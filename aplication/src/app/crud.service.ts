@@ -72,9 +72,9 @@ export class CrudService {
         return arr;
     }
 
-    // getCategory() {
-    //     return new Promise((resolve, reject) => {
-    //         resolve({name: 'tima'});
-    //     });
-    // }
+    getCategory() {
+        return new Promise((resolve, reject) => {
+            resolve({name: 'tima'});
+        });
+    }
 }

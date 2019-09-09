@@ -52,6 +52,7 @@ import { ChangeAddressComponent } from './components/change-address/change-addre
 import { ConfirmAddressComponent } from './components/confirm-address/confirm-address.component';
 import { OrdersComponent } from './pages/orders/orders.component';
 import { OrdersItemComponent } from './components/orders-item/orders-item.component';
+import {HttpClientModule} from "@angular/common/http";
 
 @NgModule({
   declarations: [
@@ -102,6 +103,7 @@ import { OrdersItemComponent } from './components/orders-item/orders-item.compon
     OrdersItemComponent
   ],
   imports: [
+    HttpClientModule,
     MatRadioModule,
     MatCheckboxModule,
     MatExpansionModule,

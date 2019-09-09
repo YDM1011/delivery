@@ -10,7 +10,8 @@ import {CrudService} from '../../crud.service';
 export class CategoryComponent implements OnInit {
   public language: string;
   constructor(
-      private auth: AuthService
+      private auth: AuthService,
+      private crud: CrudService
   ) { }
 
   ngOnInit() {
@@ -18,9 +19,9 @@ export class CategoryComponent implements OnInit {
       this.language = v;
     });
     // this.init();
-    // this.crud.getCategory().then((v: any) => {
-    //   console.log(v);
-    // });
+    this.crud.getCategory().then((v: any) => {
+      console.log(v);
+    });
   }
 
 
