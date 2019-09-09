@@ -1,0 +1,5 @@
+<div class="app-container">
+  <router-outlet *ngIf="isConnected"></router-outlet>
+  <app-no-internet-conection *ngIf="!isConnected"></app-no-internet-conection>
+  <app-controler></app-controler>
+</div>

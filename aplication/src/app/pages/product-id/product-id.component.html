@@ -1,0 +1,99 @@
+<div class="other-header">
+  <a routerLink="/{{language}}" class="back">
+    <svg width="18" height="8" viewBox="0 0 18 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0.646446 3.64645C0.451185 3.84171 0.451185 4.15829 0.646446 4.35355L3.82843 7.53553C4.02369 7.73079 4.34027 7.73079 4.53553 7.53553C4.7308 7.34027 4.7308 7.02369 4.53553 6.82843L1.70711 4L4.53553 1.17157C4.7308 0.97631 4.7308 0.659727 4.53553 0.464465C4.34027 0.269203 4.02369 0.269203 3.82843 0.464465L0.646446 3.64645ZM18 3.5L1 3.5L1 4.5L18 4.5L18 3.5Z" fill="white"/>
+    </svg>
+  </a>
+  <h2>Продукт</h2>
+  <app-basket-item></app-basket-item>
+</div>
+
+<div class="other-pages">
+  <div class="product">
+    <div class="img">
+      <img src="./assets/images/tmp/img-product.png" alt="">
+    </div>
+    <div class="title">
+      <div class="title-item">
+        Красная рыба ФОРЕЛЬ с Аляски
+      </div>
+      <div class="favorite">
+        <div class="favorite-item" *ngIf="favorite" (click)="favorite = false">
+          <svg width="25" height="23" viewBox="0 0 25 23" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path class="heart-1" d="M12.4252 4.06308C13.4343 1.67153 15.7393 0.000499974 18.4204 0.000499974C22.0319 0.000499974 24.633 3.09006 24.96 6.77213C24.96 6.77213 25.1365 7.68615 24.748 9.33169C24.219 11.5727 22.9755 13.5638 21.2989 15.0833L12.4252 23.0005L3.70107 15.0828C2.02454 13.5638 0.781017 11.5722 0.252006 9.33119C-0.136502 7.68565 0.0400019 6.77164 0.0400019 6.77164C0.367008 3.08956 2.96806 0 6.57963 0C9.26119 0 11.4162 1.67153 12.4252 4.06308Z" fill="#09C2C2"/>
+            <path class="heart-2" d="M2.34004 7.3402C2.06353 7.3402 1.84003 7.11669 1.84003 6.84019C1.84003 4.08313 4.08307 1.84009 6.84013 1.84009C7.11663 1.84009 7.34014 2.06359 7.34014 2.3401C7.34014 2.6166 7.11663 2.84011 6.84013 2.84011C4.63458 2.84011 2.84005 4.63464 2.84005 6.84019C2.84005 7.11669 2.61654 7.3402 2.34004 7.3402Z" fill="white"/>
+          </svg>
+        </div>
+        <div class="favorite-item" *ngIf="!favorite" (click)="favorite = true">
+          <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M24.9586 7.8091C24.5937 3.79252 21.7508 0.878411 18.1929 0.878411C15.8225 0.878411 13.6522 2.15396 12.431 4.19831C11.2208 2.12752 9.13946 0.87793 6.80712 0.87793C3.2497 0.87793 0.406266 3.79204 0.0418223 7.80862C0.0129745 7.98603 -0.105302 8.91974 0.254335 10.4424C0.772634 12.6387 1.96982 14.6364 3.71559 16.2182L12.4252 24.1221L21.2844 16.2187C23.0302 14.6364 24.2274 12.6392 24.7457 10.4424C25.1053 8.92022 24.987 7.98651 24.9586 7.8091ZM23.8095 10.2222C23.3364 12.2281 22.2397 14.0556 20.6411 15.5038L12.431 22.8287L4.36178 15.5057C2.76025 14.0546 1.66403 12.2276 1.19045 10.2217C0.850042 8.78079 0.989954 7.9668 0.990435 7.96151L0.997647 7.91295C1.31016 4.394 3.75309 1.83952 6.80712 1.83952C9.06061 1.83952 11.0444 3.22422 11.9858 5.45271L12.4286 6.50229L12.8714 5.45271C13.7979 3.25835 15.8865 1.84 18.1933 1.84C21.2469 1.84 23.6903 4.39448 24.0091 7.95911C24.01 7.9668 24.1499 8.78127 23.8095 10.2222Z" fill="#1C1C1C"/>
+            <path d="M7.69228 3.80029C5.04116 3.80029 2.88431 5.95715 2.88431 8.60826C2.88431 8.87414 3.09922 9.08906 3.3651 9.08906C3.63099 9.08906 3.8459 8.87414 3.8459 8.60826C3.8459 6.48747 5.57148 4.76189 7.69228 4.76189C7.95816 4.76189 8.17307 4.54697 8.17307 4.28109C8.17307 4.01521 7.95768 3.80029 7.69228 3.80029Z" fill="#09C2C2"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+    <div class="package">
+      <div class="package-item">
+        1 упаковка / 12 кг
+      </div>
+      <div class="count-sold">
+        1002 продано
+      </div>
+    </div>
+    <div class="price">
+      <div class="price-item">
+        560,90 грн.
+      </div>
+      <div class="count">
+        <div class="count-title">
+          Количество
+        </div>
+        <div class="count-minus" *ngIf="count>0" (click)="decrement()">
+          -
+        </div>
+        <div class="count-count" *ngIf="count>0">
+          {{count}}
+        </div>
+        <div class="count-plus" (click)="increment()">
+          +
+        </div>
+      </div>
+    </div>
+    <div class="buttons">
+      <button class="baton-basket" [class.active]="count>0">В корзину <svg width="20" height="20" viewBox="0 0 26 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <g clip-path="url(#clip0)">
+          <path class="basket-svg" d="M16.7901 20.3906C15.6687 20.3906 14.797 21.3086 14.797 22.4268C14.797 23.5449 15.7176 24.4629 16.7901 24.4629C17.8625 24.4629 18.7832 23.5449 18.7832 22.4268C18.7832 21.3086 17.8625 20.3906 16.7901 20.3906ZM16.7901 23.4424C16.2269 23.4424 15.8205 22.9834 15.8205 22.4219C15.8205 21.8604 16.2808 21.4014 16.7901 21.4014C17.2994 21.4014 17.7597 21.8604 17.7597 22.4219C17.7597 22.9834 17.2994 23.4424 16.7901 23.4424Z" fill="black"/>
+          <path class="basket-svg" d="M5.91386 20.3906C4.79244 20.3906 3.92078 21.3086 3.92078 22.4268C3.92078 23.5449 4.84141 24.4629 5.91386 24.4629C7.03527 24.4629 7.90694 23.5449 7.90694 22.4268C7.90694 21.3086 6.9863 20.3906 5.91386 20.3906ZM5.91386 23.4424C5.3507 23.4424 4.94425 22.9834 4.94425 22.4219C4.94425 21.8604 5.40457 21.4014 5.91386 21.4014C6.47701 21.4014 6.88347 21.8604 6.88347 22.4219C6.88347 22.9883 6.42804 23.4424 5.91386 23.4424Z" fill="black"/>
+          <path class="basket-svg" d="M21.5892 0.537109L20.7959 3.64258H0.757324L4.45456 14.5654C3.21562 14.7461 2.29009 15.791 2.29009 17.1338C2.29009 18.6084 3.4115 19.7803 4.84143 19.7803H18.7293V18.8135H4.84143C3.97466 18.8135 3.30866 18.1006 3.30866 17.1826C3.30866 16.2646 4.02363 15.5518 4.84143 15.5518H18.7293H18.7783L22.4021 1.55273H24.4441V0.537109H21.5892ZM18.0144 14.5361H5.50742L2.18725 4.6582H20.5167L18.0144 14.5361Z" fill="black"/>
+          <path class="basket-svg" d="M8.26444 7.05078H7.24097V12.8027H8.26444V7.05078Z" fill="black"/>
+          <path class="basket-svg" d="M11.8931 7.05078H10.8696V12.8027H11.8931V7.05078Z" fill="black"/>
+          <path class="basket-svg" d="M15.5169 7.05078H14.4934V12.8027H15.5169V7.05078Z" fill="black"/>
+        </g>
+        <defs>
+          <clipPath id="clip0">
+            <rect width="25.0727" height="25" fill="white" transform="translate(0.0668945)"/>
+          </clipPath>
+        </defs>
+      </svg>
+      </button>
+      <button class="baton-buy main-button color" [class.active]="count>0">Купить сейчас</button>
+    </div>
+    <div class="description">
+      <div class="description-title">
+        Описание
+      </div>
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores illum molestias officia omnis sit soluta, tenetur! Adipisci, aliquid aperiam blanditiis, consectetur cupiditate enim eos esse itaque laborum libero molestias mollitia odio omnis perferendis quae quas quasi quibusdam rem similique veritatis!
+    </div>
+  </div>
+  <app-provider-item></app-provider-item>
+  <div class="releted">
+    <div class="releted-header">
+      С этим товаром покупают
+    </div>
+    <app-product-item></app-product-item>
+    <app-product-item></app-product-item>
+    <app-product-item></app-product-item>
+    <app-product-item></app-product-item>
+    <app-product-item></app-product-item>
+  </div>
+</div>

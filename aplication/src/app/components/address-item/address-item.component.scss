@@ -1,0 +1,62 @@
+::ng-deep .mat-accordion .mat-expansion-panel{
+  border-radius: 30px!important;
+  box-shadow: none!important;
+  border: 1px solid #E4E4E4!important;
+  margin-bottom: 15px!important;
+}
+::ng-deep .mat-expansion-panel-header{
+  padding: 13px 15px!important;
+}
+.title-panel{
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  .img{
+    max-width: 22px;
+    min-width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    margin-right: 9px;
+    img{
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+    }
+  }
+  .title{
+    font-size: 14px;
+  }
+}
+.content{
+  .address-info{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    .address-info{
+      width: 50%;
+      padding: 5px;
+    }
+    .city{
+      display: flex;
+      align-items: center;
+      svg{
+        margin-right: 5px;
+      }
+    }
+    .comment{
+      padding: 5px;
+      color: rgba(0, 0, 0, 0.51);
+    }
+  }
+  .edit-address{
+    display: block;
+    color: #09C2C2;
+    text-decoration: underline;
+    text-align: center;
+    width: 100%;
+    margin: 15px 0 5px;
+    font-size: 14px;
+    line-height: 17px;
+  }
+}

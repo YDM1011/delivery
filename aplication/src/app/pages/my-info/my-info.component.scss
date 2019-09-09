@@ -1,0 +1,72 @@
+::ng-deep .phone{
+  color: #8D8D8D!important;
+  .text{
+    color: #8D8D8D!important;
+  }
+  input{
+    color: #8D8D8D!important;
+    border-bottom: 1px solid #8D8D8D!important;
+  }
+}
+.my-info{
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  .img{
+    img{
+
+    }
+  }
+  .add-photo{
+    color: #09C2C2;
+    text-decoration: underline;
+  }
+  p{
+    text-align: left;
+  }
+  .form{
+    .app-phone{
+      color: #000!important;
+    }
+    .phone{
+      color: #000!important;
+    }
+    input{
+      width: 100%;
+      max-width: 290px;
+      margin: 0 auto 25px;
+      border-radius: 0;
+      border: none;
+      border-bottom: 1px solid #8D8D8D;
+      color: #1C1C1C;
+      background: #fff;
+      padding: 3px 5px;
+      &::placeholder {
+        color: rgba(28, 28, 28, 0.3);
+        opacity: 1;
+
+        font-weight: normal;
+        font-size: 14px;
+        line-height: 17px;
+      }
+
+      &:-ms-input-placeholder {
+        color: rgba(28, 28, 28, 0.3);
+
+        font-weight: normal;
+        font-size: 14px;
+        line-height: 17px;
+      }
+
+      &::-ms-input-placeholder {
+        color: rgba(28, 28, 28, 0.3);
+
+
+        font-weight: normal;
+        font-size: 14px;
+        line-height: 17px;
+      }
+    }
+
+  }
+}

@@ -1,0 +1,28 @@
+.basket-item{
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  right: 25px;
+  top: 20px;
+  &-box{
+    position: relative;
+    .count{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      position: absolute;
+      right: -13px;
+      top: 12px;
+      width: 16px;
+      height: 16px;
+      background: #fff;
+      color: #29919F;
+      font-weight: 500;
+      font-size: 11px;
+      line-height: 13px;
+    }
+  }
+}

@@ -1,0 +1,19 @@
+.new-address{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  margin: 20px auto;
+  width: 240px;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 17px;
+  text-align: center;
+  border-radius: 15px;
+  color: #fff;
+  background: #09C2C2;
+  svg{
+    margin-right: 5px;
+  }
+}
+

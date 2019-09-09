@@ -1,0 +1,19 @@
+<div class="sign">
+  <div class="sign-content">
+    <h3>Регистрация</h3>
+    <div class="form">
+      <input type="text" [placeholder]="nameplaceholder[language]">
+      <app-phone></app-phone>
+      <input type="password" placeholder="Пароль">
+      <div class="buttons">
+        <a (click)="verification = true" class="main-button-bold continue">Продолжить</a>
+        <a routerLink="/{{language}}" class="main-button-bold no-color">Отмена</a>
+        <span class="text-buttons">
+          или
+        </span>
+        <a routerLink="/{{language}}/signin" class="main-button-bold no-color">войти</a>
+      </div>
+    </div>
+  </div>
+</div>
+<app-verification *ngIf="verification"></app-verification>

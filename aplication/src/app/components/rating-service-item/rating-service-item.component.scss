@@ -1,0 +1,32 @@
+.raiting-item{
+  display: flex;
+  flex-direction: column;
+  border-radius: 15px;
+  border: 1px solid #E2E2E2;
+  margin-bottom: 10px;
+  overflow: hidden;
+  .top-section{
+    display: flex;
+    align-items: center;
+    position: relative;
+    padding: 10px 20px;
+    background: rgba(9, 194, 194, 0.08);
+    svg{
+      margin-right: 10px;
+    }
+    .arrow{
+      position: absolute;
+      top: 12px;
+      right: 10px;
+    }
+  }
+  .bottom-section{
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+    line-height: 17px;
+    svg{
+      margin-right: 10px;
+    }
+  }
+}

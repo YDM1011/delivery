@@ -1,0 +1,21 @@
+.category-item{
+  display: flex;
+  align-items: center;
+  position: relative;
+  margin-bottom: 10px;
+  background: #FFFFFF;
+  border: 1px solid #F3F3F3;
+  box-shadow: 0 2px 3px rgba(9, 194, 194, 0.1);
+  border-radius: 15px;
+  height: 60px;
+  padding: 0 15px;
+  .img{
+    margin-right: 10px;
+    img{}
+  }
+  .arrow{
+    position: absolute;
+    right: 15px;
+    top: 24px;
+  }
+}
