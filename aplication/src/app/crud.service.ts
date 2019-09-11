@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import {environment} from '../environments/environment';
+import { City, Category, Brands } from './db';
 
 @Injectable({
   providedIn: 'root'
@@ -74,7 +75,18 @@ export class CrudService {
 
     getCategory() {
         return new Promise((resolve, reject) => {
-            resolve({name: 'tima'});
+            resolve(Category);
+        });
+    }
+
+    getCity() {
+        return new Promise((resolve, reject) => {
+            resolve(City);
+        });
+    }
+    getBrands() {
+        return new Promise((resolve, reject) => {
+            resolve(Brands);
         });
     }
 }

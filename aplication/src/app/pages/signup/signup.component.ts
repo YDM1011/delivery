@@ -9,6 +9,7 @@ import {AuthService} from "../../auth.service";
 export class SignupComponent implements OnInit {
   public verification = false;
   public language: string;
+  public phone;
   public nameplaceholder = {
     ru: 'ФИО',
     ua: "ПІБ"
@@ -21,5 +22,9 @@ export class SignupComponent implements OnInit {
     this.auth.onLanguage.subscribe((v: string) => {
       this.language = v;
     });
+  }
+
+  phoneOutput(e) {
+    this.phone = e;
   }
 }

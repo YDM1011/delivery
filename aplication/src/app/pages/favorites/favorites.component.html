@@ -11,22 +11,27 @@
   <div class="popular-section">
     <div class="popular-section-button">
       <button [class.active]="toggleMain" (click)="toggleMain = true">
-        Поставщики (4)
+        Поставщики ({{favoriteLocal.providers ? favoriteLocal.providers.length : '0' }})
       </button>
       <button [class.active]="!toggleMain" (click)="toggleMain = false">
-        Товары (3)
+        Товары ({{favoriteLocal.products ? favoriteLocal.products.length : '0' }})
       </button>
     </div>
     <div class="popular-section-box" *ngIf="toggleMain">
-      <app-provider-item></app-provider-item>
-      <app-provider-item></app-provider-item>
-      <app-provider-item></app-provider-item>
-      <app-provider-item></app-provider-item>
+      <p class="p-not" *ngIf="favoriteLocal.providers.length === 0">
+        У вас нет избранных поставщиков
+      </p>
+      <ng-container *ngIf="favoriteLocal && favoriteLocal.providers.length > 0">
+        <app-provider-item *ngFor="let item of favoriteLocal.providers"></app-provider-item>
+      </ng-container>
     </div>
     <div class="popular-section-box" *ngIf="!toggleMain">
-      <app-product-item></app-product-item>
-      <app-product-item></app-product-item>
-      <app-product-item></app-product-item>
+      <p class="p-not" *ngIf="favoriteLocal.products.length === 0">
+        У вас нет избранных товаров
+      </p>
+      <ng-container *ngIf="favoriteLocal && favoriteLocal.products.length > 0">
+        <app-product-item *ngFor="let item of favoriteLocal.products"></app-product-item>
+      </ng-container>
     </div>
   </div>
 </div>

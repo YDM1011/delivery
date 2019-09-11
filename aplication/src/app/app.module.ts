@@ -39,7 +39,9 @@ import { NoInternetConectionComponent } from './pages/no-internet-conection/no-i
 import {FormsModule} from '@angular/forms';
 import {LottieAnimationViewModule} from 'ng-lottie';
 import { TranslatePipe } from './pipe/translate.pipe';
-import {MatCheckboxModule, MatExpansionModule, MatRadioModule} from '@angular/material';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatRadioModule } from '@angular/material/radio';
 import { ActionItemComponent } from './components/action-item/action-item.component';
 import { RatingServiceItemComponent } from './components/rating-service-item/rating-service-item.component';
 import { ActionDetailComponent } from './pages/action-detail/action-detail.component';
@@ -52,7 +54,12 @@ import { ChangeAddressComponent } from './components/change-address/change-addre
 import { ConfirmAddressComponent } from './components/confirm-address/confirm-address.component';
 import { OrdersComponent } from './pages/orders/orders.component';
 import { OrdersItemComponent } from './components/orders-item/orders-item.component';
-import {HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
+import { ImgComponent } from './components/img/img.component';
+import {CookieService} from "ngx-cookie-service";
+import {ApiInterceptor} from "./api.interceptor";
+import { NumbersOnlyDirective } from './directives/numbers-only.directive';
+import {MatCarouselModule} from "@ngmodule/material-carousel";
 
 @NgModule({
   declarations: [
@@ -100,9 +107,12 @@ import {HttpClientModule} from "@angular/common/http";
     ChangeAddressComponent,
     ConfirmAddressComponent,
     OrdersComponent,
-    OrdersItemComponent
+    OrdersItemComponent,
+    ImgComponent,
+    NumbersOnlyDirective
   ],
   imports: [
+    MatCarouselModule,
     HttpClientModule,
     MatRadioModule,
     MatCheckboxModule,
@@ -113,7 +123,7 @@ import {HttpClientModule} from "@angular/common/http";
     FormsModule,
     LottieAnimationViewModule.forRoot()
   ],
-  providers: [],
+  providers: [CookieService, {provide: HTTP_INTERCEPTORS, useClass: ApiInterceptor, multi: true}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

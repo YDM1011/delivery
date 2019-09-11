@@ -9,40 +9,10 @@
 
 <div class="other-pages">
   <div class="city-box">
-    <div class="city-item">
-      <img src="./assets/images/tmp/kiew.png" alt="kiew">
+    <div class="city-item" *ngFor="let item of city; let index = index;" (click)="changeCity(index)">
+      <img src="{{item.img}}" alt="{{item.name[language]}}">
       <div class="title">
-        Киев
-      </div>
-    </div>
-    <div class="city-item">
-      <img src="./assets/images/tmp/kiew.png" alt="kiew">
-      <div class="title">
-        Киев
-      </div>
-    </div>
-    <div class="city-item">
-      <img src="./assets/images/tmp/kiew.png" alt="kiew">
-      <div class="title">
-        Киев
-      </div>
-    </div>
-    <div class="city-item">
-      <img src="./assets/images/tmp/kiew.png" alt="kiew">
-      <div class="title">
-        Киев
-      </div>
-    </div>
-    <div class="city-item">
-      <img src="./assets/images/tmp/kiew.png" alt="kiew">
-      <div class="title">
-        Киев
-      </div>
-    </div>
-    <div class="city-item">
-      <img src="./assets/images/tmp/kiew.png" alt="kiew">
-      <div class="title">
-        Киев
+        {{item.name[language]}}
       </div>
     </div>
     <a routerLink="/{{language}}/other-city" class="city-item">

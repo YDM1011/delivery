@@ -7,13 +7,13 @@ import {Component, ElementRef, EventEmitter, OnInit, Output, ViewChild} from '@a
 })
 export class PhoneComponent implements OnInit {
   @Output() phone = new EventEmitter();
-  @ViewChild('firstInput') firstInput: ElementRef;
-  @ViewChild('secondInput') secondInput: ElementRef;
-  @ViewChild('thirdInput') thirdInput: ElementRef;
+  @ViewChild('firstInput', {static: false}) firstInput: ElementRef;
+  @ViewChild('secondInput', {static: false}) secondInput: ElementRef;
+  @ViewChild('thirdInput', {static: false}) thirdInput: ElementRef;
   public firstModel: string = '';
   public secondModel: string = '';
   public thirdModel: string = '';
-  public phoneNumber;
+  public phoneNumber = '';
   constructor() { }
 
   ngOnInit() {
@@ -36,6 +36,7 @@ export class PhoneComponent implements OnInit {
   }
   keyPressThird(e) {
     this.phoneNumber = '+38' + this.firstModel + this.secondModel + this.thirdModel;
+    this.phone.emit(this.phoneNumber);
     if (e.keyCode === 8 && this.thirdModel.length === 0) {
       this.secondInput.nativeElement.focus();
     }

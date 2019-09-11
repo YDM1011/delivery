@@ -52,14 +52,31 @@
     }
   }
   .price{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 10px;
-    &-item{
-      font-weight: bold;
-      font-size: 18px;
-      line-height: 22px;
+    .price-element{
+      display: flex;
+      flex-direction: column;
+      .price-item{
+        font-weight: bold;
+        font-size: 14px;
+        line-height: 17px;
+      }
+      .new-price{
+        display: none;
+      }
+    }
+    .sale{
+      .price-item{
+        text-decoration-line: line-through;
+        font-size: 12px;
+        line-height: 15px;
+      }
+      .new-price{
+        display: block;
+        color: #FF3131;
+        font-weight: bold;
+        font-size: 18px;
+        line-height: 22px;
+      }
     }
     .count{
       display: flex;
@@ -109,7 +126,6 @@
       box-shadow: 0 4px 3px rgba(0, 0, 0, 0.03);
       border-radius: 10px;
       padding: 0 20px;
-      width: max-content;
       height: 40px;
       pointer-events: none;
       color: #09C2C2;
@@ -128,6 +144,11 @@
           fill: #fff;
         }
       }
+    }
+
+    button{
+      min-width: 48%!important;
+      max-width: 180px;
     }
     .baton-buy{
       max-width: max-content;

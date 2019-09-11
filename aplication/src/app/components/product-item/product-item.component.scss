@@ -1,7 +1,9 @@
 .product-item-title-shop{
   display: flex;
   align-items: center;
-  padding: 10px 0 0;
+  padding: 0 5px 10px;
+  border-bottom: 1px solid #E4E4E4;
+  margin-bottom: 10px;
   svg{
     margin-right: 5px;
   }
@@ -13,19 +15,13 @@
   border: 1px solid #F3F3F3;
   box-sizing: border-box;
   box-shadow: 0 4px 3px rgba(0, 0, 0, 0.03);
-  border-radius: 15px;
+  border-radius: 30px;
   padding: 10px;
   margin-bottom: 15px;
   &-box{
     display: flex;
     align-items: flex-start;
     position: relative;
-    .sale{
-      position: absolute;
-      right: -12px;
-      top: -8px;
-
-    }
     .img{
       width: 100%;
       max-width: 100px;
@@ -57,9 +53,30 @@
         justify-content: space-between;
         margin-bottom: auto;
         .price-element{
-          font-weight: bold;
-          font-size: 14px;
-          line-height: 17px;
+          display: flex;
+          flex-direction: column;
+          .price-item{
+            font-weight: bold;
+            font-size: 14px;
+            line-height: 17px;
+          }
+          .new-price{
+            display: none;
+          }
+        }
+        .sale{
+          .price-item{
+            text-decoration-line: line-through;
+            font-size: 12px;
+            line-height: 15px;
+          }
+          .new-price{
+            display: block;
+            color: #FF3131;
+            font-weight: bold;
+            font-size: 18px;
+            line-height: 22px;
+          }
         }
         .count{
           display: flex;

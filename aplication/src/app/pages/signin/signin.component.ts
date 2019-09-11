@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {AuthService} from "../../auth.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-signin',
@@ -8,12 +9,10 @@ import {AuthService} from "../../auth.service";
 })
 export class SigninComponent implements OnInit {
   public language: string;
-  public telplaceholder = {
-    ru: 'Номер телефона',
-    ua: 'Номер телефону'
-  };
+  public phone;
   constructor(
-      private auth: AuthService
+      private auth: AuthService,
+      private router: Router
   ) { }
 
   ngOnInit() {
@@ -22,4 +21,12 @@ export class SigninComponent implements OnInit {
     })
   }
 
+  signin(){
+    localStorage.setItem('userId', '3');
+    this.router.navigate(['/'+this.language])
+  }
+  phoneOutput(e) {
+    this.phone = e.value;
+    console.log(this.phone)
+  }
 }
