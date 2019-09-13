@@ -12,16 +12,7 @@ module.exports = backendApp => {
             backendApp.events.callWS.emit('message', req.body.ws);
             next()
         };
-        const canRead = (options) => {
-            return (req,res,next) => {
-                const model = req.erm.model.modelName;
-                console.log(options)
-                next()
-                // if (req.user.role == 'client') {
-                //
-                // }
-            };
-        };
+
         if (model.schema.options.createRestApi) {
             const router = backendApp.express.Router();
             restify.serve(router, model, {
@@ -37,7 +28,7 @@ module.exports = backendApp => {
                 preRead: [
                     // model.schema.options.needBeAdminR ? backendApp.middlewares.isAdmin :  nextS,
                     model.schema.options.needLogined ? backendApp.middlewares.isLoggedIn : nextS,
-                    canRead(model.schema.options),
+                    backendApp.middlewares.isLoggedIn, canRead(model.schema.options),
                     // model.schema.options.needAccessControl && !model.schema.options.needLogined && !model.schema.options.needBeAdmin ? backendApp.middlewares.isLoggedIn :  nextS,
                     // model.schema.options.needAccessControl && !model.schema.options.needBeAdmin ? backendApp.middlewares.checkAccessRights(modelName + '.canRead') :  nextS,
                     schemaPre.Read],
@@ -75,7 +66,41 @@ module.exports = backendApp => {
 
 };
 
+const canRead = (options) => {
+    return (req,res,next) => {
+        const model = req.erm.model.modelName;
+        console.log(req.user.role)
+        // next()
+        if (req.user.role == 'client' || !req.user.role) {
+            switch (options[req.user.role || 'client']) {
+                case 'byId':
+                    console.log("OK!!!", req.params)
+                    if (req.params.id) {
 
+                    } else {
+                        // model.findOne({
+                        //     _id:id,
+                        //     createdBy: req.user._id
+                        // }).exec((err,r)=>{
+                        //     if (err) return res.serverError(err);
+                        //     if (!r) return res.forbidden("Forbidden");
+                        //     if (r) return next();3
+                        // })
+                        console.log("OK!!!1", req.erm.query)
+                        // req.erm.query =  { _id: '5d0b7b0c254a8d1ee0580d90' } };
+                        req.erm.query = { query: {$or: [{'createdBy.itemId': req.user._id},
+                                    {createdBy: req.user._id},
+                                    {_id: req.user._id}]} };
+                        // req.erm.query = { query: '{"_id":"5d0b7b0c254a8d1ee0580d90"}' };
+                        console.log("OK!!!2", req.erm.query.query);
+                        next()
+                    }
+                    break;
+                default: next()
+            }
+        }
+    };
+};
 const schemaPre = {
     Read: (req, res, next) => callMethod(req, res, next, 'preRead'),
     Save: (req, res, next) => {
