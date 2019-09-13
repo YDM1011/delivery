@@ -2,7 +2,7 @@
   <div class="img">
     <img src="./assets/images/user.svg" alt="">
   </div>
-  <div class="info">
+  <div class="info" *ngIf="login">
     <div class="name">
       Кравчук Андрей
     </div>
@@ -14,23 +14,26 @@
 
 <div class="other-pages profile-block">
   <div class="profile-linki">
-    <a routerLink="/{{language}}/my-info">
+    <a routerLink="/{{language}}/my-info" *ngIf="login">
       Мои даные
     </a>
-    <a routerLink="/{{language}}/my-bonuses">
-      Бонусы
-    </a>
-    <a routerLink="/{{language}}/my-address">
+<!--    <a routerLink="/{{language}}/my-bonuses" *ngIf="login">-->
+<!--      Бонусы-->
+<!--    </a>-->
+    <a routerLink="/{{language}}/my-address" *ngIf="login">
       Адреса доставки
     </a>
-    <a routerLink="/{{language}}/info-service">
-      Инфо сервис
-    </a>
-    <a routerLink="/{{language}}/support">
-      Техническая поддержка
-    </a>
-    <a class="logout">
+<!--    <a routerLink="/{{language}}/info-service">-->
+<!--      Информация о сервисе-->
+<!--    </a>-->
+<!--    <a routerLink="/{{language}}/support">-->
+<!--      Техническая поддержка-->
+<!--    </a>-->
+    <a class="logout" *ngIf="login">
       Выйти
+    </a>
+    <a routerLink="/{{language}}/signin" *ngIf="!login">
+      Вход
     </a>
   </div>
 </div>

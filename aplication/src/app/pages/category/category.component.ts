@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {AuthService} from '../../auth.service';
 import {CrudService} from '../../crud.service';
+import {Category, CategoryObj} from "../../interfaces/category";
 
 @Component({
   selector: 'app-category',
@@ -9,6 +10,7 @@ import {CrudService} from '../../crud.service';
 })
 export class CategoryComponent implements OnInit {
   public language: string;
+  public category = [];
   constructor(
       private auth: AuthService,
       private crud: CrudService
@@ -18,18 +20,14 @@ export class CategoryComponent implements OnInit {
     this.auth.onLanguage.subscribe((v: string) => {
       this.language = v;
     });
-    // this.init();
-    this.crud.getCategory().then((v: any) => {
-      console.log(v);
-    });
+    this.init();
   }
 
 
-  // async init() {
-  //   let category;
-  //   await this.crud.getCategory().then((v: any) => {
-  //     category = v;
-  //     console.log(category);
-  //   });
-  // }
+  async init() {
+    await this.crud.getCategory().then((v: any) => {
+      this.category = v;
+      console.log(v)
+    });
+  }
 }

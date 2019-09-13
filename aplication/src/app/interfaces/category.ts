@@ -3,6 +3,7 @@ export interface Category {
     orders: string[];
     ownerCategory: any;
     companyOwner: any;
+    img: string;
 }
 
 export class CategoryObj implements Category {
@@ -10,12 +11,14 @@ export class CategoryObj implements Category {
     public orders: string[] = [];
     public ownerCategory: any = {};
     public companyOwner: any = {};
+    public img: string = '';
     constructor() {
         return {
             name: this.name,
             orders: this.orders,
             ownerCategory: this.ownerCategory,
-            companyOwner: this.companyOwner
+            companyOwner: this.companyOwner,
+            img: this.img
         };
     }
 }

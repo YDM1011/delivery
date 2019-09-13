@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import {BehaviorSubject} from 'rxjs';
+import {CookieService} from "ngx-cookie-service";
 
 @Injectable({
   providedIn: 'root'
@@ -9,16 +10,14 @@ export class AuthService {
   private settings = new BehaviorSubject<any>(null);
   public onSettings = this.settings.asObservable();
 
-  private colaborator = new BehaviorSubject<any>(null);
-  public onColaborator = this.colaborator.asObservable();
+  private city = new BehaviorSubject<any>(null);
+  public onCity = this.city.asObservable();
 
-  private newOrder = new BehaviorSubject<any>(null);
-  public onNewOrder = this.newOrder.asObservable();
+  private me = new BehaviorSubject<any>(null);
+  public onMe = this.me.asObservable();
 
   private translate = new BehaviorSubject<any>(null);
   public onTranslate = this.translate.asObservable();
-  private done = new BehaviorSubject<any>(null);
-  public onDone = this.done.asObservable();
 
   private language = new BehaviorSubject<any>(null);
   public onLanguage = this.language.asObservable();
@@ -28,7 +27,10 @@ export class AuthService {
 
   private checkBasket = new BehaviorSubject<any>(null);
   public onCheckBasket = this.checkBasket.asObservable();
-  constructor() { }
+
+  constructor(
+      private cookieService: CookieService
+  ) { }
 
   setCheckBasket(data) {
     this.checkBasket.next(data);
@@ -36,10 +38,13 @@ export class AuthService {
   setSettings(data) {
       this.settings.next(data);
   }
+  setMe(data) {
+      this.me.next(data);
+  }
   setLanguage(data) {
     this.language.next(data);
     const lang = {
-      def: 'uk',
+      def: 'ru-UA',
       ua: 'uk',
       ru: 'ru-UA'
     };
@@ -48,15 +53,24 @@ export class AuthService {
   setTranslate(data) {
     this.translate.next(data);
   }
-  isAuthAdmin() {
-    if (localStorage.getItem('adminId')) {
+  setCity(data) {
+    this.city.next(data);
+  }
+  isAuth() {
+    if (this.cookieService.get('userId') || localStorage.getItem('userId')) {
       return true;
     } else {
       return false;
     }
   }
-  setNewOrder(data) {
-    this.newOrder.next(data);
-  }
+
+
+  // isAuthAdmin() {
+  //   if (localStorage.getItem('adminId')) {
+  //     return true;
+  //   } else {
+  //     return false;
+  //   }
+  // }
 }
 

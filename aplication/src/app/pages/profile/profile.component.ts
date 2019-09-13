@@ -8,6 +8,7 @@ import {AuthService} from "../../auth.service";
 })
 export class ProfileComponent implements OnInit {
   public language: string;
+  public login: boolean = false;
   constructor(
       private auth: AuthService
   ) { }
@@ -15,7 +16,8 @@ export class ProfileComponent implements OnInit {
   ngOnInit() {
     this.auth.onLanguage.subscribe((v: string) => {
       this.language = v;
-    })
+    });
+    this.login = this.auth.isAuth();
   }
 
 }

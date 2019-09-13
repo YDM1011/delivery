@@ -1,5 +1,5 @@
 <div class="phone">
   <div class="text">
     +38
-  </div> (<input type="text" #firstInput [(ngModel)]="firstModel" (keyup)="keyPressFirst()" maxlength="3" pattern="[\d]{3}" autocomplete="off">) - <input type="text" [(ngModel)]="secondModel" #secondInput maxlength="3" pattern="[0-9]{3}" autocomplete="off" (keyup)="keyPressSecond($event)"> - <input type="text" [(ngModel)]="thirdModel" #thirdInput maxlength="4" pattern="[0-9]{4}" autocomplete="off" (keyup)="keyPressThird($event)">
+  </div> (<input type="text" #firstInput [(ngModel)]="firstModel" (keyup)="keyPressFirst()" maxlength="3" pattern="[\d]{3}" autocomplete="off" numbersOnly numericType="number" />) - <input type="text" [(ngModel)]="secondModel" #secondInput maxlength="3" pattern="[0-9]{3}" autocomplete="off" (keyup)="keyPressSecond($event)" numbersOnly numericType="number"> - <input type="text" [(ngModel)]="thirdModel" #thirdInput maxlength="4" pattern="[0-9]{4}" autocomplete="off" (keyup)="keyPressThird($event)" numbersOnly numericType="number">
 </div>

@@ -1,7 +1,5 @@
-
 <div class="main-header">
-  <div class="back-img" style="background: url('./assets/images/tmp/img-deli.png') no-repeat">
-  
+  <div class="back-img" [style.background]="carentPhoto">
   </div>
   <a routerLink="/{{language}}/city" class="city">
       <span class="chose-city">
@@ -9,7 +7,7 @@
             <path d="M8.06512 4.383C6.65562 4.383 5.50837 5.53025 5.50837 6.93975C5.50837 8.34925 6.65562 9.4965 8.06512 9.4965C9.47462 9.4965 10.6219 8.34925 10.6219 6.93975C10.6219 5.53025 9.47462 4.383 8.06512 4.383ZM8.06512 8.766C7.05812 8.766 6.23887 7.94674 6.23887 6.93975C6.23887 5.93275 7.05812 5.1135 8.06512 5.1135C9.07211 5.1135 9.89137 5.93275 9.89137 6.93975C9.89137 7.94674 9.07211 8.766 8.06512 8.766Z" fill="white"/>
             <path d="M12.9533 2.05161C11.6303 0.728674 9.8713 0 8.00049 0C6.12932 0 4.37064 0.728674 3.0477 2.05161C0.599432 4.49952 0.295178 9.10532 2.38879 11.8958L8.00049 20L13.6038 11.9072C15.7058 9.10532 15.4016 4.49952 12.9533 2.05161ZM13.0114 11.4802L8.00049 18.7165L2.98159 11.4689C1.08266 8.93694 1.35477 4.77747 3.56453 2.56807C4.7494 1.3832 6.32473 0.7305 8.00049 0.7305C9.67626 0.7305 11.2516 1.3832 12.4368 2.56807C14.6466 4.77747 14.9187 8.93694 13.0114 11.4802Z" fill="white"/>
         </svg>
-        г. Днепр
+        {{curentCity ? 'г. ' + curentCity.name[language] : "Город" }}
       </span>
     <span class="search">
         <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -32,20 +30,36 @@
   </a>
 </div>
 <div class="slider">
-  <!--    <owl-carousel [options]="mySlideOptions" [items]="images" [carouselClasses]="['owl-theme', 'sliding']" >-->
-  <!--      <div class="item" *ngFor="let image of mySlideImages;let i = index">-->
-  <!--        <div class="slider-item">-->
-  <!--          <img src="{{image}}" alt="">-->
-  <!--        </div>-->
-  <!--      </div>-->
-  <!--    </owl-carousel>-->
   
-  <div class="slider-item">
-    <img src="./assets/images/tmp/img-deli.png" alt="">
-  </div>
+  <mat-carousel
+          timings="250ms ease-in"
+          [autoplay]="true"
+          interval="5000"
+          color="accent"
+          maxWidth="auto"
+          height="180px"
+          proportion="25"
+          slides="5"
+          [loop]="false"
+          [hideArrows]="true"
+          [hideIndicators]="true"
+          [useKeyboard]="true"
+          [useMouseWheel]="false"
+          orientation="ltr"
+          (change)="changeCar(images[$event])"
+  >
+    <mat-carousel-slide
+            #matCarouselSlide
+            *ngFor="let slide of images; let i = index"
+            [image]="slide"
+            overlayColor="#00000040"
+            [hideOverlay]="true"
+    
+    ></mat-carousel-slide>
+  </mat-carousel>
 </div>
 
-<div class="category">
+<div class="category" *ngIf="category.length > 0">
   <div class="category-header">
     <h3>
       Категории
@@ -53,74 +67,18 @@
     <a routerLink="/{{language}}/category">Все</a>
   </div>
   <div class="category-box">
-    <a routerLink="/{{language}}/category/1" class="category-box-item">
+    <a routerLink="/{{language}}/category/1" class="category-box-item" *ngFor="let item of category">
       <div class="svg">
-        <img src="./assets/images/tmp/beaf.svg" alt="">
+        <img src="{{item.img}}" alt="">
       </div>
       <div class="title">
-        Мясо
-      </div>
-    </a>
-    <a routerLink="/{{language}}/category/1" class="category-box-item">
-      <div class="svg">
-        <img src="./assets/images/tmp/fish.svg" alt="">
-      </div>
-      <div class="title">
-        Рыба
-      </div>
-    </a>
-    <a routerLink="/{{language}}/category/1" class="category-box-item">
-      <div class="svg">
-        <img src="./assets/images/tmp/cheese.svg" alt="">
-      </div>
-      <div class="title">
-        Сыр
-      </div>
-    </a>
-    <a routerLink="/{{language}}/category/1" class="category-box-item">
-      <div class="svg">
-        <img src="./assets/images/tmp/bread.svg" alt="">
-      </div>
-      <div class="title">
-        Хлебобулочные
-        издения
-      </div>
-    </a>
-    <a routerLink="/{{language}}/category/1" class="category-box-item">
-      <div class="svg">
-        <img src="./assets/images/tmp/beaf.svg" alt="">
-      </div>
-      <div class="title">
-        Мясо
-      </div>
-    </a>
-    <a routerLink="/{{language}}/category/1" class="category-box-item">
-      <div class="svg">
-        <img src="./assets/images/tmp/fish.svg" alt="">
-      </div>
-      <div class="title">
-        Рыба
-      </div>
-    </a>
-    <a routerLink="/{{language}}/category/1" class="category-box-item">
-      <div class="svg">
-        <img src="./assets/images/tmp/beaf.svg" alt="">
-      </div>
-      <div class="title">
-        Мясо
-      </div>
-    </a>
-    <a routerLink="/{{language}}/category/1" class="category-box-item">
-      <div class="svg">
-        <img src="./assets/images/tmp/fish.svg" alt="">
-      </div>
-      <div class="title">
-        Рыба
+        {{item.name}}
       </div>
     </a>
   </div>
 </div>
-<div class="brandy">
+
+<div class="brandy" *ngIf="brandy.length > 0">
   <div class="category-header">
     <h3>
       Бренды
@@ -128,69 +86,12 @@
     <a routerLink="/{{language}}/brands">Все</a>
   </div>
   <div class="category-box">
-    <a routerLink="/{{language}}/category/1" class="category-box-item">
-      <div class="svg">
-        <img src="./assets/images/tmp/beaf.svg" alt="">
+    <a routerLink="/{{language}}/category/1" class="category-box-item" *ngFor="let item of brandy">
+      <div class="brandy-svg">
+        <img src="{{item.img}}" alt="">
       </div>
       <div class="title">
-        Мясо
-      </div>
-    </a>
-    <a routerLink="/{{language}}/category/1" class="category-box-item">
-      <div class="svg">
-        <img src="./assets/images/tmp/fish.svg" alt="">
-      </div>
-      <div class="title">
-        Рыба
-      </div>
-    </a>
-    <a routerLink="/{{language}}/category/1" class="category-box-item">
-      <div class="svg">
-        <img src="./assets/images/tmp/cheese.svg" alt="">
-      </div>
-      <div class="title">
-        Сыр
-      </div>
-    </a>
-    <a routerLink="/{{language}}/category/1" class="category-box-item">
-      <div class="svg">
-        <img src="./assets/images/tmp/bread.svg" alt="">
-      </div>
-      <div class="title">
-        Хлебобулочные
-        издения
-      </div>
-    </a>
-    <a routerLink="/{{language}}/category/1" class="category-box-item">
-      <div class="svg">
-        <img src="./assets/images/tmp/beaf.svg" alt="">
-      </div>
-      <div class="title">
-        Мясо
-      </div>
-    </a>
-    <a routerLink="/{{language}}/category/1" class="category-box-item">
-      <div class="svg">
-        <img src="./assets/images/tmp/fish.svg" alt="">
-      </div>
-      <div class="title">
-        Рыба
-      </div>
-    </a>
-    <a routerLink="/{{language}}/category/1" class="category-box-item">
-      <div class="svg">
-        <img src="./assets/images/tmp/beaf.svg" alt="">
-      </div>
-      <div class="title">
-        Мясо
-      </div>
-    </a>
-    <a routerLink="/{{language}}/category/1" class="category-box-item">
-      <div class="svg">
-        <img src="./assets/images/tmp/fish.svg" alt="">
-      </div>
-      <div class="title">
-        Рыба
+        {{item.name}}
       </div>
     </a>
   </div>

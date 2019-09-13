@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {AuthService} from "../../auth.service";
 
 @Component({
@@ -7,7 +7,7 @@ import {AuthService} from "../../auth.service";
   styleUrls: ['./category-item.component.scss']
 })
 export class CategoryItemComponent implements OnInit {
-
+  @Input() obj;
   public language: string;
   constructor(
       private auth: AuthService

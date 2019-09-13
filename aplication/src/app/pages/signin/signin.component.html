@@ -1,12 +1,12 @@
 <div class="sign">
   <div class="sign-content">
     <h3>Вход</h3>
-    <div class="form">
-      <app-phone></app-phone>
-      <input type="password" placeholder="Пароль">
-    </div>
+    <form class="form">
+      <app-phone (phone)="phoneOutput($event)"></app-phone>
+      <input type="password" placeholder="Пароль" autocomplete="off">
+    </form>
     <div class="buttons">
-      <button class="main-button-bold continue">Войти</button>
+      <button class="main-button-bold continue" (click)="signin()">Войти</button>
       <a routerLink="/{{language}}" class="main-button-bold no-color">Отмена</a>
       <span class="text-buttons">
           или

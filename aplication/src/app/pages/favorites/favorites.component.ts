@@ -9,6 +9,7 @@ import {AuthService} from "../../auth.service";
 export class FavoritesComponent implements OnInit {
   public language: string;
   public toggleMain: boolean = true;
+  public favoriteLocal;
   constructor(
       private auth: AuthService
   ) { }
@@ -17,6 +18,7 @@ export class FavoritesComponent implements OnInit {
     this.auth.onLanguage.subscribe((v: string) => {
       this.language = v;
     });
+    this.favoriteLocal = JSON.parse(localStorage.getItem('favorite'));
   }
 
 }

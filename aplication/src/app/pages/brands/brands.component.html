@@ -9,12 +9,6 @@
 
 </div>
 
-<div class="other-pages">
-  <app-category-item></app-category-item>
-  <app-category-item></app-category-item>
-  <app-category-item></app-category-item>
-  <app-category-item></app-category-item>
-  <app-category-item></app-category-item>
-  <app-category-item></app-category-item>
-  <app-category-item></app-category-item>
+<div class="other-pages" *ngIf="brands.length > 0">
+  <app-category-item *ngFor="let item of brands" [obj]="item"></app-category-item>
 </div>

@@ -25,12 +25,14 @@ import {SupportComponent} from './pages/support/support.component';
 import {NotFoundComponent} from './pages/not-found/not-found.component';
 import {ActionDetailComponent} from './pages/action-detail/action-detail.component';
 import {OrdersComponent} from './pages/orders/orders.component';
+import {IsLoginGuard} from "./is-login.guard";
+import {IsLogoutGuard} from "./is-logout.guard";
 
 const routes: Routes = [
   {path: ':lang', component: InitLayoutComponent, children: [
       {path: '', component: IndexComponent},
       {path: 'notification', component: NotificationComponent},
-      {path: 'basket', component: BasketComponent},
+      {path: 'basket', component: BasketComponent, canActivate: [IsLoginGuard]},
       {path: 'favorites', component: FavoritesComponent},
       {path: 'profile', component: ProfileComponent},
       {path: 'category', component: CategoryComponent},
@@ -39,8 +41,8 @@ const routes: Routes = [
       {path: 'brands', component: BrandsComponent},
       {path: 'city', component: CityComponent},
       {path: 'verification', component: VerificationComponent},
-      {path: 'signin', component: SigninComponent},
-      {path: 'signup', component: SignupComponent},
+      {path: 'signin', component: SigninComponent, canActivate: [IsLogoutGuard]},
+      {path: 'signup', component: SignupComponent, canActivate: [IsLogoutGuard]},
       {path: 'other-city', component: OtherCityComponent},
       {path: 'provider/:id', component: ProviderComponent},
       {path: 'provider-all', component: ProviderAllComponent},
@@ -50,7 +52,7 @@ const routes: Routes = [
       {path: 'new-address', component: NewAddressComponent},
       {path: 'support', component: SupportComponent},
       {path: 'action/:id', component: ActionDetailComponent},
-      {path: 'orders', component: OrdersComponent},
+      {path: 'orders', component: OrdersComponent, canActivate: [IsLoginGuard]},
     ]},
   {path: '', redirectTo: 'ru', pathMatch: 'full'},
   {path: '**', component: NotFoundComponent},

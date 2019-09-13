@@ -8,10 +8,7 @@ import {AuthService} from "../../auth.service";
 })
 export class OtherCityComponent implements OnInit {
   public language: string;
-  public telplaceholder = {
-    ru: 'Номер телефона',
-    ua: 'Номер телефону'
-  };
+  public phone;
   public cityplaceholder = {
     ru: 'Город',
     ua: 'Місто'
@@ -24,6 +21,10 @@ export class OtherCityComponent implements OnInit {
     this.auth.onLanguage.subscribe((v: string) => {
       this.language = v;
     })
+  }
+
+  phoneOutput(e) {
+    this.phone = e;
   }
 
 }

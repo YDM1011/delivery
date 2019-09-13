@@ -11,7 +11,7 @@
   <p>Не нашли свой город в списке?</p>
   <form>
     <input type="text" [placeholder]="cityplaceholder[language]">
-    <input type="tel" [placeholder]="telplaceholder[language]">
+    <app-phone (phone)="phoneOutput($event)"></app-phone>
     <p>
       Мы активно работаем и разширяемся. Надеемся, что в скором времени в Вашем районе тоже будет выбор.Оставьте свой номер телефона и мы отправим Вам сообщение как будем готовы!
     </p>
