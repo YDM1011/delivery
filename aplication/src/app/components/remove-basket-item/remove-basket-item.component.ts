@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 
 @Component({
   selector: 'app-remove-basket-item',
@@ -6,6 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./remove-basket-item.component.scss']
 })
 export class RemoveBasketItemComponent implements OnInit {
+  @Output() closeRemove = new EventEmitter();
 
   constructor() { }
 

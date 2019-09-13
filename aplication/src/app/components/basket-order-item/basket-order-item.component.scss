@@ -11,6 +11,8 @@
 ::ng-deep .mat-expansion-panel-body{
   padding: 0!important;
 }
+::ng-deep .basket-header-fix .mat-content{
+}
 
 ::ng-deep .mat-checkbox-background {
   border-radius: 50% !important;
@@ -21,9 +23,24 @@
 .title-panel{
   display: flex;
   align-items: center;
+  position: relative;
+  .title{
+    margin-left: 20px;
+    line-height: 16px;
+    font-size: 14px;
+  }
 }
 ::ng-deep .mat-checkbox-checked.mat-accent .mat-checkbox-background{
   background: #09C2C2!important;
+}
+.conteiner-basket-order{
+  position: relative;
+}
+.main-checkbox{
+  position: absolute;
+  top: 13px;
+  left: 15px;
+  z-index: 1234;
 }
 .content{
   border-top: 1px solid #E4E4E4;

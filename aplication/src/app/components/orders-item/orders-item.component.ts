@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 
 @Component({
   selector: 'app-orders-item',
@@ -7,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class OrdersItemComponent implements OnInit {
   public removeOrders: boolean = true;
-
+  @Output() removeOrder = new EventEmitter();
   constructor() { }
 
   ngOnInit() {

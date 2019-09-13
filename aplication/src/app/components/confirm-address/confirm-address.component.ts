@@ -1,4 +1,5 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {AuthService} from "../../auth.service";
 
 @Component({
   selector: 'app-confirm-address',
@@ -7,9 +8,13 @@ import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 })
 export class ConfirmAddressComponent implements OnInit {
   @Output() cancelConfirmAddress = new EventEmitter();
-  constructor() { }
+  public language;
+  constructor(private auth: AuthService) { }
 
   ngOnInit() {
+    this.auth.onLanguage.subscribe((v: string) => {
+      this.language = v;
+    })
   }
 
 }

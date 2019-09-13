@@ -66,7 +66,6 @@ import {MatIcon, MatIconModule, MatSnackBar, MatTooltipModule} from "@angular/ma
 import { FilterComponent } from './components/filter/filter.component';
 import {Ng5SliderModule} from "ng5-slider";
 import {HttpClientModule} from "@angular/common/http";
-import { WsLayoutComponent } from './layout/ws-layout/ws-layout.component';
 import {WebsocketModule} from './websocket';
 import {environment} from "../environments/environment";
 import { BrandItemComponent } from './components/brand-item/brand-item.component';

@@ -52,6 +52,9 @@
     }
   }
   .price{
+    display: flex;
+    align-content: center;
+    justify-content: space-between;
     .price-element{
       display: flex;
       flex-direction: column;

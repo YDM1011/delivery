@@ -43,7 +43,7 @@ export class TranslatePipe implements PipeTransform {
 
   newWord(v) {
     this.obj[String(this.value)] = {ru: this.value, ua: this.value};
-    this.crud.post('translator', {value: v}, '');
+    // this.crud.post('translator', {value: v}, '');
     return this.value;
   }
 }

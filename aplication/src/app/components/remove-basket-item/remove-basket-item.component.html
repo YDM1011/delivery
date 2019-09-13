@@ -1,6 +1,6 @@
 <div class="remove-item-basket">
   <div class="remove">
-    <div class="cancel">
+    <div class="cancel" (click)="closeRemove.emit(false)">
       <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M14.822 13.9624L8.3601 7.50044L14.822 1.03858C15.0594 0.801127 15.0594 0.416079 14.822 0.178598C14.5845 -0.0588818 14.1995 -0.0588818 13.962 0.178598L7.50012 6.64046L1.03821 0.178598C0.80076 -0.0588818 0.415712 -0.0588818 0.178232 0.178598C-0.0592479 0.416049 -0.0592479 0.801098 0.178232 1.03858L6.64011 7.50044L0.178232 13.9624C-0.0592479 14.1998 -0.0592479 14.5849 0.178232 14.8223C0.415683 15.0598 0.800731 15.0598 1.03821 14.8223L7.50012 8.36042L13.962 14.8223C14.1995 15.0598 14.5845 15.0598 14.822 14.8223C15.0595 14.5849 15.0595 14.1998 14.822 13.9624Z" fill="black"/>
       </svg>
@@ -36,8 +36,8 @@
       </div>
     </div>
     <div class="buttons">
-      <button class="main-button color">Удалить</button>
-      <button class="back-btn">Отмена</button>
+      <button class="main-button color" (click)="closeRemove.emit(false)">Удалить</button>
+      <button class="back-btn" (click)="closeRemove.emit(false)">Отмена</button>
     </div>
   </div>
 </div>
