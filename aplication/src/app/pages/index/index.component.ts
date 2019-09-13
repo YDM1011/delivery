@@ -3,8 +3,6 @@ import {AuthService} from "../../auth.service";
 import {WS} from "../../websocket/websocket.events";
 import {WebsocketService} from "../../websocket";
 import {CrudService} from "../../crud.service";
-import {CrudService} from "../../crud.service";
-import {Category} from "../../interfaces/category";
 @Component({
   selector: 'app-index',
   templateUrl: './index.component.html',
@@ -23,7 +21,6 @@ export class IndexComponent implements OnInit {
   constructor(
       private auth: AuthService,
       private wsService:WebsocketService,
-      private auth: AuthService,
       private crud: CrudService
   ) { }
 

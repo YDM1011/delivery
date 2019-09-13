@@ -12,36 +12,14 @@
       Оцените работу поставщика
     </div>
     <div class="svg">
-      <svg width="55" height="53" viewBox="0 0 55 53" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M55 20.3256L36.7844 16.481L27.5 0.345703V45.0563L44.4955 52.6532L42.5228 34.1414L55 20.3256Z" fill="#FFCD00"/>
-        <path d="M18.2156 16.481L0 20.3256L12.4773 34.1414L10.5045 52.6532L27.5 45.0563V0.345703L18.2156 16.481Z" fill="#FFDA44"/>
-      </svg>
-      <svg width="55" height="53" viewBox="0 0 55 53" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M55 20.3256L36.7844 16.481L27.5 0.345703V45.0563L44.4955 52.6532L42.5228 34.1414L55 20.3256Z" fill="#FFCD00"/>
-        <path d="M18.2156 16.481L0 20.3256L12.4773 34.1414L10.5045 52.6532L27.5 45.0563V0.345703L18.2156 16.481Z" fill="#FFDA44"/>
-      </svg>
-      <svg width="55" height="53" viewBox="0 0 55 53" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M55 20.3256L36.7844 16.481L27.5 0.345703V45.0563L44.4955 52.6532L42.5228 34.1414L55 20.3256Z" fill="#FFCD00"/>
-        <path d="M18.2156 16.481L0 20.3256L12.4773 34.1414L10.5045 52.6532L27.5 45.0563V0.345703L18.2156 16.481Z" fill="#FFDA44"/>
-      </svg>
-      <svg width="55" height="53" viewBox="0 0 55 53" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M55 20.3256L36.7844 16.481L27.5 0.345703V45.0563L44.4955 52.6532L42.5228 34.1414L55 20.3256Z" fill="#FFCD00"/>
-        <path d="M18.2156 16.481L0 20.3256L12.4773 34.1414L10.5045 52.6532L27.5 45.0563V0.345703L18.2156 16.481Z" fill="#FFDA44"/>
-      </svg>
-      <svg width="55" height="53" viewBox="0 0 55 53" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M55 20.3256L36.7844 16.481L27.5 0.345703V45.0563L44.4955 52.6532L42.5228 34.1414L55 20.3256Z" fill="#FFCD00"/>
-        <path d="M18.2156 16.481L0 20.3256L12.4773 34.1414L10.5045 52.6532L27.5 45.0563V0.345703L18.2156 16.481Z" fill="#FFDA44"/>
-      </svg>
-  
-
-
+      <mat-star-rating class="mat-rating-big" [starCount]="5" [rating]="raiting" (ratingUpdated)="updateRaiting($event)"></mat-star-rating>
     </div>
   
     <div class="comment-input">
       <input type="text" [(ngModel)]="comment" placeholder="Коментарий">
     </div>
     <div class="buttons">
-      <a routerLink="" class="main-button color">
+      <a (click)="close()" class="main-button color">
         Оценить
       </a>
       <a (click)="close()" class="back-btn">

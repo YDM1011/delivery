@@ -10,6 +10,7 @@ import {ActivatedRoute} from "@angular/router";
 export class CategoryIDComponent implements OnInit {
   public id: string;
   public language: string;
+  public showFilter: boolean = false;
   constructor(
       private route: ActivatedRoute,
       private auth: AuthService
@@ -23,5 +24,7 @@ export class CategoryIDComponent implements OnInit {
       this.language = v;
     })
   }
-
+  closeFilter(e){
+    this.showFilter = e;
+  }
 }

@@ -10,20 +10,20 @@ import {CrudService} from "./crud.service";
 export class AppComponent {
   title = 'delivery';
   public setting: any;
-  public loaded = false;
+  public loaded = true;
   constructor(
       private auth: AuthService,
       private crud: CrudService
   ){
-    this.crud.get('translator').then((v: any) => {
-      if (v) {
-        this.auth.setTranslate(v);
-        this.crud.get('setting').then((v: any) => {
-          this.setting = Object.assign({}, v);
-          this.auth.setSettings(this.setting);
-          this.loaded = true;
-        });
-      }
-    });
+    // this.crud.get('translator').then((v: any) => {
+    //   if (v) {
+    //     this.auth.setTranslate(v);
+    //     this.crud.get('setting').then((v: any) => {
+    //       this.setting = Object.assign({}, v);
+    //       this.auth.setSettings(this.setting);
+    //       this.loaded = true;
+    //     });
+    //   }
+    // });
   }
 }

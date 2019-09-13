@@ -1,0 +1,51 @@
+.remove-item-basket{
+  position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  top: 0;
+  left: 0;
+  min-height: 100vh;
+  height: 100%;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 10;
+  .remove{
+    position: relative;
+    padding: 10px;
+    background: #fff;
+    margin: 10vh 15px;
+    border: 1px solid #E4E4E4;
+    border-radius: 30px;
+    height: 80vh;
+    max-height: 80vh;
+    overflow-y: auto;
+
+    overflow: -moz-scrollbars-none;
+    -ms-overflow-style: none;
+    &::-webkit-scrollbar { width: 0 !important }
+    .cancel{
+      position: absolute;
+      top: 0;
+      right: 0;
+      padding: 15px;
+    }
+    .remove-header{
+      font-weight: bold;
+      font-size: 14px;
+      line-height: 17px;
+      text-align: center;
+      margin: 40px auto 15px;
+      max-width: 210px;
+    }
+    .buttons{
+      margin-bottom: 30px;
+    }
+  }
+}
+::ng-deep .mat-accordion .mat-expansion-panel{
+  border-radius: 30px 30px 0 0 !important;
+  box-shadow: none!important;
+  border: 1px solid #E4E4E4!important;
+  margin-bottom: 0px!important;
+}

@@ -54,16 +54,22 @@ import { ChangeAddressComponent } from './components/change-address/change-addre
 import { ConfirmAddressComponent } from './components/confirm-address/confirm-address.component';
 import { OrdersComponent } from './pages/orders/orders.component';
 import { OrdersItemComponent } from './components/orders-item/orders-item.component';
-import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS} from "@angular/common/http";
 import { ImgComponent } from './components/img/img.component';
 import {CookieService} from "ngx-cookie-service";
 import {ApiInterceptor} from "./api.interceptor";
 import { NumbersOnlyDirective } from './directives/numbers-only.directive';
 import {MatCarouselModule} from "@ngmodule/material-carousel";
+import { RemoveOrdersComponent } from './components/remove-orders/remove-orders.component';
+import {StarRatingComponent} from "./components/star-rating/star-rating.component";
+import {MatIcon, MatIconModule, MatSnackBar, MatTooltipModule} from "@angular/material";
+import { FilterComponent } from './components/filter/filter.component';
+import {Ng5SliderModule} from "ng5-slider";
 import {HttpClientModule} from "@angular/common/http";
 import { WsLayoutComponent } from './layout/ws-layout/ws-layout.component';
 import {WebsocketModule} from './websocket';
 import {environment} from "../environments/environment";
+import { BrandItemComponent } from './components/brand-item/brand-item.component';
 
 @NgModule({
   declarations: [
@@ -114,9 +120,15 @@ import {environment} from "../environments/environment";
     OrdersItemComponent,
     ImgComponent,
     NumbersOnlyDirective,
-    WsLayoutComponent
+    RemoveOrdersComponent,
+    StarRatingComponent,
+    FilterComponent,
+    BrandItemComponent,
   ],
   imports: [
+    Ng5SliderModule,
+    MatIconModule,
+    MatTooltipModule,
     MatCarouselModule,
     HttpClientModule,
     MatRadioModule,
