@@ -15,7 +15,7 @@ module.exports.preUpdate = async (req,res,next, backendApp) => {
         if (req.body.manager.role === 'managerDelivery') {
             manager = await createManeger(req, backendApp).catch(e=>{return res.notFound(e)});
             console.log(manager, req.body);
-            log = await actionLogCreate(manager._id,backendApp).catch(e=>{return res.notFound(e)});;
+            log = await actionLogCreate(manager._id,backendApp).catch(e=>{return res.notFound(e)});
             if (!manager || !log) return res.badRequest('Bad request!');
             // let model = req.body.manager.role === 'managerCleaner' ? 'Cleaner' : 'Delivery';
             req.body = {$push:{managers: manager._id}};

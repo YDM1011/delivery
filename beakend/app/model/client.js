@@ -57,7 +57,7 @@ const schem = new Schema({
     },
     createRestApi: true,
     strict: true,
-    isPrivate: true
+    client: 'byId'
 });
 
 schem.post('findOneAndRemove', (doc,next)=>{
