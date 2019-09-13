@@ -9,6 +9,7 @@ import {AuthService} from '../../auth.service';
 export class RaitingComponent implements OnInit {
   public language: string;
   public comment: string = '';
+  public raiting;
   @Output() closeRaiting = new EventEmitter();
   constructor(
       private auth: AuthService
@@ -22,5 +23,7 @@ export class RaitingComponent implements OnInit {
   close() {
     this.closeRaiting.emit(false);
   }
-
+  updateRaiting(e){
+    this.raiting = e;
+  }
 }

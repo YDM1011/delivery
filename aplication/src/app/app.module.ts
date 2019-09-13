@@ -60,6 +60,11 @@ import {CookieService} from "ngx-cookie-service";
 import {ApiInterceptor} from "./api.interceptor";
 import { NumbersOnlyDirective } from './directives/numbers-only.directive';
 import {MatCarouselModule} from "@ngmodule/material-carousel";
+import { RemoveOrdersComponent } from './components/remove-orders/remove-orders.component';
+import {StarRatingComponent} from "./components/star-rating/star-rating.component";
+import {MatIcon, MatIconModule, MatSnackBar, MatTooltipModule} from "@angular/material";
+import { FilterComponent } from './components/filter/filter.component';
+import {Ng5SliderModule} from "ng5-slider";
 
 @NgModule({
   declarations: [
@@ -109,9 +114,15 @@ import {MatCarouselModule} from "@ngmodule/material-carousel";
     OrdersComponent,
     OrdersItemComponent,
     ImgComponent,
-    NumbersOnlyDirective
+    NumbersOnlyDirective,
+    RemoveOrdersComponent,
+    StarRatingComponent,
+    FilterComponent,
   ],
   imports: [
+    Ng5SliderModule,
+    MatIconModule,
+    MatTooltipModule,
     MatCarouselModule,
     HttpClientModule,
     MatRadioModule,

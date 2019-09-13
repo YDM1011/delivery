@@ -6,6 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./orders-item.component.scss']
 })
 export class OrdersItemComponent implements OnInit {
+  public removeOrders: boolean = true;
 
   constructor() { }
 
