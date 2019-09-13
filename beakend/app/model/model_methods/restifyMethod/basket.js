@@ -42,12 +42,12 @@ module.exports.postUpdate = async (req, res, next, backendApp) => {
         if (!valid) return next();
         let dataBasket = await updateBasketByCleaner(req, basket.cleanerOwner);
         res.ok(dataBasket);
-    } else if (basket.status == 2 && basket.deliveryOwner){
+    } else if (basket.status == 2 && basket.deliveryOwner) {
         let delivery = await getDelivery(basket.deliveryOwner).catch(e=>{return rj(e)});
         let valid = await validateDeliveri(req,res,delivery,backendApp).catch(e=>{return res.ok(basket)});
-        if (valid === 'mainAssign'){
+        if (valid === 'mainAssign') {
             return next();
-        }else{
+        } else {
             let obj = {
                 delivery:basket.deliveryOwner,
                 $push:{orders:basket._id, ordersOpen:basket._id},
@@ -60,7 +60,7 @@ module.exports.postUpdate = async (req, res, next, backendApp) => {
             res.ok(dataBasket);
         }
 
-    } else if (basket.status == 5){
+    } else if (basket.status == 5) {
         let cleaner = await getCleaner(basket.cleanerOwner).catch(e=>{return rj(e)});
         let cleanerUpdated = await setMoneyToCleaner(req, basket, cleaner).catch(e=>res.notFound(e));
         res.ok(cleanerUpdated)

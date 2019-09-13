@@ -18,17 +18,17 @@ module.exports = (backendApp, router) => {
             $and:[{
                 $or:[
                     {login: req.body.login.toLowerCase()},
-                    {email: req.body.login.toLowerCase()}
+                    {mobile: req.body.login.toLowerCase()}
                 ]
             }],
         }).exec(function (err, user) {
             if (err) return res.serverError(err);
             if (!user) return res.notFound("Password or login invalid!");
             console.log(user.role)
-            if (user.role == 'client' || !user.role){
+            if (user.role == 'Client' || !user.role){
                 if (user.pass != md5(req.body.pass)) return res.notFound("Password or login invalid!");
             }
-            if (user.role != 'client' && user.role){
+            if (user.role != 'Client' && user.role){
                 if (user.pass != req.body.pass) return res.notFound("Password or login invalid!");
             }
             user.signin(req,res,backendApp)

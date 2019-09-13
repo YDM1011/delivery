@@ -13,7 +13,7 @@ module.exports = function (req, res, next) {
 
     model.findOne({
         _id:id,
-        'createdBy.itemId': req.user._id
+        createdBy: req.user._id
     }).exec((err,r)=>{
         if (err) return res.serverError(err);
         if (!r) return res.forbidden("Forbidden");

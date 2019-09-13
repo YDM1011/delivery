@@ -12,18 +12,26 @@ wsControllers.forEach((controller) => {
 module.exports = (backendApp, socket = null, data = null) => {
 
     wss.on('connection', async (ws, req) => {
-        let tokenData = parseCookieHeader(req.headers.cookie);
+        console.log("authorization",req.headers.authorization)
+        let tokenData =  parseAuthorization(req.headers.authorization);
+        let userData;
+        if (!tokenData) tokenData =  parseAA(req.headers.authorization);
         if (tokenData){
-            let userData = await checkToken(backendApp, tokenData).catch(e=>{console.error(e)});
+            userData = await checkToken(backendApp, tokenData).catch(e=>{console.error(e)});
             saveConnect(userData, wss, ws);
         }
 
         backendApp.events.callWS.on('message',(event)=>{
-            messageSend(event, userData, wss)
+            // ws.send(JSON.stringify(event))
+            try {
+                console.log(event, userData)
+                messageSend(JSON.stringify(event), userData, wss, ws)
+            } catch (e) {return}
+
         });
 
         ws.on('message', (event) => {
-            messageSend(event, userData, wss)
+            messageSend(event, userData, wss, ws)
         });
 
         backendApp.events.callWS.on('close',(userId = null)=>{
@@ -39,11 +47,21 @@ module.exports = (backendApp, socket = null, data = null) => {
 
 };
 
-const parseCookieHeader = (str) => {
+const parseAuthorization = (str) => {
     if (!str) return;
-    let tokenName = findTokenName(str);
-    let token = str.split(tokenName+'=')[1].split(';')[0];
-    return {name:tokenName, token:token, model: tokenName == 'token' ? 'Client' : 'Admin'}
+    // let tokenName = findTokenName(str);
+    // let token = str.split(tokenName+'=')[1].split(';')[0];
+    const token = str.split(" ");
+    const tokenName = str;
+    return {name:tokenName, token:token, model: 'Client'}
+};
+const parseAA = (str) => {
+    if (!str) return;
+    // let tokenName = findTokenName(str);
+    // let token = str.split(tokenName+'=')[1].split(';')[0];
+    const token = str.split(" ");
+    const tokenName = str;
+    return {name:tokenName, token:token, model: 'Admin'}
 };
 
 const findTokenName = (str) => {
@@ -123,10 +141,18 @@ const saveConnect = (userData, wss, ws) => {
     })
 };
 
-const messageSend = (event, userData, wss) => {
+const messageSend = (event, userData, wss, client) => {
+    console.log("data",event, userData)
     const data = JSON.parse(event);
     const res = JSON.parse(data);
+
     const sendTo = (to, event, data) => {
+        if (!userData) {
+            client.send(JSON.stringify({
+                event: event,
+                data: "ok!!"
+            }))
+        }
         if (!to) {
             wss[userData._id].forEach(ws=>{
                 ws.send(JSON.stringify({

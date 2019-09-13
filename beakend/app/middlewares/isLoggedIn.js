@@ -7,7 +7,7 @@ module.exports = (req, res, next) => {
   if (req.jwt) {
       const jwt = require('jsonwebtoken');
       const protect = req.cookies['token'] || req.jwt.token || req.headers.authorization;
-      console.log(protect)
+      console.log(protect);
       if(!protect) return tryAsAdmin(req, res, next);
 
       const connect = protect.split(" ");
@@ -51,6 +51,7 @@ const tryAsAdmin = (req,res,next) => {
                     }
                     if (req.user) return next();
                     req.user = infoA.toObject();
+                    req.isAdmin = true;
                     bodyModyfi(req);
                     next()
                 });
@@ -59,8 +60,6 @@ const tryAsAdmin = (req,res,next) => {
 };
 
 const bodyModyfi = (req) => {
-  req.body['createdBy'] = {
-      itemId: req.user._id
-  };
+  req.body['createdBy'] = req.user._id;
   return req.body
 };

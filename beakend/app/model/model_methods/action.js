@@ -1,27 +1,27 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-
+/**
+ * 1 - cleaners
+ * 2 - delivery
+ * role - manedger 1/2 superManedger 1/2 client
+ */
 const schem = new Schema({
-    name: {type: String, unique: true, required: [true, "Category Name is required and unique"]},
-    icon: {type: String},
-    orders: [{
+    description: String,
+    img: String,
+    client: [{
         type: Schema.Types.ObjectId,
-        ref: "Order"
+        ref: "Client"
     }],
-    mainCategory: {
-        type: Schema.Types.ObjectId,
-        ref: "MainCategory"
-    },
     companyOwner: {
         type: Schema.Types.ObjectId,
         ref: "Company"
     },
-    createdBy: {
+    orderOwner: [{
         type: Schema.Types.ObjectId,
-        ref: "Client"
-    },
+        ref: "Order"
+    }],
     updatedAt: {type: Date},
-    date: {type: Date, default: new Date()}
+    data: {type: Date, default: new Date()}
 },{
     toJSON: {
         transform: function (doc, ret) {
@@ -33,10 +33,12 @@ const schem = new Schema({
         transform: function (doc, ret) {
             delete ret.pass;
             delete ret.token;
-        }
+        },
+        virtuals: true,
     },
     createRestApi: true,
     strict: true,
+
 });
 
-mongoose.model('Category', schem);
+mongoose.model('Action', schem);

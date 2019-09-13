@@ -16,7 +16,7 @@ const path = require('path');
 
 const init = (app, config) =>{
     var cons = require('consolidate');
-    app.set('views', path.join(__dirname, '../../../appLaundrwise/dist/laundrwise'));
+    app.set('views', path.join(__dirname, '../../../aplication/dist/aplication'));
     app.engine('html', cons.swig);
     app.set('view engine', 'html');
 
@@ -27,8 +27,8 @@ const init = (app, config) =>{
     app.use(compress());
     app.use(flash());
     app.use('/upload', express.static(path.join(__dirname, '../../upload')));
-    app.use('/', express.static(path.join(__dirname, '../../../appLaundrwise/dist/laundrwise')));
-    app.use(express.static(config.root + 'public'));
+    app.use('/', express.static(path.join(__dirname, '../../../aplication/dist/aplication')));
+    app.use('/', express.static(config.root + 'public'));
 
     app.use(methodOverride());
     app.use(function (req, res, next) {
@@ -90,7 +90,7 @@ const init = (app, config) =>{
         res.locals.error = req.app.get('env') === 'development' ? err : {};
 
         // render the error page
-        // res.status(err.status || 500);
+        res.status(err.status || 500);
         res.render('index');
     });
 

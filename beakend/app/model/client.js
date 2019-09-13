@@ -8,21 +8,38 @@ const Schema = mongoose.Schema;
 const schem = new Schema({
     login: {type: String, required: [true, "Login is required"]},
     pass: {type: String, required: [true, "Password is required"]},
-    email: {type: String},
-    mobile: {type: String},
-    address1: {type: String},
-    address2: String,
-    country: {type: String},
-    cityCode: {type: String},
-    city: {type: String},
-    basketList: [],
-    basketListCount: Number,
-    token: String,
-    role: String,
-    loger:{
+    img: String,
+    address: String,
+    city: {
         type: Schema.Types.ObjectId,
-        ref: "ActionLog"
+        ref: "City"
     },
+    basket: [{
+        type: Schema.Types.ObjectId,
+        ref: "Basket"
+    }],
+    basketCount: Number,
+    favoriteCompany: [{
+        type: Schema.Types.ObjectId,
+        ref: "Company"
+    }],
+    favoriteProduct: [{
+        type: Schema.Types.ObjectId,
+        ref: "Order"
+    }],
+    debtor: [{
+        type: Schema.Types.ObjectId,
+        ref: "Debtor"
+    }],
+    action: [{
+        type: Schema.Types.ObjectId,
+        ref: "Action"
+    }],
+    role: String, /** Client Company Collaborator** Admin* **/
+    verify: {type: Boolean, default: false},
+    verifyCode: String,
+    token: String,
+    updatedAt: {type: Date},
     data: {type: Date, default: new Date()}
 },{
     toJSON: {
@@ -40,19 +57,11 @@ const schem = new Schema({
     },
     createRestApi: true,
     strict: true,
-
+    isPrivate: true
 });
 
 schem.post('findOneAndRemove', (doc,next)=>{
-    if (doc.role === 'managerCleaner' || doc.role === 'managerDelivery') {
-        mongoose.model('ActionLog')
-            .findOneAndRemove({owner:doc._id}, (err,r)=>{
-                next()
-            })
-    }
-    // if (doc.role === 'superManagerCleaner'){
-
-    // }
+    next()
 });
 
 require("./model_methods/object/client")(schem);

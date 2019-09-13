@@ -53,6 +53,9 @@ import { ConfirmAddressComponent } from './components/confirm-address/confirm-ad
 import { OrdersComponent } from './pages/orders/orders.component';
 import { OrdersItemComponent } from './components/orders-item/orders-item.component';
 import {HttpClientModule} from "@angular/common/http";
+import { WsLayoutComponent } from './layout/ws-layout/ws-layout.component';
+import {WebsocketModule} from './websocket';
+import {environment} from "../environments/environment";
 
 @NgModule({
   declarations: [
@@ -100,7 +103,8 @@ import {HttpClientModule} from "@angular/common/http";
     ChangeAddressComponent,
     ConfirmAddressComponent,
     OrdersComponent,
-    OrdersItemComponent
+    OrdersItemComponent,
+    WsLayoutComponent
   ],
   imports: [
     HttpClientModule,
@@ -111,7 +115,10 @@ import {HttpClientModule} from "@angular/common/http";
     BrowserAnimationsModule,
     AppRoutingModule,
     FormsModule,
-    LottieAnimationViewModule.forRoot()
+    LottieAnimationViewModule.forRoot(),
+    WebsocketModule.config({
+      url: environment.ws
+    })
   ],
   providers: [],
   bootstrap: [AppComponent]
