@@ -54,7 +54,7 @@ import { ChangeAddressComponent } from './components/change-address/change-addre
 import { ConfirmAddressComponent } from './components/confirm-address/confirm-address.component';
 import { OrdersComponent } from './pages/orders/orders.component';
 import { OrdersItemComponent } from './components/orders-item/orders-item.component';
-import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS} from "@angular/common/http";
 import { ImgComponent } from './components/img/img.component';
 import {CookieService} from "ngx-cookie-service";
 import {ApiInterceptor} from "./api.interceptor";
@@ -69,6 +69,7 @@ import {HttpClientModule} from "@angular/common/http";
 import { WsLayoutComponent } from './layout/ws-layout/ws-layout.component';
 import {WebsocketModule} from './websocket';
 import {environment} from "../environments/environment";
+import { BrandItemComponent } from './components/brand-item/brand-item.component';
 
 @NgModule({
   declarations: [
@@ -122,8 +123,7 @@ import {environment} from "../environments/environment";
     RemoveOrdersComponent,
     StarRatingComponent,
     FilterComponent,
-    NumbersOnlyDirective,
-    WsLayoutComponent
+    BrandItemComponent,
   ],
   imports: [
     Ng5SliderModule,
