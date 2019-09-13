@@ -65,6 +65,10 @@ import {StarRatingComponent} from "./components/star-rating/star-rating.componen
 import {MatIcon, MatIconModule, MatSnackBar, MatTooltipModule} from "@angular/material";
 import { FilterComponent } from './components/filter/filter.component';
 import {Ng5SliderModule} from "ng5-slider";
+import {HttpClientModule} from "@angular/common/http";
+import { WsLayoutComponent } from './layout/ws-layout/ws-layout.component';
+import {WebsocketModule} from './websocket';
+import {environment} from "../environments/environment";
 
 @NgModule({
   declarations: [
@@ -118,6 +122,8 @@ import {Ng5SliderModule} from "ng5-slider";
     RemoveOrdersComponent,
     StarRatingComponent,
     FilterComponent,
+    NumbersOnlyDirective,
+    WsLayoutComponent
   ],
   imports: [
     Ng5SliderModule,
@@ -132,7 +138,10 @@ import {Ng5SliderModule} from "ng5-slider";
     BrowserAnimationsModule,
     AppRoutingModule,
     FormsModule,
-    LottieAnimationViewModule.forRoot()
+    LottieAnimationViewModule.forRoot(),
+    WebsocketModule.config({
+      url: environment.ws
+    })
   ],
   providers: [CookieService, {provide: HTTP_INTERCEPTORS, useClass: ApiInterceptor, multi: true}],
   bootstrap: [AppComponent]

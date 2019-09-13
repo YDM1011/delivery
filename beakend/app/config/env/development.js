@@ -7,7 +7,7 @@ module.exports = {
     name: 'Laundrwise'
   },
   port: process.env.PORT || 3000,
-  WSport: process.env.WS || 6759,
+  WSport: process.env.WS || 6760,
   db: 'mongodb://localhost:27017',
   jwtSecret: process.env.JWTSECRET || "secret",
   email: {

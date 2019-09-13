@@ -1,14 +1,52 @@
 // const moduleSpecs = require(__dirname + "/../../config/modulesSpecs.json");
+let obj = {
+    client: {
+        canRead: ['order', 'category', 'city', 'translate', 'brand', 'basket', 'product', 'company'],
+        canCreate: ['product', 'basket'],
+        canUpdate: ['product', 'basket', 'client'],
+        canDelete: ['product', 'basket']
+    },
+};
 
-module.exports = function (permission, allowFunction) {
-  return  (req, res, next) => {
+module.exports = (permission, allowFunction) => {
+
+  const checkPerm = (req, res, next) => {
+      const permissionParts = permission.split(".");
+      if (permissionParts.length !== 2) {
+          res.serverError("Permission has wrong format: " + permission);
+      }
+
+      return new Promise((rs,rj)=>{
+          rs(obj.find((el) => {
+
+              // console.log("zc",el[permissionParts[1]])
+              return el.clientOwner == req.user._id &&
+                  (el.model ? el.model.name == permissionParts[0].toLowerCase() : false) &&
+                  el.model[permissionParts[1]]
+          }))
+      })
+  };
+
+  return async (req, res, next) => {
     const permissionParts = permission.split(".");
     if (permissionParts.length !== 2) {
-      res.serverError("Permission has wrong format: " + role);
+      res.serverError("Permission has wrong format: " + permission);
     }
 
-    return next()
-  }
+    // console.log(obj.find((el) => {
+    //   return el.clientOwner == req.user._id &&
+    //       el.model == permissionParts[0].toLowerCase() &&
+    //       el[permissionParts[1]]
+    // }));
+
+    const isValid = await checkPerm(req, res, next);
+    console.log("tes",isValid)
+    if (isValid) return next()
+
+    res.forbidden('Access denided')
+
+  };
+
   //User.read
   // var permissionParts = permission.split(".");
   //

@@ -2,34 +2,21 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const schema = new Schema({
-    createdBy: {itemId:{
-            type: Schema.Types.ObjectId,
-            ref: "Client"
-        }},
-    categoryOwner: {
+    createdBy: {
         type: Schema.Types.ObjectId,
-        ref: "Category",
-        required: [true, "Check category"]
-    },
-    cleanerOwner: {
-        type: Schema.Types.ObjectId,
-        ref: "Cleaner",
-        required: [true, "Check cleaner"]
+        ref: "Client"
     },
     count: Number,
     basketOwner: {
         type: Schema.Types.ObjectId,
         ref: "Basket"
     },
-    currentOrder: {
+    orderOwner: {
         type: Schema.Types.ObjectId,
         ref: "Order",
         required: [true, "Check Order"]
     },
-    name: {type: String, required: [true, "Name is required"]},
-    des: String,
-    price: {type: Number, required: [true, "Price is required"]},
-    images: {type: String, required: [true, "Image is required"]},
+    updatedAt: {type: Date},
     date: {type: Date, default: new Date()}
 },{
     toJSON: {

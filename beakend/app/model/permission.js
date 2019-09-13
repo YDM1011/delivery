@@ -1,16 +1,27 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-
+const permField = new Schema({
+    model: String,
+    specificId: [],
+    specificField: [],
+    canRead: Boolean,
+    canCreate: Boolean,
+    canUpdate: Boolean,
+    canDelete: Boolean,
+});
 const schema = new Schema({
-    forClient: {
+    clientOwner: {
         type: Schema.Types.ObjectId,
         ref: "Client"
     },
     model: String,
-    read: Boolean,
-    create: Boolean,
-    update: Boolean,
-    delete: Boolean,
+    specificId: [],
+    specificField: [],
+    canRead: Boolean,
+    canCreate: Boolean,
+    canUpdate: Boolean,
+    canDelete: Boolean,
+    updatedAt: {type: Date},
     date: {type: Date, default: new Date()}
 },{
     toJSON: {
@@ -28,10 +39,8 @@ const schema = new Schema({
     },
     createRestApi: true,
     strict: true,
-    needLogined: false,
-    needBeAdminR: true,
-    needBeAdminCUD: true,
-    needAccessControl: false
+    needLogined: true,
+    needBeAdmin: true,
 });
 
 schema.post('save', (doc, next)=>{

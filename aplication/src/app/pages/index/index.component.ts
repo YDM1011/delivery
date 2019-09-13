@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {AuthService} from "../../auth.service";
+import {WS} from "../../websocket/websocket.events";
+import {WebsocketService} from "../../websocket";
+import {CrudService} from "../../crud.service";
 import {CrudService} from "../../crud.service";
 import {Category} from "../../interfaces/category";
 @Component({
@@ -8,6 +11,7 @@ import {Category} from "../../interfaces/category";
   styleUrls: ['./index.component.scss']
 })
 export class IndexComponent implements OnInit {
+  public notification$: any;
   public language: string;
   public curentCity = null;
   public category = [];
@@ -17,6 +21,8 @@ export class IndexComponent implements OnInit {
   public carentPhoto;
   public number: number = 0;
   constructor(
+      private auth: AuthService,
+      private wsService:WebsocketService,
       private auth: AuthService,
       private crud: CrudService
   ) { }
@@ -31,7 +37,23 @@ export class IndexComponent implements OnInit {
       }
     });
     this.carentPhoto = `url(${this.images[0]})`;
+
+    // this.wsService.send(WS.SEND.NOTIFICATION, 'admin',  { data: 'test sf' });
+    this.notification$ = this.wsService.on(WS.ON.ON_NOTIFICATION);
+
+    this.notification$.subscribe(v => {
+      this.playAudio();
+    });
+
     this.init();
+  }
+
+  playAudio() {
+    const audio = new Audio();
+    audio.src = '../../../assets/audio/alert.mp3';
+    audio.load();
+    audio.play();
+
   }
 
   async init() {
