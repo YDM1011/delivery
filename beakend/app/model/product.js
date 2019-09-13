@@ -34,6 +34,8 @@ const schema = new Schema({
     },
     createRestApi: true,
     strict: true,
+    client: 'byId'
+
 });
 
 schema.post('findOneAndRemove', (doc,next)=>{

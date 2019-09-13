@@ -16,7 +16,7 @@ const path = require('path');
 
 const init = (app, config) =>{
     var cons = require('consolidate');
-    app.set('views', path.join(__dirname, '../../../aplication/dist/aplication'));
+    app.set('views', path.join(__dirname, '../../../aplication/dist/delivery-v4'));
     app.engine('html', cons.swig);
     app.set('view engine', 'html');
 
@@ -27,7 +27,7 @@ const init = (app, config) =>{
     app.use(compress());
     app.use(flash());
     app.use('/upload', express.static(path.join(__dirname, '../../upload')));
-    app.use('/', express.static(path.join(__dirname, '../../../aplication/dist/aplication')));
+    app.use('/', express.static(path.join(__dirname, '../../../aplication/dist/delivery-v4')));
     app.use('/', express.static(config.root + 'public'));
 
     app.use(methodOverride());

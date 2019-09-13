@@ -84,13 +84,19 @@ const canRead = (options) => {
                         // }).exec((err,r)=>{
                         //     if (err) return res.serverError(err);
                         //     if (!r) return res.forbidden("Forbidden");
-                        //     if (r) return next();
+                        //     if (r) return next();3
                         // })
-                        req._ermQueryOptions = {$or: [{createdBy: req.user._id}, {_id: req.user._id}]};
-                        console.log("OK!!!2", req.query);
+                        console.log("OK!!!1", req.erm.query)
+                        // req.erm.query =  { _id: '5d0b7b0c254a8d1ee0580d90' } };
+                        req.erm.query = { query: {$or: [{'createdBy.itemId': req.user._id},
+                                    {createdBy: req.user._id},
+                                    {_id: req.user._id}]} };
+                        // req.erm.query = { query: '{"_id":"5d0b7b0c254a8d1ee0580d90"}' };
+                        console.log("OK!!!2", req.erm.query.query);
                         next()
                     }
                     break;
+                default: next()
             }
         }
     };

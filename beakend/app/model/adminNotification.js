@@ -29,6 +29,6 @@ const schem = new Schema({
     },
     createRestApi: true,
     strict: false,
-
+    client:'byId'
 });
 mongoose.model('adminNotification', schem);
