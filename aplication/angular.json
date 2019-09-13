@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/delivery-v4",
+            "outputPath": "dist/delivery",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -63,18 +63,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "delivery-v4:build"
+            "browserTarget": "delivery:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "delivery-v4:build:production"
+              "browserTarget": "delivery:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "delivery-v4:build"
+            "browserTarget": "delivery:build"
           }
         },
         "test": {
@@ -138,5 +138,5 @@
       }
     }
   },
-  "defaultProject": "delivery-v4"
+  "defaultProject": "delivery"
 }

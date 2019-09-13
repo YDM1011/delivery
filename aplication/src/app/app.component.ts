@@ -15,15 +15,15 @@ export class AppComponent {
       private auth: AuthService,
       private crud: CrudService
   ){
-    // this.crud.get('translator').then((v: any) => {
-    //   if (v) {
-    //     this.auth.setTranslate(v);
-    //     this.crud.get('setting').then((v: any) => {
-    //       this.setting = Object.assign({}, v);
-    //       this.auth.setSettings(this.setting);
-    //       this.loaded = true;
-    //     });
-    //   }
-    // });
+    this.crud.get('translator').then((v: any) => {
+      if (v) {
+        this.auth.setTranslate(v);
+        this.crud.get('setting').then((v: any) => {
+          this.setting = Object.assign({}, v);
+          this.auth.setSettings(this.setting);
+          this.loaded = true;
+        });
+      }
+    });
   }
 }
