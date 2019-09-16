@@ -16,7 +16,11 @@ const path = require('path');
 
 const init = (app, config) =>{
     var cons = require('consolidate');
-    app.set('views', path.join(__dirname, '../../../aplication/dist/delivery-v4'));
+    app.set('views', path.join(__dirname, '../../../aplication/dist/application'));
+    app.engine('html', cons.swig);
+    app.set('view engine', 'html');
+
+    app.set('views', path.join(__dirname, '../../../admin/dist/admin'));
     app.engine('html', cons.swig);
     app.set('view engine', 'html');
 
@@ -27,7 +31,7 @@ const init = (app, config) =>{
     app.use(compress());
     app.use(flash());
     app.use('/upload', express.static(path.join(__dirname, '../../upload')));
-    app.use('/', express.static(path.join(__dirname, '../../../aplication/dist/delivery-v4')));
+    app.use('/', express.static(path.join(__dirname, '../../../aplication/dist/application')));
     app.use('/', express.static(config.root + 'public'));
 
     app.use(methodOverride());
@@ -40,6 +44,7 @@ const init = (app, config) =>{
     app.use(jwt.init(config.jwtSecret, {
         cookies: true
     }));
+    app.set('subdomain offset', 1);
 
     app.use(function (req, res, next) {
         /** Params for cookie auth form angular 7 */
@@ -88,6 +93,8 @@ const init = (app, config) =>{
         // set locals, only providing error in development
         res.locals.message = err.message;
         res.locals.error = req.app.get('env') === 'development' ? err : {};
+
+        console.log('subdomains',req.hostname[0]);
 
         // render the error page
         res.status(err.status || 500);
