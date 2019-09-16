@@ -67,7 +67,7 @@
     <a routerLink="/{{language}}/category">Все</a>
   </div>
   <div class="category-box">
-    <a routerLink="/{{language}}/category/1" class="category-box-item" *ngFor="let item of category">
+    <a routerLink="/{{language}}/category/{{item.name}}" class="category-box-item" *ngFor="let item of category">
       <div class="svg">
         <img src="{{item.img}}" alt="">
       </div>
@@ -86,7 +86,7 @@
     <a routerLink="/{{language}}/brands">Все</a>
   </div>
   <div class="category-box">
-    <a routerLink="/{{language}}/category/1" class="category-box-item" *ngFor="let item of brandy">
+    <a routerLink="/{{language}}/category/{{item.name}}" class="category-box-item" *ngFor="let item of brandy">
       <div class="brandy-svg">
         <img src="{{item.img}}" alt="">
       </div>

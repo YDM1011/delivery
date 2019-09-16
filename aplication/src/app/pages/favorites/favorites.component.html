@@ -11,14 +11,14 @@
   <div class="popular-section">
     <div class="popular-section-button">
       <button [class.active]="toggleMain" (click)="toggleMain = true">
-        Поставщики ({{favoriteLocal.providers ? favoriteLocal.providers.length : '0' }})
+        Поставщики (<span *ngIf="favoriteLocal && favoriteLocal.providers">{{favoriteLocal ? favoriteLocal.providers.length : '0' }}</span> <span *ngIf="!favoriteLocal || favoriteLocal.providers.length === 0">0</span>)
       </button>
       <button [class.active]="!toggleMain" (click)="toggleMain = false">
-        Товары ({{favoriteLocal.products ? favoriteLocal.products.length : '0' }})
+        Товары (<span *ngIf="favoriteLocal && favoriteLocal.products">{{favoriteLocal ? favoriteLocal.products.length : '0' }}</span> <span *ngIf="!favoriteLocal || favoriteLocal.products.length === 0">0</span>)
       </button>
     </div>
     <div class="popular-section-box" *ngIf="toggleMain">
-      <p class="p-not" *ngIf="favoriteLocal.providers.length === 0">
+      <p class="p-not" *ngIf="!favoriteLocal || favoriteLocal.providers.length === 0">
         У вас нет избранных поставщиков
       </p>
       <ng-container *ngIf="favoriteLocal && favoriteLocal.providers.length > 0">
@@ -26,7 +26,7 @@
       </ng-container>
     </div>
     <div class="popular-section-box" *ngIf="!toggleMain">
-      <p class="p-not" *ngIf="favoriteLocal.products.length === 0">
+      <p class="p-not" *ngIf="!favoriteLocal || favoriteLocal.products.length === 0">
         У вас нет избранных товаров
       </p>
       <ng-container *ngIf="favoriteLocal && favoriteLocal.products.length > 0">

@@ -65,7 +65,8 @@
     align-items: center;
     justify-content: space-between;
     .raiting{
-
+      display: flex;
+      align-items: center;
     }
     .work-time{
       display: flex;
@@ -128,3 +129,17 @@
     }
   }
 }
+
+
+::ng-deep .mat-ic{
+  height: auto!important;
+  font-size: 11px!important;
+}
+::ng-deep .mat-rating button{
+  width: 11px!important;
+  max-width: 11px!important;
+}
+::ng-deep .mat-rating{
+  height: 11px;
+}
+

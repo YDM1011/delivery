@@ -12,14 +12,17 @@
   padding: 0 16px 16px!important;
 }
 
+::ng-deep .mat-expansion-panel .mat-expansion-panel-header.cdk-keyboard-focused:not([aria-disabled=true]), .mat-expansion-panel .mat-expansion-panel-header.cdk-program-focused:not([aria-disabled=true]), .mat-expansion-panel:not(.mat-expanded) .mat-expansion-panel-header:hover:not([aria-disabled=true]){
+  background: #fff!important;
+}
 
 ::ng-deep .mat-ic{
-  width: max-content!important;
   height: auto!important;
   font-size: 16px!important;
 }
 ::ng-deep .mat-rating button{
   width: 16px!important;
+  max-width: 16px!important;
 }
 ::ng-deep .mat-rating{
   height: 17px;

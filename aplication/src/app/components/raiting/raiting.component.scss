@@ -47,12 +47,13 @@
 
 
 ::ng-deep .mat-rating-big .mat-ic{
-  width: max-content!important;
   height: auto!important;
   font-size: 60px!important;
 }
 ::ng-deep .mat-rating-big button{
   width: 60px!important;
+  max-width: 60px!important;
+  height: 55px!important;
 }
 ::ng-deep .mat-rating-big{
   height: 40px;
