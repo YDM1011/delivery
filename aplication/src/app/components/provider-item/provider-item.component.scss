@@ -84,12 +84,12 @@
 
 
 ::ng-deep .mat-ic{
-  width: max-content!important;
   height: auto!important;
   font-size: 11px!important;
 }
 ::ng-deep .mat-rating button{
   width: 11px!important;
+  max-width: 11px!important;
 }
 ::ng-deep .mat-rating{
   height: 11px;
