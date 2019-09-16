@@ -28,7 +28,7 @@ module.exports = backendApp => {
                 preRead: [
                     // model.schema.options.needBeAdminR ? backendApp.middlewares.isAdmin :  nextS,
                     model.schema.options.needLogined ? backendApp.middlewares.isLoggedIn : nextS,
-                    backendApp.middlewares.isLoggedIn, canRead(model.schema.options),
+                    model.schema.options.needLogined ? canRead(model.schema.options) : nextS,
                     // model.schema.options.needAccessControl && !model.schema.options.needLogined && !model.schema.options.needBeAdmin ? backendApp.middlewares.isLoggedIn :  nextS,
                     // model.schema.options.needAccessControl && !model.schema.options.needBeAdmin ? backendApp.middlewares.checkAccessRights(modelName + '.canRead') :  nextS,
                     schemaPre.Read],
