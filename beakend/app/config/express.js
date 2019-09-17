@@ -15,14 +15,6 @@ const path = require('path');
 // const cons = require('consolidate');
 
 const init = (app, config) =>{
-    var cons = require('consolidate');
-    app.set('views', path.join(__dirname, '../../../aplication/dist/application'));
-    app.engine('html', cons.swig);
-    app.set('view engine', 'html');
-
-    app.set('views', path.join(__dirname, '../../../admin/dist/admin'));
-    app.engine('html', cons.swig);
-    app.set('view engine', 'html');
 
     app.use(logger('dev'));
     app.use(bodyParser.json({limit: '50mb', "strict": false,}));
@@ -31,7 +23,6 @@ const init = (app, config) =>{
     app.use(compress());
     app.use(flash());
     app.use('/upload', express.static(path.join(__dirname, '../../upload')));
-    app.use('/', express.static(path.join(__dirname, '../../../aplication/dist/application')));
     app.use('/', express.static(config.root + 'public'));
 
     app.use(methodOverride());
@@ -44,7 +35,7 @@ const init = (app, config) =>{
     app.use(jwt.init(config.jwtSecret, {
         cookies: true
     }));
-    app.set('subdomain offset', 1);
+    // app.set('subdomain offset', 1);
 
     app.use(function (req, res, next) {
         /** Params for cookie auth form angular 7 */
@@ -80,6 +71,34 @@ const init = (app, config) =>{
     require('./mongooseRestApi')(backendApp);
 
 
+    app.set('views', path.join(__dirname, '../../../beakend/views'));
+    app.set('view engine', 'ejs');
+
+    app.use('/', express.static(path.join(__dirname, '../../../aplication/dist/application')));
+    app.use('/', express.static(path.join(__dirname, '../../../admin/dist/admin')));
+    app.use('/', express.static(path.join(__dirname, '../../../provider/dist/provider')));
+
+    app.get("/", (req, res, next) => {
+        const host = req.hostname;
+        switch (host.split('.')[0]) {
+            case 'client':
+                res.status(200);
+                res.render('client');
+                break;
+            case 'admin':
+                res.status(200);
+                res.render('admin');
+                break;
+            case 'provider':
+                res.status(200);
+                res.render('provider');
+                break;
+            default:
+                res.status(200);
+                res.render('index');
+                break;
+        }
+    });
 
 // catch 404 and forward to error handler
     app.use((req, res, next) => {
@@ -94,11 +113,39 @@ const init = (app, config) =>{
         res.locals.message = err.message;
         res.locals.error = req.app.get('env') === 'development' ? err : {};
 
-        console.log('subdomains',req.hostname[0]);
-
+        // console.log('subdomains',req.subdomains);
+        // if (req.subdomains.length === 0 && err.status === 404) {
+        //     res.status(200);
+        //     res.render('index');
+        //     return
+        // }
+        if(err.status == 404) {
+            const host = req.hostname;
+            switch (host.split('.')[0]) {
+                case 'client':
+                    res.status(200);
+                    res.render('client');
+                    break;
+                case 'admin':
+                    res.status(200);
+                    res.render('admin');
+                    break;
+                case 'provider':
+                    res.status(200);
+                    res.render('provider');
+                    break;
+                default:
+                    res.status(200);
+                    res.render('index');
+                    break;
+            }
+        } else {
+            res.status(err.status || 500);
+            res.render('error');
+        }
         // render the error page
-        res.status(err.status || 500);
-        res.render('index');
+
+
     });
 
     return app;

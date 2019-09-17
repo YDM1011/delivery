@@ -39,7 +39,6 @@
       left: 0;
       top: 0;
       z-index: 2;
-      width: max-content;
       padding:0 16px;
       height: 100%;
       background: $main-color;
@@ -153,10 +152,11 @@
       align-items: center;
       justify-content: center;
       margin-right: 12px;
+      max-width: 90px;
       .title{
         text-align: center;
         margin-top: 5px;
-        padding: 0 5px;
+        padding: 0;
       }
       .svg{
         display: inline-flex;
@@ -224,6 +224,9 @@
       padding: 0;
       margin: 0;
       cursor: pointer;
+      span{
+        color: #BBBBBB;
+      }
       &:before{
         content: '';
         display: block;
@@ -237,6 +240,9 @@
     .active{
       font-weight: bold;
       color: $main-color;
+      span{
+        color: $main-color;
+      }
       &:before {
         background: $main-color;
       }

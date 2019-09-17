@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build --aot --prod --build-optimizer && cd dist/admin && ren index.html admin.html",
+    "build": "ng build --aot --prod --build-optimizer && cd dist/admin && ren index.html admin.ejs && move /Y C:\\Users\\user\\WebstormProjects\\deliveries\\delivery\\admin\\dist\\admin\\admin.ejs C:\\Users\\user\\WebstormProjects\\deliveries\\delivery\\beakend\\views",
     "buildMac": "ng build --aot --prod --build-optimizer && cd dist/admin && mv index.html admin.html",
     "test": "ng test",
     "lint": "ng lint",

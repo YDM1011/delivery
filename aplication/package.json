@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build --aot --prod --build-optimizer",
+    "build": "ng build --aot --prod --build-optimizer  && cd dist/application && ren index.html client.ejs && move /Y C:\\Users\\user\\WebstormProjects\\deliveries\\delivery\\aplication\\dist\\application\\client.ejs C:\\Users\\user\\WebstormProjects\\deliveries\\delivery\\beakend\\views",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"

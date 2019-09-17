@@ -105,7 +105,7 @@ const schemaPre = {
     Read: (req, res, next) => callMethod(req, res, next, 'preRead'),
     Save: (req, res, next) => {
         req.body.date = req.body.date ? req.body.date : new Date();
-        req.body.createdBy = req.user._id;
+        if (req.user) req.body.createdBy = req.user._id;
         callMethod(req, res, next, 'preSave')
     },
     Update: (req, res, next) => {
@@ -121,11 +121,10 @@ const schemaPre = {
 
 const nextS = (req, res, next) => next();
 
-
 const callMethod = (req,res,next,method) => {
     let schem = restFunction[String(req.erm.model.modelName.toLowerCase())];
-    // return res.o("ok")
-    console.log(method)
+
+    console.log("Methods")
     if (schem && schem[method]) {
         try {
             // res.ok('');
