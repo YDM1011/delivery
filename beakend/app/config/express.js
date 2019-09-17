@@ -141,7 +141,7 @@ const init = (app, config) =>{
             }
         } else {
             res.status(err.status || 500);
-            res.render('error');
+            res.render('index');
         }
         // render the error page
 

@@ -14,6 +14,11 @@ import {CategoryComponent} from "./pages/category/category.component";
 import {BrandsComponent} from "./pages/brands/brands.component";
 import {CityComponent} from "./pages/city/city.component";
 import {LangTabComponent} from "./components/lang-tab/lang-tab.component";
+import {DialogComponent} from "./components/upload/dialog/dialog.component";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {MaterialModule} from "./material-module";
+import {UploadComponent} from "./components/upload/upload.component";
+import {ImgComponent} from "./components/img/img.component";
 
 @NgModule({
   declarations: [
@@ -26,15 +31,24 @@ import {LangTabComponent} from "./components/lang-tab/lang-tab.component";
     BrandsComponent,
     CityComponent,
     LangTabComponent,
+    DialogComponent,
+    UploadComponent,
+    ImgComponent
   ],
   imports: [
+    BrowserAnimationsModule,
     HttpClientModule,
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    SweetAlert2Module.forRoot()
+    SweetAlert2Module.forRoot(),
+    MaterialModule
   ],
+  exports: [MaterialModule],
   providers: [],
+  entryComponents: [
+    DialogComponent,
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

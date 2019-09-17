@@ -4,14 +4,16 @@ const path = require('path');
 
 module.exports = (body, backendApp) => {
     const reqFile = body;
+    console.log(reqFile);
     return new Promise((rs,rj)=>{
         let readStream, createStream, fileName;
         readStream = fs.createReadStream(reqFile.path);
         fileName = new Date().getTime() + '--' + reqFile.name;
-        createStream = fs.createWriteStream(path.join(__dirname, '../../../../upload/'+fileName));
+        createStream = fs.createWriteStream(path.join(__dirname, '../../../upload/'+fileName));
         readStream.pipe(createStream);
         readStream.on('end', ()=>{
             rs(fileName)
+
         })
     });
 };
