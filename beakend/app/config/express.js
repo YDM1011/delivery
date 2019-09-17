@@ -20,7 +20,7 @@ const init = (app, config) =>{
     app.engine('html', cons.swig);
     app.set('view engine', 'html');
 
-    app.set('views', path.join(__dirname, '../../../admin/dist/admin'));
+    app.set('views', path.join(__dirname, '../../../admin1/dist/admin1'));
     app.engine('html', cons.swig);
     app.set('view engine', 'html');
 

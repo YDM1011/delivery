@@ -1,0 +1,17 @@
+<div class="contain">
+	<button>Add city</button>
+	
+	<div class="add-city">
+		<label>
+			<input type="text" placeholder="Город" [(ngModel)]="city.name">
+		</label>
+		
+		<button (click)="createCity()">Создать город</button>
+	</div>
+	
+	<div class="all-city" *ngIf="citys && citys.length > 0">
+		<ul>
+			<li *ngFor="let item of citys">{{item.ru.name}}</li>
+		</ul>
+	</div>
+</div>

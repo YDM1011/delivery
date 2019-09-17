@@ -1,0 +1,7 @@
+<div class="lang-container">
+  <div class="tab-wrap">
+    <div class="tab-lang" *ngFor="let ln of langs"
+         [class.active]="defLang == ln.value"
+         (click)="checkLan(ln.value)">{{ln.name}}</div>
+  </div>
+</div>
