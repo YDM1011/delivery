@@ -80,19 +80,27 @@ export class CityComponent implements OnInit {
       this.crud.post('upload2', {body: this.uploadObj}).then((v: any) => {
         if (!v) return;
         this.editObj.img = v.file;
+        this.confirmEditCityCrud();
       });
+    } else {
+      this.confirmEditCityCrud();
     }
-    this.crud.post('city', this.editObj, this.editObj['_id']).then((v: any) => {
-      if (v) {
-        this.editCityShow = false;
-        this.citys[this.crud.find('_id', this.editObj['_id'], this.citys)] = v;
-        console.log(v);
-      }
-    });
   }
   onFsEdit(e) {
     this.uploadObj = e;
     this.editObj.img = e.name;
   }
-
+  confirmEditCityCrud() {
+    this.crud.post('city', this.editObj, this.editObj['_id']).then((v: any) => {
+      if (v) {
+        this.editCityShow = false;
+        this.citys[this.crud.find('_id', this.editObj['_id'], this.citys)] = v;
+        this.editObj = {
+          img: '',
+          name: ''
+        };
+        this.uploadObj = {};
+      }
+    });
+  }
 }
