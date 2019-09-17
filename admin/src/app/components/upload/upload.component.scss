@@ -1,0 +1,16 @@
+button{
+  max-width: max-content;
+  width: 100%;
+  height: 100%;
+  border: none;
+  background: transparent;
+  box-shadow: none!important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #000;
+  text-decoration: underline;
+  svg{
+    margin-right: 5px;
+  }
+}

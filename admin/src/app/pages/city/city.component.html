@@ -1,17 +1,36 @@
 <div class="contain">
-	<button>Add city</button>
+	<button (click)="addCityShow = !addCityShow">Add city</button>
 	
-	<div class="add-city">
+	<div class="add-city" *ngIf="addCityShow">
+		Add City
 		<label>
 			<input type="text" placeholder="Город" [(ngModel)]="city.name">
 		</label>
-		
+		<app-upload (onFs)="onFs($event)"></app-upload>
+		<div class="file-name">{{city.img}}</div>
 		<button (click)="createCity()">Создать город</button>
+	</div>
+	
+	<div class="edit-city" *ngIf="editCityShow">
+		Edit City
+		<label>
+			<input type="text" placeholder="Город" [(ngModel)]="editObj.name">
+		</label>
+		<app-upload *ngIf="editObj.img == ''" (onFs)="onFsEdit($event)"></app-upload>
+		<div class="file-name">{{editObj.img}}</div> <button (click)="editObj.img = ''">Изменить картинку</button>
+		<button (click)="confirmEditCity()">Изменить город</button>
 	</div>
 	
 	<div class="all-city" *ngIf="citys && citys.length > 0">
 		<ul>
-			<li *ngFor="let item of citys">{{item.ru.name}}</li>
+			<li *ngFor="let item of citys; let i = index">
+				<div class="img" style="max-width: 30px; max-height: 30px">
+					<app-img *ngIf="item && item.img.length > 0" [fs]="item.img"></app-img>
+				</div>
+				{{item.name}}
+				<button (click)="editCity(i)">Edit</button>
+				<button (click)="deleteCity(i)">Delete</button>
+			</li>
 		</ul>
 	</div>
 </div>

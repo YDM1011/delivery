@@ -9,10 +9,22 @@ module.exports = (backendApp, router) => {
             res.ok(file);
         });
         form.parse(req);
+        // let form = new IncomingForm();
+        // let readStream, createStream, fileName;
+        // form.on('file', (field, file) => {
+        //     readStream = fs.createReadStream(file.path);
+        //     fileName = new Date().getTime() + '--' + file.name;
+        //     createStream = fs.createWriteStream(path.join(__dirname, '../../../../upload/'+fileName));
+        //     readStream.pipe(createStream);
+        // });
+        // form.on('end', (e) => {
+        //     res.ok({file: fileName});
+        // });
+        // form.parse(req);
     });
     router.post('/upload2', [], function (req, res, next) {
         backendApp.service.upload(req.body.body, backendApp).then(v=>{
-            res.ok(v)
+            res.ok({file:v})
         })
     });
 };
