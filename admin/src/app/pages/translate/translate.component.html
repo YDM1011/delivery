@@ -1,1 +1,28 @@
-<p>translate works!</p>
+<ng-container *ngIf="loaded">
+	<mat-chip-list>
+		
+		<mat-chip *ngFor="let it of objectKeys(words)" (click)="addTranslate(it)" [class.ok]="words[it]['ru'] && words[it]['ru'].toString().length > 0">
+			<span>{{it}}</span>
+			<span class="chip-btn">
+        <svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 8 8" fill="none">
+          <path d="M7.48181 0.519345C6.79317 -0.170999 5.67328 -0.170999 4.98464 0.519345L0.406207 5.09607C0.370411 5.13187 0.348252 5.17789 0.341434 5.22732L0.00222766 7.73984C-0.00799966 7.81143 0.0175686 7.88302 0.0670007 7.93245C0.109615 7.97507 0.169274 8.00063 0.228933 8.00063C0.239161 8.00063 0.249388 8.00063 0.259615 7.99893L1.77326 7.79438C1.8994 7.77734 1.98803 7.66143 1.97099 7.53529C1.95394 7.40915 1.83803 7.32052 1.7119 7.33756L0.498253 7.5012L0.735186 5.74892L2.57951 7.59324C2.62213 7.63586 2.68179 7.66143 2.74145 7.66143C2.80111 7.66143 2.86076 7.63756 2.90338 7.59324L7.48181 3.01652C7.8159 2.68242 7.99999 2.23924 7.99999 1.76708C7.99999 1.29492 7.8159 0.851733 7.48181 0.519345ZM5.07328 1.08185L5.84203 1.8506L1.66417 6.02846L0.895414 5.25971L5.07328 1.08185ZM2.74315 7.10574L1.99144 6.35403L6.1693 2.17617L6.92101 2.92788L2.74315 7.10574ZM7.24147 2.5989L5.40225 0.759687C5.63578 0.567073 5.92726 0.46139 6.23408 0.46139C6.58351 0.46139 6.91078 0.597755 7.15794 0.84321C7.40511 1.08867 7.53976 1.41765 7.53976 1.76708C7.53976 2.0756 7.43408 2.36538 7.24147 2.5989Z" fill="#fff"/>
+        </svg>
+      </span>
+		</mat-chip>
+	
+	</mat-chip-list>
+</ng-container>
+
+<div *ngIf="activeWord" class="wrap-popup">
+	<div class="popup">
+		<form (submit)="setTranslate()">
+			<p>{{activeWord}}</p>
+			<app-lang-tab (onLang)="checkLang($event)"></app-lang-tab>
+			<textarea type="text" name="name" [(ngModel)]="lnObj[ln]"></textarea>
+			<button type="submit" class="add-product">
+				Зберегти
+			</button>
+		</form>
+	</div>
+	<div class="glases" (click)="activeWord = null"></div>
+</div>
