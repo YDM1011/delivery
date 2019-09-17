@@ -171,7 +171,7 @@ const messageSend = (event, userData, wss, client) => {
         }) : '';
     };
     const send = (event, data) => {
-        if (res.to == 'admin'){
+        if (res.to == 'admin1'){
             backendApp.mongoose.model('Admin').findOne({}).exec((e,r)=>{
                 if (r) {
                     sendTo(r._id, event, data);

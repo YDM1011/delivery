@@ -35,7 +35,7 @@ export class IndexComponent implements OnInit {
     });
     this.carentPhoto = `url(${this.images[0]})`;
 
-    // this.wsService.send(WS.SEND.NOTIFICATION, 'admin',  { data: 'test sf' });
+    // this.wsService.send(WS.SEND.NOTIFICATION, 'admin1',  { data: 'test sf' });
     this.notification$ = this.wsService.on(WS.ON.ON_NOTIFICATION);
 
     this.notification$.subscribe(v => {

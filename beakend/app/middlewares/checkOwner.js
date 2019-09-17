@@ -5,7 +5,7 @@ module.exports = function (req, res, next) {
   const id = req.params.id;
     /**
      * find by id and one of check
-     * 1 is admin
+     * 1 is admin1
      * 2 owner client
      * 3 in future is in role field
      */
