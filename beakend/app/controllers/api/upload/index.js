@@ -10,11 +10,9 @@ module.exports = (backendApp, router) => {
         });
         form.parse(req);
     });
-    /** test
     router.post('/upload2', [], function (req, res, next) {
         backendApp.service.upload(req.body.body, backendApp).then(v=>{
             res.ok(v)
         })
     });
-    */
 };
