@@ -103,6 +103,9 @@ MIT
 @angular/router
 MIT
 
+@angular/service-worker
+MIT
+
 @ngmodule/material-carousel
 MIT
 MIT License
