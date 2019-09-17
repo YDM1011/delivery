@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import {AuthService} from "./auth.service";
 import {CrudService} from "./crud.service";
+import {WebNotificationService} from "./web-notification.service";
+import {SwPush} from "@angular/service-worker";
 
 @Component({
   selector: 'app-root',
@@ -11,7 +13,11 @@ export class AppComponent {
   title = 'delivery';
   public setting: any;
   public loaded = true;
+  public isEnabled = this.swPush.isEnabled;
+  public isGranted = Notification.permission === 'granted';
   constructor(
+      private swPush: SwPush,
+      private webNotificationService: WebNotificationService,
       private auth: AuthService,
       private crud: CrudService
   ){
@@ -25,5 +31,7 @@ export class AppComponent {
         });
       }
     });
+
+    this.webNotificationService.subscribeToNotification();
   }
 }
