@@ -1,7 +1,7 @@
 module.exports = {
     apps : [
         {
-            name: "Laundrwise",
+            name: "Smart",
             script: "./bin/www",
             watch: true,
             env: {

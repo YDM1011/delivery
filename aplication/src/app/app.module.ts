@@ -69,6 +69,7 @@ import {HttpClientModule} from "@angular/common/http";
 import {WebsocketModule} from './websocket';
 import {environment} from "../environments/environment";
 import { BrandItemComponent } from './components/brand-item/brand-item.component';
+import {ServiceWorkerModule} from "@angular/service-worker";
 
 @NgModule({
   declarations: [
@@ -140,7 +141,8 @@ import { BrandItemComponent } from './components/brand-item/brand-item.component
     LottieAnimationViewModule.forRoot(),
     WebsocketModule.config({
       url: environment.ws
-    })
+    }),
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [CookieService, {provide: HTTP_INTERCEPTORS, useClass: ApiInterceptor, multi: true}],
   bootstrap: [AppComponent]
