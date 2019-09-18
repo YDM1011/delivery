@@ -1,4 +1,11 @@
-li{
-  display: flex;
-  align-items: center;
+table {
+  width: 100%;
+}
+
+.paginator-table{
+  display: none;
+}
+
+.paginator-table-active{
+  display: block;
 }

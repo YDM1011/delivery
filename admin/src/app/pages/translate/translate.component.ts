@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {CrudService} from "../../crud.service";
-import {Router} from "@angular/router";
-import {AuthService} from "../../../../../aplication/src/app/auth.service";
+import {AuthService} from "../../auth.service";
 
 @Component({
   selector: 'app-translate',
@@ -17,12 +16,11 @@ export class TranslateComponent implements OnInit {
   public loaded = false;
   constructor(
       private crud: CrudService,
-      private auth: AuthService,
-      private router: Router
+      private auth: AuthService
   ) { }
 
   ngOnInit() {
-    this.auth.onTranslate.subscribe((v: any) => {
+    this.crud.get('translator').then((v: any) => {
       if (v) {
         this.words = v;
         this.loaded = true;
@@ -32,8 +30,8 @@ export class TranslateComponent implements OnInit {
 
   addTranslate(data) {
     this.activeWord = data;
-    this.lnObj.ua = data;
-    this.lnObj.ru = this.words[data].ru;
+    this.lnObj.ru = data;
+    this.lnObj.ua = this.words[data].ua;
   }
   checkLang(ln) {
     this.ln = ln;

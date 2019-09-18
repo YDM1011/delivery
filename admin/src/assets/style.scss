@@ -1,8 +1,11 @@
 @import "normalize";
 @import "admin";
+@import "buttons";
 
 *{
   box-sizing: border-box;
   font-family: Montserrat, sans-serif;
-  font-size: 16px!important;
+  font-size: 16px;
+  outline:0;
 }
+button:focus {outline:0;}
