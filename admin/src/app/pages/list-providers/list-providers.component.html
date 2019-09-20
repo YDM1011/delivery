@@ -1,0 +1,23 @@
+<ng-container>
+	<div class="contain">
+		<div class="contain__group">
+			<div class="contain__group-header">
+				Все поставщики
+			</div>
+			
+			
+			<div class="client-section" *ngIf="list && list.length > 0 && loaded">
+				<input type="text" placeholder="search" [(ngModel)]="search" name="search" autocomplete="off">
+				<span *ngFor="let item of list | filter:search">{{item.login}}</span>
+			</div>
+		</div>
+	</div>
+	
+	
+	<div class="empty-section" *ngIf="!list || list.length === 0 && loaded">
+		<p>
+			У вас нет провайдеров!
+		</p>
+	</div>
+
+</ng-container>

@@ -8,6 +8,7 @@ const Schema = mongoose.Schema;
 const schem = new Schema({
     login: {type: String, required: [true, "Login is required"]},
     pass: {type: String, required: [true, "Password is required"]},
+    name: String,
     img: String,
     address: String,
     city: {

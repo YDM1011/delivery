@@ -84,7 +84,14 @@
 					<!-- Weight Column -->
 					<ng-container matColumnDef="data">
 						<th mat-header-cell *matHeaderCellDef>Дата</th>
-						<td mat-cell *matCellDef="let element">{{element.data | date: 'dd-MM-yyyy'}}</td>
+						<td mat-cell *matCellDef="let element">
+							<div class="top-table-date">
+								{{element.data | date: 'dd MMMM, yyyy'  : null : defLang}}
+							</div>
+							<div class="bottom-table-date">
+								{{element.data | date: 'h:mm a'  : null : defLang}}
+							</div>
+						</td>
 					</ng-container>
 					
 					<ng-container matColumnDef="delete">

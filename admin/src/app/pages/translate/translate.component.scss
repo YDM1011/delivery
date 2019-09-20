@@ -19,6 +19,13 @@
   z-index: 2;
   position: relative;
   background-color: #fff;
+  .close{
+    position: absolute;
+    padding: 15px;
+    right: 0;
+    top: 0;
+    cursor: pointer;
+  }
 }
 .wrap-popup{
   position: fixed;

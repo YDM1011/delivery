@@ -14,11 +14,12 @@ export class CityComponent implements OnInit, AfterViewInit{
   public editShow: boolean = false;
   public uploadObj = {};
   public citys = [];
+  public defLang = 'ru-UA';
   public editObj = {
     img: '',
     name: '',
   };
-  public city = {
+    public city = {
     img: '',
     name: ''
   };

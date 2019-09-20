@@ -10,6 +10,7 @@ import {MatPaginator, MatTableDataSource} from "@angular/material";
   styleUrls: ['./brands.component.scss']
 })
 export class BrandsComponent implements OnInit, AfterViewInit {
+  public defLang = 'ru-UA';
   public showPagin: boolean = false;
   public addShow: boolean = false;
   public editShow: boolean = false;

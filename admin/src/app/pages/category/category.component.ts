@@ -9,6 +9,7 @@ import {MatPaginator, MatTableDataSource} from "@angular/material";
   styleUrls: ['./category.component.scss']
 })
 export class CategoryComponent implements OnInit, AfterViewInit {
+  public defLang = 'ru-UA';
   public showPagin: boolean = false;
   public addShow: boolean = false;
   public editShow: boolean = false;

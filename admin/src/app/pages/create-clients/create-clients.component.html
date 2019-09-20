@@ -1,0 +1,48 @@
+<ng-container>
+	<div class="contain">
+		<div class="contain__group">
+			<div class="contain__group-header">
+				Создать клиента/поставщика
+			</div>
+		</div>
+	</div>
+	<div class="create-client">
+		<div class="buttons">
+			<button class="main-button-color" (click)="createClient()">Создать клиента</button>
+			<button class="main-button-color" (click)="createProvider()">Создать поставщика</button>
+		</div>
+		
+		<div class="contain" *ngIf="showClient">
+			<div class="contain__group">
+				<div class="contain__group-header">
+					Клиент
+				</div>
+			</div>
+			
+			<div class="client-form" >
+				<div class="form">
+					<input type="text" placeholder="Name" [(ngModel)]="client.name" autocomplete="off">
+					<input type="text" placeholder="Phone" [(ngModel)]="client.login" autocomplete="off">
+					<input type="text" placeholder="Password" [(ngModel)]="client.pass" autocomplete="off">
+					<button class="main-button-color" (click)="create('client')">Создать</button>
+				</div>
+			</div>
+		</div>
+		<div class="contain" *ngIf="showProvider">
+			<div class="contain__group">
+				<div class="contain__group-header">
+					Поставщик
+				</div>
+			</div>
+			
+			<div class="client-form">
+				<div class="form">
+					<input type="text" placeholder="Name" [(ngModel)]="client.name" autocomplete="off">
+					<input type="text" placeholder="Phone" [(ngModel)]="client.login" autocomplete="off">
+					<input type="text" placeholder="Password" [(ngModel)]="client.pass" autocomplete="off">
+					<button class="main-button-color" (click)="create('provider')">Создать</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</ng-container>

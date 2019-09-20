@@ -19,11 +19,16 @@
 
 <div *ngIf="activeWord" class="wrap-popup">
 	<div class="popup">
+		<div class="close" (click)="activeWord = null">
+			<svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+				<path d="M13.0014 0.40515L12.5969 0L6.50166 6.09479L0.406871 0L0.00195312 0.40515L6.09675 6.49988L0.00195312 12.5947L0.406871 13L6.50166 6.9044L12.5969 13L13.0014 12.5947L6.90658 6.49988L13.0014 0.40515Z" fill="#E21B1B"/>
+			</svg>
+		</div>
 		<form (submit)="setTranslate()">
 			<p>{{activeWord}}</p>
 			<app-lang-tab (onLang)="checkLang($event)"></app-lang-tab>
 			<textarea type="text" name="name" [(ngModel)]="lnObj[ln]"></textarea>
-			<button type="submit" class="add-product">
+			<button type="submit" class="main-button-color">
 				Зберегти
 			</button>
 		</form>
