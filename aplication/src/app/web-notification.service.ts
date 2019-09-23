@@ -17,7 +17,7 @@ export class WebNotificationService {
             serverPublicKey: this.VAPID_PUBLIC_KEY
         })
             .then(sub => this.sendToServer(sub))
-            .catch(err => console.error('Could not subscribe to notifications', err));
+            .catch(err => console.log('Could not subscribe to notifications', err));
     }
     sendToServer(params: any) {
         this.http.post(this.baseUrl, { notification : params }).subscribe();

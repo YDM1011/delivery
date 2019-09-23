@@ -15,9 +15,10 @@ export class AppComponent {
   public loaded = true;
   public isEnabled = this.swPush.isEnabled;
   public isGranted = Notification.permission === 'granted';
+
   constructor(
-      private swPush: SwPush,
-      private webNotificationService: WebNotificationService,
+    private swPush: SwPush,
+    private webNotificationService: WebNotificationService,
       private auth: AuthService,
       private crud: CrudService
   ){
@@ -32,6 +33,11 @@ export class AppComponent {
       }
     });
 
-    this.webNotificationService.subscribeToNotification();
+    try {
+      this.webNotificationService.subscribeToNotification();
+    } catch (e) {
+      console.log(e)
+    }
+
   }
 }
