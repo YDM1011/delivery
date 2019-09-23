@@ -1,6 +1,17 @@
 .admin-layout{
   display: flex;
+  background: #F5F6FA;
+  min-height: 100vh;
+  height: 100%;
+  width: 100%;
 }
 .admin-container{
-  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  width: calc(100% - 81px);
+  margin: 10px 45px 30px;
+  background: #fff;
+  .admin-box{
+    padding: 10px 25px;
+  }
 }

@@ -21,7 +21,7 @@ export class AppComponent {
     private webNotificationService: WebNotificationService,
       private auth: AuthService,
       private crud: CrudService
-  ){
+  ) {
     this.crud.get('translator').then((v: any) => {
       if (v) {
         this.auth.setTranslate(v);

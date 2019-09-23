@@ -1,1 +1,135 @@
-<p>category works!</p>
+<!--<div class="contain">-->
+<!--	<button (click)="addCategoryShow = !addCategoryShow">Add category</button>-->
+<!--	-->
+<!--	<div class="add-city" *ngIf="addCategoryShow">-->
+<!--		Add Category-->
+<!--		<label>-->
+<!--			<input type="text" placeholder="Категория" [(ngModel)]="category.name">-->
+<!--		</label>-->
+<!--		<button (click)="createCategory()">Создать Категорию</button>-->
+<!--	</div>-->
+<!--	-->
+<!--	<div class="edit-city" *ngIf="editCategoryShow">-->
+<!--		Edit Category-->
+<!--		<label>-->
+<!--			<input type="text" placeholder="Город" [(ngModel)]="editObj.name">-->
+<!--		</label>-->
+<!--		<button (click)="confirmEditCategory()">Изменить категорию</button>-->
+<!--	</div>-->
+<!--	-->
+<!--	<div class="all-city" *ngIf="categorys && categorys.length > 0">-->
+<!--		<ul>-->
+<!--			<li *ngFor="let item of categorys; let i = index">-->
+<!--				{{item.name}}-->
+<!--				<button (click)="editCategory(i)">Edit</button>-->
+<!--				<button (click)="deleteCategory(i)">Delete</button>-->
+<!--			</li>-->
+<!--		</ul>-->
+<!--	</div>-->
+<!--</div>-->
+
+
+<div class="contain">
+	<div class="contain__group"  *ngIf="addShow">
+		<div class="contain__group-header">
+			<div class="title">
+				Создать категорию
+			</div>
+		</div>
+		<div class="add-section">
+			<label>
+				<input type="text" placeholder="Категория" [(ngModel)]="category.name">
+			</label>
+			<div class="group-buttons">
+				<div class="left">
+				</div>
+				<div class="right">
+					<button class="main-button" (click)="cancelAdd()">Отмена</button>
+					<button class="main-button-color" (click)="create()">Сохранить</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="contain__group"  *ngIf="editShow">
+		<div class="contain__group-header">
+			<div class="title">
+				Редактировать категорию
+			</div>
+		</div>
+		<div class="edit-section" *ngIf="editShow">
+			<label>
+				<input type="text" placeholder="Категория" [(ngModel)]="editObj.name">
+			</label>
+			<div class="group-buttons">
+				<div class="left">
+				</div>
+				<div class="right">
+					<button class="main-button" (click)="cancelEdit()">Отмена</button>
+					<button class="main-button-color" (click)="confirmEdit()">Сохранить</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="contain__group">
+		<div class="contain__group-header">
+			<div class="title">
+				Все категории
+			</div>
+			<button class="button-add" (click)="openAdd()">
+				<span class="content">Создать категорию</span>
+			</button>
+		</div>
+		<div class="main-section">
+			<div class="mat-elevation-z8">
+				<table mat-table [dataSource]="dataSource" *ngIf="categorys && categorys.length > 0">
+					<!-- Position Column -->
+					<ng-container matColumnDef="Номер">
+						<th mat-header-cell *matHeaderCellDef>#</th>
+						<td mat-cell *matCellDef="let element; let index = index"> {{index + 1}} </td>
+					</ng-container>
+					
+					<!-- Name Column -->
+					<ng-container matColumnDef="Назва бренда">
+						<th mat-header-cell *matHeaderCellDef>Назва бренда</th>
+						<td class="table__name" mat-cell *matCellDef="let element">
+							<div class="table__name-name">{{element.name}}</div>
+						</td>
+					</ng-container>
+					
+					<!-- Weight Column -->
+					<ng-container matColumnDef="data">
+						<th mat-header-cell *matHeaderCellDef>Дата</th>
+						<td mat-cell *matCellDef="let element">
+							<div class="top-table-date">
+								{{element.data | date: 'dd MMMM, yyyy'  : null : defLang}}
+							</div>
+							<div class="bottom-table-date">
+								{{element.data | date: 'h:mm a'  : null : defLang}}
+							</div>
+						</td>
+					</ng-container>
+					
+					<ng-container matColumnDef="delete">
+						<th mat-header-cell *matHeaderCellDef></th>
+						<td class="right-section-table" mat-cell *matCellDef="let element; let index = index">
+							<span class="edit-btn" (click)="edit(index)"></span>
+							<span class="trash-btn" (click)="delete(index)"></span>
+						</td>
+					</ng-container>
+					
+					<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+					<tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+				</table>
+				
+				<mat-paginator class="paginator-table" [pageSizeOptions]="[5, 10, 20]" [class.paginator-table-active]="showPagin"></mat-paginator>
+			</div>
+			<div class="empty-section" *ngIf="!categorys || categorys.length === 0">
+				<p>
+					У вас нет созданых категорий
+				</p>
+			</div>
+		</div>
+	</div>
+</div>

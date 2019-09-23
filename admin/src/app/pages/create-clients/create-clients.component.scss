@@ -1,0 +1,30 @@
+.create-client{
+  .buttons{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin: 30px 0;
+    button{
+      width: 200px;
+      &:nth-of-type(1){
+        margin-right: 50px;
+      }
+    }
+  }
+
+  .form{
+    display: flex;
+    flex-direction: column;
+    input{
+      width: 100%;
+      box-shadow: none;
+      border: 0;
+      border-bottom: 1px solid #DFE0EB;
+      padding: 15px 0;
+      margin-bottom: 15px;
+    }
+    button{
+      margin-top: 15px;
+    }
+  }
+}

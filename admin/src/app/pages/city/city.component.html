@@ -1,36 +1,120 @@
 <div class="contain">
-	<button (click)="addCityShow = !addCityShow">Add city</button>
-	
-	<div class="add-city" *ngIf="addCityShow">
-		Add City
-		<label>
-			<input type="text" placeholder="Город" [(ngModel)]="city.name">
-		</label>
-		<app-upload (onFs)="onFs($event)"></app-upload>
-		<div class="file-name">{{city.img}}</div>
-		<button (click)="createCity()">Создать город</button>
-	</div>
-	
-	<div class="edit-city" *ngIf="editCityShow">
-		Edit City
-		<label>
-			<input type="text" placeholder="Город" [(ngModel)]="editObj.name">
-		</label>
-		<app-upload *ngIf="editObj.img == ''" (onFs)="onFsEdit($event)"></app-upload>
-		<div class="file-name">{{editObj.img}}</div> <button (click)="editObj.img = ''">Изменить картинку</button>
-		<button (click)="confirmEditCity()">Изменить город</button>
-	</div>
-	
-	<div class="all-city" *ngIf="citys && citys.length > 0">
-		<ul>
-			<li *ngFor="let item of citys; let i = index">
-				<div class="img" style="max-width: 30px; max-height: 30px">
-					<app-img *ngIf="item && item.img.length > 0" [fs]="item.img"></app-img>
+	<div class="contain__group"  *ngIf="addShow">
+		<div class="contain__group-header">
+			<div class="title">
+				Создать город
+			</div>
+		</div>
+		<div class="add-section">
+			<label>
+				<input type="text" placeholder="Город" [(ngModel)]="city.name">
+			</label>
+			<div class="group-buttons">
+				<div class="left">
+					<app-upload (onFs)="onFs($event)"></app-upload>
+					<div class="mat-chip-file" *ngIf="city && city.img !== ''">
+						<div class="content">{{city.img}}</div>
+						<div class="remove-mat-chip" (click)="city.img = ''"></div>
+					</div>
 				</div>
-				{{item.name}}
-				<button (click)="editCity(i)">Edit</button>
-				<button (click)="deleteCity(i)">Delete</button>
-			</li>
-		</ul>
+				<div class="right">
+					<button class="main-button" (click)="cancelAdd()">Отмена</button>
+					<button class="main-button-color" (click)="create()">Сохранить</button>
+				</div>
+			</div>
+		</div>
 	</div>
+	
+	<div class="contain__group"  *ngIf="editShow">
+		<div class="contain__group-header">
+			<div class="title">
+				Редактировать город
+			</div>
+		</div>
+		<div class="edit-section" *ngIf="editShow">
+			<label>
+				<input type="text" placeholder="Город" [(ngModel)]="editObj.name">
+			</label>
+			<div class="group-buttons">
+				<div class="left">
+					<app-upload *ngIf="editObj.img == ''" (onFs)="onFsEdit($event)"></app-upload>
+					<div class="mat-chip-file" *ngIf="editObj && editObj.img !== ''">
+						<div class="content">{{editObj.img}}</div>
+						<div class="remove-mat-chip" (click)="editObj.img = ''"></div>
+					</div>
+				</div>
+				<div class="right">
+					<button class="main-button" (click)="cancelEdit()">Отмена</button>
+					<button class="main-button-color" (click)="confirmEdit()">Сохранить</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="contain__group">
+		<div class="contain__group-header">
+			<div class="title">
+				Все города
+			</div>
+			<button class="button-add" (click)="openAdd()">
+				<span class="content">Создать город</span>
+			</button>
+		</div>
+		<div class="main-section">
+			<div class="mat-elevation-z8">
+				<table mat-table [dataSource]="dataSource" *ngIf="citys && citys.length > 0">
+					<!-- Position Column -->
+					<ng-container matColumnDef="Номер">
+						<th mat-header-cell *matHeaderCellDef>#</th>
+						<td mat-cell *matCellDef="let element; let index = index"> {{index + 1}} </td>
+					</ng-container>
+					
+					<!-- Name Column -->
+					<ng-container matColumnDef="Назва бренда">
+						<th mat-header-cell *matHeaderCellDef>Назва бренда</th>
+						<td class="table__name" mat-cell *matCellDef="let element">
+							<div class="table__name-img">
+								<app-img [fs]="element.img"></app-img>
+							</div>
+							<div class="table__name-name">{{element.name}}</div>
+						
+						</td>
+					</ng-container>
+					
+					<!-- Weight Column -->
+					<ng-container matColumnDef="data">
+						<th mat-header-cell *matHeaderCellDef>Дата</th>
+						<td mat-cell *matCellDef="let element">
+							<div class="top-table-date">
+								{{element.data | date: 'dd MMMM, yyyy'  : null : defLang}}
+							</div>
+							<div class="bottom-table-date">
+								{{element.data | date: 'h:mm a'  : null : defLang}}
+							</div>
+						</td>
+					</ng-container>
+					
+					<ng-container matColumnDef="delete">
+						<th mat-header-cell *matHeaderCellDef></th>
+						<td class="right-section-table" mat-cell *matCellDef="let element; let index = index">
+							<span class="edit-btn" (click)="edit(index)"></span>
+							<span class="trash-btn" (click)="delete(index)"></span>
+						</td>
+					</ng-container>
+					
+					<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+					<tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+				</table>
+				
+				<mat-paginator class="paginator-table" [pageSizeOptions]="[5, 10, 20]" [class.paginator-table-active]="showPagin"></mat-paginator>
+			</div>
+			
+			<div class="empty-section" *ngIf="!citys || citys.length === 0">
+				<p>
+					У вас нет созданых городов
+				</p>
+			</div>
+		</div>
+	</div>
+	
 </div>

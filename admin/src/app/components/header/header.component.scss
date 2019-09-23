@@ -1,0 +1,27 @@
+.admin-header{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #F5F6FA;
+  margin-bottom: 15px;
+  width: 100%;
+  padding: 20px 0 25px;
+  .tel{
+    color: #748AA1;
+    font-size: 18px;
+    line-height: 22px;
+  }
+  .buttons{
+    .logout{
+      color: #748AA1;
+      font-size: 18px;
+      line-height: 22px;
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      svg{
+        margin-right: 5px;
+      }
+    }
+  }
+}

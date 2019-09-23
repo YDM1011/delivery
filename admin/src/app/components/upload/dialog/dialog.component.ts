@@ -13,7 +13,7 @@ import {MAT_DIALOG_DATA} from '@angular/material'
 export class DialogComponent implements OnInit {
   // @ts-ignore
   @ViewChild('file') file;
-
+  public disBtn = true;
   public multiple;
   public files: Set<File> = new Set();
 
@@ -51,6 +51,7 @@ export class DialogComponent implements OnInit {
         this.canBeClosed = true;
         this.showCancelButton = true;
         this.uploading = false;
+        this.disBtn = false;
         return;
       }
 
@@ -74,12 +75,12 @@ export class DialogComponent implements OnInit {
 
     this.progress = this.uploadService.upload(this.files);
     for (const key in this.progress) {
-      this.progress[key].progress.subscribe(val => console.log(key,val));
+      this.progress[key].progress.subscribe(val => console.log(key, val));
     }
 
     // convert the progress map into an array
-    let allProgressObservables = [];
-    for (let key in this.progress) {
+    const allProgressObservables = [];
+    for (const key in this.progress) {
       allProgressObservables.push(this.progress[key].progress);
     }
 
