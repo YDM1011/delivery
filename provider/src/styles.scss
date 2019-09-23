@@ -1,0 +1,35 @@
+/* You can add global styles to this file, and also import other style files */
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+@import "assets/style";
+@font-face {
+  font-family: 'Montserrat-Bold';
+  src: url('./assets/fonts/Montserrat-Bold.ttf') format('ttf'),
+  url('./assets/fonts/Montserrat-Bold.woff2') format('woff2');
+  src: local('Montserrat-Bold');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Montserrat-Light';
+  src: url('./assets/fonts/Montserrat-Light.ttf') format('ttf'),
+  url('./assets/fonts/Montserrat-Light.woff2') format('woff2');
+  src: local('Montserrat-Light');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Montserrat-Medium';
+  src: url('./assets/fonts/Montserrat-Medium.ttf') format('ttf'),
+  url('./assets/fonts/Montserrat-Medium.woff2') format('woff2');
+  src: local('Montserrat-Medium');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Montserrat-Regular';
+  src: url('./assets/fonts/Montserrat-Regular.ttf') format('ttf'),
+  url('./assets/fonts/Montserrat-Regular.woff2') format('woff2');
+  src: local('Montserrat-Regular');
+  font-weight: normal;
+  font-style: normal;
+}

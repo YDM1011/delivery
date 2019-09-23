@@ -1,0 +1,12 @@
+<div class="login">
+	<div class="login-box">
+		<form (submit)="signIn()">
+			<input type="tel" placeholder="tel" name="login" [(ngModel)]="obj.login" autocomplete="on">
+			<input type="password" placeholder="password" name="password" [(ngModel)]="obj.pass" autocomplete="on">
+			<div class="error" *ngIf="error && error.text !== ''">
+				{{error.text}}
+			</div>
+			<button type="submit">Войти</button>
+		</form>
+	</div>
+</div>

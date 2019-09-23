@@ -1,0 +1,17 @@
+.login{
+  &-box{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    min-height: 100vh;
+    form{
+      display: flex;
+      flex-direction: column;
+      max-width: 300px;
+      input{
+
+      }
+    }
+  }
+}
