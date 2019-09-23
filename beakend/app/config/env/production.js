@@ -20,10 +20,10 @@ module.exports = {
         pass: "adn45hrf"
     },
     site: {
-        sidDomain: "185.69.153.199",
-        domain: "http://185.69.153.199",
-        innerDomain: "http://185.69.153.199",
-        baseUrl: "http://185.69.153.199",
+        sidDomain: "piligrim-test.pp.ua",
+        domain: "https://piligrim-test.pp.ua",
+        innerDomain: "https://piligrim-test.pp.ua",
+        baseUrl: "https://piligrim-test.pp.ua",
         resetPasswordUrl: "/reset_password/",
         setPasswordUrl: "/reset_password/"
     },
