@@ -21,7 +21,8 @@ export class AuthService {
 
   private checkBasket = new BehaviorSubject<any>(null);
   public onCheckBasket = this.checkBasket.asObservable();
-  constructor() { }
+  constructor(
+  ) { }
 
   setCheckBasket(data) {
     this.checkBasket.next(data);
@@ -41,7 +42,7 @@ export class AuthService {
   setTranslate(data) {
     this.translate.next(data);
   }
-
+  //
   // isAuthAdmin() {
   //   if (this.cookieService.get('adminId') || localStorage.getItem('adminId')) {
   //     return true;
