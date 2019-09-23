@@ -58,7 +58,7 @@ export class BrandsComponent implements OnInit, AfterViewInit {
       this.brand['img'] = v.file;
       this.crud.post('brand', this.brand).then((v: any) => {
         if (v) {
-          this.brands.push(this.brand);
+          this.brands.push(v);
           this.dataSource = new MatTableDataSource(this.brands);
           setTimeout(() => this.dataSource.paginator = this.paginator);
           this.uploadObj = {};

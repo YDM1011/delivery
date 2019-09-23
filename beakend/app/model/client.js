@@ -19,11 +19,16 @@ const schem = new Schema({
         type: Schema.Types.ObjectId,
         ref: "Basket"
     }],
+    companies:[{
+        type: Schema.Types.ObjectId,
+        ref: "Company"
+    }],
     basketCount: Number,
     favoriteCompany: [{
         type: Schema.Types.ObjectId,
         ref: "Company"
     }],
+
     favoriteProduct: [{
         type: Schema.Types.ObjectId,
         ref: "Order"

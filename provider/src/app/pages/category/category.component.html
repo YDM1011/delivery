@@ -9,6 +9,9 @@
 			<label>
 				<input type="text" placeholder="Категория" [(ngModel)]="category.name">
 			</label>
+			<select [(ngModel)]="mainCategoryChoose" (ngModelChange)="log()">
+				<option *ngFor="let item of mainCategory" [value]="item._id">{{item.name}}</option>
+			</select>
 			<div class="group-buttons">
 				<div class="left">
 				</div>
@@ -35,7 +38,7 @@
 				</div>
 				<div class="right">
 					<button class="main-button" (click)="cancelEdit()">Отмена</button>
-					<button class="main-button-color" (click)="confirmEdit(editObj._id)">Сохранить</button>
+					<button class="main-button-color" (click)="confirmEdit()">Сохранить</button>
 				</div>
 			</div>
 		</div>

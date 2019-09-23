@@ -30,12 +30,10 @@ export class CreateClientsComponent implements OnInit {
       return;
     }
     this.client['role'] = role;
-    this.crud.post('client', this.client).then((v: any) => {
-      if (v) {
-        this.clearObj();
-        this.showClient = false;
-        this.showProvider = false;
-      }
+    this.crud.post('signup', this.client).then((v: any) => {
+      this.clearObj();
+      this.showClient = false;
+      this.showProvider = false;
     });
   }
   createClient() {

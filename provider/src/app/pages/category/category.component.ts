@@ -1,14 +1,18 @@
-import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
-import {CrudService} from "../../crud.service";
+import {Component, OnInit, ViewChild} from '@angular/core';
 import Swal from "sweetalert2";
 import {MatPaginator, MatTableDataSource} from "@angular/material";
+import {CrudService} from "../../crud.service";
+import {AuthService} from "../../auth.service";
 
 @Component({
   selector: 'app-category',
   templateUrl: './category.component.html',
   styleUrls: ['./category.component.scss']
 })
-export class CategoryComponent implements OnInit, AfterViewInit {
+export class CategoryComponent implements OnInit {
+  public mainCategoryChoose: string;
+  public mainCategory;
+  public user;
   public defLang = 'ru-UA';
   public showPagin: boolean = false;
   public addShow: boolean = false;
@@ -18,23 +22,29 @@ export class CategoryComponent implements OnInit, AfterViewInit {
     name: '',
   };
   public category = {
-    name: ''
+    name: '',
+    companyOwner: '',
+    orders: [],
+    mainCategory: '',
   };
 
   displayedColumns: string[] = ['Номер', 'Назва бренда', 'data', 'delete'];
   dataSource = new MatTableDataSource(this.categorys);
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   constructor(
-      private crud: CrudService
+      private crud: CrudService,
+      private auth: AuthService
   ) { }
 
-  ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
-  }
   ngOnInit() {
     this.crud.get('mainCategory').then((v: any) => {
+      if(!v) return;
+      this.mainCategory = v;
+    });
+    this.auth.onMe.subscribe((v: any) => {
       if (!v) return;
-      this.categorys = v;
+      this.user = v;
+      this.categorys = this.user.category;
       this.dataSource = new MatTableDataSource(this.categorys);
       setTimeout(() => this.dataSource.paginator = this.paginator);
       this.chackDataLength();
@@ -46,15 +56,21 @@ export class CategoryComponent implements OnInit, AfterViewInit {
       Swal.fire('Error', 'Название категории не может быть пустым', 'error');
       return;
     }
-    this.crud.post('mainCategory', this.category).then((v: any) => {
+    this.category['mainCategory'] = this.mainCategoryChoose;
+    this.category['companyOwner'] = this.user.companies[0]._id;
+    this.crud.post('company', {categories: this.category}, this.user.companies[0]._id).then((v: any) => {
       if (v) {
-        this.categorys.push(v);
+        this.categorys.push(this.category);
         this.dataSource = new MatTableDataSource(this.categorys);
         setTimeout(() => this.dataSource.paginator = this.paginator);
         this.chackDataLength();
         this.category = {
-          name: ''
+          name: '',
+          companyOwner: '',
+          orders: [],
+          mainCategory: '',
         };
+        this.mainCategoryChoose = null;
         this.addShow = false;
       }
     });
@@ -75,15 +91,15 @@ export class CategoryComponent implements OnInit, AfterViewInit {
     this.addShow = false;
     this.editShow = true;
   }
-  confirmEdit(id) {
-      this.confirmEditCategoryCrud(id);
+  confirmEdit() {
+    this.confirmEditCategoryCrud();
   }
-  confirmEditCategoryCrud(id) {
+  confirmEditCategoryCrud() {
     if (this.editObj.name === '') {
       Swal.fire('Error', 'Название категории не может быть пустым', 'error');
       return;
     }
-    this.crud.post('mainCategory', {name: this.editObj['name']}, id).then((v: any) => {
+    this.crud.post('mainCategory', {name: this.editObj['name']}, this.editObj['_id']).then((v: any) => {
       if (v) {
         this.editShow = false;
         this.categorys[this.crud.find('_id', this.editObj['_id'], this.categorys)] = v;
@@ -114,10 +130,13 @@ export class CategoryComponent implements OnInit, AfterViewInit {
   }
 
   chackDataLength() {
-    if (this.categorys.length > 0 ) {
-      this.showPagin = true;
-    } else {
+    if (!this.categorys || this.categorys.length === 0 || this.categorys === undefined) {
       this.showPagin = false;
+    } else {
+      this.showPagin = true;
     }
+  }
+  log() {
+    console.log(this.mainCategoryChoose)
   }
 }

@@ -22,15 +22,10 @@ export class AuthService {
   private language = new BehaviorSubject<any>(null);
   public onLanguage = this.language.asObservable();
 
-  private checkBasket = new BehaviorSubject<any>(null);
-  public onCheckBasket = this.checkBasket.asObservable();
   constructor(
       private cookieService: CookieService
   ) { }
 
-  setCheckBasket(data) {
-    this.checkBasket.next(data);
-  }
   setSettings(data) {
       this.settings.next(data);
   }
@@ -51,7 +46,7 @@ export class AuthService {
   }
 
   isAuthAdmin() {
-    if (this.cookieService.get('adminId') || localStorage.getItem('adminId')) {
+    if (this.cookieService.get('userId') || localStorage.getItem('userId')) {
       return true;
     } else {
       return false;

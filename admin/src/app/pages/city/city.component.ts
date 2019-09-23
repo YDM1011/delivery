@@ -52,12 +52,12 @@ export class CityComponent implements OnInit, AfterViewInit{
         Swal.fire('Error', 'Картинка города не может быть пуста', 'error');
         return;
     }
-    this.crud.post('upload2', {body: this.uploadObj}).then((v: any) => {
+    this.crud.post('upload2', {body: this.uploadObj}, null, false).then((v: any) => {
       if (!v) return;
       this.city['img'] = v.file;
       this.crud.post('city', this.city).then((v: any) => {
         if (v) {
-          this.citys.push(this.city);
+          this.citys.push(v);
           this.dataSource = new MatTableDataSource(this.citys);
           setTimeout(() => this.dataSource.paginator = this.paginator);
           this.chackDataLength();

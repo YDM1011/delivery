@@ -7,7 +7,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {SweetAlert2Module} from '@sweetalert2/ngx-sweetalert2';
-import {HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {SidebarComponent} from "./components/sidebar/sidebar.component";
 import {LangTabComponent} from "./components/lang-tab/lang-tab.component";
 import {DialogComponent} from "./components/upload/dialog/dialog.component";
@@ -22,6 +22,8 @@ import { LoginComponent } from './pages/login/login.component';
 import {CookieService} from "ngx-cookie-service";
 import { MainComponent } from './layout/main/main.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
+import { CategoryComponent } from './pages/category/category.component';
+import {ApiInterceptor} from "../../../aplication/src/app/api.interceptor";
 
 @NgModule({
   declarations: [
@@ -36,6 +38,7 @@ import { NotFoundComponent } from './pages/not-found/not-found.component';
     LoginComponent,
     MainComponent,
     NotFoundComponent,
+    CategoryComponent,
   ],
   imports: [
     BrowserAnimationsModule,
@@ -49,7 +52,8 @@ import { NotFoundComponent } from './pages/not-found/not-found.component';
     ReactiveFormsModule,
   ],
   exports: [MaterialModule],
-  providers: [CookieService, {provide: LOCALE_ID, useValue: 'ru-UA'}, {provide: LOCALE_ID, useValue: 'uk'}],
+  providers: [CookieService, {provide: HTTP_INTERCEPTORS, useClass: ApiInterceptor, multi: true},
+    {provide: LOCALE_ID, useValue: 'ru-UA'}, {provide: LOCALE_ID, useValue: 'uk'}],
   entryComponents: [
     DialogComponent,
   ],
