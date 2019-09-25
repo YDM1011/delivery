@@ -28,12 +28,12 @@
 			<label>
 				<input type="text" placeholder="Name" [(ngModel)]="editObj.name">
 			</label>
-			<label>
-				<input type="text" placeholder="Phone" [(ngModel)]="editObj.login">
-			</label>
-			<label>
-				<input type="text" placeholder="Password" [(ngModel)]="editObj.pass">
-			</label>
+<!--			<label>-->
+<!--				<input type="text" placeholder="Phone" [(ngModel)]="editObj.login">-->
+<!--			</label>-->
+<!--			<label>-->
+<!--				<input type="text" placeholder="Password" [(ngModel)]="editObj.pass">-->
+<!--			</label>-->
 			<div class="group-buttons">
 				<div class="left">
 				</div>
@@ -68,11 +68,20 @@
 					<!-- Name Column -->
 					<ng-container matColumnDef="Назва бренда">
 						<th mat-header-cell *matHeaderCellDef>Тел</th>
+<!--						<td class="table__name" mat-cell *matCellDef="let element">-->
+<!--							<div class="table__name-name">-->
+<!--								<a [routerLink]="'/user-detail/'+ element._id">-->
+<!--									{{element.login}}-->
+<!--								</a>-->
+<!--							</div>-->
+<!--						</td>-->
 						<td class="table__name" mat-cell *matCellDef="let element">
+							<div class="table__name-img">
+								<img src="./assets/images/user.svg" alt="" *ngIf="!element.img || element.img == ''">
+								<app-img [fs]="element.img" *ngIf="element.img && element.img !== ''"></app-img>
+							</div>
 							<div class="table__name-name">
-								<a [routerLink]="'/user-detail/'+ element._id">
-									{{element.login}}
-								</a>
+								{{element.login}}
 							</div>
 						</td>
 					</ng-container>
