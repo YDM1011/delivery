@@ -14,12 +14,13 @@ export class CategoryComponent implements OnInit {
   public mainCategory;
   public user;
   public defLang = 'ru-UA';
-  public showPagin: boolean = false;
-  public addShow: boolean = false;
-  public editShow: boolean = false;
+  public showPagin = false;
+  public addShow = false;
+  public editShow = false;
   public categorys = [];
   public editObj = {
     name: '',
+    mainCategory: '',
   };
   public category = {
     name: '',
@@ -38,16 +39,21 @@ export class CategoryComponent implements OnInit {
 
   ngOnInit() {
     this.crud.get('mainCategory').then((v: any) => {
-      if(!v) return;
+      if (!v)  { return; }
       this.mainCategory = v;
+      this.mainCategoryChoose = this.mainCategory[0]._id;
     });
     this.auth.onMe.subscribe((v: any) => {
-      if (!v) return;
+      if (!v) { return; }
       this.user = v;
-      this.categorys = this.user.category;
-      this.dataSource = new MatTableDataSource(this.categorys);
-      setTimeout(() => this.dataSource.paginator = this.paginator);
-      this.chackDataLength();
+      if (this.user.companies[0] && this.user.companies[0].categories.length > 0) {
+        this.crud.get(`company?query={"_id": "${this.user.companies[0]._id}"}&populate={"path": "categories"}`).then((e: any) => {
+          this.categorys = e[0].categories;
+          this.dataSource = new MatTableDataSource(this.categorys);
+          setTimeout(() => this.dataSource.paginator = this.paginator);
+          this.chackDataLength();
+        });
+      }
     });
   }
 
@@ -56,11 +62,16 @@ export class CategoryComponent implements OnInit {
       Swal.fire('Error', 'Название категории не может быть пустым', 'error');
       return;
     }
-    this.category['mainCategory'] = this.mainCategoryChoose;
-    this.category['companyOwner'] = this.user.companies[0]._id;
-    this.crud.post('company', {categories: this.category}, this.user.companies[0]._id).then((v: any) => {
+    if (!this.mainCategoryChoose) {
+      Swal.fire('Error', 'Выберете к какой категории относится ваша категория', 'error');
+      return;
+    }
+    this.category.mainCategory = this.mainCategoryChoose;
+    this.category.companyOwner = this.user.companies[0]._id;
+    this.crud.post('category', this.category).then((v: any) => {
       if (v) {
-        this.categorys.push(this.category);
+        this.categorys.push(v);
+        this.crud.post('company', {categories: this.categorys}, this.user.companies[0]._id, false).then((e: any) => {});
         this.dataSource = new MatTableDataSource(this.categorys);
         setTimeout(() => this.dataSource.paginator = this.paginator);
         this.chackDataLength();
@@ -77,7 +88,7 @@ export class CategoryComponent implements OnInit {
   }
 
   delete(i) {
-    this.crud.delete('mainCategory', this.categorys[i]['_id']).then((v: any) => {
+    this.crud.delete('category', this.categorys[i]._id).then((v: any) => {
       if (v) {
         this.categorys.splice(i, 1);
         this.dataSource = new MatTableDataSource(this.categorys);
@@ -88,6 +99,7 @@ export class CategoryComponent implements OnInit {
   }
   edit(i) {
     this.editObj = Object.assign({}, this.categorys[i]);
+    this.mainCategoryChoose = this.editObj.mainCategory;
     this.addShow = false;
     this.editShow = true;
   }
@@ -99,7 +111,12 @@ export class CategoryComponent implements OnInit {
       Swal.fire('Error', 'Название категории не может быть пустым', 'error');
       return;
     }
-    this.crud.post('mainCategory', {name: this.editObj['name']}, this.editObj['_id']).then((v: any) => {
+    if (!this.mainCategoryChoose) {
+      Swal.fire('Error', 'Выберете к какой категории относится ваша категория', 'error');
+      return;
+    }
+    this.editObj.mainCategory = this.mainCategoryChoose;
+    this.crud.post('category', {name: this.editObj.name}, this.editObj['_id']).then((v: any) => {
       if (v) {
         this.editShow = false;
         this.categorys[this.crud.find('_id', this.editObj['_id'], this.categorys)] = v;
@@ -107,8 +124,10 @@ export class CategoryComponent implements OnInit {
         setTimeout(() => this.dataSource.paginator = this.paginator);
         this.chackDataLength();
         this.editObj = {
-          name: ''
+          name: '',
+          mainCategory: '',
         };
+        this.editShow = false;
       }
     });
   }
@@ -118,25 +137,34 @@ export class CategoryComponent implements OnInit {
   }
   cancelAdd() {
     this.addShow = false;
+    this.mainCategoryChoose = this.mainCategory[0]._id;
     this.category = {
-      name: ''
+      name: '',
+      companyOwner: '',
+      orders: [],
+      mainCategory: '',
     };
   }
   cancelEdit() {
     this.editShow = false;
     this.editObj = {
-      name: ''
+      name: '',
+      mainCategory: '',
     };
   }
 
   chackDataLength() {
-    if (!this.categorys || this.categorys.length === 0 || this.categorys === undefined) {
+    if (!this.categorys || this.categorys.length === 0) {
       this.showPagin = false;
     } else {
       this.showPagin = true;
     }
   }
-  log() {
-    console.log(this.mainCategoryChoose)
+  applyFilter(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
   }
 }

@@ -9,10 +9,6 @@ import {AuthService} from "../../auth.service";
 })
 export class DashboardComponent implements OnInit {
   public user;
-  public companyOb = {
-    id: '5d88b46109d1a9103dbdc284',
-    name: 'MyCompany'
-  };
   constructor(
       private crud: CrudService,
       private auth: AuthService
@@ -24,4 +20,10 @@ export class DashboardComponent implements OnInit {
       this.user = Object.assign({}, v);
     });
   }
+  company() {
+    this.crud.post('client', {companies: ['5d89df020a280c179cd099e0']}, this.user._id ).then((v: any) => {
+      console.log(v);
+    });
+  }
+
 }

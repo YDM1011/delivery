@@ -2,16 +2,19 @@
 	<div class="contain__group"  *ngIf="addShow">
 		<div class="contain__group-header">
 			<div class="title">
-				Создать категорию
+				Создать продукт
 			</div>
 		</div>
 		<div class="add-section">
 			<label>
-				<input type="text" placeholder="Категория" [(ngModel)]="category.name">
+				<input type="text" placeholder="Название продукта" [(ngModel)]="product.name">
 			</label>
-			<select [(ngModel)]="mainCategoryChoose">
-				<option *ngFor="let item of mainCategory" [value]="item._id">{{item.name}}</option>
-			</select>
+			<label>
+				<input type="text" placeholder="Опис продукта" [(ngModel)]="product.des">
+			</label>
+			<label>
+				<input type="text" placeholder="Ціна" [(ngModel)]="product.price">
+			</label>
 			<div class="group-buttons">
 				<div class="left">
 				</div>
@@ -26,22 +29,25 @@
 	<div class="contain__group"  *ngIf="editShow">
 		<div class="contain__group-header">
 			<div class="title">
-				Редактировать категорию
+				Редактировать продукт
 			</div>
 		</div>
 		<div class="edit-section" *ngIf="editShow">
 			<label>
-				<input type="text" placeholder="Категория" [(ngModel)]="editObj.name">
+				<input type="text" placeholder="Название продукта" [(ngModel)]="editObj.name">
 			</label>
-			<select [(ngModel)]="mainCategoryChoose">
-				<option *ngFor="let item of mainCategory" [value]="item._id">{{item.name}}</option>
-			</select>
+			<label>
+				<input type="text" placeholder="Опис продукта" [(ngModel)]="editObj.des">
+			</label>
+			<label>
+				<input type="text" placeholder="Ціна" [(ngModel)]="editObj.price">
+			</label>
 			<div class="group-buttons">
 				<div class="left">
 				</div>
 				<div class="right">
 					<button class="main-button" (click)="cancelEdit()">Отмена</button>
-					<button class="main-button-color" (click)="confirmEdit()">Сохранить</button>
+					<button class="main-button-color" (click)="confirmEditCategoryCrud()">Сохранить</button>
 				</div>
 			</div>
 		</div>
@@ -49,11 +55,11 @@
 	
 	<div class="contain__group">
 		<div class="contain__group-header">
-			<div class="title">
-				Все категории
+			<div class="title" *ngIf="categoryID">
+				Категория {{categoryID.name}}
 			</div>
 			<button class="button-add" (click)="openAdd()">
-				<span class="content">Создать категорию</span>
+				<span class="content">Создать продукт</span>
 			</button>
 		</div>
 		<div class="main-section">
@@ -61,7 +67,7 @@
 				<mat-form-field class="filter" *ngIf="showPagin">
 					<input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
 				</mat-form-field>
-				<table mat-table [dataSource]="dataSource" *ngIf="categorys && categorys.length > 0">
+				<table mat-table [dataSource]="dataSource" *ngIf="products && products.length > 0">
 					<!-- Position Column -->
 					<ng-container matColumnDef="Номер">
 						<th mat-header-cell *matHeaderCellDef>#</th>
@@ -70,12 +76,10 @@
 					
 					<!-- Name Column -->
 					<ng-container matColumnDef="Назва бренда">
-						<th mat-header-cell *matHeaderCellDef>Назва бренда</th>
+						<th mat-header-cell *matHeaderCellDef>Название продукта</th>
 						<td class="table__name" mat-cell *matCellDef="let element">
 							<div class="table__name-name">
-								<a [routerLink]="'/category-detail/'+ element._id">
-									{{element.name}}
-								</a>
+								{{element.name}}
 							</div>
 						</td>
 					</ng-container>
@@ -100,16 +104,15 @@
 							<span class="trash-btn" (click)="delete(index)"></span>
 						</td>
 					</ng-container>
-					
 					<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
 					<tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 				</table>
 				
 				<mat-paginator class="paginator-table" [pageSizeOptions]="[5, 10, 20]" [class.paginator-table-active]="showPagin"></mat-paginator>
 			</div>
-			<div class="empty-section" *ngIf="!categorys || categorys.length === 0">
+			<div class="empty-section" *ngIf="!products || products.length === 0">
 				<p>
-					У вас нет созданых категорий
+					У вас нет созданых продуктов
 				</p>
 			</div>
 		</div>

@@ -45,10 +45,10 @@ module.exports = backendApp => {
                     schemaPre.Update],
                 postUpdate: [update_ws, schemaPre.PostUpdate],
                 preDelete: [
-                    model.schema.options.needBeAdmin ? backendApp.middlewares.isAdmin :  nextS,
-                    model.schema.options.needLogined && !model.schema.options.needBeAdmin ? backendApp.middlewares.isLoggedIn : nextS,
-                    model.schema.options.needAccessControl && !model.schema.options.needLogined && !model.schema.options.needBeAdmin ? backendApp.middlewares.isLoggedIn :  nextS,
-                    model.schema.options.needAccessControl && !model.schema.options.needBeAdmin ? backendApp.middlewares.checkAccessRights(modelName + '.canDelete') :  nextS,
+                    // model.schema.options.needBeAdmin ? backendApp.middlewares.isAdmin :  nextS,
+                    // model.schema.options.needLogined && !model.schema.options.needBeAdmin ? backendApp.middlewares.isLoggedIn : nextS,
+                    // model.schema.options.needAccessControl && !model.schema.options.needLogined && !model.schema.options.needBeAdmin ? backendApp.middlewares.isLoggedIn :  nextS,
+                    // model.schema.options.needAccessControl && !model.schema.options.needBeAdmin ? backendApp.middlewares.checkAccessRights(modelName + '.canDelete') :  nextS,
                     schemaPre.Delete],
                 postDelete: [update_ws, schemaPre.PostDelete],
                 // preCustomLink: backendApp.middlewares.isLoggedIn

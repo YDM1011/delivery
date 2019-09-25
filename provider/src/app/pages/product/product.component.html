@@ -2,15 +2,21 @@
 	<div class="contain__group"  *ngIf="addShow">
 		<div class="contain__group-header">
 			<div class="title">
-				Создать категорию
+				Создать Продукт
 			</div>
 		</div>
 		<div class="add-section">
 			<label>
-				<input type="text" placeholder="Категория" [(ngModel)]="category.name">
+				<input type="text" placeholder="Название продукта" [(ngModel)]="product.name">
+			</label>
+			<label>
+				<input type="text" placeholder="Опис продукта" [(ngModel)]="product.des">
+			</label>
+			<label>
+				<input type="text" placeholder="Ціна" [(ngModel)]="product.price">
 			</label>
 			<select [(ngModel)]="mainCategoryChoose">
-				<option *ngFor="let item of mainCategory" [value]="item._id">{{item.name}}</option>
+				<option *ngFor="let item of categorys" [value]="item._id">{{item.name}}</option>
 			</select>
 			<div class="group-buttons">
 				<div class="left">
@@ -26,22 +32,28 @@
 	<div class="contain__group"  *ngIf="editShow">
 		<div class="contain__group-header">
 			<div class="title">
-				Редактировать категорию
+				Редактировать продукт
 			</div>
 		</div>
 		<div class="edit-section" *ngIf="editShow">
 			<label>
-				<input type="text" placeholder="Категория" [(ngModel)]="editObj.name">
+				<input type="text" placeholder="Название продукта" [(ngModel)]="product.name">
+			</label>
+			<label>
+				<input type="text" placeholder="Опис продукта" [(ngModel)]="product.des">
+			</label>
+			<label>
+				<input type="text" placeholder="Ціна" [(ngModel)]="product.price">
 			</label>
 			<select [(ngModel)]="mainCategoryChoose">
-				<option *ngFor="let item of mainCategory" [value]="item._id">{{item.name}}</option>
+				<option *ngFor="let item of categorys" [value]="item._id">{{item.name}}</option>
 			</select>
 			<div class="group-buttons">
 				<div class="left">
 				</div>
 				<div class="right">
 					<button class="main-button" (click)="cancelEdit()">Отмена</button>
-					<button class="main-button-color" (click)="confirmEdit()">Сохранить</button>
+					<button class="main-button-color" (click)="confirmEditCategoryCrud()">Сохранить</button>
 				</div>
 			</div>
 		</div>
@@ -50,10 +62,10 @@
 	<div class="contain__group">
 		<div class="contain__group-header">
 			<div class="title">
-				Все категории
+				Все продукты
 			</div>
 			<button class="button-add" (click)="openAdd()">
-				<span class="content">Создать категорию</span>
+				<span class="content">Создать продукт</span>
 			</button>
 		</div>
 		<div class="main-section">
@@ -61,6 +73,7 @@
 				<mat-form-field class="filter" *ngIf="showPagin">
 					<input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
 				</mat-form-field>
+				
 				<table mat-table [dataSource]="dataSource" *ngIf="categorys && categorys.length > 0">
 					<!-- Position Column -->
 					<ng-container matColumnDef="Номер">
@@ -70,7 +83,7 @@
 					
 					<!-- Name Column -->
 					<ng-container matColumnDef="Назва бренда">
-						<th mat-header-cell *matHeaderCellDef>Назва бренда</th>
+						<th mat-header-cell *matHeaderCellDef>Назва категорий</th>
 						<td class="table__name" mat-cell *matCellDef="let element">
 							<div class="table__name-name">
 								<a [routerLink]="'/category-detail/'+ element._id">
@@ -109,7 +122,7 @@
 			</div>
 			<div class="empty-section" *ngIf="!categorys || categorys.length === 0">
 				<p>
-					У вас нет созданых категорий
+					У вас нет созданых продуктов
 				</p>
 			</div>
 		</div>
