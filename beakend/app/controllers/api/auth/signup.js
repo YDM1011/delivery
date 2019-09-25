@@ -9,6 +9,7 @@ module.exports = (backendApp, router) => {
 
     const signup = (req,res,next) => {
         const Client = backendApp.mongoose.model("Client");
+        const Company = backendApp.mongoose.model("Company");
         let errors = {};
 
 
@@ -32,14 +33,36 @@ module.exports = (backendApp, router) => {
                 // req.body.email = req.body.email ? req.body.email : req.body.login;
                 req.body.email = req.body.email ? req.body.email.toLowerCase() : req.body.login.toLowerCase();
                 if (req.user && req.user.role == 'admin') req.body.verify = true;
-                if (req.user && req.user.role == 'provider') {
-                    req.body.verify = true
-                };
+                if (req.user.role === 'provider') {
+                    req.body.verify = true;
+                    req.body.role = 'collaborator';
+                    req.user.companies.forEach((it, i)=>{
+                        req.user.companies[i] = it.toString();
+                    });
+                    if(req.user.companies.indexOf(req.body.companyOwner) > -1) {
+                    } else {
+                        return res.badRequest('Company error');
+
+                    }
+                }
                 Client.create(req.body, (e,r)=>{
                     if (e) return res.serverError(e);
                     if (!r) return res.badRequest();
 
+                    if (!req.user) {
+                        // r.signin(req,res,backendApp)
+                        // verify()
+                    }
+                    if (req.user.role === 'provider') {
+                        Company.findOneAndUpdate({_id: req.body.companyOwner}, {$push: {collaborators: r._id}}, {new:true})
+                            .exec((e1,r1)=>{
+                            if (e1) return res.serverError(e1);
+                            if (!r1) return res.badRequest();
+                            console.log(r1)
+                            return  res.ok(r)
+                        });
 
+                    }
                     // backendApp.service.email({
                     //     to: r.email,
                     //     subject: 'Sign Up',
@@ -49,11 +72,6 @@ module.exports = (backendApp, router) => {
                     //     }
                     // }, backendApp)
 
-                    if (!req.user) {
-                        // r.signin(req,res,backendApp)
-                        // verify()
-                    }
-                    if (req.user) return  res.ok('')
                 })
             }
         });

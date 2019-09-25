@@ -10,7 +10,7 @@ const schem = new Schema({
     ua: String,
     ru: String,
     updatedAt: {type: Date},
-    data: {type: Date, default: new Date()}
+    date: {type: Date, default: new Date()}
 },{
     toJSON: {
         transform: function (doc, ret) {

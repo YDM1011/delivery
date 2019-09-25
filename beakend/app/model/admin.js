@@ -7,7 +7,7 @@ const schem = new Schema({
     email: {type: String, required: [true, "Email is required"]},
     token: String,
     verify: {type: Boolean, default: false},
-    data: {type: Date, default: new Date()},
+    date: {type: Date, default: new Date()},
     setting: {
             type: Schema.Types.ObjectId,
             ref: "Setting"

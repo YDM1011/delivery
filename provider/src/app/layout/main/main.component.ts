@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {AuthService} from '../../auth.service';
 import {CrudService} from '../../crud.service';
+import {CookieService} from "ngx-cookie-service";
 
 @Component({
   selector: 'app-main',
@@ -11,16 +12,19 @@ export class MainComponent implements OnInit {
   public user;
   constructor(
       private auth: AuthService,
-      private crud: CrudService
+      private crud: CrudService,
+      private cookieService: CookieService
   ) { }
 
   ngOnInit() {
     this.auth.onMe.subscribe((v: any) => {
       if (!v) {
-        this.crud.get(`client?query="${localStorage.getItem('userId')}"&populate={"path": "companies"}`).then((v: any) => {
-          if (!v) return;
-          this.auth.setMe(v[0]);
-          console.log(v[0]);
+        if (!this.cookieService.get('userId')) { return; }
+        const query = JSON.stringify({_id: this.cookieService.get('userId')});
+        this.crud.get(`client?query=${query}&populate={"path":"companies","populate":{"path":"collaborators"}}`).then((v2: any) => {
+          if (!v2) {return; }
+          this.auth.setMe(v2[0]);
+          console.log(v2[0]);
         });
       }
       this.user = v;

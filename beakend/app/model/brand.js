@@ -13,7 +13,7 @@ const schem = new Schema({
         ref: "Order"
     }],
     updatedAt: {type: Date},
-    data: {type: Date, default: new Date()}
+    date: {type: Date, default: new Date()}
 },{
     toJSON: {
         transform: function (doc, ret) {

@@ -21,14 +21,12 @@ export class CreateComponent implements OnInit {
     name: '',
     login: '',
     pass: '',
-    role: '',
     companyOwner: ''
   };
   public client = {
     name: '',
     login: '',
     pass: '',
-    role: '',
     companyOwner: ''
   };
 
@@ -50,18 +48,19 @@ export class CreateComponent implements OnInit {
       this.checkDataLength();
     });
   }
-  create(role) {
+  create() {
     const e = this.client;
     if (e.name === '' || e.pass === '' || e.login === '') {
       Swal.fire('Error', 'Все поля обязательны', 'error').then();
       return;
     }
-    this.client.role = role;
-    this.crud.post('signup', this.client, null, true).then((v: any) => {
+    this.client.companyOwner = this.user.companies[0]._id;
+    this.crud.post('signup', this.client).then((v: any) => {
       if (!v) {return; }
       this.clients.push(v);
-      this.crud.post(`company?query={"_id": ${this.user.companies[0]._id}`, {collaborators: this.clients}, this.user.companies[0]._id).then(()=>{
-      })
+      this.dataSource = new MatTableDataSource(this.clients);
+      setTimeout(() => this.dataSource.paginator = this.paginator);
+      this.checkDataLength();
       this.clearObj();
       this.showCollaborator = false;
     }).catch((error) => {
@@ -80,15 +79,11 @@ export class CreateComponent implements OnInit {
       if (v) {
         this.editShow = false;
         this.clients[this.crud.find('_id', this.editObj._id, this.clients)] = v;
-        this.dataSource = new MatTableDataSource(this.clients);
-        setTimeout(() => this.dataSource.paginator = this.paginator);
-        this.checkDataLength();
         this.editObj = {
           _id: '',
           name: '',
           login: '',
           pass: '',
-          role: '',
           companyOwner: ''
         };
         this.editShow = false;
@@ -99,12 +94,23 @@ export class CreateComponent implements OnInit {
     this.showCollaborator = true;
     this.clearObj();
   }
+  edit(i) {
+    this.editObj = Object.assign({}, this.clients[i]);
+    this.editShow = true;
+    this.showCollaborator = false;
+  }
+  delete(i) {
+    this.crud.delete('client', this.clients[i]._id).then((v: any) => {
+      if (v) {
+        this.clients.splice(i, 1);
+      }
+    });
+  }
   clearObj() {
     this.client = {
       name: '',
       login: '',
       pass: '',
-      role: '',
       companyOwner: ''
     };
   }
@@ -115,7 +121,6 @@ export class CreateComponent implements OnInit {
       name: '',
       login: '',
       pass: '',
-      role: '',
       companyOwner: ''
     };
   }
@@ -123,6 +128,7 @@ export class CreateComponent implements OnInit {
   checkDataLength() {
     if (!this.clients || this.clients.length === 0) {
       this.showPagin = false;
+      return;
     }
     this.showPagin = true;
   }
