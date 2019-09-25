@@ -26,6 +26,7 @@ import { CategoryComponent } from './pages/category/category.component';
 import {ApiInterceptor} from '../../../aplication/src/app/api.interceptor';
 import { ProductComponent } from './pages/product/product.component';
 import { CategoryDetailComponent } from './pages/category-detail/category-detail.component';
+import { CreateComponent } from './pages/create/create.component';
 
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ import { CategoryDetailComponent } from './pages/category-detail/category-detail
     CategoryComponent,
     ProductComponent,
     CategoryDetailComponent,
+    CreateComponent,
   ],
   imports: [
     BrowserAnimationsModule,
