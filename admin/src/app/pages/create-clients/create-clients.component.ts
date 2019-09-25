@@ -8,8 +8,9 @@ import Swal from "sweetalert2";
   styleUrls: ['./create-clients.component.scss']
 })
 export class CreateClientsComponent implements OnInit {
-  public showClient: boolean = false;
-  public showProvider: boolean = false;
+  public showClient = false;
+  public showProvider = false;
+  public showAdmin = false;
   public client = {
     name: '',
     login: '',
@@ -34,16 +35,26 @@ export class CreateClientsComponent implements OnInit {
       this.clearObj();
       this.showClient = false;
       this.showProvider = false;
+      this.showAdmin = false;
     });
   }
   createClient() {
     this.showClient = true;
     this.showProvider = false;
+    this.showAdmin = false;
     this.clearObj();
   }
   createProvider() {
     this.showClient = false;
     this.showProvider = true;
+    this.showAdmin = false;
+
+    this.clearObj();
+  }
+  createAdmin() {
+    this.showAdmin = true;
+    this.showClient = false;
+    this.showProvider = false;
     this.clearObj();
   }
   clearObj() {

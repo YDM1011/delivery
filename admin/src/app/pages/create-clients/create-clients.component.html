@@ -10,6 +10,7 @@
 		<div class="buttons">
 			<button class="main-button-color" (click)="createClient()">Создать клиента</button>
 			<button class="main-button-color" (click)="createProvider()">Создать поставщика</button>
+			<button class="main-button-color" (click)="createAdmin()">Создать админа</button>
 		</div>
 		
 		<div class="contain" *ngIf="showClient">
@@ -41,6 +42,22 @@
 					<input type="text" placeholder="Phone" [(ngModel)]="client.login" autocomplete="off">
 					<input type="text" placeholder="Password" [(ngModel)]="client.pass" autocomplete="off">
 					<button class="main-button-color" (click)="create('provider')">Создать</button>
+				</div>
+			</div>
+		</div>
+		<div class="contain" *ngIf="showAdmin">
+			<div class="contain__group">
+				<div class="contain__group-header">
+					Админ
+				</div>
+			</div>
+			
+			<div class="client-form">
+				<div class="form">
+					<input type="text" placeholder="Name" [(ngModel)]="client.name" autocomplete="off">
+					<input type="text" placeholder="Phone" [(ngModel)]="client.login" autocomplete="off">
+					<input type="text" placeholder="Password" [(ngModel)]="client.pass" autocomplete="off">
+					<button class="main-button-color" (click)="create('admin')">Создать</button>
 				</div>
 			</div>
 		</div>
