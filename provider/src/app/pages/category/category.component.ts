@@ -103,9 +103,6 @@ export class CategoryComponent implements OnInit {
     this.addShow = false;
     this.editShow = true;
   }
-  confirmEdit() {
-    this.confirmEditCategoryCrud();
-  }
   confirmEditCategoryCrud() {
     if (this.editObj.name === '') {
       Swal.fire('Error', 'Название категории не может быть пустым', 'error');
@@ -156,9 +153,8 @@ export class CategoryComponent implements OnInit {
   chackDataLength() {
     if (!this.categorys || this.categorys.length === 0) {
       this.showPagin = false;
-    } else {
-      this.showPagin = true;
     }
+    this.showPagin = true;
   }
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();

@@ -16,12 +16,14 @@ module.exports = (backendApp, router) => {
         if (Object.keys(errors).length > 0) {
             return res.badRequest(errors);
         }
+        delete  req.body.verify;
         Client.findOne({
             $or:[
                 {login: req.body.login.toLowerCase()},
                 {email: req.body.login.toLowerCase()}
             ]
         }, (err, user) => {
+            console.log("test", err, user);
             if (err) return res.serverError(err);
             if (user) return res.notFound("User with this login created");
             if (!user){
@@ -29,18 +31,29 @@ module.exports = (backendApp, router) => {
                 req.body.pass = md5(req.body.pass);
                 // req.body.email = req.body.email ? req.body.email : req.body.login;
                 req.body.email = req.body.email ? req.body.email.toLowerCase() : req.body.login.toLowerCase();
+                if (req.user && req.user.role == 'admin') req.body.verify = true;
+                if (req.user && req.user.role == 'provider') {
+                    req.body.verify = true
+                };
                 Client.create(req.body, (e,r)=>{
                     if (e) return res.serverError(e);
                     if (!r) return res.badRequest();
-                    // r.signin(req,res,backendApp)
-                    backendApp.service.email({
-                        to: r.email,
-                        subject: 'Sign Up',
-                        temp: 'hashlink',
-                        tempObj: {
-                            hashlink: backendApp.service.authlink.getHash({login:req.body.login,pass:req.body.pass})
-                        }
-                    }, backendApp)
+
+
+                    // backendApp.service.email({
+                    //     to: r.email,
+                    //     subject: 'Sign Up',
+                    //     temp: 'hashlink',
+                    //     tempObj: {
+                    //         hashlink: backendApp.service.authlink.getHash({login:req.body.login,pass:req.body.pass})
+                    //     }
+                    // }, backendApp)
+
+                    if (!req.user) {
+                        // r.signin(req,res,backendApp)
+                        // verify()
+                    }
+                    if (req.user) return  res.ok('')
                 })
             }
         });
@@ -53,5 +66,5 @@ module.exports = (backendApp, router) => {
         else return next()
     }
 
-    router.post('/signup', [validate], signup);
+    router.post('/signup', [backendApp.middlewares.isLoggedIn], signup);
 };

@@ -1,9 +1,9 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {MatPaginator, MatTableDataSource} from "@angular/material";
-import {CrudService} from "../../crud.service";
-import {AuthService} from "../../auth.service";
-import Swal from "sweetalert2";
-import {ActivatedRoute} from "@angular/router";
+import {MatPaginator, MatTableDataSource} from '@angular/material';
+import {CrudService} from '../../crud.service';
+import {AuthService} from '../../auth.service';
+import Swal from 'sweetalert2';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-category-detail',
@@ -19,6 +19,7 @@ export class CategoryDetailComponent implements OnInit {
   public editShow = false;
   public products = [];
   public editObj = {
+    _id: '',
     name: '',
     des: '',
     price: null,
@@ -43,7 +44,7 @@ export class CategoryDetailComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.route.params.subscribe((params: any) => {
+    this.route.params.subscribe(() => {
       this.id = this.route.snapshot.paramMap.get('id');
       if (this.id) {
         this.crud.get(`category?query={"_id": "${this.id}"}&populate={"path": "orders"}`).then((v: any) => {
@@ -51,7 +52,7 @@ export class CategoryDetailComponent implements OnInit {
           this.products = v[0].orders;
           this.dataSource = new MatTableDataSource(this.products);
           setTimeout(() => this.dataSource.paginator = this.paginator);
-          this.chackDataLength();
+          this.checkDataLength();
         });
       }
     });
@@ -69,7 +70,7 @@ export class CategoryDetailComponent implements OnInit {
           });
           this.dataSource = new MatTableDataSource(this.products);
           setTimeout(() => this.dataSource.paginator = this.paginator);
-          this.chackDataLength();
+          this.checkDataLength();
           this.product = {
             name: '',
             des: '',
@@ -81,8 +82,7 @@ export class CategoryDetailComponent implements OnInit {
         }
       }).catch((error) => {
         if (error && error.error.errors.price.name === 'CastError') {
-          Swal.fire('Error', 'Цена должна вводится через "." - точку', 'error');
-
+          Swal.fire('Error', 'Цена должна вводится через "." - точку', 'error').then();
         }
       });
     }
@@ -94,31 +94,28 @@ export class CategoryDetailComponent implements OnInit {
         this.products.splice(i, 1);
         this.dataSource = new MatTableDataSource(this.products);
         setTimeout(() => this.dataSource.paginator = this.paginator);
-        this.chackDataLength();
+        this.checkDataLength();
       }
     });
     this.products.splice(i, 1);
     this.dataSource = new MatTableDataSource(this.products);
     setTimeout(() => this.dataSource.paginator = this.paginator);
-    this.chackDataLength();
+    this.checkDataLength();
   }
   edit(i) {
     this.editObj = Object.assign({}, this.products[i]);
     this.addShow = false;
     this.editShow = true;
   }
-  confirmEdit() {
-    this.confirmEditCategoryCrud();
-  }
   confirmEditCategoryCrud() {
     if (this.validation('editObj')) {
-      this.crud.post('category', {name: this.editObj.name}, this.editObj['_id']).then((v: any) => {
+      this.crud.post('category', {name: this.editObj.name}, this.editObj._id).then((v: any) => {
         if (v) {
           this.editShow = false;
-          this.products[this.crud.find('_id', this.editObj['_id'], this.products)] = v;
+          this.products[this.crud.find('_id', this.editObj._id, this.products)] = v;
           this.dataSource = new MatTableDataSource(this.products);
           setTimeout(() => this.dataSource.paginator = this.paginator);
-          this.chackDataLength();
+          this.checkDataLength();
           this.product = {
             name: '',
             des: '',
@@ -130,7 +127,7 @@ export class CategoryDetailComponent implements OnInit {
         }
       }).catch((error) => {
         if (error && error.errors.price.name === 'CastError') {
-          Swal.fire('Error', 'Цена должна вводится через "." - точку', 'error');
+          Swal.fire('Error', 'Цена должна вводится через "." - точку', 'error').then();
           return;
         }
       });
@@ -153,6 +150,7 @@ export class CategoryDetailComponent implements OnInit {
   cancelEdit() {
     this.editShow = false;
     this.editObj = {
+      _id: '',
       name: '',
       des: '',
       price: null,
@@ -161,12 +159,11 @@ export class CategoryDetailComponent implements OnInit {
     };
   }
 
-  chackDataLength() {
+  checkDataLength() {
     if (!this.products || this.products.length === 0) {
       this.showPagin = false;
-    } else {
-      this.showPagin = true;
     }
+    this.showPagin = true;
   }
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
@@ -178,15 +175,15 @@ export class CategoryDetailComponent implements OnInit {
 
   validation(obj) {
     if (this[obj].name === '') {
-      Swal.fire('Error', 'Название продукта не может быть пустым', 'error');
+      Swal.fire('Error', 'Название продукта не может быть пустым', 'error').then();
       return;
     }
     if (this[obj].price === null) {
-      Swal.fire('Error', 'Укажите цену продукта', 'error');
+      Swal.fire('Error', 'Укажите цену продукта', 'error').then();
       return;
     }
     if (this[obj].des === '') {
-      Swal.fire('Error', 'Описание не может быть пустым', 'error');
+      Swal.fire('Error', 'Описание не может быть пустым', 'error').then();
       return;
     }
     return true;

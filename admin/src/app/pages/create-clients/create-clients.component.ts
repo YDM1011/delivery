@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {CrudService} from "../../crud.service";
-import Swal from "sweetalert2";
+import {CrudService} from '../../crud.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-create-clients',
@@ -16,7 +16,6 @@ export class CreateClientsComponent implements OnInit {
     login: '',
     pass: '',
     role: '',
-    verify: true
   };
   constructor(
       private crud: CrudService
@@ -27,15 +26,19 @@ export class CreateClientsComponent implements OnInit {
   create(role) {
     const e = this.client;
     if (e.name === '' || e.pass === '' || e.login === '') {
-      Swal.fire('Error', 'Все поля обязательны', 'error');
+      Swal.fire('Error', 'Все поля обязательны', 'error').then();
       return;
     }
-    this.client['role'] = role;
-    this.crud.post('signup', this.client).then((v: any) => {
+    this.client.role = role;
+    this.crud.post('signup', this.client).then(() => {
       this.clearObj();
       this.showClient = false;
       this.showProvider = false;
       this.showAdmin = false;
+    }).catch((error) => {
+      if (error && error.error === 'User with this login created') {
+        Swal.fire('Error', 'Номер телефона уже используется', 'error').then();
+      }
     });
   }
   createClient() {
@@ -63,7 +66,6 @@ export class CreateClientsComponent implements OnInit {
       login: '',
       pass: '',
       role: '',
-      verify: true
     };
   }
 }
