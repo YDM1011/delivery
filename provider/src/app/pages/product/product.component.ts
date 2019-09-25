@@ -65,10 +65,7 @@ export class ProductComponent implements OnInit {
         if (v) {
           const index = this.crud.find('_id', this.mainCategoryChoose, this.categorys);
           this.categorys[index].orders.push(v._id);
-          this.crud.post('category', {categories: this.categorys[index].orders}, this.user.companies[0]._id, false).then((e: any) => {});
-          this.dataSource = new MatTableDataSource(this.products);
-          setTimeout(() => this.dataSource.paginator = this.paginator);
-          this.chackDataLength();
+          this.crud.post('category', {orders: this.categorys[index].orders}, this.mainCategoryChoose, false).then((e: any) => {});
           this.mainCategoryChoose = null;
           this.addShow = false;
           this.clearMainObj();
