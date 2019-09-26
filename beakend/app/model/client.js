@@ -24,6 +24,10 @@ const schem = new Schema({
         type: Schema.Types.ObjectId,
         ref: "Company"
     }],
+    companyOwner:{
+        type: Schema.Types.ObjectId,
+        ref: "Company"
+    },
     basketCount: Number,
     favoriteCompany: [{
         type: Schema.Types.ObjectId,
@@ -46,8 +50,8 @@ const schem = new Schema({
     verify: {type: Boolean, default: false},
     verifyCode: String,
     token: String,
+    date: {type: Date, default: new Date()}
     lastUpdate: {type: Date},
-    data: {type: Date, default: new Date()}
 },{
     toJSON: {
         transform: function (doc, ret) {

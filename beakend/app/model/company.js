@@ -51,7 +51,7 @@ const schem = new Schema({
     },
     verify: {type: Boolean, default: false},
     lastUpdate: {type: Date},
-    data: {type: Date, default: new Date()}
+    date: {type: Date, default: new Date()}
 },{
     toJSON: {
         transform: function (doc, ret) {

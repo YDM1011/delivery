@@ -10,7 +10,7 @@ const user = new Schema({
     email: String,
     token: String,
     lastUpdate: {type: Date, default: new Date()},
-    data: {type: Date, default: new Date()}
+    date: {type: Date, default: new Date()}
 },{
     toJSON: {
         transform: function (doc, ret) {

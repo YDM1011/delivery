@@ -21,7 +21,7 @@ const schem = new Schema({
     value: Number,
     dataCall: Date,
     lastUpdate: {type: Date},
-    data: {type: Date, default: new Date()}
+    date: {type: Date, default: new Date()}
 },{
     toJSON: {
         transform: function (doc, ret) {

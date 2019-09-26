@@ -1,11 +1,4 @@
 <ng-container>
-	<div class="contain">
-		<div class="contain__group">
-			<div class="contain__group-header">
-				Создать сотрудника
-			</div>
-		</div>
-	</div>
 	<div class="create-client">
 		<div class="contain" *ngIf="showCollaborator">
 			<div class="contain__group">
@@ -19,7 +12,7 @@
 					<input type="text" placeholder="Name" [(ngModel)]="client.name" autocomplete="off">
 					<input type="text" placeholder="Phone" [(ngModel)]="client.login" autocomplete="off">
 					<input type="text" placeholder="Password" [(ngModel)]="client.pass" autocomplete="off">
-					<button class="main-button-color" (click)="create('collaborator')">Создать</button>
+					<button class="main-button-color" (click)="create()">Создать</button>
 				</div>
 			</div>
 		</div>
@@ -28,13 +21,19 @@
 	<div class="contain__group"  *ngIf="editShow">
 		<div class="contain__group-header">
 			<div class="title">
-				Редактировать категорию
+				Редактировать cотрудника
 			</div>
 		</div>
 		<div class="edit-section" *ngIf="editShow">
 			<label>
-				<input type="text" placeholder="Категория" [(ngModel)]="editObj.name">
+				<input type="text" placeholder="Name" [(ngModel)]="editObj.name">
 			</label>
+<!--			<label>-->
+<!--				<input type="text" placeholder="Phone" [(ngModel)]="editObj.login">-->
+<!--			</label>-->
+<!--			<label>-->
+<!--				<input type="text" placeholder="Password" [(ngModel)]="editObj.pass">-->
+<!--			</label>-->
 			<div class="group-buttons">
 				<div class="left">
 				</div>
@@ -68,12 +67,21 @@
 					
 					<!-- Name Column -->
 					<ng-container matColumnDef="Назва бренда">
-						<th mat-header-cell *matHeaderCellDef>Назва бренда</th>
+						<th mat-header-cell *matHeaderCellDef>Тел</th>
+<!--						<td class="table__name" mat-cell *matCellDef="let element">-->
+<!--							<div class="table__name-name">-->
+<!--								<a [routerLink]="'/user-detail/'+ element._id">-->
+<!--									{{element.login}}-->
+<!--								</a>-->
+<!--							</div>-->
+<!--						</td>-->
 						<td class="table__name" mat-cell *matCellDef="let element">
+							<div class="table__name-img">
+								<img src="./assets/images/user.svg" alt="" *ngIf="!element.img || element.img == ''">
+								<app-img [fs]="element.img" *ngIf="element.img && element.img !== ''"></app-img>
+							</div>
 							<div class="table__name-name">
-								<a [routerLink]="'/category-detail/'+ element._id">
-									{{element.name}}
-								</a>
+								{{element.login}}
 							</div>
 						</td>
 					</ng-container>
