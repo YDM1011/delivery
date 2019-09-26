@@ -6,7 +6,7 @@ const config = require('../config/config');
 module.exports = (req, res, next) => {
       const jwt = require('jsonwebtoken');
       const protect = req.cookies['token'] || req.jwt.token || req.headers.authorization;
-      console.log(protect);
+
       if(!protect) return tryAsAdmin(req, res, next);
 
       const connect = protect.split(" ");
@@ -30,8 +30,9 @@ module.exports = (req, res, next) => {
 const tryAsAdmin = (req,res,next) => {
     const jwt = require('jsonwebtoken');
     const protect = req.cookies['adminToken'] || req.jwt.token || req.headers.authorization;
+    console.log(protect,req.user)
     if(!protect && !req.user){
-        next()
+        return next()
     }
     const connect = protect.split(" ");
     jwt.verify(connect[0], config.jwtSecret, (err,data)=>{

@@ -70,6 +70,7 @@ module.exports = backendApp => {
 };
 const canRead = (options) => {
   return (req,res,next) => {
+      console.log("!!!!!!!!!!!!!!!!!!")
       const model = req.erm.model.modelName;
       const role = req.user ? req.user.role || 'client' : 'client';
       let triger = false;
