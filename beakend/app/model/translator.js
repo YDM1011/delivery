@@ -5,6 +5,7 @@ const schema = new Schema({
     value: String,
     ua: String,
     ru: String,
+    lastUpdate: {type: Date, default: new Date()},
     date: {type: Date, default: new Date()}
 },{
     toJSON: {

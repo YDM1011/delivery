@@ -17,7 +17,7 @@ const schema = new Schema({
     status: Number,
     totalPrice: Number,
     basketId: Number,
-    updatedAt: {type: Date, default: new Date()},
+    lastUpdate: {type: Date, default: new Date()},
     date: {type: Date, default: new Date()}
 },{
     toJSON: {
@@ -37,7 +37,24 @@ const schema = new Schema({
     needAccessControl: true,
     createRestApi: true,
     strict: true,
-
+    client: [
+        {
+            isPrivate: false,
+            model:'Company',
+            _id: 'companyOwner',
+            canBeId: [
+                {type:'refObj', fieldName: 'createdBy'},
+                {type:'array', fieldName: 'collaborators'}
+            ]
+        },{
+            isPrivate: false,
+            model:'Basket',
+            _id: null,
+            canBeId: [
+                {type:'refObj', fieldName: 'createdBy'}
+            ]
+        }
+    ]
 });
 
 mongoose.model('Basket', schema);

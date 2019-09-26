@@ -20,7 +20,7 @@ const schem = new Schema({
     },
     value: Number,
     dataCall: Date,
-    updatedAt: {type: Date},
+    lastUpdate: {type: Date},
     data: {type: Date, default: new Date()}
 },{
     toJSON: {

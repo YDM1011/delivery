@@ -18,7 +18,7 @@ const schem = new Schema({
         type: Schema.Types.ObjectId,
         ref: "Client"
     },
-    name: String,
+    name: {type: String, required: [true, "Name is required"]},
     debtors: [{
         type: Schema.Types.ObjectId,
         ref: "Debtor"
@@ -27,15 +27,16 @@ const schem = new Schema({
         type: Schema.Types.ObjectId,
         ref: "Client"
     }],
-    address: String,
+    address: {type: String, required: [true, "Address is required"]},
     categories: [{
         type: Schema.Types.ObjectId,
         ref: "Category"
     }],
-    city: {
+    city: [{
         type: Schema.Types.ObjectId,
-        ref: "City"
-    },
+        ref: "City",
+        required: [true, "City is required"]
+    }],
     img: String,
     workTime: {
         name: {type: String},
@@ -49,7 +50,7 @@ const schem = new Schema({
         timeRange7: timeRangeSchema,
     },
     verify: {type: Boolean, default: false},
-    updatedAt: {type: Date},
+    lastUpdate: {type: Date},
     data: {type: Date, default: new Date()}
 },{
     toJSON: {
@@ -67,6 +68,18 @@ const schem = new Schema({
     },
     createRestApi: true,
     strict: true,
+    needLogined: true,
+    client: [
+        {
+            isPrivate: false,
+            model:'Company',
+            _id: null,
+            canBeId: [
+                {type:'refObj', fieldName: 'createdBy'},
+                {type:'array', fieldName: 'collaborators'}
+            ]
+        }
+    ]
 
 });
 

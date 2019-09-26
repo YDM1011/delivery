@@ -8,6 +8,7 @@ const Schema = mongoose.Schema;
 const schem = new Schema({
     login: {type: String, required: [true, "Login is required"]},
     pass: {type: String, required: [true, "Password is required"]},
+    mobile: String,
     name: String,
     img: String,
     address: String,
@@ -41,11 +42,11 @@ const schem = new Schema({
         type: Schema.Types.ObjectId,
         ref: "Action"
     }],
-    role: String, /** Client Company Collaborator** Admin* **/
+    role: String, /** Client Provider Collaborator** Admin* **/
     verify: {type: Boolean, default: false},
     verifyCode: String,
     token: String,
-    updatedAt: {type: Date},
+    lastUpdate: {type: Date},
     data: {type: Date, default: new Date()}
 },{
     toJSON: {
@@ -63,7 +64,17 @@ const schem = new Schema({
     },
     createRestApi: true,
     strict: true,
-    client: 'byId'
+    client: [
+        {
+            isPrivate: false,
+            model:'Client',
+            _id: '_id',
+            canBeId: [
+                {type:'refObj', fieldName: '_id'}
+            ]
+        }
+    ],
+    notCreate: true
 });
 
 schem.post('findOneAndRemove', (doc,next)=>{

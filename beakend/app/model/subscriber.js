@@ -3,6 +3,7 @@ const Schema = mongoose.Schema;
 
 const schema = new Schema({
     email: String,
+    lastUpdate: {type: Date, default: new Date()},
     date: {type: Date, default: new Date()}
 },{
     toJSON: {

@@ -19,6 +19,7 @@ const schem = new Schema({
             ref: "Client"
         }},
     autoAssign: {type:Boolean, default: false},
+    lastUpdate: {type: Date, default: new Date()},
     date: {type: Date, default: new Date()}
 },{
     toJSON: {

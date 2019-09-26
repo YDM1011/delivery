@@ -13,6 +13,7 @@ const schem = new Schema({
     entity: String,
     amount: Number,
     isNotRead: {type: Boolean, default: true},
+    lastUpdate: {type: Date, default: new Date()},
     date: {type: Date, default: new Date()}
 },{
     toJSON: {

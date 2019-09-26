@@ -9,6 +9,7 @@ const schema = new Schema({
     title: String,
     text: String,
     images: [String],
+    lastUpdate: {type: Date, default: new Date()},
     date: {type: Date, default: new Date()}
 },{
     toJSON: {

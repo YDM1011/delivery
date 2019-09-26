@@ -16,7 +16,7 @@ const schema = new Schema({
         ref: "Order",
         required: [true, "Check Order"]
     },
-    updatedAt: {type: Date},
+    lastUpdate: {type: Date},
     date: {type: Date, default: new Date()}
 },{
     toJSON: {

@@ -28,6 +28,7 @@ const schem = new Schema({
     fs: String,
     inst: String,
     yt: String,
+    lastUpdate: {type: Date, default: new Date()},
     date: {type: Date, default: new Date()}
 },{
     toJSON: {

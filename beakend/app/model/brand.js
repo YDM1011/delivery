@@ -12,7 +12,7 @@ const schem = new Schema({
         type: Schema.Types.ObjectId,
         ref: "Order"
     }],
-    updatedAt: {type: Date},
+    lastUpdate: {type: Date},
     data: {type: Date, default: new Date()}
 },{
     toJSON: {

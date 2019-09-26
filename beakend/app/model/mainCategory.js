@@ -8,7 +8,7 @@ const Schema = mongoose.Schema;
 const schem = new Schema({
     name: String,
     img: String,
-    updatedAt: {type: Date},
+    lastUpdate: {type: Date},
     data: {type: Date, default: new Date()}
 },{
     toJSON: {

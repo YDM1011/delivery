@@ -7,6 +7,7 @@ const schem = new Schema({
     email: {type: String, required: [true, "Email is required"]},
     token: String,
     verify: {type: Boolean, default: false},
+    lastUpdate: {type: Date, default: new Date()},
     data: {type: Date, default: new Date()},
     setting: {
             type: Schema.Types.ObjectId,
@@ -27,7 +28,7 @@ const schem = new Schema({
     },
     createRestApi: false,
     strict: true,
-
+    notCreate: true
 });
 require("./model_methods/object/admin")(schem);
 mongoose.model('Admin', schem);

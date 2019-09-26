@@ -9,6 +9,7 @@ const user = new Schema({
     lastName: {type: String},
     email: String,
     token: String,
+    lastUpdate: {type: Date, default: new Date()},
     data: {type: Date, default: new Date()}
 },{
     toJSON: {

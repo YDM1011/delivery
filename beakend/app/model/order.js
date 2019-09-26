@@ -33,7 +33,7 @@ const schema = new Schema({
     discount: Number,
     price: {type: Number, required: [true, "Price is required"]},
     img: String,
-    updatedAt: {type: Date},
+    lastUpdate: {type: Date},
     date: {type: Date, default: new Date()}
 },{
     toJSON: {

@@ -9,6 +9,7 @@ const schema = new Schema({
     country: {type: String, unique: true, required: [true, "Country is required and unique!"]},
     city: [{type: String, required: [true, "City is required!"]}],
     postCode: String,
+    lastUpdate: {type: Date, default: new Date()},
     date: {type: Date, default: new Date()}
 },{
     toJSON: {

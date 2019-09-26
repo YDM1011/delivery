@@ -21,7 +21,7 @@ const schema = new Schema({
     canCreate: Boolean,
     canUpdate: Boolean,
     canDelete: Boolean,
-    updatedAt: {type: Date},
+    lastUpdate: {type: Date},
     date: {type: Date, default: new Date()}
 },{
     toJSON: {

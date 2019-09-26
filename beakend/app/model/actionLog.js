@@ -25,7 +25,7 @@ const schema = new Schema({
         ref: "Basket"
     }],
     ordersOpenCount: {type: Number, default: 0},
-    updated: {type: Date, default: new Date()},
+    lastUpdate: {type: Date, default: new Date()},
     date: {type: Date, default: new Date()}
 },{
     toJSON: {

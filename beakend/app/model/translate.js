@@ -9,7 +9,7 @@ const schem = new Schema({
     key: String,
     ua: String,
     ru: String,
-    updatedAt: {type: Date},
+    lastUpdate: {type: Date},
     data: {type: Date, default: new Date()}
 },{
     toJSON: {

@@ -20,7 +20,7 @@ const schem = new Schema({
         type: Schema.Types.ObjectId,
         ref: "Client"
     },
-    updatedAt: {type: Date},
+    lastUpdate: {type: Date},
     date: {type: Date, default: new Date()}
 },{
     toJSON: {
