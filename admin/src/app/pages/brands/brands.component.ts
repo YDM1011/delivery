@@ -87,7 +87,6 @@ export class BrandsComponent implements OnInit, AfterViewInit {
     this.uploadObj = e;
     this.brand.img = e.name;
   }
-
   edit(i) {
     this.editObj = Object.assign({}, this.brands[i]);
     this.addShow = false;

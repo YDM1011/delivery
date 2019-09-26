@@ -10,6 +10,8 @@ import {NotFoundComponent} from './pages/not-found/not-found.component';
 import {ProductComponent} from './pages/product/product.component';
 import {CategoryDetailComponent} from './pages/category-detail/category-detail.component';
 import {CreateComponent} from './pages/create/create.component';
+import {DebtorComponent} from './pages/debtor/debtor.component';
+import {SettingsComponent} from './pages/settings/settings.component';
 
 const routes: Routes = [
   {path: '', component: MainComponent, children: [
@@ -19,6 +21,8 @@ const routes: Routes = [
       {path: 'category-detail/:id', component: CategoryDetailComponent},
       {path: 'product', component: ProductComponent},
       {path: 'create', component: CreateComponent},
+      {path: 'debtor', component: DebtorComponent},
+      {path: 'settings', component: SettingsComponent},
     ], canActivate: [AdminLoginedGuard]},
   {path: 'login', component: LoginComponent, canActivate: [AdminLogoutGuard]},
   {path: '**', component: NotFoundComponent},

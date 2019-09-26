@@ -1,0 +1,137 @@
+<div class="contain">
+	<div class="contain__group"  *ngIf="addShow">
+		<div class="contain__group-header">
+			<div class="title">
+				Создать категорию
+			</div>
+		</div>
+		<div class="add-section">
+			<form class="example-form">
+				<mat-form-field class="example-full-width">
+					<input type="text" placeholder="Tel" aria-label="Number" name="inputSearch" matInput [(ngModel)]="inputChange" [matAutocomplete]="auto" (keyup)="change()">
+					<mat-autocomplete #auto="matAutocomplete">
+						<mat-option *ngFor="let item of searchDebtors" [value]="item.login">
+							{{item.login}}
+						</mat-option>
+					</mat-autocomplete>
+				</mat-form-field>
+			</form>
+			<mat-form-field class="example-full-width">
+				<input type="text" placeholder="Сумма долга" aria-label="Number" name="value" matInput [(ngModel)]="debtor.value">
+			</mat-form-field>
+			<mat-form-field>
+				<input matInput [matDatepicker]="picker" placeholder="Choose a date" [min]="minDate" [(ngModel)]="debtor.dataCall" (focus)="picker.open()">
+				<mat-datepicker-toggle matSuffix [for]="picker" ></mat-datepicker-toggle>
+				<mat-datepicker touchUi #picker></mat-datepicker>
+			</mat-form-field>
+			<div class="group-buttons">
+				<div class="left">
+				</div>
+				<div class="right">
+					<button class="main-button" (click)="cancelAdd()">Отмена</button>
+					<button class="main-button-color" (click)="create()">Сохранить</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="contain__group"  *ngIf="editShow">
+		<div class="contain__group-header">
+			<div class="title">
+				Редактировать должника
+			</div>
+		</div>
+		<div class="edit-section" *ngIf="editShow">
+			<mat-form-field class="example-full-width">
+				<input type="text" placeholder="Сумма долга" aria-label="Number" name="value" matInput [(ngModel)]="editObj.value">
+			</mat-form-field>
+			<mat-form-field>
+				<input matInput [matDatepicker]="picker" placeholder="Choose a date" [min]="minDate" [(ngModel)]="editObj.dataCall" (focus)="picker.open()">
+				<mat-datepicker-toggle matSuffix [for]="picker" ></mat-datepicker-toggle>
+				<mat-datepicker touchUi #picker></mat-datepicker>
+			</mat-form-field>
+			<div class="group-buttons">
+				<div class="left">
+				</div>
+				<div class="right">
+					<button class="main-button" (click)="cancelEdit()">Отмена</button>
+					<button class="main-button-color" (click)="confirmEditCategoryCrud()">Сохранить</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="contain__group">
+		<div class="contain__group-header">
+			<div class="title">
+				Все должники
+			</div>
+			<button class="button-add" (click)="openAdd()">
+				<span class="content">Создать должника</span>
+			</button>
+		</div>
+		<div class="main-section">
+			<div class="mat-elevation-z8">
+				<mat-form-field class="filter" *ngIf="showPagin">
+					<input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+				</mat-form-field>
+				<table mat-table [dataSource]="dataSource" *ngIf="debtors && debtors.length > 0">
+					
+					<ng-container matColumnDef="Номер">
+						<th mat-header-cell *matHeaderCellDef>#</th>
+						<td mat-cell *matCellDef="let element; let index = index"> {{index + 1}} </td>
+					</ng-container>
+					
+					<ng-container matColumnDef="Назва бренда">
+						<th mat-header-cell *matHeaderCellDef>Должник</th>
+						<td class="table__name" mat-cell *matCellDef="let element">
+							<div class="table__name-img">
+								<img src="./assets/images/user.svg" alt="" *ngIf="!element.client.img || element.client.img == ''">
+								<app-img [fs]="element.img" *ngIf="element.client.img && element.client.img !== ''"></app-img>
+							</div>
+							<div class="table__name-name">
+								<a [routerLink]="'/debtor-detail/'+ element.client._id">
+									{{element.client.login}}
+								</a>
+							</div>
+						</td>
+					</ng-container>
+					
+					<ng-container matColumnDef="price">
+						<th mat-header-cell *matHeaderCellDef>Cумма</th>
+						<td mat-cell *matCellDef="let element; let index = index">
+							{{element.value}} Грн.
+						</td>
+					</ng-container>
+					
+					<ng-container matColumnDef="data">
+						<th mat-header-cell *matHeaderCellDef>Дата возврата</th>
+						<td mat-cell *matCellDef="let element">
+							<div class="top-table-date">
+								{{element.dataCall | date: 'dd MMMM, yyyy'  : null : defLang}}
+							</div>
+						</td>
+					</ng-container>
+					
+					<ng-container matColumnDef="delete">
+						<th mat-header-cell *matHeaderCellDef></th>
+						<td class="right-section-table" mat-cell *matCellDef="let element; let index = index">
+							<span class="edit-btn" (click)="edit(index)"></span>
+							<span class="trash-btn" (click)="delete(index)"></span>
+						</td>
+					</ng-container>
+					
+					<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+					<tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+				</table>
+				
+				<mat-paginator class="paginator-table" [pageSizeOptions]="[5, 10, 20]" [class.paginator-table-active]="showPagin"></mat-paginator>
+			</div>
+			<div class="empty-section" *ngIf="!debtors || debtors.length === 0">
+				<p>
+					У вас нет должников
+				</p>
+			</div>
+		</div>
+	</div>
+</div>

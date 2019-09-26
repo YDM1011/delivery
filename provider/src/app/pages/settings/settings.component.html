@@ -1,0 +1,40 @@
+<div class="contain">
+	<div class="contain__group">
+		<div class="contain__group-header">
+			<div class="title">
+				Информация поставщика
+			</div>
+		</div>
+		
+		<div class="add-section">
+			<form action="" (keyup)="formCheck()">
+				<mat-form-field class="example-full-width" *ngIf="company">
+					<input type="text" placeholder="Название комнании" aria-label="Text" name="name" matInput [(ngModel)]="companyCopy.name">
+				</mat-form-field>
+				<mat-form-field class="example-half">
+					<mat-label>City</mat-label>
+					<mat-select #o (selectionChange)="changeCity(o.value); formCheck()">
+						<mat-option *ngFor="let item of city" [value]="item._id">
+							{{item.name}}
+						</mat-option>
+					</mat-select>
+				</mat-form-field>
+			</form>
+			<div class="group-buttons">
+				<div class="left">
+					<app-upload (onFs)="onFs($event)"></app-upload>
+					<div class="mat-chip-file" *ngIf="companyCopy && companyCopy.img && companyCopy.img !== ''">
+						<div class="content">{{companyCopy.img}}</div>
+						<div class="remove-mat-chip" (click)="companyCopy.img = ''"></div>
+					</div>
+				</div>
+				<div class="right" *ngIf="isBlok">
+<!--					<button class="main-button" (click)="cancelAdd()">Отмена</button>-->
+					<button class="main-button-color" (click)="create()">Сохранить</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+</div>
+
