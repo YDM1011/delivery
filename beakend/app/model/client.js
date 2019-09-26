@@ -50,7 +50,7 @@ const schem = new Schema({
     verify: {type: Boolean, default: false},
     verifyCode: String,
     token: String,
-    date: {type: Date, default: new Date()}
+    date: {type: Date, default: new Date()},
     lastUpdate: {type: Date},
 },{
     toJSON: {
