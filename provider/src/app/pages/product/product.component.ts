@@ -10,7 +10,9 @@ import Swal from 'sweetalert2';
   styleUrls: ['./product.component.scss']
 })
 export class ProductComponent implements OnInit {
+  public brands = [];
   public mainCategoryChoose: string;
+  public mainChooseBrand: string;
   public user;
   public defLang = 'ru-UA';
   public showPagin = false;
@@ -53,6 +55,11 @@ export class ProductComponent implements OnInit {
           setTimeout(() => this.dataSource.paginator = this.paginator);
           this.chackDataLength();
         });
+        this.crud.get('brands').then((b: any) => {
+          if (!b) {return; }
+          this.brands = b;
+          this.mainChooseBrand = this.brands[0]._id;
+        });
       }
     });
   }
@@ -72,8 +79,9 @@ export class ProductComponent implements OnInit {
         }
       }).catch((error) => {
         if (error && error.errors.price.name === 'CastError') {
-          Swal.fire('Error', 'Цена должна вводится через "." - точку', 'error');
-          return;
+          Swal.fire('Error', 'Цена должна вводится через "." - точку', 'error').then();
+        } else if (error && error.errors.categoryOwner.message === 'Check category') {
+          Swal.fire('Error', 'У вас нет созданых категорий', 'error').then();
         }
       });
     }
@@ -169,12 +177,12 @@ export class ProductComponent implements OnInit {
       Swal.fire('Error', 'Название продукта не может быть пустым', 'error');
       return;
     }
-    if (this[obj].price === null) {
-      Swal.fire('Error', 'Укажите цену продукта', 'error');
-      return;
-    }
     if (this[obj].des === '') {
       Swal.fire('Error', 'Описание не может быть пустым', 'error');
+      return;
+    }
+    if (this[obj].price === null) {
+      Swal.fire('Error', 'Укажите цену продукта', 'error');
       return;
     }
     return true;

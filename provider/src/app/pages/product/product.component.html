@@ -15,9 +15,22 @@
 			<label>
 				<input type="text" placeholder="Ціна" [(ngModel)]="product.price">
 			</label>
-			<select [(ngModel)]="mainCategoryChoose">
-				<option *ngFor="let item of categorys" [value]="item._id">{{item.name}}</option>
-			</select>
+			<div>
+				category
+				<select [(ngModel)]="mainCategoryChoose" *ngIf="categorys.length > 0">
+					<option *ngFor="let item of categorys" [value]="item._id">{{item.name}}</option>
+				</select>
+				<div *ngIf="categorys.length === 0">
+					У вас нету категорий, создайте категорию тогда вы сможете создать продукт
+				</div>
+			</div>
+			<div>
+				brands
+				
+				<select [(ngModel)]="mainChooseBrand" *ngIf="brands && brands.length > 0">
+					<option *ngFor="let item of brands" [value]="item._id">{{item.name}}</option>
+				</select>
+			</div>
 			<div class="group-buttons">
 				<div class="left">
 				</div>

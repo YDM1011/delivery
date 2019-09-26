@@ -27,6 +27,9 @@ import {ApiInterceptor} from '../../../aplication/src/app/api.interceptor';
 import { ProductComponent } from './pages/product/product.component';
 import { CategoryDetailComponent } from './pages/category-detail/category-detail.component';
 import { CreateComponent } from './pages/create/create.component';
+import { DebtorComponent } from './pages/debtor/debtor.component';
+import { ActionComponent } from './pages/action/action.component';
+import { SettingsComponent } from './pages/settings/settings.component';
 
 @NgModule({
   declarations: [
@@ -45,6 +48,9 @@ import { CreateComponent } from './pages/create/create.component';
     ProductComponent,
     CategoryDetailComponent,
     CreateComponent,
+    DebtorComponent,
+    ActionComponent,
+    SettingsComponent,
   ],
   imports: [
     BrowserAnimationsModule,

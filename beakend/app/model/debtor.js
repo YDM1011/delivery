@@ -18,6 +18,10 @@ const schem = new Schema({
         type: Schema.Types.ObjectId,
         ref: "Company"
     },
+    // basket: {
+    //     type: Schema.Types.ObjectId,
+    //     ref: "Basket"
+    // },
     value: Number,
     dataCall: Date,
     updatedAt: {type: Date},

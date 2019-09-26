@@ -153,6 +153,7 @@ export class CategoryComponent implements OnInit {
   chackDataLength() {
     if (!this.categorys || this.categorys.length === 0) {
       this.showPagin = false;
+      return;
     }
     this.showPagin = true;
   }
