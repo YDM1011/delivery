@@ -14,6 +14,7 @@ export class CategoryComponent implements OnInit, AfterViewInit {
   public addShow: boolean = false;
   public editShow: boolean = false;
   public categorys = [];
+  public page = {pageSize:5,pageIndex:0};
   public editObj = {
     name: '',
   };
