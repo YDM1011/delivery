@@ -35,23 +35,20 @@ export class LoginComponent implements OnInit {
       this.error['text'] = 'Пароль введен не верно';
       return;
     }
-    this.crud.post('signIn', this.obj, null, false).then((v: any) => {
+    this.crud.post('adminSignin', this.obj, null, false).then((v: any) => {
       if (!v) return;
-      if (v.user.role === 'client') {
-        this.error['text'] = 'Поставщик не найден';
-      } else if (v.user.role === 'provider') {
-        localStorage.setItem('userId', v.userId);
-        localStorage.setItem('token', v.token);
-        this.route.navigate(['']);
-        this.obj = {
-          login: '',
-          pass: ''
-        };
-      }
+      console.log(v);
+      localStorage.setItem('adminId', v.adminId);
+      localStorage.setItem('adminToken', v.token);
+      this.obj = {
+        login: '',
+        pass: ''
+      };
+      this.route.navigate(['']);
     }).catch((error) => {
-    if (error.status === 404) {
-      this.error['text'] = 'Логин или пароль введены не верно';
-    }
+      if (error.status === 404) {
+        this.error['text'] = 'Логин или пароль введены не верно';
+      }
     });
   }
 }

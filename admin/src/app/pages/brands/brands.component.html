@@ -39,7 +39,7 @@
 				<div class="left">
 					<app-upload *ngIf="editObj.img == ''" (onFs)="onFsEdit($event)"></app-upload>
 					<div class="mat-chip-file" *ngIf="editObj && editObj.img !== ''">
-						<div class="content">{{editObj.img}}</div>
+						<div class="content">{{editObj.img.split("--")[1]}}</div>
 						<div class="remove-mat-chip" (click)="editObj.img = ''"></div>
 					</div>
 				</div>

@@ -53,7 +53,6 @@ export class SettingsComponent implements OnInit {
     this.companyCopy['city'] = o;
     this.formCheck();
   }
-
   validate() {
     let isTrue = false;
     for (const key in this.company) {

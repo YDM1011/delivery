@@ -23,13 +23,13 @@ import {CookieService} from 'ngx-cookie-service';
 import { MainComponent } from './layout/main/main.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { CategoryComponent } from './pages/category/category.component';
-import {ApiInterceptor} from '../../../aplication/src/app/api.interceptor';
 import { ProductComponent } from './pages/product/product.component';
 import { CategoryDetailComponent } from './pages/category-detail/category-detail.component';
 import { CreateComponent } from './pages/create/create.component';
 import { DebtorComponent } from './pages/debtor/debtor.component';
 import { ActionComponent } from './pages/action/action.component';
 import { SettingsComponent } from './pages/settings/settings.component';
+import {ApiInterceptor} from './api.interceptor';
 
 @NgModule({
   declarations: [
