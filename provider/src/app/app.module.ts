@@ -30,6 +30,7 @@ import { DebtorComponent } from './pages/debtor/debtor.component';
 import { ActionComponent } from './pages/action/action.component';
 import { SettingsComponent } from './pages/settings/settings.component';
 import {ApiInterceptor} from './api.interceptor';
+import { WorkTimeComponent } from './pages/work-time/work-time.component';
 
 @NgModule({
   declarations: [
@@ -51,6 +52,7 @@ import {ApiInterceptor} from './api.interceptor';
     DebtorComponent,
     ActionComponent,
     SettingsComponent,
+    WorkTimeComponent,
   ],
   imports: [
     BrowserAnimationsModule,

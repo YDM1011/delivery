@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {CrudService} from "../../crud.service";
-import {AuthService} from "../../auth.service";
+import {CrudService} from '../../crud.service';
+import {AuthService} from '../../auth.service';
 
 @Component({
   selector: 'app-translate',
@@ -27,10 +27,16 @@ export class TranslateComponent implements OnInit {
       }
     });
   }
-
+  remove(i) {
+    this.crud.delete('translator', this.words[i]._id).then((v: any) => {
+      if (v) {
+        this.words.splice(i, 1);
+      }
+    });
+  }
   addTranslate(data) {
-    this.activeWord = data;
-    this.lnObj.ru = data;
+    this.activeWord = this.words[data].value;
+    this.lnObj.ru = this.words[data].ru;
     this.lnObj.ua = this.words[data].ua;
   }
   checkLang(ln) {

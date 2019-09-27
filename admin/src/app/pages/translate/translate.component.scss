@@ -1,8 +1,13 @@
 .translate-chip{
   color: #fff;
   background: #8C8C8C;
-  box-shadow: 0px 4px 12px rgba(71, 71, 71, 0.32);
+  box-shadow: 0 4px 12px rgba(71, 71, 71, 0.32);
   border-radius: 50px;
+  position: relative;
+  padding: 0;
+  .chip-content{
+    padding: 8px 35px 8px 20px;
+  }
   &:hover{
     background: #696969;
     &.ok{
@@ -75,12 +80,13 @@ form{
 
 .mat-standard-chip{
   max-height: max-content;
-  height: 100%;;
+  height: 100%;
 }
 
 .ok .chip-btn{
   background: #009688;
 }
+
 .chip-btn{
   border-radius: 50%;
   width: 20px;
@@ -93,4 +99,10 @@ form{
   margin-left: 5px;
   cursor: pointer;
   margin-right: -5px;
+}
+
+.chip-btn-remove{
+  z-index: 132;
+  position: absolute;
+  right: 10px;
 }
