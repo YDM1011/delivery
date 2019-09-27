@@ -31,6 +31,7 @@ import { ActionComponent } from './pages/action/action.component';
 import { SettingsComponent } from './pages/settings/settings.component';
 import {ApiInterceptor} from './api.interceptor';
 import { WorkTimeComponent } from './pages/work-time/work-time.component';
+import {NgxMaterialTimepickerModule} from "ngx-material-timepicker";
 
 @NgModule({
   declarations: [
@@ -64,6 +65,7 @@ import { WorkTimeComponent } from './pages/work-time/work-time.component';
     MaterialModule,
     Ng2SearchPipeModule,
     ReactiveFormsModule,
+    NgxMaterialTimepickerModule
   ],
   exports: [MaterialModule],
   providers: [CookieService, {provide: HTTP_INTERCEPTORS, useClass: ApiInterceptor, multi: true},

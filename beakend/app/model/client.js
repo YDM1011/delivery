@@ -10,7 +10,7 @@ const schem = new Schema({
     pass: {type: String, required: [true, "Password is required"]},
     mobile: String,
     name: String,
-    img: String,
+    img: {type: String, default: ''},
     address: String,
     city: {
         type: Schema.Types.ObjectId,

@@ -1,1 +1,129 @@
-<p>work-time works!</p>
+<div class="contain">
+	<div class="contain__group">
+		<div class="contain__group-header">
+			<div class="title">
+				Настройка времени роботы
+			</div>
+		</div>
+		
+		<div class="add-section">
+			<label *ngIf="time">
+				<input type="text" placeholder="Название календаря" [(ngModel)]="time.label" name="label">
+			</label>
+			<div class="work-time" *ngIf="time">
+				<div class="work-time-header">
+					Время роботы компании
+				</div>
+				<div class="work-time-box">
+					<div class="work-time-item">
+						<div class="day">
+							Понедельник:
+						</div>
+						От
+						<div class="group">
+							<input [ngxTimepicker]="picker"  [format]="24" [placeholder]="time.timeRange1.timeStart" [value]="time.timeRange1.timeStart" readonly>
+							<ngx-material-timepicker #picker [defaultTime]="time.timeRange1.timeStart" (timeSet)="setTimeStart('timeRange1', $event)"></ngx-material-timepicker>
+						</div>
+						До
+						<div class="group">
+							<input [ngxTimepicker]="picker2" [format]="24" [placeholder]="time.timeRange1.timeEnd" [value]="time.timeRange1.timeEnd"  readonly>
+							<ngx-material-timepicker #picker2 [defaultTime]="time.timeRange1.timeEnd" (timeSet)="setTimeEnd('timeRange1', $event)"></ngx-material-timepicker>
+						</div>
+					</div>
+					<div class="work-time-item">
+						<div class="day">
+							Пятница:
+						</div>
+						От
+						<div class="group">
+							<input [ngxTimepicker]="picker3"  [format]="24" [placeholder]="time.timeRange5.timeStart" [value]="time.timeRange5.timeStart" readonly>
+							<ngx-material-timepicker #picker3 [defaultTime]="time.timeRange5.timeStart" (timeSet)="setTimeStart('timeRange5', $event)"></ngx-material-timepicker>
+						</div>
+						До
+						<div class="group">
+							<input [ngxTimepicker]="picker4" [format]="24" [placeholder]="time.timeRange5.timeEnd" [value]="time.timeRange5.timeEnd"  readonly>
+							<ngx-material-timepicker #picker4 [defaultTime]="time.timeRange5.timeEnd" (timeSet)="setTimeEnd('timeRange5', $event)"></ngx-material-timepicker>
+						</div>
+					</div>
+					<div class="work-time-item">
+						<div class="day">
+							Вторник:
+						</div>
+						От
+						<div class="group">
+							<input [ngxTimepicker]="picker5"  [format]="24" [placeholder]="time.timeRange2.timeStart" [value]="time.timeRange2.timeStart" readonly>
+							<ngx-material-timepicker #picker5 [defaultTime]="time.timeRange2.timeStart" (timeSet)="setTimeStart('timeRange2', $event)"></ngx-material-timepicker>
+						</div>
+						До
+						<div class="group">
+							<input [ngxTimepicker]="picker6" [format]="24" [placeholder]="time.timeRange2.timeEnd" [value]="time.timeRange2.timeEnd"  readonly>
+							<ngx-material-timepicker #picker6 [defaultTime]="time.timeRange2.timeEnd" (timeSet)="setTimeEnd('timeRange2', $event)"></ngx-material-timepicker>
+						</div>
+					</div>
+					<div class="work-time-item">
+						<div class="day">
+							Субота:
+						</div>
+						От
+						<div class="group">
+							<input [ngxTimepicker]="picker7"  [format]="24" [placeholder]="time.timeRange6.timeStart" [value]="time.timeRange6.timeStart" readonly>
+							<ngx-material-timepicker #picker7 [defaultTime]="time.timeRange6.timeStart" (timeSet)="setTimeStart('timeRange6', $event)"></ngx-material-timepicker>
+						</div>
+						До
+						<div class="group">
+							<input [ngxTimepicker]="picker8" [format]="24" [placeholder]="time.timeRange6.timeEnd" [value]="time.timeRange6.timeEnd"  readonly>
+							<ngx-material-timepicker #picker8 [defaultTime]="time.timeRange6.timeEnd" (timeSet)="setTimeEnd('timeRange6', $event)"></ngx-material-timepicker>
+						</div>
+					</div>
+					<div class="work-time-item">
+						<div class="day">
+							Среда:
+						</div>
+						От
+						<div class="group">
+							<input [ngxTimepicker]="picker9"  [format]="24" [placeholder]="time.timeRange3.timeStart" [value]="time.timeRange3.timeStart" readonly>
+							<ngx-material-timepicker #picker9 [defaultTime]="time.timeRange3.timeStart" (timeSet)="setTimeStart('timeRange3', $event)"></ngx-material-timepicker>
+						</div>
+						До
+						<div class="group">
+							<input [ngxTimepicker]="picker10" [format]="24" [placeholder]="time.timeRange3.timeEnd" [value]="time.timeRange3.timeEnd"  readonly>
+							<ngx-material-timepicker #picker10 [defaultTime]="time.timeRange3.timeEnd" (timeSet)="setTimeEnd('timeRange3', $event)"></ngx-material-timepicker>
+						</div>
+					</div>
+					<div class="work-time-item">
+						<div class="day">
+							Воскресенье:
+						</div>
+						От
+						<div class="group">
+							<input [ngxTimepicker]="picker11"  [format]="24" [placeholder]="time.timeRange7.timeStart" [value]="time.timeRange7.timeStart" readonly>
+							<ngx-material-timepicker #picker11 [defaultTime]="time.timeRange7.timeStart" (timeSet)="setTimeStart('timeRange7', $event)"></ngx-material-timepicker>
+						</div>
+						До
+						<div class="group">
+							<input [ngxTimepicker]="picker12" [format]="24" [placeholder]="time.timeRange7.timeEnd" [value]="time.timeRange7.timeEnd"  readonly>
+							<ngx-material-timepicker #picker12 [defaultTime]="time.timeRange7.timeEnd" (timeSet)="setTimeEnd('timeRange7', $event)"></ngx-material-timepicker>
+						</div>
+					</div>
+					<div class="work-time-item">
+						<div class="day">
+							Четверг:
+						</div>
+						От
+						<div class="group">
+							<input [ngxTimepicker]="picker13"  [format]="24" [placeholder]="time.timeRange4.timeStart" [value]="time.timeRange4.timeStart" readonly>
+							<ngx-material-timepicker #picker13 [defaultTime]="time.timeRange4.timeStart" (timeSet)="setTimeStart('timeRange4', $event)"></ngx-material-timepicker>
+						</div>
+						До
+						<div class="group">
+							<input [ngxTimepicker]="picker14" [format]="24" [placeholder]="time.timeRange4.timeEnd" [value]="time.timeRange4.timeEnd"  readonly>
+							<ngx-material-timepicker #picker14 [defaultTime]="time.timeRange4.timeEnd" (timeSet)="setTimeEnd('timeRange4', $event)"></ngx-material-timepicker>
+						</div>
+					</div>
+					<div class="work-time-item">
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

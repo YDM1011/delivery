@@ -22,12 +22,10 @@ export class MainComponent implements OnInit {
         if (!this.cookieService.get('userId') || !localStorage.getItem('userId')) { return; }
         const userId = this.cookieService.get('userId') || localStorage.getItem('userId');
         const query = JSON.stringify({_id: userId});
-        // this.crud.get('client', userId).then((v: any) => {
-        //   if (v) {
-        //     console.log(v);
-        //   }
-        // });
-        this.crud.get(`client?query=${query}&populate={"path":"companies","populate":{"path":"collaborators","path":"debtors","populate":{"path":"client"}}}`)
+        const populate = JSON.stringify(
+            {'path': 'companies', 'populate': ['collaborators', 'debtors', 'categories']}
+            );
+        this.crud.get(`client?query=${query}&populate=${populate}`)
             .then((v2: any) => {
           if (!v2) {return; }
           this.auth.setMe(v2[0]);

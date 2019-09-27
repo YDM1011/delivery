@@ -13,7 +13,7 @@
 				</mat-form-field>
 				<mat-form-field class="example-half">
 					<mat-label>City</mat-label>
-					<mat-select #o (selectionChange)="changeCity(o.value); formCheck()">
+					<mat-select #o [(value)]="cityChoose" (selectionChange)="changeCity(o.value); formCheck()">
 						<mat-option *ngFor="let item of city" [value]="item._id">
 							{{item.name}}
 						</mat-option>
@@ -25,7 +25,7 @@
 					<app-upload (onFs)="onFs($event)"></app-upload>
 					<div class="mat-chip-file" *ngIf="companyCopy && companyCopy.img && companyCopy.img !== ''">
 						<div class="content">{{companyCopy.img}}</div>
-						<div class="remove-mat-chip" (click)="companyCopy.img = ''"></div>
+						<div class="remove-mat-chip" (click)="companyCopy.img = ''; formCheck()"></div>
 					</div>
 				</div>
 				<div class="right" *ngIf="isBlok">
@@ -33,8 +33,8 @@
 					<button class="main-button-color" (click)="create()">Сохранить</button>
 				</div>
 			</div>
+			<a [routerLink]="'/work-time'"> Work time</a>
 		</div>
 	</div>
-	
 </div>
 
