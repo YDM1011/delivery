@@ -7,7 +7,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import {FormsModule} from '@angular/forms';
 import {SweetAlert2Module} from '@sweetalert2/ngx-sweetalert2';
-import {HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {SidebarComponent} from "./components/sidebar/sidebar.component";
 import {SettingsComponent} from "./pages/settings/settings.component";
 import {TranslateComponent} from "./pages/translate/translate.component";
@@ -26,6 +26,11 @@ import { ListProvidersComponent } from './pages/list-providers/list-providers.co
 import { ListClientsComponent } from './pages/list-clients/list-clients.component';
 import { CreateClientsComponent } from './pages/create-clients/create-clients.component';
 import {Ng2SearchPipeModule} from "ng2-search-filter";
+import {CookieService} from "ngx-cookie-service";
+import {ApiInterceptor} from "./api.interceptor";
+import { LoginComponent } from './pages/login/login.component';
+import { NotFoundComponent } from './pages/not-found/not-found.component';
+import { MainComponent } from './layout/main/main.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +49,10 @@ import {Ng2SearchPipeModule} from "ng2-search-filter";
     HeaderComponent,
     ListProvidersComponent,
     ListClientsComponent,
-    CreateClientsComponent
+    CreateClientsComponent,
+    LoginComponent,
+    NotFoundComponent,
+    MainComponent
   ],
   imports: [
     BrowserAnimationsModule,
@@ -57,7 +65,8 @@ import {Ng2SearchPipeModule} from "ng2-search-filter";
     Ng2SearchPipeModule
   ],
   exports: [MaterialModule],
-  providers: [{provide: LOCALE_ID, useValue: 'ru-UA'}, {provide: LOCALE_ID, useValue: 'uk'}],
+  providers: [CookieService, {provide: HTTP_INTERCEPTORS, useClass: ApiInterceptor, multi: true},
+    {provide: LOCALE_ID, useValue: 'ru-UA'}, {provide: LOCALE_ID, useValue: 'uk'}],
   entryComponents: [
     DialogComponent,
   ],

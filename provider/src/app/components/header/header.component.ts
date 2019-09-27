@@ -26,6 +26,8 @@ export class HeaderComponent implements OnInit {
   logout() {
     this.crud.post('logout', {}, null, false).then((v: any) => {
       if (v) {
+        localStorage.removeItem('userId');
+        localStorage.removeItem('token');
         this.router.navigate(['login']);
       }
     });
