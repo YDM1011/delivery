@@ -70,165 +70,149 @@ module.exports = backendApp => {
 };
 const canRead = (options) => {
   return (req,res,next) => {
-      console.log("!!!!!!!!!!!!!!!!!!")
       const model = req.erm.model.modelName;
       const role = req.user ? req.user.role || 'client' : 'client';
-      let triger = false;
       let objPromise = [];
       let query = {$or: [{'createdBy.itemId': req.user._id},
               {createdBy: req.user._id},
               {_id: req.user._id}]};
       options[role].forEach( it =>{
-          if (it.isPrivate) {
-              if (!req.user || !req.user._id) return res.forbidden('Not access!');
+
+          if (it.model) {
+              // if params.id
               if (req.params.id) {
+                  objPromise.push( new Promise((rs,rj)=>{
                   backendApp.mongoose.model(model)
-                      .findOne({
-                        _id:req.params.id,
-                        $or: [{'createdBy.itemId': req.user._id}, {createdBy: req.user._id}, {_id: req.user._id}]
-                      });
-                  return req.params.id === req.user._id ? next() : res.forbidden('Not access!');
-              } else {
-                  req.erm.query = { query: {$or: [{'createdBy.itemId': req.user._id},
-                                {createdBy: req.user._id},
-                                {_id: req.user._id}]} };
-                  next()
-              }
-          } else {
-              if (it.model) {
-                  // if params.id
-                  if (req.params.id) {
-                      objPromise.push( new Promise((rs,rj)=>{
-                      backendApp.mongoose.model(model)
-                          .findOne({_id: req.params.id})
-                          .exec((e, r) => {
-                              if (e) return res.serverError(e);
-                              if (!r) return res.forbidden('Not access!');
-                              const checkId = r[it._id] ? r[it._id].toString() : null;
-                              it.canBeId.forEach(idChecker => {
-                                  // console.log("idChecker:",it.model,idChecker);
-                                  if (idChecker.fieldName == '_id') {
-                                      if (checkId == req.user._id){
-                                          rs()
-                                      } else {
-                                          rj("403")
-                                      }
+                      .findOne({_id: req.params.id})
+                      .exec((e, r) => {
+                          if (e) return res.serverError(e);
+                          if (!r) return res.forbidden('Not access!');
+                          const checkId = r[it._id] ? r[it._id].toString() : null;
+                          it.canBeId.forEach(idChecker => {
+                              // console.log("idChecker:",it.model,idChecker);
+                              if (idChecker.fieldName == '_id') {
+                                  if (checkId == req.user._id){
+                                      rs()
+                                  } else {
+                                      rj("403")
                                   }
-                                  if (idChecker.type === 'refObj') {
-
-                                      let obj = {};
-                                      obj['_id'] = checkId || req.params.id.toString();
-                                      obj[idChecker.fieldName] = req.user._id.toString();
-
-                                      // console.log(it.model,obj)
-                                      backendApp.mongoose.model(it.model)
-                                          .findOne(obj).exec((e1, r1) => {
-                                          console.log(it.model,obj)
-                                              console.log(e1,r1);
-                                          if (e1) rj();
-                                          if (!r1) {
-                                              // check another field
-                                              // res.forbidden("403 1")
-                                              rs()
-                                          }else{
-                                              let _o = {};
-                                              _o[it ? it._id || '_id' : '_id'] = r1._id;
-                                              query['$or'].push(_o);
-                                              rs()
-                                          }
-                                      })
-                                  }
-                                  if (idChecker.type === 'array') {
-                                      let obj = {};
-                                      obj['_id'] = checkId || req.params.id.toString();
-                                      obj[idChecker.fieldName] = {$in:req.user._id.toString()};
-                                      // console.log(it.model,obj)
-                                      backendApp.mongoose.model(it.model)
-                                          .findOne(obj).exec((e1, r1) => {
-                                          console.log(it.model,obj)
-                                          console.log(e1,r1);
-                                          if (e1) rj();
-                                          if (!r1) {
-                                              // check another field
-                                              // res.forbidden("403 1")
-                                              rs()
-                                          }else{
-                                              let _o = {};
-                                              _o[it ? it._id || '_id' : '_id'] = r1._id;
-                                              query['$or'].push(_o);
-                                              rs()
-                                          }
-                                      })
-                                  }
-                              })
-                          })
-                      }))
-                  }
-                  if (!req.params.id) {
-
-                      it.canBeId.forEach(idChecker => {
-                          objPromise.push( new Promise((rs,rj)=>{
+                              }
                               if (idChecker.type === 'refObj') {
 
                                   let obj = {};
+                                  obj['_id'] = checkId || req.params.id.toString();
                                   obj[idChecker.fieldName] = req.user._id.toString();
 
                                   // console.log(it.model,obj)
                                   backendApp.mongoose.model(it.model)
                                       .findOne(obj).exec((e1, r1) => {
+                                      console.log(it.model,obj)
+                                          console.log(e1,r1);
                                       if (e1) rj();
                                       if (!r1) {
                                           // check another field
                                           // res.forbidden("403 1")
                                           rs()
-                                      } else {
-                                          console.log("r00",it._id)
-                                          // if(it._id){
-                                              let _o = {};
-                                              _o[it._id || '_id'] = r1._id;
-                                              query['$or'].push(_o);
-                                              console.log("t00",query['$or'],_o)
-                                          // }
+                                      }else{
+                                          let _o = {};
+                                          _o[it ? it._id || '_id' : '_id'] = r1._id;
+                                          query['$or'].push(_o);
                                           rs()
                                       }
                                   })
                               }
                               if (idChecker.type === 'array') {
                                   let obj = {};
+                                  obj['_id'] = checkId || req.params.id.toString();
                                   obj[idChecker.fieldName] = {$in:req.user._id.toString()};
-                                  console.log(it.model,obj)
+                                  // console.log(it.model,obj)
                                   backendApp.mongoose.model(it.model)
                                       .findOne(obj).exec((e1, r1) => {
-                                      if (e1) rj() ;
+                                      console.log(it.model,obj)
+                                      console.log(e1,r1);
+                                      if (e1) rj();
                                       if (!r1) {
+                                          // check another field
+                                          // res.forbidden("403 1")
                                           rs()
-                                      } else {
-                                          console.log("r00",it._id)
-                                          // if(it._id){
-                                              let _o = {};
-                                              _o[it._id || '_id'] = r1._id;
-                                              query['$or'].push(_o);
-                                              console.log("t00",query['$or'],_o)
-                                          // }
+                                      }else{
+                                          let _o = {};
+                                          _o[it ? it._id || '_id' : '_id'] = r1._id;
+                                          query['$or'].push(_o);
                                           rs()
                                       }
                                   })
                               }
-                          }))
-
-                      });
-
-                  }
-              } else if (it.all) {
-                  next()
+                          })
+                      })
+                  }))
               }
+              if (!req.params.id) {
+                  it.canBeId.forEach(idChecker => {
+                      objPromise.push( new Promise((rs,rj)=>{
+                          if (idChecker.type === 'refObj') {
+
+                              let obj = {};
+                              obj[idChecker.fieldName] = req.user._id.toString();
+
+                              // console.log(it.model,obj)
+                              backendApp.mongoose.model(it.model)
+                                  .findOne(obj).exec((e1, r1) => {
+                                  if (e1) rj();
+                                  if (!r1) {
+                                      // check another field
+                                      // res.forbidden("403 1")
+                                      rs()
+                                  } else {
+                                      console.log("r00",it._id)
+                                      // if(it._id){
+                                          let _o = {};
+                                          _o[it._id || '_id'] = r1._id;
+                                          query['$or'].push(_o);
+                                          console.log("t00",query['$or'],_o)
+                                      // }
+                                      rs()
+                                  }
+                              })
+                          }
+                          if (idChecker.type === 'array') {
+                              let obj = {};
+                              obj[idChecker.fieldName] = {$in:req.user._id.toString()};
+                              console.log(it.model,obj)
+                              backendApp.mongoose.model(it.model)
+                                  .findOne(obj).exec((e1, r1) => {
+                                  if (e1) rj() ;
+                                  if (!r1) {
+                                      rs()
+                                  } else {
+                                      console.log("r00",it._id)
+                                      // if(it._id){
+                                          let _o = {};
+                                          _o[it._id || '_id'] = r1._id;
+                                          query['$or'].push(_o);
+                                          console.log("t00",query['$or'],_o)
+                                      // }
+                                      rs()
+                                  }
+                              })
+                          }
+                      }))
+                  });
+              }
+          } else if (it.all) {
+              next()
           }
+
       });
       Promise.all(objPromise).then(v=>{
           console.log(query)
-          console.log("t2",query['$or'])
-          req.erm.query = { query: {$or: query['$or'] } };
-
+          if (req.query) {
+              console.log(JSON.parse(req.query.query))
+              req.erm.query = { query: {$and: [query, JSON.parse(req.query.query)]} };
+          } else {
+              req.erm.query = { query: query };
+          }
+          // {$and: [query, {}]}
           return next()
       });
 
