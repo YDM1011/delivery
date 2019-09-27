@@ -69,11 +69,11 @@ const schem = new Schema({
     createRestApi: true,
     strict: true,
     needLogined: true,
-    client: [
+    client: [{public:true}],
+    provider: [
         {
-            isPrivate: false,
             model:'Company',
-            _id: null,
+            _id: '_id',
             canBeId: [
                 {type:'refObj', fieldName: 'createdBy'},
                 {type:'array', fieldName: 'collaborators'}

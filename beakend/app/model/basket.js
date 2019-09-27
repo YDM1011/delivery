@@ -37,9 +37,9 @@ const schema = new Schema({
     needAccessControl: true,
     createRestApi: true,
     strict: true,
-    client: [
+    client: [{private:true}],
+    provider: [
         {
-            isPrivate: false,
             model:'Company',
             _id: 'companyOwner',
             canBeId: [
@@ -47,14 +47,31 @@ const schema = new Schema({
                 {type:'array', fieldName: 'collaborators'}
             ]
         },{
-            isPrivate: false,
             model:'Basket',
-            _id: null,
+            _id: '_id',
             canBeId: [
                 {type:'refObj', fieldName: 'createdBy'}
             ]
         }
-    ]
+    ],
+    collaborator: [
+        {
+            model:'Company',
+            _id: 'companyOwner',
+            canBeId: [
+                {type:'refObj', fieldName: 'createdBy'},
+                {type:'array', fieldName: 'collaborators'}
+            ]
+        },{
+            model:'Basket',
+            _id: '_id',
+            canBeId: [
+                {type:'refObj', fieldName: 'createdBy'}
+            ]
+        }
+    ],
+    admin: [{public:true}],
+    sa: [{public:true}]
 });
 
 mongoose.model('Basket', schema);
