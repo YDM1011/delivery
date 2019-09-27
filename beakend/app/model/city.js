@@ -26,6 +26,7 @@ const schem = new Schema({
     },
     createRestApi: true,
     strict: true,
+    client: [{public:true}]
 });
 
 mongoose.model('City', schem);

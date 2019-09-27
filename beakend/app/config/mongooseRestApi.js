@@ -29,8 +29,8 @@ module.exports = backendApp => {
                 preRead: [
                     // model.schema.options.needBeAdminR ? backendApp.middlewares.isAdmin :  nextS,
                     modelOpt.needLogined || modelOpt.client ? backendApp.middlewares.isLoggedIn : backendApp.middlewares.checkLoggedIn,
-                    modelOpt.needLogined || modelOpt.client ? canRead(modelOpt) : nextS,
-                    // canRead(modelOpt),
+                    // modelOpt.needLogined || modelOpt.client ? canRead(modelOpt) : nextS,
+                    canRead(modelOpt),
                     // model.schema.options.needAccessControl && !model.schema.options.needLogined && !model.schema.options.needBeAdmin ? backendApp.middlewares.isLoggedIn :  nextS,
                     // model.schema.options.needAccessControl && !model.schema.options.needBeAdmin ? backendApp.middlewares.checkAccessRights(modelName + '.canRead') :  nextS,
                     schemaPre.Read],
@@ -73,11 +73,31 @@ const canRead = (options) => {
       const model = req.erm.model.modelName;
       const role = req.user ? req.user.role || 'client' : 'client';
       let objPromise = [];
+      let error = {success: false};
       let query = {$or: [{'createdBy.itemId': req.user._id},
               {createdBy: req.user._id},
               {_id: req.user._id}]};
+      if (!options[role]) {
+          return res.forbidden("Permission is undefined")
+      }
+      if (options[role][0].private) {
+          if (Object.entries(req.query).length > 0) {
+              console.log(JSON.parse(req.query.query));
+              req.erm.query = { query: {$and: [query, JSON.parse(req.query.query)]} };
+          } else {
+              req.erm.query = { query: query };
+          }
+          return next()
+      }
+      if (options[role][0].public) {
+          if (Object.entries(req.query).length > 0) {
+              console.log(JSON.parse(req.query.query));
+              req.erm.query = { query: JSON.parse(req.query.query) };
+          }
+          return next()
+      }
       options[role].forEach( it =>{
-
+          console.log(it)
           if (it.model) {
               // if params.id
               if (req.params.id) {
@@ -162,15 +182,14 @@ const canRead = (options) => {
                                   if (!r1) {
                                       // check another field
                                       // res.forbidden("403 1")
-                                      rs()
+                                      rs("Not found0")
                                   } else {
                                       console.log("r00",it._id)
-                                      // if(it._id){
-                                          let _o = {};
-                                          _o[it._id || '_id'] = r1._id;
-                                          query['$or'].push(_o);
-                                          console.log("t00",query['$or'],_o)
-                                      // }
+                                      let _o = {};
+                                      _o[it._id || '_id'] = r1._id;
+                                      query['$or'].push(_o);
+                                      console.log("t00",query['$or'],_o)
+                                      error.success = true;
                                       rs()
                                   }
                               })
@@ -183,15 +202,14 @@ const canRead = (options) => {
                                   .findOne(obj).exec((e1, r1) => {
                                   if (e1) rj() ;
                                   if (!r1) {
-                                      rs()
+                                      rs("Not found1")
                                   } else {
                                       console.log("r00",it._id)
-                                      // if(it._id){
-                                          let _o = {};
-                                          _o[it._id || '_id'] = r1._id;
-                                          query['$or'].push(_o);
-                                          console.log("t00",query['$or'],_o)
-                                      // }
+                                      let _o = {};
+                                      _o[it._id || '_id'] = r1._id;
+                                      query['$or'].push(_o);
+                                      console.log("t00",query['$or'],_o)
+                                      error.success = true;
                                       rs()
                                   }
                               })
@@ -199,22 +217,23 @@ const canRead = (options) => {
                       }))
                   });
               }
-          } else if (it.all) {
-              next()
           }
 
       });
-      Promise.all(objPromise).then(v=>{
-          console.log(query)
-          if (req.query) {
-              console.log(JSON.parse(req.query.query))
+      Promise.all(objPromise).then(v => {
+          if (Object.entries(req.query).length > 0) {
+              console.log(JSON.parse(req.query.query));
               req.erm.query = { query: {$and: [query, JSON.parse(req.query.query)]} };
           } else {
               req.erm.query = { query: query };
           }
-          // {$and: [query, {}]}
-          return next()
-      });
+          if (error.success) {
+              return next()
+          } else {
+              res.notFound("No one document")
+          }
+
+      }).catch(e=>{res.badRequest(e)});
 
   }
 };
