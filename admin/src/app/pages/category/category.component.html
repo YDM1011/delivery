@@ -92,7 +92,7 @@
 					<tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 				</table>
 				
-				<mat-paginator class="paginator-table" [pageSizeOptions]="[5, 10, 20]" [class.paginator-table-active]="showPagin" (page)="page = $event"></mat-paginator>
+				<mat-paginator class="paginator-table" [length]="30" [pageSizeOptions]="[5, 10, 20]" [class.paginator-table-active]="showPagin" (page)="page = $event"></mat-paginator>
 			</div>
 			<div class="empty-section" *ngIf="!categorys || categorys.length === 0">
 				<p>
