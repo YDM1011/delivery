@@ -26,7 +26,9 @@ const schem = new Schema({
     },
     createRestApi: true,
     strict: true,
-    client: [{public:true}]
+    client: [{public:true}],
+    provider: [{public:true}],
+    collaborator: [{public:true}],
 });
 
 mongoose.model('City', schem);

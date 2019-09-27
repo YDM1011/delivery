@@ -69,14 +69,22 @@ const schem = new Schema({
     createRestApi: true,
     strict: true,
     client: [{private:true}],
-    provider: [{
-        model:'Company',
-        _id: 'companyOwner',
-        canBeId: [
-            {type:'refObj', fieldName: 'createdBy'},
-            {type:'array', fieldName: 'collaborators'}
-        ]
-    }],
+    provider: [
+        {
+            model:'Company',
+            _id: 'companyOwner',
+            canBeId: [
+                {type:'refObj', fieldName: 'createdBy'},
+                {type:'array', fieldName: 'collaborators'}
+            ]
+        },{
+            model:'Client',
+            _id: '_id',
+            canBeId: [
+                {type:'refObj', fieldName: '_id'}
+            ]
+        }
+    ],
     notCreate: true
 });
 

@@ -81,18 +81,26 @@ const canRead = (options) => {
           return res.forbidden("Permission is undefined")
       }
       if (options[role][0].private) {
-          if (Object.entries(req.query).length > 0) {
-              console.log(JSON.parse(req.query.query));
-              req.erm.query = { query: {$and: [query, JSON.parse(req.query.query)]} };
+          if (Object.entries(req.erm.query).length > 0) {
+              req.erm.query['query'] =  {};
+              if (req.query.query){
+                  req.erm.query['query'] =  {$and: [query, JSON.parse(req.query.query)]};
+              }else {
+                  req.erm.query['query'] =  {$and: [query]};
+              }
           } else {
-              req.erm.query = { query: query };
+              req.erm.query['query'] = query;
           }
           return next()
       }
       if (options[role][0].public) {
           if (Object.entries(req.query).length > 0) {
-              console.log(JSON.parse(req.query.query));
-              req.erm.query = { query: JSON.parse(req.query.query) };
+              req.erm.query['query'] =  {};
+              if (req.query.query){
+                  req.erm.query['query'] =  {$and: [query, JSON.parse(req.query.query)]};
+              }else {
+                  req.erm.query['query'] =  {$and: [query]};
+              }
           }
           return next()
       }
@@ -112,6 +120,7 @@ const canRead = (options) => {
                               // console.log("idChecker:",it.model,idChecker);
                               if (idChecker.fieldName == '_id') {
                                   if (checkId == req.user._id){
+                                      error.success = true;
                                       rs()
                                   } else {
                                       rj("403")
@@ -137,6 +146,7 @@ const canRead = (options) => {
                                           let _o = {};
                                           _o[it ? it._id || '_id' : '_id'] = r1._id;
                                           query['$or'].push(_o);
+                                          error.success = true;
                                           rs()
                                       }
                                   })
@@ -159,6 +169,7 @@ const canRead = (options) => {
                                           let _o = {};
                                           _o[it ? it._id || '_id' : '_id'] = r1._id;
                                           query['$or'].push(_o);
+                                          error.success = true;
                                           rs()
                                       }
                                   })
@@ -221,11 +232,19 @@ const canRead = (options) => {
 
       });
       Promise.all(objPromise).then(v => {
-          if (Object.entries(req.query).length > 0) {
-              console.log(JSON.parse(req.query.query));
-              req.erm.query = { query: {$and: [query, JSON.parse(req.query.query)]} };
+          if (Object.entries(req.erm.query).length > 0) {
+              req.erm.query['query'] =  {};
+              if (req.query.query){
+                  req.erm.query['query'] =  {$and: [query, JSON.parse(req.query.query)]};
+              }else {
+                  req.erm.query['query'] =  {$and: [query]};
+              }
+
           } else {
-              req.erm.query = { query: query };
+              req.erm.query['query'] = {} ;
+              req.erm.query['query'] = query ;
+
+
           }
           if (error.success) {
               return next()
@@ -233,7 +252,7 @@ const canRead = (options) => {
               res.notFound("No one document")
           }
 
-      }).catch(e=>{res.badRequest(e)});
+      }).catch(e=>{console.log(e); res.badRequest(e)});
 
   }
 };
