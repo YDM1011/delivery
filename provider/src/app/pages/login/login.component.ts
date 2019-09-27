@@ -41,7 +41,7 @@ export class LoginComponent implements OnInit {
         this.error['text'] = 'Поставщик не найден';
       } else if (v.user.role === 'provider') {
         localStorage.setItem('userId', v.userId);
-        localStorage.setItem('userToken', v.token);
+        localStorage.setItem('token', v.token);
         this.route.navigate(['']);
         this.obj = {
           login: '',
