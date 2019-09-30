@@ -14,10 +14,12 @@ export class CategoryComponent implements OnInit {
   public mainCategory;
   public user;
   public defLang = 'ru-UA';
+  public isBlok = false;
   public showPagin = false;
   public addShow = false;
   public editShow = false;
   public categorys = [];
+  public editObjCopy;
   public editObj = {
     name: '',
     mainCategory: '',
@@ -71,7 +73,9 @@ export class CategoryComponent implements OnInit {
     this.crud.post('category', this.category).then((v: any) => {
       if (v) {
         this.categorys.push(v);
-        this.crud.post('company', {categories: this.categorys}, this.user.companies[0]._id, false).then((e: any) => {});
+        this.user.companies[0].categories = this.categorys;
+        this.auth.setMe(this.user);
+        this.crud.post('company', {$push: {categories: v._id}}, this.user.companies[0]._id, false).then();
         this.dataSource = new MatTableDataSource(this.categorys);
         setTimeout(() => this.dataSource.paginator = this.paginator);
         this.chackDataLength();
@@ -99,6 +103,7 @@ export class CategoryComponent implements OnInit {
   }
   edit(i) {
     this.editObj = Object.assign({}, this.categorys[i]);
+    this.editObjCopy = Object.assign({}, this.categorys[i]);
     this.mainCategoryChoose = this.editObj.mainCategory;
     this.addShow = false;
     this.editShow = true;
@@ -117,6 +122,8 @@ export class CategoryComponent implements OnInit {
       if (v) {
         this.editShow = false;
         this.categorys[this.crud.find('_id', this.editObj['_id'], this.categorys)] = v;
+        this.user.companies[0].categories = this.categorys;
+        this.auth.setMe(this.user);
         this.dataSource = new MatTableDataSource(this.categorys);
         setTimeout(() => this.dataSource.paginator = this.paginator);
         this.chackDataLength();
@@ -127,6 +134,28 @@ export class CategoryComponent implements OnInit {
         this.editShow = false;
       }
     });
+  }
+  selectValid() {
+    if (this.editObjCopy.mainCategory !== this.mainCategoryChoose) {
+      return this.btnBlok(true);
+    }
+    return this.btnBlok(false);
+
+  }
+  validate() {
+    let isTrue = false;
+    for (const key in this.editObj) {
+      if (this.editObj[key] !== this.editObjCopy[key]) {isTrue = true; }
+    }
+    return isTrue;
+  }
+
+  btnBlok(is) {
+    this.isBlok = is;
+  }
+
+  formCheck() {
+    this.btnBlok(this.validate());
   }
   openAdd() {
     this.addShow = true;

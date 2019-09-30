@@ -14,8 +14,10 @@ export class CreateComponent implements OnInit {
   public user;
   public showPagin = false;
   public editShow = false;
+  public isBlok = false;
   public defLang = 'ru-UA';
   public clients = [];
+  public editObjCopy;
   public editObj = {
     _id: '',
     name: '',
@@ -75,7 +77,7 @@ export class CreateComponent implements OnInit {
       return;
     }
     this.editObj.companyOwner = this.user.companies[0]._id;
-    this.crud.post('category', {name: this.editObj.name}, this.editObj._id).then((v: any) => {
+    this.crud.post('client', {name: this.editObj.name}, this.editObj._id).then((v: any) => {
       if (v) {
         this.editShow = false;
         this.clients[this.crud.find('_id', this.editObj._id, this.clients)] = v;
@@ -96,6 +98,7 @@ export class CreateComponent implements OnInit {
   }
   edit(i) {
     this.editObj = Object.assign({}, this.clients[i]);
+    this.editObjCopy = Object.assign({}, this.clients[i]);
     this.editShow = true;
     this.showCollaborator = false;
   }
@@ -125,6 +128,21 @@ export class CreateComponent implements OnInit {
     };
   }
 
+  validate() {
+    let isTrue = false;
+    for (const key in this.editObj) {
+      if (this.editObj[key] !== this.editObjCopy[key]) {isTrue = true; }
+    }
+    return isTrue;
+  }
+
+  btnBlok(is) {
+    this.isBlok = is;
+  }
+
+  formCheck() {
+    this.btnBlok(this.validate());
+  }
   checkDataLength() {
     if (!this.clients || this.clients.length === 0) {
       this.showPagin = false;

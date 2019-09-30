@@ -24,25 +24,19 @@
 				Редактировать cотрудника
 			</div>
 		</div>
-		<div class="edit-section" *ngIf="editShow">
+		<form (submit)="confirmEditCategoryCrud()" (keyup)="formCheck()" class="edit-section" *ngIf="editShow">
 			<label>
-				<input type="text" placeholder="Name" [(ngModel)]="editObj.name">
+				<input type="text" placeholder="Name" [(ngModel)]="editObj.name" name="name">
 			</label>
-<!--			<label>-->
-<!--				<input type="text" placeholder="Phone" [(ngModel)]="editObj.login">-->
-<!--			</label>-->
-<!--			<label>-->
-<!--				<input type="text" placeholder="Password" [(ngModel)]="editObj.pass">-->
-<!--			</label>-->
 			<div class="group-buttons">
 				<div class="left">
 				</div>
 				<div class="right">
-					<button class="main-button" (click)="cancelEdit()">Отмена</button>
-					<button class="main-button-color" (click)="confirmEditCategoryCrud()">Сохранить</button>
+					<button class="main-button" type="reset" (click)="cancelEdit()">Отмена</button>
+					<button class="main-button-color" type="submit" *ngIf="isBlok">Сохранить</button>
 				</div>
 			</div>
-		</div>
+		</form>
 	</div>
 	<div class="contain__group">
 		<div class="contain__group-header">
@@ -68,13 +62,6 @@
 					<!-- Name Column -->
 					<ng-container matColumnDef="Назва бренда">
 						<th mat-header-cell *matHeaderCellDef>Тел</th>
-<!--						<td class="table__name" mat-cell *matCellDef="let element">-->
-<!--							<div class="table__name-name">-->
-<!--								<a [routerLink]="'/user-detail/'+ element._id">-->
-<!--									{{element.login}}-->
-<!--								</a>-->
-<!--							</div>-->
-<!--						</td>-->
 						<td class="table__name" mat-cell *matCellDef="let element">
 							<div class="table__name-img">
 								<img src="./assets/images/user.svg" alt="" *ngIf="!element.img || element.img == ''">

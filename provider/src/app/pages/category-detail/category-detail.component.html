@@ -17,6 +17,11 @@
 			</label>
 			<div class="group-buttons">
 				<div class="left">
+					<app-upload (onFs)="onFs($event)"></app-upload>
+					<div class="mat-chip-file" *ngIf="product && product.img !== ''">
+						<div class="content">{{product.img}}</div>
+						<div class="remove-mat-chip" (click)="product.img = ''"></div>
+					</div>
 				</div>
 				<div class="right">
 					<button class="main-button" (click)="cancelAdd()">Отмена</button>
@@ -32,25 +37,30 @@
 				Редактировать продукт
 			</div>
 		</div>
-		<div class="edit-section" *ngIf="editShow">
+		<form (keyup)="formCheck()" (submit)="confirmEditCategoryCrud()" class="edit-section" *ngIf="editShow">
 			<label>
-				<input type="text" placeholder="Название продукта" [(ngModel)]="editObj.name">
+				<input type="text" placeholder="Название продукта" name="name" [(ngModel)]="editObj.name">
 			</label>
 			<label>
-				<input type="text" placeholder="Опис продукта" [(ngModel)]="editObj.des">
+				<input type="text" placeholder="Опис продукта" name="des" [(ngModel)]="editObj.des">
 			</label>
 			<label>
-				<input type="text" placeholder="Ціна" [(ngModel)]="editObj.price">
+				<input type="text" placeholder="Ціна" name="price" [(ngModel)]="editObj.price">
 			</label>
 			<div class="group-buttons">
 				<div class="left">
+					<app-upload (onFs)="onFs($event)" *ngIf="editObj && editObj.img === ''"></app-upload>
+					<div class="mat-chip-file" *ngIf="editObj && editObj.img !== ''">
+						<div class="content">{{editObj.img.split("--")[1]}}</div>
+						<div class="remove-mat-chip" (click)="editObj.img = ''; formCheck()"></div>
+					</div>
 				</div>
-				<div class="right">
+				<div class="right" *ngIf="isBlok">
 					<button class="main-button" (click)="cancelEdit()">Отмена</button>
-					<button class="main-button-color" (click)="confirmEditCategoryCrud()">Сохранить</button>
+					<button class="main-button-color" type="submit">Сохранить</button>
 				</div>
 			</div>
-		</div>
+		</form>
 	</div>
 	
 	<div class="contain__group">
@@ -63,8 +73,8 @@
 			</button>
 		</div>
 		<div class="main-section">
-			<div class="mat-elevation-z8">
-				<mat-form-field class="filter" *ngIf="showPagin">
+			<div class="mat-elevation-z8"  *ngIf="showPagin">
+				<mat-form-field class="filter" >
 					<input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
 				</mat-form-field>
 				<table mat-table [dataSource]="dataSource" *ngIf="products && products.length > 0">
@@ -78,9 +88,10 @@
 					<ng-container matColumnDef="Назва бренда">
 						<th mat-header-cell *matHeaderCellDef>Название продукта</th>
 						<td class="table__name" mat-cell *matCellDef="let element">
-							<div class="table__name-name">
-								{{element.name}}
+							<div class="table__name-img">
+								<app-img [fs]="element.img"></app-img>
 							</div>
+							<div class="table__name-name">{{element.name}}</div>
 						</td>
 					</ng-container>
 					
@@ -112,7 +123,7 @@
 			</div>
 			<div class="empty-section" *ngIf="!products || products.length === 0">
 				<p>
-					У вас нет созданых продуктов
+					У вас нет созданых продуктов в категории {{categoryID ? categoryID.name : ''}}
 				</p>
 			</div>
 		</div>
