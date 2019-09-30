@@ -25,14 +25,14 @@ export class TranslateComponent implements OnInit {
         this.words = v;
         this.loaded = true;
       }
-    });
+    }).catch( e => console.log(e));
   }
   remove(i) {
     this.crud.delete('translator', this.words[i]._id).then((v: any) => {
       if (v) {
         this.words.splice(i, 1);
       }
-    });
+    }).catch( e => console.log(e));
   }
   addTranslate(data) {
     this.activeWord = this.words[data].value;
@@ -49,8 +49,8 @@ export class TranslateComponent implements OnInit {
         if (v) {
           this.words = v;
         }
-      });
-    });
+      }).catch( e => console.log(e));
+    }).catch( e => console.log(e));
     this.activeWord = null;
   }
 

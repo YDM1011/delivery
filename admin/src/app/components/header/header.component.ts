@@ -23,6 +23,6 @@ export class HeaderComponent implements OnInit {
         localStorage.removeItem('adminId');
         this.route.navigate(['/login']);
       }
-    });
+    }).catch( e => console.log(e));
   }
 }

@@ -20,7 +20,7 @@ export class ListProvidersComponent implements OnInit {
       if(!v) return;
       this.list = v;
       this.loaded = true;
-    });
+    }).catch( e => console.log(e));
   }
 
 }
