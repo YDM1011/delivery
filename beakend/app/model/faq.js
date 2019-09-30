@@ -29,7 +29,7 @@ const schema = new Schema({
     createRestApi: true,
     strict: true,
     needLogined: true,
-    needAccessControl: true,
+    sa: [{public:true}],
 });
 
 mongoose.model('Faq', schema);

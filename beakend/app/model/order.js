@@ -51,7 +51,7 @@ const schema = new Schema({
     },
     createRestApi: true,
     strict: true,
-    needAccessControl: true
+    sa: [{public:true}],
 });
 
 schema.post('save', (doc,next)=>{

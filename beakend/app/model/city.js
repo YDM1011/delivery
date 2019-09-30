@@ -26,6 +26,7 @@ const schem = new Schema({
     },
     createRestApi: true,
     strict: true,
+    sa: [{public:true}],
     client: [{public:true}],
     provider: [{public:true}],
     collaborator: [{public:true}],

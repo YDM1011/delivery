@@ -79,7 +79,8 @@ const schem = new Schema({
                 {type:'array', fieldName: 'collaborators'}
             ]
         }
-    ]
+    ],
+    sa: [{public:true}],
 
 });
 

@@ -34,7 +34,7 @@ const schema = new Schema({
     },
     createRestApi: true,
     strict: true,
-    client: 'byId'
+    sa: [{public:true}],
 
 });
 

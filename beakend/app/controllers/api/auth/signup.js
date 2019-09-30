@@ -24,7 +24,6 @@ module.exports = (backendApp, router) => {
                 {email: req.body.login.toLowerCase()}
             ]
         }, (err, user) => {
-            console.log("test", err, user);
             if (err) return res.serverError(err);
             if (user) return res.notFound("User with this login created");
             if (!user){
@@ -32,7 +31,10 @@ module.exports = (backendApp, router) => {
                 req.body.pass = md5(req.body.pass);
                 // req.body.email = req.body.email ? req.body.email : req.body.login;
                 req.body.email = req.body.email ? req.body.email.toLowerCase() : req.body.login.toLowerCase();
-                if (req.user && req.user.role == 'admin') req.body.verify = true;
+                if (req.user && req.user.role == 'sa'){
+                    req.body.verify = true;
+                    req.body.role = 'admin';
+                }
                 if (req.user.role === 'provider') {
                     req.body.verify = true;
                     req.body.role = 'collaborator';
@@ -52,6 +54,10 @@ module.exports = (backendApp, router) => {
                     if (!req.user) {
                         // r.signin(req,res,backendApp)
                         // verify()
+                        return res.badRequest();
+                    }
+                    if (req.user.role == 'sa'){
+                        return res.ok(r);
                     }
                     if (req.user.role === 'provider') {
                         Company.findOneAndUpdate({_id: req.body.companyOwner}, {$push: {collaborators: r._id}}, {new:true})
@@ -61,7 +67,6 @@ module.exports = (backendApp, router) => {
                             console.log(r1)
                             return  res.ok(r)
                         });
-
                     }
                     // backendApp.service.email({
                     //     to: r.email,

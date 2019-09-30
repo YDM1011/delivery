@@ -29,6 +29,7 @@ const schem = new Schema({
     client: [{public:true}],
     provider: [{public:true}],
     collaborator: [{public:true}],
+    sa: [{public:true}],
 });
 
 mongoose.model('MainCategory', schem);
