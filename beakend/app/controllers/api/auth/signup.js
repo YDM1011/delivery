@@ -21,7 +21,7 @@ module.exports = (backendApp, router) => {
         Client.findOne({
             $or:[
                 {login: req.body.login.toLowerCase()},
-                {email: req.body.login.toLowerCase()}
+                {mobile: req.body.login.toLowerCase()}
             ]
         }, (err, user) => {
             if (err) return res.serverError(err);
@@ -30,10 +30,9 @@ module.exports = (backendApp, router) => {
                 req.body.token = getToken(req.body.login);
                 req.body.pass = md5(req.body.pass);
                 // req.body.email = req.body.email ? req.body.email : req.body.login;
-                req.body.email = req.body.email ? req.body.email.toLowerCase() : req.body.login.toLowerCase();
+                req.body.mobile = req.body.mobile ? req.body.mobile.toLowerCase() : req.body.login.toLowerCase();
                 if (req.user && req.user.role == 'sa'){
                     req.body.verify = true;
-                    req.body.role = 'admin';
                 }
                 if (req.user.role === 'provider') {
                     req.body.verify = true;
@@ -42,6 +41,7 @@ module.exports = (backendApp, router) => {
                         req.user.companies[i] = it.toString();
                     });
                     if(req.user.companies.indexOf(req.body.companyOwner) > -1) {
+
                     } else {
                         return res.badRequest('Company error');
 
@@ -57,15 +57,15 @@ module.exports = (backendApp, router) => {
                         return res.badRequest();
                     }
                     if (req.user.role == 'sa'){
-                        return res.ok(r);
+                        return postSignup(req, res, r);
                     }
                     if (req.user.role === 'provider') {
                         Company.findOneAndUpdate({_id: req.body.companyOwner}, {$push: {collaborators: r._id}}, {new:true})
                             .exec((e1,r1)=>{
                             if (e1) return res.serverError(e1);
                             if (!r1) return res.badRequest();
-                            console.log(r1)
-                            return  res.ok(r)
+                            console.log(r1);
+                            return postSignup(req, res, r);
                         });
                     }
                     // backendApp.service.email({
@@ -87,7 +87,12 @@ module.exports = (backendApp, router) => {
         console.log(err);
         if (err) return res.badRequest(err);
         else return next()
-    }
+    };
+    const postSignup = (req, res, result) => {
+        const signup = new backendApp.hooks.signupRole(req, res, result);
+        signup.end()
+    };
 
     router.post('/signup', [backendApp.middlewares.isLoggedIn], signup);
 };
+
