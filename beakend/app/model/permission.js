@@ -43,8 +43,6 @@ const schema = new Schema({
     sa: [{public:true}],
 });
 
-schema.post('save', (doc, next)=>{
-    next()
-});
+
 mongoose.model('Permission', schema);
 

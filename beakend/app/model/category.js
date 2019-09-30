@@ -40,4 +40,20 @@ const schem = new Schema({
     sa: [{public:true}],
 });
 
+schem.post('save', (doc, next)=>{
+    const key = doc.name;
+    const translator = mongoose.model('Translator');
+    translator.findOne({value: key}).exec((e,r)=>{
+        if (e) return next(e);
+        if (!r) {
+            translator.create({value: key}, (e,r)=>{
+                if (e) return next(e);
+                next()
+            })
+        } else {
+            next()
+        }
+    });
+});
+
 mongoose.model('Category', schem);

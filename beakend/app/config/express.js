@@ -65,6 +65,7 @@ const init = (app, config) =>{
     };
     global.backendApp = backendApp;
     backendApp.middlewares = require('../middlewares')(backendApp, config);
+    backendApp.hooks = require('../hooks')(backendApp, config);
     backendApp.customEndPoints = [];
     require('../controllers')(backendApp);
     require('../service')(backendApp);
