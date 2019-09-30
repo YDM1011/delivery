@@ -28,7 +28,8 @@ const schem = new Schema({
     },
     createRestApi: false,
     strict: true,
-    notCreate: true
+    notCreate: true,
+    sa: [{public:true}],
 });
 require("./model_methods/object/admin")(schem);
 mongoose.model('Admin', schem);

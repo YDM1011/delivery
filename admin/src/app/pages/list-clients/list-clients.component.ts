@@ -16,7 +16,7 @@ export class ListClientsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.crud.get('client?query={"role": "client"}').then((v: any) => {
+    this.crud.get('client?query={"$or":[{"role": "client"},{"role":null},{"role":{"$exists":true}}]}').then((v: any) => {
       if(!v) return;
       this.list = v;
       this.loaded = true;

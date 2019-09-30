@@ -28,7 +28,7 @@ const schema = new Schema({
     createRestApi: true,
     strict: true,
     needLogined: false,
-    needAccessControl: false
+    sa: [{public:true}],
 });
 
 schema.post('save', (doc, next)=>{

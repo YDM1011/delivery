@@ -85,6 +85,7 @@ const schem = new Schema({
             ]
         }
     ],
+    sa: [{public:true}],
     notCreate: true
 });
 

@@ -23,6 +23,7 @@ const schema = new Schema({
     },
     createRestApi: true,
     strict: true,
+    sa: [{public:true}],
 });
 
 schema.post('find', (doc,next)=>{

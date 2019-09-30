@@ -80,6 +80,7 @@ const canRead = (options) => {
       if (!options[role]) {
           return res.forbidden("Permission is undefined")
       }
+      if(options[role][0].public && role === 'sa') return next();
       if (options[role][0].private) {
           if (Object.entries(req.erm.query).length > 0) {
               req.erm.query['query'] =  {};

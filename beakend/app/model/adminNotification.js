@@ -30,6 +30,6 @@ const schem = new Schema({
     },
     createRestApi: true,
     strict: false,
-    client:'byId'
+    sa: [{public:true}],
 });
 mongoose.model('adminNotification', schem);

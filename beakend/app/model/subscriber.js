@@ -21,6 +21,7 @@ const schema = new Schema({
     },
     createRestApi: true,
     strict: true,
+    sa: [{public:true}],
 });
 
 mongoose.model('Subscriber', schema);

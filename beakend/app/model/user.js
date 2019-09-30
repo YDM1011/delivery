@@ -29,7 +29,7 @@ const user = new Schema({
     },
     createRestApi: true,
     strict: true,
-
+    sa: [{public:true}],
 });
 require("./model_methods/object/user")(user);
 // user.plugin(CustomFieldValidator, {});
