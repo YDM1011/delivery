@@ -20,9 +20,11 @@ export class ProductComponent implements OnInit {
   public editShow = false;
   public products = [];
   public categorys = [];
+  public uploadObj = {};
   public editObj = {
     name: '',
     des: '',
+    img: '',
     price: null,
     companyOwner: '',
     categoryOwner: '',
@@ -30,6 +32,7 @@ export class ProductComponent implements OnInit {
   public product = {
     name: '',
     des: '',
+    img: '',
     price: null,
     companyOwner: '',
     categoryOwner: '',
@@ -87,6 +90,11 @@ export class ProductComponent implements OnInit {
     }
   }
 
+  onFs(e) {
+    this.uploadObj = e;
+    this.product.img = e.name;
+  }
+
   delete(i) {
     this.crud.delete('category', this.products[i]._id).then((v: any) => {
       if (v) {
@@ -116,6 +124,7 @@ export class ProductComponent implements OnInit {
           this.editObj = {
             name: '',
             des: '',
+            img: '',
             price: null,
             companyOwner: '',
             categoryOwner: '',
@@ -143,6 +152,7 @@ export class ProductComponent implements OnInit {
     this.editObj = {
       name: '',
       des: '',
+      img: '',
       price: null,
       companyOwner: '',
       categoryOwner: '',
@@ -167,6 +177,7 @@ export class ProductComponent implements OnInit {
     this.product = {
       name: '',
       des: '',
+      img: '',
       price: null,
       companyOwner: '',
       categoryOwner: '',

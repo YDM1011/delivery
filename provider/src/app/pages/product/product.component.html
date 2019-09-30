@@ -33,6 +33,11 @@
 			</div>
 			<div class="group-buttons">
 				<div class="left">
+					<app-upload (onFs)="onFs($event)"></app-upload>
+					<div class="mat-chip-file" *ngIf="city && city.img !== ''">
+						<div class="content">{{city.img}}</div>
+						<div class="remove-mat-chip" (click)="city.img = ''"></div>
+					</div>
 				</div>
 				<div class="right">
 					<button class="main-button" (click)="cancelAdd()">Отмена</button>
