@@ -39,7 +39,7 @@ export class CategoryComponent implements OnInit, AfterViewInit {
       this.dataSource = new MatTableDataSource(this.categorys);
       setTimeout(() => this.dataSource.paginator = this.paginator);
       this.chackDataLength();
-    });
+    }).catch( e => console.log(e));
   }
 
   create() {
@@ -58,7 +58,7 @@ export class CategoryComponent implements OnInit, AfterViewInit {
         };
         this.addShow = false;
       }
-    });
+    }).catch( e => console.log(e));
   }
 
   delete(i) {
@@ -69,7 +69,7 @@ export class CategoryComponent implements OnInit, AfterViewInit {
         setTimeout(() => this.dataSource.paginator = this.paginator);
         this.chackDataLength();
       }
-    });
+    }).catch( e => console.log(e));
   }
   edit(i) {
     this.editObj = Object.assign({}, this.categorys[i]);
@@ -95,7 +95,7 @@ export class CategoryComponent implements OnInit, AfterViewInit {
           name: ''
         };
       }
-    });
+    }).catch( e => console.log(e));
   }
   openAdd() {
     this.addShow = true;

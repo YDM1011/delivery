@@ -41,7 +41,7 @@ export class BrandsComponent implements OnInit, AfterViewInit {
       this.dataSource = new MatTableDataSource(this.brands);
       setTimeout(() => this.dataSource.paginator = this.paginator);
       this.chackDataLength();
-    });
+    }).catch( e => console.log(e));
   }
 
   create() {
@@ -70,7 +70,7 @@ export class BrandsComponent implements OnInit, AfterViewInit {
           this.chackDataLength();
         }
       });
-    });
+    }).catch( e => console.log(e));
   }
 
   delete(i) {
@@ -81,7 +81,7 @@ export class BrandsComponent implements OnInit, AfterViewInit {
         setTimeout(() => this.dataSource.paginator = this.paginator);
         this.chackDataLength();
       }
-    });
+    }).catch( e => console.log(e));
   }
   onFs(e) {
     this.uploadObj = e;
@@ -98,7 +98,7 @@ export class BrandsComponent implements OnInit, AfterViewInit {
         if (!v) return;
         this.editObj.img = v.file;
         this.confirmEditCityCrud();
-      });
+      }).catch( e => console.log(e));
     } else {
       this.confirmEditCityCrud();
     }
@@ -128,7 +128,7 @@ export class BrandsComponent implements OnInit, AfterViewInit {
         };
         this.uploadObj = {};
       }
-    });
+    }).catch( e => console.log(e));
   }
 
   openAdd() {

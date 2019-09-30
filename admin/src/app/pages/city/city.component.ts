@@ -40,7 +40,7 @@ export class CityComponent implements OnInit, AfterViewInit{
       this.dataSource = new MatTableDataSource(this.citys);
       setTimeout(() => this.dataSource.paginator = this.paginator);
       this.chackDataLength();
-    });
+    }).catch( e => console.log(e));
   }
 
   create() {
@@ -68,8 +68,8 @@ export class CityComponent implements OnInit, AfterViewInit{
           };
           this.addShow = false;
         }
-      });
-    });
+      }).catch( e => console.log(e));
+    }).catch( e => console.log(e));
   }
 
   delete(i) {
@@ -81,7 +81,7 @@ export class CityComponent implements OnInit, AfterViewInit{
         setTimeout(() => this.dataSource.paginator = this.paginator);
         this.chackDataLength();
       }
-    });
+    }).catch( e => console.log(e));
   }
   onFs(e) {
     this.uploadObj = e;
@@ -99,7 +99,7 @@ export class CityComponent implements OnInit, AfterViewInit{
         if (!v) return;
         this.editObj.img = v.file;
         this.confirmEditCityCrud();
-      });
+      }).catch( e => console.log(e));
     } else {
       this.confirmEditCityCrud();
     }
@@ -131,7 +131,7 @@ export class CityComponent implements OnInit, AfterViewInit{
         };
         this.uploadObj = {};
       }
-    });
+    }).catch( e => console.log(e));
   }
   openAdd() {
     this.addShow = true;

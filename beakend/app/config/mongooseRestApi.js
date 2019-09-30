@@ -105,7 +105,6 @@ const canRead = (options) => {
           return next()
       }
       options[role].forEach( it =>{
-          console.log(it)
           if (it.model) {
               // if params.id
               if (req.params.id) {
@@ -113,8 +112,8 @@ const canRead = (options) => {
                   backendApp.mongoose.model(model)
                       .findOne({_id: req.params.id})
                       .exec((e, r) => {
-                          if (e) return res.serverError(e);
-                          if (!r) return res.forbidden('Not access!');
+                          if (e) return rj(e);
+                          if (!r) return rs('Not access!');
                           const checkId = r[it._id] ? r[it._id].toString() : null;
                           it.canBeId.forEach(idChecker => {
                               // console.log("idChecker:",it.model,idChecker);
@@ -122,8 +121,6 @@ const canRead = (options) => {
                                   if (checkId == req.user._id){
                                       error.success = true;
                                       rs()
-                                  } else {
-                                      rj("403")
                                   }
                               }
                               if (idChecker.type === 'refObj') {
@@ -135,9 +132,7 @@ const canRead = (options) => {
                                   // console.log(it.model,obj)
                                   backendApp.mongoose.model(it.model)
                                       .findOne(obj).exec((e1, r1) => {
-                                      console.log(it.model,obj)
-                                          console.log(e1,r1);
-                                      if (e1) rj();
+                                      if (e1) rj(e1);
                                       if (!r1) {
                                           // check another field
                                           // res.forbidden("403 1")
@@ -158,8 +153,6 @@ const canRead = (options) => {
                                   // console.log(it.model,obj)
                                   backendApp.mongoose.model(it.model)
                                       .findOne(obj).exec((e1, r1) => {
-                                      console.log(it.model,obj)
-                                      console.log(e1,r1);
                                       if (e1) rj();
                                       if (!r1) {
                                           // check another field
@@ -195,11 +188,9 @@ const canRead = (options) => {
                                       // res.forbidden("403 1")
                                       rs("Not found0")
                                   } else {
-                                      console.log("r00",it._id)
                                       let _o = {};
                                       _o[it._id || '_id'] = r1._id;
                                       query['$or'].push(_o);
-                                      console.log("t00",query['$or'],_o)
                                       error.success = true;
                                       rs()
                                   }
@@ -208,18 +199,15 @@ const canRead = (options) => {
                           if (idChecker.type === 'array') {
                               let obj = {};
                               obj[idChecker.fieldName] = {$in:req.user._id.toString()};
-                              console.log(it.model,obj)
                               backendApp.mongoose.model(it.model)
                                   .findOne(obj).exec((e1, r1) => {
                                   if (e1) rj() ;
                                   if (!r1) {
                                       rs("Not found1")
                                   } else {
-                                      console.log("r00",it._id)
                                       let _o = {};
                                       _o[it._id || '_id'] = r1._id;
                                       query['$or'].push(_o);
-                                      console.log("t00",query['$or'],_o)
                                       error.success = true;
                                       rs()
                                   }
@@ -296,7 +284,6 @@ const callMethod = (req,res,next,method) => {
 
 
 const parseFileName = str =>{
-    // return str.match(/\/?([^:\/\s]+)((\/\w+)*\/)([a-zA-Z]\w+)?/i)[4]
     let strRout = str.split('.js')[0];
     return strRout ? strRout.split('restifyMethod/')[1] : ''
 };
