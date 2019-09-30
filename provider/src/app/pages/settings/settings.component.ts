@@ -30,7 +30,9 @@ export class SettingsComponent implements OnInit {
       if (!this.company.city) {
         this.company['city'] = null;
         this.companyCopy['city'] = '';
+        return;
       }
+      this.cityChoose = this.company.city;
       this.cityChoose = this.company.city;
     });
     this.crud.get('city').then((v: any) => {
@@ -41,11 +43,14 @@ export class SettingsComponent implements OnInit {
   create() {
     this.crud.post('company', this.companyCopy, this.company._id).then((v: any) => {
       this.user.companies[0] = v;
+      this.company = this.user.companies[0];
       this.auth.setMe(this.user);
+      this.formCheck();
     });
   }
   onFs(e) {
     this.uploadObj = e;
+    console.log(this.companyCopy);
     this.companyCopy.img = e.name;
     this.formCheck();
   }

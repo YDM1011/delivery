@@ -7,7 +7,7 @@ const Schema = mongoose.Schema;
  */
 const timeRangeSchema = {
     nameDay: String,
-    timeStart:  {type: String, default: "8:00"},
+    timeStart:  {type: String, default: "08:00"},
     timeEnd: {type: String, default: "20:00"},
     isTimeRange: {type: Boolean, default: true},
     isAllTime: {type: Boolean, default: false},
@@ -32,15 +32,15 @@ const schem = new Schema({
         type: Schema.Types.ObjectId,
         ref: "Category"
     }],
-    city: [{
+    city: {
         type: Schema.Types.ObjectId,
         ref: "City",
         required: [true, "City is required"]
-    }],
-    img: String,
+    },
+    img: {type: String, default: ''},
     workTime: {
         name: {type: String},
-        label: {type: String},
+        label: {type: String, default: ''},
         timeRange1: timeRangeSchema,
         timeRange2: timeRangeSchema,
         timeRange3: timeRangeSchema,
