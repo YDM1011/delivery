@@ -8,10 +8,10 @@ import {CrudService} from '../../crud.service';
   styleUrls: ['./work-time.component.scss']
 })
 export class WorkTimeComponent implements OnInit {
-  public time;
   public timeCopy;
   public user;
   public isBlok: boolean = false;
+  public time;
   constructor(
       private auth: AuthService,
       private crud: CrudService
@@ -21,17 +21,17 @@ export class WorkTimeComponent implements OnInit {
     this.auth.onMe.subscribe((v: any) => {
       if (!v) {return; }
       this.user = v;
+      this.timeCopy = Object.assign({}, v.companies[0].workTime);
       this.time = Object.assign({}, v.companies[0].workTime);
-      this.timeCopy = v.companies[0].workTime;
     });
   }
   setTimeStart(range, v) {
     this.time[range].timeStart = v;
-    this.formCheck();
+    this.isBlok = true;
   }
   setTimeEnd(range, v) {
     this.time[range].timeEnd = v;
-    this.formCheck();
+    this.isBlok = true;
   }
   saveTime() {
     this.user.companies[0].workTime = this.time;
@@ -45,12 +45,10 @@ export class WorkTimeComponent implements OnInit {
   validate() {
     let isTrue = false;
     for (const key in this.time) {
-      // console.log(key);
       if (this.time[key] !== this.timeCopy[key]) {isTrue = true; }
     }
     return isTrue;
   }
-
   btnBlok(is) {
     this.isBlok = is;
   }
