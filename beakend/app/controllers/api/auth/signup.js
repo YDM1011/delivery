@@ -90,6 +90,7 @@ module.exports = (backendApp, router) => {
     };
     const postSignup = (req, res, result) => {
         const signup = new backendApp.hooks.signupRole(req, res, result);
+
         signup.end()
     };
 

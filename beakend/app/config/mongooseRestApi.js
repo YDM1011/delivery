@@ -37,7 +37,7 @@ module.exports = backendApp => {
                 preCreate: [
                     modelOpt.notCreate ? forbidden : nextS,
                     // model.schema.options.needBeAdminCUD ? backendApp.middlewares.isAdmin :  nextS,
-                    model.schema.options.needLogined ? backendApp.middlewares.isLoggedIn : nextS,
+                    backendApp.middlewares.isLoggedIn,
                     // model.schema.options.needAccessControl ? backendApp.middlewares.checkAccessRights(modelName + '.canCreate') :  nextS,
                     schemaPre.Save],
                 postCreate: [update_ws, schemaPre.PostCreate],
@@ -45,6 +45,7 @@ module.exports = backendApp => {
                     // model.schema.options.needBeAdminCUD ? backendApp.middlewares.isAdmin :  nextS,
                     // model.schema.options.needLogined ? backendApp.middlewares.isLoggedIn : nextS,
                     // model.schema.options.needAccessControl ? backendApp.middlewares.checkAccessRights(modelName + '.canUpdate') :  nextS,
+                    backendApp.middlewares.isLoggedIn,
                     schemaPre.Update],
                 postUpdate: [update_ws, schemaPre.PostUpdate],
                 preDelete: [
@@ -52,6 +53,7 @@ module.exports = backendApp => {
                     // model.schema.options.needLogined && !model.schema.options.needBeAdmin ? backendApp.middlewares.isLoggedIn : nextS,
                     // model.schema.options.needAccessControl && !model.schema.options.needLogined && !model.schema.options.needBeAdmin ? backendApp.middlewares.isLoggedIn :  nextS,
                     // model.schema.options.needAccessControl && !model.schema.options.needBeAdmin ? backendApp.middlewares.checkAccessRights(modelName + '.canDelete') :  nextS,
+                    backendApp.middlewares.isLoggedIn,
                     schemaPre.Delete],
                 postDelete: [update_ws, schemaPre.PostDelete],
                 // preCustomLink: backendApp.middlewares.isLoggedIn

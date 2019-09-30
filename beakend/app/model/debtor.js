@@ -10,11 +10,11 @@ const schem = new Schema({
         type: Schema.Types.ObjectId,
         ref: "Client"
     },
-    client: {
+    clientOwner: {
         type: Schema.Types.ObjectId,
         ref: "Client"
     },
-    company: {
+    companyOwner: {
         type: Schema.Types.ObjectId,
         ref: "Company"
     },
@@ -43,6 +43,22 @@ const schem = new Schema({
     createRestApi: true,
     strict: true,
     sa: [{public:true}],
+    provider: [
+        {
+            model:'Company',
+            _id: 'companyOwner',
+            canBeId: [
+                {type:'refObj', fieldName: 'createdBy'},
+                {type:'array', fieldName: 'collaborators'}
+            ]
+        },{
+            model:'Debtor',
+            _id: '_id',
+            canBeId: [
+                {type:'refObj', fieldName: 'createdBy'}
+            ]
+        }
+    ],
 });
 
 mongoose.model('Debtor', schem);
