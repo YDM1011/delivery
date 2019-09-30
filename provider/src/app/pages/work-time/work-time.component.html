@@ -8,7 +8,7 @@
 		
 		<div class="add-section">
 			<label *ngIf="time">
-				<input type="text" placeholder="Название календаря" [(ngModel)]="time.label" name="label">
+				<input type="text" placeholder="Название календаря" [(ngModel)]="time.label" name="label" (ngModelChange)="formCheck()">
 			</label>
 			<div class="work-time" *ngIf="time">
 				<div class="work-time-header">
@@ -122,6 +122,15 @@
 					</div>
 					<div class="work-time-item">
 					</div>
+				</div>
+			</div>
+			
+			<div class="group-buttons">
+				<div class="left">
+				</div>
+				<div class="right" *ngIf="isBlok">
+<!--					<button class="main-button" (click)="cancelAdd()">Отмена</button>-->
+					<button class="main-button-color" (click)="saveTime()">Сохранить</button>
 				</div>
 			</div>
 		</div>
