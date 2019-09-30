@@ -154,6 +154,8 @@ export class CategoryDetailComponent implements OnInit {
                 this.dataSource = new MatTableDataSource(this.products);
                 setTimeout(() => this.dataSource.paginator = this.paginator);
                 this.checkDataLength();
+                this.editShow = false;
+                this.isBlok = false;
                 this.product = {
                   name: '',
                   des: '',
@@ -162,7 +164,6 @@ export class CategoryDetailComponent implements OnInit {
                   companyOwner: '',
                   categoryOwner: '',
                 };
-                this.editShow = false;
               }
             }).catch((error) => {
               if (error && error.errors.price.name === 'CastError') {
@@ -213,6 +214,7 @@ export class CategoryDetailComponent implements OnInit {
   }
   cancelEdit() {
     this.editShow = false;
+    this.isBlok = false;
     this.editObj = {
       _id: '',
       name: '',

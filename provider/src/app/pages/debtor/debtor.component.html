@@ -41,12 +41,12 @@
 				Редактировать должника
 			</div>
 		</div>
-		<div class="edit-section" *ngIf="editShow">
+		<form class="edit-section" (submit)="confirmEditCategoryCrud()" (keyup)="formCheck()" *ngIf="editShow">
 			<mat-form-field class="example-full-width">
 				<input type="text" placeholder="Сумма долга" aria-label="Number" name="value" matInput [(ngModel)]="editObj.value">
 			</mat-form-field>
 			<mat-form-field>
-				<input matInput [matDatepicker]="picker" placeholder="Choose a date" [min]="minDate" [(ngModel)]="editObj.dataCall" (focus)="picker.open()">
+				<input matInput [matDatepicker]="picker" name="date" placeholder="Choose a date" [min]="minDate" [(ngModel)]="editObj.dataCall" (ngModelChange)="formCheck()" (focus)="picker.open()">
 				<mat-datepicker-toggle matSuffix [for]="picker" ></mat-datepicker-toggle>
 				<mat-datepicker touchUi #picker></mat-datepicker>
 			</mat-form-field>
@@ -54,11 +54,11 @@
 				<div class="left">
 				</div>
 				<div class="right">
-					<button class="main-button" (click)="cancelEdit()">Отмена</button>
-					<button class="main-button-color" (click)="confirmEditCategoryCrud()">Сохранить</button>
+					<button class="main-button" type="reset" (click)="cancelEdit()">Отмена</button>
+					<button class="main-button-color" type="submit" *ngIf="isBlok">Сохранить</button>
 				</div>
 			</div>
-		</div>
+		</form>
 	</div>
 	
 	<div class="contain__group">
@@ -86,12 +86,12 @@
 						<th mat-header-cell *matHeaderCellDef>Должник</th>
 						<td class="table__name" mat-cell *matCellDef="let element">
 							<div class="table__name-img">
-								<img src="./assets/images/user.svg" alt="" *ngIf="!element.client.img || element.client.img == ''">
-								<app-img [fs]="element.img" *ngIf="element.client.img && element.client.img !== ''"></app-img>
+								<img src="./assets/images/user.svg" alt="" *ngIf="!element.clientOwner.img || element.clientOwner.img == ''">
+								<app-img [fs]="element.img" *ngIf="element.clientOwner.img && element.clientOwner.img !== ''"></app-img>
 							</div>
 							<div class="table__name-name">
-								<a [routerLink]="'/debtor-detail/'+ element.client._id">
-									{{element.client.login}}
+								<a [routerLink]="'/debtor-detail/'+ element.clientOwner._id">
+									{{element.clientOwner.login}}
 								</a>
 							</div>
 						</td>
