@@ -18,10 +18,14 @@ export class CategoryDetailComponent implements OnInit {
   public addShow = false;
   public editShow = false;
   public products = [];
+  public uploadObj = {};
+  public editObjCopy;
+  public isBlok: boolean = false;
   public editObj = {
     _id: '',
     name: '',
     des: '',
+    img: '',
     price: null,
     companyOwner: '',
     categoryOwner: '',
@@ -29,6 +33,7 @@ export class CategoryDetailComponent implements OnInit {
   public product = {
     name: '',
     des: '',
+    img: '',
     price: null,
     companyOwner: '',
     categoryOwner: '',
@@ -60,29 +65,33 @@ export class CategoryDetailComponent implements OnInit {
 
   create() {
     if (this.validation('product')) {
-      this.product.categoryOwner = this.id;
-      this.product.companyOwner = this.id;
-      this.crud.post('order', this.product).then((v: any) => {
+      this.crud.post('upload2', {body: this.uploadObj}, null, false).then((v: any) => {
         if (v) {
-          this.products.push(v);
-          this.crud.post('category', {orders: this.products}, this.id, false).then((e: any) => {
-            console.log(e);
+          this.product['img'] = v.file;
+          this.product.categoryOwner = this.id;
+          this.product.companyOwner = this.id;
+          this.crud.post('order', this.product).then((v: any) => {
+            if (v) {
+              this.products.push(v);
+              this.crud.post('category', {$push: {orders: v._id}}, this.id, false).then();
+              this.dataSource = new MatTableDataSource(this.products);
+              setTimeout(() => this.dataSource.paginator = this.paginator);
+              this.checkDataLength();
+              this.product = {
+                name: '',
+                des: '',
+                img: '',
+                price: null,
+                companyOwner: '',
+                categoryOwner: '',
+              };
+              this.addShow = false;
+            }
+          }).catch((error) => {
+            if (error && error.error.errors.price.name === 'CastError') {
+              Swal.fire('Error', 'Цена должна вводится через "." - точку', 'error').then();
+            }
           });
-          this.dataSource = new MatTableDataSource(this.products);
-          setTimeout(() => this.dataSource.paginator = this.paginator);
-          this.checkDataLength();
-          this.product = {
-            name: '',
-            des: '',
-            price: null,
-            companyOwner: '',
-            categoryOwner: '',
-          };
-          this.addShow = false;
-        }
-      }).catch((error) => {
-        if (error && error.error.errors.price.name === 'CastError') {
-          Swal.fire('Error', 'Цена должна вводится через "." - точку', 'error').then();
         }
       });
     }
@@ -104,34 +113,88 @@ export class CategoryDetailComponent implements OnInit {
   }
   edit(i) {
     this.editObj = Object.assign({}, this.products[i]);
+    this.editObjCopy = Object.assign({}, this.products[i]);
     this.addShow = false;
     this.editShow = true;
   }
   confirmEditCategoryCrud() {
     if (this.validation('editObj')) {
-      this.crud.post('category', {name: this.editObj.name}, this.editObj._id).then((v: any) => {
-        if (v) {
-          this.editShow = false;
-          this.products[this.crud.find('_id', this.editObj._id, this.products)] = v;
-          this.dataSource = new MatTableDataSource(this.products);
-          setTimeout(() => this.dataSource.paginator = this.paginator);
-          this.checkDataLength();
-          this.product = {
-            name: '',
-            des: '',
-            price: null,
-            companyOwner: '',
-            categoryOwner: '',
-          };
-          this.editShow = false;
-        }
-      }).catch((error) => {
-        if (error && error.errors.price.name === 'CastError') {
-          Swal.fire('Error', 'Цена должна вводится через "." - точку', 'error').then();
-          return;
-        }
-      });
+      if (this.editObj.img === this.editObjCopy.img) {
+        this.crud.post('order', this.editObj, this.editObj._id).then((v: any) => {
+          if (v) {
+            this.editShow = false;
+            this.products[this.crud.find('_id', this.editObj._id, this.products)] = v;
+            this.dataSource = new MatTableDataSource(this.products);
+            setTimeout(() => this.dataSource.paginator = this.paginator);
+            this.checkDataLength();
+            this.product = {
+              name: '',
+              des: '',
+              img: '',
+              price: null,
+              companyOwner: '',
+              categoryOwner: '',
+            };
+            this.editShow = false;
+          }
+        }).catch((error) => {
+          if (error && error.errors.price.name === 'CastError') {
+            Swal.fire('Error', 'Цена должна вводится через "." - точку', 'error').then();
+            return;
+          }
+        });
+      } else {
+        this.crud.post('upload2', {body: this.uploadObj}).then((u: any) => {
+          if (u) {
+            this.editObj.img = u.file;
+            this.crud.post('order', this.editObj, this.editObj._id).then((v: any) => {
+              if (v) {
+                this.editShow = false;
+                this.products[this.crud.find('_id', this.editObj._id, this.products)] = v;
+                this.dataSource = new MatTableDataSource(this.products);
+                setTimeout(() => this.dataSource.paginator = this.paginator);
+                this.checkDataLength();
+                this.product = {
+                  name: '',
+                  des: '',
+                  img: '',
+                  price: null,
+                  companyOwner: '',
+                  categoryOwner: '',
+                };
+                this.editShow = false;
+              }
+            }).catch((error) => {
+              if (error && error.errors.price.name === 'CastError') {
+                Swal.fire('Error', 'Цена должна вводится через "." - точку', 'error').then();
+                return;
+              }
+            });
+          }
+        });
+      }
+      this.isBlok = false;
     }
+  }
+  validate() {
+    let isTrue = false;
+    for (const key in this.editObj) {
+      if (this.editObj[key] !== this.editObjCopy[key]) {isTrue = true; }
+    }
+    return isTrue;
+  }
+
+  btnBlok(is) {
+    this.isBlok = is;
+  }
+
+  formCheck() {
+    this.btnBlok(this.validate());
+  }
+  onFs(e) {
+    this.uploadObj = e;
+    this.product.img = e.name;
+    this.formCheck();
   }
   openAdd() {
     this.addShow = true;
@@ -142,6 +205,7 @@ export class CategoryDetailComponent implements OnInit {
     this.product = {
       name: '',
       des: '',
+      img: '',
       price: null,
       companyOwner: '',
       categoryOwner: '',
@@ -153,6 +217,7 @@ export class CategoryDetailComponent implements OnInit {
       _id: '',
       name: '',
       des: '',
+      img: '',
       price: null,
       companyOwner: '',
       categoryOwner: '',
@@ -162,6 +227,7 @@ export class CategoryDetailComponent implements OnInit {
   checkDataLength() {
     if (!this.products || this.products.length === 0) {
       this.showPagin = false;
+      return;
     }
     this.showPagin = true;
   }
@@ -184,6 +250,10 @@ export class CategoryDetailComponent implements OnInit {
     }
     if (this[obj].des === '') {
       Swal.fire('Error', 'Описание не может быть пустым', 'error').then();
+      return;
+    }
+    if (this[obj].img === '') {
+      Swal.fire('Error', 'Додайте картинку к продукту', 'error').then();
       return;
     }
     return true;

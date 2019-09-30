@@ -12,7 +12,7 @@ import Swal from 'sweetalert2';
 export class ProductComponent implements OnInit {
   public brands = [];
   public mainCategoryChoose: string;
-  public mainChooseBrand: string;
+  public mainChooseBrand: string = null;
   public user;
   public defLang = 'ru-UA';
   public showPagin = false;
@@ -28,6 +28,7 @@ export class ProductComponent implements OnInit {
     price: null,
     companyOwner: '',
     categoryOwner: '',
+    brand: '',
   };
   public product = {
     name: '',
@@ -36,6 +37,7 @@ export class ProductComponent implements OnInit {
     price: null,
     companyOwner: '',
     categoryOwner: '',
+    brand: '',
   };
 
   displayedColumns: string[] = ['Номер', 'Назва бренда', 'data', 'delete'];
@@ -50,41 +52,42 @@ export class ProductComponent implements OnInit {
     this.auth.onMe.subscribe((v: any) => {
       if (!v) { return; }
       this.user = v;
-      if (this.user.companies[0] && this.user.companies[0].categories.length > 0) {
-        this.crud.get(`category?query={"companyOwner": "${this.user.companies[0]._id}"}`).then((e: any) => {
-          this.categorys = e;
-          this.mainCategoryChoose = this.categorys[0]._id;
-          this.dataSource = new MatTableDataSource(this.categorys);
-          setTimeout(() => this.dataSource.paginator = this.paginator);
-          this.chackDataLength();
-        });
-        this.crud.get('brands').then((b: any) => {
-          if (!b) {return; }
-          this.brands = b;
-          this.mainChooseBrand = this.brands[0]._id;
-        });
-      }
+      this.categorys = v.companies[0].categories;
+      this.mainCategoryChoose = this.categorys[0]._id;
+      this.dataSource = new MatTableDataSource(this.categorys);
+      setTimeout(() => this.dataSource.paginator = this.paginator);
+      this.chackDataLength();
+      this.crud.get('brand').then((b: any) => {
+        if (!b) {return; }
+        this.brands = b;
+      });
     });
   }
 
   create() {
     if (this.validation('product')) {
-      this.product.categoryOwner = this.mainCategoryChoose;
-      this.product.companyOwner = this.user.companies[0]._id;
-      this.crud.post('order', this.product).then((v: any) => {
-        if (v) {
-          const index = this.crud.find('_id', this.mainCategoryChoose, this.categorys);
-          this.categorys[index].orders.push(v._id);
-          this.crud.post('category', {orders: this.categorys[index].orders}, this.mainCategoryChoose, false).then((e: any) => {});
-          this.mainCategoryChoose = null;
-          this.addShow = false;
-          this.clearMainObj();
-        }
-      }).catch((error) => {
-        if (error && error.errors.price.name === 'CastError') {
-          Swal.fire('Error', 'Цена должна вводится через "." - точку', 'error').then();
-        } else if (error && error.errors.categoryOwner.message === 'Check category') {
-          Swal.fire('Error', 'У вас нет созданых категорий', 'error').then();
+      this.crud.post('upload2', {body: this.uploadObj}, null, false).then((u: any) => {
+        if (u) {
+          this.product['img'] = u.file;
+          this.product.categoryOwner = this.mainCategoryChoose;
+          this.product.brand = this.mainChooseBrand;
+          this.product.companyOwner = this.user.companies[0]._id;
+          this.crud.post('order', this.product).then((v: any) => {
+            if (v) {
+              const index = this.crud.find('_id', this.mainCategoryChoose, this.categorys);
+              this.categorys[index].orders.push(v._id);
+              this.crud.post('category', {$push: {orders: v._id}}, this.mainCategoryChoose, false).then((e: any) => {});
+              this.mainCategoryChoose = null;
+              this.addShow = false;
+              this.clearMainObj();
+            }
+          }).catch((error) => {
+            if (error && error.errors.price.name === 'CastError') {
+              Swal.fire('Error', 'Цена должна вводится через "." - точку', 'error').then();
+            } else if (error && error.errors.categoryOwner.message === 'Check category') {
+              Swal.fire('Error', 'У вас нет созданых категорий', 'error').then();
+            }
+          });
         }
       });
     }
@@ -128,6 +131,7 @@ export class ProductComponent implements OnInit {
             price: null,
             companyOwner: '',
             categoryOwner: '',
+            brand: '',
           };
           this.editShow = false;
         }
@@ -156,6 +160,7 @@ export class ProductComponent implements OnInit {
       price: null,
       companyOwner: '',
       categoryOwner: '',
+      brand: '',
     };
   }
 
@@ -181,6 +186,7 @@ export class ProductComponent implements OnInit {
       price: null,
       companyOwner: '',
       categoryOwner: '',
+      brand: '',
     };
   }
   validation(obj) {
@@ -194,6 +200,10 @@ export class ProductComponent implements OnInit {
     }
     if (this[obj].price === null) {
       Swal.fire('Error', 'Укажите цену продукта', 'error');
+      return;
+    }
+    if (this[obj].img === '') {
+      Swal.fire('Error', 'Картинка продукта не может быть пустой', 'error');
       return;
     }
     return true;

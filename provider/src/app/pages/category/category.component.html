@@ -5,22 +5,22 @@
 				Создать категорию
 			</div>
 		</div>
-		<div class="add-section">
+		<form class="add-section" (submit)="create()">
 			<label>
-				<input type="text" placeholder="Категория" [(ngModel)]="category.name">
+				<input type="text" placeholder="Категория" name="name" [(ngModel)]="category.name">
 			</label>
-			<select [(ngModel)]="mainCategoryChoose">
+			<select [(ngModel)]="mainCategoryChoose" name="choose">
 				<option *ngFor="let item of mainCategory" [value]="item._id">{{item.name}}</option>
 			</select>
 			<div class="group-buttons">
 				<div class="left">
 				</div>
 				<div class="right">
-					<button class="main-button" (click)="cancelAdd()">Отмена</button>
-					<button class="main-button-color" (click)="create()">Сохранить</button>
+					<button class="main-button" type="reset" (click)="cancelAdd()">Отмена</button>
+					<button class="main-button-color" type="submit">Сохранить</button>
 				</div>
 			</div>
-		</div>
+		</form>
 	</div>
 	
 	<div class="contain__group"  *ngIf="editShow">
@@ -29,22 +29,22 @@
 				Редактировать категорию
 			</div>
 		</div>
-		<div class="edit-section" *ngIf="editShow">
+		<form (submit)="confirmEditCategoryCrud()" (keyup)="formCheck()" class="edit-section" *ngIf="editShow">
 			<label>
-				<input type="text" placeholder="Категория" [(ngModel)]="editObj.name">
+				<input type="text" placeholder="Категория" name="name" [(ngModel)]="editObj.name">
 			</label>
-			<select [(ngModel)]="mainCategoryChoose">
+			<select [(ngModel)]="mainCategoryChoose" name="choose" (change)="selectValid()">
 				<option *ngFor="let item of mainCategory" [value]="item._id">{{item.name}}</option>
 			</select>
 			<div class="group-buttons">
 				<div class="left">
 				</div>
 				<div class="right">
-					<button class="main-button" (click)="cancelEdit()">Отмена</button>
-					<button class="main-button-color" (click)="confirmEditCategoryCrud()">Сохранить</button>
+					<button class="main-button" type="reset" (click)="cancelEdit()">Отмена</button>
+					<button class="main-button-color" type="submit"  *ngIf="isBlok">Сохранить</button>
 				</div>
 			</div>
-		</div>
+		</form>
 	</div>
 	
 	<div class="contain__group">
@@ -70,7 +70,7 @@
 					
 					<!-- Name Column -->
 					<ng-container matColumnDef="Назва бренда">
-						<th mat-header-cell *matHeaderCellDef>Назва бренда</th>
+						<th mat-header-cell *matHeaderCellDef>Назва категории</th>
 						<td class="table__name" mat-cell *matCellDef="let element">
 							<div class="table__name-name">
 								<a [routerLink]="'/category-detail/'+ element._id">

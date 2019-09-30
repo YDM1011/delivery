@@ -82,16 +82,13 @@ export class DebtorComponent implements OnInit {
     }
     this.crud.post('debtor', this.debtor).then((v: any) => {
       if (v) {
-        let newObj = v;
-        const virtualArray = this.debtors;
-        virtualArray.push(v);
-        this.crud.post('company', {debtors: virtualArray}, this.user.companies[0]._id, false).then(() => {
-          newObj['client'] = this.user;
-          this.debtors.push(newObj);
-        });
+        this.debtors.push(v);
+        this.crud.post('company', {$push: {debtors: v._id}}, this.user.companies[0]._id, false).then();
         this.dataSource = new MatTableDataSource(this.debtors);
         setTimeout(() => this.dataSource.paginator = this.paginator);
         this.chackDataLength();
+        this.inputChange = null;
+        this.addShow = false;
         this.debtor = {
           client: '',
           company: '',
@@ -99,8 +96,6 @@ export class DebtorComponent implements OnInit {
           value: '',
           dataCall: '',
         };
-        this.userChoose = null;
-        this.addShow = false;
       }
     });
   }
@@ -134,8 +129,10 @@ export class DebtorComponent implements OnInit {
     this.crud.post('debtor', {value: this.editObj.value, dataCall: this.editObj.dataCall}, this.editObj['_id']).then((v: any) => {
       if (v) {
         const newObj = v;
-        newObj['client'] = this.user;
+        newObj.client = this.user;
         this.debtors[this.crud.find('_id', this.editObj['_id'], this.debtors)] = newObj;
+        this.user.companies[0].debtors = this.debtors;
+        this.auth.setMe(this.user);
         this.dataSource = new MatTableDataSource(this.debtors);
         setTimeout(() => this.dataSource.paginator = this.paginator);
         this.chackDataLength();

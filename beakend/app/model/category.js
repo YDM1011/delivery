@@ -37,6 +37,15 @@ const schem = new Schema({
     },
     createRestApi: true,
     strict: true,
+    provider: [
+        {
+            model:'Company',
+            _id: 'companyOwner',
+            canBeId: [
+                {type:'refObj', fieldName: 'createdBy'},
+            ]
+        }
+    ],
     sa: [{public:true}],
 });
 
