@@ -127,11 +127,12 @@ export class CategoryComponent implements OnInit {
         this.dataSource = new MatTableDataSource(this.categorys);
         setTimeout(() => this.dataSource.paginator = this.paginator);
         this.chackDataLength();
+        this.isBlok = false;
+        this.editShow = false;
         this.editObj = {
           name: '',
           mainCategory: '',
         };
-        this.editShow = false;
       }
     });
   }
@@ -173,6 +174,7 @@ export class CategoryComponent implements OnInit {
   }
   cancelEdit() {
     this.editShow = false;
+    this.isBlok = false;
     this.editObj = {
       name: '',
       mainCategory: '',

@@ -18,19 +18,21 @@ export class DebtorComponent implements OnInit {
   public showPagin = false;
   public addShow = false;
   public editShow = false;
+  public isBlok = false;
   public searchDebtors = [];
   public debtors = [];
   public minDate = new Date();
+  public editObjCopy;
   public editObj = {
-    client: '',
-    company: '',
+    clientOwner: '',
+    companyOwner: '',
     basket: '',
     value: '',
     dataCall: '',
   };
   public debtor = {
-    client: '',
-    company: '',
+    clientOwner: '',
+    companyOwner: '',
     basket: '',
     value: '',
     dataCall: '',
@@ -52,10 +54,12 @@ export class DebtorComponent implements OnInit {
     this.auth.onMe.subscribe((v: any) => {
       if (!v) { return; }
       this.user = v;
-      this.debtors = this.user.companies[0].debtors;
-      this.dataSource = new MatTableDataSource(this.debtors);
-      setTimeout(() => this.dataSource.paginator = this.paginator);
-      this.chackDataLength();
+      this.crud.get(`debtor?query={"companyOwner": "${this.user.companies[0]._id}"}&populate={"path":"clientOwner"}`).then((d: any) => {
+        this.debtors = d;
+        this.dataSource = new MatTableDataSource(this.debtors);
+        setTimeout(() => this.dataSource.paginator = this.paginator);
+        this.chackDataLength();
+      });
     });
   }
   change() {
@@ -66,9 +70,9 @@ export class DebtorComponent implements OnInit {
   }
   create() {
     const index = this.crud.find('login', this.inputChange, this.searchDebtors);
-    this.debtor.client = this.searchDebtors[index]._id;
-    this.debtor.company = this.user.companies[0]._id;
-    if (this.debtor.client === '') {
+    this.debtor.clientOwner = this.searchDebtors[index]._id;
+    this.debtor.companyOwner = this.user.companies[0]._id;
+    if (this.debtor.clientOwner === '') {
       Swal.fire('Error', 'Выберете должника по номеру телефона', 'error');
       return;
     }
@@ -90,8 +94,8 @@ export class DebtorComponent implements OnInit {
         this.inputChange = null;
         this.addShow = false;
         this.debtor = {
-          client: '',
-          company: '',
+          clientOwner: '',
+          companyOwner: '',
           basket: '',
           value: '',
           dataCall: '',
@@ -114,6 +118,7 @@ export class DebtorComponent implements OnInit {
   }
   edit(i) {
     this.editObj = Object.assign({}, this.debtors[i]);
+    this.editObjCopy = Object.assign({}, this.debtors[i]);
     this.addShow = false;
     this.editShow = true;
   }
@@ -137,14 +142,14 @@ export class DebtorComponent implements OnInit {
         setTimeout(() => this.dataSource.paginator = this.paginator);
         this.chackDataLength();
         this.editShow = false;
+        this.isBlok = false;
         this.editObj = {
-          client: '',
-          company: '',
+          clientOwner: '',
+          companyOwner: '',
           basket: '',
           value: '',
           dataCall: '',
         };
-        this.editShow = false;
       }
     });
   }
@@ -156,8 +161,8 @@ export class DebtorComponent implements OnInit {
     this.addShow = false;
     this.userChoose = this.mainCategory[0]._id;
     this.debtor = {
-      client: '',
-      company: '',
+      clientOwner: '',
+      companyOwner: '',
       basket: '',
       value: '',
       dataCall: '',
@@ -165,13 +170,29 @@ export class DebtorComponent implements OnInit {
   }
   cancelEdit() {
     this.editShow = false;
+    this.isBlok = false;
     this.editObj = {
-      client: '',
-          company: '',
-          basket: '',
-          value: '',
-          dataCall: '',
+      clientOwner: '',
+      companyOwner: '',
+      basket: '',
+      value: '',
+      dataCall: '',
     };
+  }
+  validate() {
+    let isTrue = false;
+    for (const key in this.editObj) {
+      if (this.editObj[key].toString() !== this.editObjCopy[key].toString()) {isTrue = true; }
+    }
+    return isTrue;
+  }
+
+  btnBlok(is) {
+    this.isBlok = is;
+  }
+
+  formCheck() {
+    this.btnBlok(this.validate());
   }
 
   chackDataLength() {

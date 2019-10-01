@@ -119,6 +119,7 @@ export class CreateComponent implements OnInit {
   }
   cancelEdit() {
     this.editShow = false;
+    this.isBlok = false;
     this.editObj = {
       _id: '',
       name: '',
