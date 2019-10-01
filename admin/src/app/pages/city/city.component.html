@@ -5,10 +5,10 @@
 				Создать город
 			</div>
 		</div>
-		<div class="add-section">
-			<label>
-				<input type="text" placeholder="Город" [(ngModel)]="city.name">
-			</label>
+		<form (submit)="create()" class="add-section">
+			<mat-form-field class="example-full-width">
+				<input matInput type="text" placeholder="Город" [(ngModel)]="city.name" name="city" autocomplete="off">
+			</mat-form-field>
 			<div class="group-buttons">
 				<div class="left">
 					<app-upload (onFs)="onFs($event)"></app-upload>
@@ -18,11 +18,11 @@
 					</div>
 				</div>
 				<div class="right">
-					<button class="main-button" (click)="cancelAdd()">Отмена</button>
-					<button class="main-button-color" (click)="create()">Сохранить</button>
+					<button class="main-button" type="reset" (click)="cancelAdd()">Отмена</button>
+					<button class="main-button-color" type="submit">Сохранить</button>
 				</div>
 			</div>
-		</div>
+		</form>
 	</div>
 	
 	<div class="contain__group"  *ngIf="editShow">
@@ -31,24 +31,24 @@
 				Редактировать город
 			</div>
 		</div>
-		<div class="edit-section" *ngIf="editShow">
-			<label>
-				<input type="text" placeholder="Город" [(ngModel)]="editObj.name">
-			</label>
+		<form (submit)="confirmEdit()" (keyup)="formCheck()" class="edit-section" *ngIf="editShow">
+			<mat-form-field class="example-full-width">
+				<input matInput type="text" placeholder="Город" [(ngModel)]="editObj.name" name="editcity" autocomplete="off">
+			</mat-form-field>
 			<div class="group-buttons">
 				<div class="left">
 					<app-upload *ngIf="editObj.img == ''" (onFs)="onFsEdit($event)"></app-upload>
 					<div class="mat-chip-file" *ngIf="editObj && editObj.img !== ''">
-						<div class="content">{{editObj.img.split("--")[1]}}</div>
-						<div class="remove-mat-chip" (click)="editObj.img = ''"></div>
+						<div class="content">{{editObj.img}}</div>
+						<div class="remove-mat-chip" (click)="editObj.img = ''; formCheck()"></div>
 					</div>
 				</div>
 				<div class="right">
-					<button class="main-button" (click)="cancelEdit()">Отмена</button>
-					<button class="main-button-color" (click)="confirmEdit()">Сохранить</button>
+					<button class="main-button" type="reset" (click)="cancelEdit()">Отмена</button>
+					<button class="main-button-color" type="submit" *ngIf="isBlok">Сохранить</button>
 				</div>
 			</div>
-		</div>
+		</form>
 	</div>
 	
 	<div class="contain__group">

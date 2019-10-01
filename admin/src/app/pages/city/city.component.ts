@@ -11,10 +11,12 @@ import {MatPaginator, MatTableDataSource} from "@angular/material";
 export class CityComponent implements OnInit, AfterViewInit{
   public showPagin: boolean = false;
   public addShow: boolean = false;
+  public isBlok: boolean = false;
   public editShow: boolean = false;
   public uploadObj = {};
   public citys = [];
   public defLang = 'ru-UA';
+  public editObjCopy;
   public editObj = {
     img: '',
     name: '',
@@ -90,6 +92,8 @@ export class CityComponent implements OnInit, AfterViewInit{
 
   edit(i) {
     this.editObj = Object.assign({}, this.citys[i]);
+    this.editObj.img = this.editObj.img.split("--")[1];
+    this.editObjCopy = Object.assign({}, this.editObj);
     this.addShow = false;
     this.editShow = true;
   }
@@ -107,6 +111,7 @@ export class CityComponent implements OnInit, AfterViewInit{
   onFsEdit(e) {
     this.uploadObj = e;
     this.editObj.img = e.name;
+    this.formCheck();
   }
   confirmEditCityCrud() {
     if (this.editObj.name === '') {
@@ -154,8 +159,25 @@ export class CityComponent implements OnInit, AfterViewInit{
   chackDataLength() {
     if (this.citys.length > 0 ) {
       this.showPagin = true;
-    } else {
-      this.showPagin = false;
+      return;
     }
+    this.showPagin = false;
   }
+
+  validate() {
+    let isTrue = false;
+    for (const key in this.editObj) {
+      if (this.editObj[key].toString() !== this.editObjCopy[key].toString()) {isTrue = true; }
+    }
+    return isTrue;
+  }
+
+  btnBlok(is) {
+    this.isBlok = is;
+  }
+
+  formCheck() {
+    this.btnBlok(this.validate());
+  }
+
 }
