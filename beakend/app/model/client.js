@@ -68,9 +68,20 @@ const schem = new Schema({
     },
     createRestApi: true,
     strict: true,
-    client: [{private:true}],
-    provider: [
-        {
+    sa: {
+        read: [{public:true}],
+        update: [{public:true}],
+        create: [{public:true}],
+        delete: [{public:true}],
+    },
+    client: {
+        read: [{public:true}],
+        update: [{private:true}],
+        create: [{private:true}],
+        delete: [{private:true}],
+    },
+    provider: {
+        read: [{
             model:'Company',
             _id: 'companyOwner',
             canBeId: [
@@ -83,9 +94,17 @@ const schem = new Schema({
             canBeId: [
                 {type:'refObj', fieldName: '_id'}
             ]
-        }
-    ],
-    sa: [{public:true}],
+        }],
+        update: [{private:true}],
+        create: [{private:true}],
+        delete: [{private:true}],
+    },
+    collaborator: {
+        read: [{public:true}],
+        update: [{private:true}],
+        create: [{private:true}],
+        delete: [{private:true}],
+    },
     notCreate: true
 });
 

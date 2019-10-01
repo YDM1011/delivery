@@ -59,7 +59,8 @@ export class CategoryComponent implements OnInit {
     });
   }
 
-  create() {
+  create(e) {
+    e.preventDefault()
     if (this.category.name === '') {
       Swal.fire('Error', 'Название категории не может быть пустым', 'error');
       return;
@@ -69,6 +70,7 @@ export class CategoryComponent implements OnInit {
       return;
     }
     this.category.mainCategory = this.mainCategoryChoose;
+    console.log(this.user);
     this.category.companyOwner = this.user.companies[0]._id;
     this.crud.post('category', this.category).then((v: any) => {
       if (v) {
@@ -108,7 +110,9 @@ export class CategoryComponent implements OnInit {
     this.addShow = false;
     this.editShow = true;
   }
-  confirmEditCategoryCrud() {
+  confirmEditCategoryCrud(e) {
+    console.log(e)
+    e.preventDefault()
     if (this.editObj.name === '') {
       Swal.fire('Error', 'Название категории не может быть пустым', 'error');
       return;

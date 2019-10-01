@@ -37,16 +37,30 @@ const schem = new Schema({
     },
     createRestApi: true,
     strict: true,
-    provider: [
-        {
-            model:'Company',
-            _id: 'companyOwner',
-            canBeId: [
-                {type:'refObj', fieldName: 'createdBy'},
-            ]
-        }
-    ],
-    sa: [{public:true}],
+    sa: {
+        read: [{public:true}],
+        update: [{public:true}],
+        create: [{public:true}],
+        delete: [{public:true}],
+    },
+    client: {
+        read: [{public:true}],
+        update: [{private:true}],
+        create: [{private:true}],
+        delete: [{private:true}],
+    },
+    provider: {
+        read: [{public:true}],
+        update: [{private:true}],
+        create: [{private:true}],
+        delete: [{private:true}],
+    },
+    collaborator: {
+        read: [{public:true}],
+        update: [{private:true}],
+        create: [{private:true}],
+        delete: [{private:true}],
+    },
 });
 
 schem.post('save', (doc, next)=>{
