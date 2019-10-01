@@ -86,15 +86,25 @@ const canRead = (options) => {
             if (!opt) return res.forbidden('403');
             if (Object.entries(req.erm.query).length > 0) {
                 req.erm.query['query'] =  {};
-                if (req.query.query){
-                    req.erm.query['query'] =  {$and: [opt, JSON.parse(req.query.query)]};
-                }else {
-                    req.erm.query['query'] =  {$and: [opt]};
+                if (typeof opt == 'object' && opt){
+                    if (req.query.query){
+                        req.erm.query['query'] =  {$and: [opt, JSON.parse(req.query.query)]};
+                    }else {
+                        req.erm.query['query'] =  {$and: [opt]};
+                    }
+                } else {
+                    if (req.query.query){
+                        req.erm.query['query'] =  {$and: [JSON.parse(req.query.query)]};
+                    }else {
+                        req.erm.query['query'] =  {$and: [{}]};
+                    }
                 }
 
+
             } else {
-                req.erm.query['query'] = opt || {};
+                req.erm.query['query'] = typeof opt == 'object' ? opt : {};
             }
+            console.log(req.erm.query['query'])
             if (req.error.success) {
                 if (req.erm.query['query'] === true) req.erm.query['query'] = {};
                 // console.log(req.erm.query)
@@ -282,9 +292,14 @@ const checkOwner = (req,res,next,options) => {
             rs(false);
             return objPromise
         }
-        if (options[role].read[0].public || role === 'sa'){
+        if (options[role].read[0].public){
             req.error.success = true;
-            rs(true);
+            if(role === 'sa'){
+                rs(true);
+            } else {
+                rs(query)
+            }
+
             return objPromise
         }
         if (options[role].read[0].private) {
@@ -323,7 +338,7 @@ const checkOwner = (req,res,next,options) => {
                                     if (idChecker.fieldName == '_id') {
                                         if (checkId == req.user._id){
                                             req.error.success = true;
-                                            rs(true)
+                                            rs(query)
                                         }
                                     }
 
