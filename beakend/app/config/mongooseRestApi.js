@@ -179,14 +179,14 @@ const checkOwnerPost = (req,res,next,options) => {
             {createdBy: req.user._id},
             {_id: req.user._id}]};
     objPromise.push( new Promise((rs,rj)=> {
-        if (!options[role]) {
+        if (!options[role] || !options[role].update) {
             rs(false);
         }
-        if (options[role][0].public || role === 'sa'){
+        if (options[role].update[0].public || role === 'sa'){
             req.error.success = true;
             rs(true);
         }
-        if (options[role][0].private) {
+        if (options[role].update[0].private) {
             if (Object.entries(req.erm.query).length > 0) {
                 req.erm.query['query'] = {};
                 if (req.query.query) {
@@ -205,12 +205,11 @@ const checkOwnerPost = (req,res,next,options) => {
             })
         }
     }));
-    if (!options[role] || (options[role][0].public || role === 'sa') || options[role][0].private){
-        console.log("fff")
+    if (!options[role].update || (options[role].update[0].public || role === 'sa') || options[role].update[0].private){
         return objPromise
     } else {
         objPromise = [];
-        options[role].forEach( it =>{
+        options[role].update.forEach( it =>{
             if (it.model) {
                 if (req.params.id) {
                     objPromise.push( new Promise((rs,rj)=>{
@@ -284,16 +283,16 @@ const checkOwner = (req,res,next,options) => {
             {createdBy: req.user._id},
             {_id: req.user._id}]};
     objPromise.push( new Promise((rs,rj)=> {
-        if (!options[role]) {
+        if (!options[role] || !options[role].read) {
             rs(403);
             return objPromise
         }
-        if (options[role][0].public || role === 'sa'){
+        if (options[role].read[0].public || role === 'sa'){
             req.error.success = true;
             rs(200);
             return objPromise
         }
-        if (options[role][0].private) {
+        if (options[role].read[0].private) {
             if (Object.entries(req.erm.query).length > 0) {
                 req.erm.query['query'] = {};
                 if (req.query.query) {
@@ -310,11 +309,11 @@ const checkOwner = (req,res,next,options) => {
             return objPromise
         }
     }));
-    if (!options[role] || (options[role][0].public || role === 'sa') || options[role][0].private){
+    if (!options[role].read || (options[role].read[0].public || role === 'sa') || options[role].read[0].private){
         return objPromise
     } else {
         objPromise = [];
-        options[role].forEach( it =>{
+        options[role].read.forEach( it =>{
             if (it.model) {
                 // if params.id
                 if (req.params.id) {
@@ -326,29 +325,23 @@ const checkOwner = (req,res,next,options) => {
                                 if (!r) return rs(403);
                                 const checkId = r[it._id] ? r[it._id].toString() : null;
                                 it.canBeId.forEach(idChecker => {
-                                    // console.log("idChecker:",it.model,idChecker);
                                     if (idChecker.fieldName == '_id') {
                                         if (checkId == req.user._id){
                                             req.error.success = true;
-                                            // console.log(query, req.erm.query)
                                             rs(200)
                                         }
                                     }
-                                    if (idChecker.type === 'refObj') {
 
+                                    if (idChecker.type === 'refObj') {
                                         let obj = {};
                                         obj['_id'] = checkId || req.params.id.toString();
                                         obj[idChecker.fieldName] = req.user._id.toString();
-
-                                        // console.log(it.model,obj)
                                         backendApp.mongoose.model(it.model)
                                             .findOne(obj).exec((e1, r1) => {
                                             if (e1) rj(e1);
                                             if (!r1) {
-                                                // check another field
-                                                // res.forbidden("403 1")
                                                 rs(403)
-                                            }else{
+                                            } else {
                                                 let _o = {};
                                                 _o[it ? it._id || '_id' : '_id'] = r1._id;
                                                 query['$or'].push(_o);
@@ -361,13 +354,10 @@ const checkOwner = (req,res,next,options) => {
                                         let obj = {};
                                         obj['_id'] = checkId || req.params.id.toString();
                                         obj[idChecker.fieldName] = {$in:req.user._id.toString()};
-                                        // console.log(it.model,obj)
                                         backendApp.mongoose.model(it.model)
                                             .findOne(obj).exec((e1, r1) => {
                                             if (e1) rj();
                                             if (!r1) {
-                                                // check another field
-                                                // res.forbidden("403 1")
                                                 rs(403)
                                             }else{
                                                 let _o = {};
