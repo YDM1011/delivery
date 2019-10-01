@@ -1,1 +1,9 @@
-<p>not-found works!</p>
+<div class="not-found">
+	<lottie-animation-view
+			[options]="lottieConfig"
+			[width]="300"
+			[height]="300"
+			(animCreated)="handleAnimation($event)">
+	</lottie-animation-view>
+	<a [routerLink]="'/'" class="main-button-color">На главную</a>
+</div>

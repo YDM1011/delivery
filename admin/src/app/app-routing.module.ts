@@ -6,7 +6,6 @@ import {TranslateComponent} from "./pages/translate/translate.component";
 import {CategoryComponent} from "./pages/category/category.component";
 import {BrandsComponent} from "./pages/brands/brands.component";
 import {DashboardComponent} from "./pages/dashboard/dashboard.component";
-import {CreateClientsComponent} from "./pages/create-clients/create-clients.component";
 import {ListProvidersComponent} from "./pages/list-providers/list-providers.component";
 import {ListClientsComponent} from "./pages/list-clients/list-clients.component";
 import {LoginComponent} from "./pages/login/login.component";
@@ -14,6 +13,7 @@ import {NotFoundComponent} from "./pages/not-found/not-found.component";
 import {AdminLogoutGuard} from "./admin-logout.guard";
 import {MainComponent} from "./layout/main/main.component";
 import {AdminLoginedGuard} from "./admin-logined.guard";
+import {ListAdminsComponent} from "./pages/list-admins/list-admins.component";
 
 const routes: Routes = [
   {path: '', component: MainComponent, canActivate: [AdminLoginedGuard], children: [
@@ -23,9 +23,9 @@ const routes: Routes = [
       {path: 'translate', component: TranslateComponent},
       {path: 'category', component: CategoryComponent},
       {path: 'brands', component: BrandsComponent},
-      {path: 'create', component: CreateClientsComponent},
       {path: 'list-providers', component: ListProvidersComponent},
       {path: 'list-clients', component: ListClientsComponent},
+      {path: 'list-admins', component: ListAdminsComponent},
     ]},
     {path: 'login', component: LoginComponent, canActivate: [AdminLogoutGuard]},
     {path: '**', component: NotFoundComponent}

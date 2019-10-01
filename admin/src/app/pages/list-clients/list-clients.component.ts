@@ -33,7 +33,7 @@ export class ListClientsComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-    this.crud.get('client?query={"$or":[{"role": "client"},{"role":null},{"role":{"$exists":true}}]}').then((v: any) => {
+    this.crud.get('client?query={"role": "client"}').then((v: any) => {
       if (!v) {return; }
       this.list = v;
       this.dataSource = new MatTableDataSource(this.list);
@@ -42,9 +42,10 @@ export class ListClientsComponent implements OnInit, AfterViewInit {
       this.loaded = true;
     }).catch( e => console.log(e));
   }
-  create() {
-    const e = this.client;
-    if (e.name === '' || e.pass === '' || e.login === '') {
+  create(e) {
+    e.preventDefault();
+    const c = this.client;
+    if (c.name === '' || c.pass === '' || c.login === '') {
       Swal.fire('Error', 'Все поля обязательны', 'error').then();
       return;
     }

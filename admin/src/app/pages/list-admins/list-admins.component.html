@@ -2,7 +2,7 @@
 	<div class="contain__group"  *ngIf="addShow">
 		<div class="contain__group-header">
 			<div class="title">
-				Поставщик
+				Администратор
 			</div>
 		</div>
 		<form (submit)="create($event)" class="add-section">
@@ -15,6 +15,7 @@
 			<mat-form-field class="example-full-width">
 				<input matInput type="text" placeholder="Password" name="pass" [(ngModel)]="client.pass" autocomplete="off">
 			</mat-form-field>
+			
 			<div class="group-buttons">
 				<div class="left">
 				</div>
@@ -29,10 +30,10 @@
 	<div class="contain__group">
 		<div class="contain__group-header">
 			<div class="title">
-				Все поставщики
+				Все администраторы
 			</div>
 			<button class="button-add" (click)="openAdd()">
-				<span class="content">Создать клиента</span>
+				<span class="content">Создать администратора</span>
 			</button>
 		</div>
 		<div class="main-section">
@@ -46,7 +47,7 @@
 					
 					<!-- Name Column -->
 					<ng-container matColumnDef="Назва бренда">
-						<th mat-header-cell *matHeaderCellDef>Поставщики</th>
+						<th mat-header-cell *matHeaderCellDef>Администраторы</th>
 						<td class="table__name" mat-cell *matCellDef="let element">
 							<div class="table__name-img">
 								<img src="./assets/images/user.svg" alt="" *ngIf="!element.img || element.img == ''">
@@ -80,14 +81,16 @@
 							<!--							<span class="trash-btn" (click)="delete(index)"></span>-->
 						</td>
 					</ng-container>
+					
 					<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
 					<tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 				</table>
+				
 				<mat-paginator class="paginator-table" [pageSizeOptions]="[5, 10, 20]" [class.paginator-table-active]="showPagin"></mat-paginator>
 			</div>
 			
 			<div class="no-content" *ngIf="list && list.length === 0">
-				У вас нет поставщиков
+				У вас нет администраторов
 			</div>
 		</div>
 	</div>

@@ -2,10 +2,10 @@
 	<div class="contain__group"  *ngIf="addShow">
 		<div class="contain__group-header">
 			<div class="title">
-				Создать клиента
+				Клиент
 			</div>
 		</div>
-		<form (submit)="create()" class="add-section">
+		<form (submit)="create($event)" class="add-section">
 			<mat-form-field class="example-full-width">
 				<input matInput type="text" placeholder="Name" name="name"  [(ngModel)]="client.name" autocomplete="off">
 			</mat-form-field>
@@ -47,7 +47,7 @@
 					
 					<!-- Name Column -->
 					<ng-container matColumnDef="Назва бренда">
-						<th mat-header-cell *matHeaderCellDef>Назва бренда</th>
+						<th mat-header-cell *matHeaderCellDef>Клиенты</th>
 						<td class="table__name" mat-cell *matCellDef="let element">
 							<div class="table__name-img">
 								<img src="./assets/images/user.svg" alt="" *ngIf="!element.img || element.img == ''">
@@ -63,7 +63,7 @@
 					
 					<!-- Weight Column -->
 					<ng-container matColumnDef="data">
-						<th mat-header-cell *matHeaderCellDef>Дата</th>
+						<th mat-header-cell *matHeaderCellDef>Дата реестрации</th>
 						<td mat-cell *matCellDef="let element">
 							<div class="top-table-date">
 								{{element.date | date: 'dd MMMM, yyyy'  : null : defLang}}

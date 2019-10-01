@@ -24,7 +24,6 @@ import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { HeaderComponent } from './components/header/header.component';
 import { ListProvidersComponent } from './pages/list-providers/list-providers.component';
 import { ListClientsComponent } from './pages/list-clients/list-clients.component';
-import { CreateClientsComponent } from './pages/create-clients/create-clients.component';
 import {Ng2SearchPipeModule} from "ng2-search-filter";
 import {CookieService} from "ngx-cookie-service";
 import {ApiInterceptor} from "./api.interceptor";
@@ -32,6 +31,8 @@ import { LoginComponent } from './pages/login/login.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { MainComponent } from './layout/main/main.component';
 import {MatInputModule} from "@angular/material";
+import { ListAdminsComponent } from './pages/list-admins/list-admins.component';
+import {LottieAnimationViewModule} from "ng-lottie";
 
 @NgModule({
   declarations: [
@@ -50,12 +51,13 @@ import {MatInputModule} from "@angular/material";
     HeaderComponent,
     ListProvidersComponent,
     ListClientsComponent,
-    CreateClientsComponent,
     LoginComponent,
     NotFoundComponent,
-    MainComponent
+    MainComponent,
+    ListAdminsComponent
   ],
   imports: [
+    LottieAnimationViewModule.forRoot(),
     MatInputModule,
     BrowserAnimationsModule,
     HttpClientModule,
