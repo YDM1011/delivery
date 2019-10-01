@@ -29,14 +29,12 @@ const schem = new Schema({
 },{
     toJSON: {
         transform: function (doc, ret) {
-            delete ret.pass;
-            delete ret.token;
+
         }
     },
     toObject: {
         transform: function (doc, ret) {
-            delete ret.pass;
-            delete ret.token;
+
         },
         virtuals: true,
     },
@@ -51,7 +49,7 @@ const schem = new Schema({
                 {type:'refObj', fieldName: 'createdBy'},
                 {type:'array', fieldName: 'collaborators'}
             ]
-        },{
+        }, {
             model:'Debtor',
             _id: '_id',
             canBeId: [
