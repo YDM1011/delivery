@@ -6,9 +6,9 @@
 			</div>
 		</div>
 		<form class="add-section" (submit)="create()">
-			<label>
-				<input type="text" placeholder="Категория" name="name" [(ngModel)]="category.name">
-			</label>
+			<mat-form-field class="example-full-width">
+				<input matInput type="text" placeholder="Категория" name="name" [(ngModel)]="category.name" autocomplete="off">
+			</mat-form-field>
 			<select [(ngModel)]="mainCategoryChoose" name="choose">
 				<option *ngFor="let item of mainCategory" [value]="item._id">{{item.name}}</option>
 			</select>
@@ -30,9 +30,9 @@
 			</div>
 		</div>
 		<form (submit)="confirmEditCategoryCrud()" (keyup)="formCheck()" class="edit-section" *ngIf="editShow">
-			<label>
-				<input type="text" placeholder="Категория" name="name" [(ngModel)]="editObj.name">
-			</label>
+			<mat-form-field class="example-full-width">
+				<input matInput type="text" placeholder="Категория" name="name" [(ngModel)]="editObj.name" autocomplete="off">
+			</mat-form-field>
 			<select [(ngModel)]="mainCategoryChoose" name="choose" (change)="selectValid()">
 				<option *ngFor="let item of mainCategory" [value]="item._id">{{item.name}}</option>
 			</select>

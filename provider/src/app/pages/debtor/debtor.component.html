@@ -17,7 +17,7 @@
 				</mat-form-field>
 			</form>
 			<mat-form-field class="example-full-width">
-				<input type="text" placeholder="Сумма долга" aria-label="Number" name="value" matInput [(ngModel)]="debtor.value">
+				<input matInput type="text" placeholder="Сумма долга" aria-label="Number" name="value" [(ngModel)]="debtor.value">
 			</mat-form-field>
 			<mat-form-field>
 				<input matInput [matDatepicker]="picker" placeholder="Choose a date" [min]="minDate" [(ngModel)]="debtor.dataCall" (focus)="picker.open()">

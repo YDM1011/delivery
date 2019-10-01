@@ -1,33 +1,49 @@
-.create-client{
-  .buttons{
+//.create-client{
+//  .buttons{
+//    display: flex;
+//    align-items: center;
+//    justify-content: flex-start;
+//    margin: 30px 0;
+//    button{
+//      width: 200px;
+//      &:nth-of-type(1){
+//        margin-right: 50px;
+//      }
+//      &:nth-of-type(2){
+//        margin-right: 50px;
+//      }
+//    }
+//  }
+//
+//  .form{
+//    display: flex;
+//    flex-direction: column;
+//    input{
+//      width: 100%;
+//      box-shadow: none;
+//      border: 0;
+//      border-bottom: 1px solid #DFE0EB;
+//      padding: 15px 0;
+//      margin-bottom: 15px;
+//    }
+//    button{
+//      margin: 30px 0 50px auto;
+//    }
+//  }
+//}
+
+.group-buttons{
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-bottom: 50px;
+  .right{
     display: flex;
     align-items: center;
-    justify-content: flex-start;
-    margin: 30px 0;
     button{
-      width: 200px;
-      &:nth-of-type(1){
-        margin-right: 50px;
-      }
       &:nth-of-type(2){
-        margin-right: 50px;
+        margin-left: 20px;
       }
-    }
-  }
-
-  .form{
-    display: flex;
-    flex-direction: column;
-    input{
-      width: 100%;
-      box-shadow: none;
-      border: 0;
-      border-bottom: 1px solid #DFE0EB;
-      padding: 15px 0;
-      margin-bottom: 15px;
-    }
-    button{
-      margin: 30px 0 50px auto;
     }
   }
 }
@@ -49,4 +65,23 @@ table {
 
 .filter{
   width: 100%;
+}
+
+.example-full-width {
+  width: 100%;
+}
+
+::ng-deep .mat-focused .mat-form-field-label {
+  /*change color of label*/
+  color: #009688 !important;
+}
+
+::ng-deep.mat-form-field-underline {
+  /*change color of underline*/
+  background-color: #DFE0EB !important;
+}
+
+::ng-deep.mat-form-field-ripple {
+  /*change color of underline when focused*/
+  background-color: #009688 !important;;
 }

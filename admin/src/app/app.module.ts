@@ -31,6 +31,7 @@ import {ApiInterceptor} from "./api.interceptor";
 import { LoginComponent } from './pages/login/login.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { MainComponent } from './layout/main/main.component';
+import {MatInputModule} from "@angular/material";
 
 @NgModule({
   declarations: [
@@ -55,6 +56,7 @@ import { MainComponent } from './layout/main/main.component';
     MainComponent
   ],
   imports: [
+    MatInputModule,
     BrowserAnimationsModule,
     HttpClientModule,
     BrowserModule,

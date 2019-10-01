@@ -6,15 +6,15 @@
 			</div>
 		</div>
 		<div class="add-section">
-			<label>
-				<input type="text" placeholder="Название продукта" [(ngModel)]="product.name">
-			</label>
-			<label>
-				<input type="text" placeholder="Опис продукта" [(ngModel)]="product.des">
-			</label>
-			<label>
-				<input type="text" placeholder="Ціна" [(ngModel)]="product.price">
-			</label>
+			<mat-form-field class="example-full-width">
+				<input matInput type="text" placeholder="Название продукта" [(ngModel)]="product.name" autocomplete="off">
+			</mat-form-field>
+			<mat-form-field class="example-full-width">
+				<input matInput type="text" placeholder="Опис продукта" [(ngModel)]="product.des" autocomplete="off">
+			</mat-form-field>
+			<mat-form-field class="example-full-width">
+				<input matInput type="text" placeholder="Ціна" [(ngModel)]="product.price" autocomplete="off">
+			</mat-form-field>
 			<div class="group-buttons">
 				<div class="left">
 					<app-upload (onFs)="onFs($event)"></app-upload>
@@ -38,15 +38,15 @@
 			</div>
 		</div>
 		<form (keyup)="formCheck()" (submit)="confirmEditCategoryCrud()" class="edit-section" *ngIf="editShow">
-			<label>
-				<input type="text" placeholder="Название продукта" name="name" [(ngModel)]="editObj.name">
-			</label>
-			<label>
-				<input type="text" placeholder="Опис продукта" name="des" [(ngModel)]="editObj.des">
-			</label>
-			<label>
-				<input type="text" placeholder="Ціна" name="price" [(ngModel)]="editObj.price">
-			</label>
+			<mat-form-field class="example-full-width">
+				<input matInput type="text" placeholder="Название продукта" name="name" [(ngModel)]="editObj.name" autocomplete="off">
+			</mat-form-field>
+			<mat-form-field class="example-full-width">
+				<input matInput type="text" placeholder="Опис продукта" name="des" [(ngModel)]="editObj.des" autocomplete="off">
+			</mat-form-field>
+			<mat-form-field class="example-full-width">
+				<input matInput type="text" placeholder="Ціна" name="price" [(ngModel)]="editObj.price" autocomplete="off">
+			</mat-form-field>
 			<div class="group-buttons">
 				<div class="left">
 					<app-upload (onFs)="onFs($event)" *ngIf="editObj && editObj.img === ''"></app-upload>
@@ -55,9 +55,9 @@
 						<div class="remove-mat-chip" (click)="editObj.img = ''; formCheck()"></div>
 					</div>
 				</div>
-				<div class="right" *ngIf="isBlok">
-					<button class="main-button" (click)="cancelEdit()">Отмена</button>
-					<button class="main-button-color" type="submit">Сохранить</button>
+				<div class="right">
+					<button class="main-button" type="reset" (click)="cancelEdit()">Отмена</button>
+					<button class="main-button-color" type="submit"  *ngIf="isBlok">Сохранить</button>
 				</div>
 			</div>
 		</form>

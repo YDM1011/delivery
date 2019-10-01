@@ -117,11 +117,9 @@ export class CreateComponent implements OnInit {
       companyOwner: ''
     };
   }
-  cancelEdit() {
-    this.editShow = false;
-    this.isBlok = false;
-    this.editObj = {
-      _id: '',
+  cancelAdd() {
+    this.showCollaborator = false;
+    this.client = {
       name: '',
       login: '',
       pass: '',

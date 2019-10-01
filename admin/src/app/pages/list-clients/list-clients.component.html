@@ -1,21 +1,97 @@
-<ng-container>
-	<div class="contain">
-		<div class="contain__group">
-			<div class="contain__group-header">
+<div class="contain__group">
+	<div class="contain__group"  *ngIf="addShow">
+		<div class="contain__group-header">
+			<div class="title">
+				Создать клиента
+			</div>
+		</div>
+		<form (submit)="create()" class="add-section">
+			<mat-form-field class="example-full-width">
+				<input matInput type="text" placeholder="Name" name="name"  [(ngModel)]="client.name" autocomplete="off">
+			</mat-form-field>
+			<mat-form-field class="example-full-width">
+				<input matInput type="text" placeholder="Phone" name="login" [(ngModel)]="client.login" autocomplete="off">
+			</mat-form-field>
+			<mat-form-field class="example-full-width">
+				<input matInput type="text" placeholder="Password" name="pass" [(ngModel)]="client.pass" autocomplete="off">
+			</mat-form-field>
+			
+			<div class="group-buttons">
+				<div class="left">
+				</div>
+				<div class="right">
+					<button class="main-button" type="reset" (click)="cancelAdd()">Отмена</button>
+					<button class="main-button-color" type="submit">Сохранить</button>
+				</div>
+			</div>
+		</form>
+	</div>
+	
+	<div class="contain__group">
+		<div class="contain__group-header">
+			<div class="title">
 				Все клиенты
 			</div>
+			<button class="button-add" (click)="openAdd()">
+				<span class="content">Создать клиента</span>
+			</button>
+		</div>
+		<div class="main-section">
+			<div class="mat-elevation-z8">
+				<table mat-table [dataSource]="dataSource" *ngIf="list && list.length > 0">
+					<!-- Position Column -->
+					<ng-container matColumnDef="Номер">
+						<th mat-header-cell *matHeaderCellDef>#</th>
+						<td mat-cell *matCellDef="let element; let index = index"> {{index + 1}} </td>
+					</ng-container>
+					
+					<!-- Name Column -->
+					<ng-container matColumnDef="Назва бренда">
+						<th mat-header-cell *matHeaderCellDef>Назва бренда</th>
+						<td class="table__name" mat-cell *matCellDef="let element">
+							<div class="table__name-img">
+								<img src="./assets/images/user.svg" alt="" *ngIf="!element.img || element.img == ''">
+								<app-img [fs]="element.img" *ngIf="element.img && element.img !== ''"></app-img>
+							</div>
+							<div class="table__name-name">
+								<a>
+									{{element.login}}
+								</a>
+							</div>
+						</td>
+					</ng-container>
+					
+					<!-- Weight Column -->
+					<ng-container matColumnDef="data">
+						<th mat-header-cell *matHeaderCellDef>Дата</th>
+						<td mat-cell *matCellDef="let element">
+							<div class="top-table-date">
+								{{element.date | date: 'dd MMMM, yyyy'  : null : defLang}}
+							</div>
+							<div class="bottom-table-date">
+								{{element.date | date: 'h:mm a'  : null : defLang}}
+							</div>
+						</td>
+					</ng-container>
+					
+					<ng-container matColumnDef="delete">
+						<th mat-header-cell *matHeaderCellDef></th>
+						<td class="right-section-table" mat-cell *matCellDef="let element; let index = index">
+<!--							<span class="edit-btn" (click)="edit(index)"></span>-->
+<!--							<span class="trash-btn" (click)="delete(index)"></span>-->
+						</td>
+					</ng-container>
+					
+					<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+					<tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+				</table>
+				
+				<mat-paginator class="paginator-table" [pageSizeOptions]="[5, 10, 20]" [class.paginator-table-active]="showPagin"></mat-paginator>
+			</div>
 			
-			<div class="client-section" *ngIf="list && list.length > 0 && loaded">
-				<input type="text" placeholder="search" [(ngModel)]="search" name="search" autocomplete="off">
-				<span *ngFor="let item of list | filter:search">{{item.login}}</span>
+			<div class="no-content" *ngIf="list && list.length === 0">
+				У вас нет клиентов
 			</div>
 		</div>
 	</div>
-	
-	<div class="empty-section" *ngIf="!list || list.length === 0 && loaded">
-		<p>
-			У вас нет клиентов!
-		</p>
-	</div>
-	
-</ng-container>
+</div>

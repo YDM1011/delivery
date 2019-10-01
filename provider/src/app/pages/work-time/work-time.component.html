@@ -6,11 +6,11 @@
 			</div>
 		</div>
 		
-		<div class="add-section">
-			<label *ngIf="time">
-				<input type="text" placeholder="Название календаря" [(ngModel)]="time.label" name="label" (ngModelChange)="formCheck()">
-			</label>
-			<div class="work-time" *ngIf="time">
+		<div class="add-section" *ngIf="time">
+			<mat-form-field class="example-full-width">
+				<input matInput type="text" placeholder="Название календаря" [(ngModel)]="time.label" name="label" (ngModelChange)="formCheck()">
+			</mat-form-field>
+			<div class="work-time">
 				<div class="work-time-header">
 					Время роботы компании
 				</div>

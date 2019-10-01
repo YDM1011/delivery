@@ -3,17 +3,30 @@
 		<div class="contain" *ngIf="showCollaborator">
 			<div class="contain__group">
 				<div class="contain__group-header">
-					Сотрудник
+					Создать сотрудника
 				</div>
 			</div>
-			
 			<div class="client-form" >
-				<div class="form">
-					<input type="text" placeholder="Name" [(ngModel)]="client.name" autocomplete="off">
-					<input type="text" placeholder="Phone" [(ngModel)]="client.login" autocomplete="off">
-					<input type="text" placeholder="Password" [(ngModel)]="client.pass" autocomplete="off">
-					<button class="main-button-color" (click)="create()">Создать</button>
-				</div>
+				<form (submit)="create()" class="form">
+					<mat-form-field class="example-full-width">
+						<input matInput type="text" placeholder="Name" [(ngModel)]="client.name" name="name" autocomplete="off">
+					</mat-form-field>
+					<mat-form-field class="example-full-width">
+						<input matInput type="text" placeholder="Phone" [(ngModel)]="client.login" name="name" autocomplete="off">
+					</mat-form-field>
+					<mat-form-field class="example-full-width">
+						<input matInput type="text" placeholder="Password" [(ngModel)]="client.pass" name="name" autocomplete="off">
+					</mat-form-field>
+					
+					<div class="group-buttons">
+						<div class="left">
+						</div>
+						<div class="right">
+							<button class="main-button" type="reset" (click)="cancelAdd()">Отмена</button>
+							<button class="main-button-color" type="submit">Сохранить</button>
+						</div>
+					</div>
+				</form>
 			</div>
 		</div>
 	</div>
@@ -25,9 +38,10 @@
 			</div>
 		</div>
 		<form (submit)="confirmEditCategoryCrud()" (keyup)="formCheck()" class="edit-section" *ngIf="editShow">
-			<label>
-				<input type="text" placeholder="Name" [(ngModel)]="editObj.name" name="name">
-			</label>
+			<mat-form-field class="example-full-width">
+				<input matInput type="text" placeholder="Name" [(ngModel)]="editObj.name" name="name" autocomplete="off">
+			</mat-form-field>
+			
 			<div class="group-buttons">
 				<div class="left">
 				</div>

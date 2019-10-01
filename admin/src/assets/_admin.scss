@@ -81,7 +81,7 @@
   align-items: center;
   min-height: 75px;
   position: relative;
-  &-img{
+  &-img, img{
     width: 40px;
     height: 40px;
     border-radius: 50%;
@@ -90,18 +90,12 @@
     position: absolute;
   }
   &-name{
-    color: #000;  padding-left: 50px;
-
+    color: #000;
+    padding-left: 50px;
   }
 }
 
 .right-section-table{
-  //display: flex;
-  //align-items: center;
-  //justify-content: flex-end;
-  //flex-direction: row;
-  //padding: 0;
-  //padding: 15px 0!important;
   position: relative;
   .trash-btn{
     position: absolute;
@@ -116,10 +110,6 @@
 }
 .mat-elevation-z8{
   box-shadow: none;
-}
-
-.top-table-date{
-
 }
 
 .bottom-table-date{
