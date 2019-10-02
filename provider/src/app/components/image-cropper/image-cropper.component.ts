@@ -73,8 +73,8 @@ export class ImageCropperComponent implements OnInit, AfterViewInit {
     let file = path[path.length-1];
     this.imageData = {
       fileName: file,
-      xx:[canvas.x, canvas.x + canvas.width],
-      yy:[canvas.y, canvas.y + canvas.height]
+      yy:[canvas.x, canvas.x+canvas.width],
+      xx:[canvas.y, canvas.y+canvas.height]
     };
     this.crud.post('imgSlice', this.imageData, null, null)
       .then(v=>{

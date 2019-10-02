@@ -8,12 +8,20 @@ imageToSlices.configure({
 module.exports = (backendApp, router) => {
 
     router.post('/imgSlice', [], (req,res,next) => {
-        const dir = '../../../../upload/';
-        console.log("Start");
         let fileName = req.body.fileName;
         console.log(path.join(__dirname, '../../../../upload/'+fileName));
+        req.body.xx.forEach((it,ind)=>{
+            req.body.xx[ind] = parseInt(it)
+           if (req.body.xx[ind] < 1) req.body.xx[ind] = 1
+        });
+        req.body.yy.forEach((it,ind)=>{
+            req.body.yy[ind] = parseInt(it)
+            if (req.body.yy[ind] < 1) req.body.yy[ind] = 1
+        });
+        console.log(req.body.xx, req.body.yy)
 
-        imageToSlices(path.join(__dirname, '../../../../upload/'+fileName), req.body.xx, req.body.yy,
+        imageToSlices(path.join(__dirname, '../../../../upload/'+fileName),
+            req.body.xx, req.body.yy,
             {
                 // saveToDir: path.join(__dirname, '../../../../upload/')
                 saveToDataUrl: true
@@ -23,7 +31,6 @@ module.exports = (backendApp, router) => {
                 //
                 // console.log(v[4].dataURI)
                 minification(fileName, v[4].dataURI, (err,info)=>{
-                    console.log(err,info);
                     res.ok('ok')
                 })
             }
@@ -34,7 +41,6 @@ const sharp = require('sharp');
 
 const minification = (fileName, base64Data, next)=>{
     base64Data = base64Data.toString().split("base64,")[1];
-    console.log("TEST",base64Data)
     base64Data = convertation(base64Data);
 
     sharp(base64Data)
