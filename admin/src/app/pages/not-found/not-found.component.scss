@@ -1,0 +1,14 @@
+.not-found{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  min-width: 100%;
+  min-height: 100vh;
+
+}
+::ng-deep .svg-not-found{
+  width: 500px!important;
+  height: 100%!important;
+  transform: translate3d(-95px, 0px, 0px) !important;
+}

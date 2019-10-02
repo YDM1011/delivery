@@ -43,7 +43,7 @@ module.exports = (backendApp, router) => {
                     if(req.user.companies.indexOf(req.body.companyOwner) > -1) {
 
                     } else {
-                        return res.badRequest('Company error');
+                        return res.badRequest('Company errors' + req.user._id + req.user.role);
 
                     }
                 }

@@ -1,14 +1,14 @@
 import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
-import {CrudService} from "../../crud.service";
 import {MatPaginator, MatTableDataSource} from "@angular/material";
+import {CrudService} from "../../crud.service";
 import Swal from "sweetalert2";
 
 @Component({
-  selector: 'app-list-providers',
-  templateUrl: './list-providers.component.html',
-  styleUrls: ['./list-providers.component.scss']
+  selector: 'app-list-admins',
+  templateUrl: './list-admins.component.html',
+  styleUrls: ['./list-admins.component.scss']
 })
-export class ListProvidersComponent implements OnInit, AfterViewInit {
+export class ListAdminsComponent implements OnInit, AfterViewInit {
   public loaded = false;
   public search;
   public defLang = 'ru-UA';
@@ -33,7 +33,7 @@ export class ListProvidersComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-    this.crud.get('client?query={"role": "provider"}').then((v: any) => {
+    this.crud.get('client?query={"role": "admin"}').then((v: any) => {
       if (!v) {return; }
       this.list = v;
       this.dataSource = new MatTableDataSource(this.list);
@@ -80,5 +80,4 @@ export class ListProvidersComponent implements OnInit, AfterViewInit {
       role: 'client',
     };
   }
-
 }

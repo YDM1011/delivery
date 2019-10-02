@@ -8,7 +8,7 @@ import {AuthService} from "../../auth.service";
 })
 export class NotFoundComponent implements OnInit {
   public language: string;
-  public lottieConfig: Object;
+  public lottieConfig;
   private anim: any;
 
   constructor(

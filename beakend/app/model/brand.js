@@ -30,10 +30,30 @@ const schem = new Schema({
     },
     createRestApi: true,
     strict: true,
-    client: [{public:true}],
-    collaborator: [{public:true}],
-    provider: [{public:true}],
-    sa: [{public:true}],
+    sa: {
+        read: [{public:true}],
+        update: [{public:true}],
+        create: [{public:true}],
+        delete: [{public:true}],
+    },
+    client: {
+        read: [{public:true}],
+        update: [{private:true}],
+        create: [{private:true}],
+        delete: [{private:true}],
+    },
+    provider: {
+        read: [{public:true}],
+        update: [{private:true}],
+        create: [{private:true}],
+        delete: [{private:true}],
+    },
+    collaborator: {
+        read: [{public:true}],
+        update: [{private:true}],
+        create: [{private:true}],
+        delete: [{private:true}],
+    },
 });
 
 mongoose.model('Brand', schem);
