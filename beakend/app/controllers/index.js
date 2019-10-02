@@ -7,10 +7,7 @@ module.exports = function (backendApp) {
 
 
   const originsWhitelist = [
-      '*',
-      'http://localhost:3000',
-      'http://www.piligrim-test.top',
-      'http://www.piligrim-test.top:3000',
+      '*'
   ];
   const corsOptions = {
       origin:originsWhitelist,

@@ -21,8 +21,8 @@ module.exports = {
   },
   site: {
     sidDomain: "localhost",
-    domain: "http://localhost:3000",
-    innerDomain: "http://localhost:3000",
+        domain: "http://localhost:3001",
+    innerDomain: "http://localhost:3001",
     baseUrl: "http://localhost:4200",
     resetPasswordUrl: "/reset_password/",
     setPasswordUrl: "/reset_password/"
