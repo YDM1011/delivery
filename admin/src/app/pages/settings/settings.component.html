@@ -10,7 +10,7 @@
 				<div class="title">
 					Карта
 				</div>
-				<button class="button-add" (click)="openAddCard()" *ngIf="user && user.card &&  user.card.number === ''">
+				<button class="button-add" (click)="openAddCard()" *ngIf="!user || !user.card || user.card.number === ''">
 					<span class="content">Создать карту</span>
 				</button>
 			</div>
