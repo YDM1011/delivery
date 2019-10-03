@@ -69,7 +69,7 @@ export class SettingsComponent implements OnInit {
     };
   }
   removeCard() {
-    this.crud.post('admin',{card: {number: '', month: '', year: '', ccv: ''}}, this.user._id).then((v: any) => {
+    this.crud.post('admin', {card: {number: '', month: '', year: '', ccv: ''}}, this.user._id).then((v: any) => {
       if (v) {
         this.auth.setMe(v);
       }
