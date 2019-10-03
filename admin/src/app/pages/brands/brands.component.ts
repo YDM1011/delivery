@@ -89,6 +89,7 @@ export class BrandsComponent implements OnInit, AfterViewInit {
   }
   edit(i) {
     this.editObj = Object.assign({}, this.brands[i]);
+    this.editObj.img = this.editObj.img.split("--")[1];
     this.addShow = false;
     this.editShow = true;
   }
@@ -154,6 +155,14 @@ export class BrandsComponent implements OnInit, AfterViewInit {
       this.showPagin = true;
     } else {
       this.showPagin = false;
+    }
+  }
+
+  applyFilter(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
     }
   }
 }

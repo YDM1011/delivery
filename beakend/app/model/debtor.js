@@ -40,23 +40,44 @@ const schem = new Schema({
     },
     createRestApi: true,
     strict: true,
-    sa: [{public:true}],
-    provider: [
-        {
+    sa: {
+        read: [{public:true}],
+        update: [{public:true}],
+        create: [{public:true}],
+        delete: [{public:true}],
+    },
+    client: {
+        read: [{public:true}],
+        update: [{private:true}],
+        create: [{private:true}],
+        delete: [{private:true}],
+    },
+    provider: {
+        read: [{
             model:'Company',
             _id: 'companyOwner',
             canBeId: [
                 {type:'refObj', fieldName: 'createdBy'},
                 {type:'array', fieldName: 'collaborators'}
             ]
-        }, {
-            model:'Debtor',
-            _id: '_id',
+        }],
+        update: [{
+            model:'Company',
+            _id: 'companyOwner',
             canBeId: [
-                {type:'refObj', fieldName: 'createdBy'}
+                {type:'refObj', fieldName: 'createdBy'},
+                {type:'array', fieldName: 'collaborators'}
             ]
-        }
-    ],
+        }],
+        create: [{private:true}],
+        delete: [{private:true}],
+    },
+    collaborator: {
+        read: [{public:true}],
+        update: [{private:true}],
+        create: [{private:true}],
+        delete: [{private:true}],
+    },
 });
 
 mongoose.model('Debtor', schem);

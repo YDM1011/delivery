@@ -88,6 +88,7 @@ export class CityComponent implements OnInit, AfterViewInit{
   onFs(e) {
     this.uploadObj = e;
     this.city.img = e.name;
+
   }
 
   edit(i) {
@@ -180,4 +181,11 @@ export class CityComponent implements OnInit, AfterViewInit{
     this.btnBlok(this.validate());
   }
 
+  applyFilter(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
+  }
 }

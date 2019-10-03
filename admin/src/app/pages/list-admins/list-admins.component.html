@@ -38,6 +38,10 @@
 		</div>
 		<div class="main-section">
 			<div class="mat-elevation-z8">
+				
+				<mat-form-field class="filter" *ngIf="showPagin">
+					<input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+				</mat-form-field>
 				<table mat-table [dataSource]="dataSource" *ngIf="list && list.length > 0">
 					<!-- Position Column -->
 					<ng-container matColumnDef="Номер">
@@ -78,7 +82,7 @@
 						<th mat-header-cell *matHeaderCellDef></th>
 						<td class="right-section-table" mat-cell *matCellDef="let element; let index = index">
 							<!--							<span class="edit-btn" (click)="edit(index)"></span>-->
-							<!--							<span class="trash-btn" (click)="delete(index)"></span>-->
+														<span class="trash-btn" (click)="delete(index)"></span>
 						</td>
 					</ng-container>
 					

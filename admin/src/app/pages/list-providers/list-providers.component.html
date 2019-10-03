@@ -15,6 +15,15 @@
 			<mat-form-field class="example-full-width">
 				<input matInput type="text" placeholder="Password" name="pass" [(ngModel)]="client.pass" autocomplete="off">
 			</mat-form-field>
+			<mat-form-field class="example-full-width">
+				<input matInput type="text" placeholder="Name company" name="name-company" [(ngModel)]="company.name" autocomplete="off">
+			</mat-form-field>
+			<mat-form-field class="example-full-width">
+				<input matInput type="text" placeholder="Address company" name="name-address" [(ngModel)]="company.address" autocomplete="off">
+			</mat-form-field>
+			<select [(ngModel)]="company.city" name="choose" *ngIf="city && city.length>0">
+				<option *ngFor="let item of city" [value]="item._id">{{item.name}}</option>
+			</select>
 			<div class="group-buttons">
 				<div class="left">
 				</div>
@@ -32,11 +41,14 @@
 				Все поставщики
 			</div>
 			<button class="button-add" (click)="openAdd()">
-				<span class="content">Создать клиента</span>
+				<span class="content">Создать поставщика</span>
 			</button>
 		</div>
 		<div class="main-section">
 			<div class="mat-elevation-z8">
+				<mat-form-field class="filter" *ngIf="showPagin">
+					<input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+				</mat-form-field>
 				<table mat-table [dataSource]="dataSource" *ngIf="list && list.length > 0">
 					<!-- Position Column -->
 					<ng-container matColumnDef="Номер">

@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {AuthService} from '../../auth.service';
 import {CrudService} from '../../crud.service';
-import {CookieService} from "ngx-cookie-service";
 
 @Component({
   selector: 'app-main',
@@ -12,15 +11,14 @@ export class MainComponent implements OnInit {
   public user;
   constructor(
       private auth: AuthService,
-      private crud: CrudService,
-      private cookieService: CookieService
+      private crud: CrudService
   ) { }
 
   ngOnInit() {
     this.auth.onMe.subscribe((v: any) => {
       if (!v) {
-        if (!this.cookieService.get('userId') || !localStorage.getItem('userId')) { return; }
-        const userId = this.cookieService.get('userId') || localStorage.getItem('userId');
+        if (!localStorage.getItem('userId')) { return; }
+        const userId = localStorage.getItem('userId');
         const query = JSON.stringify({_id: userId});
         const populate = JSON.stringify(
             {'path': 'companies', 'populate': ['collaborators', 'debtors', 'categories']}

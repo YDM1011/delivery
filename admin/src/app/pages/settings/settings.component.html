@@ -5,5 +5,56 @@
 				Настройки
 			</div>
 		</div>
+		<div class="contain__group">
+			<div class="contain__group-header">
+				<div class="title">
+					Карта
+				</div>
+				<button class="button-add" (click)="openAddCard()" *ngIf="user && user.card &&  user.card.number === ''">
+					<span class="content">Создать карту</span>
+				</button>
+			</div>
+			<div class="main-section">
+				<div class="card-block" *ngIf="user && user.card && user.card.number !== ''">
+					{{user.card.number}}
+					<button class="main-button-color" (click)="removeCard()">remove</button>
+				</div>
+				<div class="add-card" *ngIf="showAddCard">
+					<form (submit)="createCard($event)">
+						<div class="card-item number">
+							<mat-form-field class="date-item">
+								<input matInput type="text" placeholder="Номер карты" name="cardName" [(ngModel)]="card.number" #n (keyup)="checkSupported(n.value)" autocomplete="off" maxlength="19">
+							</mat-form-field>
+							<div class="error" *ngIf="!cardError.number">
+								Номер карты ввееден не верно
+							</div>
+						</div>
+						<div class="card-item date">
+							<mat-form-field class="date-item">
+								<input matInput type="text" placeholder="month" name="cardMonth" maxlength="2" pattern="[\d]{2}" numbersOnly numericType="number" [(ngModel)]="card.month" autocomplete="off">
+							</mat-form-field>
+							/
+							<mat-form-field class="date-item">
+								<input matInput type="text" placeholder="year" name="cardYear" maxlength="2" pattern="[\d]{2}" numbersOnly numericType="number" [(ngModel)]="card.year" autocomplete="off">
+							</mat-form-field>
+						</div>
+						<div class="card-item ccv">
+							<mat-form-field class="date-item">
+								<input matInput type="text" placeholder="ccv" name="cardCcv"  maxlength="3" pattern="[\d]{3}" numbersOnly numericType="number" [(ngModel)]="card.ccv" autocomplete="off">
+							</mat-form-field>
+						</div>
+						
+						<div class="group-buttons">
+							<div class="left">
+							</div>
+							<div class="right">
+								<button class="main-button" type="reset" (click)="cancelAddCard()">Отмена</button>
+								<button class="main-button-color" type="submit">Сохранить</button>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
 	</div>
 </ng-container>

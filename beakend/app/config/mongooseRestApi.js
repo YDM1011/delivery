@@ -294,11 +294,12 @@ const checkOwner = (req,res,next,options) => {
         }
         if (options[role].read[0].public){
             req.error.success = true;
-            if(role === 'sa'){
-                rs(true);
-            } else {
-                rs(query)
-            }
+            // if(role === 'sa'){
+            //     rs(true);
+            // } else {
+            //     rs(query)
+            // }
+            rs(true)
 
             return objPromise
         }

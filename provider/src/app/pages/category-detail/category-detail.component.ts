@@ -17,16 +17,18 @@ export class CategoryDetailComponent implements OnInit {
   public showPagin = false;
   public addShow = false;
   public editShow = false;
+  public isBlok: boolean = false;
+  public showSale: boolean = false;
   public products = [];
   public uploadObj = {};
   public editObjCopy;
-  public isBlok: boolean = false;
   public editObj = {
     _id: '',
     name: '',
     des: '',
     img: '',
     price: null,
+    discount: null,
     companyOwner: '',
     categoryOwner: '',
   };
@@ -35,6 +37,7 @@ export class CategoryDetailComponent implements OnInit {
     des: '',
     img: '',
     price: null,
+    discount: null,
     companyOwner: '',
     categoryOwner: '',
   };
@@ -52,7 +55,8 @@ export class CategoryDetailComponent implements OnInit {
     this.route.params.subscribe(() => {
       this.id = this.route.snapshot.paramMap.get('id');
       if (this.id) {
-        this.crud.get(`category?query={"_id": "${this.id}"}&populate={"path": "orders"}`).then((v: any) => {
+        this.crud.get(`category?query={"_id":"${this.id}"}&populate={"path":"orders"}`).then((v: any) => {
+          if (!v || v.length === 0) {return; }
           this.categoryID = v[0];
           this.products = v[0].orders;
           this.dataSource = new MatTableDataSource(this.products);
@@ -72,7 +76,7 @@ export class CategoryDetailComponent implements OnInit {
           this.product.companyOwner = this.id;
           this.crud.post('order', this.product).then((v: any) => {
             if (v) {
-              this.products.push(v);
+              this.products.unshift(v);
               this.crud.post('category', {$push: {orders: v._id}}, this.id, false).then();
               this.dataSource = new MatTableDataSource(this.products);
               setTimeout(() => this.dataSource.paginator = this.paginator);
@@ -82,6 +86,7 @@ export class CategoryDetailComponent implements OnInit {
                 des: '',
                 img: '',
                 price: null,
+                discount: null,
                 companyOwner: '',
                 categoryOwner: '',
               };
@@ -114,11 +119,17 @@ export class CategoryDetailComponent implements OnInit {
   edit(i) {
     this.editObj = Object.assign({}, this.products[i]);
     this.editObjCopy = Object.assign({}, this.products[i]);
+    if (this.editObj.discount && this.editObj.discount !== '') {
+      this.showSale = true;
+    }
     this.addShow = false;
     this.editShow = true;
   }
   confirmEditCategoryCrud() {
     if (this.validation('editObj')) {
+      if (!this.showSale) {
+        this.editObj.discount = null;
+      }
       if (this.editObj.img === this.editObjCopy.img) {
         this.crud.post('order', this.editObj, this.editObj._id).then((v: any) => {
           if (v) {
@@ -132,6 +143,7 @@ export class CategoryDetailComponent implements OnInit {
               des: '',
               img: '',
               price: null,
+              discount: null,
               companyOwner: '',
               categoryOwner: '',
             };
@@ -161,6 +173,7 @@ export class CategoryDetailComponent implements OnInit {
                   des: '',
                   img: '',
                   price: null,
+                  discount: null,
                   companyOwner: '',
                   categoryOwner: '',
                 };
@@ -208,6 +221,7 @@ export class CategoryDetailComponent implements OnInit {
       des: '',
       img: '',
       price: null,
+      discount: null,
       companyOwner: '',
       categoryOwner: '',
     };
@@ -221,6 +235,7 @@ export class CategoryDetailComponent implements OnInit {
       des: '',
       img: '',
       price: null,
+      discount: null,
       companyOwner: '',
       categoryOwner: '',
     };

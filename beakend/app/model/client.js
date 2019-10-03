@@ -51,7 +51,7 @@ const schem = new Schema({
     verifyCode: String,
     token: String,
     date: {type: Date, default: new Date()},
-    lastUpdate: {type: Date},
+    lastUpdate: {type: Date, default: new Date()},
 },{
     toJSON: {
         transform: function (doc, ret) {

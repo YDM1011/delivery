@@ -6,16 +6,14 @@
 			</div>
 		</div>
 		<div class="add-section">
-			<form class="example-form">
-				<mat-form-field class="example-full-width">
-					<input type="text" placeholder="Tel" aria-label="Number" name="inputSearch" matInput [(ngModel)]="inputChange" [matAutocomplete]="auto" (keyup)="change()">
-					<mat-autocomplete #auto="matAutocomplete">
-						<mat-option *ngFor="let item of searchDebtors" [value]="item.login">
-							{{item.login}}
-						</mat-option>
-					</mat-autocomplete>
-				</mat-form-field>
-			</form>
+			<mat-form-field class="example-full-width">
+				<input type="text" placeholder="Tel" aria-label="Number" name="inputSearch" matInput [(ngModel)]="inputChange" [matAutocomplete]="auto" (keyup)="change()">
+				<mat-autocomplete #auto="matAutocomplete">
+					<mat-option *ngFor="let item of searchDebtors" [value]="item.login">
+						{{item.login}}
+					</mat-option>
+				</mat-autocomplete>
+			</mat-form-field>
 			<mat-form-field class="example-full-width">
 				<input matInput type="text" placeholder="Сумма долга" aria-label="Number" name="value" [(ngModel)]="debtor.value">
 			</mat-form-field>
@@ -41,7 +39,7 @@
 				Редактировать должника
 			</div>
 		</div>
-		<form class="edit-section" (submit)="confirmEditCategoryCrud()" (keyup)="formCheck()" *ngIf="editShow">
+		<form class="edit-section" (submit)="confirmEditCategoryCrud($event)" (keyup)="formCheck()" *ngIf="editShow">
 			<mat-form-field class="example-full-width">
 				<input type="text" placeholder="Сумма долга" aria-label="Number" name="value" matInput [(ngModel)]="editObj.value">
 			</mat-form-field>
