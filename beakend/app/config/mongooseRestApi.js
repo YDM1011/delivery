@@ -38,6 +38,7 @@ module.exports = backendApp => {
                     modelOpt.notCreate ? forbidden : nextS,
                     // model.schema.options.needBeAdminCUD ? backendApp.middlewares.isAdmin :  nextS,
                     backendApp.middlewares.isLoggedIn,
+                    isVerify,
                     // model.schema.options.needAccessControl ? backendApp.middlewares.checkAccessRights(modelName + '.canCreate') :  nextS,
                     schemaPre.Save],
                 postCreate: [update_ws, schemaPre.PostCreate],
@@ -72,6 +73,21 @@ module.exports = backendApp => {
 
 
 };
+const isVerify = backendApp => {
+    return (req,res,next)=>{
+        if (req.user && req.user.verify) {
+            next()
+        } else {
+            if (req.user && !req.user.verify) {
+                const signup = new backendApp.hooks.signupRole(req, res, req.user, backendApp);
+                signup.init()
+            } else if (!req.user) {
+                res.serverError("Server error!")
+            }
+        }
+    }
+};
+
 const canRead = (options) => {
     return (req,res,next)=>{
         const objPromise = checkOwner(req,res,next,options);

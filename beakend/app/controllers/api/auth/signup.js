@@ -11,6 +11,7 @@ module.exports = (backendApp, router) => {
         const Client = backendApp.mongoose.model("Client");
         const Company = backendApp.mongoose.model("Company");
         let errors = {};
+        req.body.login = req.body.login.slice(-10).toLowerCase();
         if (req.body.client && req.body.company) {
             req.companyBody = req.body.company;
             req.body = req.body.client
@@ -21,8 +22,8 @@ module.exports = (backendApp, router) => {
         delete  req.body.verify;
         Client.findOne({
             $or:[
-                {login: req.body.login.toLowerCase()},
-                {mobile: req.body.login.toLowerCase()}
+                {login: req.body.login},
+                {mobile: req.body.login}
             ]
         }, (err, user) => {
             if (err) return res.serverError(err);
@@ -30,39 +31,45 @@ module.exports = (backendApp, router) => {
             if (!user){
                 req.body.token = getToken(req.body.login);
                 req.body.pass = md5(req.body.pass);
-                req.body.mobile = req.body.mobile ? req.body.mobile.toLowerCase() : req.body.login.toLowerCase();
-                if (req.user && (req.user.role == 'sa' || req.user.role == 'admin')){
-                    req.body.verify = true;
-                }
-                if (req.user.role === 'provider') {
-                    req.body.verify = true;
-                    req.body.role = 'collaborator';
-                    req.user.companies.forEach((it, i)=>{
-                        req.user.companies[i] = it.toString();
-                    });
-                    if(!(req.user.companies.indexOf(req.body.companyOwner) > -1)) {
-                        return res.badRequest('Company errors' + req.user._id + req.user.role);
-                    }
-                }
-                Client.create(req.body, (e,r)=> {
-                    if (e) return res.serverError(e);
-                    if (!r) return res.badRequest();
-
-                    if (!req.user) {
-                        return res.badRequest();
-                    }
-                    if ((req.user.role == 'sa' || req.user.role == 'admin')) {
-                        return postSignup(req, res, r);
+                req.body.mobile = req.body.mobile ? req.body.mobile.toLowerCase() : req.body.login;
+                if (req.user){
+                    if (req.user.role == 'sa' || req.user.role == 'admin'){
+                        req.body.verify = true;
                     }
                     if (req.user.role === 'provider') {
-                        Company.findOneAndUpdate({_id: req.body.companyOwner}, {$push: {collaborators: r._id}}, {new:true})
-                            .exec((e1,r1)=>{
-                            if (e1) return res.serverError(e1);
-                            if (!r1) return res.badRequest();
-                            console.log(r1);
-                            return postSignup(req, res, r);
+                        req.body.verify = true;
+                        req.body.role = 'collaborator';
+                        req.user.companies.forEach((it, i)=>{
+                            req.user.companies[i] = it.toString();
                         });
+                        if(!(req.user.companies.indexOf(req.body.companyOwner) > -1)) {
+                            return res.badRequest('Company errors' + req.user._id + req.user.role);
+                        }
                     }
+                }
+
+                Client.create(req.body, (e,r)=> {
+                    if (e) return res.serverError(e);
+                    if (!r) return res.badRequest("no found");
+
+                    if (req.user) {
+                        if ((req.user.role == 'sa' || req.user.role == 'admin')) {
+                            return postSignup(req, res, r);
+                        }
+                        if (req.user.role === 'provider') {
+                            Company.findOneAndUpdate({_id: req.body.companyOwner}, {$push: {collaborators: r._id}}, {new:true})
+                                .exec((e1,r1)=>{
+                                    if (e1) return res.serverError(e1);
+                                    if (!r1) return res.badRequest();
+                                    console.log(r1);
+                                    return postSignup(req, res, r);
+                                });
+                        }
+                    } else {
+                        return postSignup(req, res, r);
+                    }
+
+
                     // backendApp.service.email({
                     //     to: r.email,
                     //     subject: 'Sign Up',
@@ -79,11 +86,10 @@ module.exports = (backendApp, router) => {
 
 
     const postSignup = (req, res, result) => {
-        const signup = new backendApp.hooks.signupRole(req, res, result);
-
-        signup.end()
+        const signup = new backendApp.hooks.signupRole(req, res, result, backendApp);
+        signup.init()
     };
 
-    router.post('/signup', [backendApp.middlewares.isLoggedIn], signup);
+    router.post('/signup', [backendApp.middlewares.checkLoggedIn], signup);
 };
 

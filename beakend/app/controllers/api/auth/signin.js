@@ -14,6 +14,7 @@ module.exports = (backendApp, router) => {
         if (Object.keys(errors).length > 0) {
             return res.badRequest(errors);
         }
+        req.body.login = req.body.login.slice(-10).toLowerCase();
         Client.findOne({
             $and:[{
                 $or:[

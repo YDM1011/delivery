@@ -9,6 +9,7 @@ const schem = new Schema({
     login: {type: String, required: [true, "Login is required"]},
     pass: {type: String, required: [true, "Password is required"]},
     mobile: String,
+    smsCode: String,
     name: String,
     img: {type: String, default: ''},
     address: String,
@@ -57,12 +58,14 @@ const schem = new Schema({
         transform: function (doc, ret) {
             delete ret.pass;
             delete ret.token;
+            delete ret.smsCode;
         }
     },
     toObject: {
         transform: function (doc, ret) {
             delete ret.pass;
             delete ret.token;
+            delete ret.smsCode;
         },
         virtuals: true,
     },
