@@ -10,9 +10,8 @@ module.exports = class Signup {
     }
 
     end () {
-        console.log("END")
         if (this.result.role === 'provider') {
-            if (this.validator()) this.createCompany();
+            if (this.validator()) return this.createCompany();
             this.res.badRequest('Error');
         } else {
             this.res.ok(this.result)
@@ -20,9 +19,9 @@ module.exports = class Signup {
     }
     createCompany(){
         Company.create({
-            city:this.req.city,
-            name:this.req.name,
-            address:this.req.address
+            city:this.req.companyBody.city,
+            name:this.req.companyBody.name,
+            address:this.req.companyBody.address
         }, (e,r)=>{
             if (e) return this.res.serverError(e);
             if (!r) return this.res.badRequest();
@@ -30,8 +29,8 @@ module.exports = class Signup {
         })
     }
     validator() {
-        if (!this.req.city || !this.req.name || !this.req.address) {
-            Client.findOneAndRemove({_id: this.result._id}).exec((e,r)=>{ })
+        if (!this.req.companyBody.city || !this.req.companyBody.name || !this.req.companyBody.address) {
+            Client.findOneAndRemove({_id: this.result._id}).exec((e,r)=>{ });
             return false
         } else {
            return true

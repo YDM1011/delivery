@@ -58,7 +58,7 @@ export class ListProvidersComponent implements OnInit, AfterViewInit {
     e.preventDefault();
     const c = this.client;
     const comp = this.company;
-    if (c.name === '' || c.pass === '' || c.login === '' || comp.address || comp.city || comp.address) {
+    if ((!c || !comp) || (!c.name || !c.pass || !c.login || !comp.address || !comp.city || !comp.name)) {
       Swal.fire('Error', 'Все поля обязательны', 'error').then();
       return;
     }

@@ -36,10 +36,10 @@ const schem = new Schema({
     strict: true,
     notCreate: true,
     sa: {
-        read: [{public:true}],
-        update: [{public:true}],
-        create: [{public:true}],
-        delete: [{public:true}],
+        read: [{private:true}],
+        update: [{private:true}],
+        create: [{private:true}],
+        delete: [{private:true}],
     },
     client: {
         read: [{private:true}],

@@ -11,9 +11,10 @@ module.exports = (backendApp, router) => {
         const Client = backendApp.mongoose.model("Client");
         const Company = backendApp.mongoose.model("Company");
         let errors = {};
-
-
-
+        if (req.body.client && req.body.company) {
+            req.companyBody = req.body.company;
+            req.body = req.body.client
+        }
         if (Object.keys(errors).length > 0) {
             return res.badRequest(errors);
         }
@@ -29,9 +30,8 @@ module.exports = (backendApp, router) => {
             if (!user){
                 req.body.token = getToken(req.body.login);
                 req.body.pass = md5(req.body.pass);
-                // req.body.email = req.body.email ? req.body.email : req.body.login;
                 req.body.mobile = req.body.mobile ? req.body.mobile.toLowerCase() : req.body.login.toLowerCase();
-                if (req.user && req.user.role == 'sa'){
+                if (req.user && (req.user.role == 'sa' || req.user.role == 'admin')){
                     req.body.verify = true;
                 }
                 if (req.user.role === 'provider') {
@@ -40,23 +40,18 @@ module.exports = (backendApp, router) => {
                     req.user.companies.forEach((it, i)=>{
                         req.user.companies[i] = it.toString();
                     });
-                    if(req.user.companies.indexOf(req.body.companyOwner) > -1) {
-
-                    } else {
+                    if(!(req.user.companies.indexOf(req.body.companyOwner) > -1)) {
                         return res.badRequest('Company errors' + req.user._id + req.user.role);
-
                     }
                 }
-                Client.create(req.body, (e,r)=>{
+                Client.create(req.body, (e,r)=> {
                     if (e) return res.serverError(e);
                     if (!r) return res.badRequest();
 
                     if (!req.user) {
-                        // r.signin(req,res,backendApp)
-                        // verify()
                         return res.badRequest();
                     }
-                    if (req.user.role == 'sa'){
+                    if ((req.user.role == 'sa' || req.user.role == 'admin')) {
                         return postSignup(req, res, r);
                     }
                     if (req.user.role === 'provider') {
@@ -82,12 +77,7 @@ module.exports = (backendApp, router) => {
         });
     };
 
-    const validate = (req,res,next) => {
-        const err = backendApp.service.signupvalidator(req);
-        console.log(err);
-        if (err) return res.badRequest(err);
-        else return next()
-    };
+
     const postSignup = (req, res, result) => {
         const signup = new backendApp.hooks.signupRole(req, res, result);
 

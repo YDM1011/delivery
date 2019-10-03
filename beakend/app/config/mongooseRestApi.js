@@ -75,6 +75,7 @@ module.exports = backendApp => {
 const canRead = (options) => {
     return (req,res,next)=>{
         const objPromise = checkOwner(req,res,next,options);
+        console.log("objPromise", typeof objPromise)
         Promise.all(objPromise).then(query => {
             let opt;
             query.some(it => {
@@ -113,7 +114,7 @@ const canRead = (options) => {
                 res.notFound("No one document")
             }
 
-        }).catch(e=>{console.log(e); res.forbidden(e)});
+        }, e=>{console.log(e); res.forbidden(e)});
     }
 };
 const canUpdate = (options) => {
@@ -287,42 +288,44 @@ const checkOwner = (req,res,next,options) => {
     let query = {$or: [{'createdBy.itemId': req.user._id},
             {createdBy: req.user._id},
             {_id: req.user._id}]};
-    objPromise.push( new Promise((rs,rj)=> {
-        if (!options[role] || !options[role].read) {
-            rs(false);
-            return objPromise
-        }
-        if (options[role].read[0].public){
-            req.error.success = true;
-            // if(role === 'sa'){
-            //     rs(true);
-            // } else {
-            //     rs(query)
-            // }
-            rs(true)
-
-            return objPromise
-        }
-        if (options[role].read[0].private) {
-            if (Object.entries(req.erm.query).length > 0) {
-                req.erm.query['query'] = {};
-                if (req.query.query) {
-                    req.erm.query['query'] = {$and: [query, JSON.parse(req.query.query)]};
-                } else {
-                    req.erm.query['query'] = {$and: [query]};
-                }
-            } else {
-                req.erm.query['query'] = query;
-            }
-            req.error.success = true;
-
-            rs(query);
-            return objPromise
-        }
-    }));
-    if (!options[role].read || (options[role].read[0].public || role === 'sa') || options[role].read[0].private){
+    if (!options[role] || !options[role].read) {
+        objPromise.push( new Promise((rs,rj)=> {rj("Not access!")}))
         return objPromise
-    } else {
+    } else
+    if ((options[role].read[0].public || role === 'sa') || options[role].read[0].private){
+        objPromise.push( new Promise((rs,rj)=> {
+            if (options[role].read[0].public){
+                req.error.success = true;
+                // if(role === 'sa'){
+                //     rs(true);
+                // } else {
+                //     rs(query)
+                // }
+                rs(true);
+
+                // return objPromise
+            }
+            if (options[role].read[0].private) {
+                if (Object.entries(req.erm.query).length > 0) {
+                    req.erm.query['query'] = {};
+                    if (req.query.query) {
+                        req.erm.query['query'] = {$and: [query, JSON.parse(req.query.query)]};
+                    } else {
+                        req.erm.query['query'] = {$and: [query]};
+                    }
+                } else {
+                    req.erm.query['query'] = query;
+                }
+                req.error.success = true;
+
+                rs(query);
+                // return objPromise
+            }
+        }));
+        return objPromise
+    } else
+    {
+        console.log("Err");
         objPromise = [];
         options[role].read.forEach( it =>{
             if (it.model) {

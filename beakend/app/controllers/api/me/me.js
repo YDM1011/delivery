@@ -3,6 +3,7 @@ module.exports = (backendApp, router) => {
     router.get('/me', [], (req,res,next) => {
 
         const Client = backendApp.mongoose.model("Client");
+        const Admin = backendApp.mongoose.model("Admin");
         if (req.jwt) {
             const jwt = require('jsonwebtoken');
             const protect = req.cookies['token'] || req.jwt.token  || req.headers.authorization;
@@ -17,8 +18,16 @@ module.exports = (backendApp, router) => {
                     Client.findOne({login: data.login })
                         .exec((err, info)=>{
                             if (err) return res.serverError(err);
-                            if (!info) return res.forbidden("forbidden");
-                            res.ok(info);
+                            if (!info) {
+                                Admin.findOne({login: data.login })
+                                    .exec((err, info)=>{
+                                        if (err) return res.serverError(err);
+                                        if (!info) return res.forbidden("forbidden");
+                                        res.ok(info);
+                                    });
+                            } else {
+                                res.ok(info);
+                            }
                         });
                 }
             });
