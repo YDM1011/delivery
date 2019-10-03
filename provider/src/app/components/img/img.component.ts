@@ -8,6 +8,7 @@ import {environment} from "../../../environments/environment";
 })
 export class ImgComponent implements OnInit {
   @Input() fs;
+  @Input() product;
   public domain = environment.domain;
   constructor() { }
 
