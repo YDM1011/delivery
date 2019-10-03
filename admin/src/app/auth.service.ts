@@ -13,6 +13,9 @@ export class AuthService {
   private translate = new BehaviorSubject<any>(null);
   public onTranslate = this.translate.asObservable();
 
+  private me = new BehaviorSubject<any>(null);
+  public onMe = this.me.asObservable();
+
   private dateTranslator = new BehaviorSubject<any>(null);
   public onDateTranslator = this.dateTranslator.asObservable();
 
@@ -21,10 +24,11 @@ export class AuthService {
 
   private checkBasket = new BehaviorSubject<any>(null);
   public onCheckBasket = this.checkBasket.asObservable();
-  constructor(
-      private cookieService: CookieService
-  ) { }
+  constructor() { }
 
+  setMe(data) {
+    this.me.next(data);
+  }
   setCheckBasket(data) {
     this.checkBasket.next(data);
   }
@@ -45,7 +49,7 @@ export class AuthService {
   }
 
   isAuthAdmin() {
-    if (this.cookieService.get('adminId') || localStorage.getItem('adminId')) {
+    if (localStorage.getItem('adminId')) {
       return true;
     }
     return false;

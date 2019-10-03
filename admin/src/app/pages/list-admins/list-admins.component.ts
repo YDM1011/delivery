@@ -19,7 +19,7 @@ export class ListAdminsComponent implements OnInit, AfterViewInit {
     name: '',
     login: '',
     pass: '',
-    role: 'client',
+    role: 'admin',
   };
   displayedColumns: string[] = ['Номер', 'Назва бренда', 'data', 'delete'];
   dataSource = new MatTableDataSource(this.list);
@@ -33,7 +33,7 @@ export class ListAdminsComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-    this.crud.get('client?query={"role": "admin"}').then((v: any) => {
+    this.crud.get('client?query={"role": "admin"}&sort={"lastUpdate":-1}').then((v: any) => {
       if (!v) {return; }
       this.list = v;
       this.dataSource = new MatTableDataSource(this.list);
@@ -49,7 +49,11 @@ export class ListAdminsComponent implements OnInit, AfterViewInit {
       Swal.fire('Error', 'Все поля обязательны', 'error').then();
       return;
     }
-    this.crud.post('signup', this.client).then(() => {
+    this.crud.post('signup', this.client).then((v: any) => {
+      this.list.unshift(v);
+      this.dataSource = new MatTableDataSource(this.list);
+      setTimeout(() => this.dataSource.paginator = this.paginator);
+      this.chackDataLength();
       this.clearObj();
       this.addShow = false;
     }).catch((error) => {
@@ -58,11 +62,20 @@ export class ListAdminsComponent implements OnInit, AfterViewInit {
       }
     });
   }
+  delete(i) {
+   const id = this.list[i]._id;
+   this.crud.delete('client', id).then((v: any) => {
+     if (v) {
+       this.list.splice(i, 1);
+     }
+   });
+  }
   openAdd() {
     this.addShow = true;
   }
   cancelAdd() {
     this.addShow = false;
+    this.clearObj();
   }
   chackDataLength() {
     if (this.list.length > 0 ) {
@@ -77,7 +90,15 @@ export class ListAdminsComponent implements OnInit, AfterViewInit {
       name: '',
       login: '',
       pass: '',
-      role: 'client',
+      role: 'admin',
     };
+  }
+
+  applyFilter(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
   }
 }

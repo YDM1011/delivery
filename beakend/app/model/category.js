@@ -50,7 +50,14 @@ const schem = new Schema({
         delete: [{private:true}],
     },
     provider: {
-        read: [{public:true}],
+        read: [{
+            model:'Company',
+            _id: 'companyOwner',
+            canBeId: [
+                {type:'refObj', fieldName: 'createdBy'},
+                {type:'array', fieldName: 'collaborators'}
+            ]
+        }],
         update: [{private:true}],
         create: [{private:true}],
         delete: [{private:true}],

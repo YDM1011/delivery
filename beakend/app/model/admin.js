@@ -5,6 +5,12 @@ const schem = new Schema({
     login: {type: String, unique: true, required: [true, "Login is required"]},
     pass: {type: String, required: [true, "Password is required"]},
     email: {type: String, required: [true, "Email is required"]},
+    card: {
+        number: {type: String, default: ''},
+        year: {type: String, default: ''},
+        month: {type: String, default: ''},
+        ccv: {type: String, default: ''}
+    },
     token: String,
     verify: {type: Boolean, default: false},
     date: {type: Date, default: new Date()},
@@ -26,10 +32,33 @@ const schem = new Schema({
             delete ret.token;
         }
     },
-    createRestApi: false,
+    createRestApi: true,
     strict: true,
     notCreate: true,
-    sa: [{public:true}],
+    sa: {
+        read: [{public:true}],
+        update: [{public:true}],
+        create: [{public:true}],
+        delete: [{public:true}],
+    },
+    client: {
+        read: [{private:true}],
+        update: [{private:true}],
+        create: [{private:true}],
+        delete: [{private:true}],
+    },
+    provider: {
+        read: [{private:true}],
+        update: [{private:true}],
+        create: [{private:true}],
+        delete: [{private:true}],
+    },
+    collaborator: {
+        read: [{private:true}],
+        update: [{private:true}],
+        create: [{private:true}],
+        delete: [{private:true}],
+    },
 });
 require("./model_methods/object/admin")(schem);
 mongoose.model('Admin', schem);

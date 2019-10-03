@@ -7,7 +7,7 @@
 				</div>
 			</div>
 			<div class="client-form" >
-				<form (submit)="create()" class="form">
+				<form (submit)="create($event)" class="form">
 					<mat-form-field class="example-full-width">
 						<input matInput type="text" placeholder="Name" [(ngModel)]="client.name" name="name" autocomplete="off">
 					</mat-form-field>
@@ -37,7 +37,7 @@
 				Редактировать cотрудника
 			</div>
 		</div>
-		<form (submit)="confirmEditCategoryCrud()" (keyup)="formCheck()" class="edit-section" *ngIf="editShow">
+		<form (submit)="confirmEditCategoryCrud($event)" (keyup)="formCheck()" class="edit-section" *ngIf="editShow">
 			<mat-form-field class="example-full-width">
 				<input matInput type="text" placeholder="Name" [(ngModel)]="editObj.name" name="name" autocomplete="off">
 			</mat-form-field>

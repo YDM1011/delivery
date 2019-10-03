@@ -122,7 +122,8 @@ export class DebtorComponent implements OnInit {
     this.addShow = false;
     this.editShow = true;
   }
-  confirmEditCategoryCrud() {
+  confirmEditCategoryCrud(e) {
+    e.preventDefault();
     if (this.editObj.value === '') {
       Swal.fire('Error', 'Введите cумму долга', 'error');
       return;

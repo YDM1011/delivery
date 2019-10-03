@@ -50,16 +50,17 @@ export class CreateComponent implements OnInit {
       this.checkDataLength();
     });
   }
-  create() {
-    const e = this.client;
-    if (e.name === '' || e.pass === '' || e.login === '') {
+  create(e) {
+    e.preventDefault();
+    const с = this.client;
+    if (с.name === '' || с.pass === '' || с.login === '') {
       Swal.fire('Error', 'Все поля обязательны', 'error').then();
       return;
     }
     this.client.companyOwner = this.user.companies[0]._id;
     this.crud.post('signup', this.client).then((v: any) => {
       if (!v) {return; }
-      this.clients.push(v);
+      this.clients.unshift(v);
       this.dataSource = new MatTableDataSource(this.clients);
       setTimeout(() => this.dataSource.paginator = this.paginator);
       this.checkDataLength();
@@ -71,7 +72,8 @@ export class CreateComponent implements OnInit {
       }
     });
   }
-  confirmEditCategoryCrud() {
+  confirmEditCategoryCrud(e) {
+    e.preventDefault();
     if (this.editObj.name === '') {
       Swal.fire('Error', 'Название категории не может быть пустым', 'error').then();
       return;

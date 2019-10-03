@@ -49,9 +49,13 @@ export class ListClientsComponent implements OnInit, AfterViewInit {
       Swal.fire('Error', 'Все поля обязательны', 'error').then();
       return;
     }
-    this.crud.post('signup', this.client).then(() => {
+    this.crud.post('signup', this.client).then((v: any) => {
       this.clearObj();
       this.addShow = false;
+      this.list.unshift(v);
+      this.dataSource = new MatTableDataSource(this.list);
+      setTimeout(() => this.dataSource.paginator = this.paginator);
+      this.chackDataLength();
     }).catch((error) => {
       if (error && error.error === 'User with this login created') {
         Swal.fire('Error', 'Номер телефона уже используется', 'error').then();
@@ -63,6 +67,7 @@ export class ListClientsComponent implements OnInit, AfterViewInit {
   }
   cancelAdd() {
     this.addShow = false;
+    this.clearObj();
   }
   chackDataLength() {
     if (this.list.length > 0 ) {
@@ -79,5 +84,13 @@ export class ListClientsComponent implements OnInit, AfterViewInit {
       pass: '',
       role: 'client',
     };
+  }
+
+  applyFilter(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
   }
 }

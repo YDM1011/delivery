@@ -9,8 +9,9 @@ table {
 .paginator-table-active{
   display: block;
 }
-
-
+.check{
+  display: flex;
+}
 .right-section-table {
   padding: 19px 0 !important;
 }
@@ -40,4 +41,11 @@ table {
 ::ng-deep.mat-form-field-ripple {
   /*change color of underline when focused*/
   background-color: #009688 !important;;
+}
+::ng-deep .mat-checkbox .mat-checkbox-frame {
+  border-color: #009688!important;
+}
+
+::ng-deep .mat-checkbox-checked .mat-checkbox-background {
+  background-color: #009688 !important;
 }

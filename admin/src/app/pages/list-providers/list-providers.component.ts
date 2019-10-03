@@ -15,11 +15,17 @@ export class ListProvidersComponent implements OnInit, AfterViewInit {
   public addShow = false;
   public showPagin = false;
   public list = [];
+  public city = [];
   public client = {
     name: '',
     login: '',
     pass: '',
-    role: 'client',
+    role: 'provider',
+  };
+  public company = {
+    name: '',
+    city: '',
+    address: '',
   };
   displayedColumns: string[] = ['Номер', 'Назва бренда', 'data', 'delete'];
   dataSource = new MatTableDataSource(this.list);
@@ -40,16 +46,27 @@ export class ListProvidersComponent implements OnInit, AfterViewInit {
       setTimeout(() => this.dataSource.paginator = this.paginator);
       this.chackDataLength();
       this.loaded = true;
+      this.crud.get('city').then((c: any) => {
+        if (c) {
+          this.city = c;
+          this.company.city = this.city[0]._id;
+        }
+      });
     }).catch( e => console.log(e));
   }
   create(e) {
     e.preventDefault();
     const c = this.client;
-    if (c.name === '' || c.pass === '' || c.login === '') {
+    const comp = this.company;
+    if (c.name === '' || c.pass === '' || c.login === '' || comp.address || comp.city || comp.address) {
       Swal.fire('Error', 'Все поля обязательны', 'error').then();
       return;
     }
-    this.crud.post('signup', this.client).then(() => {
+    this.crud.post('signup', {client: this.client, company: this.company}).then((v: any) => {
+      this.list.unshift(v);
+      this.dataSource = new MatTableDataSource(this.list);
+      setTimeout(() => this.dataSource.paginator = this.paginator);
+      this.chackDataLength();
       this.clearObj();
       this.addShow = false;
     }).catch((error) => {
@@ -63,22 +80,34 @@ export class ListProvidersComponent implements OnInit, AfterViewInit {
   }
   cancelAdd() {
     this.addShow = false;
+    this.clearObj();
   }
   chackDataLength() {
     if (this.list.length > 0 ) {
       this.showPagin = true;
       return;
-    } else {
-      this.showPagin = false;
     }
+    this.showPagin = false;
   }
   clearObj() {
     this.client = {
       name: '',
       login: '',
       pass: '',
-      role: 'client',
+      role: 'provider',
+    };
+    this.company = {
+      name: '',
+      address: '',
+      city: this.city[0]._id
     };
   }
 
+  applyFilter(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
+  }
 }

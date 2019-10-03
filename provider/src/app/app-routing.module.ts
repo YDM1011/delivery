@@ -12,7 +12,8 @@ import {CategoryDetailComponent} from './pages/category-detail/category-detail.c
 import {CreateComponent} from './pages/create/create.component';
 import {DebtorComponent} from './pages/debtor/debtor.component';
 import {SettingsComponent} from './pages/settings/settings.component';
-import {WorkTimeComponent} from "./pages/work-time/work-time.component";
+import {WorkTimeComponent} from './pages/work-time/work-time.component';
+import {ActionComponent} from './pages/action/action.component';
 
 const routes: Routes = [
   {path: '', component: MainComponent, children: [
@@ -25,6 +26,7 @@ const routes: Routes = [
       {path: 'debtor', component: DebtorComponent},
       {path: 'settings', component: SettingsComponent},
       {path: 'work-time', component: WorkTimeComponent},
+      {path: 'action', component: ActionComponent},
     ], canActivate: [AdminLoginedGuard]},
   {path: 'login', component: LoginComponent, canActivate: [AdminLogoutGuard]},
   {path: '**', component: NotFoundComponent},

@@ -41,7 +41,7 @@ export class CategoryComponent implements OnInit {
 
   ngOnInit() {
     this.crud.get('mainCategory').then((v: any) => {
-      if (!v)  { return; }
+      if (!v || v.length === 0)  { return; }
       this.mainCategory = v;
       this.mainCategoryChoose = this.mainCategory[0]._id;
     });
@@ -60,7 +60,7 @@ export class CategoryComponent implements OnInit {
   }
 
   create(e) {
-    e.preventDefault()
+    e.preventDefault();
     if (this.category.name === '') {
       Swal.fire('Error', 'Название категории не может быть пустым', 'error');
       return;
@@ -70,17 +70,16 @@ export class CategoryComponent implements OnInit {
       return;
     }
     this.category.mainCategory = this.mainCategoryChoose;
-    console.log(this.user);
     this.category.companyOwner = this.user.companies[0]._id;
     this.crud.post('category', this.category).then((v: any) => {
       if (v) {
-        this.categorys.push(v);
+        this.categorys.unshift(v);
         this.user.companies[0].categories = this.categorys;
-        this.auth.setMe(this.user);
-        this.crud.post('company', {$push: {categories: v._id}}, this.user.companies[0]._id, false).then();
         this.dataSource = new MatTableDataSource(this.categorys);
         setTimeout(() => this.dataSource.paginator = this.paginator);
         this.chackDataLength();
+        // this.auth.setMe(this.user);
+        this.crud.post('company', {$push: {categories: v._id}}, this.user.companies[0]._id, false).then();
         this.category = {
           name: '',
           companyOwner: '',

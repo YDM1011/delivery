@@ -22,9 +22,7 @@ export class AuthService {
   private language = new BehaviorSubject<any>(null);
   public onLanguage = this.language.asObservable();
 
-  constructor(
-      private cookieService: CookieService
-  ) { }
+  constructor() { }
 
   setSettings(data) {
       this.settings.next(data);
@@ -46,7 +44,7 @@ export class AuthService {
   }
 
   isAuthAdmin() {
-    if (this.cookieService.get('userId') || localStorage.getItem('userId')) {
+    if (localStorage.getItem('userId')) {
       return true;
     } else {
       return false;

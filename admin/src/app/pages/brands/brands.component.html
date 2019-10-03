@@ -39,7 +39,7 @@
 				<div class="left">
 					<app-upload *ngIf="editObj.img == ''" (onFs)="onFsEdit($event)"></app-upload>
 					<div class="mat-chip-file" *ngIf="editObj && editObj.img !== ''">
-						<div class="content">{{editObj.img.split("--")[1]}}</div>
+						<div class="content">{{editObj.img}}</div>
 						<div class="remove-mat-chip" (click)="editObj.img = ''"></div>
 					</div>
 				</div>
@@ -62,6 +62,9 @@
 		</div>
 		<div class="main-section">
 			<div class="mat-elevation-z8">
+				<mat-form-field class="filter" *ngIf="showPagin">
+					<input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+				</mat-form-field>
 				<table mat-table [dataSource]="dataSource" *ngIf="brands && brands.length > 0">
 					<!-- Position Column -->
 					<ng-container matColumnDef="Номер">

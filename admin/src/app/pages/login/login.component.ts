@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import {CookieService} from "ngx-cookie-service";
 import {Router} from "@angular/router";
 import {CrudService} from "../../crud.service";
 import {AuthService} from "../../auth.service";
@@ -20,7 +19,6 @@ export class LoginComponent implements OnInit {
   constructor(
       private crud: CrudService,
       private auth: AuthService,
-      private cookieService: CookieService,
       private route: Router
   ) { }
 

@@ -42,10 +42,16 @@
 				<input matInput type="text" placeholder="Название продукта" name="name" [(ngModel)]="editObj.name" autocomplete="off">
 			</mat-form-field>
 			<mat-form-field class="example-full-width">
-				<input matInput type="text" placeholder="Опис продукта" name="des" [(ngModel)]="editObj.des" autocomplete="off">
+				<input matInput type="text" placeholder="Описание продукта" name="des" [(ngModel)]="editObj.des" autocomplete="off">
 			</mat-form-field>
 			<mat-form-field class="example-full-width">
-				<input matInput type="text" placeholder="Ціна" name="price" [(ngModel)]="editObj.price" autocomplete="off">
+				<input matInput type="text" placeholder="Цена" name="price" [(ngModel)]="editObj.price" autocomplete="off">
+			</mat-form-field>
+			<div class="check">
+				<mat-checkbox [(ngModel)]="showSale" name="saleChack">Включить скидку</mat-checkbox>
+			</div>
+			<mat-form-field class="example-full-width" *ngIf="showSale">
+				<input matInput type="text" placeholder="Цена со скидкой" name="priceSale" [(ngModel)]="editObj.discount" autocomplete="off">
 			</mat-form-field>
 			<div class="group-buttons">
 				<div class="left">
@@ -107,7 +113,6 @@
 							</div>
 						</td>
 					</ng-container>
-					
 					<ng-container matColumnDef="delete">
 						<th mat-header-cell *matHeaderCellDef></th>
 						<td class="right-section-table" mat-cell *matCellDef="let element; let index = index">

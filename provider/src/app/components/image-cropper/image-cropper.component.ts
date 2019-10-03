@@ -28,7 +28,7 @@ export class ImageCropperComponent implements OnInit, AfterViewInit {
   public constructor(
     private crud: CrudService
   ) {
-    this.imageDestination = "";
+    this.imageDestination = '';
   }
 
   public ngAfterViewInit() {
@@ -37,36 +37,32 @@ export class ImageCropperComponent implements OnInit, AfterViewInit {
       scalable: false,
       aspectRatio: 1,
       crop: () => {
-        const canvas = this.cropper.getCroppedCanvas();
-        this.imageDestination = canvas.toDataURL("image/png");
+        // const canvas = this.cropper.getCroppedCanvas();
+        // this.imageDestination = canvas.toDataURL("image/png");
       }
     });
   }
   rotete() {
-
     const canvas = this.cropper.rotate(90);
     // this.imageDestination = canvas.toDataURL("image/png");
   }
   getCropBoxData() {
-
     const canvas = this.cropper.getCropBoxData();
-    console.log(canvas)
+    console.log(canvas);
     // this.imageDestination = canvas.toDataURL("image/png");
   }
   getCanvasData() {
-
     const canvas = this.cropper.getCanvasData();
-    console.log(canvas)
+    console.log(canvas);
     // this.imageDestination = canvas.toDataURL("image/png");
   }
   getImageData() {
 
     const canvas = this.cropper.getImageData();
-    console.log(canvas)
+    console.log(canvas);
     // this.imageDestination = canvas.toDataURL("image/png");
   }
   getData() {
-
     const canvas = this.cropper.getData();
     console.log(canvas);
     const path = this.imageSource.split('/');
