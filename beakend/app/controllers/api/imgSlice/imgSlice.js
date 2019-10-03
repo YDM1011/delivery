@@ -6,30 +6,22 @@ imageToSlices.configure({
     }
 });
 module.exports = (backendApp, router) => {
-
     router.post('/imgSlice', [], (req,res,next) => {
         let fileName = req.body.fileName;
-        console.log(path.join(__dirname, '../../../../upload/'+fileName));
         req.body.xx.forEach((it,ind)=>{
-            req.body.xx[ind] = parseInt(it)
+            req.body.xx[ind] = parseInt(it);
            if (req.body.xx[ind] < 1) req.body.xx[ind] = 1
         });
         req.body.yy.forEach((it,ind)=>{
-            req.body.yy[ind] = parseInt(it)
+            req.body.yy[ind] = parseInt(it);
             if (req.body.yy[ind] < 1) req.body.yy[ind] = 1
         });
-        console.log(req.body.xx, req.body.yy)
 
         imageToSlices(path.join(__dirname, '../../../../upload/'+fileName),
             req.body.xx, req.body.yy,
             {
-                // saveToDir: path.join(__dirname, '../../../../upload/')
                 saveToDataUrl: true
             }, (v) => {
-                console.log('the source image has been sliced into 9 sections!');
-                // v[4].dataURI = convertation(v[4].dataURI.toString().split("base64,", ""));
-                //
-                // console.log(v[4].dataURI)
                 minification(fileName, v[4].dataURI, (err,info)=>{
                     res.ok('ok')
                 })
