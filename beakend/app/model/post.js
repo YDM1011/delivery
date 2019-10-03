@@ -27,7 +27,6 @@ const schema = new Schema({
     },
     createRestApi: true,
     strict: true,
-    needLogined: false,
     sa: [{public:true}],
 });
 

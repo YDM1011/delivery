@@ -68,7 +68,6 @@ const schem = new Schema({
     },
     createRestApi: true,
     strict: true,
-    needLogined: true,
     sa: {
         read: [{public:true}],
         update: [{public:true}],

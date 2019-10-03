@@ -49,6 +49,7 @@ const schem = new Schema({
     }],
     role: String, /** Client Provider Collaborator** Admin* **/
     verify: {type: Boolean, default: false},
+    banned: {type: Boolean, default: false},
     verifyCode: String,
     token: String,
     date: {type: Date, default: new Date()},
@@ -71,6 +72,7 @@ const schem = new Schema({
     },
     createRestApi: true,
     strict: true,
+    needLogined: true,
     sa: {
         read: [{public:true}],
         update: [{public:true}],

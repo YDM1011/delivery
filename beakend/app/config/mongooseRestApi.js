@@ -28,9 +28,10 @@ module.exports = backendApp => {
                 // preMiddleware: backendApp.middlewares.isLoggedIn,
                 preRead: [
                     // model.schema.options.needBeAdminR ? backendApp.middlewares.isAdmin :  nextS,
-                    modelOpt.needLogined || modelOpt.client ? backendApp.middlewares.isLoggedIn : backendApp.middlewares.checkLoggedIn,
+                    modelOpt.needLogined ? backendApp.middlewares.isLoggedIn : backendApp.middlewares.checkLoggedIn,
+                    modelOpt.needLogined ? isVerify(backendApp) : backendApp.middlewares.checkLoggedIn,
                     // modelOpt.needLogined || modelOpt.client ? canRead(modelOpt) : nextS,
-                    canRead(modelOpt),
+                    modelOpt.needLogined ? canRead(modelOpt) : nextS,
                     // model.schema.options.needAccessControl && !model.schema.options.needLogined && !model.schema.options.needBeAdmin ? backendApp.middlewares.isLoggedIn :  nextS,
                     // model.schema.options.needAccessControl && !model.schema.options.needBeAdmin ? backendApp.middlewares.checkAccessRights(modelName + '.canRead') :  nextS,
                     schemaPre.Read],
@@ -38,7 +39,7 @@ module.exports = backendApp => {
                     modelOpt.notCreate ? forbidden : nextS,
                     // model.schema.options.needBeAdminCUD ? backendApp.middlewares.isAdmin :  nextS,
                     backendApp.middlewares.isLoggedIn,
-                    isVerify,
+                    isVerify(backendApp),
                     // model.schema.options.needAccessControl ? backendApp.middlewares.checkAccessRights(modelName + '.canCreate') :  nextS,
                     schemaPre.Save],
                 postCreate: [update_ws, schemaPre.PostCreate],
@@ -47,6 +48,7 @@ module.exports = backendApp => {
                     // model.schema.options.needLogined ? backendApp.middlewares.isLoggedIn : nextS,
                     // model.schema.options.needAccessControl ? backendApp.middlewares.checkAccessRights(modelName + '.canUpdate') :  nextS,
                     backendApp.middlewares.isLoggedIn,
+                    isVerify(backendApp),
                     canUpdate(modelOpt),
                     schemaPre.Update],
                 postUpdate: [update_ws, schemaPre.PostUpdate],
@@ -56,6 +58,7 @@ module.exports = backendApp => {
                     // model.schema.options.needAccessControl && !model.schema.options.needLogined && !model.schema.options.needBeAdmin ? backendApp.middlewares.isLoggedIn :  nextS,
                     // model.schema.options.needAccessControl && !model.schema.options.needBeAdmin ? backendApp.middlewares.checkAccessRights(modelName + '.canDelete') :  nextS,
                     backendApp.middlewares.isLoggedIn,
+                    isVerify(backendApp),
                     canUpdate(modelOpt),
                     schemaPre.Delete],
                 postDelete: [update_ws, schemaPre.PostDelete],
@@ -78,6 +81,9 @@ const isVerify = backendApp => {
         if (req.user && req.user.verify) {
             next()
         } else {
+            if (req.user && req.user.banned){
+                res.forbidden("Profile is banned")
+            } else
             if (req.user && !req.user.verify) {
                 const signup = new backendApp.hooks.signupRole(req, res, req.user, backendApp);
                 signup.init()
@@ -124,7 +130,6 @@ const canRead = (options) => {
             console.log(req.erm.query['query'])
             if (req.error.success) {
                 if (req.erm.query['query'] === true) req.erm.query['query'] = {};
-                // console.log(req.erm.query)
                 return next()
             } else {
                 res.notFound("No one document")

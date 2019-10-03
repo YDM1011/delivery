@@ -35,6 +35,7 @@ const schem = new Schema({
     createRestApi: true,
     strict: true,
     notCreate: true,
+    needLogined: true,
     sa: {
         read: [{private:true}],
         update: [{private:true}],

@@ -38,6 +38,7 @@ const schema = new Schema({
         virtuals: true,
     },
     createRestApi: true,
+    needLogined: true,
     strict: true,
     sa: [{public:true}],
 });
