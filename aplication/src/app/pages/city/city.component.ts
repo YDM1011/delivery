@@ -1,16 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {AuthService} from "../../auth.service";
 import {CrudService} from "../../crud.service";
 import {Router} from "@angular/router";
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-city',
   templateUrl: './city.component.html',
   styleUrls: ['./city.component.scss']
 })
-export class CityComponent implements OnInit {
+export class CityComponent implements OnInit, OnDestroy {
   public language: string;
   public city;
+  private _subscription: Subscription;
   constructor(
       private auth: AuthService,
       private crud: CrudService,
@@ -19,7 +21,7 @@ export class CityComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.auth.onLanguage.subscribe((v: string) => {
+    this._subscription = this.auth.onLanguage.subscribe((v: string) => {
       this.language = v;
     });
     this.init();
@@ -36,5 +38,7 @@ export class CityComponent implements OnInit {
     this.auth.setCity(this.city[index]);
     this.router.navigate(['/' + this.language])
   }
-
+  ngOnDestroy() {
+    this._subscription.unsubscribe();
+  }
 }

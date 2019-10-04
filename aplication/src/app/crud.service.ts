@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import {environment} from '../environments/environment';
 import { City, Category, Brands } from './db';
+import {AuthService} from "./auth.service";
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +10,9 @@ import { City, Category, Brands } from './db';
 export class CrudService {
     private api = environment.host;
     private domain = environment.domain;
-    constructor( private http: HttpClient ) { }
+
+
+    constructor( private http: HttpClient, private auth: AuthService) { }
 
     get(api, id = null, any = null) {
         return new Promise((resolve, reject) => {
@@ -74,32 +77,91 @@ export class CrudService {
         return arr;
     }
 
-    getCategory(city) {
+    getCompany(city){
+      return new Promise((resolve, reject) => {
+        const query = `?query={"city":"${city._id}"}&select=_id`;
+        this.get('company', '', query).then((v:any)=>{
+          if (v) {
+            let arr = [];
+            v.map(it => arr.push({companyOwner: it._id}));
+            this.auth.setCompanyCity(arr);
+            resolve(arr)
+          } else {
+            reject()
+          }
+        });
+        // resolve(Category);
+      });
+    }
+
+    getCategory(company = null) {
         return new Promise((resolve, reject) => {
           const populate = '&populate='+JSON.stringify({path:'mainCategory'});
-          this.get('category', '', '?select=name,mainCategory'+populate).then((v:any)=>{
+          const select = '&select=name,mainCategory';
+          const query = `?query={"$or":${JSON.stringify(company)}}`;
+          if (company.length > 0) {
+            this.get('category', '', query+select+populate).then((v: any) => {
+              if (v) {
+                const defIcon = './assets/angular.png';
+                let triger = {};
+                let arr = [];
+                v.forEach(it => {
+                  if (it.mainCategory){
+                    if (triger[it.mainCategory._id]) return;
+                    it["img"] =  `${this.domain}/upload/${it.mainCategory.img}` || defIcon;
+                    it["name"] = `${it.mainCategory.name}`;
+                    arr.push(it)
+                    triger[it.mainCategory._id] = true;
+                  }
+
+                });
+                resolve(arr)
+              } else {
+                reject()
+              }
+            });
+          } else {
+
+            resolve([])
+          }
+        });
+    }
+
+    getCity() {
+        return new Promise((resolve, reject) => {
+          this.get('city', '', '').then((v:any)=>{
             if (v) {
-              const defIcon = './assets/angular.png';
               v.map(it=>{
-                it["img"] = it.mainCategory ? `${this.domain}/upload/${it.mainCategory.img}` || defIcon : defIcon;
+                it["img"] = it.img ? `${this.domain}/upload/${it.img}` : null;
               });
               resolve(v)
             } else {
               reject()
             }
           });
-            // resolve(Category);
         });
     }
+    getBrands(company) {
+      return new Promise((resolve, reject) => {
+        // const populate = '&populate='+JSON.stringify({path:'mainCategory'});
+        // const select = '&select=name,mainCategory';
+        const query = `?query={"$or":${JSON.stringify(company)}}`;
+        if (company.length > 0) {
+          this.get('brands', '').then((v: any) => {
+            if (v) {
+              const defIcon = './assets/angular.png';
+              v.map(it => {
+                it["img"] = it.img ? `${this.domain}/upload/${it.img}` || defIcon : defIcon;
+              });
+              resolve(v)
+            } else {
+              reject()
+            }
+          });
+        } else {
 
-    getCity() {
-        return new Promise((resolve, reject) => {
-            resolve(City);
-        });
-    }
-    getBrands() {
-        return new Promise((resolve, reject) => {
-            resolve(Brands);
-        });
+          resolve([])
+        }
+      });
     }
 }

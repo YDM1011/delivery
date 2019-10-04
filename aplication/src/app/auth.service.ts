@@ -10,6 +10,9 @@ export class AuthService {
   private settings = new BehaviorSubject<any>(null);
   public onSettings = this.settings.asObservable();
 
+  private company = new BehaviorSubject<any>(null);
+  public onCompany = this.company.asObservable();
+
   private city = new BehaviorSubject<any>(null);
   public onCity = this.city.asObservable();
 
@@ -62,6 +65,10 @@ export class AuthService {
     } else {
       return false;
     }
+  }
+
+  setCompanyCity(arr){
+    this.company.next(arr);
   }
 
 

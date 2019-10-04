@@ -1,15 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {AuthService} from "../../auth.service";
 import {WS} from "../../websocket/websocket.events";
 import {WebsocketService} from "../../websocket";
 import {CrudService} from "../../crud.service";
+import {Subscription} from "rxjs";
 @Component({
   selector: 'app-index',
   templateUrl: './index.component.html',
   styleUrls: ['./index.component.scss']
 })
-export class IndexComponent implements OnInit {
+export class IndexComponent implements OnInit, OnDestroy {
   public notification$: any;
+  public companyArr: any;
   public language: string;
   public curentCity = {};
   public category = [];
@@ -22,6 +24,7 @@ export class IndexComponent implements OnInit {
     category: false,
     brand: false
   };
+  private _subscription: Subscription[] = [];
   constructor(
       private auth: AuthService,
       private wsService:WebsocketService,
@@ -29,15 +32,21 @@ export class IndexComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.auth.onLanguage.subscribe((v: string) => {
+    this._subscription.push(this.auth.onLanguage.subscribe((v: string) => {
       this.language = v;
-    });
-    this.auth.onCity.subscribe((v:any) => {
+    }));
+    this._subscription.push(this.auth.onCity.subscribe((v:any) => {
       if (v) {
+        this.crud.getCompany(v);
         this.curentCity = v;
+      }
+    }));
+    this._subscription.push(this.auth.onCompany.subscribe((v:any)=>{
+      if (v) {
+        this.companyArr = v;
         this.init();
       }
-    });
+    }));
     this.carentPhoto = `url(${this.images[0]})`;
 
     // this.wsService.send(WS.SEND.NOTIFICATION, 'admin1',  { data: 'test sf' });
@@ -59,12 +68,12 @@ export class IndexComponent implements OnInit {
   }
 
   async init() {
-    await this.crud.getCategory(this.curentCity).then((v: any) => {
+    await this.crud.getCategory(this.companyArr).then((v: any) => {
       if (!v) return;
       this.category = v;
       this.loaded.category = true;
     }).catch(e=> { this.loaded.category = true });
-    await this.crud.getBrands().then((v: any) => {
+    await this.crud.getBrands(this.companyArr).then((v: any) => {
       if (!v) return;
       this.brandy = v;
       this.loaded.brand = true
@@ -72,5 +81,8 @@ export class IndexComponent implements OnInit {
   }
   changeCar(e) {
     this.carentPhoto = `url(${e})`;
+  }
+  ngOnDestroy() {
+    this._subscription.forEach(it=>it.unsubscribe());
   }
 }
