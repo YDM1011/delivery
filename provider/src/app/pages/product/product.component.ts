@@ -53,14 +53,16 @@ export class ProductComponent implements OnInit {
       if (!v) { return; }
       this.user = v;
       this.categorys = v.companies[0].categories;
-      this.mainCategoryChoose = this.categorys[0]._id;
-      this.dataSource = new MatTableDataSource(this.categorys);
-      setTimeout(() => this.dataSource.paginator = this.paginator);
-      this.chackDataLength();
-      this.crud.get('brand').then((b: any) => {
-        if (!b) {return; }
-        this.brands = b;
-      });
+      if (this.categorys && this.categorys.length > 0) {
+        this.mainCategoryChoose = this.categorys[0]._id;
+        this.dataSource = new MatTableDataSource(this.categorys);
+        setTimeout(() => this.dataSource.paginator = this.paginator);
+        this.chackDataLength();
+      }
+    });
+    this.crud.get('brand').then((b: any) => {
+      if (!b) {return; }
+      this.brands = b;
     });
   }
 

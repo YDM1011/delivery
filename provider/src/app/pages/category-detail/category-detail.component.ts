@@ -12,6 +12,7 @@ import {ActivatedRoute} from '@angular/router';
 })
 export class CategoryDetailComponent implements OnInit {
   public id = null;
+  public user: any;
   public categoryID;
   public defLang = 'ru-UA';
   public showPagin = false;
@@ -23,7 +24,6 @@ export class CategoryDetailComponent implements OnInit {
   public uploadObj = {};
   public editObjCopy;
   public editObj = {
-    _id: '',
     name: '',
     des: '',
     img: '',
@@ -52,6 +52,10 @@ export class CategoryDetailComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.auth.onMe.subscribe((u: any) => {
+      if (!u) {return; }
+      this.user = u;
+    });
     this.route.params.subscribe(() => {
       this.id = this.route.snapshot.paramMap.get('id');
       if (this.id) {
@@ -71,9 +75,10 @@ export class CategoryDetailComponent implements OnInit {
     if (this.validation('product')) {
       this.crud.post('upload2', {body: this.uploadObj}, null, false).then((v: any) => {
         if (v) {
+          this.addShow = false;
           this.product['img'] = v.file;
           this.product.categoryOwner = this.id;
-          this.product.companyOwner = this.id;
+          this.product.companyOwner = this.user.companies[0]._id;
           this.crud.post('order', this.product).then((v: any) => {
             if (v) {
               this.products.unshift(v);
@@ -90,7 +95,6 @@ export class CategoryDetailComponent implements OnInit {
                 companyOwner: '',
                 categoryOwner: '',
               };
-              this.addShow = false;
             }
           }).catch((error) => {
             if (error && error.error.errors.price.name === 'CastError') {
@@ -111,10 +115,6 @@ export class CategoryDetailComponent implements OnInit {
         this.checkDataLength();
       }
     });
-    this.products.splice(i, 1);
-    this.dataSource = new MatTableDataSource(this.products);
-    setTimeout(() => this.dataSource.paginator = this.paginator);
-    this.checkDataLength();
   }
   edit(i) {
     this.editObj = Object.assign({}, this.products[i]);
@@ -125,16 +125,17 @@ export class CategoryDetailComponent implements OnInit {
     this.addShow = false;
     this.editShow = true;
   }
-  confirmEditCategoryCrud() {
+  confirmEditCategoryCrud(e) {
+    e.preventDefault();
     if (this.validation('editObj')) {
       if (!this.showSale) {
         this.editObj.discount = null;
       }
       if (this.editObj.img === this.editObjCopy.img) {
-        this.crud.post('order', this.editObj, this.editObj._id).then((v: any) => {
+        this.crud.post('order', this.editObj, this.editObj['_id']).then((v: any) => {
           if (v) {
             this.editShow = false;
-            this.products[this.crud.find('_id', this.editObj._id, this.products)] = v;
+            this.products[this.crud.find('_id', this.editObj['_id'], this.products)] = v;
             this.dataSource = new MatTableDataSource(this.products);
             setTimeout(() => this.dataSource.paginator = this.paginator);
             this.checkDataLength();
@@ -159,10 +160,10 @@ export class CategoryDetailComponent implements OnInit {
         this.crud.post('upload2', {body: this.uploadObj}).then((u: any) => {
           if (u) {
             this.editObj.img = u.file;
-            this.crud.post('order', this.editObj, this.editObj._id).then((v: any) => {
+            this.crud.post('order', this.editObj, this.editObj['_id']).then((v: any) => {
               if (v) {
                 this.editShow = false;
-                this.products[this.crud.find('_id', this.editObj._id, this.products)] = v;
+                this.products[this.crud.find('_id', this.editObj['_id'], this.products)] = v;
                 this.dataSource = new MatTableDataSource(this.products);
                 setTimeout(() => this.dataSource.paginator = this.paginator);
                 this.checkDataLength();
@@ -208,6 +209,10 @@ export class CategoryDetailComponent implements OnInit {
   onFs(e) {
     this.uploadObj = e;
     this.product.img = e.name;
+  }
+  onFsEdit(e) {
+    this.uploadObj = e;
+    this.editObj.img = e.name;
     this.formCheck();
   }
   openAdd() {
@@ -230,7 +235,6 @@ export class CategoryDetailComponent implements OnInit {
     this.editShow = false;
     this.isBlok = false;
     this.editObj = {
-      _id: '',
       name: '',
       des: '',
       img: '',

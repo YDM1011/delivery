@@ -15,22 +15,22 @@ export class MainComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.auth.onMe.subscribe((v: any) => {
-      if (!v) {
-        if (!localStorage.getItem('userId')) { return; }
-        const userId = localStorage.getItem('userId');
-        const query = JSON.stringify({_id: userId});
-        const populate = JSON.stringify(
-            {'path': 'companies', 'populate': ['collaborators', 'debtors', 'categories']}
-            );
-        this.crud.get(`client?query=${query}&populate=${populate}`)
-            .then((v2: any) => {
+    if (!localStorage.getItem('userId')) { return; }
+    const userId = localStorage.getItem('userId');
+    const query = JSON.stringify({_id: userId});
+    const populate = JSON.stringify(
+        {'path': 'companies', 'populate': ['action', 'collaborators', 'debtors', 'categories']}
+    );
+    this.crud.get(`client?query=${query}&populate=${populate}`)
+        .then((v2: any) => {
           if (!v2) {return; }
           this.auth.setMe(v2[0]);
           console.log(v2[0]);
         });
+    this.auth.onMe.subscribe((v: any) => {
+      if (v) {
+        this.user = v;
       }
-      this.user = v;
     });
   }
 }

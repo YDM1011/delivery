@@ -81,13 +81,27 @@ const schema = new Schema({
             ]
         }],
         create: [{private:true}],
-        delete: [{private:true}],
+        delete: [{
+            model:'Company',
+            _id: 'companyOwner',
+            canBeId: [
+                {type:'refObj', fieldName: 'createdBy'},
+                {type:'array', fieldName: 'collaborators'}
+            ]
+        }],
     },
     collaborator: {
         read: [{public:true}],
         update: [{private:true}],
         create: [{private:true}],
-        delete: [{private:true}],
+        delete: [{
+            model:'Company',
+            _id: 'companyOwner',
+            canBeId: [
+                {type:'refObj', fieldName: 'createdBy'},
+                {type:'array', fieldName: 'collaborators'}
+            ]
+        }],
     },
 });
 

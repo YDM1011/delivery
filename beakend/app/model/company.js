@@ -32,6 +32,11 @@ const schem = new Schema({
         type: Schema.Types.ObjectId,
         ref: "Category"
     }],
+    action: [{
+        type: Schema.Types.ObjectId,
+        ref: "Action",
+        default: null
+    }],
     city: {
         type: Schema.Types.ObjectId,
         ref: "City",

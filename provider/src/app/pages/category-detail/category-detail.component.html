@@ -37,7 +37,7 @@
 				Редактировать продукт
 			</div>
 		</div>
-		<form (keyup)="formCheck()" (submit)="confirmEditCategoryCrud()" class="edit-section" *ngIf="editShow">
+		<form (keyup)="formCheck()" (submit)="confirmEditCategoryCrud($event)" class="edit-section" *ngIf="editShow">
 			<mat-form-field class="example-full-width">
 				<input matInput type="text" placeholder="Название продукта" name="name" [(ngModel)]="editObj.name" autocomplete="off">
 			</mat-form-field>
@@ -55,7 +55,7 @@
 			</mat-form-field>
 			<div class="group-buttons">
 				<div class="left">
-					<app-upload (onFs)="onFs($event)" *ngIf="editObj && editObj.img === ''"></app-upload>
+					<app-upload (onFs)="onFsEdit($event)" *ngIf="editObj && editObj.img === ''"></app-upload>
 					<div class="mat-chip-file" *ngIf="editObj && editObj.img !== ''">
 						<div class="content">{{editObj.img.split("--")[1]}}</div>
 						<div class="remove-mat-chip" (click)="editObj.img = ''; formCheck()"></div>

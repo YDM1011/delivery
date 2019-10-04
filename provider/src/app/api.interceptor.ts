@@ -2,25 +2,30 @@ import {Injectable} from '@angular/core';
 import {HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {tap} from 'rxjs/internal/operators/tap';
-import {CookieService} from "ngx-cookie-service";
 
 @Injectable()
 export class ApiInterceptor implements HttpInterceptor {
     public localStorage = localStorage ;
-    constructor(
-        private cookieService: CookieService
-    ) { }
+    public obj: any;
+    constructor() { }
 
     // intercept request and add token
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         // modify request
-        request = request.clone({
-            setHeaders: {
-                Authorization: (this.localStorage.getItem('token') ||
-                    this.cookieService.get('token'))
-            },
-            withCredentials: true
-        });
+        if (this.localStorage.getItem('token')) {
+            this.obj = {
+                setHeaders: {
+                    Authorization: this.localStorage.getItem('token')
+                },
+                withCredentials: true
+            };
+        } else {
+            this.obj = {
+                setHeaders: {},
+                withCredentials: true
+            };
+        }
+        request = request.clone(this.obj);
         return next.handle(request)
             .pipe(
                 tap(event => {

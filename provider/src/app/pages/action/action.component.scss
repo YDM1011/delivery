@@ -1,0 +1,90 @@
+table {
+  width: 100%;
+}
+
+.paginator-table{
+  display: none;
+}
+
+.paginator-table-active{
+  display: block;
+}
+.no-content{
+  p{
+
+  }
+  button{
+    margin: 20px 0 50px auto;
+  }
+}
+.right-section-table {
+  padding: 19px 0 !important;
+}
+.chips-box{
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  margin: 15px 0 25px;
+  .chip-item{
+    position: relative;
+    padding-right: 30px;
+    min-width: 65px;
+    width: max-content;
+    .remove{
+      position: absolute;
+      right: 4px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: #e0e0e0;
+      padding: 3px;
+      cursor: pointer;
+    }
+    &:hover{
+      .remove{
+        background: rgba(0,0,0,.7);
+      }
+    }
+  }
+}
+.block-check{
+  display: flex;
+  align-items: center;
+  margin: 15px 0;
+  .check-item{
+    &:nth-of-type(1){
+      margin-right: 25px;
+    }
+  }
+}
+.filter{
+  width: 100%;
+}
+
+.example-full-width {
+  width: 100%;
+}
+
+::ng-deep .mat-focused .mat-form-field-label {
+  /*change color of label*/
+  color: #009688 !important;
+}
+
+::ng-deep.mat-form-field-underline {
+  /*change color of underline*/
+  background-color: #DFE0EB !important;
+}
+
+::ng-deep.mat-form-field-ripple {
+  /*change color of underline when focused*/
+  background-color: #009688 !important;;
+}
+::ng-deep .mat-checkbox .mat-checkbox-frame {
+  border-color: #009688!important;
+}
+
+::ng-deep .mat-checkbox-checked .mat-checkbox-background {
+  background-color: #009688 !important;
+}

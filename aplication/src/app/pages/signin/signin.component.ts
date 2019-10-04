@@ -18,15 +18,14 @@ export class SigninComponent implements OnInit {
   ngOnInit() {
     this.auth.onLanguage.subscribe((v: string) => {
       this.language = v;
-    })
+    });
   }
 
-  signin(){
+  signin() {
     localStorage.setItem('userId', '3');
-    this.router.navigate(['/'+this.language])
+    this.router.navigate(['/' + this.language]);
   }
   phoneOutput(e) {
     this.phone = e.value;
-    console.log(this.phone)
   }
 }

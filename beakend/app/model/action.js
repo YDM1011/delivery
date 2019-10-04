@@ -20,8 +20,9 @@ const schem = new Schema({
         type: Schema.Types.ObjectId,
         ref: "Order"
     }],
+    actionGlobal: {type: Boolean, default: true},
     updatedAt: {type: Date},
-    data: {type: Date, default: new Date()}
+    date: {type: Date, default: new Date()}
 },{
     toJSON: {
         transform: function (doc, ret) {
@@ -38,7 +39,58 @@ const schem = new Schema({
     },
     createRestApi: true,
     strict: true,
-
+    sa: {
+        read: [{public:true}],
+        update: [{public:true}],
+        create: [{public:true}],
+        delete: [{public:true}],
+    },
+    client: {
+        read: [{public:true}],
+        update: [{private:true}],
+        create: [{private:true}],
+        delete: [{private:true}],
+    },
+    provider: {
+        read: [{
+            model:'Company',
+            _id: 'companyOwner',
+            canBeId: [
+                {type:'refObj', fieldName: 'createdBy'},
+                {type:'array', fieldName: 'collaborators'}
+            ]
+        }],
+        update: [{
+            model:'Company',
+            _id: 'companyOwner',
+            canBeId: [
+                {type:'refObj', fieldName: 'createdBy'},
+                {type:'array', fieldName: 'collaborators'}
+            ]
+        }],
+        create: [{private:true}],
+        delete: [{
+            model:'Company',
+            _id: 'companyOwner',
+            canBeId: [
+                {type:'refObj', fieldName: 'createdBy'},
+                {type:'array', fieldName: 'collaborators'}
+            ]
+        }],
+    },
+    collaborator: {
+        read: [{public:true}],
+        update: [{private:true}],
+        create: [{private:true}],
+        delete: [{
+            model:'Company',
+            _id: 'companyOwner',
+            canBeId: [
+                {type:'refObj', fieldName: 'createdBy'},
+                {type:'array', fieldName: 'collaborators'}
+            ]
+        }],
+    },
 });
 
 mongoose.model('Action', schem);
