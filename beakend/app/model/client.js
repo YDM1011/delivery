@@ -86,6 +86,12 @@ const schem = new Schema({
         delete: [{private:true}],
     },
     provider: {
+        read: [{public:true}],
+        update: [{private:true}],
+        create: [{private:true}],
+        delete: [{private:true}],
+    },
+    collaborator: {
         read: [{
             model:'Company',
             _id: 'companyOwner',
@@ -100,12 +106,6 @@ const schem = new Schema({
                 {type:'refObj', fieldName: '_id'}
             ]
         }],
-        update: [{private:true}],
-        create: [{private:true}],
-        delete: [{private:true}],
-    },
-    collaborator: {
-        read: [{public:true}],
         update: [{private:true}],
         create: [{private:true}],
         delete: [{private:true}],

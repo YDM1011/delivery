@@ -97,7 +97,6 @@ const isVerify = backendApp => {
 const canRead = (options) => {
     return (req,res,next)=>{
         const objPromise = checkOwner(req,res,next,options);
-        console.log("objPromise", typeof objPromise)
         Promise.all(objPromise).then(query => {
             let opt;
             query.some(it => {
