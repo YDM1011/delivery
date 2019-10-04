@@ -12,6 +12,13 @@
     }
   }
 }
+.city{
+  display: flex;
+  align-items: center;
+  button{
+    margin-left: 50px;
+  }
+}
 .error{
   color: red;
   font-size: 11px;

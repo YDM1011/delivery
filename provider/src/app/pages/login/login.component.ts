@@ -24,7 +24,8 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
   }
-  signIn() {
+  signIn(e) {
+    e.preventDefault();
     if (this.obj.login === '') {
       this.error['text'] = 'Номер телефона введен не верно';
       return;
