@@ -18,6 +18,7 @@ import {ListAdminsComponent} from "./pages/list-admins/list-admins.component";
 const routes: Routes = [
   {path: '', component: MainComponent, canActivate: [AdminLoginedGuard], children: [
       {path: '', component: DashboardComponent},
+      {path: 'dashboard', component: DashboardComponent},
       {path: 'settings', component: SettingsComponent},
       {path: 'city', component: CityComponent},
       {path: 'translate', component: TranslateComponent},

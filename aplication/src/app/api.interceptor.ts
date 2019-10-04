@@ -6,7 +6,7 @@ import {tap} from 'rxjs/internal/operators/tap';
 @Injectable()
 export class ApiInterceptor implements HttpInterceptor {
     public localStorage = localStorage ;
-    public obj:any ;
+    public obj: any;
     constructor(
     ) { }
 
@@ -19,12 +19,12 @@ export class ApiInterceptor implements HttpInterceptor {
               Authorization: this.localStorage.getItem('token')
             },
             withCredentials: true
-          }
+          };
         } else {
           this.obj = {
             setHeaders: {},
             withCredentials: true
-          }
+          };
         }
         request = request.clone(this.obj);
         return next.handle(request)
