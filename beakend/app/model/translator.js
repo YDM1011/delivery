@@ -48,12 +48,12 @@ const schema = new Schema({
         delete: [{private:true}],
     },
 });
-
-schema.post('find', (doc,next)=>{
-   console.log(doc);
-
-   next()
-});
+//
+// schema.post('find', (doc,next)=>{
+//    console.log(doc);
+//
+//    next()
+// });
 
 mongoose.model('Translator', schema);
 

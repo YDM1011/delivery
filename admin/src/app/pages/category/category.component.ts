@@ -14,12 +14,14 @@ export class CategoryComponent implements OnInit, AfterViewInit {
   public addShow: boolean = false;
   public editShow: boolean = false;
   public categorys = [];
+  public uploadObj;
   public page = {pageSize:5,pageIndex:0};
   public editObj = {
     name: '',
   };
   public category = {
-    name: ''
+    name: '',
+    img: ''
   };
 
   displayedColumns: string[] = ['Номер', 'Назва бренда', 'data', 'delete'];
@@ -41,7 +43,11 @@ export class CategoryComponent implements OnInit, AfterViewInit {
       this.chackDataLength();
     }).catch( e => console.log(e));
   }
+  onFs(e) {
+    this.uploadObj = e;
+    this.category.img = e.name;
 
+  }
   create() {
     if (this.category.name === '') {
       Swal.fire('Error', 'Название категории не может быть пустым', 'error');
@@ -54,10 +60,29 @@ export class CategoryComponent implements OnInit, AfterViewInit {
         setTimeout(() => this.dataSource.paginator = this.paginator);
         this.chackDataLength();
         this.category = {
-          name: ''
+          name: '',
+          img:''
         };
         this.addShow = false;
       }
+    }).catch( e => console.log(e));
+
+    this.crud.post('upload2', {body: this.uploadObj}, null, false).then((v: any) => {
+      if (!v) return;
+      this.category['img'] = v.file;
+      this.crud.post('mainCategory', this.category).then((v: any) => {
+        if (v) {
+          this.categorys.push(v);
+          this.dataSource = new MatTableDataSource(this.categorys);
+          setTimeout(() => this.dataSource.paginator = this.paginator);
+          this.chackDataLength();
+          this.category = {
+            name: '',
+            img:''
+          };
+          this.addShow = false;
+        }
+      }).catch( e => console.log(e));
     }).catch( e => console.log(e));
   }
 
@@ -84,18 +109,24 @@ export class CategoryComponent implements OnInit, AfterViewInit {
       Swal.fire('Error', 'Название категории не может быть пустым', 'error');
       return;
     }
-    this.crud.post('mainCategory', {name: this.editObj['name']}, id).then((v: any) => {
-      if (v) {
-        this.editShow = false;
-        this.categorys[this.crud.find('_id', this.editObj['_id'], this.categorys)] = v;
-        this.dataSource = new MatTableDataSource(this.categorys);
-        setTimeout(() => this.dataSource.paginator = this.paginator);
-        this.chackDataLength();
-        this.editObj = {
-          name: ''
-        };
-      }
+    this.crud.post('upload2', {body: this.uploadObj}, null, false).then((v: any) => {
+      if (!v) return;
+      this.category['img'] = v.file;
+      this.category['name'] =  this.editObj['name'];
+      this.crud.post('mainCategory', this.category, id).then((v: any) => {
+        if (v) {
+          this.editShow = false;
+          this.categorys[this.crud.find('_id', this.editObj['_id'], this.categorys)] = v;
+          this.dataSource = new MatTableDataSource(this.categorys);
+          setTimeout(() => this.dataSource.paginator = this.paginator);
+          this.chackDataLength();
+          this.editObj = {
+            name: ''
+          };
+        }
+      }).catch( e => console.log(e));
     }).catch( e => console.log(e));
+
   }
   openAdd() {
     this.addShow = true;
@@ -104,7 +135,8 @@ export class CategoryComponent implements OnInit, AfterViewInit {
   cancelAdd() {
     this.addShow = false;
     this.category = {
-      name: ''
+      name: '',
+      img: ''
     };
   }
   cancelEdit() {

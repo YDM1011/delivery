@@ -24,7 +24,7 @@ module.exports = backendApp => {
                 lean: false,
                 findOneAndUpdate: true,
                 findOneAndRemove: true,
-                // postRead: [update_ws, schemaPre.PostRead],
+                postRead: [schemaPre.PostRead],
                 // preMiddleware: backendApp.middlewares.isLoggedIn,
                 preRead: [
                     // model.schema.options.needBeAdminR ? backendApp.middlewares.isAdmin :  nextS,
@@ -146,11 +146,11 @@ const canUpdate = (options) => {
             opt = query.some(it => {
                 if (it) return it
             });
-
+            console.log()
             if (opt || req.error.success) {
                 return next()
             } else {
-                res.notFound("No one document")
+                res.notFound("No one document1")
             }
 
         }).catch(e=>{console.log(e); res.badRequest(e)});
@@ -206,6 +206,7 @@ const checkOwnerPost = (req,res,next,options) => {
     let query = {$or: [{'createdBy.itemId': req.user._id},
             {createdBy: req.user._id},
             {_id: req.user._id}]};
+
     objPromise.push( new Promise((rs,rj)=> {
         if (!options[role] || !options[role].update) {
             rs(false);
@@ -225,11 +226,15 @@ const checkOwnerPost = (req,res,next,options) => {
             } else {
                 req.erm.query['query'] = query;
             }
-            if (!req.erm.query.query) return rs(false);
+            console.log(req.erm.query.query)
+            if (!req.erm.query.query) { return rs(false); }
             mongoose.model(model).findOne(req.erm.query.query).exec((e,r)=>{
                 if (e) return rj(e);
                 if (!r) return rs(false);
-                if (r) return rs(true)
+                if (r) {
+                    req.error.success = true;
+                    return rs(true)
+                }
             })
         }
     }));

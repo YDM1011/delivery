@@ -42,6 +42,7 @@ const tryAsAdmin = (req,res,next) => {
             if (!req.user) return res.serverError("Token error");
             return next()
         }else{
+            console.log(data)
             Admin.findOne({login: data.login })
                 .exec((err, infoA)=>{
                     if (err) return next(err);

@@ -3,7 +3,6 @@ const Schema = mongoose.Schema;
 
 const schem = new Schema({
     name: {type: String, unique: true, required: [true, "Category Name is required and unique"]},
-    icon: {type: String},
     orders: [{
         type: Schema.Types.ObjectId,
         ref: "Order"

@@ -8,6 +8,7 @@ import { City, Category, Brands } from './db';
 })
 export class CrudService {
     private api = environment.host;
+    private domain = environment.domain;
     constructor( private http: HttpClient ) { }
 
     get(api, id = null, any = null) {
@@ -73,9 +74,21 @@ export class CrudService {
         return arr;
     }
 
-    getCategory() {
+    getCategory(city) {
         return new Promise((resolve, reject) => {
-            resolve(Category);
+          const populate = '&populate='+JSON.stringify({path:'mainCategory'});
+          this.get('category', '', '?select=name,mainCategory'+populate).then((v:any)=>{
+            if (v) {
+              const defIcon = './assets/angular.png';
+              v.map(it=>{
+                it["img"] = it.mainCategory ? `${this.domain}/upload/${it.mainCategory.img}` || defIcon : defIcon;
+              });
+              resolve(v)
+            } else {
+              reject()
+            }
+          });
+            // resolve(Category);
         });
     }
 

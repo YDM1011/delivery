@@ -12,7 +12,7 @@ import {SwPush} from "@angular/service-worker";
 export class AppComponent {
   title = 'delivery';
   public setting: any;
-  public loaded = true;
+  public loaded = false;
   public isEnabled = this.swPush.isEnabled;
   public isGranted = Notification.permission === 'granted';
 
@@ -28,6 +28,9 @@ export class AppComponent {
         this.crud.get('setting').then((v: any) => {
           this.setting = Object.assign({}, v);
           this.auth.setSettings(this.setting);
+          if (this.setting.city){
+            this.auth.setCity(this.setting.city);
+          }
           this.loaded = true;
         });
       }

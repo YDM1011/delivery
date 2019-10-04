@@ -11,13 +11,17 @@ import {CrudService} from "../../crud.service";
 export class IndexComponent implements OnInit {
   public notification$: any;
   public language: string;
-  public curentCity = null;
+  public curentCity = {};
   public category = [];
   public brandy = [];
   public toggleMain: boolean = true;
   public images = [`./assets/images/tmp/img-deli.png`, `./assets/images/tmp/img-product.png`, `./assets/images/tmp/img-deli.png`];
   public carentPhoto;
   public number: number = 0;
+  public loaded = {
+    category: false,
+    brand: false
+  };
   constructor(
       private auth: AuthService,
       private wsService:WebsocketService,
@@ -31,6 +35,7 @@ export class IndexComponent implements OnInit {
     this.auth.onCity.subscribe((v:any) => {
       if (v) {
         this.curentCity = v;
+        this.init();
       }
     });
     this.carentPhoto = `url(${this.images[0]})`;
@@ -42,7 +47,7 @@ export class IndexComponent implements OnInit {
       this.playAudio();
     });
 
-    this.init();
+
   }
 
   playAudio() {
@@ -54,14 +59,16 @@ export class IndexComponent implements OnInit {
   }
 
   async init() {
-    await this.crud.getCategory().then((v: any) => {
+    await this.crud.getCategory(this.curentCity).then((v: any) => {
       if (!v) return;
       this.category = v;
-    });
+      this.loaded.category = true;
+    }).catch(e=> { this.loaded.category = true });
     await this.crud.getBrands().then((v: any) => {
       if (!v) return;
       this.brandy = v;
-    });
+      this.loaded.brand = true
+    }).catch(e=> { this.loaded.brand = true });
   }
   changeCar(e) {
     this.carentPhoto = `url(${e})`;

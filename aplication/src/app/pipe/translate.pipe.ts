@@ -33,6 +33,7 @@ export class TranslatePipe implements PipeTransform {
     return this.translate();
   }
   translate() {
+    console.log(this.obj);
     if (!this.obj[String(this.value)]) return this.newWord(this.value);
     if (this.obj[String(this.value)] && this.obj[String(this.value)][this.lang]) {
       return this.obj[String(this.value)][this.lang];
