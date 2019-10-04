@@ -44,6 +44,7 @@ module.exports.preRead = async (req,res,next, backendApp) => {
     const Setting = backendApp.mongoose.model('Setting');
     // await isLoggedIn(req,res,backendApp);
     Setting.findOne({})
+        .populate({path: "city", select:"img name"})
         .exec((e,r)=>{
             if (e) return res.serverError(e);
             if (!r) return res.badRequest('Not valid setting');

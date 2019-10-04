@@ -15,9 +15,6 @@
 				</button>
 			</div>
 			<div class="main-section">
-				<div class="city" *ngIf="setting && setting.city">
-					{{setting.city.name}}
-				</div>
 				<div class="add-city" *ngIf="showAddCity && city.length>0">
 					<select [(ngModel)]="cityChoose">
 						<option *ngFor="let item of city" [value]="item._id">{{item.name}}</option>
@@ -30,6 +27,10 @@
 							<button class="main-button-color" (click)="confirmCity()">Сохранить</button>
 						</div>
 					</div>
+				</div>
+				<div class="city" *ngIf="setting && setting.city">
+					{{setting.city.name}}
+					<button class="main-button-color" (click)="showAddCity = true;">Изменить город</button>
 				</div>
 			</div>
 		</div>

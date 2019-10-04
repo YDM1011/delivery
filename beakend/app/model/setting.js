@@ -2,14 +2,13 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const schema = new Schema({
-    createdBy: {itemId:{
+    createdBy: {
         type: Schema.Types.ObjectId,
         ref: "Client"
-    }},
+    },
     city: {
         type: Schema.Types.ObjectId,
-        ref: "City",
-        default: null
+        ref: "City"
     },
     isAppBlock: Boolean,
     percentage: Number,
