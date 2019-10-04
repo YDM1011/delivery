@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {AuthService} from '../../auth.service';
-import {CrudService} from "../../crud.service";
-import Swal from "sweetalert2";
+import {CrudService} from '../../crud.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-settings',
@@ -10,7 +10,11 @@ import Swal from "sweetalert2";
 })
 export class SettingsComponent implements OnInit {
   public user;
+  public setting;
+  public cityChoose;
+  public city = [];
   public loaded = true;
+  public showAddCity = false;
   public showAddCard = false;
   public acceptedCreditCards = {
     visa: /^4[0-9]{12}(?:[0-9]{3})?$/,
@@ -32,6 +36,7 @@ export class SettingsComponent implements OnInit {
     month: '',
     ccv: ''
   };
+
   constructor(
       private auth: AuthService,
       private crud: CrudService
@@ -43,6 +48,15 @@ export class SettingsComponent implements OnInit {
         return;
       }
       this.user = Object.assign({}, v);
+    });
+    this.crud.get('setting?populate={"path":"city"}').then((s: any) => {
+      if (!s) {return; }
+      this.setting = Object.assign({}, s);
+    });
+    this.crud.get('city').then((c: any) => {
+      if (!c || c.lenght === 0) {return; }
+      this.city = c;
+      this.cityChoose = this.city[0]._id;
     });
   }
   checkSupported(v) {
@@ -56,8 +70,14 @@ export class SettingsComponent implements OnInit {
     });
     return this.cardError.number = accepted;
   }
+  openAddCity() {
+    this.showAddCity = true;
+  }
   openAddCard() {
     this.showAddCard = true;
+  }
+  cancelAddCity() {
+    this.showAddCity = false;
   }
   cancelAddCard() {
     this.showAddCard = false;
@@ -92,6 +112,19 @@ export class SettingsComponent implements OnInit {
         this.auth.setMe(v);
         this.showAddCard = false;
       }
+    });
+  }
+  confirmCity() {
+    if (!this.cityChoose && this.cityChoose === '') {
+      Swal.fire('Error', 'Город не выбран', 'error');
+      return;
+    }
+    this.crud.post('setting', {city: this.cityChoose}).then((c: any) => {
+      if (!c) {return; }
+      this.crud.get('setting?populate={"path":"city"}').then((s: any) => {
+        if (!s) {return; }
+        this.setting = Object.assign({}, s);
+      });
     });
   }
 }

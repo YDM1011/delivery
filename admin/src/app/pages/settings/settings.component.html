@@ -8,6 +8,34 @@
 		<div class="contain__group">
 			<div class="contain__group-header">
 				<div class="title">
+					Город выбран по умолчанию
+				</div>
+				<button class="button-add" (click)="openAddCity()" *ngIf="setting && !setting.city">
+					<span class="content">Додать город</span>
+				</button>
+			</div>
+			<div class="main-section">
+				<div class="city" *ngIf="setting && setting.city">
+					{{setting.city.name}}
+				</div>
+				<div class="add-city" *ngIf="showAddCity && city.length>0">
+					<select [(ngModel)]="cityChoose">
+						<option *ngFor="let item of city" [value]="item._id">{{item.name}}</option>
+					</select>
+					<div class="group-buttons">
+						<div class="left">
+						</div>
+						<div class="right">
+							<button class="main-button" (click)="cancelAddCity()">Отмена</button>
+							<button class="main-button-color" (click)="confirmCity()">Сохранить</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="contain__group">
+			<div class="contain__group-header">
+				<div class="title">
 					Карта
 				</div>
 				<button class="button-add" (click)="openAddCard()" *ngIf="!user || !user.card || user.card.number === ''">

@@ -35,7 +35,7 @@ export class TranslateComponent implements OnInit {
     }).catch( e => console.log(e));
   }
   addTranslate(data) {
-    this.activeWord = this.words[data].value;
+    this.activeWord = data;
     this.lnObj.ru = this.words[data].ru;
     this.lnObj.ua = this.words[data].ua;
   }
