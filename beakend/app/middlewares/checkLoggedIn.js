@@ -4,28 +4,28 @@ const Admin = mongoose.model('Admin');
 const config = require('../config/config');
 
 module.exports = (req, res, next) => {
-      const jwt = require('jsonwebtoken');
-      const protect = req.cookies['token'] || req.jwt.token || req.headers.authorization;
-        console.log("protect:",protect)
-      if(!protect) return tryAsAdmin(req, res, next);
+    const jwt = require('jsonwebtoken');
+    const protect = req.cookies['token'] || req.jwt.token || req.headers.authorization;
+    console.log("protect:",protect)
+    if(!protect) return tryAsAdmin(req, res, next);
 
-      const connect = protect.split(" ");
-      console.log("connect",connect[0]);
-      jwt.verify(connect[0], config.jwtSecret, (err,data)=>{
-          if (err) return res.serverError("Token error", err);
+    const connect = protect.split(" ");
+    console.log("connect",connect[0]);
+    if(!connect[0]) return next();
+    jwt.verify(connect[0], config.jwtSecret, (err,data)=>{
+      if (err) return res.serverError("Token error", err);
 
-          Client.findOne({login: data.login })
-              .exec((err, info)=>{
-                  if (err) return next(err);
-                  if (!info) return tryAsAdmin(req, res, next)
+      Client.findOne({login: data.login })
+          .exec((err, info)=>{
+              if (err) return next(err);
+              if (!info) return tryAsAdmin(req, res, next)
 
-                  req.user = info.toObject();
-                  bodyModyfi(req);
-                  tryAsAdmin(req, res, next);
-              });
-      });
-
-};
+              req.user = info.toObject();
+              bodyModyfi(req);
+              tryAsAdmin(req, res, next);
+          });
+    });
+}
 
 const tryAsAdmin = (req,res,next) => {
     const jwt = require('jsonwebtoken');

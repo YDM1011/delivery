@@ -97,7 +97,7 @@ const init = (app, config) =>{
                 break;
             default:
                 res.status(200);
-                res.render('client');
+                res.render('index');
                 break;
         }
     });
@@ -121,7 +121,7 @@ const init = (app, config) =>{
         //     res.render('index');
         //     return
         // }
-        if(err.status == 404) {
+        // if(err.status == 404) {
             const host = req.hostname;
             switch (host.split('.')[0]) {
                 case 'client':
@@ -138,13 +138,13 @@ const init = (app, config) =>{
                     break;
                 default:
                     res.status(200);
-                    res.render('client');
+                    res.render('index');
                     break;
             }
-        } else {
-            res.status(err.status || 500);
-            res.render('index');
-        }
+        // } else {
+        //     res.status(err.status || 500);
+        //     res.render('index');
+        // }
         // render the error page
 
 

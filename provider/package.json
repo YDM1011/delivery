@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "ng serve --port 4000",
     "build": "ng build --aot --prod --build-optimizer && cd dist/provider && ren index.html provider.ejs && move /Y C:\\Users\\user\\WebstormProjects\\deliveries\\delivery\\provider\\dist\\provider\\provider.ejs C:\\Users\\user\\WebstormProjects\\deliveries\\delivery\\beakend\\views",
     "buildMac": "ng build --aot --prod --build-optimizer && cd dist/admin && ren index.html admin.html",
     "test": "ng test",

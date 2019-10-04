@@ -6,19 +6,27 @@ import {tap} from 'rxjs/internal/operators/tap';
 @Injectable()
 export class ApiInterceptor implements HttpInterceptor {
     public localStorage = localStorage ;
+    public obj:any ;
     constructor(
     ) { }
 
     // intercept request and add token
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         // modify request
-        request = request.clone({
+        if (this.localStorage.getItem('token')) {
+          this.obj = {
             setHeaders: {
-                Authorization: 'Bearer ' + (this.localStorage.getItem('adminToken') ||
-                    this.localStorage.getItem('token'))
+              Authorization: this.localStorage.getItem('token')
             },
             withCredentials: true
-        });
+          }
+        } else {
+          this.obj = {
+            setHeaders: {},
+            withCredentials: true
+          }
+        }
+        request = request.clone(this.obj);
         return next.handle(request)
             .pipe(
                 tap(event => {
