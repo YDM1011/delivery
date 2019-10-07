@@ -15,6 +15,12 @@
 			<mat-form-field class="example-full-width">
 				<input matInput type="text" placeholder="Ціна" [(ngModel)]="product.price" autocomplete="off">
 			</mat-form-field>
+			<div  *ngIf="brands && brands.length > 0">
+				brands
+				<select [(ngModel)]="mainChooseBrand">
+					<option *ngFor="let item of brands" [value]="item._id">{{item.name}}</option>
+				</select>
+			</div>
 			<div class="group-buttons">
 				<div class="left">
 					<app-upload (onFs)="onFs($event)"></app-upload>
@@ -47,6 +53,12 @@
 			<mat-form-field class="example-full-width">
 				<input matInput type="text" placeholder="Цена" name="price" [(ngModel)]="editObj.price" autocomplete="off">
 			</mat-form-field>
+			<div  *ngIf="brands && brands.length > 0">
+				brands
+				<select #b [(ngModel)]="mainChooseBrand" name="select" (change)="changeSelect(b.value)">
+					<option *ngFor="let item of brands" [value]="item._id">{{item.name}}</option>
+				</select>
+			</div>
 			<div class="check">
 				<mat-checkbox [(ngModel)]="showSale" name="saleChack">Включить скидку</mat-checkbox>
 			</div>
