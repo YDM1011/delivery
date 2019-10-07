@@ -14,7 +14,7 @@ export class CategoryDetailComponent implements OnInit {
   public id = null;
   public user: any;
   public categoryID;
-  public mainChooseBrand;
+  public mainChooseBrand = null;
   public defLang = 'ru-UA';
   public showPagin = false;
   public addShow = false;
@@ -142,6 +142,7 @@ export class CategoryDetailComponent implements OnInit {
       if (!this.showSale) {
         this.editObj.discount = null;
       }
+      this.editObj.brand = this.mainChooseBrand;
       if (this.editObj.img === this.editObjCopy.img) {
         this.crud.post('order', this.editObj, this.editObj['_id']).then((v: any) => {
           if (v) {
