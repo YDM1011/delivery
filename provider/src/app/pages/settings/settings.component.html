@@ -13,7 +13,7 @@
 				</mat-form-field>
 				<mat-form-field class="example-half">
 					<mat-label>City</mat-label>
-					<mat-select #o [(value)]="cityChoose" (selectionChange)="changeCity(o.value); formCheck()">
+					<mat-select #o [(value)]="cityChoose" (selectionChange)="changeCity(o.value)">
 						<mat-option *ngFor="let item of city" [value]="item._id">
 							{{item.name}}
 						</mat-option>

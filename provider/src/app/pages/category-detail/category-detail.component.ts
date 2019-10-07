@@ -14,6 +14,7 @@ export class CategoryDetailComponent implements OnInit {
   public id = null;
   public user: any;
   public categoryID;
+  public mainChooseBrand;
   public defLang = 'ru-UA';
   public showPagin = false;
   public addShow = false;
@@ -21,12 +22,14 @@ export class CategoryDetailComponent implements OnInit {
   public isBlok: boolean = false;
   public showSale: boolean = false;
   public products = [];
+  public brands = [];
   public uploadObj = {};
   public editObjCopy;
   public editObj = {
     name: '',
     des: '',
     img: '',
+    brand: '',
     price: null,
     discount: null,
     companyOwner: '',
@@ -36,6 +39,7 @@ export class CategoryDetailComponent implements OnInit {
     name: '',
     des: '',
     img: '',
+    brand: '',
     price: null,
     discount: null,
     companyOwner: '',
@@ -69,6 +73,11 @@ export class CategoryDetailComponent implements OnInit {
         });
       }
     });
+    this.crud.get('brand').then((b: any) => {
+      if (!b) {return; }
+      this.brands = b;
+      this.mainChooseBrand = this.brands[0]._id;
+    });
   }
 
   create() {
@@ -78,6 +87,7 @@ export class CategoryDetailComponent implements OnInit {
           this.addShow = false;
           this.product['img'] = v.file;
           this.product.categoryOwner = this.id;
+          this.product.brand = this.mainChooseBrand;
           this.product.companyOwner = this.user.companies[0]._id;
           this.crud.post('order', this.product).then((v: any) => {
             if (v) {
@@ -90,6 +100,7 @@ export class CategoryDetailComponent implements OnInit {
                 name: '',
                 des: '',
                 img: '',
+                brand: '',
                 price: null,
                 discount: null,
                 companyOwner: '',
@@ -122,6 +133,7 @@ export class CategoryDetailComponent implements OnInit {
     if (this.editObj.discount && this.editObj.discount !== '') {
       this.showSale = true;
     }
+    this.mainChooseBrand = this.editObj.brand;
     this.addShow = false;
     this.editShow = true;
   }
@@ -143,6 +155,7 @@ export class CategoryDetailComponent implements OnInit {
               name: '',
               des: '',
               img: '',
+              brand: '',
               price: null,
               discount: null,
               companyOwner: '',
@@ -173,6 +186,7 @@ export class CategoryDetailComponent implements OnInit {
                   name: '',
                   des: '',
                   img: '',
+                  brand: '',
                   price: null,
                   discount: null,
                   companyOwner: '',
@@ -190,6 +204,11 @@ export class CategoryDetailComponent implements OnInit {
       }
       this.isBlok = false;
     }
+  }
+
+  changeSelect(b) {
+    this.editObjCopy['brand'] = b;
+    this.formCheck();
   }
   validate() {
     let isTrue = false;
@@ -225,6 +244,7 @@ export class CategoryDetailComponent implements OnInit {
       name: '',
       des: '',
       img: '',
+      brand: '',
       price: null,
       discount: null,
       companyOwner: '',
@@ -234,10 +254,12 @@ export class CategoryDetailComponent implements OnInit {
   cancelEdit() {
     this.editShow = false;
     this.isBlok = false;
+    this.mainChooseBrand = this.brands[0]._id;
     this.editObj = {
       name: '',
       des: '',
       img: '',
+      brand: '',
       price: null,
       discount: null,
       companyOwner: '',
@@ -275,6 +297,10 @@ export class CategoryDetailComponent implements OnInit {
     }
     if (this[obj].img === '') {
       Swal.fire('Error', 'Додайте картинку к продукту', 'error').then();
+      return;
+    }
+    if (this[obj].brand === '') {
+      Swal.fire('Error', 'Выберете к какому бренду относится продукт', 'error').then();
       return;
     }
     return true;
