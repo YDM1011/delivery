@@ -78,7 +78,6 @@ export class ProductComponent implements OnInit {
             if (v) {
               const index = this.crud.find('_id', this.mainCategoryChoose, this.categorys);
               this.categorys[index].orders.push(v._id);
-              this.crud.post('category', {$push: {orders: v._id}}, this.mainCategoryChoose, false).then((e: any) => {});
               this.mainCategoryChoose = null;
               this.addShow = false;
               this.clearMainObj();

@@ -82,7 +82,6 @@ export class CategoryDetailComponent implements OnInit {
           this.crud.post('order', this.product).then((v: any) => {
             if (v) {
               this.products.unshift(v);
-              this.crud.post('category', {$push: {orders: v._id}}, this.id, false).then();
               this.dataSource = new MatTableDataSource(this.products);
               setTimeout(() => this.dataSource.paginator = this.paginator);
               this.checkDataLength();

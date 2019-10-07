@@ -79,7 +79,8 @@ export class CrudService {
 
     getCompany(city){
       return new Promise((resolve, reject) => {
-        const query = `?query={"city":"${city._id}"}&select=_id`;
+        const populate = '&populate='+JSON.stringify({path:'brands'});
+        const query = `?query={"city":"${city._id}"}${populate}&select=_id,brands`;
         this.get('company', '', query).then((v:any)=>{
           if (v) {
             let arr = [];
@@ -128,18 +129,18 @@ export class CrudService {
     }
 
     getCity() {
-        return new Promise((resolve, reject) => {
-          this.get('city', '', '').then((v:any)=>{
-            if (v) {
-              v.map(it=>{
-                it["img"] = it.img ? `${this.domain}/upload/${it.img}` : null;
-              });
-              resolve(v)
-            } else {
-              reject()
-            }
-          });
+      return new Promise((resolve, reject) => {
+        this.get('city', '', '').then((v:any)=>{
+          if (v) {
+            v.map(it=>{
+              it["img"] = it.img ? `${this.domain}/upload/${it.img}` : null;
+            });
+            resolve(v)
+          } else {
+            reject()
+          }
         });
+      });
     }
     getBrands(company) {
       return new Promise((resolve, reject) => {

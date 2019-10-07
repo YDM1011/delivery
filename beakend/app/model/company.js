@@ -32,6 +32,14 @@ const schem = new Schema({
         type: Schema.Types.ObjectId,
         ref: "Category"
     }],
+    categoryMain: [{
+        type: Schema.Types.ObjectId,
+        ref: "MainCategory"
+    }],
+    brands: [{
+        type: Schema.Types.ObjectId,
+        ref: "Brand"
+    }],
     action: [{
         type: Schema.Types.ObjectId,
         ref: "Action",

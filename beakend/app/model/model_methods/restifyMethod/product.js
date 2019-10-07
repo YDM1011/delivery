@@ -44,13 +44,12 @@ module.exports.preUpdate = async (req,res,next, backendApp) => {
 
 module.exports.preSave = async (req, res, next, backendApp) => {
     req.percentage = await getSettings(req,backendApp).catch(e => {return res.notFound(e)});
-    console.log("Percentage",req.percentage)
     // try {
         if (req.body) {
             // let user = await checkUser(req, res, backendApp).catch(e => {return res.notFound(e)});
             // if (user) {
             console.log(req.user._id)
-                req.body['createdBy'] = {itemId:req.user._id};
+                req.body['createdBy'] = req.user._id;
                 // console.log(req.body, user, req.user)
                 let product = await createProduct(req, backendApp).catch(e => {return res.notFound(e)});
                 console.log("product",product);
@@ -71,16 +70,14 @@ const checkAndInitBasket = (req, backendApp, product) => {
     const Basket = backendApp.mongoose.model('Basket');
     return new Promise ((rs,rj)=>{
         Basket.findOne({
-            "createdBy.itemId": req.user.id,
-            cleanerOwner: req.body.cleanerOwner,
+            "createdBy": req.user._id,
             status: 0
         }).exec((e,r)=>{
             if (e) return rj(e);
             if (!r){
                 let data = {
-                    'createdBy.itemId': req.user._id,
+                    'createdBy': req.user._id,
                     products: [product._id],
-                    cleanerOwner: req.body.cleanerOwner,
                     totalPrice: parsePrice(product.count*(product.price)),
                     status: 0,
                     date: new Date()
@@ -93,8 +90,7 @@ const checkAndInitBasket = (req, backendApp, product) => {
             }
             if (r) {
                 Basket.findOneAndUpdate({
-                    "createdBy.itemId": req.user.id,
-                    cleanerOwner: req.body.cleanerOwner,
+                    "createdBy.itemId": req.user._id,
                     status: 0
                 }, {$push:{products:product._id}, $inc: {totalPrice:parsePrice(product.count*product.price)}}, {new:true})
                     .exec((e,r)=>{

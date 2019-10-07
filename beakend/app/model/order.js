@@ -88,6 +88,12 @@ const schema = new Schema({
                 {type:'refObj', fieldName: 'createdBy'},
                 {type:'array', fieldName: 'collaborators'}
             ]
+        },{
+            model:'Client',
+            _id: 'createdBy',
+            canBeId: [
+                {type:'refObj', fieldName: '_id'}
+            ]
         }],
     },
     collaborator: {
@@ -107,31 +113,39 @@ const schema = new Schema({
 
 schema.post('save', (doc,next)=>{
     mongoose.model('Category')
-        .findOneAndUpdate({_id:doc.categoryOwner},{$push:{product:doc._id}})
+        .findOneAndUpdate({_id:doc.categoryOwner},{$push:{orders:doc._id}})
         .exec((err,r)=>{
-            next()
-        })
+            mongoose.model('Brand')
+                .findOneAndUpdate({_id:doc.brand},{$push:{orders:doc._id}})
+                .exec((err,r)=>{
+                    mongoose.model('Company')
+                        .findOneAndUpdate({_id: doc.companyOwner}, {$pullAll:{brands:doc.brand}})
+                        .exec((e,r)=>{
+                            mongoose.model('Company')
+                                .findOneAndUpdate({_id: doc.companyOwner}, {$push:{brands:doc.brand}})
+                                .exec((e,r)=>{
+                                    next()
+                                })
+                        })
+                })
+        });
+
 });
 
-// schema.post('find', (doc,next)=>{
-//     const Setting = backendApp.mongoose.model('Setting');
-//     Setting.findOne({})
-//         .exec((e,r)=>{
-//             if (r){
-//                 doc.map(it=>{
-//                     if(r.percentage || (r.percentage == 0)) it.price = ((r.percentage*it.price)/100) +  it.price;
-//                 });
-//                 next()
-//             }
-//         });
-// });
-//
-
 schema.post('findOneAndRemove', (doc,next) => {
+    console.log(doc);
     mongoose.model('Category')
-        .findOneAndUpdate({_id:doc.categoryOwner},{$pull:{product:doc._id}})
+        .findOneAndUpdate({_id:doc.categoryOwner},{$pull:{orders:doc._id}})
         .exec((err,r)=>{
-            next()
+            mongoose.model('Brand')
+                .findOneAndUpdate({_id:doc.brand},{$pull:{orders:doc._id}})
+                .exec((err,r)=>{
+                    mongoose.model('Company')
+                        .findOneAndUpdate({_id: doc.companyOwner}, {$pull:{brands:doc.brand}})
+                        .exec((e,r)=>{
+                            next()
+                        })
+                })
         })
 });
 

@@ -146,7 +146,6 @@ const canUpdate = (options) => {
             opt = query.some(it => {
                 if (it) return it
             });
-            console.log()
             if (opt || req.error.success) {
                 return next()
             } else {
@@ -270,11 +269,12 @@ const checkOwnerPost = (req,res,next,options) => {
                                                 if (!r1) {
                                                     rs(false)
                                                 } else {
-                                                    req.error.success = true
+                                                    req.error.success = true;
                                                     rs(true)
                                                 }
                                             })
                                         } else {
+                                            console.log("&&!&!&!")
                                             rs(false)
                                         }
 
@@ -290,7 +290,7 @@ const checkOwnerPost = (req,res,next,options) => {
                                             if (!r1) {
                                                 rs(false)
                                             }else{
-                                                req.error.success = true
+                                                req.error.success = true;
                                                 rs(true)
                                             }
                                         })
