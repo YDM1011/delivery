@@ -73,7 +73,7 @@ export class CategoryComponent implements OnInit {
     this.category.companyOwner = this.user.companies[0]._id;
     this.crud.post('category', this.category).then((v: any) => {
       if (v) {
-        this.categorys.unshift(v);
+        this.categorys.push(v);
         this.user.companies[0].categories = this.categorys;
         this.dataSource = new MatTableDataSource(this.categorys);
         setTimeout(() => this.dataSource.paginator = this.paginator);

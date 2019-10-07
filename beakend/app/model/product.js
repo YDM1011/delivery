@@ -64,14 +64,7 @@ const schema = new Schema({
                 {type:'array', fieldName: 'collaborators'}
             ]
         }],
-        create: [{
-            model:'Company',
-            _id: 'companyOwner',
-            canBeId: [
-                {type:'refObj', fieldName: 'createdBy'},
-                {type:'array', fieldName: 'collaborators'}
-            ]
-        }],
+        create: [{public: true}],
         delete: [{
             model:'Company',
             _id: 'companyOwner',

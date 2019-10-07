@@ -2,7 +2,7 @@ import { MatPaginatorIntl } from '@angular/material';
 
 const dutchRangeLabel = (page: number, pageSize: number, length: number) => {
 	if (length === 0 || pageSize === 0) {
-		return `0 van ${length}`;
+		return `0 of ${length}`;
 	}
 	length = Math.max(length, 0);
 
@@ -13,7 +13,7 @@ const dutchRangeLabel = (page: number, pageSize: number, length: number) => {
 		Math.min(startIndex + pageSize, length) :
 		startIndex + pageSize;
 
-	return `${startIndex + 1} - ${endIndex} van ${length}`;
+	return `${startIndex + 1} - ${endIndex} of ${length}`;
 }
 
 

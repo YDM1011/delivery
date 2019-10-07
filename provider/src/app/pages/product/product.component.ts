@@ -1,5 +1,4 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {MatPaginator, MatTableDataSource} from '@angular/material';
 import {CrudService} from '../../crud.service';
 import {AuthService} from '../../auth.service';
 import Swal from 'sweetalert2';
@@ -10,6 +9,10 @@ import Swal from 'sweetalert2';
   styleUrls: ['./product.component.scss']
 })
 export class ProductComponent implements OnInit {
+  public loading: boolean = false;
+  public showSale: boolean = false;
+  public isBlok: boolean = false;
+  public countProduct = null;
   public brands = [];
   public mainCategoryChoose: string;
   public mainChooseBrand: string = null;
@@ -20,29 +23,19 @@ export class ProductComponent implements OnInit {
   public editShow = false;
   public products = [];
   public categorys = [];
-  public uploadObj = {};
+  public editObjCopy;
+  public uploadObj;
   public editObj = {
     name: '',
     des: '',
     img: '',
+    brand: '',
     price: null,
+    discount: null,
     companyOwner: '',
     categoryOwner: '',
-    brand: '',
-  };
-  public product = {
-    name: '',
-    des: '',
-    img: '',
-    price: null,
-    companyOwner: '',
-    categoryOwner: '',
-    brand: '',
   };
 
-  displayedColumns: string[] = ['Номер', 'Назва бренда', 'data', 'delete'];
-  dataSource = new MatTableDataSource(this.products);
-  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   constructor(
       private crud: CrudService,
       private auth: AuthService
@@ -55,140 +48,97 @@ export class ProductComponent implements OnInit {
       this.categorys = v.companies[0].categories;
       if (this.categorys && this.categorys.length > 0) {
         this.mainCategoryChoose = this.categorys[0]._id;
-        this.dataSource = new MatTableDataSource(this.categorys);
-        setTimeout(() => this.dataSource.paginator = this.paginator);
-        this.chackDataLength();
-      }
-    });
-    this.crud.get('brand').then((b: any) => {
-      if (!b) {return; }
-      this.brands = b;
-    });
-  }
-
-  create() {
-    if (this.validation('product')) {
-      this.crud.post('upload2', {body: this.uploadObj}, null, false).then((u: any) => {
-        if (u) {
-          this.product['img'] = u.file;
-          this.product.categoryOwner = this.mainCategoryChoose;
-          this.product.brand = this.mainChooseBrand;
-          this.product.companyOwner = this.user.companies[0]._id;
-          this.crud.post('order', this.product).then((v: any) => {
-            if (v) {
-              const index = this.crud.find('_id', this.mainCategoryChoose, this.categorys);
-              this.categorys[index].orders.push(v._id);
-              this.mainCategoryChoose = null;
-              this.addShow = false;
-              this.clearMainObj();
-            }
-          }).catch((error) => {
-            if (error && error.errors.price.name === 'CastError') {
-              Swal.fire('Error', 'Цена должна вводится через "." - точку', 'error').then();
-            } else if (error && error.errors.categoryOwner.message === 'Check category') {
-              Swal.fire('Error', 'У вас нет созданых категорий', 'error').then();
-            }
-          });
-        }
-      });
-    }
-  }
-
-  onFs(e) {
-    this.uploadObj = e;
-    this.product.img = e.name;
-  }
-
-  delete(i) {
-    this.crud.delete('category', this.products[i]._id).then((v: any) => {
-      if (v) {
-        this.products.splice(i, 1);
-        this.dataSource = new MatTableDataSource(this.products);
-        setTimeout(() => this.dataSource.paginator = this.paginator);
-        this.chackDataLength();
+        this.crud.get(`order/count?query={"companyOwner":"${this.user.companies[0]._id}"}`).then((count: any) => {
+          if (count.count > 0) {
+            this.countProduct = count.count;
+            this.crud.get(`order?query={"companyOwner":"${this.user.companies[0]._id}"}`).then((p: any) => {
+              if (!p) {return; }
+              this.products = p;
+              this.loading = true;
+            });
+          }
+        });
       }
     });
   }
   edit(i) {
     this.editObj = Object.assign({}, this.products[i]);
+    this.editObjCopy = Object.assign({}, this.products[i]);
+    this.mainChooseBrand = this.editObj.brand;
     this.mainCategoryChoose = this.editObj.categoryOwner;
     this.addShow = false;
     this.editShow = true;
   }
-  confirmEditCategoryCrud() {
+  confirmEditCategoryCrud(e) {
+    e.preventDefault();
     if (this.validation('editObj')) {
-      this.editObj.categoryOwner = this.mainCategoryChoose;
-      this.crud.post('category', {name: this.editObj.name}, this.editObj['_id']).then((v: any) => {
-        if (v) {
-          this.editShow = false;
-          this.products[this.crud.find('_id', this.editObj['_id'], this.products)] = v;
-          this.dataSource = new MatTableDataSource(this.products);
-          setTimeout(() => this.dataSource.paginator = this.paginator);
-          this.chackDataLength();
-          this.editObj = {
-            name: '',
-            des: '',
-            img: '',
-            price: null,
-            companyOwner: '',
-            categoryOwner: '',
-            brand: '',
-          };
-          this.editShow = false;
-        }
-      }).catch((error) => {
-        if (error && error.errors.price.name === 'CastError') {
-          Swal.fire('Error', 'Цена должна вводится через "." - точку', 'error');
-          return;
-        }
-      });
+      if (!this.showSale) {
+        this.editObj.discount = null;
+      }
+      this.editObj.brand = this.mainChooseBrand;
+      if (this.editObj.img === this.editObjCopy.img) {
+        this.crud.post('order', this.editObj, this.editObj['_id']).then((v: any) => {
+          if (v) {
+            this.editShow = false;
+            this.products[this.crud.find('_id', this.editObj['_id'], this.products)] = v;
+            this.editShow = false;
+          }
+        }).catch((error) => {
+          if (error && error.errors.price.name === 'CastError') {
+            Swal.fire('Error', 'Цена должна вводится через "." - точку', 'error').then();
+            return;
+          }
+        });
+      } else {
+        this.crud.post('upload2', {body: this.uploadObj}).then((u: any) => {
+          if (u) {
+            this.editObj.img = u.file;
+            this.crud.post('order', this.editObj, this.editObj['_id']).then((v: any) => {
+              if (v) {
+                this.editShow = false;
+                this.products[this.crud.find('_id', this.editObj['_id'], this.products)] = v;
+                this.editShow = false;
+                this.isBlok = false;
+              }
+            }).catch((error) => {
+              if (error && error.errors.price.name === 'CastError') {
+                Swal.fire('Error', 'Цена должна вводится через "." - точку', 'error').then();
+                return;
+              }
+            });
+          }
+        });
+      }
+      this.isBlok = false;
     }
   }
   openAdd() {
     this.addShow = true;
     this.editShow = false;
   }
-  cancelAdd() {
+  cancelAdd(e) {
     this.addShow = false;
-    this.clearMainObj();
   }
   cancelEdit() {
     this.editShow = false;
+    this.mainChooseBrand = this.brands[0]._id;
     this.editObj = {
       name: '',
       des: '',
       img: '',
+      brand: '',
       price: null,
+      discount: null,
       companyOwner: '',
       categoryOwner: '',
-      brand: '',
     };
   }
-
-  chackDataLength() {
-    if (!this.categorys || this.categorys.length === 0) {
-      this.showPagin = false;
-    } else {
-      this.showPagin = true;
-    }
-  }
-  applyFilter(filterValue: string) {
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
-  }
-  clearMainObj() {
-    this.product = {
-      name: '',
-      des: '',
-      img: '',
-      price: null,
-      companyOwner: '',
-      categoryOwner: '',
-      brand: '',
-    };
+  delete(i) {
+    this.crud.delete('order', this.products[i]._id).then((v: any) => {
+      if (v) {
+        this.products.splice(i, 1);
+      }
+    });
   }
   validation(obj) {
     if (this[obj].name === '') {
@@ -208,5 +158,36 @@ export class ProductComponent implements OnInit {
       return;
     }
     return true;
+  }
+  validate() {
+    let isTrue = false;
+    for (const key in this.editObj) {
+      if (this.editObj[key] !== this.editObjCopy[key]) {isTrue = true; }
+    }
+    return isTrue;
+  }
+
+  onFsEdit(e) {
+    this.uploadObj = e;
+    this.editObj.img = e.name;
+    this.formCheck();
+  }
+
+  btnBlok(is) {
+    this.isBlok = is;
+  }
+
+  formCheck() {
+    this.btnBlok(this.validate());
+  }
+  changeSelect(b) {
+    this.editObjCopy['brand'] = b;
+    this.formCheck();
+  }
+  newProduct(e) {
+    if (e) {
+      this.products.push(e);
+      this.addShow = false;
+    }
   }
 }

@@ -46,9 +46,6 @@ export class CategoryDetailComponent implements OnInit {
     categoryOwner: '',
   };
 
-  displayedColumns: string[] = ['Номер', 'Назва бренда', 'data', 'delete'];
-  dataSource = new MatTableDataSource(this.products);
-  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   constructor(
       private crud: CrudService,
       private auth: AuthService,
@@ -67,9 +64,6 @@ export class CategoryDetailComponent implements OnInit {
           if (!v || v.length === 0) {return; }
           this.categoryID = v[0];
           this.products = v[0].orders;
-          this.dataSource = new MatTableDataSource(this.products);
-          setTimeout(() => this.dataSource.paginator = this.paginator);
-          this.checkDataLength();
         });
       }
     });
@@ -92,9 +86,6 @@ export class CategoryDetailComponent implements OnInit {
           this.crud.post('order', this.product).then((v: any) => {
             if (v) {
               this.products.unshift(v);
-              this.dataSource = new MatTableDataSource(this.products);
-              setTimeout(() => this.dataSource.paginator = this.paginator);
-              this.checkDataLength();
               this.product = {
                 name: '',
                 des: '',
@@ -120,9 +111,6 @@ export class CategoryDetailComponent implements OnInit {
     this.crud.delete('order', this.products[i]._id).then((v: any) => {
       if (v) {
         this.products.splice(i, 1);
-        this.dataSource = new MatTableDataSource(this.products);
-        setTimeout(() => this.dataSource.paginator = this.paginator);
-        this.checkDataLength();
       }
     });
   }
@@ -148,9 +136,6 @@ export class CategoryDetailComponent implements OnInit {
           if (v) {
             this.editShow = false;
             this.products[this.crud.find('_id', this.editObj['_id'], this.products)] = v;
-            this.dataSource = new MatTableDataSource(this.products);
-            setTimeout(() => this.dataSource.paginator = this.paginator);
-            this.checkDataLength();
             this.product = {
               name: '',
               des: '',
@@ -177,9 +162,6 @@ export class CategoryDetailComponent implements OnInit {
               if (v) {
                 this.editShow = false;
                 this.products[this.crud.find('_id', this.editObj['_id'], this.products)] = v;
-                this.dataSource = new MatTableDataSource(this.products);
-                setTimeout(() => this.dataSource.paginator = this.paginator);
-                this.checkDataLength();
                 this.editShow = false;
                 this.isBlok = false;
                 this.product = {
@@ -238,7 +220,7 @@ export class CategoryDetailComponent implements OnInit {
     this.addShow = true;
     this.editShow = false;
   }
-  cancelAdd() {
+  cancelAdd(e) {
     this.addShow = false;
     this.product = {
       name: '',
@@ -267,21 +249,6 @@ export class CategoryDetailComponent implements OnInit {
     };
   }
 
-  checkDataLength() {
-    if (!this.products || this.products.length === 0) {
-      this.showPagin = false;
-      return;
-    }
-    this.showPagin = true;
-  }
-  applyFilter(filterValue: string) {
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
-  }
-
   validation(obj) {
     if (this[obj].name === '') {
       Swal.fire('Error', 'Название продукта не может быть пустым', 'error').then();
@@ -304,5 +271,11 @@ export class CategoryDetailComponent implements OnInit {
       return;
     }
     return true;
+  }
+  newProduct(e) {
+    if (e) {
+      this.products.push(e);
+      this.addShow = false;
+    }
   }
 }

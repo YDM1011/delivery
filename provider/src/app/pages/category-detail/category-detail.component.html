@@ -5,36 +5,8 @@
 				Создать продукт
 			</div>
 		</div>
-		<div class="add-section">
-			<mat-form-field class="example-full-width">
-				<input matInput type="text" placeholder="Название продукта" [(ngModel)]="product.name" autocomplete="off">
-			</mat-form-field>
-			<mat-form-field class="example-full-width">
-				<input matInput type="text" placeholder="Опис продукта" [(ngModel)]="product.des" autocomplete="off">
-			</mat-form-field>
-			<mat-form-field class="example-full-width">
-				<input matInput type="text" placeholder="Ціна" [(ngModel)]="product.price" autocomplete="off">
-			</mat-form-field>
-			<div  *ngIf="brands && brands.length > 0">
-				brands
-				<select [(ngModel)]="mainChooseBrand">
-					<option *ngFor="let item of brands" [value]="item._id">{{item.name}}</option>
-				</select>
-			</div>
-			<div class="group-buttons">
-				<div class="left">
-					<app-upload (onFs)="onFs($event)"></app-upload>
-					<div class="mat-chip-file" *ngIf="product && product.img !== ''">
-						<div class="content">{{product.img}}</div>
-						<div class="remove-mat-chip" (click)="product.img = ''"></div>
-					</div>
-				</div>
-				<div class="right">
-					<button class="main-button" (click)="cancelAdd()">Отмена</button>
-					<button class="main-button-color" (click)="create()">Сохранить</button>
-				</div>
-			</div>
-		</div>
+		<app-add-product (outputNew)="newProduct($event)" (cancelAdd)="cancelAdd($event)"></app-add-product>
+		
 	</div>
 	
 	<div class="contain__group"  *ngIf="editShow">
@@ -91,52 +63,12 @@
 			</button>
 		</div>
 		<div class="main-section">
-			<div class="mat-elevation-z8"  *ngIf="showPagin">
-				<mat-form-field class="filter" >
-					<input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
-				</mat-form-field>
-				<table mat-table [dataSource]="dataSource" *ngIf="products && products.length > 0">
-					<!-- Position Column -->
-					<ng-container matColumnDef="Номер">
-						<th mat-header-cell *matHeaderCellDef>#</th>
-						<td mat-cell *matCellDef="let element; let index = index"> {{index + 1}} </td>
-					</ng-container>
-					
-					<!-- Name Column -->
-					<ng-container matColumnDef="Назва бренда">
-						<th mat-header-cell *matHeaderCellDef>Название продукта</th>
-						<td class="table__name" mat-cell *matCellDef="let element">
-							<div class="table__name-img">
-								<app-img [fs]="element.img"></app-img>
-							</div>
-							<div class="table__name-name">{{element.name}}</div>
-						</td>
-					</ng-container>
-					
-					<!-- Weight Column -->
-					<ng-container matColumnDef="data">
-						<th mat-header-cell *matHeaderCellDef>Дата</th>
-						<td mat-cell *matCellDef="let element">
-							<div class="top-table-date">
-								{{element.date | date: 'dd MMMM, yyyy'  : null : defLang}}
-							</div>
-							<div class="bottom-table-date">
-								{{element.date | date: 'h:mm a'  : null : defLang}}
-							</div>
-						</td>
-					</ng-container>
-					<ng-container matColumnDef="delete">
-						<th mat-header-cell *matHeaderCellDef></th>
-						<td class="right-section-table" mat-cell *matCellDef="let element; let index = index">
-							<span class="edit-btn" (click)="edit(index)"></span>
-							<span class="trash-btn" (click)="delete(index)"></span>
-						</td>
-					</ng-container>
-					<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-					<tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-				</table>
-				
-				<mat-paginator class="paginator-table" [pageSizeOptions]="[5, 10, 20]" [class.paginator-table-active]="showPagin"></mat-paginator>
+			<div class="table">
+				<div *ngFor="let item of products; let index = index" style="display: flex;align-items: center">
+					{{item.name}}
+					<span class="edit-btn" (click)="edit(index)"></span>
+					<span class="trash-btn" (click)="delete(index)"></span>
+				</div>
 			</div>
 			<div class="empty-section" *ngIf="!products || products.length === 0">
 				<p>

@@ -37,6 +37,7 @@ import { OrdersComponent } from './pages/orders/orders.component';
 import { OrdersDetailComponent } from './pages/orders-detail/orders-detail.component';
 import {MatPaginatorIntl} from "@angular/material";
 import {getDutchPaginatorIntl} from "./dutch-paginator-intl";
+import { AddProductComponent } from './components/add-product/add-product.component';
 
 @NgModule({
   declarations: [
@@ -62,6 +63,7 @@ import {getDutchPaginatorIntl} from "./dutch-paginator-intl";
     ImageCropperComponent,
     OrdersComponent,
     OrdersDetailComponent,
+    AddProductComponent,
   ],
   imports: [
     BrowserAnimationsModule,
