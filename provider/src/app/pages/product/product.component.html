@@ -73,6 +73,11 @@
 						<span class="edit-btn" (click)="edit(index)"></span>
 						<span class="trash-btn" (click)="delete(index)"></span>
 					</div>
+					<mat-paginator [length]="lengthPagination"
+					               [pageSize]="pageSizePagination"
+					               [pageSizeOptions]="pageSizeOptionsPagination"
+					               (page)="pageEvent($event)">
+					</mat-paginator>
 				</div>
 				<div class="empty-section" *ngIf="!products || products.length === 0">
 					<p>

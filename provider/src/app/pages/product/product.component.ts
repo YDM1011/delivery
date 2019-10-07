@@ -9,6 +9,9 @@ import Swal from 'sweetalert2';
   styleUrls: ['./product.component.scss']
 })
 export class ProductComponent implements OnInit {
+  public lengthPagination = 0;
+  public pageSizePagination = 10;
+  public pageSizeOptionsPagination: number[] = [5, 10, 15];
   public loading: boolean = false;
   public showSale: boolean = false;
   public isBlok: boolean = false;
@@ -50,7 +53,7 @@ export class ProductComponent implements OnInit {
         this.mainCategoryChoose = this.categorys[0]._id;
         this.crud.get(`order/count?query={"companyOwner":"${this.user.companies[0]._id}"}`).then((count: any) => {
           if (count.count > 0) {
-            this.countProduct = count.count;
+            this.lengthPagination = count.count;
             this.crud.get(`order?query={"companyOwner":"${this.user.companies[0]._id}"}`).then((p: any) => {
               if (!p) {return; }
               this.products = p;
