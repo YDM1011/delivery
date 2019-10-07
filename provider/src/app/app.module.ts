@@ -31,8 +31,10 @@ import { ActionComponent } from './pages/action/action.component';
 import { SettingsComponent } from './pages/settings/settings.component';
 import {ApiInterceptor} from './api.interceptor';
 import { WorkTimeComponent } from './pages/work-time/work-time.component';
-import {NgxMaterialTimepickerModule} from "ngx-material-timepicker";
+import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
 import { ImageCropperComponent } from './components/image-cropper/image-cropper.component';
+import { OrdersComponent } from './pages/orders/orders.component';
+import { OrdersDetailComponent } from './pages/orders-detail/orders-detail.component';
 
 @NgModule({
   declarations: [
@@ -56,6 +58,8 @@ import { ImageCropperComponent } from './components/image-cropper/image-cropper.
     SettingsComponent,
     WorkTimeComponent,
     ImageCropperComponent,
+    OrdersComponent,
+    OrdersDetailComponent,
   ],
   imports: [
     BrowserAnimationsModule,
