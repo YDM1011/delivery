@@ -147,7 +147,7 @@ export class CrudService {
         // const select = '&select=name,mainCategory';
         const query = `?query={"$or":${JSON.stringify(company)}}`;
         if (company.length > 0) {
-          this.get('brands', '').then((v: any) => {
+          this.get('brand', '').then((v: any) => {
             if (v) {
               const defIcon = './assets/angular.png';
               v.map(it => {
