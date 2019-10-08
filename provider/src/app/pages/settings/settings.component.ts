@@ -69,7 +69,6 @@ export class SettingsComponent implements OnInit {
   }
   onFs(e) {
     this.uploadObj = e;
-    console.log(this.companyCopy);
     this.companyCopy.img = e.name;
     this.formCheck();
   }
