@@ -1,8 +1,7 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import Swal from "sweetalert2";
-import {MatPaginator, MatTableDataSource} from "@angular/material";
-import {CrudService} from "../../crud.service";
-import {AuthService} from "../../auth.service";
+import {Component, OnInit} from '@angular/core';
+import Swal from 'sweetalert2';
+import {CrudService} from '../../crud.service';
+import {AuthService} from '../../auth.service';
 
 @Component({
   selector: 'app-category',
@@ -10,11 +9,15 @@ import {AuthService} from "../../auth.service";
   styleUrls: ['./category.component.scss']
 })
 export class CategoryComponent implements OnInit {
+  public lengthPagination = 0;
+  public pageSizePagination = 10;
+  public pageSizeOptionsPagination: number[] = [5, 10, 15];
   public mainCategoryChoose: string;
   public mainCategory;
   public user;
   public defLang = 'ru-UA';
   public isBlok = false;
+  public loading = false;
   public showPagin = false;
   public addShow = false;
   public editShow = false;
@@ -31,9 +34,6 @@ export class CategoryComponent implements OnInit {
     mainCategory: '',
   };
 
-  displayedColumns: string[] = ['Номер', 'Назва бренда', 'data', 'delete'];
-  dataSource = new MatTableDataSource(this.categorys);
-  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   constructor(
       private crud: CrudService,
       private auth: AuthService
@@ -49,11 +49,16 @@ export class CategoryComponent implements OnInit {
       if (!v) { return; }
       this.user = v;
       if (this.user.companies[0] && this.user.companies[0].categories.length > 0) {
-        this.crud.get(`company?query={"_id": "${this.user.companies[0]._id}"}&populate={"path": "categories"}`).then((e: any) => {
-          this.categorys = e[0].categories;
-          this.dataSource = new MatTableDataSource(this.categorys);
-          setTimeout(() => this.dataSource.paginator = this.paginator);
-          this.chackDataLength();
+        this.crud.get(`category/count?query={"companyOwner": "${this.user.companies[0]._id}"}`).then((count: any) => {
+          if (count.count > 0) {
+            this.lengthPagination = count.count;
+            this.crud.get(`category?query={"companyOwner": "${this.user.companies[0]._id}"}&skip=0&limit=${this.pageSizePagination}`).then((c: any) => {
+              if (c) {
+                this.categorys = c;
+                this.loading = true;
+              }
+            });
+          }
         });
       }
     });
@@ -74,11 +79,6 @@ export class CategoryComponent implements OnInit {
     this.crud.post('category', this.category).then((v: any) => {
       if (v) {
         this.categorys.push(v);
-        this.user.companies[0].categories = this.categorys;
-        this.dataSource = new MatTableDataSource(this.categorys);
-        setTimeout(() => this.dataSource.paginator = this.paginator);
-        this.chackDataLength();
-        this.crud.post('company', {$push: {categories: v._id}}, this.user.companies[0]._id, false).then();
         this.category = {
           name: '',
           companyOwner: '',
@@ -87,6 +87,11 @@ export class CategoryComponent implements OnInit {
         };
         this.mainCategoryChoose = null;
         this.addShow = false;
+        this.crud.get(`category/count?query={"companyOwner": "${this.user.companies[0]._id}"}`).then((count: any) => {
+          if (count.count > 0) {
+            this.lengthPagination = count.count;
+          }
+        });
       }
     });
   }
@@ -95,9 +100,11 @@ export class CategoryComponent implements OnInit {
     this.crud.delete('category', this.categorys[i]._id).then((v: any) => {
       if (v) {
         this.categorys.splice(i, 1);
-        this.dataSource = new MatTableDataSource(this.categorys);
-        setTimeout(() => this.dataSource.paginator = this.paginator);
-        this.chackDataLength();
+        this.crud.get(`category/count?query={"companyOwner": "${this.user.companies[0]._id}"}`).then((count: any) => {
+          if (count.count > 0) {
+            this.lengthPagination = count.count;
+          }
+        });
       }
     });
   }
@@ -109,8 +116,7 @@ export class CategoryComponent implements OnInit {
     this.editShow = true;
   }
   confirmEditCategoryCrud(e) {
-    console.log(e)
-    e.preventDefault()
+    e.preventDefault();
     if (this.editObj.name === '') {
       Swal.fire('Error', 'Название категории не может быть пустым', 'error');
       return;
@@ -126,9 +132,6 @@ export class CategoryComponent implements OnInit {
         this.categorys[this.crud.find('_id', this.editObj['_id'], this.categorys)] = v;
         this.user.companies[0].categories = this.categorys;
         this.auth.setMe(this.user);
-        this.dataSource = new MatTableDataSource(this.categorys);
-        setTimeout(() => this.dataSource.paginator = this.paginator);
-        this.chackDataLength();
         this.isBlok = false;
         this.editShow = false;
         this.editObj = {
@@ -183,18 +186,13 @@ export class CategoryComponent implements OnInit {
     };
   }
 
-  chackDataLength() {
-    if (!this.categorys || this.categorys.length === 0) {
-      this.showPagin = false;
-      return;
-    }
-    this.showPagin = true;
-  }
-  applyFilter(filterValue: string) {
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
+  pageEvent(e) {
+    this.crud.get(`category?query={"companyOwner":"${this.user.companies[0]._id}"}&skip=${e.pageIndex}&limit=${e.pageSize}`).then((c: any) => {
+      if (!c) {
+        return;
+      }
+      this.categorys = c;
+      this.loading = true;
+    });
   }
 }
