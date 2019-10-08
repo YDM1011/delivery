@@ -56,9 +56,9 @@ export class DebtorComponent implements OnInit {
       this.user = v;
       if (this.user && this.user.companies.length > 0) {
         this.crud.get(`debtor/count?query={"companyOwner": "${this.user.companies[0]._id}"}`).then((count: any) => {
-          if (count.count > 0) {
+          if (count) {
             this.lengthPagination = count.count;
-            this.crud.get(`debtor?query={"companyOwner": "${this.user.companies[0]._id}"}&populate={"path":"clientOwner"}`).then((d: any) => {
+            this.crud.get(`debtor?query={"companyOwner": "${this.user.companies[0]._id}"}&populate={"path":"clientOwner"}&skip=0&limit=${this.pageSizePagination}`).then((d: any) => {
               if (d) {
                 this.debtors = d;
                 this.loading = true;
@@ -93,7 +93,17 @@ export class DebtorComponent implements OnInit {
     }
     this.crud.post('debtor', this.debtor).then((v: any) => {
       if (v) {
-        this.debtors.push(v);
+        this.crud.get(`debtor/count?query={"companyOwner": "${this.user.companies[0]._id}"}`).then((count: any) => {
+          if (count) {
+            this.lengthPagination = count.count;
+            this.crud.get(`debtor?query={"companyOwner": "${this.user.companies[0]._id}"}&populate={"path":"clientOwner"}&skip=0&limit=${this.pageSizePagination}`).then((d: any) => {
+              if (d) {
+                this.debtors = d;
+                this.loading = true;
+              }
+            });
+          }
+        });
         this.inputChange = null;
         this.addShow = false;
         this.debtor = {

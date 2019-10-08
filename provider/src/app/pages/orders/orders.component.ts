@@ -10,6 +10,7 @@ export class OrdersComponent implements OnInit {
   public pageSizePagination = 10;
   public pageSizeOptionsPagination: number[] = [5, 10, 15];
   public loading = false;
+  public orders = [];
   constructor() { }
 
   ngOnInit() {

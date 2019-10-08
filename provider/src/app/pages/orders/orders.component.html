@@ -266,7 +266,8 @@
 							<mat-paginator [length]="lengthPagination"
 							               [pageSize]="pageSizePagination"
 							               [pageSizeOptions]="pageSizeOptionsPagination"
-							               (page)="pageEvent($event)">
+							               (page)="pageEvent($event)"
+							               *ngIf="orders || orders.length > 0">
 							</mat-paginator>
 						</div>
 					</ng-template>

@@ -62,8 +62,7 @@ export class ActionComponent implements OnInit {
           this.crud.get(`action/count?query={"companyOwner":"${this.company._id}"}`).then((c: any) => {
             if (c.count > 0) {
               this.lengthPagination = c.count;
-
-              this.crud.get(`action?query={"companyOwner":"${this.company._id}"}&populate={"path":"client"}`).then((a: any) => {
+              this.crud.get(`action?query={"companyOwner":"${this.company._id}"}&populate={"path":"client"}&skip=0&limit=${this.pageSizePagination}`).then((a: any) => {
                 if (a && a.length > 0) {
                   this.actions = a;
                   this.loading = true;

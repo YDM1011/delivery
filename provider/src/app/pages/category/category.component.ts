@@ -50,7 +50,7 @@ export class CategoryComponent implements OnInit {
       this.user = v;
       if (this.user.companies[0] && this.user.companies[0].categories.length > 0) {
         this.crud.get(`category/count?query={"companyOwner": "${this.user.companies[0]._id}"}`).then((count: any) => {
-          if (count.count > 0) {
+          if (count) {
             this.lengthPagination = count.count;
             this.crud.get(`category?query={"companyOwner": "${this.user.companies[0]._id}"}&skip=0&limit=${this.pageSizePagination}`).then((c: any) => {
               if (c) {
@@ -88,7 +88,7 @@ export class CategoryComponent implements OnInit {
         this.mainCategoryChoose = null;
         this.addShow = false;
         this.crud.get(`category/count?query={"companyOwner": "${this.user.companies[0]._id}"}`).then((count: any) => {
-          if (count.count > 0) {
+          if (count) {
             this.lengthPagination = count.count;
           }
         });
@@ -101,7 +101,7 @@ export class CategoryComponent implements OnInit {
       if (v) {
         this.categorys.splice(i, 1);
         this.crud.get(`category/count?query={"companyOwner": "${this.user.companies[0]._id}"}`).then((count: any) => {
-          if (count.count > 0) {
+          if (count) {
             this.lengthPagination = count.count;
           }
         });

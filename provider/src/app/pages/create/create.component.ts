@@ -10,6 +10,10 @@ import {CrudService} from '../../crud.service';
   styleUrls: ['./create.component.scss']
 })
 export class CreateComponent implements OnInit {
+  public lengthPagination = 0;
+  public pageSizePagination = 10;
+  public pageSizeOptionsPagination: number[] = [5, 10, 15];
+  public loading = false;
   public showCollaborator = false;
   public user;
   public showPagin = false;
@@ -32,9 +36,6 @@ export class CreateComponent implements OnInit {
     companyOwner: ''
   };
 
-  displayedColumns: string[] = ['Номер', 'Назва бренда', 'data', 'delete'];
-  dataSource = new MatTableDataSource(this.clients);
-  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   constructor(
       private crud: CrudService,
       private auth: AuthService
@@ -44,10 +45,19 @@ export class CreateComponent implements OnInit {
     this.auth.onMe.subscribe((v: any) => {
       if (!v) {return; }
       this.user = v;
-      this.clients = this.user.companies[0].collaborators;
-      this.dataSource = new MatTableDataSource(this.clients);
-      setTimeout(() => this.dataSource.paginator = this.paginator);
-      this.checkDataLength();
+      if (this.user && this.user.companies.length > 0) {
+        this.crud.get(`client/count?query={"companyOwner":"${this.user.companies[0]._id}"}`).then((count: any) => {
+          if (count) {
+            this.lengthPagination = count.count;
+            this.crud.get(`client?query={"companyOwner": "${this.user.companies[0]._id}"}&skip=0&limit=${this.pageSizePagination}`).then((c: any) => {
+              if (c) {
+                this.clients = c;
+                this.loading = true;
+              }
+            })
+          }
+        })
+      }
     });
   }
   create(e) {
@@ -60,10 +70,7 @@ export class CreateComponent implements OnInit {
     this.client.companyOwner = this.user.companies[0]._id;
     this.crud.post('signup', this.client).then((v: any) => {
       if (!v) {return; }
-      this.clients.unshift(v);
-      this.dataSource = new MatTableDataSource(this.clients);
-      setTimeout(() => this.dataSource.paginator = this.paginator);
-      this.checkDataLength();
+      this.clients.push(v);
       this.clearObj();
       this.showCollaborator = false;
     }).catch((error) => {
@@ -108,6 +115,10 @@ export class CreateComponent implements OnInit {
     this.crud.delete('client', this.clients[i]._id).then((v: any) => {
       if (v) {
         this.clients.splice(i, 1);
+        this.crud.get(`client/count?query={"companyOwner":"${this.user.companies[0]._id}"}`).then((c: any) => {
+          if (!c) {return; }
+          this.clients = c;
+        });
       }
     });
   }
@@ -144,18 +155,10 @@ export class CreateComponent implements OnInit {
   formCheck() {
     this.btnBlok(this.validate());
   }
-  checkDataLength() {
-    if (!this.clients || this.clients.length === 0) {
-      this.showPagin = false;
-      return;
-    }
-    this.showPagin = true;
-  }
-  applyFilter(filterValue: string) {
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
+  pageEvent(e) {
+    this.crud.get(`client?query={"companyOwner":"${this.user.companies[0]._id}"}&skip=${e.pageIndex}&limit=${e.pageSize}`).then((c: any) => {
+      if (!c) {return; }
+      this.clients = c;
+    });
   }
 }
