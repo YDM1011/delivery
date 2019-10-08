@@ -16,12 +16,14 @@ export class IndexComponent implements OnInit, OnDestroy {
   public curentCity = {};
   public category = [];
   public brandy = [];
+  public topCompany = [];
   public toggleMain: boolean = true;
   public images = [`./assets/images/tmp/img-deli.png`, `./assets/images/tmp/img-product.png`, `./assets/images/tmp/img-deli.png`];
   public carentPhoto;
   public number: number = 0;
   public loaded = {
     category: false,
+    topCompany: false,
     brand: false
   };
   private _subscription: Subscription[] = [];
@@ -37,14 +39,12 @@ export class IndexComponent implements OnInit, OnDestroy {
     }));
     this._subscription.push(this.auth.onCity.subscribe((v:any) => {
       if (v) {
-        this.crud.getCompany(v);
-        this.curentCity = v;
-      }
-    }));
-    this._subscription.push(this.auth.onCompany.subscribe((v:any)=>{
-      if (v) {
-        this.companyArr = v;
-        this.init();
+        this.crud.getCompany(v).then((arr)=>{
+          this.curentCity = v;
+          this.companyArr = arr;
+          this.init();
+        });
+
       }
     }));
     this.carentPhoto = `url(${this.images[0]})`;
@@ -68,16 +68,21 @@ export class IndexComponent implements OnInit, OnDestroy {
   }
 
   async init() {
-    await this.crud.getCategory(this.companyArr).then((v: any) => {
-      if (!v) return;
-      this.category = v;
-      this.loaded.category = true;
-    }).catch(e=> { this.loaded.category = true });
-    await this.crud.getBrands(this.companyArr).then((v: any) => {
+    await this.crud.getBrands().then((v: any) => {
       if (!v) return;
       this.brandy = v;
       this.loaded.brand = true
     }).catch(e=> { this.loaded.brand = true });
+    await this.crud.getCategory().then((v: any) => {
+      if (!v) return;
+      this.category = v;
+      this.loaded.category = true;
+    }).catch(e=> { this.loaded.category = true });
+    await this.crud.getTopCompany().then((v:any)=>{
+      if (!v) return;
+      this.topCompany = v;
+      this.loaded.topCompany = true;
+    }).catch(e=> { this.loaded.topCompany = true });
   }
   changeCar(e) {
     this.carentPhoto = `url(${e})`;

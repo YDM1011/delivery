@@ -70,6 +70,9 @@ import {WebsocketModule} from './websocket';
 import {environment} from "../environments/environment";
 import { BrandItemComponent } from './components/brand-item/brand-item.component';
 import {ServiceWorkerModule} from "@angular/service-worker";
+import { BrandsIDComponent } from './pages/brands-id/brands-id.component';
+import { WorkTimeComponent } from './components/work-time/work-time.component';
+import { PopupDirective } from './directives/popup.directive';
 
 @NgModule({
   declarations: [
@@ -124,6 +127,9 @@ import {ServiceWorkerModule} from "@angular/service-worker";
     StarRatingComponent,
     FilterComponent,
     BrandItemComponent,
+    BrandsIDComponent,
+    WorkTimeComponent,
+    PopupDirective,
   ],
   imports: [
     Ng5SliderModule,

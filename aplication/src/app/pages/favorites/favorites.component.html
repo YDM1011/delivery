@@ -11,10 +11,10 @@
   <div class="popular-section">
     <div class="popular-section-button">
       <button [class.active]="toggleMain" (click)="toggleMain = true">
-        Поставщики (<span *ngIf="favoriteLocal && favoriteLocal.providers.length > 0">{{ favoriteLocal.providers.length }}</span> <span *ngIf="favoriteLocal && favoriteLocal.providers.length === 0">0</span>)
+        Поставщики (<span *ngIf="favoriteLocal && favoriteLocal.providers">{{ favoriteLocal.providers.length || 0 }}</span> <span *ngIf="favoriteLocal && favoriteLocal.providers.length === 0">0</span>)
       </button>
       <button [class.active]="!toggleMain" (click)="toggleMain = false">
-        Товары (<span *ngIf="favoriteLocal && favoriteLocal.products.length > 0">{{ favoriteLocal.products.length }}</span> <span *ngIf="favoriteLocal && favoriteLocal.products.length === 0">0</span>)
+        Товары (<span *ngIf="favoriteLocal && favoriteLocal.products">{{ favoriteLocal.products.length || 0 }}</span> <span *ngIf="favoriteLocal && favoriteLocal.products.length === 0">0</span>)
       </button>
     </div>
     <div class="popular-section-box" *ngIf="toggleMain">

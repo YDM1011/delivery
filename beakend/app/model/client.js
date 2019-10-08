@@ -39,7 +39,7 @@ const schem = new Schema({
         type: Schema.Types.ObjectId,
         ref: "Order"
     }],
-    debtor: [{
+    debtors: [{
         type: Schema.Types.ObjectId,
         ref: "Debtor"
     }],

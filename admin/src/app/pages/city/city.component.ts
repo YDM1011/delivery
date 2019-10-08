@@ -93,7 +93,7 @@ export class CityComponent implements OnInit, AfterViewInit{
 
   edit(i) {
     this.editObj = Object.assign({}, this.citys[i]);
-    this.editObj.img = this.editObj.img.split("--")[1];
+    this.editObj.img = this.editObj.img ? this.editObj.img.split("--")[1] : '';
     this.editObjCopy = Object.assign({}, this.editObj);
     this.addShow = false;
     this.editShow = true;

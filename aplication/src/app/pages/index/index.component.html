@@ -116,10 +116,11 @@
     </button>
   </div>
   <div class="popular-section-box" *ngIf="toggleMain">
-    <app-provider-item></app-provider-item>
-    <app-provider-item></app-provider-item>
-    <app-provider-item></app-provider-item>
-    <app-provider-item></app-provider-item>
+    <ng-container *ngIf="loaded.topCompany">
+      <ng-container *ngFor="let it of topCompany">
+        <app-provider-item [data]="it" [isTop]="true"></app-provider-item>
+      </ng-container>
+    </ng-container>
   </div>
   <div class="popular-section-box" *ngIf="!toggleMain">
     <app-product-item></app-product-item>

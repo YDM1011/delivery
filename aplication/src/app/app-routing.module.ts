@@ -27,6 +27,7 @@ import {ActionDetailComponent} from './pages/action-detail/action-detail.compone
 import {OrdersComponent} from './pages/orders/orders.component';
 import {IsLoginGuard} from "./is-login.guard";
 import {IsLogoutGuard} from "./is-logout.guard";
+import {BrandsIDComponent} from "./pages/brands-id/brands-id.component";
 
 const routes: Routes = [
   {path: ':lang', component: InitLayoutComponent, children: [
@@ -39,9 +40,10 @@ const routes: Routes = [
       {path: 'category/:id', component: CategoryIDComponent},
       {path: 'product/:id', component: ProductIDComponent},
       {path: 'brands', component: BrandsComponent},
+      {path: 'brand/:id', component: BrandsIDComponent},
       {path: 'city', component: CityComponent},
       {path: 'verification', component: VerificationComponent},
-      {path: 'signin', component: SigninComponent, canActivate: [IsLogoutGuard]},
+      {path: 'login', component: SigninComponent, canActivate: [IsLogoutGuard]},
       {path: 'signup', component: SignupComponent, canActivate: [IsLogoutGuard]},
       {path: 'other-city', component: OtherCityComponent},
       {path: 'provider1/:id', component: ProviderComponent},

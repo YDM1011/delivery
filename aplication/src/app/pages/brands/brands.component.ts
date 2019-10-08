@@ -38,7 +38,7 @@ export class BrandsComponent implements OnInit, OnDestroy {
     this.init();
   }
   async init(){
-    await this.crud.getBrands(this.companyArr).then((v: any) => {
+    await this.crud.getBrands().then((v: any) => {
       this.brands = v;
     });
   }

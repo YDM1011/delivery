@@ -40,6 +40,7 @@ const schem = new Schema({
         type: Schema.Types.ObjectId,
         ref: "Brand"
     }],
+    rating: Number,
     action: [{
         type: Schema.Types.ObjectId,
         ref: "Action",

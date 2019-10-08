@@ -16,10 +16,10 @@ const schem = new Schema({
         type: Schema.Types.ObjectId,
         ref: "Company"
     },
-    orderOwner: [{
+    orderOwner: {
         type: Schema.Types.ObjectId,
         ref: "Order"
-    }],
+    },
     actionGlobal: {type: Boolean, default: true},
     updatedAt: {type: Date},
     date: {type: Date, default: new Date()}
@@ -92,5 +92,39 @@ const schem = new Schema({
         }],
     },
 });
+schem.post('save', (doc, next)=>{
+    mongoose.model('Company')
+        .findOneAndUpdate({_id: doc.companyOwner}, {$push:{action:doc._id}})
+        .exec((e,r)=>{
+            mongoose.model('Order')
+                .findOneAndUpdate({_id: doc.orderOwner}, {action:doc._id})
+                .exec((e,r)=>{
+                    next()
+                })
+        })
 
+});
+schem.post('findOneAndRemove', (doc,next) => {
+    mongoose.model('Company')
+        .findOneAndUpdate(
+            { "action": doc._id },
+            { "$unset": { "action.$": "" } },
+            { "multi": true },
+            (e,r) => {
+                mongoose.model('Company')
+                    .findOneAndUpdate(
+                        { "action": null },
+                        { "$pull": { "action": null } },
+                        { "multi": true },
+                        (e,r) => {
+                            mongoose.model('Order')
+                                .findOneAndUpdate({_id: doc.orderOwner}, {action:null})
+                                .exec((e,r)=>{
+                                    next()
+                                })
+                        }
+                    )
+            }
+        )
+});
 mongoose.model('Action', schem);

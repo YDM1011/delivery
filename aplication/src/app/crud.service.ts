@@ -10,6 +10,9 @@ import {AuthService} from "./auth.service";
 export class CrudService {
     private api = environment.host;
     private domain = environment.domain;
+    private company;
+    private city;
+    private CompanyArr = [];
 
 
     constructor( private http: HttpClient, private auth: AuthService) { }
@@ -78,14 +81,18 @@ export class CrudService {
     }
 
     getCompany(city){
+      this.city = city;
       return new Promise((resolve, reject) => {
         const populate = '&populate='+JSON.stringify({path:'brands'});
-        const query = `?query={"city":"${city._id}"}${populate}&select=_id,brands`;
+        const query = `?query={"city":"${this.city._id}"}${populate}&select=_id,brands`;
         this.get('company', '', query).then((v:any)=>{
           if (v) {
             let arr = [];
+            this.company = Object.assign([], v);
             v.map(it => arr.push({companyOwner: it._id}));
+            this.CompanyArr = arr;
             this.auth.setCompanyCity(arr);
+            console.log(this.CompanyArr)
             resolve(arr)
           } else {
             reject()
@@ -95,12 +102,13 @@ export class CrudService {
       });
     }
 
-    getCategory(company = null) {
+    getCategory() {
         return new Promise((resolve, reject) => {
           const populate = '&populate='+JSON.stringify({path:'mainCategory'});
           const select = '&select=name,mainCategory';
-          const query = `?query={"$or":${JSON.stringify(company)}}`;
-          if (company.length > 0) {
+          const query = `?query={"$or":${JSON.stringify(this.CompanyArr)}}`;
+          console.log(this.CompanyArr)
+          if (this.CompanyArr && this.CompanyArr.length > 0) {
             this.get('category', '', query+select+populate).then((v: any) => {
               if (v) {
                 const defIcon = './assets/angular.png';
@@ -135,6 +143,7 @@ export class CrudService {
             v.map(it=>{
               it["img"] = it.img ? `${this.domain}/upload/${it.img}` : null;
             });
+            this.city = v;
             resolve(v)
           } else {
             reject()
@@ -142,27 +151,59 @@ export class CrudService {
         });
       });
     }
-    getBrands(company) {
+    getBrands() {
       return new Promise((resolve, reject) => {
-        // const populate = '&populate='+JSON.stringify({path:'mainCategory'});
-        // const select = '&select=name,mainCategory';
-        const query = `?query={"$or":${JSON.stringify(company)}}`;
-        if (company.length > 0) {
-          this.get('brand', '').then((v: any) => {
-            if (v) {
-              const defIcon = './assets/angular.png';
-              v.map(it => {
-                it["img"] = it.img ? `${this.domain}/upload/${it.img}` || defIcon : defIcon;
-              });
-              resolve(v)
-            } else {
-              reject()
-            }
-          });
-        } else {
-
-          resolve([])
-        }
+        let arr = new Set([]);
+        this.company.forEach((it)=>{
+          if (it.brands.length > 0){
+            it.brands.forEach((el)=>{
+              arr.add({_id:el._id})
+            })
+          }
+        });
+          const query = `?query={"$or":${JSON.stringify(Array.from(arr))}}`;
+          if (Array.from(arr).length > 0) {
+            this.get('brand', '', query).then((v: any) => {
+              if (v) {
+                const defIcon = './assets/angular.png';
+                v.forEach(it => {
+                  it["img"] = it.img ? `${this.domain}/upload/${it.img}` || defIcon : defIcon;
+                });
+                console.log(v)
+                resolve(v)
+              } else {
+                reject()
+              }
+            });
+          } else {
+            resolve([])
+          }
+      });
+    }
+    getDetailBrand(id) {
+      return new Promise((resolve, reject) => {
+        this.get('brand', id, `?populate={"path":"orders"}`).then((v: any) => {
+          if (v) {
+            const defIcon = './assets/angular.png';
+              v["img"] = v.img ? `${this.domain}/upload/${v.img}` || defIcon : defIcon;
+            console.log(v)
+            resolve(v)
+          } else {
+            reject()
+          }
+        });
+      });
+    }
+    getTopCompany() {
+      return new Promise((resolve, reject) => {
+        const query = `?query={"city":"${this.city._id}"}&sort={"date":-1}&limit=7&skip=0`;
+        this.get('company', '', query).then((v:any)=>{
+          if (v) {
+            resolve(v)
+          } else {
+            reject()
+          }
+        });
       });
     }
 }

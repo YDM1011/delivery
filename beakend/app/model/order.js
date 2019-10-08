@@ -119,13 +119,9 @@ schema.post('save', (doc,next)=>{
                 .findOneAndUpdate({_id:doc.brand},{$push:{orders:doc._id}})
                 .exec((err,r)=>{
                     mongoose.model('Company')
-                        .findOneAndUpdate({_id: doc.companyOwner}, {$pullAll:{brands:doc.brand}})
+                        .findOneAndUpdate({_id: doc.companyOwner}, {$push:{brands:doc.brand}})
                         .exec((e,r)=>{
-                            mongoose.model('Company')
-                                .findOneAndUpdate({_id: doc.companyOwner}, {$push:{brands:doc.brand}})
-                                .exec((e,r)=>{
-                                    next()
-                                })
+                            next()
                         })
                 })
         });
@@ -141,10 +137,22 @@ schema.post('findOneAndRemove', (doc,next) => {
                 .findOneAndUpdate({_id:doc.brand},{$pull:{orders:doc._id}})
                 .exec((err,r)=>{
                     mongoose.model('Company')
-                        .findOneAndUpdate({_id: doc.companyOwner}, {$pull:{brands:doc.brand}})
-                        .exec((e,r)=>{
-                            next()
-                        })
+                        .findOneAndUpdate(
+                            { "brands": doc.brand },
+                            { "$unset": { "brands.$": "" } },
+                            { "multi": true },
+                            (e,r) => {
+                                mongoose.model('Company')
+                                    .findOneAndUpdate(
+                                        { "brands": null },
+                                        { "$pull": { "brands": null } },
+                                        { "multi": true },
+                                        (e,r) => {
+                                            next()
+                                        }
+                                    )
+                            }
+                        )
                 })
         })
 });

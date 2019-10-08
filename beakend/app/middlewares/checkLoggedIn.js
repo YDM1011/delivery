@@ -31,7 +31,8 @@ const tryAsAdmin = (req,res,next) => {
     const jwt = require('jsonwebtoken');
     const protect = req.cookies['adminToken'] || req.jwt.token || req.headers.authorization;
     console.log(protect,req.user)
-    if(!protect && !req.user){
+    if(!protect){
+        delete req.user;
         return next()
     }
     const connect = protect.split(" ");

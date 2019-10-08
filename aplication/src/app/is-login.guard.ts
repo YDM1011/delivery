@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot} from '@angular/router';
+import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot} from '@angular/router';
 import {AuthService} from './auth.service';
 
 @Injectable({
@@ -7,6 +7,7 @@ import {AuthService} from './auth.service';
 })
 export class IsLoginGuard implements CanActivate {
   public language;
+  public lang;
   constructor(
       private router: Router,
       private auth: AuthService
@@ -14,15 +15,16 @@ export class IsLoginGuard implements CanActivate {
     this.auth.onLanguage.subscribe((v: string) => {
       if(!v) return;
       this.language = v;
-    })
+    });
   }
   canActivate(
       next: ActivatedRouteSnapshot,
       state: RouterStateSnapshot) {
+
     if (this.auth.isAuth()) {
       return true;
     } else {
-      this.router.navigate(['/login']);
+      this.router.navigate(['/'+next.parent.params.lang+'/login']);
       return false;
     }
 

@@ -32,7 +32,7 @@ const schema = new Schema({
     client: {
         read: [{public:true}],
         update: [{private:true}],
-        create: [{private:true}],
+        create: [{public:true}],
         delete: [{private:true}],
     },
     provider: {

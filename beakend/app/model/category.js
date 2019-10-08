@@ -98,5 +98,31 @@ schem.post('save', (doc, next)=>{
         }
     });
 });
+schem.post('save', (doc, next)=>{
+    mongoose.model('Company')
+        .findOneAndUpdate({_id: doc.companyOwner}, {$push:{categories:doc._id}})
+        .exec((e,r)=>{
+            next()
+        })
+});
+schem.post('findOneAndRemove', (doc,next) => {
+    mongoose.model('Company')
+        .findOneAndUpdate(
+            { "categories": doc._id },
+            { "$unset": { "categories.$": "" } },
+            { "multi": true },
+            (e,r) => {
+                mongoose.model('Company')
+                    .findOneAndUpdate(
+                        { "categories": null },
+                        { "$pull": { "categories": null } },
+                        { "multi": true },
+                        (e,r) => {
+                            next()
+                        }
+                    )
+            }
+        )
+});
 
 mongoose.model('Category', schem);

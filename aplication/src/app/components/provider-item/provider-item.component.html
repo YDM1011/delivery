@@ -1,31 +1,33 @@
-<a routerLink="/{{language}}/provider/1" class="popular-item">
-  <div class="sale">
-    <div class="top"></div>
-    <!--    <div class="sale"></div>-->
-  </div>
-  <div class="img">
-    <img src="./assets/images/tmp/cola.png" alt="">
-  </div>
-  <div class="block-info">
-    <div class="block-title">
-      Свежая рыба “Fresh Fish”
+<div class="cart-wrap">
+  <a routerLink="/{{language}}/provider/{{data._id}}" class="popular-item">
+    <div class="sale">
+      <div class="top"></div>
+      <!--    <div class="sale"></div>-->
     </div>
-    <div class="block-second">
-      <div class="action">
-        5 акций
+    <div class="img">
+      <img src="./upload/{{data.img}}" alt="">
+    </div>
+    <div class="block-info">
+      <div class="block-title">
+        {{data.name}}
+      </div>
+      <div class="block-second">
+        <ng-container *ngIf="data.action">
+          <ng-container *ngIf="data.action.length>0">
+            <div class="action">
+              {{data.action.length}} акций
+            </div>
+          </ng-container>
+        </ng-container>
+      </div>
+      <div class="block-raiting">
+        <div class="raiting">
+          <mat-star-rating class="mat-rating"  [starCount]="5" [rating]="data.rating"></mat-star-rating>
+        </div>
+
       </div>
     </div>
-    <div class="block-raiting">
-      <div class="raiting">
-        9/10
-        <mat-star-rating class="mat-rating"  [starCount]="5" [rating]="3"></mat-star-rating>
-      </div>
-      <div class="work-time">
-        <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M5 0.0102539C2.243 0.0102539 0 2.25325 0 5.01025C0 7.76725 2.243 9.99009 5 9.99009C7.757 9.99009 10 7.76725 10 5.01025C10 2.25325 7.757 0.0102539 5 0.0102539ZM5.33333 5.15659C5.33333 5.34059 5.184 5.48992 5 5.48992H2.33333C2.14933 5.48992 2 5.34059 2 5.15659C2 4.97259 2.14933 4.82325 2.33333 4.82325H4.66667V1.15659C4.66667 0.972587 4.816 0.823254 5 0.823254C5.184 0.823254 5.33333 0.972587 5.33333 1.15659V5.15659Z" fill="#09C2C2"/>
-        </svg>
-        пн-пт  10:00 - 20:00
-      </div>
-    </div>
-  </div>
-</a>
+  </a>
+  <app-work-time class="work-time" [data]="data.workTime" *ngIf="data.workTime"></app-work-time>
+</div>
+

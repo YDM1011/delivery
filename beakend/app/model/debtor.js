@@ -12,11 +12,13 @@ const schem = new Schema({
     },
     clientOwner: {
         type: Schema.Types.ObjectId,
-        ref: "Client"
+        ref: "Client",
+        required: [true, "Client is required"]
     },
     companyOwner: {
         type: Schema.Types.ObjectId,
-        ref: "Company"
+        ref: "Company",
+        required: [true, "Company is required"]
     },
     // basket: {
     //     type: Schema.Types.ObjectId,
@@ -79,5 +81,50 @@ const schem = new Schema({
         delete: [{private:true}],
     },
 });
-
+schem.post('save', (doc, next)=>{
+    mongoose.model('Company')
+        .findOneAndUpdate({_id: doc.companyOwner}, {$push:{debtors:doc._id}})
+        .exec((e,r)=>{
+            mongoose.model('Client')
+                .findOneAndUpdate({_id: doc.clientOwner}, {$push:{debtors:doc._id}})
+                .exec((e,r)=>{
+                    next()
+                })
+        })
+});
+schem.post('findOneAndRemove', (doc,next) => {
+    mongoose.model('Company')
+        .findOneAndUpdate(
+            { "debtors": doc._id },
+            { "$unset": { "debtors.$": "" } },
+            { "multi": true },
+            (e,r) => {
+                mongoose.model('Company')
+                    .findOneAndUpdate(
+                        { "debtors": null },
+                        { "$pull": { "debtors": null } },
+                        { "multi": true },
+                        (e,r) => {
+                            mongoose.model('Client')
+                                .findOneAndUpdate(
+                                    { "debtors": doc._id },
+                                    { "$unset": { "debtors.$": "" } },
+                                    { "multi": true },
+                                    (e,r) => {
+                                        mongoose.model('Client')
+                                            .findOneAndUpdate(
+                                                { "debtors": null },
+                                                { "$pull": { "debtors": null } },
+                                                { "multi": true },
+                                                (e,r) => {
+                                                    next()
+                                                }
+                                            )
+                                    }
+                                )
+                        }
+                    )
+            }
+        )
+});
 mongoose.model('Debtor', schem);
