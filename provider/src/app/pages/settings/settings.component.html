@@ -22,8 +22,7 @@
 			</form>
 			<div class="group-buttons">
 				<div class="left">
-					<app-upload (onFs)="onFs($event)"></app-upload>
-					<div class="mat-chip-file" *ngIf="companyCopy && companyCopy.img && companyCopy.img !== ''">
+					<div class="mat-chip-file" *ngIf="companyCopy && companyCopy.img && companyCopy.img !== ''; else upload">
 						<div class="content">{{companyCopy.img}}</div>
 						<div class="remove-mat-chip" (click)="companyCopy.img = ''; formCheck()"></div>
 					</div>
@@ -37,3 +36,6 @@
 	</div>
 </div>
 
+<ng-template #upload>
+  <app-upload (onFs)="onFs($event)"></app-upload>
+</ng-template>

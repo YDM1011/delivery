@@ -26,6 +26,7 @@ export class SettingsComponent implements OnInit {
     this.auth.onMe.subscribe((v: any) => {
       if (!v) {return; }
       this.user = Object.assign({}, v);
+      this.user.companies[0].img = this.user.companies[0].img ? this.user.companies[0].img.split("--")[1] : '';
       this.company = this.user.companies[0];
       this.companyCopy = Object.assign({}, this.user.companies[0]);
       if (!this.company.city) {
@@ -57,9 +58,10 @@ export class SettingsComponent implements OnInit {
       this.crud.post('upload2', {body: this.uploadObj}).then((u: any) => {
         if (u) {
           this.company['img'] = u.file;
-          this.crud.post('company', this.companyCopy, this.company._id).then((v: any) => {
+          this.crud.post('company', this.company, this.company._id).then((v: any) => {
+            v.img = v.img.split("--")[1];
             this.user.companies[0] = v;
-            this.company = this.user.companies[0];
+            this.company = v;
             this.auth.setMe(this.user);
             this.formCheck();
           });
