@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {CrudService} from "../../crud.service";
-import {AuthService} from "../../auth.service";
-import Swal from "sweetalert2";
+import {CrudService} from '../../crud.service';
+import {AuthService} from '../../auth.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-settings',
