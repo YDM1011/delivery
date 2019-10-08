@@ -38,6 +38,7 @@ import { OrdersDetailComponent } from './pages/orders-detail/orders-detail.compo
 import {MatPaginatorIntl} from "@angular/material";
 import {getDutchPaginatorIntl} from "./dutch-paginator-intl";
 import { AddProductComponent } from './components/add-product/add-product.component';
+import { EditProductComponent } from './components/edit-product/edit-product.component';
 
 @NgModule({
   declarations: [
@@ -64,6 +65,7 @@ import { AddProductComponent } from './components/add-product/add-product.compon
     OrdersComponent,
     OrdersDetailComponent,
     AddProductComponent,
+    EditProductComponent,
   ],
   imports: [
     BrowserAnimationsModule,
