@@ -187,7 +187,7 @@ export class CategoryComponent implements OnInit {
   }
 
   pageEvent(e) {
-    this.crud.get(`category?query={"companyOwner":"${this.user.companies[0]._id}"}&skip=${e.pageIndex}&limit=${e.pageSize}`).then((c: any) => {
+    this.crud.get(`category?query={"companyOwner":"${this.user.companies[0]._id}"}&skip=${e.pageIndex  * e.pageSize}&limit=${e.pageSize}`).then((c: any) => {
       if (!c) {
         return;
       }

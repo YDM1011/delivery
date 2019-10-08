@@ -89,7 +89,7 @@ export class ProductComponent implements OnInit {
     }
   }
   pageEvent(e) {
-    this.crud.get(`order?query={"companyOwner":"${this.user.companies[0]._id}"}&skip=${e.pageIndex}&limit=${e.pageSize}`).then((p: any) => {
+    this.crud.get(`order?query={"companyOwner":"${this.user.companies[0]._id}"}&skip=${e.pageIndex  * e.pageSize}&limit=${e.pageSize}`).then((p: any) => {
       if (!p) {return; }
       this.products = p;
       this.loading = true;

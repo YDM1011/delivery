@@ -9,8 +9,16 @@
 			<mat-form-field class="example-full-width">
 				<input type="text" placeholder="Tel" aria-label="Number" name="inputSearch" matInput [(ngModel)]="inputChange" [matAutocomplete]="auto" (keyup)="change()">
 				<mat-autocomplete #auto="matAutocomplete">
-					<mat-option *ngFor="let item of searchDebtors" [value]="item.login">
-						{{item.login}}
+					<mat-option *ngFor="let item of searchDebtors" [value]="item.login" (click)="inputChange=item.login">
+						<div class="option">
+							<div class="img">
+								<app-img [fs]="item.img" *ngIf="item.img !== ''; else usersvg"></app-img>
+								<ng-template #usersvg>
+									<img src="./assets/images/user.svg" alt="user-svg">
+								</ng-template>
+							</div>
+							{{item.login}}
+						</div>
 					</mat-option>
 				</mat-autocomplete>
 			</mat-form-field>

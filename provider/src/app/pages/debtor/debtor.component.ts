@@ -11,7 +11,7 @@ import Swal from 'sweetalert2';
 export class DebtorComponent implements OnInit {
   public lengthPagination = 0;
   public pageSizePagination = 10;
-  public pageSizeOptionsPagination: number[] = [5, 10, 15];
+  public pageSizeOptionsPagination: number[] = [1, 2, 15];
   public loading: boolean = false;
   public inputChange: string;
   public userChoose: string;
@@ -70,8 +70,8 @@ export class DebtorComponent implements OnInit {
     });
   }
   change() {
-    const query = JSON.stringify({login: this.inputChange});
-    this.crud.get(`client?query=${query}`).then((v: any) => {
+    const query = JSON.stringify({login: {$regex: this.inputChange, $options: 'gi'}});
+    this.crud.get(`client?query=${query}&select=["login", "img"]&limit=10`).then((v: any) => {
       this.searchDebtors = v;
     });
   }
@@ -204,7 +204,8 @@ export class DebtorComponent implements OnInit {
   }
 
   pageEvent(e) {
-    this.crud.get(`debtor?query={"companyOwner":"${this.user.companies[0]._id}"}&skip=${e.pageIndex}&limit=${e.pageSize}`).then((d: any) => {
+    console.log(e)
+    this.crud.get(`debtor?query={"companyOwner":"${this.user.companies[0]._id}"}&populate={"path":"clientOwner"}&skip=${e.pageIndex  * e.pageSize}&limit=${e.pageSize}`).then((d: any) => {
       if (!d) {return; }
       this.debtors = d;
     });

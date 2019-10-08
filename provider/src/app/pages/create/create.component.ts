@@ -156,7 +156,7 @@ export class CreateComponent implements OnInit {
     this.btnBlok(this.validate());
   }
   pageEvent(e) {
-    this.crud.get(`client?query={"companyOwner":"${this.user.companies[0]._id}"}&skip=${e.pageIndex}&limit=${e.pageSize}`).then((c: any) => {
+    this.crud.get(`client?query={"companyOwner":"${this.user.companies[0]._id}"}&skip=${e.pageIndex  * e.pageSize}&limit=${e.pageSize}`).then((c: any) => {
       if (!c) {return; }
       this.clients = c;
     });

@@ -93,7 +93,7 @@ export class ActionComponent implements OnInit {
   }
   change() {
     const query = JSON.stringify({login: {$regex: this.inputChange, $options: 'gi'}});
-    this.crud.get(`client?query=${query}&select=["login", "img"]`).then((v: any) => {
+    this.crud.get(`client?query=${query}&select=["login", "img"]&limit=10`).then((v: any) => {
       this.searchUser = v;
     });
   }
@@ -278,7 +278,7 @@ export class ActionComponent implements OnInit {
     }
   }
   pageEvent(e) {
-    this.crud.get(`category?query={"companyOwner":"${this.user.companies[0]._id}"}&skip=${e.pageIndex}&limit=${e.pageSize}`).then((c: any) => {
+    this.crud.get(`category?query={"companyOwner":"${this.user.companies[0]._id}"}&skip=${e.pageIndex  * e.pageSize}&limit=${e.pageSize}`).then((c: any) => {
       if (!c) {
         return;
       }
