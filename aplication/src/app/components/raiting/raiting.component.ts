@@ -23,7 +23,8 @@ export class RaitingComponent implements OnInit {
   close() {
     this.closeRaiting.emit(false);
   }
-  updateRaiting(e){
+  updateRaiting(e) {
+    console.log(e);
     this.raiting = e;
   }
 }
