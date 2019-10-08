@@ -38,7 +38,15 @@
 				<input type="text" placeholder="Tel" aria-label="Number" name="inputSearch" matInput [(ngModel)]="inputChange" [matAutocomplete]="auto" (keyup)="change()">
 				<mat-autocomplete #auto="matAutocomplete">
 					<mat-option *ngFor="let item of searchUser" [value]="item.login" (click)="pushUser(item)">
-						{{item.login}}
+						<div class="option">
+							<div class="img">
+								<app-img [fs]="item.img" *ngIf="item.img !== ''; else usersvg"></app-img>
+								<ng-template #usersvg>
+									<img src="./assets/images/user.svg" alt="user-svg">
+								</ng-template>
+							</div>
+							{{item.login}}
+						</div>
 					</mat-option>
 				</mat-autocomplete>
 			</mat-form-field>

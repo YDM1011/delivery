@@ -93,7 +93,7 @@ export class ActionComponent implements OnInit {
   }
   change() {
     const query = JSON.stringify({login: {$regex: this.inputChange, $options: 'gi'}});
-    this.crud.get(`client?query=${query}`).then((v: any) => {
+    this.crud.get(`client?query=${query}&select=["login", "img"]`).then((v: any) => {
       this.searchUser = v;
     });
   }

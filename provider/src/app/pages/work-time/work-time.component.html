@@ -16,108 +16,192 @@
 				</div>
 				<div class="work-time-box">
 					<div class="work-time-item">
-						<div class="day">
-							Понедельник:
+						<div class="row">
+							<div class="day">
+								Понедельник:
+							</div>
+							От
+							<div class="group">
+								<input [ngxTimepicker]="picker"  [format]="24" [placeholder]="time.timeRange1.timeStart" [value]="time.timeRange1.timeStart" readonly>
+								<ngx-material-timepicker #picker [defaultTime]="time.timeRange1.timeStart" (timeSet)="setTimeStart('timeRange1', $event)"></ngx-material-timepicker>
+							</div>
+							До
+							<div class="group">
+								<input [ngxTimepicker]="picker2" [format]="24" [placeholder]="time.timeRange1.timeEnd" [value]="time.timeRange1.timeEnd"  readonly>
+								<ngx-material-timepicker #picker2 [defaultTime]="time.timeRange1.timeEnd" (timeSet)="setTimeEnd('timeRange1', $event)"></ngx-material-timepicker>
+							</div>
 						</div>
-						От
-						<div class="group">
-							<input [ngxTimepicker]="picker"  [format]="24" [placeholder]="time.timeRange1.timeStart" [value]="time.timeRange1.timeStart" readonly>
-							<ngx-material-timepicker #picker [defaultTime]="time.timeRange1.timeStart" (timeSet)="setTimeStart('timeRange1', $event)"></ngx-material-timepicker>
-						</div>
-						До
-						<div class="group">
-							<input [ngxTimepicker]="picker2" [format]="24" [placeholder]="time.timeRange1.timeEnd" [value]="time.timeRange1.timeEnd"  readonly>
-							<ngx-material-timepicker #picker2 [defaultTime]="time.timeRange1.timeEnd" (timeSet)="setTimeEnd('timeRange1', $event)"></ngx-material-timepicker>
-						</div>
-					</div>
-					<div class="work-time-item">
-						<div class="day">
-							Пятница:
-						</div>
-						От
-						<div class="group">
-							<input [ngxTimepicker]="picker3"  [format]="24" [placeholder]="time.timeRange5.timeStart" [value]="time.timeRange5.timeStart" readonly>
-							<ngx-material-timepicker #picker3 [defaultTime]="time.timeRange5.timeStart" (timeSet)="setTimeStart('timeRange5', $event)"></ngx-material-timepicker>
-						</div>
-						До
-						<div class="group">
-							<input [ngxTimepicker]="picker4" [format]="24" [placeholder]="time.timeRange5.timeEnd" [value]="time.timeRange5.timeEnd"  readonly>
-							<ngx-material-timepicker #picker4 [defaultTime]="time.timeRange5.timeEnd" (timeSet)="setTimeEnd('timeRange5', $event)"></ngx-material-timepicker>
+						<div class="row">
+							<div class="check">
+								<mat-checkbox [(ngModel)]="time.timeRange1.isAllTime" #all1 (change)="setTimeAll('timeRange1', all1.value)">
+									24/7
+								</mat-checkbox>
+								<mat-checkbox [(ngModel)]="time.timeRange1.isWeekend" #week1 (change)="setTimeWeekend('timeRange1', week1.value)">
+									Выходной
+								</mat-checkbox>
+							</div>
 						</div>
 					</div>
 					<div class="work-time-item">
-						<div class="day">
-							Вторник:
+						<div class="row">
+							<div class="day">
+								Пятница:
+							</div>
+							От
+							<div class="group">
+								<input [ngxTimepicker]="picker3"  [format]="24" [placeholder]="time.timeRange5.timeStart" [value]="time.timeRange5.timeStart" readonly>
+								<ngx-material-timepicker #picker3 [defaultTime]="time.timeRange5.timeStart" (timeSet)="setTimeStart('timeRange5', $event)"></ngx-material-timepicker>
+							</div>
+							До
+							<div class="group">
+								<input [ngxTimepicker]="picker4" [format]="24" [placeholder]="time.timeRange5.timeEnd" [value]="time.timeRange5.timeEnd"  readonly>
+								<ngx-material-timepicker #picker4 [defaultTime]="time.timeRange5.timeEnd" (timeSet)="setTimeEnd('timeRange5', $event)"></ngx-material-timepicker>
+							</div>
 						</div>
-						От
-						<div class="group">
-							<input [ngxTimepicker]="picker5"  [format]="24" [placeholder]="time.timeRange2.timeStart" [value]="time.timeRange2.timeStart" readonly>
-							<ngx-material-timepicker #picker5 [defaultTime]="time.timeRange2.timeStart" (timeSet)="setTimeStart('timeRange2', $event)"></ngx-material-timepicker>
-						</div>
-						До
-						<div class="group">
-							<input [ngxTimepicker]="picker6" [format]="24" [placeholder]="time.timeRange2.timeEnd" [value]="time.timeRange2.timeEnd"  readonly>
-							<ngx-material-timepicker #picker6 [defaultTime]="time.timeRange2.timeEnd" (timeSet)="setTimeEnd('timeRange2', $event)"></ngx-material-timepicker>
-						</div>
-					</div>
-					<div class="work-time-item">
-						<div class="day">
-							Субота:
-						</div>
-						От
-						<div class="group">
-							<input [ngxTimepicker]="picker7"  [format]="24" [placeholder]="time.timeRange6.timeStart" [value]="time.timeRange6.timeStart" readonly>
-							<ngx-material-timepicker #picker7 [defaultTime]="time.timeRange6.timeStart" (timeSet)="setTimeStart('timeRange6', $event)"></ngx-material-timepicker>
-						</div>
-						До
-						<div class="group">
-							<input [ngxTimepicker]="picker8" [format]="24" [placeholder]="time.timeRange6.timeEnd" [value]="time.timeRange6.timeEnd"  readonly>
-							<ngx-material-timepicker #picker8 [defaultTime]="time.timeRange6.timeEnd" (timeSet)="setTimeEnd('timeRange6', $event)"></ngx-material-timepicker>
+						<div class="row">
+							<div class="check">
+								<mat-checkbox [(ngModel)]="time.timeRange5.isAllTime" #all5 (change)="setTimeAll('timeRange5', all5.value)">
+									24/7
+								</mat-checkbox>
+								<mat-checkbox [(ngModel)]="time.timeRange5.isWeekend" #week5 (change)="setTimeWeekend('timeRange5', week5.value)">
+									Выходной
+								</mat-checkbox>
+							</div>
 						</div>
 					</div>
 					<div class="work-time-item">
-						<div class="day">
-							Среда:
+						<div class="row">
+							<div class="day">
+								Вторник:
+							</div>
+							От
+							<div class="group">
+								<input [ngxTimepicker]="picker5"  [format]="24" [placeholder]="time.timeRange2.timeStart" [value]="time.timeRange2.timeStart" readonly>
+								<ngx-material-timepicker #picker5 [defaultTime]="time.timeRange2.timeStart" (timeSet)="setTimeStart('timeRange2', $event)"></ngx-material-timepicker>
+							</div>
+							До
+							<div class="group">
+								<input [ngxTimepicker]="picker6" [format]="24" [placeholder]="time.timeRange2.timeEnd" [value]="time.timeRange2.timeEnd"  readonly>
+								<ngx-material-timepicker #picker6 [defaultTime]="time.timeRange2.timeEnd" (timeSet)="setTimeEnd('timeRange2', $event)"></ngx-material-timepicker>
+							</div>
 						</div>
-						От
-						<div class="group">
-							<input [ngxTimepicker]="picker9"  [format]="24" [placeholder]="time.timeRange3.timeStart" [value]="time.timeRange3.timeStart" readonly>
-							<ngx-material-timepicker #picker9 [defaultTime]="time.timeRange3.timeStart" (timeSet)="setTimeStart('timeRange3', $event)"></ngx-material-timepicker>
-						</div>
-						До
-						<div class="group">
-							<input [ngxTimepicker]="picker10" [format]="24" [placeholder]="time.timeRange3.timeEnd" [value]="time.timeRange3.timeEnd"  readonly>
-							<ngx-material-timepicker #picker10 [defaultTime]="time.timeRange3.timeEnd" (timeSet)="setTimeEnd('timeRange3', $event)"></ngx-material-timepicker>
-						</div>
-					</div>
-					<div class="work-time-item">
-						<div class="day">
-							Воскресенье:
-						</div>
-						От
-						<div class="group">
-							<input [ngxTimepicker]="picker11"  [format]="24" [placeholder]="time.timeRange7.timeStart" [value]="time.timeRange7.timeStart" readonly>
-							<ngx-material-timepicker #picker11 [defaultTime]="time.timeRange7.timeStart" (timeSet)="setTimeStart('timeRange7', $event)"></ngx-material-timepicker>
-						</div>
-						До
-						<div class="group">
-							<input [ngxTimepicker]="picker12" [format]="24" [placeholder]="time.timeRange7.timeEnd" [value]="time.timeRange7.timeEnd"  readonly>
-							<ngx-material-timepicker #picker12 [defaultTime]="time.timeRange7.timeEnd" (timeSet)="setTimeEnd('timeRange7', $event)"></ngx-material-timepicker>
+						<div class="row">
+							<div class="check">
+								<mat-checkbox [(ngModel)]="time.timeRange2.isAllTime" #all2 (change)="setTimeAll('timeRange2', all2.value)">
+									24/7
+								</mat-checkbox>
+								<mat-checkbox [(ngModel)]="time.timeRange2.isWeekend" #week2 (change)="setTimeWeekend('timeRange2', week2.value)">
+									Выходной
+								</mat-checkbox>
+							</div>
 						</div>
 					</div>
 					<div class="work-time-item">
-						<div class="day">
-							Четверг:
+						<div class="row">
+							<div class="day">
+								Субота:
+							</div>
+							От
+							<div class="group">
+								<input [ngxTimepicker]="picker7"  [format]="24" [placeholder]="time.timeRange6.timeStart" [value]="time.timeRange6.timeStart" readonly>
+								<ngx-material-timepicker #picker7 [defaultTime]="time.timeRange6.timeStart" (timeSet)="setTimeStart('timeRange6', $event)"></ngx-material-timepicker>
+							</div>
+							До
+							<div class="group">
+								<input [ngxTimepicker]="picker8" [format]="24" [placeholder]="time.timeRange6.timeEnd" [value]="time.timeRange6.timeEnd"  readonly>
+								<ngx-material-timepicker #picker8 [defaultTime]="time.timeRange6.timeEnd" (timeSet)="setTimeEnd('timeRange6', $event)"></ngx-material-timepicker>
+							</div>
 						</div>
-						От
-						<div class="group">
-							<input [ngxTimepicker]="picker13"  [format]="24" [placeholder]="time.timeRange4.timeStart" [value]="time.timeRange4.timeStart" readonly>
-							<ngx-material-timepicker #picker13 [defaultTime]="time.timeRange4.timeStart" (timeSet)="setTimeStart('timeRange4', $event)"></ngx-material-timepicker>
+						<div class="row">
+							<div class="check">
+								<mat-checkbox [(ngModel)]="time.timeRange6.isAllTime" #all6 (change)="setTimeAll('timeRange6', all6.value)">
+									24/7
+								</mat-checkbox>
+								<mat-checkbox [(ngModel)]="time.timeRange6.isWeekend" #week6 (change)="setTimeWeekend('timeRange6', week6.value)">
+									Выходной
+								</mat-checkbox>
+							</div>
 						</div>
-						До
-						<div class="group">
-							<input [ngxTimepicker]="picker14" [format]="24" [placeholder]="time.timeRange4.timeEnd" [value]="time.timeRange4.timeEnd"  readonly>
-							<ngx-material-timepicker #picker14 [defaultTime]="time.timeRange4.timeEnd" (timeSet)="setTimeEnd('timeRange4', $event)"></ngx-material-timepicker>
+					</div>
+					<div class="work-time-item">
+						<div class="row">
+							<div class="day">
+								Среда:
+							</div>
+							От
+							<div class="group">
+								<input [ngxTimepicker]="picker9"  [format]="24" [placeholder]="time.timeRange3.timeStart" [value]="time.timeRange3.timeStart" readonly>
+								<ngx-material-timepicker #picker9 [defaultTime]="time.timeRange3.timeStart" (timeSet)="setTimeStart('timeRange3', $event)"></ngx-material-timepicker>
+							</div>
+							До
+							<div class="group">
+								<input [ngxTimepicker]="picker10" [format]="24" [placeholder]="time.timeRange3.timeEnd" [value]="time.timeRange3.timeEnd"  readonly>
+								<ngx-material-timepicker #picker10 [defaultTime]="time.timeRange3.timeEnd" (timeSet)="setTimeEnd('timeRange3', $event)"></ngx-material-timepicker>
+							</div>
+						</div>
+						<div class="row">
+							<div class="check">
+								<mat-checkbox [(ngModel)]="time.timeRange3.isAllTime" #all3 (change)="setTimeAll('timeRange3', all3.value)">
+									24/7
+								</mat-checkbox>
+								<mat-checkbox [(ngModel)]="time.timeRange3.isWeekend" #week3 (change)="setTimeWeekend('timeRange3', week3.value)">
+									Выходной
+								</mat-checkbox>
+							</div>
+						</div>
+					</div>
+					<div class="work-time-item">
+						<div class="row">
+							<div class="day">
+								Воскресенье:
+							</div>
+							От
+							<div class="group">
+								<input [ngxTimepicker]="picker11"  [format]="24" [placeholder]="time.timeRange7.timeStart" [value]="time.timeRange7.timeStart" readonly>
+								<ngx-material-timepicker #picker11 [defaultTime]="time.timeRange7.timeStart" (timeSet)="setTimeStart('timeRange7', $event)"></ngx-material-timepicker>
+							</div>
+							До
+							<div class="group">
+								<input [ngxTimepicker]="picker12" [format]="24" [placeholder]="time.timeRange7.timeEnd" [value]="time.timeRange7.timeEnd"  readonly>
+								<ngx-material-timepicker #picker12 [defaultTime]="time.timeRange7.timeEnd" (timeSet)="setTimeEnd('timeRange7', $event)"></ngx-material-timepicker>
+							</div>
+						</div>
+						<div class="row">
+							<div class="check">
+								<mat-checkbox [(ngModel)]="time.timeRange7.isAllTime" #all7 (change)="setTimeAll('timeRange7', all7.value)">
+									24/7
+								</mat-checkbox>
+								<mat-checkbox [(ngModel)]="time.timeRange7.isWeekend" #week7 (change)="setTimeWeekend('timeRange7', week7.value)">
+									Выходной
+								</mat-checkbox>
+							</div>
+						</div>
+					</div>
+					<div class="work-time-item">
+						<div class="row">
+							<div class="day">
+								Четверг:
+							</div>
+							От
+							<div class="group">
+								<input [ngxTimepicker]="picker13"  [format]="24" [placeholder]="time.timeRange4.timeStart" [value]="time.timeRange4.timeStart" readonly>
+								<ngx-material-timepicker #picker13 [defaultTime]="time.timeRange4.timeStart" (timeSet)="setTimeStart('timeRange4', $event)"></ngx-material-timepicker>
+							</div>
+							До
+							<div class="group">
+								<input [ngxTimepicker]="picker14" [format]="24" [placeholder]="time.timeRange4.timeEnd" [value]="time.timeRange4.timeEnd"  readonly>
+								<ngx-material-timepicker #picker14 [defaultTime]="time.timeRange4.timeEnd" (timeSet)="setTimeEnd('timeRange4', $event)"></ngx-material-timepicker>
+							</div>
+						</div>
+						<div class="row">
+							<div class="check">
+								<mat-checkbox [(ngModel)]="time.timeRange4.isAllTime" #all4 (change)="setTimeAll('timeRange4', all4.value)">
+									24/7
+								</mat-checkbox>
+								<mat-checkbox [(ngModel)]="time.timeRange4.isWeekend" #week4 (change)="setTimeWeekend('timeRange4', week4.value)">
+									Выходной
+								</mat-checkbox>
+							</div>
 						</div>
 					</div>
 					<div class="work-time-item">
