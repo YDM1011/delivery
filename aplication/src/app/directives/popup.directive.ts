@@ -25,9 +25,9 @@ export class PopupDirective {
     this.node.appendChild(node2);
     this.node.appendChild(this.defBlock);
     if (!document.getElementById('wrapper')) return console.error("Create id wrapper in dom!")
-    document.getElementById('wrapper').appendChild(this.node);
-    // document.getElementById('wrapper').classList.add('active');
-    document.getElementById('wrapper').addEventListener('touchmove', this.preventDef)
+    document.getElementsByTagName('body')[0].appendChild(this.node);
+    document.getElementById('wrapper').classList.add('active');
+    document.getElementsByClassName('popup-directive')[0].addEventListener('touchmove', this.preventDef)
     node2.onclick = ()=>{
       this.close();
     };
@@ -54,8 +54,7 @@ export class PopupDirective {
   close(){
     this.node.remove();
     this.onClose.emit(true);
-    document.getElementById('wrapper').removeEventListener('touchmove', this.preventDef);
-
+    document.getElementById('wrapper').classList.remove('active');
   }
   preventDef(e) {
     e.preventDefault()

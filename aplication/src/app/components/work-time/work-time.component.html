@@ -7,6 +7,25 @@
 
 <ng-container *ngIf="detail">
   <div appPopup class="pop" (onClose)="show()">
-    test
+    <div class="calendar">
+      <table>
+        <tr *ngFor="let i of [1,2,3,4,5,6,7]">
+          <td>{{'timeRange'+i | trans:language}}</td>
+          <td>
+            <ng-container *ngIf="data['timeRange'+i].isAllTime">
+              <span class="all-time">{{'isAllTime' | trans:language}}</span>
+            </ng-container>
+            <ng-container *ngIf="data['timeRange'+i].isTimeRange">
+              <span class="range">
+                {{data['timeRange'+i].timeStart}} - {{data['timeRange'+i].timeEnd}}
+              </span>
+            </ng-container>
+            <ng-container *ngIf="data['timeRange'+i].isWeekend">
+              <span class="weekend">{{'isWeekend' | trans:language}}</span>
+            </ng-container>
+          </td>
+        </tr>
+      </table>
+    </div>
   </div>
 </ng-container>

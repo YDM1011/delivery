@@ -195,8 +195,10 @@ export class CrudService {
       });
     }
     getTopCompany() {
+      let page = 0;
+      let limit = 7;
       return new Promise((resolve, reject) => {
-        const query = `?query={"city":"${this.city._id}"}&sort={"date":-1}&limit=7&skip=0`;
+        const query = `?query={"city":"${this.city._id}"}&sort={"rating":-1}&limit=${page}&skip=${limit*page}`;
         this.get('company', '', query).then((v:any)=>{
           if (v) {
             resolve(v)

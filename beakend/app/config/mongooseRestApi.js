@@ -38,7 +38,10 @@ module.exports = backendApp => {
                 preCreate: [
                     modelOpt.notCreate ? forbidden : nextS,
                     // model.schema.options.needBeAdminCUD ? backendApp.middlewares.isAdmin :  nextS,
-                    backendApp.middlewares.isLoggedIn,
+                    modelOpt.client &&
+                    modelOpt.client.create &&
+                    modelOpt.client.create[0] &&
+                    modelOpt.client.create[0].public ? backendApp.middlewares.checkLoggedIn : backendApp.middlewares.isLoggedIn,
                     isVerify(backendApp),
                     // model.schema.options.needAccessControl ? backendApp.middlewares.checkAccessRights(modelName + '.canCreate') :  nextS,
                     schemaPre.Save],
@@ -88,7 +91,7 @@ const isVerify = backendApp => {
                 const signup = new backendApp.hooks.signupRole(req, res, req.user, backendApp);
                 signup.init()
             } else if (!req.user) {
-                res.serverError("Server error!")
+                next()
             }
         }
     }

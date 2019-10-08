@@ -6,7 +6,7 @@ const Schema = mongoose.Schema;
  * role - manedger 1/2 superManedger 1/2 client
  */
 const schem = new Schema({
-    name: String,
+    name: {type: String, unique: true},
     img: String,
     lastUpdate: {type: Date},
     date: {type: Date, default: new Date()}

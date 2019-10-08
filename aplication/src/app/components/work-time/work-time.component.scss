@@ -1,0 +1,17 @@
+.calendar{
+  padding: 15px 10px;
+  border-radius: 4px;
+  box-shadow: 0 8px 15px #333;
+  background-color: #fff;
+  td {
+    padding: 3px 10px 3px 5px;
+    font-size: 14px;
+  }
+}
+.pop{
+  position: absolute;
+  z-index: 999;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -80%);
+}
