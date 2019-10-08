@@ -22,3 +22,16 @@
 .left{
   height: 40px;
 }
+.link{
+  position: relative;
+  &:after{
+    content: '';
+    position: absolute;
+    width: 6px;
+    height: 12px;
+    top: calc(50% - 6px);
+    right: -15px;
+    background: url("/assets/images/arrow-link.svg") no-repeat;
+    background-size: cover;
+  }
+}

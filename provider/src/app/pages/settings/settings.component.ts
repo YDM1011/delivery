@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {CrudService} from "../../crud.service";
 import {AuthService} from "../../auth.service";
+import Swal from "sweetalert2";
 
 @Component({
   selector: 'app-settings',
@@ -41,12 +42,30 @@ export class SettingsComponent implements OnInit {
     });
   }
   create() {
-    this.crud.post('company', this.companyCopy, this.company._id).then((v: any) => {
-      this.user.companies[0] = v;
-      this.company = this.user.companies[0];
-      this.auth.setMe(this.user);
-      this.formCheck();
-    });
+    if (this.company.img === this.companyCopy.img) {
+      this.crud.post('company', this.companyCopy, this.company._id).then((v: any) => {
+        this.user.companies[0] = v;
+        this.company = this.user.companies[0];
+        this.auth.setMe(this.user);
+        this.formCheck();
+      });
+    } else {
+      if (!this.uploadObj) {
+        Swal.fire('Error', 'Поле с картинкой не может быть пустым', 'error').then();
+        return;
+      }
+      this.crud.post('upload2', {body: this.uploadObj}).then((u: any) => {
+        if (u) {
+          this.company['img'] = u.file;
+          this.crud.post('company', this.companyCopy, this.company._id).then((v: any) => {
+            this.user.companies[0] = v;
+            this.company = this.user.companies[0];
+            this.auth.setMe(this.user);
+            this.formCheck();
+          });
+        }
+      });
+    }
   }
   onFs(e) {
     this.uploadObj = e;
