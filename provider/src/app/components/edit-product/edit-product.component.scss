@@ -1,8 +1,13 @@
+.check{
+  display: flex;
+}
+
+.left{
+  height: 40px;
+}
+
 .example-full-width {
   width: 100%;
-}
-.example-half{
-  width: 400px;
 }
 
 ::ng-deep .mat-focused .mat-form-field-label {
@@ -19,19 +24,10 @@
   /*change color of underline when focused*/
   background-color: #009688 !important;;
 }
-.left{
-  height: 40px;
+::ng-deep .mat-checkbox .mat-checkbox-frame {
+  border-color: #009688!important;
 }
-.link{
-  position: relative;
-  &:after{
-    content: '';
-    position: absolute;
-    width: 6px;
-    height: 12px;
-    top: calc(50% - 6px);
-    right: -15px;
-    background: url("/assets/images/arrow-link.svg") no-repeat;
-    background-size: cover;
-  }
+
+::ng-deep .mat-checkbox-checked .mat-checkbox-background {
+  background-color: #009688 !important;
 }

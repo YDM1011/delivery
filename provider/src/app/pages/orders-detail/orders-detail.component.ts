@@ -16,16 +16,16 @@ export class OrdersDetailComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.route.params.subscribe(() => {
-      this.id = this.route.snapshot.paramMap.get('id');
-      if (this.id) {
-        this.crud.get('basket', this.id).then((b: any) => {
-          if (b) {
-            this.basket = b;
-          }
-        });
-      }
-    });
+    // this.route.params.subscribe(() => {
+    //   this.id = this.route.snapshot.paramMap.get('id');
+    //   if (this.id) {
+    //     this.crud.get('basket', this.id).then((b: any) => {
+    //       if (b) {
+    //         this.basket = b;
+    //       }
+    //     });
+    //   }
+    // });
   }
 
 }

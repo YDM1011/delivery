@@ -1,0 +1,36 @@
+<div class="add-section">
+	<mat-form-field class="example-full-width">
+		<input matInput type="text" placeholder="Название продукта" [(ngModel)]="product.name" name="name" autocomplete="off">
+	</mat-form-field>
+	<mat-form-field class="example-full-width">
+		<input matInput type="text" placeholder="Опис продукта" [(ngModel)]="product.des" name="des" autocomplete="off">
+	</mat-form-field>
+	<mat-form-field class="example-full-width">
+		<input matInput type="text" placeholder="Ціна" [(ngModel)]="product.price" name="price" autocomplete="off">
+	</mat-form-field>
+	<div *ngIf="categorys.length > 0">
+		category
+		<select [(ngModel)]="mainCategoryChoose">
+			<option *ngFor="let item of categorys" [value]="item._id">{{item.name}}</option>
+		</select>
+	</div>
+	<div  *ngIf="brands && brands.length > 0">
+		brands
+		<select [(ngModel)]="mainChooseBrand">
+			<option *ngFor="let item of brands" [value]="item._id">{{item.name}}</option>
+		</select>
+	</div>
+	<div class="group-buttons">
+		<div class="left">
+			<app-upload (onFs)="onFs($event)"></app-upload>
+			<div class="mat-chip-file" *ngIf="product && product.img !== ''">
+				<div class="content">{{product.img}}</div>
+				<div class="remove-mat-chip" (click)="product.img = ''"></div>
+			</div>
+		</div>
+		<div class="right">
+			<button class="main-button" (click)="cancelAddBtn()">Отмена</button>
+			<button class="main-button-color" (click)="create()">Сохранить</button>
+		</div>
+	</div>
+</div>

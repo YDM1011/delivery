@@ -1,1 +1,278 @@
-<p>orders works!</p>
+<div class="contain">
+	<div class="contain__group">
+		<div class="add-section">
+			<mat-tab-group (selectedIndexChange)="selectChange($event)" [animationDuration]="0">
+				<mat-tab label="Все заказы">
+					<ng-template matTabContent class="mat-template">
+						<div class="loading" *ngIf="!loading">
+							loading...1
+						</div>
+						<div class="content" *ngIf="loading">
+							<div class="table-f">
+								<div class="row-f">
+									<div class="name col-f">
+										Имя
+									</div>
+									<div class="address col-f">
+										Адрес доставки
+									</div>
+									<div class="price col-f">
+										Цена
+									</div>
+									<div class="date col-f">
+										Дата создания
+									</div>
+									<div class="buttons col-f">
+									
+									</div>
+								</div>
+								<div class="row-f" [routerLink]="'/orders-detail/4'">
+									<div class="name col-f" [matTooltip]="'Имя Фамилия'">
+										<div class="img">
+											<img src="./assets/images/user.svg" alt="">
+										</div>
+									</div>
+									<div class="address col-f">
+										Киев, улица Нивка 45, дом 3
+									</div>
+									<div class="price col-f">
+										500 грн
+									</div>
+									<div class="date col-f">
+										date
+									</div>
+									<div class="buttons col-f">
+										<button class="main-button-color">
+											Взять заказ
+										</button>
+									</div>
+								</div>
+								<div class="row-f" [routerLink]="'/orders-detail/4'">
+									<div class="name col-f" [matTooltip]="'Имя Фамилия'">
+										<div class="img">
+											<img src="./assets/images/user.svg" alt="">
+										</div>
+									</div>
+									<div class="address col-f">
+										Киев, улица Нивка 45, дом 3
+									</div>
+									<div class="price col-f">
+										500 грн
+									</div>
+									<div class="date col-f">
+										date
+									</div>
+									<div class="buttons col-f">
+										<button class="main-button-color">
+											Взять заказ
+										</button>
+									</div>
+								</div>
+								<div class="row-f" [routerLink]="'/orders-detail/4'">
+									<div class="name col-f" [matTooltip]="'Имя Фамилия'">
+										<div class="img">
+											<img src="./assets/images/user.svg" alt="">
+										</div>
+									</div>
+									<div class="address col-f">
+										Киев, улица Нивка 45, дом 3
+									</div>
+									<div class="price col-f">
+										500 грн
+									</div>
+									<div class="date col-f">
+										date
+									</div>
+									<div class="buttons col-f">
+										<button class="main-button-color">
+											Взять заказ
+										</button>
+									</div>
+								</div>
+							</div>
+							
+							<mat-paginator [length]="lengthPagination"
+							               [pageSize]="pageSizePagination"
+							               [pageSizeOptions]="pageSizeOptionsPagination"
+							               (page)="pageEvent($event)">
+							</mat-paginator>
+						</div>
+					</ng-template>
+				</mat-tab>
+				<mat-tab label="В процесе">
+					<ng-template matTabContent>
+						<div class="loading" *ngIf="!loading">
+							loading...2
+						</div>
+						<div class="content" *ngIf="loading">
+							<div class="table-f">
+								<div class="row-f">
+									<div class="name col-f">
+										Имя
+									</div>
+									<div class="address col-f">
+										Адрес доставки
+									</div>
+									<div class="price col-f">
+										Цена
+									</div>
+									<div class="date col-f">
+										Дата создания
+									</div>
+									<div class="buttons col-f">
+									
+									</div>
+								</div>
+								<div class="row-f" [routerLink]="'/orders-detail/4'">
+									<div class="name col-f" [matTooltip]="'Имя Фамилия'">
+										<div class="img">
+											<img src="./assets/images/user.svg" alt="">
+										</div>
+									</div>
+									<div class="address col-f">
+										Киев, улица Нивка 45, дом 3
+									</div>
+									<div class="price col-f">
+										500 грн
+									</div>
+									<div class="date col-f">
+										date
+									</div>
+									<div class="buttons col-f">
+										<div class="who-doing">
+											<div class="status waiting">
+												В оброботке
+											</div>
+											<div class="name">
+												Василь Васильевич
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="row-f" [routerLink]="'/orders-detail/4'">
+									<div class="name col-f" [matTooltip]="'Имя Фамилия'">
+										<div class="img">
+											<img src="./assets/images/user.svg" alt="">
+										</div>
+									</div>
+									<div class="address col-f">
+										Киев, улица Нивка 45, дом 3
+									</div>
+									<div class="price col-f">
+										500 грн
+									</div>
+									<div class="date col-f">
+										date
+									</div>
+									<div class="buttons col-f">
+										<div class="who-doing">
+											<div class="status waiting">
+												В оброботке
+											</div>
+											<div class="name">
+												Василь Васильевич
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							
+							<mat-paginator [length]="lengthPagination"
+							               [pageSize]="pageSizePagination"
+							               [pageSizeOptions]="pageSizeOptionsPagination"
+							               (page)="pageEvent($event)">
+							</mat-paginator>
+						</div>
+					</ng-template>
+				</mat-tab>
+				<mat-tab label="История">
+					<ng-template matTabContent>
+						<div class="loading" *ngIf="!loading">
+							loading...3
+						</div>
+						<div class="content" *ngIf="loading">
+							<div class="table-f">
+								<div class="row-f">
+									<div class="name col-f">
+										Имя
+									</div>
+									<div class="address col-f">
+										Адрес доставки
+									</div>
+									<div class="price col-f">
+										Цена
+									</div>
+									<div class="date col-f">
+										Дата создания
+									</div>
+									<div class="buttons col-f">
+									
+									</div>
+								</div>
+								<div class="row-f" [routerLink]="'/orders-detail/4'">
+									<div class="name col-f" [matTooltip]="'Имя Фамилия'">
+										<div class="img">
+											<img src="./assets/images/user.svg" alt="">
+										</div>
+									</div>
+									<div class="address col-f">
+										Киев, улица Нивка 45, дом 3
+									</div>
+									<div class="price col-f">
+										500 грн
+									</div>
+									<div class="date col-f">
+										date
+									</div>
+									<div class="buttons col-f">
+										<div class="who-doing">
+											<div class="status cancel">
+												Отменен
+											</div>
+											<div class="name">
+												Василь Васильевич
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="row-f" [routerLink]="'/orders-detail/4'">
+									<div class="name col-f" [matTooltip]="'Имя Фамилия'">
+										<div class="img">
+											<img src="./assets/images/user.svg" alt="">
+										</div>
+									</div>
+									<div class="address col-f">
+										Киев, улица Нивка 45, дом 3
+									</div>
+									<div class="price col-f">
+										500 грн
+									</div>
+									<div class="date col-f">
+										date
+									</div>
+									<div class="buttons col-f">
+										<div class="who-doing">
+											<div class="status success">
+												Сделано
+											</div>
+											<div class="name">
+												Василь Васильевич
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							
+							<mat-paginator [length]="lengthPagination"
+							               [pageSize]="pageSizePagination"
+							               [pageSizeOptions]="pageSizeOptionsPagination"
+							               (page)="pageEvent($event)">
+							</mat-paginator>
+						</div>
+					</ng-template>
+				</mat-tab>
+			</mat-tab-group>
+		</div>
+	</div>
+</div>
+

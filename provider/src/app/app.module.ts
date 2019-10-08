@@ -35,6 +35,10 @@ import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
 import { ImageCropperComponent } from './components/image-cropper/image-cropper.component';
 import { OrdersComponent } from './pages/orders/orders.component';
 import { OrdersDetailComponent } from './pages/orders-detail/orders-detail.component';
+import {MatPaginatorIntl} from "@angular/material";
+import {getDutchPaginatorIntl} from "./dutch-paginator-intl";
+import { AddProductComponent } from './components/add-product/add-product.component';
+import { EditProductComponent } from './components/edit-product/edit-product.component';
 
 @NgModule({
   declarations: [
@@ -60,6 +64,8 @@ import { OrdersDetailComponent } from './pages/orders-detail/orders-detail.compo
     ImageCropperComponent,
     OrdersComponent,
     OrdersDetailComponent,
+    AddProductComponent,
+    EditProductComponent,
   ],
   imports: [
     BrowserAnimationsModule,
@@ -75,7 +81,8 @@ import { OrdersDetailComponent } from './pages/orders-detail/orders-detail.compo
   ],
   exports: [MaterialModule],
   providers: [CookieService, {provide: HTTP_INTERCEPTORS, useClass: ApiInterceptor, multi: true},
-    {provide: LOCALE_ID, useValue: 'ru-UA'}, {provide: LOCALE_ID, useValue: 'uk'}],
+    {provide: LOCALE_ID, useValue: 'ru-UA'}, {provide: LOCALE_ID, useValue: 'uk'},
+    { provide: MatPaginatorIntl, useValue: getDutchPaginatorIntl() }],
   entryComponents: [
     DialogComponent,
   ],
