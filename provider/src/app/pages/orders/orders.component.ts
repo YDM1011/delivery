@@ -22,6 +22,6 @@ export class OrdersComponent implements OnInit {
   }
 
   pageEvent(e) {
-    console.log('tima', e);
+    console.log('pag', e);
   }
 }

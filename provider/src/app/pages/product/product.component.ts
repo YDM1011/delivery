@@ -15,7 +15,6 @@ export class ProductComponent implements OnInit {
   public loading: boolean = false;
   public showSale: boolean = false;
   public isBlok: boolean = false;
-  public countProduct = null;
   public brands = [];
   public mainCategoryChoose: string;
   public mainChooseBrand: string = null;
@@ -192,5 +191,8 @@ export class ProductComponent implements OnInit {
       this.products.push(e);
       this.addShow = false;
     }
+  }
+  pageEvent(e) {
+    console.log('pag', e);
   }
 }
