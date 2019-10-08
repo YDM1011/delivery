@@ -85,7 +85,8 @@
 					<mat-paginator [length]="lengthPagination"
 					               [pageSize]="pageSizePagination"
 					               [pageSizeOptions]="pageSizeOptionsPagination"
-					               (page)="pageEvent($event)">
+					               (page)="pageEvent($event)"
+									*ngIf="debtors && debtors.length > 0">
 					</mat-paginator>
 				</div>
 				<div class="empty-section" *ngIf="!debtors || debtors.length === 0">

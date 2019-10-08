@@ -25,6 +25,28 @@ export class WorkTimeComponent implements OnInit {
       this.time = Object.assign({}, v.companies[0].workTime);
     });
   }
+  setTimeAll(range, v) {
+    v = !v;
+    if (v) {
+      this.time[range].isWeekend = false;
+      this.time[range].isTimeRange = false;
+    } else {
+      this.time[range].isTimeRange = true;
+    }
+    this.time[range].isAllTime = v;
+    this.isBlok = true;
+  }
+  setTimeWeekend(range, v) {
+    v = !v;
+    if (v) {
+      this.time[range].isAllTime = false;
+      this.time[range].isTimeRange = false;
+    } else {
+      this.time[range].isTimeRange = true;
+    }
+    this.time[range].isWeekend = v;
+    this.isBlok = true;
+  }
   setTimeStart(range, v) {
     this.time[range].timeStart = v;
     this.isBlok = true;
