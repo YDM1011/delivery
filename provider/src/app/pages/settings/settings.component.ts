@@ -55,7 +55,7 @@ export class SettingsComponent implements OnInit {
         Swal.fire('Error', 'Поле с картинкой не может быть пустым', 'error').then();
         return;
       }
-      this.crud.post('upload2', {body: this.uploadObj}).then((u: any) => {
+      this.crud.post('upload2', {body: this.uploadObj}, null, false).then((u: any) => {
         if (u) {
           this.company['img'] = u.file;
           this.crud.post('company', this.company, this.company._id).then((v: any) => {

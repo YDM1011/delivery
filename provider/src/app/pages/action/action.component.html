@@ -78,14 +78,6 @@
 					</mat-chip>
 				</mat-chip-list>
 			</div>
-<!--			<mat-form-field class="example-full-width" *ngIf="editObj && editObj.client.length > 0">-->
-<!--				<input type="text" placeholder="Tel" aria-label="Number" name="inputSearch" matInput [(ngModel)]="inputChange" [matAutocomplete]="auto" (keyup)="change()">-->
-<!--				<mat-autocomplete #auto="matAutocomplete">-->
-<!--					<mat-option *ngFor="let item of searchUser" [value]="item.login" (click)="pushUser(item)">-->
-<!--						{{item.login}}-->
-<!--					</mat-option>-->
-<!--				</mat-autocomplete>-->
-<!--			</mat-form-field>-->
 			<div class="group-buttons">
 				<div class="left">
 					<app-upload (onFs)="onFsEdit($event)" *ngIf="editObj && editObj.img === ''"></app-upload>
@@ -111,62 +103,32 @@
 				<span class="content">Создать акцию</span>
 			</button>
 		</div>
-		<div class="main-section">
-			<div class="mat-elevation-z8">
-				<mat-form-field class="filter" *ngIf="showPagin">
-					<input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
-				</mat-form-field>
-				<table mat-table [dataSource]="dataSource" *ngIf="actions && actions.length > 0">
-					<!-- Position Column -->
-					<ng-container matColumnDef="Номер">
-						<th mat-header-cell *matHeaderCellDef>#</th>
-						<td mat-cell *matCellDef="let element; let index = index"> {{index + 1}} </td>
-					</ng-container>
-					
-					<!-- Name Column -->
-					<ng-container matColumnDef="Назва бренда">
-						<th mat-header-cell *matHeaderCellDef>Назва акции</th>
-						<td class="table__name" mat-cell *matCellDef="let element">
-							<div class="table__name-img">
-								<app-img [fs]="element.img"></app-img>
-							</div>
-							<div class="table__name-name">{{element.description}}</div>
-						</td>
-					</ng-container>
-					
-					<!-- Weight Column -->
-					<ng-container matColumnDef="data">
-						<th mat-header-cell *matHeaderCellDef>Дата</th>
-						<td mat-cell *matCellDef="let element">
-							<div class="top-table-date">
-								{{element.date | date: 'dd MMMM, yyyy'  : null : defLang}}
-							</div>
-							<div class="bottom-table-date">
-								{{element.date | date: 'h:mm a'  : null : defLang}}
-							</div>
-						</td>
-					</ng-container>
-					
-					<ng-container matColumnDef="delete">
-						<th mat-header-cell *matHeaderCellDef></th>
-						<td class="right-section-table" mat-cell *matCellDef="let element; let index = index">
+		<ng-container class="loading" *ngIf="!loading">
+			Loading...
+		</ng-container>
+		<ng-container *ngIf="loading">
+			<div class="main-section">
+				<div class="table" *ngIf="actions || actions.length > 0">
+					<div class="table-content">
+						<div *ngFor="let item of actions; let index = index" style="display: flex;align-items: center">
+							{{item.description}}
 							<span class="edit-btn" (click)="edit(index)"></span>
 							<span class="trash-btn" (click)="delete(index)"></span>
-						</td>
-					</ng-container>
-					
-					<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-					<tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-				</table>
-				
-				<mat-paginator class="paginator-table" [pageSizeOptions]="[5, 10, 20]" [class.paginator-table-active]="showPagin"></mat-paginator>
+						</div>
+					</div>
+					<mat-paginator [length]="lengthPagination"
+					               [pageSize]="pageSizePagination"
+					               [pageSizeOptions]="pageSizeOptionsPagination"
+					               (page)="pageEvent($event)">
+					</mat-paginator>
+				</div>
+				<div class="empty-section" *ngIf="!actions || actions.length === 0">
+					<p>
+						У вас нет созданых акций
+					</p>
+				</div>
 			</div>
-			<div class="empty-section" *ngIf="!actions || actions.length === 0">
-				<p>
-					У вас нет созданых акций
-				</p>
-			</div>
-		</div>
+		</ng-container>
 	</div>
 
 </div>

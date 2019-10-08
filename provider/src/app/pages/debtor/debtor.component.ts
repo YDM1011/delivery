@@ -1,5 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {MatPaginator, MatTableDataSource} from '@angular/material';
+import {Component, OnInit} from '@angular/core';
 import {CrudService} from '../../crud.service';
 import {AuthService} from '../../auth.service';
 import Swal from 'sweetalert2';
@@ -10,6 +9,10 @@ import Swal from 'sweetalert2';
   styleUrls: ['./debtor.component.scss']
 })
 export class DebtorComponent implements OnInit {
+  public lengthPagination = 0;
+  public pageSizePagination = 10;
+  public pageSizeOptionsPagination: number[] = [5, 10, 15];
+  public loading: boolean = false;
   public inputChange: string;
   public userChoose: string;
   public mainCategory;
@@ -38,9 +41,6 @@ export class DebtorComponent implements OnInit {
     dataCall: '',
   };
 
-  displayedColumns: string[] = ['Номер', 'Назва бренда', 'data', 'price', 'delete'];
-  dataSource = new MatTableDataSource(this.debtors);
-  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   constructor(
       private crud: CrudService,
       private auth: AuthService
@@ -54,12 +54,19 @@ export class DebtorComponent implements OnInit {
     this.auth.onMe.subscribe((v: any) => {
       if (!v) { return; }
       this.user = v;
-      this.crud.get(`debtor?query={"companyOwner": "${this.user.companies[0]._id}"}&populate={"path":"clientOwner"}`).then((d: any) => {
-        this.debtors = d;
-        this.dataSource = new MatTableDataSource(this.debtors);
-        setTimeout(() => this.dataSource.paginator = this.paginator);
-        this.chackDataLength();
-      });
+      if (this.user && this.user.companies.length > 0) {
+        this.crud.get(`debtor/count?query={"companyOwner": "${this.user.companies[0]._id}"}`).then((count: any) => {
+          if (count.count > 0) {
+            this.lengthPagination = count.count;
+            this.crud.get(`debtor?query={"companyOwner": "${this.user.companies[0]._id}"}&populate={"path":"clientOwner"}`).then((d: any) => {
+              if (d) {
+                this.debtors = d;
+                this.loading = true;
+              }
+            });
+          }
+        });
+      }
     });
   }
   change() {
@@ -87,10 +94,6 @@ export class DebtorComponent implements OnInit {
     this.crud.post('debtor', this.debtor).then((v: any) => {
       if (v) {
         this.debtors.push(v);
-        this.crud.post('company', {$push: {debtors: v._id}}, this.user.companies[0]._id, false).then();
-        this.dataSource = new MatTableDataSource(this.debtors);
-        setTimeout(() => this.dataSource.paginator = this.paginator);
-        this.chackDataLength();
         this.inputChange = null;
         this.addShow = false;
         this.debtor = {
@@ -108,11 +111,10 @@ export class DebtorComponent implements OnInit {
     this.crud.delete('debtor', this.debtors[i]._id).then((v: any) => {
       if (v) {
         this.debtors.splice(i, 1);
-        this.user.companies[0].debtors = this.debtors;
-        this.auth.setMe(this.user);
-        this.dataSource = new MatTableDataSource(this.debtors);
-        setTimeout(() => this.dataSource.paginator = this.paginator);
-        this.chackDataLength();
+        this.crud.get(`debtor/count?query={"companyOwner":"${this.user.companies[0]._id}"}`).then((count: any) => {
+          if (!count) {return; }
+          this.lengthPagination  = count.count;
+        });
       }
     });
   }
@@ -137,11 +139,6 @@ export class DebtorComponent implements OnInit {
         const newObj = v;
         newObj.client = this.user;
         this.debtors[this.crud.find('_id', this.editObj['_id'], this.debtors)] = newObj;
-        this.user.companies[0].debtors = this.debtors;
-        this.auth.setMe(this.user);
-        this.dataSource = new MatTableDataSource(this.debtors);
-        setTimeout(() => this.dataSource.paginator = this.paginator);
-        this.chackDataLength();
         this.editShow = false;
         this.isBlok = false;
         this.editObj = {
@@ -196,18 +193,10 @@ export class DebtorComponent implements OnInit {
     this.btnBlok(this.validate());
   }
 
-  chackDataLength() {
-    if (!this.debtors || this.debtors.length === 0) {
-      this.showPagin = false;
-      return;
-    }
-    this.showPagin = true;
-  }
-  applyFilter(filterValue: string) {
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
+  pageEvent(e) {
+    this.crud.get(`debtor?query={"companyOwner":"${this.user.companies[0]._id}"}&skip=${e.pageIndex}&limit=${e.pageSize}`).then((d: any) => {
+      if (!d) {return; }
+      this.debtors = d;
+    });
   }
 }
