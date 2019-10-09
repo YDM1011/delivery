@@ -1,22 +1,23 @@
-import {AfterViewInit, Component, OnChanges, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {CrudService} from "../../crud.service";
 import Swal from "sweetalert2";
-import {MatPaginator, MatTableDataSource} from "@angular/material";
-
 
 @Component({
   selector: 'app-brands',
   templateUrl: './brands.component.html',
   styleUrls: ['./brands.component.scss']
 })
-export class BrandsComponent implements OnInit, AfterViewInit {
+export class BrandsComponent implements OnInit {
+  public lengthPagination = 0;
+  public pageSizePagination = 10;
+  public pageSizeOptionsPagination: number[] = [5, 10, 15];
   public defLang = 'ru-UA';
   public showPagin: boolean = false;
   public addShow: boolean = false;
   public editShow: boolean = false;
   public uploadObj = {};
   public brands = [];
-  public loaded = false;
+  public loading = false;
   public editObj = {
     img: '',
     name: '',
@@ -25,23 +26,20 @@ export class BrandsComponent implements OnInit, AfterViewInit {
     img: '',
     name: ''
   };
-  displayedColumns: string[] = ['Номер', 'Назва бренда', 'data', 'delete'];
-  dataSource = new MatTableDataSource(this.brands);
-  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   constructor(
       private crud: CrudService
   ) { }
-  ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
-  }
   ngOnInit() {
-    this.crud.get('brand').then((v: any) => {
-      if (!v) return;
-      this.brands = v;
-      this.dataSource = new MatTableDataSource(this.brands);
-      setTimeout(() => this.dataSource.paginator = this.paginator);
-      this.chackDataLength();
-    }).catch( e => console.log(e));
+    this.crud.get('brand/count').then((count: any) => {
+      if (count) {
+        this.lengthPagination = count.count;
+        this.crud.get(`brand?skip=0&limit=${this.pageSizePagination}`).then((v: any) => {
+          if (!v) {return; }
+          this.brands = v;
+          this.loading = true;
+        });
+      }
+    });
   }
 
   create() {
@@ -59,15 +57,12 @@ export class BrandsComponent implements OnInit, AfterViewInit {
       this.crud.post('brand', this.brand).then((v: any) => {
         if (v) {
           this.brands.push(v);
-          this.dataSource = new MatTableDataSource(this.brands);
-          setTimeout(() => this.dataSource.paginator = this.paginator);
           this.uploadObj = {};
           this.brand = {
             img: '',
             name: ''
           };
           this.addShow = false;
-          this.chackDataLength();
         }
       });
     }).catch( e => console.log(e));
@@ -77,11 +72,13 @@ export class BrandsComponent implements OnInit, AfterViewInit {
     this.crud.delete('brand', this.brands[i]['_id']).then((v: any) => {
       if (v) {
         this.brands.splice(i, 1);
-        this.dataSource = new MatTableDataSource(this.brands);
-        setTimeout(() => this.dataSource.paginator = this.paginator);
-        this.chackDataLength();
+        this.crud.get('brand/count').then((count: any) => {
+          if (count) {
+            this.lengthPagination = count.count;
+          }
+        });
       }
-    }).catch( e => console.log(e));
+    });
   }
   onFs(e) {
     this.uploadObj = e;
@@ -96,7 +93,7 @@ export class BrandsComponent implements OnInit, AfterViewInit {
   confirmEdit() {
     if (this.uploadObj && this.uploadObj['name']) {
       this.crud.post('upload2', {body: this.uploadObj}).then((v: any) => {
-        if (!v) return;
+        if (!v) {return; }
         this.editObj.img = v.file;
         this.confirmEditCityCrud();
       }).catch( e => console.log(e));
@@ -121,8 +118,6 @@ export class BrandsComponent implements OnInit, AfterViewInit {
       if (v) {
         this.editShow = false;
         this.brands[this.crud.find('_id', this.editObj['_id'], this.brands)] = v;
-        this.dataSource = new MatTableDataSource(this.brands);
-        setTimeout(() => this.dataSource.paginator = this.paginator);
         this.editObj = {
           img: '',
           name: ''
@@ -150,19 +145,12 @@ export class BrandsComponent implements OnInit, AfterViewInit {
       name: ''
     };
   }
-  chackDataLength() {
-    if (this.brands.length > 0 ) {
-      this.showPagin = true;
-    } else {
-      this.showPagin = false;
-    }
-  }
-
-  applyFilter(filterValue: string) {
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
+  pageEvent(e) {
+    this.crud.get(`brand&skip=${e.pageIndex  * e.pageSize}&limit=${e.pageSize}`).then((b: any) => {
+      if (!b) {
+        return;
+      }
+      this.brands = b;
+    });
   }
 }

@@ -6,8 +6,11 @@
 			</div>
 		</div>
 	</div>
+	<mat-form-field class="example-full-width">
+		<input matInput placeholder="Filter" name="fileter" [(ngModel)]="filterInput" value="Sushi">
+	</mat-form-field>
 	<mat-chip-list>
-		<mat-chip class="translate-chip" *ngFor="let it of objectKeys(words);" [class.ok]="words[it]['ru'] && words[it]['ru'].toString().length > 0">
+		<mat-chip class="translate-chip" *ngFor="let it of objectKeys(words) | filter: filterInput;" [class.ok]="words[it]['ru'] && words[it]['ru'].toString().length > 0">
 			<span class="chip-content" (click)="addTranslate(it)">
 				{{it}}
 				<span class="chip-btn">

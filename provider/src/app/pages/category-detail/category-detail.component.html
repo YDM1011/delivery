@@ -32,10 +32,30 @@
 			</div>
 			<div class="main-section">
 				<div class="table">
-					<div *ngFor="let item of products; let index = index" style="display: flex;align-items: center">
-						{{item.name}}
-						<span class="edit-btn" (click)="edit(index)"></span>
-						<span class="trash-btn" (click)="delete(index)"></span>
+					<div class="table-content">
+						<div class="row-h">
+							<div class="col">
+								Name
+							</div>
+							<div class="col">
+							</div>
+							<div class="col">
+								Date
+							</div>
+							<div class="col">
+							</div>
+						</div>
+						<div class="row-r" *ngFor="let item of products; let index = index">
+							<div class="col">
+								{{item.name}}
+							</div>
+							<div class="col"></div>
+							<div class="col"></div>
+							<div class="col">
+								<span class="edit-btn" (click)="edit(index)"></span>
+								<span class="trash-btn" (click)="delete(index)"></span>
+							</div>
+						</div>
 					</div>
 					<mat-paginator [length]="lengthPagination"
 					               [pageSize]="pageSizePagination"

@@ -1,14 +1,17 @@
-import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {CrudService} from '../../crud.service';
-import Swal from "sweetalert2";
-import {MatPaginator, MatTableDataSource} from "@angular/material";
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-city',
   templateUrl: './city.component.html',
   styleUrls: ['./city.component.scss']
 })
-export class CityComponent implements OnInit, AfterViewInit{
+export class CityComponent implements OnInit {
+  public lengthPagination = 0;
+  public pageSizePagination = 10;
+  public pageSizeOptionsPagination: number[] = [5, 10, 15];
+  public loading: boolean = false;
   public showPagin: boolean = false;
   public addShow: boolean = false;
   public isBlok: boolean = false;
@@ -17,6 +20,7 @@ export class CityComponent implements OnInit, AfterViewInit{
   public citys = [];
   public defLang = 'ru-UA';
   public editObjCopy;
+  public filterInput = '';
   public editObj = {
     img: '',
     name: '',
@@ -25,24 +29,20 @@ export class CityComponent implements OnInit, AfterViewInit{
     img: '',
     name: ''
   };
-  displayedColumns: string[] = ['Номер', 'Назва бренда', 'data', 'delete'];
-  dataSource = new MatTableDataSource(this.citys);
-  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   constructor(
       private crud: CrudService
   ) { }
-  ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
-  }
 
   ngOnInit() {
-    this.crud.get('city').then((v: any) => {
-      if (!v) return;
-      this.citys = v;
-      this.dataSource = new MatTableDataSource(this.citys);
-      setTimeout(() => this.dataSource.paginator = this.paginator);
-      this.chackDataLength();
-    }).catch( e => console.log(e));
+    this.crud.get('city/count').then((count: any) => {
+      if (!count) {return; }
+      this.lengthPagination = count.count;
+      this.crud.get(`city?skip=0&limit=${this.pageSizePagination}`).then((v: any) => {
+        if (!v) {return; }
+        this.citys = v;
+        this.loading = true;
+      });
+    });
   }
 
   create() {
@@ -55,35 +55,36 @@ export class CityComponent implements OnInit, AfterViewInit{
         return;
     }
     this.crud.post('upload2', {body: this.uploadObj}, null, false).then((v: any) => {
-      if (!v) return;
+      if (!v) {return; }
+      this.addShow = false;
       this.city['img'] = v.file;
       this.crud.post('city', this.city).then((v: any) => {
         if (v) {
           this.citys.push(v);
-          this.dataSource = new MatTableDataSource(this.citys);
-          setTimeout(() => this.dataSource.paginator = this.paginator);
-          this.chackDataLength();
           this.uploadObj = {};
           this.city = {
             img: '',
             name: ''
           };
-          this.addShow = false;
+          this.crud.get('city/count').then((count: any) => {
+            if (!count) {return; }
+            this.lengthPagination = count.count;
+          });
         }
-      }).catch( e => console.log(e));
-    }).catch( e => console.log(e));
+      });
+    });
   }
 
   delete(i) {
     this.crud.delete('city', this.citys[i]['_id']).then((v: any) => {
       if (v) {
         this.citys.splice(i, 1);
-
-        this.dataSource = new MatTableDataSource(this.citys);
-        setTimeout(() => this.dataSource.paginator = this.paginator);
-        this.chackDataLength();
+        this.crud.get('city/count').then((count: any) => {
+          if (!count) {return; }
+          this.lengthPagination = count.count;
+        });
       }
-    }).catch( e => console.log(e));
+    });
   }
   onFs(e) {
     this.uploadObj = e;
@@ -104,7 +105,7 @@ export class CityComponent implements OnInit, AfterViewInit{
         if (!v) return;
         this.editObj.img = v.file;
         this.confirmEditCityCrud();
-      }).catch( e => console.log(e));
+      });
     } else {
       this.confirmEditCityCrud();
     }
@@ -127,10 +128,6 @@ export class CityComponent implements OnInit, AfterViewInit{
       if (v) {
         this.editShow = false;
         this.citys[this.crud.find('_id', this.editObj['_id'], this.citys)] = v;
-
-        this.dataSource = new MatTableDataSource(this.citys);
-        setTimeout(() => this.dataSource.paginator = this.paginator);
-        this.chackDataLength();
         this.editObj = {
           img: '',
           name: ''
@@ -157,14 +154,6 @@ export class CityComponent implements OnInit, AfterViewInit{
       name: ''
     };
   }
-  chackDataLength() {
-    if (this.citys.length > 0 ) {
-      this.showPagin = true;
-      return;
-    }
-    this.showPagin = false;
-  }
-
   validate() {
     let isTrue = false;
     for (const key in this.editObj) {
@@ -181,11 +170,10 @@ export class CityComponent implements OnInit, AfterViewInit{
     this.btnBlok(this.validate());
   }
 
-  applyFilter(filterValue: string) {
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
+  pageEvent(e) {
+    this.crud.get(`city&skip=${e.pageIndex  * e.pageSize}&limit=${e.pageSize}`).then((c: any) => {
+      if (!c) {return; }
+      this.citys = c;
+    });
   }
 }

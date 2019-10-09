@@ -1,5 +1,4 @@
-import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
-import {MatPaginator, MatTableDataSource} from "@angular/material";
+import {Component, OnInit} from '@angular/core';
 import {CrudService} from "../../crud.service";
 import Swal from "sweetalert2";
 
@@ -8,8 +7,11 @@ import Swal from "sweetalert2";
   templateUrl: './list-admins.component.html',
   styleUrls: ['./list-admins.component.scss']
 })
-export class ListAdminsComponent implements OnInit, AfterViewInit {
-  public loaded = false;
+export class ListAdminsComponent implements OnInit {
+  public lengthPagination = 0;
+  public pageSizePagination = 10;
+  public pageSizeOptionsPagination: number[] = [5, 10, 15];
+  public loading = false;
   public search;
   public defLang = 'ru-UA';
   public addShow = false;
@@ -21,26 +23,21 @@ export class ListAdminsComponent implements OnInit, AfterViewInit {
     pass: '',
     role: 'admin',
   };
-  displayedColumns: string[] = ['Номер', 'Назва бренда', 'data', 'delete'];
-  dataSource = new MatTableDataSource(this.list);
-  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   constructor(
       private crud: CrudService
   ) { }
 
-  ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
-  }
-
   ngOnInit() {
-    this.crud.get('client?query={"role": "admin"}&sort={"lastUpdate":-1}').then((v: any) => {
-      if (!v) {return; }
-      this.list = v;
-      this.dataSource = new MatTableDataSource(this.list);
-      setTimeout(() => this.dataSource.paginator = this.paginator);
-      this.chackDataLength();
-      this.loaded = true;
-    }).catch( e => console.log(e));
+    this.crud.get(`client/count?query={"role": "admin"}`).then((count: any) => {
+      if (count) {
+        this.lengthPagination = count.count;
+        this.crud.get(`client?query={"role": "admin"}&skip=0&limit=${this.lengthPagination}`).then((v: any) => {
+          if (!v) {return; }
+          this.list = v;
+          this.loading = true;
+        });
+      }
+    });
   }
   create(e) {
     e.preventDefault();
@@ -50,10 +47,7 @@ export class ListAdminsComponent implements OnInit, AfterViewInit {
       return;
     }
     this.crud.post('signup', this.client).then((v: any) => {
-      this.list.unshift(v);
-      this.dataSource = new MatTableDataSource(this.list);
-      setTimeout(() => this.dataSource.paginator = this.paginator);
-      this.chackDataLength();
+      this.list.push(v);
       this.clearObj();
       this.addShow = false;
     }).catch((error) => {
@@ -67,6 +61,11 @@ export class ListAdminsComponent implements OnInit, AfterViewInit {
    this.crud.delete('client', id).then((v: any) => {
      if (v) {
        this.list.splice(i, 1);
+       this.crud.get('client/count?query={"role": "admin"}').then((count: any) => {
+         if (count) {
+           this.lengthPagination = count.count;
+         }
+       });
      }
    });
   }
@@ -77,14 +76,6 @@ export class ListAdminsComponent implements OnInit, AfterViewInit {
     this.addShow = false;
     this.clearObj();
   }
-  chackDataLength() {
-    if (this.list.length > 0 ) {
-      this.showPagin = true;
-      return;
-    } else {
-      this.showPagin = false;
-    }
-  }
   clearObj() {
     this.client = {
       name: '',
@@ -94,11 +85,12 @@ export class ListAdminsComponent implements OnInit, AfterViewInit {
     };
   }
 
-  applyFilter(filterValue: string) {
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
+  pageEvent(e) {
+    this.crud.get(`client?query={"role": "admin"}&skip=${e.pageIndex  * e.pageSize}&limit=${e.pageSize}`).then((l: any) => {
+      if (!l) {
+        return;
+      }
+      this.list = l;
+    });
   }
 }

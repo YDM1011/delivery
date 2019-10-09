@@ -1,47 +1,46 @@
-import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
-import {CrudService} from "../../crud.service";
-import Swal from "sweetalert2";
-import {MatPaginator, MatTableDataSource} from "@angular/material";
+import {Component, OnInit} from '@angular/core';
+import {CrudService} from '../../crud.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-category',
   templateUrl: './category.component.html',
   styleUrls: ['./category.component.scss']
 })
-export class CategoryComponent implements OnInit, AfterViewInit {
+export class CategoryComponent implements OnInit {
+  public lengthPagination = 0;
+  public pageSizePagination = 10;
+  public pageSizeOptionsPagination: number[] = [5, 10, 15];
+  public loading = false;
   public defLang = 'ru-UA';
   public showPagin: boolean = false;
   public addShow: boolean = false;
   public editShow: boolean = false;
   public categorys = [];
   public uploadObj;
-  public page = {pageSize:5,pageIndex:0};
+  public page = {pageSize: 5, pageIndex: 0};
   public editObj = {
     name: '',
   };
   public category = {
     name: '',
-    img: ''
+    img: '',
   };
 
-  displayedColumns: string[] = ['Номер', 'Назва бренда', 'data', 'delete'];
-  dataSource = new MatTableDataSource(this.categorys);
-  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   constructor(
       private crud: CrudService
   ) { }
 
-  ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
-  }
   ngOnInit() {
-    this.crud.get('mainCategory').then((v: any) => {
-      if (!v) return;
-      this.categorys = v;
-      this.dataSource = new MatTableDataSource(this.categorys);
-      setTimeout(() => this.dataSource.paginator = this.paginator);
-      this.chackDataLength();
-    }).catch( e => console.log(e));
+    this.crud.get('mainCategory/count').then((count: any) => {
+      if (!count) {return; }
+      this.lengthPagination = count.count;
+      this.crud.get(`mainCategory?skip=0&limit=${this.pageSizePagination}`).then((v: any) => {
+        if (!v) {return; }
+        this.categorys = v;
+        this.loading = true;
+      })
+    })
   }
   onFs(e) {
     this.uploadObj = e;
@@ -56,14 +55,15 @@ export class CategoryComponent implements OnInit, AfterViewInit {
     this.crud.post('mainCategory', this.category).then((v: any) => {
       if (v) {
         this.categorys.push(v);
-        this.dataSource = new MatTableDataSource(this.categorys);
-        setTimeout(() => this.dataSource.paginator = this.paginator);
-        this.chackDataLength();
+        this.addShow = false;
         this.category = {
           name: '',
-          img:''
+          img: ''
         };
-        this.addShow = false;
+        this.crud.get('mainCategory/count').then((count: any) => {
+          if (!count) {return; }
+          this.lengthPagination = count.count;
+        });
       }
     }).catch( e => console.log(e));
 
@@ -73,26 +73,24 @@ export class CategoryComponent implements OnInit, AfterViewInit {
       this.crud.post('mainCategory', this.category).then((v: any) => {
         if (v) {
           this.categorys.push(v);
-          this.dataSource = new MatTableDataSource(this.categorys);
-          setTimeout(() => this.dataSource.paginator = this.paginator);
-          this.chackDataLength();
           this.category = {
             name: '',
-            img:''
+            img: ''
           };
           this.addShow = false;
         }
-      }).catch( e => console.log(e));
-    }).catch( e => console.log(e));
+      })
+    })
   }
 
   delete(i) {
     this.crud.delete('mainCategory', this.categorys[i]['_id']).then((v: any) => {
       if (v) {
         this.categorys.splice(i, 1);
-        this.dataSource = new MatTableDataSource(this.categorys);
-        setTimeout(() => this.dataSource.paginator = this.paginator);
-        this.chackDataLength();
+        this.crud.get('mainCategory/count').then((count: any) => {
+          if (!count) {return; }
+          this.lengthPagination = count.count;
+        });
       }
     }).catch( e => console.log(e));
   }
@@ -117,15 +115,12 @@ export class CategoryComponent implements OnInit, AfterViewInit {
         if (v) {
           this.editShow = false;
           this.categorys[this.crud.find('_id', this.editObj['_id'], this.categorys)] = v;
-          this.dataSource = new MatTableDataSource(this.categorys);
-          setTimeout(() => this.dataSource.paginator = this.paginator);
-          this.chackDataLength();
           this.editObj = {
             name: ''
           };
         }
-      }).catch( e => console.log(e));
-    }).catch( e => console.log(e));
+      });
+    });
 
   }
   openAdd() {
@@ -146,19 +141,12 @@ export class CategoryComponent implements OnInit, AfterViewInit {
     };
   }
 
-  chackDataLength() {
-    if (this.categorys.length > 0 ) {
-      this.showPagin = true;
-    } else {
-      this.showPagin = false;
-    }
-  }
-
-  applyFilter(filterValue: string) {
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
+  pageEvent(e) {
+    this.crud.get(`mainCategory&skip=${e.pageIndex  * e.pageSize}&limit=${e.pageSize}`).then((c: any) => {
+      if (!c) {
+        return;
+      }
+      this.categorys = c;
+    });
   }
 }
