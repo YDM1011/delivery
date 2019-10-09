@@ -36,66 +36,61 @@
 				<span class="content">Создать клиента</span>
 			</button>
 		</div>
-		<div class="main-section">
-			<div class="mat-elevation-z8">
-				
-				<mat-form-field class="filter" *ngIf="showPagin">
-					<input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
-				</mat-form-field>
-				<table mat-table [dataSource]="dataSource" *ngIf="list && list.length > 0">
-					<!-- Position Column -->
-					<ng-container matColumnDef="Номер">
-						<th mat-header-cell *matHeaderCellDef>#</th>
-						<td mat-cell *matCellDef="let element; let index = index"> {{index + 1}} </td>
-					</ng-container>
-					
-					<!-- Name Column -->
-					<ng-container matColumnDef="Назва бренда">
-						<th mat-header-cell *matHeaderCellDef>Клиенты</th>
-						<td class="table__name" mat-cell *matCellDef="let element">
-							<div class="table__name-img">
-								<img src="./assets/images/user.svg" alt="" *ngIf="!element.img || element.img == ''">
-								<app-img [fs]="element.img" *ngIf="element.img && element.img !== ''"></app-img>
+		
+		<ng-container class="loading" *ngIf="!loading">
+			Loading...
+		</ng-container>
+		<ng-container *ngIf="loading">
+			<div class="main-section">
+				<div class="table">
+					<div class="table-content">
+						<div class="row-h">
+							<div class="col">
+								Name
 							</div>
-							<div class="table__name-name">
-								<a>
-									{{element.login}}
-								</a>
+							<div class="col">
 							</div>
-						</td>
-					</ng-container>
-					
-					<!-- Weight Column -->
-					<ng-container matColumnDef="data">
-						<th mat-header-cell *matHeaderCellDef>Дата реестрации</th>
-						<td mat-cell *matCellDef="let element">
-							<div class="top-table-date">
-								{{element.date | date: 'dd MMMM, yyyy'  : null : defLang}}
+							<div class="col">
+								Date
 							</div>
-							<div class="bottom-table-date">
-								{{element.date | date: 'h:mm a'  : null : defLang}}
+							<div class="col">
 							</div>
-						</td>
-					</ng-container>
+						</div>
+						<div class="row-r" *ngFor="let item of list; let index = index">
+							<div class="col">
+								<div class="img">
+									<img src="./assets/images/user.svg" alt="" *ngIf="!item.img || item.img == ''">
+									<app-img [fs]="item.img" *ngIf="item.img && item.img !== ''"></app-img>
+								</div>
+								{{item.login}}
+							</div>
+							<div class="col"></div>
+							<div class="col">
+								<div class="date">
+									<div class="top-table-date">
+										{{item.date | date: 'dd MMMM, yyyy'  : null : defLang}}
+									</div>
+									<div class="bottom-table-date">
+										{{item.date | date: 'h:mm a'  : null : defLang}}
+									</div>
+								</div>
+							</div>
+							<div class="col">
+							</div>
+						</div>
+					</div>
 					
-					<ng-container matColumnDef="delete">
-						<th mat-header-cell *matHeaderCellDef></th>
-						<td class="right-section-table" mat-cell *matCellDef="let element; let index = index">
-<!--							<span class="edit-btn" (click)="edit(index)"></span>-->
-<!--							<span class="trash-btn" (click)="delete(index)"></span>-->
-						</td>
-					</ng-container>
-					
-					<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-					<tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-				</table>
-				
-				<mat-paginator class="paginator-table" [pageSizeOptions]="[5, 10, 20]" [class.paginator-table-active]="showPagin"></mat-paginator>
+					<mat-paginator [length]="lengthPagination"
+					               [pageSize]="pageSizePagination"
+					               [pageSizeOptions]="pageSizeOptionsPagination"
+					               (page)="pageEvent($event)"
+					               *ngIf="list && list.length > 0">
+					</mat-paginator>
+				</div>
+				<div class="no-content" *ngIf="list && list.length === 0">
+					У вас нет администраторов
+				</div>
 			</div>
-			
-			<div class="no-content" *ngIf="list && list.length === 0">
-				У вас нет клиентов
-			</div>
-		</div>
+		</ng-container>
 	</div>
 </div>

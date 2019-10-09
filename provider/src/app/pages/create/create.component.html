@@ -66,14 +66,42 @@
 				loading...
 			</ng-container>
 			<ng-container *ngIf="loading">
-				<div class="table" *ngIf="clients || clients.length > 0">
+				<div class="table" *ngIf="clients && clients.length > 0">
 					<div class="table-content">
-						<div *ngFor="let item of clients; let index = index" style="display: flex;align-items: center">
-							{{item.login}}
-							<span class="edit-btn" (click)="edit(index)"></span>
-							<span class="trash-btn" (click)="delete(index)"></span>
+						<div class="row-h">
+							<div class="col">
+								Name
+							</div>
+							<div class="col">
+							</div>
+							<div class="col">
+								Date
+							</div>
+							<div class="col">
+							</div>
+						</div>
+						<div class="row-r" *ngFor="let item of clients; let index = index">
+							<div class="col">
+								{{item.login}}
+							</div>
+							<div class="col"></div>
+							<div class="col">
+								<div class="date">
+									<div class="top-table-date">
+										{{item.date | date: 'dd MMMM, yyyy'  : null : defLang}}
+									</div>
+									<div class="bottom-table-date">
+										{{item.date | date: 'h:mm a'  : null : defLang}}
+									</div>
+								</div>
+							</div>
+							<div class="col">
+								<span class="edit-btn" (click)="edit(index)"></span>
+								<span class="trash-btn" (click)="delete(index)"></span>
+							</div>
 						</div>
 					</div>
+					
 					<mat-paginator [length]="lengthPagination"
 					               [pageSize]="pageSizePagination"
 					               [pageSizeOptions]="pageSizeOptionsPagination"

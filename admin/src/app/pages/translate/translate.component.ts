@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import {CrudService} from '../../crud.service';
-import {AuthService} from '../../auth.service';
 
 @Component({
   selector: 'app-translate',
@@ -9,14 +8,14 @@ import {AuthService} from '../../auth.service';
 })
 export class TranslateComponent implements OnInit {
   objectKeys = Object.keys;
+  public filterInput = '';
   public words;
   public ln;
   public lnObj = {ua: '', ru: ''};
   public activeWord;
   public loaded = false;
   constructor(
-      private crud: CrudService,
-      private auth: AuthService
+      private crud: CrudService
   ) { }
 
   ngOnInit() {

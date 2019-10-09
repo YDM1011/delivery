@@ -8,8 +8,11 @@ import Swal from "sweetalert2";
   templateUrl: './list-providers.component.html',
   styleUrls: ['./list-providers.component.scss']
 })
-export class ListProvidersComponent implements OnInit, AfterViewInit {
-  public loaded = false;
+export class ListProvidersComponent implements OnInit {
+  public lengthPagination = 0;
+  public pageSizePagination = 10;
+  public pageSizeOptionsPagination: number[] = [5, 10, 15];
+  public loading = false;
   public search;
   public defLang = 'ru-UA';
   public addShow = false;
@@ -27,32 +30,27 @@ export class ListProvidersComponent implements OnInit, AfterViewInit {
     city: '',
     address: '',
   };
-  displayedColumns: string[] = ['Номер', 'Назва бренда', 'data', 'delete'];
-  dataSource = new MatTableDataSource(this.list);
-  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   constructor(
       private crud: CrudService
   ) { }
 
-  ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
-  }
-
   ngOnInit() {
-    this.crud.get('client?query={"role": "provider"}').then((v: any) => {
-      if (!v) {return; }
-      this.list = v;
-      this.dataSource = new MatTableDataSource(this.list);
-      setTimeout(() => this.dataSource.paginator = this.paginator);
-      this.chackDataLength();
-      this.loaded = true;
-      this.crud.get('city').then((c: any) => {
-        if (c) {
-          this.city = c;
-          this.company.city = this.city[0]._id;
-        }
-      });
-    }).catch( e => console.log(e));
+    this.crud.get('client/count?query={"role": "provider"}').then((count: any) => {
+      if (count) {
+        this.lengthPagination = count.count;
+        this.crud.get(`client?query={"role": "provider"}&skip=0&limit=${this.lengthPagination}`).then((v: any) => {
+          if (!v) {return; }
+          this.list = v;
+          this.loading = true;
+        });
+      }
+    });
+    this.crud.get('city').then((c: any) => {
+      if (c) {
+        this.city = c;
+        this.company.city = this.city[0]._id;
+      }
+    });
   }
   create(e) {
     e.preventDefault();
@@ -63,10 +61,7 @@ export class ListProvidersComponent implements OnInit, AfterViewInit {
       return;
     }
     this.crud.post('signup', {client: this.client, company: this.company}).then((v: any) => {
-      this.list.unshift(v);
-      this.dataSource = new MatTableDataSource(this.list);
-      setTimeout(() => this.dataSource.paginator = this.paginator);
-      this.chackDataLength();
+      this.list.push(v);
       this.clearObj();
       this.addShow = false;
     }).catch((error) => {
@@ -82,13 +77,6 @@ export class ListProvidersComponent implements OnInit, AfterViewInit {
     this.addShow = false;
     this.clearObj();
   }
-  chackDataLength() {
-    if (this.list.length > 0 ) {
-      this.showPagin = true;
-      return;
-    }
-    this.showPagin = false;
-  }
   clearObj() {
     this.client = {
       name: '',
@@ -102,12 +90,12 @@ export class ListProvidersComponent implements OnInit, AfterViewInit {
       city: this.city[0]._id
     };
   }
-
-  applyFilter(filterValue: string) {
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
+  pageEvent(e) {
+    this.crud.get(`client?query={"role": "provider"}&skip=${e.pageIndex  * e.pageSize}&limit=${e.pageSize}`).then((l: any) => {
+      if (!l) {
+        return;
+      }
+      this.list = l;
+    });
   }
 }

@@ -11,7 +11,7 @@ import Swal from 'sweetalert2';
 export class DebtorComponent implements OnInit {
   public lengthPagination = 0;
   public pageSizePagination = 10;
-  public pageSizeOptionsPagination: number[] = [1, 2, 15];
+  public pageSizeOptionsPagination: number[] = [5, 10, 15];
   public loading: boolean = false;
   public inputChange: string;
   public userChoose: string;
