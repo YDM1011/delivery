@@ -44,6 +44,7 @@ export class SettingsComponent implements OnInit {
   }
   create() {
     if (this.company.img === this.companyCopy.img) {
+      delete  this.companyCopy.img;
       this.crud.post('company', this.companyCopy, this.company._id).then((v: any) => {
         this.user.companies[0] = v;
         this.company = this.user.companies[0];
@@ -62,6 +63,7 @@ export class SettingsComponent implements OnInit {
             v.img = v.img.split("--")[1];
             this.user.companies[0] = v;
             this.company = v;
+            this.companyCopy.img = v.img;
             this.auth.setMe(this.user);
             this.formCheck();
           });

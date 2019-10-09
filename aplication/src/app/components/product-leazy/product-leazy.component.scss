@@ -1,21 +1,3 @@
-.filter-sort{
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 10px;
-  .filter{
-    display: flex;
-    align-items: center;
-    svg{
-      margin-right: 5px;
-    }
-  }
-}
-
-.products{
-  display: flex;
-  flex-direction: column;
-}
 .product-item-title-shop{
   display: flex;
   align-items: center;

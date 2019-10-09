@@ -8,6 +8,7 @@ const Schema = mongoose.Schema;
 const schem = new Schema({
     name: {type: String, unique: true},
     img: String,
+    subCategory: [{type: String}],
     lastUpdate: {type: Date},
     date: {type: Date, default: new Date()}
 },{

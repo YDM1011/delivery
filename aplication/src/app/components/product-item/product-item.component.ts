@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit, Output} from '@angular/core';
 import {AuthService} from "../../auth.service";
 
 @Component({
@@ -9,6 +9,7 @@ import {AuthService} from "../../auth.service";
 export class ProductItemComponent implements OnInit {
   public count: number = 0;
   public language: string;
+  @Input() data;
   constructor(
       private auth: AuthService
   ) { }

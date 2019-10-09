@@ -10,14 +10,14 @@ import {ActivatedRoute} from "@angular/router";
   styleUrls: ['./brands-id.component.scss']
 })
 export class BrandsIDComponent implements OnInit {
-  @Input() obj;
-  public language: string;
   public id: string;
-  public data: any;
+  public language: string;
+  public companies;
+  public showFilter: boolean = false;
   constructor(
     private route: ActivatedRoute,
-    private crud: CrudService,
-    private auth: AuthService
+    private auth: AuthService,
+    private crud: CrudService
   ) { }
 
   ngOnInit() {
@@ -25,15 +25,22 @@ export class BrandsIDComponent implements OnInit {
       this.id = this.route.snapshot.paramMap.get('id');
       this.init()
     });
-
     this.auth.onLanguage.subscribe((v: string) => {
       this.language = v;
+    });
+
+  }
+  init(){
+    this.auth.onCity.subscribe((city:any) => {
+      if (city) {
+        this.crud.getBrandName(this.id, city._id).then((companies)=>{
+          this.companies = companies;
+        }).catch(e=>console.log(e));
+      }
     })
   }
 
-  init(){
-    this.crud.getDetailBrand(this.id).then(v=>{
-      this.data = v;
-    })
+  closeFilter(e){
+    this.showFilter = e;
   }
 }

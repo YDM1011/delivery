@@ -32,7 +32,7 @@ const schem = new Schema({
         type: Schema.Types.ObjectId,
         ref: "Category"
     }],
-    categoryMain: [{
+    mainCategories: [{
         type: Schema.Types.ObjectId,
         ref: "MainCategory"
     }],

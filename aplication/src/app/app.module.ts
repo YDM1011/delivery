@@ -73,6 +73,7 @@ import {ServiceWorkerModule} from "@angular/service-worker";
 import { BrandsIDComponent } from './pages/brands-id/brands-id.component';
 import { WorkTimeComponent } from './components/work-time/work-time.component';
 import { PopupDirective } from './directives/popup.directive';
+import {ProductLeazyComponent} from "./components/product-leazy/product-leazy.component";
 
 @NgModule({
   declarations: [
@@ -130,6 +131,7 @@ import { PopupDirective } from './directives/popup.directive';
     BrandsIDComponent,
     WorkTimeComponent,
     PopupDirective,
+    ProductLeazyComponent,
   ],
   imports: [
     Ng5SliderModule,

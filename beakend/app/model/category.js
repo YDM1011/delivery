@@ -100,7 +100,10 @@ schem.post('save', (doc, next)=>{
 });
 schem.post('save', (doc, next)=>{
     mongoose.model('Company')
-        .findOneAndUpdate({_id: doc.companyOwner}, {$push:{categories:doc._id}})
+        .findOneAndUpdate({_id: doc.companyOwner}, {$push:{
+                categories:doc._id,
+                mainCategories:doc.mainCategory,
+            }})
         .exec((e,r)=>{
             next()
         })
@@ -116,6 +119,25 @@ schem.post('findOneAndRemove', (doc,next) => {
                     .findOneAndUpdate(
                         { "categories": null },
                         { "$pull": { "categories": null } },
+                        { "multi": true },
+                        (e,r) => {
+                            next()
+                        }
+                    )
+            }
+        )
+});
+schem.post('findOneAndRemove', (doc,next) => {
+    mongoose.model('Company')
+        .findOneAndUpdate(
+            { "mainCategories": doc.mainCategory },
+            { "$unset": { "mainCategories.$": "" } },
+            { "multi": true },
+            (e,r) => {
+                mongoose.model('Company')
+                    .findOneAndUpdate(
+                        { "mainCategories": null },
+                        { "$pull": { "mainCategories": null } },
                         { "multi": true },
                         (e,r) => {
                             next()
