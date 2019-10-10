@@ -16,7 +16,7 @@ export class CreateComponent implements OnInit {
   public loading = false;
   public showCollaborator = false;
   public user;
-  public showPagin = false;
+
   public editShow = false;
   public isBlok = false;
   public defLang = 'ru-UA';

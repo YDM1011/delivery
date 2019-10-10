@@ -31,24 +31,24 @@
 				Редактировать категорию
 			</div>
 		</div>
-		<div class="edit-section" *ngIf="editShow">
+		<form (submit)="confirmEdit()" (keyup)="formCheck()" class="edit-section">
 			<label>
-				<input type="text" placeholder="Категория" [(ngModel)]="editObj.name">
+				<input type="text" placeholder="Категория" name="name" [(ngModel)]="editObjCopy.name">
 			</label>
 			<div class="group-buttons">
 				<div class="left">
-          <app-upload (onFs)="onFs($event)" [multiple]="false"></app-upload>
-          <div class="mat-chip-file" *ngIf="category && category.img !== ''">
-            <div class="content">{{category.img}}</div>
-            <div class="remove-mat-chip" (click)="category.img = ''"></div>
+          <app-upload (onFs)="onFsEdit($event)" [multiple]="false" *ngIf="editObjCopy && editObjCopy.img === ''"></app-upload>
+          <div class="mat-chip-file" *ngIf="editObjCopy && editObjCopy.img !== ''">
+            <div class="content">{{editObjCopy.img}}</div>
+            <div class="remove-mat-chip" (click)="editObjCopy.img = ''; formCheck()"></div>
           </div>
 				</div>
 				<div class="right">
-					<button class="main-button" (click)="cancelEdit()">Отмена</button>
-					<button class="main-button-color" (click)="confirmEdit(editObj._id)">Сохранить</button>
+					<button class="main-button" type="reset" (click)="cancelEdit()">Отмена</button>
+					<button class="main-button-color" type="submit" *ngIf="isBlok">Сохранить</button>
 				</div>
 			</div>
-		</div>
+		</form>
 	</div>
 	
 	<div class="contain__group">
@@ -68,9 +68,7 @@
 			<ng-container *ngIf="loading">
 				<div class="main-section">
 					<div class="table" *ngIf="categorys && categorys.length > 0">
-						<mat-form-field class="example-full-width">
-							<input matInput placeholder="Filter" name="fileter" [(ngModel)]="filterInput" value="Sushi" (keyup)="filterSearch()">
-						</mat-form-field>
+						<app-search-filter [inputApi]="'mainCategory'" [inputQuery]="'name'" (output)="outputSearch($event)"></app-search-filter>
 						<div class="table-content">
 							<div class="row-h">
 								<div class="col">
@@ -86,6 +84,9 @@
 							</div>
 							<div class="row-r" *ngFor="let item of categorys; let index = index">
 								<div class="col">
+									<div class="img">
+										<app-img [fs]="item.img"></app-img>
+									</div>
 									{{item.name}}
 								</div>
 								<div class="col"></div>

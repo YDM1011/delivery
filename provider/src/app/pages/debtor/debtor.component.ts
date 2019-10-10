@@ -18,7 +18,7 @@ export class DebtorComponent implements OnInit {
   public mainCategory;
   public user;
   public defLang = 'ru-UA';
-  public showPagin = false;
+
   public addShow = false;
   public editShow = false;
   public isBlok = false;

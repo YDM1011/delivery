@@ -15,7 +15,7 @@
 		</select>
 	</div>
 	<div class="check">
-		<mat-checkbox [(ngModel)]="showSale" name="saleChack">Включить скидку</mat-checkbox>
+		<mat-checkbox [(ngModel)]="showSale" (change)="formCheck()" name="saleChack">Включить скидку</mat-checkbox>
 	</div>
 	<mat-form-field class="example-full-width" *ngIf="showSale">
 		<input matInput type="text" placeholder="Цена со скидкой" name="priceSale" [(ngModel)]="editObj.discount" autocomplete="off">
@@ -24,7 +24,7 @@
 		<div class="left">
 			<app-upload (onFs)="onFsEdit($event)" *ngIf="editObj && editObj.img === ''"></app-upload>
 			<div class="mat-chip-file" *ngIf="editObj && editObj.img !== ''">
-				<div class="content">{{editObj.img.split("--")[1]}}</div>
+				<div class="content">{{editObj.img}}</div>
 				<div class="remove-mat-chip" (click)="editObj.img = ''; formCheck()"></div>
 			</div>
 		</div>

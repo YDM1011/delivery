@@ -35,6 +35,7 @@ import { ListAdminsComponent } from './pages/list-admins/list-admins.component';
 import {LottieAnimationViewModule} from 'ng-lottie';
 import {CreditCardDirectivesModule} from "angular-cc-library";
 import {NumbersOnlyDirective} from "./directives/numbers-only.directive";
+import { SearchFilterComponent } from './components/search-filter/search-filter.component';
 
 @NgModule({
   declarations: [
@@ -57,7 +58,8 @@ import {NumbersOnlyDirective} from "./directives/numbers-only.directive";
     NotFoundComponent,
     MainComponent,
     ListAdminsComponent,
-    NumbersOnlyDirective
+    NumbersOnlyDirective,
+    SearchFilterComponent
   ],
   imports: [
     LottieAnimationViewModule.forRoot(),

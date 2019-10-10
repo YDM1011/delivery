@@ -5,7 +5,7 @@
 				Создать Продукт
 			</div>
 		</div>
-		<app-add-product *ngIf="products.length > 0" (outputNew)="newProduct($event)" (cancelAdd)="cancelAdd($event)"></app-add-product>
+		<app-add-product *ngIf="products.length > 0" (outputNew)="newProduct($event)" [brands]="brands" (cancelAdd)="cancelAdd($event)"></app-add-product>
 		<div *ngIf="products.length === 0 && categorys && categorys.length === 0" class="nocategory">
 			У вас нету категорий, создайте категорию тогда вы сможете создать продукт
 		</div>
@@ -16,7 +16,7 @@
 				Редактировать продукт
 			</div>
 		</div>
-		<app-edit-product (cancelEdit)="cancelEdit($event)" (outputChanges)="outputEdit($event)" [obj]="editObj"></app-edit-product>
+		<app-edit-product (cancelEdit)="cancelEdit($event)" [brands]="brands" (outputChanges)="outputEdit($event)" [obj]="editObj"></app-edit-product>
 	</div>
 	<div class="contain__group">
 		<div class="contain__group-header">
@@ -48,6 +48,9 @@
 						</div>
 						<div class="row-r"  *ngFor="let item of products; let index = index">
 							<div class="col">
+								<div class="img">
+									<app-img [fs]="item.img"></app-img>
+								</div>
 								{{item.name}}
 							</div>
 							<div class="col"></div>

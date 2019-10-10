@@ -12,19 +12,16 @@ export class CategoryDetailComponent implements OnInit {
   public lengthPagination = 0;
   public pageSizePagination = 10;
   public pageSizeOptionsPagination: number[] = [5, 10, 15];
-  public loading: boolean = false;
+  public loading = false;
+  public brands = [];
   public id = null;
   public user: any;
   public categoryID;
   public defLang = 'ru-UA';
-  public showPagin = false;
   public addShow = false;
   public editShow = false;
   public products = [];
-  public editObj = {
-    index: null,
-    obj: null
-  };
+  public editObj;
 
   constructor(
       private crud: CrudService,
@@ -37,12 +34,17 @@ export class CategoryDetailComponent implements OnInit {
       if (!u) {return; }
       this.user = u;
     });
+    this.crud.get('brand?select=["name"]').then((b: any) => {
+      if (!b) {return; }
+      this.brands = b;
+    });
     this.route.params.subscribe(() => {
       this.id = this.route.snapshot.paramMap.get('id');
       if (this.id) {
         this.crud.get(`category`, this.id).then((c: any) => {
           if (c) {
             this.categoryID = c;
+            this.loading = true;
           }
         });
         this.crud.get(`order/count?query={"categoryOwner":"${this.id}"}`).then((c: any) => {
@@ -51,7 +53,6 @@ export class CategoryDetailComponent implements OnInit {
             this.crud.get(`order?query={"categoryOwner":"${this.id}"}&skip=0&limit=${this.pageSizePagination}`).then((v: any) => {
               if (!v || v.length === 0) {return; }
               this.products = v;
-              this.loading = true;
             });
           }
         });
@@ -66,10 +67,7 @@ export class CategoryDetailComponent implements OnInit {
     });
   }
   edit(i) {
-    this.editObj = {
-      index: i,
-      obj: this.products[i]
-    };
+    this.editObj = this.products[i];
     this.addShow = false;
     this.editShow = true;
   }
@@ -86,7 +84,7 @@ export class CategoryDetailComponent implements OnInit {
   }
   outputEdit(e) {
     if (e) {
-      this.products[e.index] = e.obj;
+      this.products[this.crud.find('_id', e._id, this.products)] = e;
       this.editShow = false;
     }
   }

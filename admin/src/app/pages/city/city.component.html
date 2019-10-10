@@ -37,10 +37,10 @@
 			</mat-form-field>
 			<div class="group-buttons">
 				<div class="left">
-					<app-upload *ngIf="editObj.img == ''" (onFs)="onFsEdit($event)"></app-upload>
-					<div class="mat-chip-file" *ngIf="editObj && editObj.img !== ''">
-						<div class="content">{{editObj.img}}</div>
-						<div class="remove-mat-chip" (click)="editObj.img = ''; formCheck()"></div>
+					<app-upload *ngIf="editObjCopy.img == ''" (onFs)="onFsEdit($event)"></app-upload>
+					<div class="mat-chip-file" *ngIf="editObjCopy && editObjCopy.img !== ''">
+						<div class="content">{{editObjCopy.img}}</div>
+						<div class="remove-mat-chip" (click)="editObjCopy.img = ''; formCheck()"></div>
 					</div>
 				</div>
 				<div class="right">
@@ -67,10 +67,8 @@
 		<ng-container *ngIf="loading">
 			<div class="main-section">
 				<div class="table">
+					<app-search-filter [inputApi]="'city'" [inputQuery]="'name'" (output)="outputSearch($event)"></app-search-filter>
 					<div class="table-content">
-						<mat-form-field class="example-full-width">
-							<input matInput placeholder="Filter" name="fileter" [(ngModel)]="filterInput" value="Sushi">
-						</mat-form-field>
 						<div class="row-h">
 							<div class="col">
 								Name
@@ -83,7 +81,7 @@
 							<div class="col">
 							</div>
 						</div>
-						<div class="row-r" *ngFor="let item of citys | filter: filterInput; let index = index">
+						<div class="row-r" *ngFor="let item of citys; let index = index">
 							<div class="col">
 								<div class="img">
 									<img src="./assets/images/user.svg" alt="" *ngIf="!item.img || item.img == ''">

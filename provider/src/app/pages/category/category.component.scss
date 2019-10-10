@@ -22,6 +22,21 @@ table {
   width: 100%;
 }
 
+.link{
+  position: relative;
+  padding-right: 30px;
+  &:after{
+    content: '';
+    position: absolute;
+    width: 6px;
+    height: 12px;
+    top: calc(50% - 6px);
+    right: 15px;
+    background: url("/assets/images/arrow-link.svg") no-repeat;
+    background-size: cover;
+  }
+}
+
 ::ng-deep .mat-focused .mat-form-field-label {
   /*change color of label*/
   color: #009688 !important;

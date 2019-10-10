@@ -51,6 +51,7 @@
 		<ng-container *ngIf="loading">
 			<div class="main-section">
 				<div class="table">
+					<app-search-filter [inputApi]="'client'" [inputQuery]="'login'" [role]="'provider'" (output)="outputSearch($event)"></app-search-filter>
 					<div class="table-content">
 						<div class="row-h">
 							<div class="col">

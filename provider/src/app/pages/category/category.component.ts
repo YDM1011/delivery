@@ -18,7 +18,7 @@ export class CategoryComponent implements OnInit {
   public defLang = 'ru-UA';
   public isBlok = false;
   public loading = false;
-  public showPagin = false;
+
   public addShow = false;
   public editShow = false;
   public categorys = [];

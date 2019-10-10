@@ -16,7 +16,7 @@ export class ListProvidersComponent implements OnInit {
   public search;
   public defLang = 'ru-UA';
   public addShow = false;
-  public showPagin = false;
+
   public list = [];
   public city = [];
   public client = {
@@ -90,6 +90,17 @@ export class ListProvidersComponent implements OnInit {
       city: this.city[0]._id
     };
   }
+  outputSearch(e) {
+    if (!e) {
+      this.crud.get(`client?query={"role": "provider"}&skip=0&limit=${this.lengthPagination}`).then((v: any) => {
+        if (!v) {return; }
+        this.list = v;
+      });
+    } else {
+      this.list = e;
+    }
+  }
+
   pageEvent(e) {
     this.crud.get(`client?query={"role": "provider"}&skip=${e.pageIndex  * e.pageSize}&limit=${e.pageSize}`).then((l: any) => {
       if (!l) {

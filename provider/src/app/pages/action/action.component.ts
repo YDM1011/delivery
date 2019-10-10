@@ -18,7 +18,7 @@ export class ActionComponent implements OnInit {
   public defLang = 'ru-UA';
   public isBlok = false;
   public loading = false;
-  public showPagin = false;
+
   public globalAction = true;
   public userAction = false;
   public addShow = false;

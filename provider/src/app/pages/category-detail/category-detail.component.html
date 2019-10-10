@@ -5,7 +5,7 @@
 				Создать продукт
 			</div>
 		</div>
-		<app-add-product (outputNew)="newProduct($event)" (cancelAdd)="cancelAdd($event)"></app-add-product>
+		<app-add-product (outputNew)="newProduct($event)" [brands]="brands" (cancelAdd)="cancelAdd($event)"></app-add-product>
 		
 	</div>
 	
@@ -15,7 +15,7 @@
 				Редактировать продукт
 			</div>
 		</div>
-		<app-edit-product (cancelEdit)="cancelEdit($event)" (outputChanges)="outputEdit($event)" [obj]="editObj"></app-edit-product>
+		<app-edit-product (cancelEdit)="cancelEdit($event)" [brands]="brands" (outputChanges)="outputEdit($event)" [obj]="editObj"></app-edit-product>
 	</div>
 	<ng-container class="loading" *ngIf="!loading">
 		loading ...
@@ -31,7 +31,7 @@
 				</button>
 			</div>
 			<div class="main-section">
-				<div class="table">
+				<div class="table" *ngIf="products && products.length > 0">
 					<div class="table-content">
 						<div class="row-h">
 							<div class="col">
@@ -47,10 +47,22 @@
 						</div>
 						<div class="row-r" *ngFor="let item of products; let index = index">
 							<div class="col">
+								<div class="img">
+									<app-img [fs]="item.img"></app-img>
+								</div>
 								{{item.name}}
 							</div>
 							<div class="col"></div>
-							<div class="col"></div>
+							<div class="col">
+								<div class="date">
+									<div class="top-table-date">
+										{{item.date | date: 'dd MMMM, yyyy'  : null : defLang}}
+									</div>
+									<div class="bottom-table-date">
+										{{item.date | date: 'h:mm a'  : null : defLang}}
+									</div>
+								</div>
+							</div>
 							<div class="col">
 								<span class="edit-btn" (click)="edit(index)"></span>
 								<span class="trash-btn" (click)="delete(index)"></span>
