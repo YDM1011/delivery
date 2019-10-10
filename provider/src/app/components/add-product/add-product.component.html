@@ -22,7 +22,7 @@
 	</div>
 	<div class="group-buttons">
 		<div class="left">
-			<app-upload (onFs)="onFs($event)"></app-upload>
+			<app-upload (onFs)="onFs($event)" *ngIf="product && product.img === ''"></app-upload>
 			<div class="mat-chip-file" *ngIf="product && product.img !== ''">
 				<div class="content">{{product.img}}</div>
 				<div class="remove-mat-chip" (click)="product.img = ''"></div>

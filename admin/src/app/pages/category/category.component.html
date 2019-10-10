@@ -11,7 +11,7 @@
 			</label>
 			<div class="group-buttons">
 				<div class="left">
-          <app-upload (onFs)="onFs($event)" [multiple]="false"></app-upload>
+          <app-upload (onFs)="onFs($event)" [multiple]="false" *ngIf="category && category.img == ''"></app-upload>
           <div class="mat-chip-file" *ngIf="category && category.img !== ''">
             <div class="content">{{category.img}}</div>
             <div class="remove-mat-chip" (click)="category.img = ''"></div>
@@ -60,6 +60,7 @@
 				<span class="content">Создать категорию</span>
 			</button>
 		</div>
+		
 		<div class="main-section">
 			<ng-container class="loading" *ngIf="!loading">
 				Loading...
@@ -67,6 +68,9 @@
 			<ng-container *ngIf="loading">
 				<div class="main-section">
 					<div class="table" *ngIf="categorys && categorys.length > 0">
+						<mat-form-field class="example-full-width">
+							<input matInput placeholder="Filter" name="fileter" [(ngModel)]="filterInput" value="Sushi" (keyup)="filterSearch()">
+						</mat-form-field>
 						<div class="table-content">
 							<div class="row-h">
 								<div class="col">

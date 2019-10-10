@@ -13,14 +13,16 @@ export class CategoryComponent implements OnInit {
   public pageSizeOptionsPagination: number[] = [5, 10, 15];
   public loading = false;
   public defLang = 'ru-UA';
-  public showPagin: boolean = false;
-  public addShow: boolean = false;
-  public editShow: boolean = false;
+  public filterInput = '';
+  public showPagin = false;
+  public addShow = false;
+  public editShow = false;
   public categorys = [];
   public uploadObj;
   public page = {pageSize: 5, pageIndex: 0};
   public editObj = {
     name: '',
+    img: '',
   };
   public category = {
     name: '',
@@ -39,8 +41,8 @@ export class CategoryComponent implements OnInit {
         if (!v) {return; }
         this.categorys = v;
         this.loading = true;
-      })
-    })
+      });
+    });
   }
   onFs(e) {
     this.uploadObj = e;
@@ -48,43 +50,32 @@ export class CategoryComponent implements OnInit {
 
   }
   create() {
-    if (this.category.name === '') {
-      Swal.fire('Error', 'Название категории не может быть пустым', 'error');
+    if (this.category.name === '' || !this.category.img) {
+      Swal.fire('Error', 'Все поля должны быть заполнены', 'error').then();
       return;
     }
-    this.crud.post('mainCategory', this.category).then((v: any) => {
-      if (v) {
-        this.categorys.push(v);
-        this.addShow = false;
-        this.category = {
-          name: '',
-          img: ''
-        };
-        this.crud.get('mainCategory/count').then((count: any) => {
-          if (!count) {return; }
-          this.lengthPagination = count.count;
-        });
-      }
-    }).catch( e => console.log(e));
-
     this.crud.post('upload2', {body: this.uploadObj}, null, false).then((v: any) => {
-      if (!v) return;
-      this.category['img'] = v.file;
+      if (!v) {return; }
+      this.category.img = v.file;
       this.crud.post('mainCategory', this.category).then((v: any) => {
         if (v) {
           this.categorys.push(v);
+          this.addShow = false;
+          this.crud.get('mainCategory/count').then((count: any) => {
+            if (!count) {return; }
+            this.lengthPagination = count.count;
+          });
           this.category = {
             name: '',
             img: ''
           };
-          this.addShow = false;
         }
-      })
-    })
+      });
+    });
   }
 
   delete(i) {
-    this.crud.delete('mainCategory', this.categorys[i]['_id']).then((v: any) => {
+    this.crud.delete('mainCategory', this.categorys[i]._id).then((v: any) => {
       if (v) {
         this.categorys.splice(i, 1);
         this.crud.get('mainCategory/count').then((count: any) => {
@@ -104,24 +95,24 @@ export class CategoryComponent implements OnInit {
   }
   confirmEditCategoryCrud(id) {
     if (this.editObj.name === '') {
-      Swal.fire('Error', 'Название категории не может быть пустым', 'error');
+      Swal.fire('Error', 'Название категории не может быть пустым', 'error').then();
       return;
     }
     this.crud.post('upload2', {body: this.uploadObj}, null, false).then((v: any) => {
-      if (!v) return;
-      this.category['img'] = v.file;
-      this.category['name'] =  this.editObj['name'];
+      if (!v) {return; }
+      this.category.img = v.file;
+      this.category.name =  this.editObj.name;
       this.crud.post('mainCategory', this.category, id).then((v: any) => {
         if (v) {
           this.editShow = false;
           this.categorys[this.crud.find('_id', this.editObj['_id'], this.categorys)] = v;
           this.editObj = {
-            name: ''
+            name: '',
+            img: ''
           };
         }
       });
     });
-
   }
   openAdd() {
     this.addShow = true;
@@ -137,8 +128,24 @@ export class CategoryComponent implements OnInit {
   cancelEdit() {
     this.editShow = false;
     this.editObj = {
-      name: ''
+      name: '',
+      img: ''
     };
+  }
+  filterSearch() {
+    if (this.filterInput.length > 0) {
+      const query = JSON.stringify({name: {$regex: this.filterInput, $options: 'gi'}});
+      this.crud.get(`mainCategory?query=${query}&skip=0&limit=10`).then((v: any) => {
+        if (v && v.length > 0) {
+          this.categorys = v;
+        }
+      });
+    } else {
+      this.crud.get(`mainCategory?skip=0&limit=${this.pageSizePagination}`).then((v: any) => {
+        if (!v) {return; }
+        this.categorys = v;
+      });
+    }
   }
 
   pageEvent(e) {

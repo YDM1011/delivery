@@ -1,16 +1,27 @@
-table {
+.example-full-width {
   width: 100%;
 }
 
-.paginator-table{
-  display: none;
-}
-
-.paginator-table-active{
-  display: block;
-}
-
-
 .right-section-table {
   padding: 19px 0 !important;
+}
+::ng-deep .mat-focused .mat-form-field-label {
+  /*change color of label*/
+  color: #009688 !important;
+}
+
+::ng-deep.mat-form-field-underline {
+  /*change color of underline*/
+  background-color: #DFE0EB !important;
+}
+::ng-deep.mat-form-field-ripple {
+  /*change color of underline when focused*/
+  background-color: #009688 !important;;
+}
+::ng-deep .mat-checkbox .mat-checkbox-frame {
+  border-color: #009688!important;
+}
+
+::ng-deep .mat-checkbox-checked .mat-checkbox-background {
+  background-color: #009688 !important;
 }

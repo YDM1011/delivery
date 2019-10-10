@@ -52,7 +52,7 @@
 			</mat-form-field>
 			<div class="group-buttons">
 				<div class="left">
-					<app-upload (onFs)="onFs($event)"></app-upload>
+					<app-upload (onFs)="onFs($event)" *ngIf="action && action.img === ''"></app-upload>
 					<div class="mat-chip-file" *ngIf="action && action.img !== ''">
 						<div class="content">{{action.img}}</div>
 						<div class="remove-mat-chip" (click)="action.img = ''"></div>
