@@ -126,7 +126,7 @@ export class CategoryComponent implements OnInit {
       return;
     }
     this.editObj.mainCategory = this.mainCategoryChoose;
-    this.crud.post('category', {name: this.editObj.name}, this.editObj['_id']).then((v: any) => {
+    this.crud.post('category', this.editObj, this.editObj['_id']).then((v: any) => {
       if (v) {
         this.editShow = false;
         this.categorys[this.crud.find('_id', this.editObj['_id'], this.categorys)] = v;

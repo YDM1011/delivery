@@ -15,9 +15,14 @@
 			<mat-form-field class="example-full-width">
 				<input matInput type="text" placeholder="Описание акции" name="name" [(ngModel)]="action.description" autocomplete="off">
 			</mat-form-field>
-			<select [(ngModel)]="productChoose" name="choose">
-				<option *ngFor="let item of products" [value]="item._id">{{item.name}}</option>
-			</select>
+			<mat-form-field>
+				<mat-label>Product</mat-label>
+				<mat-select [(value)]="productChoose">
+					<mat-option *ngFor="let item of products" [value]="item._id">
+						{{item.name}}
+					</mat-option>
+				</mat-select>
+			</mat-form-field>
 			<div class="block-check">
 				<mat-checkbox class="check-item" [(ngModel)]="globalAction" name="global" (change)="changeTypeActionGlobal()">Глобальная акция</mat-checkbox>
 				<mat-checkbox class="check-item" [(ngModel)]="userAction" name="user" (change)="changeTypeActionUser()">Для клиента</mat-checkbox>
@@ -76,9 +81,14 @@
 			<mat-form-field class="example-full-width">
 				<input matInput type="text" placeholder="Описание акции" name="name" [(ngModel)]="editObj.description" autocomplete="off">
 			</mat-form-field>
-			<select [(ngModel)]="productChoose" (change)="selectValid()" name="choose">
-				<option *ngFor="let item of products" [value]="item._id">{{item.name}}</option>
-			</select>
+			<mat-form-field>
+				<mat-label>Product</mat-label>
+				<mat-select [(value)]="productChoose" (selectionChange)="selectValid()">
+					<mat-option *ngFor="let item of products" [value]="item._id">
+						{{item.name}}
+					</mat-option>
+				</mat-select>
+			</mat-form-field>
 			<div class="chips-box" *ngIf="editObj && editObj.client.length > 0">
 				<mat-chip-list aria-label="Fish selection">
 					<mat-chip class="chip-item" *ngFor="let item of userChoose; let index = index">

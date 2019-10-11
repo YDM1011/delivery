@@ -8,11 +8,25 @@
 	<mat-form-field class="example-full-width">
 		<input matInput type="text" placeholder="Цена" name="price" [(ngModel)]="editObj.price" autocomplete="off">
 	</mat-form-field>
+	<div *ngIf="categorys.length > 0">
+		<mat-form-field>
+			<mat-label>Category</mat-label>
+			<mat-select [(value)]="mainCategoryChoose" (selectionChange)="changeSelectCategory(mainCategoryChoose)">
+				<mat-option *ngFor="let item of categorys" [value]="item._id">
+					{{item.name}}
+				</mat-option>
+			</mat-select>
+		</mat-form-field>
+	</div>
 	<div  *ngIf="brands && brands.length > 0">
-		brands
-		<select #b [(ngModel)]="mainChooseBrand" name="select" (change)="changeSelect(b.value)">
-			<option *ngFor="let item of brands" [value]="item._id">{{item.name}}</option>
-		</select>
+		<mat-form-field>
+			<mat-label>Brands</mat-label>
+			<mat-select [(value)]="mainChooseBrand" (selectionChange)="changeSelectBrand(mainChooseBrand)">
+				<mat-option *ngFor="let item of brands" [value]="item._id">
+					{{item.name}}
+				</mat-option>
+			</mat-select>
+		</mat-form-field>
 	</div>
 	<div class="check">
 		<mat-checkbox [(ngModel)]="showSale" (change)="formCheck()" name="saleChack">Включить скидку</mat-checkbox>

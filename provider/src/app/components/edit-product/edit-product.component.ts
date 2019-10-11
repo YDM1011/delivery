@@ -1,6 +1,7 @@
 import {Component, EventEmitter, Input, OnChanges, OnInit, Output} from '@angular/core';
 import Swal from "sweetalert2";
 import {CrudService} from "../../crud.service";
+import {AuthService} from "../../auth.service";
 
 @Component({
   selector: 'app-edit-product',
@@ -13,13 +14,16 @@ export class EditProductComponent implements OnInit, OnChanges {
   @Output() outputChanges = new EventEmitter();
   @Output() cancelEdit = new EventEmitter();
   public mainChooseBrand;
+  public mainCategoryChoose;
+  public categorys = [];
   public showSale = false;
   public isBlok = false;
   public uploadObj = null;
   public editObjCopy;
   public editObj;
   constructor(
-      private crud: CrudService
+      private crud: CrudService,
+      private auth: AuthService
   ) { }
 
   ngOnChanges() {
@@ -35,10 +39,17 @@ export class EditProductComponent implements OnInit, OnChanges {
     }
   }
   ngOnInit() {
+    this.auth.onMe.subscribe((v: any) => {
+      if (!v) { return; }
+      if (v && v.companies.length > 0) {
+        this.categorys = v.companies[0].categories;
+      }
+    });
     this.editObj = Object.assign({}, this.obj);
     this.editObj.img = this.obj.img.split('--')[1];
     this.editObjCopy = Object.assign({}, this.obj);
     this.mainChooseBrand = this.obj.brand;
+    this.mainCategoryChoose = this.obj.categoryOwner;
     if (this.editObj.discount) {
       this.showSale = true;
       return;
@@ -58,6 +69,7 @@ export class EditProductComponent implements OnInit, OnChanges {
         }
       }
       this.editObj.brand = this.mainChooseBrand;
+      this.editObj.categoryOwner = this.mainCategoryChoose;
       if (!this.uploadObj) {
         this.editObj.img = this.editObjCopy.img;
         this.crud.post('order', this.editObj, this.editObj['_id']).then((v: any) => {
@@ -98,8 +110,12 @@ export class EditProductComponent implements OnInit, OnChanges {
     }
   }
 
-  changeSelect(b) {
+  changeSelectBrand(b) {
     this.editObjCopy['brand'] = b;
+    this.formCheck();
+  }
+  changeSelectCategory(c) {
+    this.editObjCopy['categoryOwner'] = c;
     this.formCheck();
   }
 
