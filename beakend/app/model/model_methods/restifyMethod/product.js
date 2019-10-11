@@ -32,9 +32,9 @@ module.exports.preUpdate = async (req,res,next, backendApp) => {
                         .exec((e,r)=>{
                             if (e) return res.serverError(e);
                             if (!r) return res.notFound('Not found!');
-                            if (r) {next()};
+                            if (r) {next()}
                         })
-                };
+                }
             });
     } catch(e) {
         res.notFound("Can't be update")
@@ -69,17 +69,18 @@ const checkAndInitBasket = (req, backendApp, product) => {
     const Basket = backendApp.mongoose.model('Basket');
     return new Promise ((rs,rj)=>{
         Basket.findOne({
-            "createdBy": req.user._id,
+            companyOwner: product.companyOwner,
+            createdBy: req.user._id,
             status: 0
         }).exec((e,r)=>{
             if (e) return rj(e);
             if (!r){
                 let data = {
-                    'createdBy': req.user._id,
+                    companyOwner: product.companyOwner,
+                    createdBy: req.user._id,
                     products: [product._id],
-                    totalPrice: parsePrice(product.count*(product.price)),
-                    status: 0,
-                    date: new Date()
+                    totalPrice: parseInt(product.count) * parseInt(product.price),
+                    status: 0
                 };
                 Basket.create(data, (e,r)=>{
                     if (e) return rj(e);
@@ -89,8 +90,9 @@ const checkAndInitBasket = (req, backendApp, product) => {
             }
             if (r) {
                 Basket.findOneAndUpdate({
-                    "createdBy": req.user._id,
-                    status: 0
+                    companyOwner: product.companyOwner,
+                    createdBy: req.user._id,
+                    status: 0,
                 }, {$push:{products:product._id}, $inc: {totalPrice:parsePrice(product.count*product.price)}}, {new:true})
                     .exec((e,r)=>{
                         if (e) return rj(e);
@@ -111,8 +113,9 @@ const createProduct = (req,backendApp) => {
             .exec((e0,r0)=>{
                 if (e0) return rj(e0);
                 if (!r0) return rj("One of product is invalid!");
-                data.price = r0.price;
-                console.log(data)
+                data['price'] = r0.price;
+                data['companyOwner'] = r0.companyOwner;
+                console.log("Created product",data);
                 Product.create(data,(e,r)=>{
 
                     if (e) return rj(e);

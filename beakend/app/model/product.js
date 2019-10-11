@@ -7,6 +7,11 @@ const schema = new Schema({
         ref: "Client"
     },
     count: Number,
+    price: Number,
+    companyOwner: {
+        type: Schema.Types.ObjectId,
+        ref: "Company"
+    },
     basketOwner: {
         type: Schema.Types.ObjectId,
         ref: "Basket"
@@ -54,6 +59,12 @@ const schema = new Schema({
             canBeId: [
                 {type:'refObj', fieldName: 'createdBy'},
                 {type:'array', fieldName: 'collaborators'}
+            ]
+        },{
+            model:'Basket',
+            _id: '_id',
+            canBeId: [
+                {type:'refObj', fieldName: 'createdBy'}
             ]
         }],
         update: [{
