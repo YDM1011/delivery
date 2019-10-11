@@ -85,7 +85,6 @@ const schema = new Schema({
 
 schema.post('findOneAndRemove', (doc,next)=>{
     let inc = doc.price*(0-doc.count);
-    console.log("test",inc);
     mongoose.model('Basket')
         .findOneAndUpdate({_id:doc.basketOwner},
             {$pull:{products:doc._id}, $inc: {totalPrice:inc}},
@@ -115,24 +114,16 @@ const checkIsProduct = async (basket, next) => {
     let canDelet = true;
     let i = 0;
     while ( i<products.length){
-        console.log("for ", i);
         let isProduct = await checker(Prod, products[i]).catch(e=>console.log(e));
-        console.log(isProduct, "test");
         if (canDelet){
             canDelet = !isProduct
         }
-        console.log("for ", i, products.length)
-        // if (i == products.length) return rs(canDelet);
-        console.log("for ", canDelet)
         i++
     }
-    console.log("finish and do")
     if (canDelet){
         // next()
-        console.log('delet')
         deleteBasket(basket, next)
     }else{
-        console.log("Update")
         next();
     }
 };

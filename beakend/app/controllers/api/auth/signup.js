@@ -1,4 +1,4 @@
-const md5 = require('md5');
+    const md5 = require('md5');
 const jwt = require('jsonwebtoken');
 module.exports = (backendApp, router) => {
 
@@ -8,14 +8,21 @@ module.exports = (backendApp, router) => {
     };
 
     const signup = (req,res,next) => {
+
         const Client = backendApp.mongoose.model("Client");
         const Company = backendApp.mongoose.model("Company");
         let errors = {};
-        req.body.login = req.body.login.slice(-10).toLowerCase();
+        if (req.body.login) {
+            req.body.login = req.body.login.slice(-10).toLowerCase();
+        } else
+        if (req.body.client && req.body.client.login) {
+            req.body.client.login = req.body.client.login.slice(-10).toLowerCase();
+        }
         if (req.body.client && req.body.company) {
             req.companyBody = req.body.company;
             req.body = req.body.client
         }
+        console.log("ok",req.body)
         if (Object.keys(errors).length > 0) {
             return res.badRequest(errors);
         }

@@ -8,16 +8,16 @@
   <app-basket-item></app-basket-item>
 </div>
 
-<div class="other-pages">
+<div class="other-pages" *ngIf="company">
   <div class="popular-item">
     <div class="favorite">
-      <div class="favorite-item" *ngIf="favoriteShow" (click)="favorite(false)">
+      <div class="favorite-item" *ngIf="favoriteShow">
         <svg width="25" height="23" viewBox="0 0 25 23" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path class="heart-1" d="M12.4252 4.06308C13.4343 1.67153 15.7393 0.000499974 18.4204 0.000499974C22.0319 0.000499974 24.633 3.09006 24.96 6.77213C24.96 6.77213 25.1365 7.68615 24.748 9.33169C24.219 11.5727 22.9755 13.5638 21.2989 15.0833L12.4252 23.0005L3.70107 15.0828C2.02454 13.5638 0.781017 11.5722 0.252006 9.33119C-0.136502 7.68565 0.0400019 6.77164 0.0400019 6.77164C0.367008 3.08956 2.96806 0 6.57963 0C9.26119 0 11.4162 1.67153 12.4252 4.06308Z" fill="#09C2C2"/>
           <path class="heart-2" d="M2.34004 7.3402C2.06353 7.3402 1.84003 7.11669 1.84003 6.84019C1.84003 4.08313 4.08307 1.84009 6.84013 1.84009C7.11663 1.84009 7.34014 2.06359 7.34014 2.3401C7.34014 2.6166 7.11663 2.84011 6.84013 2.84011C4.63458 2.84011 2.84005 4.63464 2.84005 6.84019C2.84005 7.11669 2.61654 7.3402 2.34004 7.3402Z" fill="white"/>
         </svg>
       </div>
-      <div class="favorite-item" *ngIf="!favoriteShow" (click)="favorite(true)">
+      <div class="favorite-item" *ngIf="!favoriteShow">
         <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M24.9586 7.8091C24.5937 3.79252 21.7508 0.878411 18.1929 0.878411C15.8225 0.878411 13.6522 2.15396 12.431 4.19831C11.2208 2.12752 9.13946 0.87793 6.80712 0.87793C3.2497 0.87793 0.406266 3.79204 0.0418223 7.80862C0.0129745 7.98603 -0.105302 8.91974 0.254335 10.4424C0.772634 12.6387 1.96982 14.6364 3.71559 16.2182L12.4252 24.1221L21.2844 16.2187C23.0302 14.6364 24.2274 12.6392 24.7457 10.4424C25.1053 8.92022 24.987 7.98651 24.9586 7.8091ZM23.8095 10.2222C23.3364 12.2281 22.2397 14.0556 20.6411 15.5038L12.431 22.8287L4.36178 15.5057C2.76025 14.0546 1.66403 12.2276 1.19045 10.2217C0.850042 8.78079 0.989954 7.9668 0.990435 7.96151L0.997647 7.91295C1.31016 4.394 3.75309 1.83952 6.80712 1.83952C9.06061 1.83952 11.0444 3.22422 11.9858 5.45271L12.4286 6.50229L12.8714 5.45271C13.7979 3.25835 15.8865 1.84 18.1933 1.84C21.2469 1.84 23.6903 4.39448 24.0091 7.95911C24.01 7.9668 24.1499 8.78127 23.8095 10.2222Z" fill="#1C1C1C"/>
           <path d="M7.69228 3.80029C5.04116 3.80029 2.88431 5.95715 2.88431 8.60826C2.88431 8.87414 3.09922 9.08906 3.3651 9.08906C3.63099 9.08906 3.8459 8.87414 3.8459 8.60826C3.8459 6.48747 5.57148 4.76189 7.69228 4.76189C7.95816 4.76189 8.17307 4.54697 8.17307 4.28109C8.17307 4.01521 7.95768 3.80029 7.69228 3.80029Z" fill="#09C2C2"/>
@@ -25,25 +25,19 @@
       </div>
     </div>
     <div class="img">
-      <img src="./assets/images/tmp/cola.png" alt="">
+      <app-img [fs]="company.img"></app-img>
     </div>
     <div class="block-info">
       <div class="block-title">
-        Свежая рыба “Fresh Fish”
+        {{company.name}}
       </div>
       <div class="block-second">
         <div class="raiting">
-          9/10
-          <mat-star-rating class="mat-rating"  [starCount]="5" [rating]="3"></mat-star-rating>
+          <mat-star-rating class="mat-rating"  [starCount]="5" [rating]="company.rating"></mat-star-rating>
         </div>
       </div>
       <div class="block-raiting">
-        <div class="work-time">
-          <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M5 0.0102539C2.243 0.0102539 0 2.25325 0 5.01025C0 7.76725 2.243 9.99009 5 9.99009C7.757 9.99009 10 7.76725 10 5.01025C10 2.25325 7.757 0.0102539 5 0.0102539ZM5.33333 5.15659C5.33333 5.34059 5.184 5.48992 5 5.48992H2.33333C2.14933 5.48992 2 5.34059 2 5.15659C2 4.97259 2.14933 4.82325 2.33333 4.82325H4.66667V1.15659C4.66667 0.972587 4.816 0.823254 5 0.823254C5.184 0.823254 5.33333 0.972587 5.33333 1.15659V5.15659Z" fill="#09C2C2"/>
-          </svg>
-          пн-пт  10:00 - 20:00
-        </div>
+        <app-work-time class="work-time" [data]="company.workTime" *ngIf="company.workTime"></app-work-time>
       </div>
     </div>
   </div>
@@ -55,7 +49,7 @@
         <path d="M14.9826 6.61682C14.7008 4.96424 13.922 3.46046 12.7253 2.26377C11.5286 1.06708 10.0249 0.288277 8.37228 0.00651579C8.14117 -0.0346403 7.92273 0.123652 7.88157 0.35476C7.84358 0.589033 7.99871 0.807477 8.23298 0.848633C9.70827 1.09873 11.0538 1.79839 12.1238 2.86528C13.1939 3.93534 13.8904 5.28083 14.1405 6.75611C14.1753 6.96506 14.3557 7.11069 14.5615 7.11069C14.5868 7.11069 14.609 7.10752 14.6343 7.10436C14.8654 7.06953 15.0237 6.84792 14.9826 6.61682Z" fill="#09C2C2"/>
       </svg>
       <div class="text">
-        +38 (066) 333 66 66
+        {{company.createdBy.mobile}}
       </div>
     </div>
     <div class="location">
@@ -64,7 +58,7 @@
         <path d="M7.5 2.63672C6.04611 2.63672 4.86328 3.81955 4.86328 5.27344C4.86328 6.71804 6.02687 7.91016 7.5 7.91016C8.9913 7.91016 10.1367 6.70216 10.1367 5.27344C10.1367 3.81955 8.95389 2.63672 7.5 2.63672ZM7.5 7.03711C6.52567 7.03711 5.73633 6.24513 5.73633 5.27344C5.73633 4.30418 6.53074 3.50977 7.5 3.50977C8.46926 3.50977 9.26074 4.30418 9.26074 5.27344C9.26074 6.23095 8.48977 7.03711 7.5 7.03711Z" fill="#09C2C2"/>
       </svg>
       <div class="text">
-        г. Киев ул. Победы 1А
+        {{company.city.name}} {{company.address}}
       </div>
     </div>
   </div>
@@ -76,71 +70,19 @@
       <a routerLink="/{{language}}/category">Все</a>
     </div>
     <div class="category-box">
-      <a routerLink="/{{language}}/category/1" class="category-box-item">
-        <div class="svg">
-          <img src="./assets/images/tmp/beaf.svg" alt="">
-        </div>
-        <div class="title">
-          Мясо
-        </div>
-      </a>
-      <a routerLink="/{{language}}/category/1" class="category-box-item">
-        <div class="svg">
-          <img src="./assets/images/tmp/fish.svg" alt="">
-        </div>
-        <div class="title">
-          Рыба
-        </div>
-      </a>
-      <a routerLink="/{{language}}/category/1" class="category-box-item">
-        <div class="svg">
-          <img src="./assets/images/tmp/cheese.svg" alt="">
-        </div>
-        <div class="title">
-          Сыр
-        </div>
-      </a>
-      <a routerLink="/{{language}}/category/1" class="category-box-item">
-        <div class="svg">
-          <img src="./assets/images/tmp/bread.svg" alt="">
-        </div>
-        <div class="title">
-          Хлебобулочные
-          издения
-        </div>
-      </a>
-      <a routerLink="/{{language}}/category/1" class="category-box-item">
-        <div class="svg">
-          <img src="./assets/images/tmp/beaf.svg" alt="">
-        </div>
-        <div class="title">
-          Мясо
-        </div>
-      </a>
-      <a routerLink="/{{language}}/category/1" class="category-box-item">
-        <div class="svg">
-          <img src="./assets/images/tmp/fish.svg" alt="">
-        </div>
-        <div class="title">
-          Рыба
-        </div>
-      </a>
-      <a routerLink="/{{language}}/category/1" class="category-box-item">
-        <div class="svg">
-          <img src="./assets/images/tmp/beaf.svg" alt="">
-        </div>
-        <div class="title">
-          Мясо
-        </div>
-      </a>
-      <a routerLink="/{{language}}/category/1" class="category-box-item">
-        <div class="svg">
-          <img src="./assets/images/tmp/fish.svg" alt="">
-        </div>
-        <div class="title">
-          Рыба
-        </div>
-      </a>
+      <ng-container *ngIf="company.categories">
+        <ng-container *ngIf="company.categories.length>0">
+          <a routerLink="/{{language}}/category/1" class="category-box-item" *ngFor="let category of company.categories">
+            <div class="svg">
+              <app-img [fs]="category.mainCategory.img"></app-img>
+            </div>
+            <div class="title">
+              {{category.name}}
+            </div>
+          </a>
+        </ng-container>
+      </ng-container>
+
     </div>
   </div>
   <div class="brandy">
@@ -151,80 +93,32 @@
       <a routerLink="/{{language}}/brands">Все</a>
     </div>
     <div class="category-box">
-      <a routerLink="/{{language}}/category/1" class="category-box-item">
-        <div class="svg">
-          <img src="./assets/images/tmp/beaf.svg" alt="">
-        </div>
-        <div class="title">
-          Мясо
-        </div>
-      </a>
-      <a routerLink="/{{language}}/category/1" class="category-box-item">
-        <div class="svg">
-          <img src="./assets/images/tmp/fish.svg" alt="">
-        </div>
-        <div class="title">
-          Рыба
-        </div>
-      </a>
-      <a routerLink="/{{language}}/category/1" class="category-box-item">
-        <div class="svg">
-          <img src="./assets/images/tmp/cheese.svg" alt="">
-        </div>
-        <div class="title">
-          Сыр
-        </div>
-      </a>
-      <a routerLink="/{{language}}/category/1" class="category-box-item">
-        <div class="svg">
-          <img src="./assets/images/tmp/bread.svg" alt="">
-        </div>
-        <div class="title">
-          Хлебобулочные
-          издения
-        </div>
-      </a>
-      <a routerLink="/{{language}}/category/1" class="category-box-item">
-        <div class="svg">
-          <img src="./assets/images/tmp/beaf.svg" alt="">
-        </div>
-        <div class="title">
-          Мясо
-        </div>
-      </a>
-      <a routerLink="/{{language}}/category/1" class="category-box-item">
-        <div class="svg">
-          <img src="./assets/images/tmp/fish.svg" alt="">
-        </div>
-        <div class="title">
-          Рыба
-        </div>
-      </a>
-      <a routerLink="/{{language}}/category/1" class="category-box-item">
-        <div class="svg">
-          <img src="./assets/images/tmp/beaf.svg" alt="">
-        </div>
-        <div class="title">
-          Мясо
-        </div>
-      </a>
-      <a routerLink="/{{language}}/category/1" class="category-box-item">
-        <div class="svg">
-          <img src="./assets/images/tmp/fish.svg" alt="">
-        </div>
-        <div class="title">
-          Рыба
-        </div>
-      </a>
+      <ng-container *ngIf="company.brands">
+        <ng-container *ngIf="company.brands.length>0">
+          <a routerLink="/{{language}}/brand/1" class="category-box-item" *ngFor="let brand of company.brands">
+            <div class="svg">
+              <app-img [fs]="brand.img"></app-img>
+            </div>
+            <div class="title">
+              {{brand.name}}
+            </div>
+          </a>
+        </ng-container>
+      </ng-container>
     </div>
   </div>
   <div class="catalog">
-    <app-product-item></app-product-item>
-    <app-product-item></app-product-item>
-    <app-product-item></app-product-item>
-    <app-product-item></app-product-item>
-    <app-product-item></app-product-item>
-    <app-product-item></app-product-item>
-    <app-product-item></app-product-item>
+    <ng-container *ngIf="company.categories.length>0">
+      <ng-container *ngFor="let category of company.categories">
+
+        <ng-container *ngIf="category.orders.length>0">
+          <ng-container *ngFor="let order of category.orders">
+            <app-product-item [data]="order"></app-product-item>
+            <br>
+          </ng-container>
+        </ng-container>
+
+      </ng-container>
+    </ng-container>
   </div>
 </div>

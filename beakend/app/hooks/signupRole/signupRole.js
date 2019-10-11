@@ -30,6 +30,7 @@ module.exports = class Signup {
         this.init()
     }
     createCompany() {
+
         Company.create({
             city:this.req.companyBody.city,
             name:this.req.companyBody.name,

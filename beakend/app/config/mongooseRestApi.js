@@ -167,7 +167,6 @@ const schemaPre = {
     },
     Update: (req, res, next) => {
         req.body.lastUpdate = req.body.lastUpdate ? req.body.lastUpdate : new Date();
-        console.log(req.body)
         callMethod(req, res, next, 'preUpdate')
     },
     Delete: (req, res, next) => callMethod(req, res, next, 'preDel'),

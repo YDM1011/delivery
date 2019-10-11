@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {AuthService} from "../../auth.service";
 
@@ -10,6 +10,7 @@ import {AuthService} from "../../auth.service";
 export class VerificationComponent implements OnInit {
   public token = null;
   public language: string;
+  @Input() data;
   constructor(
       private route: ActivatedRoute,
       private auth: AuthService

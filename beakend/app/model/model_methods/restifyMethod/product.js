@@ -25,7 +25,7 @@ module.exports.preUpdate = async (req,res,next, backendApp) => {
                 if (r) {
                     let inc = parsePrice((r.price)*(req.body.count - r.count));
                     Basket.findOneAndUpdate({
-                        "createdBy.itemId": req.user.id,
+                        "createdBy": req.user.id,
                         _id: req.body.basketOwner,
                         status: 0
                     }, { $inc: {totalPrice:inc} }, {new:true})
@@ -43,24 +43,23 @@ module.exports.preUpdate = async (req,res,next, backendApp) => {
 
 
 module.exports.preSave = async (req, res, next, backendApp) => {
-    req.percentage = await getSettings(req,backendApp).catch(e => {return res.notFound(e)});
+    // req.percentage = await getSettings(req,backendApp).catch(e => {return res.notFound(e)});
     // try {
-        if (req.body) {
+        if (req.body && req.body.count && req.body.orderOwner) {
             // let user = await checkUser(req, res, backendApp).catch(e => {return res.notFound(e)});
             // if (user) {
-            console.log(req.user._id)
-                req.body['createdBy'] = req.user._id;
-                // console.log(req.body, user, req.user)
-                let product = await createProduct(req, backendApp).catch(e => {return res.notFound(e)});
-                console.log("product",product);
-                let basket = await checkAndInitBasket(req, backendApp, product).catch(e => {return res.notFound(e)});
-                await setBasketToProduct(product, backendApp, basket).catch(e => {return res.notFound(e)});
-                product.basketOwner = basket._id;
-                res.ok(product);
+            req.body['createdBy'] = req.user._id;
+            let product = await createProduct(req, backendApp).catch(e => {return res.notFound(e)});
+            console.log("product",product);
+            let basket = await checkAndInitBasket(req, backendApp, product).catch(e => {return res.notFound(e)});
+            await setBasketToProduct(product, backendApp, basket).catch(e => {return res.notFound(e)});
+            product.basketOwner = basket._id;
+            res.ok(product);
             // }
             // console.log(manager, "maneger");
         } else {
-            next()
+            res.badRequest("Basket is empty!")
+            // next()
         }
     // } catch(e) {
     //     res.notFound("Can't be create")
@@ -90,7 +89,7 @@ const checkAndInitBasket = (req, backendApp, product) => {
             }
             if (r) {
                 Basket.findOneAndUpdate({
-                    "createdBy.itemId": req.user._id,
+                    "createdBy": req.user._id,
                     status: 0
                 }, {$push:{products:product._id}, $inc: {totalPrice:parsePrice(product.count*product.price)}}, {new:true})
                     .exec((e,r)=>{
@@ -108,11 +107,11 @@ const createProduct = (req,backendApp) => {
     const Product = backendApp.mongoose.model('Product');
     const Order = backendApp.mongoose.model('Order');
     return new Promise((rs,rj)=>{
-        Order.findOne({_id:data.currentOrder})
+        Order.findOne({_id:data.orderOwner})
             .exec((e0,r0)=>{
                 if (e0) return rj(e0);
                 if (!r0) return rj("One of product is invalid!");
-                data.price = parsePrice(r0.price*req.percentage);
+                data.price = r0.price;
                 console.log(data)
                 Product.create(data,(e,r)=>{
 

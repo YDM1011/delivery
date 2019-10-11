@@ -32,10 +32,10 @@ import {BrandsIDComponent} from "./pages/brands-id/brands-id.component";
 const routes: Routes = [
   {path: ':lang', component: InitLayoutComponent, children: [
       {path: '', component: IndexComponent},
-      {path: 'notification', component: NotificationComponent},
+      {path: 'notification', component: NotificationComponent, canActivate: [IsLoginGuard]},
       {path: 'basket', component: BasketComponent, canActivate: [IsLoginGuard]},
-      {path: 'favorites', component: FavoritesComponent},
-      {path: 'profile', component: ProfileComponent},
+      {path: 'favorites', component: FavoritesComponent, canActivate: [IsLoginGuard]},
+      {path: 'profile', component: ProfileComponent, canActivate: [IsLoginGuard]},
       {path: 'category', component: CategoryComponent},
       {path: 'category/:id', component: CategoryIDComponent},
       {path: 'product/:id', component: ProductIDComponent},

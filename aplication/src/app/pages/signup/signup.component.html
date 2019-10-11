@@ -1,19 +1,25 @@
 <div class="sign">
   <div class="sign-content">
-    <h3>Регистрация</h3>
-    <form class="form">
-      <input type="text" [placeholder]="nameplaceholder[language]">
-      <app-phone (phone)="phoneOutput($event)"></app-phone>
-      <input type="password" placeholder="Пароль" autocomplete="off">
+    <h3>{{t_signup[language]}}</h3>
+    <form class="form" (submit)="signup($event)">
+      <input type="text" [placeholder]="t_nameplaceholder[language]"  name="name" [(ngModel)]="data['name']">
+      <span class="error" *ngIf="dataError.name">{{dataError.name}}</span>
+
+      <app-phone (phone)="data['login'] = $event"></app-phone>
+      <span class="error" *ngIf="dataError.name">{{dataError.name}}</span>
+
+      <input type="password" placeholder="Пароль" autocomplete="off" name="pass" [(ngModel)]="data['pass']">
+      <span class="error" *ngIf="dataError.name">{{dataError.name}}</span>
+
       <div class="buttons">
-        <a (click)="verification = true" class="main-button-bold continue">Продолжить</a>
-        <a routerLink="/{{language}}" class="main-button-bold no-color">Отмена</a>
+        <button type="submit" class="main-button-bold continue">{{t_submit[language]}}</button>
+        <a routerLink="/{{language}}" class="main-button-bold no-color">{{t_cancel[language]}}</a>
         <span class="text-buttons">
-          или
+          {{t_or[language]}}
         </span>
-        <a routerLink="/{{language}}/signin" class="main-button-bold no-color">войти</a>
+        <a routerLink="/{{language}}/signin" class="main-button-bold no-color">{{t_enter[language]}}</a>
       </div>
     </form>
   </div>
 </div>
-<app-verification *ngIf="verification"></app-verification>
+<app-verification *ngIf="verification" [data]="data"></app-verification>

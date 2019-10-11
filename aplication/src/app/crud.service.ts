@@ -101,6 +101,20 @@ export class CrudService {
       // resolve(Category);
     });
   }
+  getDetailCompany(id){
+    return new Promise((resolve, reject) => {
+      const populate = '?populate='+JSON.stringify([{path:'brands'},
+        {path:'categories', populate:[{path:'mainCategory'},{path:'orders'}]},
+        {path:'createdBy'},{path:'city'}]);
+      this.get('company', id, populate).then((v:any)=>{
+        if (v) {
+          resolve(v)
+        } else {
+          reject()
+        }
+      });
+    });
+  }
   getCategoryName(name,city){
     const params = `${name}/${city}`;
     return new Promise((resolve, reject) => {

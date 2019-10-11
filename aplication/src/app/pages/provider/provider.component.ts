@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {AuthService} from "../../auth.service";
 import {CrudService} from "../../crud.service";
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'app-provider',
@@ -8,52 +9,30 @@ import {CrudService} from "../../crud.service";
   styleUrls: ['./provider.component.scss']
 })
 export class ProviderComponent implements OnInit {
-  public favoriteShow: boolean = false;
   public language: string;
-  public favoriteLocal;
+  public favoriteShow;
+  public id;
+  public company;
   constructor(
       private auth: AuthService,
-      private crud: CrudService
+      private crud: CrudService,
+      private route: ActivatedRoute,
   ) { }
 
   ngOnInit() {
     this.auth.onLanguage.subscribe((v: string) => {
       this.language = v;
     });
-    this.favoriteLocal = JSON.parse(localStorage.getItem('favorite'));
-    if (!this.favoriteLocal) {
-      this.favoriteLocal  = {
-        providers: [],
-        products: []
-      };
-    }
-    if (this.favoriteLocal && this.favoriteLocal.providers.length > 0) {
-      let index;
-      index = this.crud.find('_id', 1, this.favoriteLocal.providers);
-      if(index !== undefined){
-        this.favoriteShow = true;
-      }
-    }
+    this.route.params.subscribe((params: any) => {
+      this.id = this.route.snapshot.paramMap.get('id');
+      this.init()
+    });
   }
-  favorite(e){
-    if (e === true) {
-      this.favoriteShow = e;
-      let obj = {
-        _id: 1
-      };
-      this.favoriteLocal.providers.push(obj);
-      localStorage.setItem('favorite', JSON.stringify(this.favoriteLocal))
-    } else {
-      this.favoriteLocal = JSON.parse(localStorage.getItem('favorite'));
-      if (this.favoriteLocal) {
-        let index;
-        index = this.crud.find('_id', 1, this.favoriteLocal.providers);
-        if(index !== undefined){
-          this.favoriteShow = false;
-          this.favoriteLocal.providers.splice(index, 1);
-          localStorage.setItem('favorite', JSON.stringify(this.favoriteLocal))
-        }
+  init() {
+    this.crud.getDetailCompany(this.id).then((v:any)=>{
+      if (v) {
+        this.company = v;
       }
-    }
+    })
   }
 }

@@ -119,9 +119,31 @@ schema.post('save', (doc,next)=>{
                 .findOneAndUpdate({_id:doc.brand},{$push:{orders:doc._id}})
                 .exec((err,r)=>{
                     mongoose.model('Company')
-                        .findOneAndUpdate({_id: doc.companyOwner}, {$push:{brands:doc.brand}})
+                        .findOneAndUpdate({_id: doc.companyOwner}, {
+                            $pull:{brands:doc.brand},
+                        })
                         .exec((e,r)=>{
-                            next()
+                            mongoose.model('Company')
+                                .findOneAndUpdate({_id: doc.companyOwner}, {
+                                    $push:{brands:doc.brand},
+                                })
+                                .exec((e,r)=>{
+                                    let obj = r && r.brandCount ? r.brandCount : {};
+                                    if (r && r.brandCount[doc.brand]){
+                                        obj = r.brandCount;
+                                        obj[doc.brand] += 1;
+                                    } else
+                                    if (r && (!r.brandCount || !r.brandCount[doc.brand])){
+                                        obj[doc.brand] = 1;
+                                    }
+                                    mongoose.model('Company')
+                                        .findOneAndUpdate({_id: doc.companyOwner}, {
+                                            brandCount: obj
+                                        })
+                                        .exec((e,r)=>{
+                                            next()
+                                        })
+                                })
                         })
                 })
         });
