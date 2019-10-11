@@ -52,5 +52,4 @@ export class TranslateComponent implements OnInit {
     }).catch( e => console.log(e));
     this.activeWord = null;
   }
-
 }

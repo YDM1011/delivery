@@ -18,7 +18,7 @@ export class CategoryComponent implements OnInit {
   public defLang = 'ru-UA';
   public isBlok = false;
   public loading = false;
-  public showPagin = false;
+
   public addShow = false;
   public editShow = false;
   public categorys = [];
@@ -126,7 +126,7 @@ export class CategoryComponent implements OnInit {
       return;
     }
     this.editObj.mainCategory = this.mainCategoryChoose;
-    this.crud.post('category', {name: this.editObj.name}, this.editObj['_id']).then((v: any) => {
+    this.crud.post('category', this.editObj, this.editObj['_id']).then((v: any) => {
       if (v) {
         this.editShow = false;
         this.categorys[this.crud.find('_id', this.editObj['_id'], this.categorys)] = v;
@@ -185,7 +185,17 @@ export class CategoryComponent implements OnInit {
       mainCategory: '',
     };
   }
-
+  outputSearch(e) {
+    if (!e) {
+      this.crud.get(`category?query={"companyOwner": "${this.user.companies[0]._id}"}&skip=0&limit=${this.pageSizePagination}`).then((c: any) => {
+        if (c) {
+          this.categorys = c;
+        }
+      });
+    } else {
+      this.categorys = e;
+    }
+  }
   pageEvent(e) {
     this.crud.get(`category?query={"companyOwner":"${this.user.companies[0]._id}"}&skip=${e.pageIndex  * e.pageSize}&limit=${e.pageSize}`).then((c: any) => {
       if (!c) {

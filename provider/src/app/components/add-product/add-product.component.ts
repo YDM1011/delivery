@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {CrudService} from '../../crud.service';
 import {AuthService} from '../../auth.service';
 import Swal from 'sweetalert2';
@@ -9,6 +9,7 @@ import Swal from 'sweetalert2';
   styleUrls: ['./add-product.component.scss']
 })
 export class AddProductComponent implements OnInit {
+  @Input() brands;
   @Output() outputNew = new EventEmitter();
   @Output() cancelAdd = new EventEmitter();
   public user;
@@ -16,7 +17,6 @@ export class AddProductComponent implements OnInit {
   public mainChooseBrand;
   public uploadObj;
   public categorys = [];
-  public brands = [];
     public product = {
     name: '',
     des: '',
@@ -39,11 +39,6 @@ export class AddProductComponent implements OnInit {
       if (this.categorys && this.categorys.length > 0) {
         this.mainCategoryChoose = this.categorys[0]._id;
       }
-    });
-    this.crud.get('brand').then((b: any) => {
-      if (!b) {return; }
-      this.brands = b;
-      this.mainChooseBrand = this.brands[0]._id;
     });
   }
   create() {

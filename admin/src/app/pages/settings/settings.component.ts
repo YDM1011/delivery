@@ -9,6 +9,8 @@ import Swal from 'sweetalert2';
   styleUrls: ['./settings.component.scss']
 })
 export class SettingsComponent implements OnInit {
+  public loading = false;
+  public cardEmpty = false;
   public user;
   public setting;
   public cityChoose;
@@ -48,6 +50,12 @@ export class SettingsComponent implements OnInit {
         return;
       }
       this.user = Object.assign({}, v);
+      this.loading = true;
+      if (this.user.card.number === '') {
+        this.cardEmpty = false;
+        return;
+      }
+      this.cardEmpty = true;
     });
     this.crud.get('setting?populate={"path":"city"}').then((s: any) => {
       if (!s) {return; }
@@ -75,12 +83,14 @@ export class SettingsComponent implements OnInit {
   }
   openAddCard() {
     this.showAddCard = true;
+    this.cardEmpty = true;
   }
   cancelAddCity() {
     this.showAddCity = false;
   }
   cancelAddCard() {
     this.showAddCard = false;
+    this.cardEmpty = false;
     this.card = {
       number: '',
       year: '',
@@ -92,6 +102,7 @@ export class SettingsComponent implements OnInit {
     this.crud.post('admin', {card: {number: '', month: '', year: '', ccv: ''}}, this.user._id).then((v: any) => {
       if (v) {
         this.auth.setMe(v);
+        this.cardEmpty = false;
       }
     });
   }
@@ -111,6 +122,7 @@ export class SettingsComponent implements OnInit {
       if (v) {
         this.auth.setMe(v);
         this.showAddCard = false;
+        this.cardEmpty = true;
       }
     });
   }

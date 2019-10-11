@@ -46,7 +46,7 @@
 				<div class="left">
 				</div>
 				<div class="right">
-					<button class="main-button" type="reset" (click)="cancelEdit()">Отмена</button>
+<!--					<button class="main-button" type="reset" (click)="cancelEdit()">Отмена</button>-->
 					<button class="main-button-color" type="submit" *ngIf="isBlok">Сохранить</button>
 				</div>
 			</div>
@@ -67,6 +67,7 @@
 			</ng-container>
 			<ng-container *ngIf="loading">
 				<div class="table" *ngIf="clients && clients.length > 0">
+					<app-search-filter [inputApi]="'client'" [inputQuery]="'login'" [queryValue]="'companyOwner'" [querySearch]="user.companies[0]._id" (output)="outputSearch($event)"></app-search-filter>
 					<div class="table-content">
 						<div class="row-h">
 							<div class="col">

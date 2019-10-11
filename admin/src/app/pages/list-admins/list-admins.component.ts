@@ -15,7 +15,7 @@ export class ListAdminsComponent implements OnInit {
   public search;
   public defLang = 'ru-UA';
   public addShow = false;
-  public showPagin = false;
+
   public list = [];
   public client = {
     name: '',
@@ -50,6 +50,11 @@ export class ListAdminsComponent implements OnInit {
       this.list.push(v);
       this.clearObj();
       this.addShow = false;
+      this.crud.get(`client/count?query={"role": "admin"}`).then((count: any) => {
+        if (count) {
+          this.lengthPagination = count.count;
+        }
+      });
     }).catch((error) => {
       if (error && error.error === 'User with this login created') {
         Swal.fire('Error', 'Номер телефона уже используется', 'error').then();
@@ -83,6 +88,16 @@ export class ListAdminsComponent implements OnInit {
       pass: '',
       role: 'admin',
     };
+  }
+  outputSearch(e) {
+    if (!e) {
+      this.crud.get(`client?query={"role": "admin"}&skip=0&limit=${this.lengthPagination}`).then((v: any) => {
+        if (!v) {return; }
+        this.list = v;
+      });
+    } else {
+      this.list = e;
+    }
   }
 
   pageEvent(e) {

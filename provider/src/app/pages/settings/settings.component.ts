@@ -60,7 +60,7 @@ export class SettingsComponent implements OnInit {
         if (u) {
           this.company['img'] = u.file;
           this.crud.post('company', this.company, this.company._id).then((v: any) => {
-            v.img = v.img.split("--")[1];
+            v.img = v.img.split('--')[1];
             this.user.companies[0] = v;
             this.company = v;
             this.companyCopy.img = v.img;

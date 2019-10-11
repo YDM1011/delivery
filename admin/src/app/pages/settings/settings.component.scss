@@ -15,6 +15,16 @@
 .city{
   display: flex;
   align-items: center;
+  margin-bottom: 25px;
+  .img{
+    display: flex;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin-right: 15px;
+    overflow: hidden;
+  }
   button{
     margin-left: 50px;
   }
@@ -58,22 +68,4 @@
   button{
     margin-left: 50px;
   }
-}
-
-::ng-deep .mat-form-field.mat-form-field-invalid .mat-form-field-label{
-  color: #009688 !important;
-}
-::ng-deep .mat-focused .mat-form-field-label {
-  /*change color of label*/
-  color: #009688 !important;
-}
-
-::ng-deep.mat-form-field-underline {
-  /*change color of underline*/
-  background-color: #DFE0EB !important;
-}
-
-::ng-deep.mat-form-field-ripple {
-  /*change color of underline when focused*/
-  background-color: #009688 !important;;
 }

@@ -9,9 +9,14 @@
 			<mat-form-field class="example-full-width">
 				<input matInput type="text" placeholder="Категория" name="name" [(ngModel)]="category.name" autocomplete="off">
 			</mat-form-field>
-			<select [(ngModel)]="mainCategoryChoose" name="choose">
-				<option *ngFor="let item of mainCategory" [value]="item._id">{{item.name}}</option>
-			</select>
+			<mat-form-field>
+				<mat-label>Main category</mat-label>
+				<mat-select [(value)]="mainCategoryChoose">
+					<mat-option *ngFor="let item of mainCategory" [value]="item._id">
+						{{item.name}}
+					</mat-option>
+				</mat-select>
+			</mat-form-field>
 			<div class="group-buttons">
 				<div class="left">
 				</div>
@@ -33,9 +38,14 @@
 			<mat-form-field class="example-full-width">
 				<input matInput type="text" placeholder="Категория" name="name" [(ngModel)]="editObj.name" autocomplete="off">
 			</mat-form-field>
-			<select [(ngModel)]="mainCategoryChoose" name="choose" (change)="selectValid()">
-				<option *ngFor="let item of mainCategory" [value]="item._id">{{item.name}}</option>
-			</select>
+			<mat-form-field>
+				<mat-label>Main category</mat-label>
+				<mat-select [(value)]="mainCategoryChoose" (selectionChange)="selectValid()">
+					<mat-option *ngFor="let item of mainCategory" [value]="item._id">
+						{{item.name}}
+					</mat-option>
+				</mat-select>
+			</mat-form-field>
 			<div class="group-buttons">
 				<div class="left">
 				</div>
@@ -61,7 +71,8 @@
 		</ng-container>
 		<ng-container *ngIf="loading">
 			<div class="main-section">
-				<div class="table" *ngIf="categorys || categorys.length > 0">
+				<div class="table" *ngIf="categorys && categorys.length > 0">
+					<app-search-filter [inputApi]="'category'" [inputQuery]="'name'" [queryValue]="'companyOwner'" [querySearch]="user.companies[0]._id" (output)="outputSearch($event)"></app-search-filter>
 					<div class="table-content">
 						<div class="row-h">
 							<div class="col">
@@ -92,6 +103,7 @@
 								</div>
 							</div>
 							<div class="col">
+								<span class="link-btn" [routerLink]="'/category-detail/' + item._id"></span>
 								<span class="edit-btn" (click)="edit(index)"></span>
 								<span class="trash-btn" (click)="delete(index)"></span>
 							</div>

@@ -20,7 +20,6 @@ export class CityComponent implements OnInit {
   public citys = [];
   public defLang = 'ru-UA';
   public editObjCopy;
-  public filterInput = '';
   public editObj = {
     img: '',
     name: '',
@@ -47,11 +46,11 @@ export class CityComponent implements OnInit {
 
   create() {
     if (this.city.name === '') {
-        Swal.fire('Error', 'Название города не может быть пустым', 'error');
+        Swal.fire('Error', 'Название города не может быть пустым', 'error').then();
         return;
     }
     if (this.city.img === '') {
-        Swal.fire('Error', 'Картинка города не может быть пуста', 'error');
+        Swal.fire('Error', 'Картинка города не может быть пуста', 'error').then();
         return;
     }
     this.crud.post('upload2', {body: this.uploadObj}, null, false).then((v: any) => {
@@ -89,52 +88,54 @@ export class CityComponent implements OnInit {
   onFs(e) {
     this.uploadObj = e;
     this.city.img = e.name;
-
   }
 
+  onFsEdit(e) {
+    this.uploadObj = e;
+    this.editObjCopy.img = e.name;
+    this.formCheck();
+  }
   edit(i) {
     this.editObj = Object.assign({}, this.citys[i]);
-    this.editObj.img = this.editObj.img ? this.editObj.img.split("--")[1] : '';
     this.editObjCopy = Object.assign({}, this.editObj);
+    this.formCheck();
+    this.editObjCopy.img = this.editObjCopy.img ? this.editObjCopy.img.split("--")[1] : '';
     this.addShow = false;
     this.editShow = true;
   }
   confirmEdit() {
     if (this.uploadObj && this.uploadObj['name']) {
-      this.crud.post('upload2', {body: this.uploadObj}).then((v: any) => {
-        if (!v) return;
+      this.crud.post('upload2', {body: this.uploadObj}, null, false).then((v: any) => {
+        if (!v) {return; }
         this.editObj.img = v.file;
+        this.editObjCopy.img = v.file;
         this.confirmEditCityCrud();
+        this.editShow = false;
       });
     } else {
       this.confirmEditCityCrud();
     }
   }
-  onFsEdit(e) {
-    this.uploadObj = e;
-    this.editObj.img = e.name;
-    this.formCheck();
-  }
   confirmEditCityCrud() {
     if (this.editObj.name === '') {
-      Swal.fire('Error', 'Название города не может быть пустым', 'error');
+      Swal.fire('Error', 'Название города не может быть пустым', 'error').then();
       return;
     }
-    if (this.editObj.img === '') {
-      Swal.fire('Error', 'Картинка города не может быть пуста', 'error');
+    if (this.editObjCopy.img === '') {
+      Swal.fire('Error', 'Картинка города не может быть пуста', 'error').then();
       return;
     }
     this.crud.post('city', this.editObj, this.editObj['_id']).then((v: any) => {
       if (v) {
         this.editShow = false;
         this.citys[this.crud.find('_id', this.editObj['_id'], this.citys)] = v;
+        this.uploadObj = {};
         this.editObj = {
           img: '',
           name: ''
         };
-        this.uploadObj = {};
       }
-    }).catch( e => console.log(e));
+    });
   }
   openAdd() {
     this.addShow = true;
@@ -169,7 +170,16 @@ export class CityComponent implements OnInit {
   formCheck() {
     this.btnBlok(this.validate());
   }
-
+  outputSearch(e) {
+    if (!e) {
+      this.crud.get(`city?skip=0&limit=${this.pageSizePagination}`).then((v: any) => {
+        if (!v) {return; }
+        this.citys = v;
+      });
+    } else {
+      this.citys = e;
+    }
+  }
   pageEvent(e) {
     this.crud.get(`city&skip=${e.pageIndex  * e.pageSize}&limit=${e.pageSize}`).then((c: any) => {
       if (!c) {return; }

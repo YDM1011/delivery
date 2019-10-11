@@ -1,53 +1,84 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output} from '@angular/core';
 import Swal from "sweetalert2";
 import {CrudService} from "../../crud.service";
+import {AuthService} from "../../auth.service";
 
 @Component({
   selector: 'app-edit-product',
   templateUrl: './edit-product.component.html',
   styleUrls: ['./edit-product.component.scss']
 })
-export class EditProductComponent implements OnInit {
+export class EditProductComponent implements OnInit, OnChanges {
   @Input() obj;
+  @Input() brands;
   @Output() outputChanges = new EventEmitter();
   @Output() cancelEdit = new EventEmitter();
   public mainChooseBrand;
+  public mainCategoryChoose;
+  public categorys = [];
   public showSale = false;
   public isBlok = false;
-  public brands = [];
-  public uploadObj = {};
+  public uploadObj = null;
   public editObjCopy;
   public editObj;
   constructor(
-      private crud: CrudService
+      private crud: CrudService,
+      private auth: AuthService
   ) { }
 
-  ngOnInit() {
-    this.editObj = Object.assign({}, this.obj.obj);
-    this.editObjCopy = Object.assign({}, this.obj.obj);
-    if (this.editObj.discount && this.editObj.discount !== '') {
+  ngOnChanges() {
+    this.editObj = Object.assign({}, this.obj);
+    this.editObj.img = this.obj.img.split('--')[1];
+    this.editObjCopy = Object.assign({}, this.obj);
+    this.mainChooseBrand = this.obj.brand;
+    if (this.editObj.discount) {
       this.showSale = true;
+      return;
+    } else {
+      this.showSale = false;
     }
-    this.crud.get('brand').then((b: any) => {
-      if (!b) {return; }
-      this.brands = b;
-      this.mainChooseBrand = this.brands[0]._id;
+  }
+  ngOnInit() {
+    this.auth.onMe.subscribe((v: any) => {
+      if (!v) { return; }
+      if (v && v.companies.length > 0) {
+        this.categorys = v.companies[0].categories;
+      }
     });
+    this.editObj = Object.assign({}, this.obj);
+    this.editObj.img = this.obj.img.split('--')[1];
+    this.editObjCopy = Object.assign({}, this.obj);
+    this.mainChooseBrand = this.obj.brand;
+    this.mainCategoryChoose = this.obj.categoryOwner;
+    if (this.editObj.discount) {
+      this.showSale = true;
+      return;
+    } else {
+      this.showSale = false;
+    }
   }
   confirmEditCategoryCrud(e) {
     e.preventDefault();
     if (this.validation('editObj')) {
       if (!this.showSale) {
         this.editObj.discount = null;
+      } else {
+        if (!this.editObj.discount) {
+          Swal.fire('Error', 'Укажите скидку или отключите', 'error').then();
+          return;
+        }
       }
-      this.obj.obj = this.editObj;
       this.editObj.brand = this.mainChooseBrand;
-      if (this.editObj.img === this.editObjCopy.img) {
+      this.editObj.categoryOwner = this.mainCategoryChoose;
+      if (!this.uploadObj) {
+        this.editObj.img = this.editObjCopy.img;
         this.crud.post('order', this.editObj, this.editObj['_id']).then((v: any) => {
           if (v) {
-            this.obj.obj = v;
+            this.obj = v;
             this.outputChanges.emit(this.obj);
             this.cancelEdit.emit(false);
+            this.editObj = null;
+            this.editObjCopy = null;
           }
         }).catch((error) => {
           if (error && error.errors.price.name === 'CastError') {
@@ -56,15 +87,15 @@ export class EditProductComponent implements OnInit {
           }
         });
       } else {
-        this.crud.post('upload2', {body: this.uploadObj}).then((u: any) => {
+        this.crud.post('upload2', {body: this.uploadObj}, null, false).then((u: any) => {
           if (u) {
             this.editObj.img = u.file;
             this.crud.post('order', this.editObj, this.editObj['_id']).then((v: any) => {
               if (v) {
-                this.obj.obj = v;
+                this.obj = v;
                 this.outputChanges.emit(this.obj);
                 this.isBlok = false;
-                this.editObj = null;
+                this.uploadObj = null;
               }
             }).catch((error) => {
               if (error && error.errors.price.name === 'CastError') {
@@ -76,6 +107,41 @@ export class EditProductComponent implements OnInit {
         });
       }
       this.isBlok = false;
+    }
+  }
+
+  changeSelectBrand(b) {
+    this.editObjCopy['brand'] = b;
+    this.formCheck();
+  }
+  changeSelectCategory(c) {
+    this.editObjCopy['categoryOwner'] = c;
+    this.formCheck();
+  }
+
+  onFsEdit(e) {
+    this.uploadObj = e;
+    this.editObj.img = e.name;
+    this.formCheck();
+  }
+
+  validate() {
+    let isTrue = false;
+    for (const key in this.editObj) {
+      if (this.editObj[key] !== this.editObjCopy[key]) {isTrue = true; }
+    }
+    return isTrue;
+  }
+
+  btnBlok(is) {
+    this.isBlok = is;
+  }
+
+  formCheck() {
+    this.btnBlok(this.validate());
+    if (!this.showSale) {
+      this.editObj.discount = null;
+      this.btnBlok(true);
     }
   }
 
@@ -101,29 +167,5 @@ export class EditProductComponent implements OnInit {
       return;
     }
     return true;
-  }
-  changeSelect(b) {
-    this.editObjCopy['brand'] = b;
-    this.formCheck();
-  }
-  validate() {
-    let isTrue = false;
-    for (const key in this.editObj) {
-      if (this.editObj[key] !== this.editObjCopy[key]) {isTrue = true; }
-    }
-    return isTrue;
-  }
-
-  btnBlok(is) {
-    this.isBlok = is;
-  }
-
-  formCheck() {
-    this.btnBlok(this.validate());
-  }
-  onFsEdit(e) {
-    this.uploadObj = e;
-    this.editObj.img = e.name;
-    this.formCheck();
   }
 }

@@ -18,7 +18,7 @@ export class ActionComponent implements OnInit {
   public defLang = 'ru-UA';
   public isBlok = false;
   public loading = false;
-  public showPagin = false;
+
   public globalAction = true;
   public userAction = false;
   public addShow = false;
@@ -277,13 +277,23 @@ export class ActionComponent implements OnInit {
       this.globalAction = true;
     }
   }
+  outputSearch(e) {
+    if (!e) {
+      this.crud.get(`action?query={"companyOwner":"${this.company._id}"}&populate={"path":"client"}&skip=0&limit=${this.pageSizePagination}`).then((a: any) => {
+        if (a && a.length > 0) {
+          this.actions = a;
+        }
+      });
+    } else {
+      this.actions = e;
+    }
+  }
   pageEvent(e) {
-    this.crud.get(`category?query={"companyOwner":"${this.user.companies[0]._id}"}&skip=${e.pageIndex  * e.pageSize}&limit=${e.pageSize}`).then((c: any) => {
+    this.crud.get(`action?query={"companyOwner":"${this.company._id}"}&populate={"path":"client"}&skip=${e.pageIndex  * e.pageSize}&limit=${e.pageSize}`).then((c: any) => {
       if (!c) {
         return;
       }
       this.actions = c;
-      this.loading = true;
     });
   }
 }

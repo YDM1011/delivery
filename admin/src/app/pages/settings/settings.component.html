@@ -29,12 +29,15 @@
 					</div>
 				</div>
 				<div class="city" *ngIf="setting && setting.city">
+					<div class="img">
+						<app-img [fs]="setting.city.img"></app-img>
+					</div>
 					{{setting.city.name}}
-					<button class="main-button-color" (click)="showAddCity = true;">Изменить город</button>
+					<button class="main-button-color" (click)="showAddCity = true;" style="width: 200px">Изменить город</button>
 				</div>
 			</div>
 		</div>
-		<div class="contain__group">
+		<div class="contain__group" *ngIf="loading">
 			<div class="contain__group-header">
 				<div class="title">
 					Карта
@@ -44,8 +47,11 @@
 				</button>
 			</div>
 			<div class="main-section">
+				<ng-container *ngIf="!cardEmpty">
+					У вас не додана банковская карта
+				</ng-container>
 				<div class="card-block" *ngIf="user && user.card && user.card.number !== ''">
-					{{user.card.number}}
+					Карта: {{user.card.number}}
 					<button class="main-button-color" (click)="removeCard()">remove</button>
 				</div>
 				<div class="add-card" *ngIf="showAddCard">

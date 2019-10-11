@@ -11,7 +11,7 @@
 			</label>
 			<div class="group-buttons">
 				<div class="left">
-					<app-upload (onFs)="onFs($event)"></app-upload>
+					<app-upload (onFs)="onFs($event)" *ngIf="brand && brand.img === ''"></app-upload>
 					<div class="mat-chip-file" *ngIf="brand && brand.img !== ''">
 						<div class="content">{{brand.img}}</div>
 						<div class="remove-mat-chip" (click)="brand.img = ''"></div>
@@ -31,24 +31,24 @@
 				Редактировать бренд
 			</div>
 		</div>
-		<div class="edit-section" *ngIf="editShow">
+		<form (submit)="confirmEdit()" (keyup)="formCheck()" class="edit-section">
 			<label>
-				<input type="text" placeholder="Бренд" [(ngModel)]="editObj.name">
+				<input type="text" placeholder="Бренд" name="name" [(ngModel)]="editObjCopy.name">
 			</label>
 			<div class="group-buttons">
 				<div class="left">
-					<app-upload *ngIf="editObj.img == ''" (onFs)="onFsEdit($event)"></app-upload>
-					<div class="mat-chip-file" *ngIf="editObj && editObj.img !== ''">
-						<div class="content">{{editObj.img}}</div>
-						<div class="remove-mat-chip" (click)="editObj.img = ''"></div>
+					<app-upload *ngIf="editObjCopy.img == ''" (onFs)="onFsEdit($event)"></app-upload>
+					<div class="mat-chip-file" *ngIf="editObjCopy && editObjCopy.img !== ''">
+						<div class="content">{{editObjCopy.img}}</div>
+						<div class="remove-mat-chip" (click)="editObjCopy.img = ''; formCheck()"></div>
 					</div>
 				</div>
 				<div class="right">
-					<button class="main-button" (click)="cancelEdit()">Отмена</button>
-					<button class="main-button-color" (click)="confirmEdit()">Сохранить</button>
+					<button class="main-button" type="reset" (click)="cancelEdit()">Отмена</button>
+					<button class="main-button-color" type="submit" *ngIf="isBlok">Сохранить</button>
 				</div>
 			</div>
-		</div>
+		</form>
 	</div>
 	
 	<div class="contain__group">
@@ -66,6 +66,7 @@
 		<ng-container *ngIf="loading">
 			<div class="main-section">
 				<div class="table" *ngIf="brands && brands.length > 0">
+					<app-search-filter [inputApi]="'brand'" [inputQuery]="'name'" (output)="outputSearch($event)"></app-search-filter>
 					<div class="table-content">
 						<div class="row-h">
 							<div class="col">
@@ -116,7 +117,6 @@
 					</p>
 				</div>
 			</div>
-		
 		</ng-container>
 	</div>
 </div>
