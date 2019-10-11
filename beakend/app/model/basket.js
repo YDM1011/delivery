@@ -37,9 +37,34 @@ const schema = new Schema({
     needAccessControl: true,
     createRestApi: true,
     strict: true,
-    client: [{private:true}],
-    provider: [
-        {
+    sa: {
+        read: [{public:true}],
+        update: [{public:true}],
+        create: [{public:true}],
+        delete: [{public:true}],
+    },
+    client: {
+        read: [{public:true}],
+        update: [{public:true}],
+        create: [{public:true}],
+        delete: [{private:true}],
+    },
+    provider: {
+        read: [{
+            model:'Company',
+            _id: 'companyOwner',
+            canBeId: [
+                {type:'refObj', fieldName: 'createdBy'},
+                {type:'array', fieldName: 'collaborators'}
+            ]
+            },{
+                model:'Basket',
+                _id: '_id',
+                canBeId: [
+                    {type:'refObj', fieldName: 'createdBy'}
+                ]
+            }],
+        update: [{
             model:'Company',
             _id: 'companyOwner',
             canBeId: [
@@ -52,26 +77,73 @@ const schema = new Schema({
             canBeId: [
                 {type:'refObj', fieldName: 'createdBy'}
             ]
-        }
-    ],
-    collaborator: [
-        {
+        }],
+        create: [{public: true}],
+        delete: [{
             model:'Company',
             _id: 'companyOwner',
             canBeId: [
                 {type:'refObj', fieldName: 'createdBy'},
                 {type:'array', fieldName: 'collaborators'}
             ]
-        },{
-            model:'Basket',
-            _id: '_id',
-            canBeId: [
-                {type:'refObj', fieldName: 'createdBy'}
-            ]
-        }
-    ],
-    admin: [{public:true}],
-    sa: [{public:true}]
+        }],
+    },
+    collaborator: {
+        read: [
+                {
+                    model:'Company',
+                    _id: 'companyOwner',
+                    canBeId: [
+                        {type:'refObj', fieldName: 'createdBy'},
+                        {type:'array', fieldName: 'collaborators'}
+                    ]
+                },{
+                    model:'Basket',
+                    _id: '_id',
+                    canBeId: [
+                        {type:'refObj', fieldName: 'createdBy'}
+                    ]
+                }
+        ],
+        update: [{private:true}],
+        create: [{private:true}],
+        delete: [{private:true}],
+    },
+    // client: [{private:true}],
+    // provider: [
+    //     {
+    //         model:'Company',
+    //         _id: 'companyOwner',
+    //         canBeId: [
+    //             {type:'refObj', fieldName: 'createdBy'},
+    //             {type:'array', fieldName: 'collaborators'}
+    //         ]
+    //     },{
+    //         model:'Basket',
+    //         _id: '_id',
+    //         canBeId: [
+    //             {type:'refObj', fieldName: 'createdBy'}
+    //         ]
+    //     }
+    // ],
+    // collaborator: [
+    //     {
+    //         model:'Company',
+    //         _id: 'companyOwner',
+    //         canBeId: [
+    //             {type:'refObj', fieldName: 'createdBy'},
+    //             {type:'array', fieldName: 'collaborators'}
+    //         ]
+    //     },{
+    //         model:'Basket',
+    //         _id: '_id',
+    //         canBeId: [
+    //             {type:'refObj', fieldName: 'createdBy'}
+    //         ]
+    //     }
+    // ],
+    // admin: [{public:true}],
+    // sa: [{public:true}],
 });
 
 mongoose.model('Basket', schema);
