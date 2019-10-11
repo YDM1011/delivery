@@ -79,6 +79,7 @@ export class DebtorComponent implements OnInit {
     const index = this.crud.find('login', this.inputChange, this.searchDebtors);
     this.debtor.clientOwner = this.searchDebtors[index]._id;
     this.debtor.companyOwner = this.user.companies[0]._id;
+    this.debtor['login'] = this.searchDebtors[index].login;
     if (this.debtor.clientOwner === '') {
       Swal.fire('Error', 'Выберете должника по номеру телефона', 'error');
       return;
@@ -202,9 +203,18 @@ export class DebtorComponent implements OnInit {
   formCheck() {
     this.btnBlok(this.validate());
   }
-
+  outputSearch(e) {
+    if (!e) {
+      this.crud.get(`debtor?query={"companyOwner": "${this.user.companies[0]._id}"}&populate={"path":"clientOwner"}&skip=0&limit=${this.pageSizePagination}`).then((d: any) => {
+        if (d) {
+          this.debtors = d;
+        }
+      });
+    } else {
+      this.debtors = e;
+    }
+  }
   pageEvent(e) {
-    console.log(e)
     this.crud.get(`debtor?query={"companyOwner":"${this.user.companies[0]._id}"}&populate={"path":"clientOwner"}&skip=${e.pageIndex  * e.pageSize}&limit=${e.pageSize}`).then((d: any) => {
       if (!d) {return; }
       this.debtors = d;

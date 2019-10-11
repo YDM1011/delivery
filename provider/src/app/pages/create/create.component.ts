@@ -155,6 +155,17 @@ export class CreateComponent implements OnInit {
   formCheck() {
     this.btnBlok(this.validate());
   }
+  outputSearch(e) {
+    if (!e) {
+      this.crud.get(`client?query={"companyOwner": "${this.user.companies[0]._id}"}&skip=0&limit=${this.pageSizePagination}`).then((c: any) => {
+        if (c) {
+          this.clients = c;
+        }
+      })
+    } else {
+      this.clients = e;
+    }
+  }
   pageEvent(e) {
     this.crud.get(`client?query={"companyOwner":"${this.user.companies[0]._id}"}&skip=${e.pageIndex  * e.pageSize}&limit=${e.pageSize}`).then((c: any) => {
       if (!c) {return; }

@@ -185,7 +185,17 @@ export class CategoryComponent implements OnInit {
       mainCategory: '',
     };
   }
-
+  outputSearch(e) {
+    if (!e) {
+      this.crud.get(`category?query={"companyOwner": "${this.user.companies[0]._id}"}&skip=0&limit=${this.pageSizePagination}`).then((c: any) => {
+        if (c) {
+          this.categorys = c;
+        }
+      });
+    } else {
+      this.categorys = e;
+    }
+  }
   pageEvent(e) {
     this.crud.get(`category?query={"companyOwner":"${this.user.companies[0]._id}"}&skip=${e.pageIndex  * e.pageSize}&limit=${e.pageSize}`).then((c: any) => {
       if (!c) {

@@ -94,7 +94,16 @@ export class CategoryDetailComponent implements OnInit {
       this.addShow = false;
     }
   }
-
+  outputSearch(e) {
+    if (!e) {
+      this.crud.get(`order?query={"categoryOwner":"${this.id}"}&skip=0&limit=${this.pageSizePagination}`).then((v: any) => {
+        if (!v || v.length === 0) {return; }
+        this.products = v;
+      });
+    } else {
+      this.products = e;
+    }
+  }
   pageEvent(e) {
     this.crud.get(`order?query={"categoryOwner":"${this.id}"}&skip=${e.pageIndex  * e.pageSize}&limit=${e.pageSize}`).then((p: any) => {
       if (!p) {

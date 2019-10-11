@@ -81,7 +81,8 @@
 		</ng-container>
 		<ng-container *ngIf="loading">
 			<div class="main-section">
-				<div class="table">
+				<div class="table" *ngIf="debtors && debtors.length > 0">
+					<app-search-filter [inputApi]="'debtor'" [inputQuery]="'login'" [queryValue]="'companyOwner'" [querySearch]="user.companies[0]._id" [populate]="'clientOwner'" (output)="outputSearch($event)"></app-search-filter>
 					<div class="table-content">
 						<div class="row-h">
 							<div class="col">

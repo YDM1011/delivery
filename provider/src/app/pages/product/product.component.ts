@@ -89,6 +89,16 @@ export class ProductComponent implements OnInit {
       this.editShow = false;
     }
   }
+  outputSearch(e) {
+    if (!e) {
+      this.crud.get(`order?query={"companyOwner":"${this.user.companies[0]._id}"}&skip=0&limit=${this.pageSizePagination}`).then((p: any) => {
+        if (!p) {return; }
+        this.products = p;
+      });
+    } else {
+      this.products = e;
+    }
+  }
   pageEvent(e) {
     this.crud.get(`order?query={"companyOwner":"${this.user.companies[0]._id}"}&skip=${e.pageIndex  * e.pageSize}&limit=${e.pageSize}`).then((p: any) => {
       if (!p) {return; }

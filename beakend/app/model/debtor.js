@@ -24,6 +24,7 @@ const schem = new Schema({
     //     type: Schema.Types.ObjectId,
     //     ref: "Basket"
     // },
+    login: {type: String, default: ''},
     value: Number,
     dataCall: Date,
     lastUpdate: {type: Date},

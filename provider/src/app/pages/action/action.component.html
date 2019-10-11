@@ -116,7 +116,8 @@
 		</ng-container>
 		<ng-container *ngIf="loading">
 			<div class="main-section">
-				<div class="table" *ngIf="actions || actions.length > 0">
+				<div class="table" *ngIf="actions && actions.length > 0">
+					<app-search-filter [inputApi]="'action'" [inputQuery]="'description'" [populate]="'client'" (output)="outputSearch($event)"></app-search-filter>
 					<div class="table-content">
 						<div class="row-h">
 							<div class="col">

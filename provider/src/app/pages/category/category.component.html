@@ -61,7 +61,8 @@
 		</ng-container>
 		<ng-container *ngIf="loading">
 			<div class="main-section">
-				<div class="table" *ngIf="categorys || categorys.length > 0">
+				<div class="table" *ngIf="categorys && categorys.length > 0">
+					<app-search-filter [inputApi]="'category'" [inputQuery]="'name'" [queryValue]="'companyOwner'" [querySearch]="user.companies[0]._id" (output)="outputSearch($event)"></app-search-filter>
 					<div class="table-content">
 						<div class="row-h">
 							<div class="col">
