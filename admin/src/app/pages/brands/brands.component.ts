@@ -89,7 +89,7 @@ export class BrandsComponent implements OnInit {
     this.editObj = Object.assign({}, this.brands[i]);
     this.editObjCopy = Object.assign({}, this.brands[i]);
     this.formCheck();
-    this.editObjCopy.img = this.editObj.img.split("--")[1];
+    this.editObjCopy.img = this.editObj.img.split('--')[1];
     this.addShow = false;
     this.editShow = true;
   }

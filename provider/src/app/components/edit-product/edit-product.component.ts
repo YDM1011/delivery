@@ -15,7 +15,7 @@ export class EditProductComponent implements OnInit, OnChanges {
   public mainChooseBrand;
   public showSale = false;
   public isBlok = false;
-  public uploadObj = {};
+  public uploadObj = null;
   public editObjCopy;
   public editObj;
   constructor(
@@ -24,7 +24,7 @@ export class EditProductComponent implements OnInit, OnChanges {
 
   ngOnChanges() {
     this.editObj = Object.assign({}, this.obj);
-    this.editObj.img = this.obj.img.split("--")[1];
+    this.editObj.img = this.obj.img.split('--')[1];
     this.editObjCopy = Object.assign({}, this.obj);
     this.mainChooseBrand = this.obj.brand;
     if (this.editObj.discount) {
@@ -36,7 +36,7 @@ export class EditProductComponent implements OnInit, OnChanges {
   }
   ngOnInit() {
     this.editObj = Object.assign({}, this.obj);
-    this.editObj.img = this.obj.img.split("--")[1];
+    this.editObj.img = this.obj.img.split('--')[1];
     this.editObjCopy = Object.assign({}, this.obj);
     this.mainChooseBrand = this.obj.brand;
     if (this.editObj.discount) {
@@ -58,7 +58,7 @@ export class EditProductComponent implements OnInit, OnChanges {
         }
       }
       this.editObj.brand = this.mainChooseBrand;
-      if (!this.uploadObj.name) {
+      if (!this.uploadObj) {
         this.editObj.img = this.editObjCopy.img;
         this.crud.post('order', this.editObj, this.editObj['_id']).then((v: any) => {
           if (v) {
