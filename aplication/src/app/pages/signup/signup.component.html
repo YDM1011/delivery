@@ -2,14 +2,14 @@
   <div class="sign-content">
     <h3>{{t_signup[language]}}</h3>
     <form class="form" (submit)="signup($event)">
+      <span class="error" *ngIf="dataError.name && !data['name']">{{errors[dataError.name][language]}}</span>
       <input type="text" [placeholder]="t_nameplaceholder[language]"  name="name" [(ngModel)]="data['name']">
-      <span class="error" *ngIf="dataError.name">{{dataError.name}}</span>
 
+      <span class="error" *ngIf="dataError.login && !data['login']">{{errors[dataError.login][language]}}</span>
       <app-phone (phone)="data['login'] = $event"></app-phone>
-      <span class="error" *ngIf="dataError.name">{{dataError.name}}</span>
 
+      <span class="error" *ngIf="dataError.pass && !data['pass']">{{errors[dataError.pass][language]}}</span>
       <input type="password" placeholder="Пароль" autocomplete="off" name="pass" [(ngModel)]="data['pass']">
-      <span class="error" *ngIf="dataError.name">{{dataError.name}}</span>
 
       <div class="buttons">
         <button type="submit" class="main-button-bold continue">{{t_submit[language]}}</button>

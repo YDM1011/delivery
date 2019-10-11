@@ -74,6 +74,7 @@ import { BrandsIDComponent } from './pages/brands-id/brands-id.component';
 import { WorkTimeComponent } from './components/work-time/work-time.component';
 import { PopupDirective } from './directives/popup.directive';
 import {ProductLeazyComponent} from "./components/product-leazy/product-leazy.component";
+import {SweetAlert2Module} from "@sweetalert2/ngx-sweetalert2";
 
 @NgModule({
   declarations: [
@@ -146,6 +147,7 @@ import {ProductLeazyComponent} from "./components/product-leazy/product-leazy.co
     BrowserAnimationsModule,
     AppRoutingModule,
     FormsModule,
+    SweetAlert2Module.forRoot(),
     LottieAnimationViewModule.forRoot(),
     WebsocketModule.config({
       url: environment.ws

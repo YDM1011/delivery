@@ -20,7 +20,7 @@ module.exports = {
             let sender = 'Smart';
             request(`https://smsc.ua/sys/send.php?login=andreysmart&psw=Andreysmart&phones=${phone}&mes=${mes}&sender=${sender}`,
                 (error, response, body) => {
-                    if (error) { rj(error) } else { rs(body) }
+                    if (error) { rj(error) } else { rs({body:body}) }
                 });
         })
     },
@@ -31,8 +31,7 @@ module.exports = {
             Client.findOne({
                 $and: [{
                     $or: [
-                        {login: req.body.login},
-                        {mobile: req.body.login}
+                        {login: req.body.login}
                     ]
                 }, {pass: md5(req.body.pass)}, {smsCode: md5(req.body.smsCode)}]
             }).exec((err, user) => {
@@ -49,9 +48,8 @@ module.exports = {
                     }, {verify: true}, {new:true}).exec((e,r)=>{
                         if (e) return rj(e);
                         if (!r) return rj('Password or login invalid!');
-                        rs(r)
+                        r.signin(req,res,backendApp);
                     })
-
                 }
             });
         })

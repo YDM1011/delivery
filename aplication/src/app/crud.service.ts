@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import {environment} from '../environments/environment';
-import { City, Category, Brands } from './db';
 import {AuthService} from "./auth.service";
+import Swal from 'sweetalert2';
 
 @Injectable({
   providedIn: 'root'
@@ -293,5 +293,29 @@ export class CrudService {
         }
       });
     });
+  }
+  signup(data){
+      return new Promise((rs,rj)=>{
+        this.post('signup', data).then(v=>{
+          console.log(v)
+          if (v) {
+            rs(v)
+          } else {
+            rj()
+          }
+        })
+      })
+  }
+  confirmAuth(data){
+      return new Promise((rs,rj)=>{
+        this.post('confirmAuth', data).then(v=>{
+          console.log(v)
+          if (v) {
+            rs(v)
+          } else {
+            rj()
+          }
+        })
+      })
   }
 }

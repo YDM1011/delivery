@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {AuthService} from "../../auth.service";
+import {CrudService} from "../../crud.service";
 
 @Component({
   selector: 'app-verification',
@@ -12,22 +13,21 @@ export class VerificationComponent implements OnInit {
   public language: string;
   @Input() data;
   constructor(
-      private route: ActivatedRoute,
+      private crud: CrudService,
       private auth: AuthService
   ) { }
 
   ngOnInit() {
-
     this.auth.onLanguage.subscribe((v: string) => {
       this.language = v;
     });
-    this.route.params.subscribe((params: any) => {
-      this.token = this.route.snapshot.paramMap.get('token');
-      console.log(this.token);
-      if (this.token) {
-        localStorage.setItem("token", this.token)
-      }
-    })
   }
-
+  confirm(){
+    console.log(this.data);
+    if (this.data) {
+      this.crud.confirmAuth(this.data).then(v=>{
+        console.log(v)
+      })
+    }
+  }
 }

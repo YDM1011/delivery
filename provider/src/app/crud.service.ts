@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import {environment} from '../environments/environment';
-import Swal from 'sweetalert2';
+import Swal from "sweetalert2";
 
 @Injectable({
   providedIn: 'root'

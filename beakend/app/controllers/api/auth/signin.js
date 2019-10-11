@@ -15,14 +15,12 @@ module.exports = (backendApp, router) => {
             return res.badRequest(errors);
         }
         req.body.login = req.body.login.slice(-10).toLowerCase();
-        console.log(req.body)
         Client.findOne({
             $and:[{
                 $or:[
-                    {login: req.body.login.toLowerCase()},
-                    {mobile: req.body.login.toLowerCase()}
+                    {login: req.body.login.toLowerCase()}
                 ]
-            }],
+            }, {verify:true}],
         }).exec(function (err, user) {
             if (err) return res.serverError(err);
             if (!user) return res.notFound("Password or login invalid!");
