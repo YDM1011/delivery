@@ -1,5 +1,4 @@
-<div class="contain">
-	
+<div class="contain" *ngIf="basket">
 	<div class="contain__group">
 		<div class="contain__group-header">
 			<div class="title">
@@ -22,7 +21,9 @@
 						Дата создания:
 					</div>
 					<div class="content">
-						26 Mая, 2019, 6 : 30 PM
+						{{basket.date | date: 'dd MMMM, yyyy'  : null : defLang}}
+						-
+						{{basket.date | date: 'hh:mm'  : null : defLang}}
 					</div>
 				</div>
 				<div class="info-item info-name">
@@ -30,15 +31,15 @@
 						Имя:
 					</div>
 					<div class="content">
-						Имя заказчика
+						{{basket.createdBy.name}}
 					</div>
 				</div>
 				<div class="info-item info-address">
 					<div class="title">
-						Адресс доставки
+						Адресс доставки:
 					</div>
 					<div class="content">
-						какойто адресс
+						{{basket.createdBy.address}}
 					</div>
 				</div>
 			</div>
@@ -54,37 +55,15 @@
 						Цена
 					</div>
 				</div>
-				<div class="product-item">
+				<div class="product-item" *ngFor="let item of basket.products">
 					<div class="name">
-						Название продукта
+						{{item.orderOwner.name}}
 					</div>
 					<div class="count">
-						3 шт.
+						{{item.count}} шт.
 					</div>
 					<div class="price">
-						320 Грн.
-					</div>
-				</div>
-				<div class="product-item">
-					<div class="name">
-						Название продукта
-					</div>
-					<div class="count">
-						3 шт.
-					</div>
-					<div class="price">
-						320 Грн.
-					</div>
-				</div>
-				<div class="product-item">
-					<div class="name">
-						Название продукта
-					</div>
-					<div class="count">
-						3 шт.
-					</div>
-					<div class="price">
-						320 Грн.
+						{{item.price}} Грн.
 					</div>
 				</div>
 			</div>
@@ -93,11 +72,12 @@
 				<div class="left">
 					Всего
 					<div class="total-price">
-						4999 Грн.
+						{{basket.totalPrice}}
 					</div>
+					Грн.
 				</div>
 				<div class="right">
-					<button class="main-button" type="reset">Назад</button>
+					<button class="main-button" type="reset" [routerLink]="'/orders'">Назад</button>
 					<button class="main-button-color" type="submit">Взять заказ</button>
 				</div>
 			</div>

@@ -45,9 +45,8 @@ export class AuthService {
   isAuthAdmin() {
     if (localStorage.getItem('userId')) {
       return true;
-    } else {
-      return false;
     }
+    return false;
   }
 }
 

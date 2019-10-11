@@ -35,10 +35,12 @@ export class LoginComponent implements OnInit {
       return;
     }
     this.crud.post('signIn', this.obj, null, false).then((v: any) => {
-      if (!v) return;
+      if (!v) {return; }
       if (v.user.role === 'client') {
         this.error['text'] = 'Поставщик не найден';
-      } else if (v.user.role === 'provider') {
+        return;
+      }
+      if (v.user.role === 'provider' || v.user.role === 'collaborator') {
         localStorage.setItem('userId', v.userId);
         localStorage.setItem('token', v.token);
         this.route.navigate(['']);
