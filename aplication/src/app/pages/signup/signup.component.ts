@@ -1,11 +1,13 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {AuthService} from "../../auth.service";
+import {CrudService} from "../../crud.service";
 
 interface SignUp {
   login: string,
   pass: string,
   name: string,
-  confirm?: string
+  role: string,
+  smsCode?: string
 }
 
 @Component({
@@ -18,10 +20,11 @@ export class SignupComponent implements OnInit {
   public language: string;
   public phone;
   public data:SignUp = new class implements SignUp {
-    confirm: string;
+    smsCode: string;
     login: string;
     name: string;
     pass: string;
+    role: string = 'client';
   };
   public dataError = {login:'',name:'',pass:'',};
   public t_nameplaceholder = {
@@ -48,8 +51,14 @@ export class SignupComponent implements OnInit {
     ru: 'Регистрация',
     ua: 'Регистрация'
   };
+  public errors = {
+    login_err: {ru:'Введите номер мобильного', ua:'тест'},
+    name_err: {ru:'Введите ФИО', ua:'тест'},
+    pass_err: {ru:'Создайте пароль', ua:'тест'}
+  };
   constructor(
-      private auth: AuthService
+    private crud: CrudService,
+    private auth: AuthService
   ) { }
 
   ngOnInit() {
@@ -59,9 +68,13 @@ export class SignupComponent implements OnInit {
   }
 
   signup(e){
-    e.preventDefault()
+    e.preventDefault();
     if (this.checkDetaSignUp(this.data)) return;
-    this.verification = true;
+    this.crud.signup(this.data).then(v=>{
+      console.log(v);
+      this.verification = true;
+    })
+
   }
 
   checkDetaSignUp(data) {
@@ -71,11 +84,11 @@ export class SignupComponent implements OnInit {
       isErr = true;
     }
     if (!data.name) {
-      this.dataError.name = "login_err";
+      this.dataError.name = "name_err";
       isErr = true;
     }
     if (!data.pass) {
-      this.dataError.pass = "login_err";
+      this.dataError.pass = "pass_err";
       isErr = true;
     }
     return isErr

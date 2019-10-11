@@ -22,19 +22,17 @@ module.exports = (backendApp, router) => {
             req.companyBody = req.body.company;
             req.body = req.body.client
         }
-        console.log("ok",req.body)
         if (Object.keys(errors).length > 0) {
             return res.badRequest(errors);
         }
         delete  req.body.verify;
         Client.findOne({
             $or:[
-                {login: req.body.login},
-                {mobile: req.body.login}
+                {login: req.body.login}
             ]
         }, (err, user) => {
             if (err) return res.serverError(err);
-            if (user) return res.notFound("User with this login created");
+            if (user) return res.notFound("User with this login created"+user._id);
             if (!user){
                 req.body.token = getToken(req.body.login);
                 req.body.pass = md5(req.body.pass);
@@ -73,6 +71,7 @@ module.exports = (backendApp, router) => {
                                 });
                         }
                     } else {
+                        console.log(r);
                         return postSignup(req, res, r);
                     }
 
