@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {AuthService} from "../../auth.service";
 import {CrudService} from "../../crud.service";
 
@@ -14,7 +14,8 @@ export class VerificationComponent implements OnInit {
   @Input() data;
   constructor(
       private crud: CrudService,
-      private auth: AuthService
+      private auth: AuthService,
+      private route: Router
   ) { }
 
   ngOnInit() {
@@ -25,8 +26,11 @@ export class VerificationComponent implements OnInit {
   confirm(){
     console.log(this.data);
     if (this.data) {
-      this.crud.confirmAuth(this.data).then(v=>{
-        console.log(v)
+      this.crud.confirmAuth(this.data).then((v:any)=>{
+        localStorage.setItem('userId', v.userId);
+        localStorage.setItem('token', v.token);
+        this.auth.setMe(v.user);
+        this.route.navigate(['']);
       })
     }
   }

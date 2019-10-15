@@ -14,7 +14,7 @@ module.exports = (body, backendApp) => {
 
         const roundedCornerResizer =
             sharp()
-                .resize(200)
+                .resize(500)
                 .png();
 
         readStream

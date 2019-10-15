@@ -6,8 +6,9 @@ imageToSlices.configure({
     }
 });
 module.exports = (backendApp, router) => {
-    router.post('/imgSlice', [], (req,res,next) => {
+    router.post('/imgSlice/:dir?', [], (req,res,next) => {
         let fileName = req.body.fileName;
+        console.log(req.params.dir);
         req.body.xx.forEach((it,ind)=>{
             req.body.xx[ind] = parseInt(it);
            if (req.body.xx[ind] < 1) req.body.xx[ind] = 1
@@ -22,8 +23,8 @@ module.exports = (backendApp, router) => {
             {
                 saveToDataUrl: true
             }, (v) => {
-                minification(fileName, v[4].dataURI, (err,info)=>{
-                    res.ok('ok')
+                minification(fileName, v[4].dataURI, req.params.dir, (err,info)=>{
+                    res.ok({file:fileName})
                 })
             }
         );
@@ -31,13 +32,13 @@ module.exports = (backendApp, router) => {
 };
 const sharp = require('sharp');
 
-const minification = (fileName, base64Data, next)=>{
+const minification = (fileName, base64Data, dir='product', next)=>{
     base64Data = base64Data.toString().split("base64,")[1];
     base64Data = convertation(base64Data);
 
     sharp(base64Data)
             .resize(126)
-            .toFile('upload/product/'+fileName, (err, info) => {next(err,info)} );
+            .toFile('upload/'+dir+'/'+fileName, (err, info) => {next(err,info)} );
 };
 const convertation = b64string =>{
     let buf;

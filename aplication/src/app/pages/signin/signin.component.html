@@ -1,17 +1,19 @@
 <div class="sign">
   <div class="sign-content">
     <h3>Вход</h3>
-    <form class="form">
-      <app-phone (phone)="phoneOutput($event)"></app-phone>
-      <input type="password" placeholder="Пароль" autocomplete="off">
+    <form class="form" (submit)="signin($event)">
+      <app-phone (phone)="data['login'] = $event"></app-phone>
+      <input type="password" placeholder="Пароль" autocomplete="off" name="pass" [(ngModel)]="data['pass']">
+
+      <div class="buttons">
+        <button class="main-button-bold continue" type="submit">{{t_enter[language]}}</button>
+        <a routerLink="/{{language}}" class="main-button-bold no-color">{{t_cancel[language]}}</a>
+        <span class="text-buttons">
+            {{t_or[language]}}
+          </span>
+        <a routerLink="/{{language}}/signup" class="main-button-bold no-color">{{t_signup[language]}}</a>
+      </div>
+
     </form>
-    <div class="buttons">
-      <button class="main-button-bold continue" (click)="signin()">Войти</button>
-      <a routerLink="/{{language}}" class="main-button-bold no-color">Отмена</a>
-      <span class="text-buttons">
-          или
-        </span>
-      <a routerLink="/{{language}}/signup" class="main-button-bold no-color">регистрация</a>
-    </div>
   </div>
 </div>

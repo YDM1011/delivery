@@ -306,6 +306,30 @@ export class CrudService {
         })
       })
   }
+  signin(data){
+      return new Promise((rs,rj)=>{
+        this.post('signin', data).then(v=>{
+          console.log(v)
+          if (v) {
+            rs(v)
+          } else {
+            rj()
+          }
+        })
+      })
+  }
+  favoriteCompany(data){
+      return new Promise((rs,rj)=>{
+        this.post('favoriteCompany', data).then(v=>{
+          console.log(v)
+          if (v) {
+            rs(v)
+          } else {
+            rj()
+          }
+        })
+      })
+  }
   confirmAuth(data){
       return new Promise((rs,rj)=>{
         this.post('confirmAuth', data).then(v=>{

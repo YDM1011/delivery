@@ -40,7 +40,7 @@ module.exports = class Signup {
         }, (e,r)=>{
             if (e) return this.res.serverError(e);
             if (!r) return this.res.badRequest();
-            Client.findOneAndUpdate({_id: this.result._id}, {$push:{companies: r._id}}).exec((e,r)=>{
+            Client.findOneAndUpdate({_id: this.result._id}, {$push:{companies: r._id},companyOwner:r._id }).exec((e,r)=>{
                 if (e) return this.res.serverError(e);
                 if (!r) return this.res.notFound("Not found");
                 if (r) return this.res.ok(r);

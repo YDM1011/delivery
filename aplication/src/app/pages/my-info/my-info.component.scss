@@ -80,3 +80,13 @@
     }
   }
 }
+app-image-cropper{
+  background-color: #fff;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 999;
+  padding: 15px;
+  max-width: calc(100% - 30px);
+  margin: 0 15px;
+}

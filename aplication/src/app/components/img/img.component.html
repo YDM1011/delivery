@@ -1,1 +1,8 @@
-<img *ngIf="fs" alt="{{fs}}" src="{{domain}}/upload/{{fs}}">
+
+<ng-container *ngIf="anyFs && !fs; else fsTmp">
+  <img *ngIf="anyFs" alt="{{anyFs}}" src="{{domain}}/{{anyFs}}">
+</ng-container>
+
+<ng-template #fsTmp>
+  <img *ngIf="fs" alt="{{fs}}" src="{{domain}}/upload/{{dir?dir:''}}/{{fs}}">
+</ng-template>

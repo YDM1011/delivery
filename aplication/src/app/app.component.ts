@@ -11,7 +11,9 @@ import {SwPush} from "@angular/service-worker";
 })
 export class AppComponent {
   title = 'delivery';
+  public localStorage = localStorage ;
   public setting: any;
+  public me: any;
   public loaded = false;
   public isEnabled = this.swPush.isEnabled;
   public isGranted = Notification.permission === 'granted';
@@ -33,6 +35,13 @@ export class AppComponent {
           }
           this.loaded = true;
         });
+        if (this.localStorage.getItem('token')){
+          this.crud.get('me').then((v: any) => {
+            this.me = Object.assign({}, v);
+            this.auth.setMe(this.me);
+          });
+        }
+
       }
     });
 

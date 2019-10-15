@@ -75,6 +75,10 @@ import { WorkTimeComponent } from './components/work-time/work-time.component';
 import { PopupDirective } from './directives/popup.directive';
 import {ProductLeazyComponent} from "./components/product-leazy/product-leazy.component";
 import {SweetAlert2Module} from "@sweetalert2/ngx-sweetalert2";
+import {MaterialModule} from "./material-module";
+import {UploadComponent} from "./components/upload/upload.component";
+import {DialogComponent} from "./components/upload/dialog/dialog.component";
+import { ImageCropperComponent } from './components/image-cropper/image-cropper.component';
 
 @NgModule({
   declarations: [
@@ -133,6 +137,9 @@ import {SweetAlert2Module} from "@sweetalert2/ngx-sweetalert2";
     WorkTimeComponent,
     PopupDirective,
     ProductLeazyComponent,
+    UploadComponent,
+    DialogComponent,
+    ImageCropperComponent,
   ],
   imports: [
     Ng5SliderModule,
@@ -147,6 +154,7 @@ import {SweetAlert2Module} from "@sweetalert2/ngx-sweetalert2";
     BrowserAnimationsModule,
     AppRoutingModule,
     FormsModule,
+    MaterialModule,
     SweetAlert2Module.forRoot(),
     LottieAnimationViewModule.forRoot(),
     WebsocketModule.config({
@@ -154,6 +162,10 @@ import {SweetAlert2Module} from "@sweetalert2/ngx-sweetalert2";
     }),
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
+  entryComponents: [
+    DialogComponent,
+  ],
+  exports: [MaterialModule],
   providers: [CookieService, {provide: HTTP_INTERCEPTORS, useClass: ApiInterceptor, multi: true}],
   bootstrap: [AppComponent]
 })

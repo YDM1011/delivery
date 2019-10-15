@@ -1,0 +1,18 @@
+export interface Me {
+  action: any[],
+  banned: boolean,
+  basket: any[],
+  companies: any[],
+  date: string,
+  debtors: any[],
+  favoriteCompany: any[],
+  favoriteProduct: any[],
+  _id: string,
+  img?: string,
+  lastUpdate: string,
+  login: string,
+  mobile: string,
+  name: string,
+  role: string,
+  verify: boolean,
+}

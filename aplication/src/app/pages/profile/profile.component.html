@@ -1,27 +1,28 @@
 <div class="other-header profile-header">
   <div class="img">
-    <img src="./assets/images/user.svg" alt="">
+    <!--<img src="./assets/images/user.svg" alt="">-->
+    <app-img [fs]="me.img" [anyFs]="'assets/images/user.svg'"></app-img>
   </div>
-  <div class="info" *ngIf="login">
+  <div class="info" *ngIf="login && me">
     <div class="name">
-      Кравчук Андрей
+      {{me.name}}
     </div>
     <div class="tel">
-      +38 (066) 666 6666
+      {{me.mobile}}
     </div>
   </div>
 </div>
 
-<div class="other-pages profile-block">
+<div class="other-pages profile-block" *ngIf="language">
   <div class="profile-linki">
     <a routerLink="/{{language}}/my-info" *ngIf="login">
-      Мои даные
+      {{data.mydata[language]}}
     </a>
 <!--    <a routerLink="/{{language}}/my-bonuses" *ngIf="login">-->
 <!--      Бонусы-->
 <!--    </a>-->
     <a routerLink="/{{language}}/my-address" *ngIf="login">
-      Адреса доставки
+      {{data.address[language]}}
     </a>
 <!--    <a routerLink="/{{language}}/info-service">-->
 <!--      Информация о сервисе-->
@@ -29,11 +30,11 @@
 <!--    <a routerLink="/{{language}}/support">-->
 <!--      Техническая поддержка-->
 <!--    </a>-->
-    <a class="logout" *ngIf="login">
-      Выйти
-    </a>
+    <button class="logout" *ngIf="login" (click)="logut()">
+      {{data.exit[language]}}
+    </button>
     <a routerLink="/{{language}}/signin" *ngIf="!login">
-      Вход
+      {{data.enter[language]}}
     </a>
   </div>
 </div>

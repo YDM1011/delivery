@@ -1,0 +1,15 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.1/cropper.min.css">
+<!--<button (click)="rotete()">rotate</button>-->
+<!--<button (click)="getCropBoxData()">getCropBoxData</button> <br>-->
+<!--<button (click)="getCanvasData()">getCanvasData</button> <br>-->
+<!--<button (click)="getImageData()">getImageData</button> <br>-->
+<div class="wrap-cropper">
+  <div class="img-container">
+    <!--<img #image [src]="domain+'/upload/'+imageSource">-->
+    <img #image src="https://piligrim-test.pp.ua/assets/images/tmp/semki.png" alt="" crossorigin="">
+  </div>
+  <!--<img [src]="imageDestination" class="img-preview">-->
+  <div class="btn-wrap">
+    <button (click)="getData()" class="cansel-popup-btn">getData</button>
+  </div>
+</div>

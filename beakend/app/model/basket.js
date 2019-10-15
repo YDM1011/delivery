@@ -14,6 +14,7 @@ const schema = new Schema({
         type: Schema.Types.ObjectId,
         ref: "Product"
     }],
+    basketNumber: Number,
     status: Number,
     totalPrice: Number,
     basketId: Number,
@@ -144,6 +145,20 @@ const schema = new Schema({
     // ],
     // admin: [{public:true}],
     // sa: [{public:true}],
+});
+
+schema.post('save', (doc,next)=>{
+    mongoose.model('Basket')
+        .findOne({})
+        .sort({date:-1})
+        .exec((e,r)=>{
+            mongoose.model('Basket')
+                .findOneAndUpdate({_id:doc._id}, {basketNumber: (r.basketNumber+1)}, {new:true})
+                .exec((e,r)=>{
+                    next()
+                });
+        });
+
 });
 
 mongoose.model('Basket', schema);
