@@ -26,65 +26,30 @@
 									
 									</div>
 								</div>
-								<div class="row-f" [routerLink]="'/orders-detail/4'">
-									<div class="name col-f" [matTooltip]="'Имя Фамилия'">
+								<div class="row-f" [routerLink]="'/orders-detail/' + item._id" *ngFor="let item of orders; let i = index">
+									<div class="name col-f" [matTooltip]="item.createdBy.name">
 										<div class="img">
 											<img src="./assets/images/user.svg" alt="">
 										</div>
 									</div>
 									<div class="address col-f">
-										Киев, улица Нивка 45, дом 3
+										{{item.createdBy.address}}
 									</div>
 									<div class="price col-f">
-										500 грн
+										{{item.totalPrice}} Грн.
 									</div>
 									<div class="date col-f">
-										date
-									</div>
-									<div class="buttons col-f">
-										<button class="main-button-color">
-											Взять заказ
-										</button>
-									</div>
-								</div>
-								<div class="row-f" [routerLink]="'/orders-detail/4'">
-									<div class="name col-f" [matTooltip]="'Имя Фамилия'">
-										<div class="img">
-											<img src="./assets/images/user.svg" alt="">
+										<div class="date">
+											<div class="top-table-date">
+												{{item.date | date: 'dd MMMM, yyyy'  : null : defLang}}
+											</div>
+											<div class="bottom-table-date">
+												{{item.date | date: 'h:mm a'  : null : defLang}}
+											</div>
 										</div>
 									</div>
-									<div class="address col-f">
-										Киев, улица Нивка 45, дом 3
-									</div>
-									<div class="price col-f">
-										500 грн
-									</div>
-									<div class="date col-f">
-										date
-									</div>
 									<div class="buttons col-f">
-										<button class="main-button-color">
-											Взять заказ
-										</button>
-									</div>
-								</div>
-								<div class="row-f" [routerLink]="'/orders-detail/4'">
-									<div class="name col-f" [matTooltip]="'Имя Фамилия'">
-										<div class="img">
-											<img src="./assets/images/user.svg" alt="">
-										</div>
-									</div>
-									<div class="address col-f">
-										Киев, улица Нивка 45, дом 3
-									</div>
-									<div class="price col-f">
-										500 грн
-									</div>
-									<div class="date col-f">
-										date
-									</div>
-									<div class="buttons col-f">
-										<button class="main-button-color">
+										<button class="main-button-color" (click)="takeOrder($event, i)">
 											Взять заказ
 										</button>
 									</div>
@@ -105,7 +70,7 @@
 							loading...2
 						</div>
 						<div class="content" *ngIf="loading">
-							<div class="table-f">
+							<div class="table-f" *ngIf="orders && orders.length > 0">
 								<div class="row-f">
 									<div class="name col-f">
 										Имя
@@ -123,7 +88,7 @@
 									
 									</div>
 								</div>
-								<div class="row-f" [routerLink]="'/orders-detail/4'">
+								<div class="row-f" [routerLink]="'/orders-detail/4'" *ngFor="let item of orders; let i = index">
 									<div class="name col-f" [matTooltip]="'Имя Фамилия'">
 										<div class="img">
 											<img src="./assets/images/user.svg" alt="">
@@ -149,39 +114,16 @@
 										</div>
 									</div>
 								</div>
-								<div class="row-f" [routerLink]="'/orders-detail/4'">
-									<div class="name col-f" [matTooltip]="'Имя Фамилия'">
-										<div class="img">
-											<img src="./assets/images/user.svg" alt="">
-										</div>
-									</div>
-									<div class="address col-f">
-										Киев, улица Нивка 45, дом 3
-									</div>
-									<div class="price col-f">
-										500 грн
-									</div>
-									<div class="date col-f">
-										date
-									</div>
-									<div class="buttons col-f">
-										<div class="who-doing">
-											<div class="status waiting">
-												В оброботке
-											</div>
-											<div class="name">
-												Василь Васильевич
-											</div>
-										</div>
-									</div>
-								</div>
+								
+								<mat-paginator [length]="lengthPagination"
+								               [pageSize]="pageSizePagination"
+								               [pageSizeOptions]="pageSizeOptionsPagination"
+								               (page)="pageEvent($event)">
+								</mat-paginator>
 							</div>
-							
-							<mat-paginator [length]="lengthPagination"
-							               [pageSize]="pageSizePagination"
-							               [pageSizeOptions]="pageSizeOptionsPagination"
-							               (page)="pageEvent($event)">
-							</mat-paginator>
+							<ng-container *ngIf="orders && orders.length === 0">
+								У вас нет активных заказов
+							</ng-container>
 						</div>
 					</ng-template>
 				</mat-tab>
@@ -206,10 +148,9 @@
 										Дата создания
 									</div>
 									<div class="buttons col-f">
-									
 									</div>
 								</div>
-								<div class="row-f" [routerLink]="'/orders-detail/4'">
+								<div class="row-f" [routerLink]="'/orders-detail/4'" *ngFor="let item of orders; let i = index">
 									<div class="name col-f" [matTooltip]="'Имя Фамилия'">
 										<div class="img">
 											<img src="./assets/images/user.svg" alt="">
@@ -235,34 +176,7 @@
 										</div>
 									</div>
 								</div>
-								<div class="row-f" [routerLink]="'/orders-detail/4'">
-									<div class="name col-f" [matTooltip]="'Имя Фамилия'">
-										<div class="img">
-											<img src="./assets/images/user.svg" alt="">
-										</div>
-									</div>
-									<div class="address col-f">
-										Киев, улица Нивка 45, дом 3
-									</div>
-									<div class="price col-f">
-										500 грн
-									</div>
-									<div class="date col-f">
-										date
-									</div>
-									<div class="buttons col-f">
-										<div class="who-doing">
-											<div class="status success">
-												Сделано
-											</div>
-											<div class="name">
-												Василь Васильевич
-											</div>
-										</div>
-									</div>
-								</div>
 							</div>
-							
 							<mat-paginator [length]="lengthPagination"
 							               [pageSize]="pageSizePagination"
 							               [pageSizeOptions]="pageSizeOptionsPagination"
