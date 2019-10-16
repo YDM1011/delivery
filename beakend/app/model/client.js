@@ -13,6 +13,7 @@ const schem = new Schema({
     name: String,
     img: {type: String, default: ''},
     address: String,
+    addressWorks: [],
     city: {
         type: Schema.Types.ObjectId,
         ref: "City"

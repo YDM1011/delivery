@@ -13,7 +13,7 @@
   </p>
   <div class="form">
     <input type="text" placeholder="Название торговой точки" name="name" [(ngModel)]="address.name">
-    <select *ngIf="cities" name="" id="" (change)="select($event)">
+    <select *ngIf="cities" name="city" [(ngModel)]="address.city" (change)="select($event)">
       <option *ngFor="let city of cities" [value]="city._id">
         <app-img [fs]="city.img" [anyFs]="'assets/images/city.svg'"></app-img>
         {{city.name}}

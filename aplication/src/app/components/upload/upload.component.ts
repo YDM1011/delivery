@@ -15,6 +15,7 @@ export class UploadComponent implements OnInit, OnDestroy {
   @Input() multiple = true;
   @Input() defType = {'image/png': true, 'image/jpg': true, 'image/jpeg': true};
   @Input() tooltip = '';
+  @Input() dir = '';
   @Input() cropper = false;
 
   constructor(public dialog: MatDialog,
@@ -44,7 +45,7 @@ export class UploadComponent implements OnInit, OnDestroy {
   }
   openUploadDialog() {
     const dialogRef = this.dialog.open(DialogComponent, { width: '360px', height: '360px',
-      data: {type: this.defType, tooltip: this.tooltip, cropper: this.cropper} });
+      data: {type: this.defType, tooltip: this.tooltip, cropper: this.cropper, dir: this.dir} });
   }
   ngOnDestroy() {
     this.uploadService.setNull();

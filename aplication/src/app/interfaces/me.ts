@@ -1,9 +1,11 @@
 export interface Me {
   action: any[],
+  addressWorks: any[],
   banned: boolean,
   basket: any[],
   companies: any[],
   date: string,
+  address?: string,
   debtors: any[],
   favoriteCompany: any[],
   favoriteProduct: any[],

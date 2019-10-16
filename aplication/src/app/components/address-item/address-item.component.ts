@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {AuthService} from '../../auth.service';
 
 @Component({
@@ -8,7 +8,7 @@ import {AuthService} from '../../auth.service';
 })
 export class AddressItemComponent implements OnInit {
   public language: string;
-
+  @Input() data;
   constructor(
       private auth: AuthService
   ) { }
@@ -17,6 +17,7 @@ export class AddressItemComponent implements OnInit {
     this.auth.onLanguage.subscribe((v: string) => {
       this.language = v;
     })
+
   }
 
 

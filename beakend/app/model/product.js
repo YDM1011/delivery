@@ -74,7 +74,7 @@ const schema = new Schema({
                 {type:'refObj', fieldName: 'createdBy'},
                 {type:'array', fieldName: 'collaborators'}
             ]
-        },{
+        }, {
             model:'Product',
             _id: '_id',
             canBeId: [

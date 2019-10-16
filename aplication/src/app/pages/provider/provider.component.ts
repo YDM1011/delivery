@@ -44,6 +44,7 @@ export class ProviderComponent implements OnInit {
   favoriteCompany(){
     this.crud.favoriteCompany({companyId:this.id}).then((v:any)=>{
       if (v) {
+        this.me.favoriteCompany = v;
         if (v && (v.indexOf(this.id)>-1)) {
           this.favoriteShow = true;
         } else {
