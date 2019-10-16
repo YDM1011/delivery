@@ -31,13 +31,7 @@ export class OrdersDetailComponent implements OnInit {
     this.route.params.subscribe(() => {
       this.id = this.route.snapshot.paramMap.get('id');
       if (this.id) {
-        const populate = JSON.stringify([{path: 'products', select: 'price count', populate: {path: 'orderOwner', select: 'name'}}, {path: 'createdBy', select: 'name address'}, {path: 'manager', select: 'name'}]);
-        this.crud.get(`basket?query={"_id":"${this.id}"}&populate=${populate}`).then((b: any) => {
-          if (b && b.length > 0) {
-            this.basket = Object.assign({}, b[0]);
-            this.basketCopy = Object.assign({}, b[0]);
-          }
-        });
+        this.refresh();
       }
     });
   }
@@ -78,7 +72,8 @@ export class OrdersDetailComponent implements OnInit {
       return;
     }
     this.basket.products[i].count--;
-    this.crud.post('product', {count: this.basket.products[i].count}, this.basket.products[i]._id).then();
+    this.crud.post('product', {count: this.basket.products[i].count}, this.basket.products[i]._id, false).then();
+    this.refresh();
   }
   increment(i) {
     this.showDescription();
@@ -94,7 +89,8 @@ export class OrdersDetailComponent implements OnInit {
         return;
     }
     this.basket.products[i].count++;
-    this.crud.post('product', {count: this.basket.products[i].count}, this.basket.products[i]._id).then();
+    this.crud.post('product', {count: this.basket.products[i].count}, this.basket.products[i]._id, false).then();
+    this.refresh();
   }
   removeProduct(i) {
     if (this.basket.products.length === 1) {
@@ -117,6 +113,7 @@ export class OrdersDetailComponent implements OnInit {
                 if (b && b.length > 0) {
                   this.basket = Object.assign({}, b[0]);
                   this.editBasket = false;
+                  this.refresh();
                 }
               });
             }
@@ -140,6 +137,7 @@ export class OrdersDetailComponent implements OnInit {
         this.crud.delete('product', this.basket.products[i]._id).then((v: any) => {
           if (v) {
             this.basket.products.splice(i, 1);
+            this.refresh();
           }
         });
       }
@@ -168,6 +166,15 @@ export class OrdersDetailComponent implements OnInit {
             });
           }
         });
+      }
+    });
+  }
+  refresh() {
+    const populate = JSON.stringify([{path: 'products', select: 'price count', populate: {path: 'orderOwner', select: 'name'}}, {path: 'createdBy', select: 'name address'}, {path: 'manager', select: 'name'}]);
+    this.crud.get(`basket?query={"_id":"${this.id}"}&populate=${populate}`).then((b: any) => {
+      if (b && b.length > 0) {
+        this.basket = Object.assign({}, b[0]);
+        this.basketCopy = Object.assign({}, b[0]);
       }
     });
   }
