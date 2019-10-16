@@ -3,13 +3,13 @@
 		<div class="contain__group-header">
 			<div class="title">
 				Заказ №
+<!--				{{basket.number}}-->
 			</div>
 			<div class="status-info">
 				<div class="name">
-				имя исполнителя
+				{{basket.manager.name}}
 				</div>
-				<div class="status">
-					Новий заказ
+				<div class="status" [innerHTML]="basket.status | status | safeHTML">
 				</div>
 			</div>
 		</div>
@@ -60,7 +60,8 @@
 						{{item.orderOwner.name}}
 					</div>
 					<div class="count">
-						{{item.count}} шт.
+						<ng-template #count>{{item.count}}</ng-template>
+						<input type="text" [(ngModel)]="item.count" *ngIf="editBasket; else count"> шт.
 					</div>
 					<div class="price">
 						{{item.price}} Грн.
@@ -77,8 +78,16 @@
 					Грн.
 				</div>
 				<div class="right">
-					<button class="main-button" type="reset" [routerLink]="'/orders'">Назад</button>
-					<button class="main-button-color" type="submit">Взять заказ</button>
+					<ng-container *ngIf="!editBasket">
+						<button class="main-button back" [routerLink]="'/orders'">Назад</button>
+						<button class="main-button remove" *ngIf="basket.status === 1" (click)="cancel()">Отменить</button>
+						<button class="main-button edit" *ngIf="basket.status === 1" (click)="edit()">Редактировать</button>
+						<button class="main-button-color" *ngIf="basket.status === 1" (click)="takeOrder()">Взять заказ</button>
+						<button class="main-button-color" *ngIf="basket.status === 2 || basket.status === 3" (click)="done()">Готово</button>
+					</ng-container>
+					<ng-container *ngIf="editBasket">
+						<button class="main-button-color" (click)="saveChanges()">Сохранить изменения</button>
+					</ng-container>
 				</div>
 			</div>
 		</div>

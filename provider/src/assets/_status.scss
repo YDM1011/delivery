@@ -1,0 +1,20 @@
+.status__title{
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
+  &.active{
+    color: #009688;
+  }
+  &.confirm{
+    color: #F4A100;
+  }
+  &.edit{
+    color: #F4A100;
+  }
+  &.done{
+    color: #009688;
+  }
+  &.remove{
+    color: #E21B1B;
+  }
+}

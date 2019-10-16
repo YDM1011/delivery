@@ -61,7 +61,7 @@ const schema = new Schema({
                 {type:'array', fieldName: 'collaborators'}
             ]
         },{
-            model:'Basket',
+            model:'Product',
             _id: '_id',
             canBeId: [
                 {type:'refObj', fieldName: 'createdBy'}
@@ -74,6 +74,12 @@ const schema = new Schema({
                 {type:'refObj', fieldName: 'createdBy'},
                 {type:'array', fieldName: 'collaborators'}
             ]
+        },{
+            model:'Product',
+            _id: '_id',
+            canBeId: [
+                {type:'refObj', fieldName: 'createdBy'}
+            ]
         }],
         create: [{public: true}],
         delete: [{
@@ -83,13 +89,71 @@ const schema = new Schema({
                 {type:'refObj', fieldName: 'createdBy'},
                 {type:'array', fieldName: 'collaborators'}
             ]
+        },{
+            model:'Product',
+            _id: '_id',
+            canBeId: [
+                {type:'refObj', fieldName: 'createdBy'}
+            ]
         }],
     },
     collaborator: {
-        read: [{public:true}],
-        update: [{private:true}],
-        create: [{private:true}],
-        delete: [{private:true}],
+        read: [{
+            model:'Company',
+            _id: 'companyOwner',
+            canBeId: [
+                {type:'refObj', fieldName: 'createdBy'},
+                {type:'array', fieldName: 'collaborators'}
+            ]
+        },{
+            model:'Product',
+            _id: '_id',
+            canBeId: [
+                {type:'refObj', fieldName: 'createdBy'}
+            ]
+        }],
+        update: [{
+            model:'Company',
+            _id: 'companyOwner',
+            canBeId: [
+                {type:'refObj', fieldName: 'createdBy'},
+                {type:'array', fieldName: 'collaborators'}
+            ]
+        },{
+            model:'Product',
+            _id: '_id',
+            canBeId: [
+                {type:'refObj', fieldName: 'createdBy'}
+            ]
+        }],
+        create: [{
+            model:'Company',
+            _id: 'companyOwner',
+            canBeId: [
+                {type:'refObj', fieldName: 'createdBy'},
+                {type:'array', fieldName: 'collaborators'}
+            ]
+        },{
+            model:'Product',
+            _id: '_id',
+            canBeId: [
+                {type:'refObj', fieldName: 'createdBy'}
+            ]
+        }],
+        delete: [{
+            model:'Company',
+            _id: 'companyOwner',
+            canBeId: [
+                {type:'refObj', fieldName: 'createdBy'},
+                {type:'array', fieldName: 'collaborators'}
+            ]
+        },{
+            model:'Product',
+            _id: '_id',
+            canBeId: [
+                {type:'refObj', fieldName: 'createdBy'}
+            ]
+        }],
     },
 
 });
