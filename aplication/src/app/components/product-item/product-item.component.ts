@@ -1,5 +1,6 @@
 import {Component, Input, OnInit, Output} from '@angular/core';
 import {AuthService} from "../../auth.service";
+import {CrudService} from "../../crud.service";
 
 @Component({
   selector: 'app-product-item',
@@ -11,7 +12,8 @@ export class ProductItemComponent implements OnInit {
   public language: string;
   @Input() data;
   constructor(
-      private auth: AuthService
+      private auth: AuthService,
+      private crud: CrudService
   ) { }
 
   ngOnInit() {
@@ -27,7 +29,11 @@ export class ProductItemComponent implements OnInit {
     this.count --;
   }
 
-  alert(text){
-    alert(text)
+  addProduct(order){
+    this.crud.post('product', {orderOwner:order._id,count:this.count}).then(v=>{
+      this.count = 0;
+      alert("Success")
+    })
   }
+
 }

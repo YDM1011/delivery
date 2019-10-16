@@ -1,15 +1,16 @@
-<div class="conteiner-basket-order">
+<div class="conteiner-basket-order" *ngIf="data">
     <mat-checkbox [ngModel]="chooseAll" (change)="mainChack()" class="main-checkbox"></mat-checkbox>
   <mat-expansion-panel class="basket-panel">
     <mat-expansion-panel-header class="basket-header-fix" collapsedHeight="*" expandedHeight="*">
       <mat-panel-title>
         <div class="title-panel">
           <div class="title">
-            Поставщик “Рыбалка”
+            {{data.companyOwner.name}}
           </div>
         </div>
       </mat-panel-title>
     </mat-expansion-panel-header>
+
     <div class="content">
       <div class="content-item">
         <mat-checkbox class="green-checkbox" name="it1" [ngModel]="items[0].isChoise" (change)="otherChack(0)"></mat-checkbox>
@@ -93,6 +94,7 @@
           Поставщик “Фреш продукты РУКОВИЧКА”
         </div>
       </div>
+
     </div>
     
     <div class="basket-buttons">
@@ -101,7 +103,7 @@
           Всего к оплате:
         </div>
         <div class="left-price">
-          23 405 грн.
+          {{data.totalPrice}} грн.
         </div>
       </div>
       <button class="right" (click)="showConfirm = true">

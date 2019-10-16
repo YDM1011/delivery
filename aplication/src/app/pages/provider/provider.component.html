@@ -120,15 +120,24 @@
     </div>
   </div>
   <div class="catalog">
+
     <ng-container *ngIf="company.categories.length>0">
       <ng-container *ngFor="let category of company.categories">
+        <div class="wrap-category">
+          <div class="wrap-title" (click)="getProduct(category._id)">{{category.name}}</div>
+          <div class="product-content">
+            <ng-container *ngIf="products[category._id]">
+              <ng-container *ngFor="let order of products[category._id]">
+                <app-product-item [data]="order"></app-product-item> <br>
+              </ng-container>
+            </ng-container>
+          </div>
+        </div>
+        <!--<ng-container *ngIf="category.orders.length>0">-->
+          <!--<ng-container *ngFor="let order of category.orders">-->
 
-        <ng-container *ngIf="category.orders.length>0">
-          <ng-container *ngFor="let order of category.orders">
-            <app-product-item [data]="order"></app-product-item>
-            <br>
-          </ng-container>
-        </ng-container>
+          <!--</ng-container>-->
+        <!--</ng-container>-->
 
       </ng-container>
     </ng-container>

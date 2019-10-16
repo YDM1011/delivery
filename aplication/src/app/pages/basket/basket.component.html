@@ -10,9 +10,9 @@
   <app-basket-item></app-basket-item>
 </div>
 
-<div class="other-pages">
-  <mat-accordion>
-    <app-basket-order-item></app-basket-order-item>
+<div class="other-pages" *ngIf="baskets">
+  <mat-accordion *ngFor="let basket of baskets">
+    <app-basket-order-item [data]="basket"></app-basket-order-item>
   </mat-accordion>
 </div>
 <app-remove-basket-item *ngIf="removeItem"></app-remove-basket-item>

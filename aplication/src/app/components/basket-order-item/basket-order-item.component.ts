@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-basket-order-item',
@@ -6,6 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./basket-order-item.component.scss']
 })
 export class BasketOrderItemComponent implements OnInit {
+  @Input() data;
   public chooseAll: boolean = true;
   public showConfirm: boolean = false;
   public removeItemShow: boolean = false;

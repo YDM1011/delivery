@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {AuthService} from "../../auth.service";
 import {CrudService} from "../../crud.service";
 import {ActivatedRoute} from "@angular/router";
+import {query} from "@angular/animations";
 
 @Component({
   selector: 'app-provider',
@@ -14,6 +15,7 @@ export class ProviderComponent implements OnInit {
   public id;
   public me;
   public company;
+  public products = {};
   constructor(
       private auth: AuthService,
       private crud: CrudService,
@@ -35,10 +37,20 @@ export class ProviderComponent implements OnInit {
     });
   }
   init() {
-    this.crud.getDetailCompany(this.id).then((v:any)=>{
+    this.crud.getDetailCompany(this.id, this.company).then((v:any)=>{
       if (v) {
         this.company = v;
       }
+    })
+  }
+  getProduct(categoryId){
+    let skip = this.products[categoryId] ? this.products[categoryId].length : 0;
+    const query = `?query={"companyOwner":"${this.id}","categoryOwner":"${categoryId}"}&limit=2&skip=${skip}`;
+    this.crud.get('order', '', query).then(v=>{
+      if(!this.products[categoryId]) {
+        this.products[categoryId] = []
+      }
+      this.products[categoryId] = this.products[categoryId].concat(v)
     })
   }
   favoriteCompany(){
