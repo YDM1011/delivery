@@ -31,36 +31,42 @@ export class EditAddressComponent implements OnInit {
   ngOnInit() {
     this.route.params.subscribe((params: any) => {
       this.id = this.route.snapshot.paramMap.get('id');
-      this.init()
+      this.init();
     });
     this.auth.onLanguage.subscribe((v: string) => {
       this.language = v;
     });
 
   }
-  init(){
-    this.crud.get('shopAddress', this.id).then((v:any)=>{
-      if (!v) return;
+  init() {
+    this.crud.get('shopAddress', this.id).then((v: any) => {
+      if (!v) {return; }
       this.address = v;
-      this.crud.getCity().then((v:any)=>{
+      this.crud.getCity().then((v: any) => {
         this.cities = v;
-      })
-    })
+      });
+    });
   }
   onFs(body) {
     this.address.img = null;
-    setTimeout(()=>{
+    setTimeout(() => {
       this.address.img = body.file;
-    },0)
+    }, 0);
   }
   save(e) {
     e.preventDefault();
-    this.crud.post('shopAddress', this.address, this.id).then((v:any)=>{
-      if (!v) return;
+    this.crud.post('shopAddress', this.address, this.id).then((v: any) => {
+      if (!v) {return; }
       this.router.navigate(['/' + this.language + '/my-address']);
-    })
+    });
   }
-  select(e){
-    console.log(e.target.value)
+  select(e) {
+    console.log(e.target.value);
+  }
+  removeAddress() {
+    this.crud.delete('shopAddress', this.id).then((v: any) => {
+      if (v) {
+      }
+    });
   }
 }

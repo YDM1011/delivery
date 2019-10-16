@@ -1,6 +1,6 @@
 <div class="phone">
   <div class="block">
-    <input type="text" class="mainPhone" [(ngModel)]="mainPhone" (keyup)="splitPhone()" pattern="[0-9]{10}" autocomplete="off" numbersOnly numericType="number" >
+    <input type="text" class="mainPhone" [(ngModel)]="mainPhone" (keyup)="splitPhone()" [maxLength]="10" pattern="[0-9]{10}" autocomplete="off" numbersOnly numericType="number" >
   </div>
   <div class="text">
     +38
