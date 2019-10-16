@@ -53,4 +53,11 @@ export class MyInfoComponent implements OnInit{
     },0)
 
   }
+
+  save(e){
+    e.preventDefault();
+    this.crud.post('client', this.me, this.me._id).then((v:any)=>{
+      console.log('success update')
+    })
+  }
 }
