@@ -15,6 +15,11 @@ const schema = new Schema({
         ref: "Product"
     }],
     basketNumber: Number,
+    manager: {
+        type: Schema.Types.ObjectId,
+        ref: "Client"
+    },
+    description: String,
     status: Number,
     totalPrice: Number,
     basketId: Number,

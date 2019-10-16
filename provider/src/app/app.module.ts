@@ -40,6 +40,8 @@ import {getDutchPaginatorIntl} from "./dutch-paginator-intl";
 import { AddProductComponent } from './components/add-product/add-product.component';
 import { EditProductComponent } from './components/edit-product/edit-product.component';
 import { SearchFilterComponent } from './components/search-filter/search-filter.component';
+import { StatusPipe } from './pipe/status.pipe';
+import { SafeHtmlPipe } from './pipe/safe-html.pipe';
 
 @NgModule({
   declarations: [
@@ -68,6 +70,8 @@ import { SearchFilterComponent } from './components/search-filter/search-filter.
     AddProductComponent,
     EditProductComponent,
     SearchFilterComponent,
+    StatusPipe,
+    SafeHtmlPipe,
   ],
   imports: [
     BrowserAnimationsModule,

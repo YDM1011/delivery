@@ -2,9 +2,9 @@
   <div class="sign-content">
     <h3>Вход</h3>
     <form class="form" (submit)="signin($event)">
-      <app-phone (phone)="data['login'] = $event"></app-phone>
+      <app-phone (phone)="data['login'] = $event" [number]="'0994604368'"></app-phone>
       <input type="password" placeholder="Пароль" autocomplete="off" name="pass" [(ngModel)]="data['pass']">
-
+      
       <div class="buttons">
         <button class="main-button-bold continue" type="submit">{{t_enter[language]}}</button>
         <a routerLink="/{{language}}" class="main-button-bold no-color">{{t_cancel[language]}}</a>

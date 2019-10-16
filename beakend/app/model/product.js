@@ -61,7 +61,7 @@ const schema = new Schema({
                 {type:'array', fieldName: 'collaborators'}
             ]
         },{
-            model:'Basket',
+            model:'Product',
             _id: '_id',
             canBeId: [
                 {type:'refObj', fieldName: 'createdBy'}
@@ -74,6 +74,12 @@ const schema = new Schema({
                 {type:'refObj', fieldName: 'createdBy'},
                 {type:'array', fieldName: 'collaborators'}
             ]
+        },{
+            model:'Product',
+            _id: '_id',
+            canBeId: [
+                {type:'refObj', fieldName: 'createdBy'}
+            ]
         }],
         create: [{public: true}],
         delete: [{
@@ -83,15 +89,20 @@ const schema = new Schema({
                 {type:'refObj', fieldName: 'createdBy'},
                 {type:'array', fieldName: 'collaborators'}
             ]
+        },{
+            model:'Product',
+            _id: '_id',
+            canBeId: [
+                {type:'refObj', fieldName: 'createdBy'}
+            ]
         }],
     },
     collaborator: {
         read: [{public:true}],
-        update: [{private:true}],
-        create: [{private:true}],
-        delete: [{private:true}],
+        update: [{public:true}],
+        create: [{public:true}],
+        delete: [{public:true}],
     },
-
 });
 
 schema.post('findOneAndRemove', (doc,next)=>{
@@ -102,7 +113,7 @@ schema.post('findOneAndRemove', (doc,next)=>{
             { new: true },(err,r)=>{
             if (r){
                 console.log(r.products.length, r);
-                r.products.length == 0 ? deleteBasket(r, next) : checkIsProduct(r, next);
+                r.products.length === 0 ? deleteBasket(r, next) : checkIsProduct(r, next);
             }
             // next()
         })

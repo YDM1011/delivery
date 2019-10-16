@@ -2,13 +2,13 @@
 	<div class="contain__group">
 		<div class="add-section">
 			<mat-tab-group (selectedIndexChange)="selectChange($event)" [animationDuration]="0">
-				<mat-tab label="Все заказы">
+				<mat-tab label="Новые заказы">
 					<ng-template matTabContent class="mat-template">
 						<div class="loading" *ngIf="!loading">
 							loading...1
 						</div>
 						<div class="content" *ngIf="loading">
-							<div class="table-f">
+							<div class="table-f" *ngIf="orders && orders.length > 0">
 								<div class="row-f">
 									<div class="name col-f">
 										Имя
@@ -49,18 +49,22 @@
 										</div>
 									</div>
 									<div class="buttons col-f">
-										<button class="main-button-color" (click)="takeOrder($event, i)">
+										<button class="main-button-color" (click)="takeOrder($event, i)" *ngIf="item.status === 1">
 											Взять заказ
 										</button>
+										<div class="who-doing" *ngIf="item.status !== 1">
+											<div class="status" [innerHTML]="item.status | status | safeHTML">
+											</div>
+											<div class="name">
+												{{item.manager.name}}
+											</div>
+										</div>
 									</div>
 								</div>
 							</div>
-							
-							<mat-paginator [length]="lengthPagination"
-							               [pageSize]="pageSizePagination"
-							               [pageSizeOptions]="pageSizeOptionsPagination"
-							               (page)="pageEvent($event)">
-							</mat-paginator>
+							<div class="no-content" *ngIf="orders && orders.length === 0">
+								У вас нет новых заказов
+							</div>
 						</div>
 					</ng-template>
 				</mat-tab>
@@ -88,42 +92,41 @@
 									
 									</div>
 								</div>
-								<div class="row-f" [routerLink]="'/orders-detail/4'" *ngFor="let item of orders; let i = index">
+								<div class="row-f" [routerLink]="'/orders-detail/' + item._id" *ngFor="let item of orders; let i = index">
 									<div class="name col-f" [matTooltip]="'Имя Фамилия'">
 										<div class="img">
 											<img src="./assets/images/user.svg" alt="">
 										</div>
 									</div>
 									<div class="address col-f">
-										Киев, улица Нивка 45, дом 3
+										{{item.createdBy.address}}
 									</div>
 									<div class="price col-f">
-										500 грн
+										{{item.totalPrice}} Грн.
 									</div>
 									<div class="date col-f">
-										date
+										<div class="date">
+											<div class="top-table-date">
+												{{item.date | date: 'dd MMMM, yyyy' : null : defLang}}
+											</div>
+											<div class="bottom-table-date">
+												{{item.date | date: 'h:mm a' : null : defLang}}
+											</div>
+										</div>
 									</div>
 									<div class="buttons col-f">
 										<div class="who-doing">
-											<div class="status waiting">
-												В оброботке
-											</div>
+											<div class="status" [innerHTML]="item.status | status | safeHTML"></div>
 											<div class="name">
-												Василь Васильевич
+												{{item.manager.name}}
 											</div>
 										</div>
 									</div>
 								</div>
-								
-								<mat-paginator [length]="lengthPagination"
-								               [pageSize]="pageSizePagination"
-								               [pageSizeOptions]="pageSizeOptionsPagination"
-								               (page)="pageEvent($event)">
-								</mat-paginator>
 							</div>
-							<ng-container *ngIf="orders && orders.length === 0">
+							<div class="no-content" *ngIf="orders && orders.length === 0">
 								У вас нет активных заказов
-							</ng-container>
+							</div>
 						</div>
 					</ng-template>
 				</mat-tab>
@@ -150,43 +153,112 @@
 									<div class="buttons col-f">
 									</div>
 								</div>
-								<div class="row-f" [routerLink]="'/orders-detail/4'" *ngFor="let item of orders; let i = index">
+								<div class="row-f" [routerLink]="'/orders-detail/' + item._id" *ngFor="let item of orders; let i = index">
 									<div class="name col-f" [matTooltip]="'Имя Фамилия'">
 										<div class="img">
 											<img src="./assets/images/user.svg" alt="">
 										</div>
 									</div>
 									<div class="address col-f">
-										Киев, улица Нивка 45, дом 3
+										{{item.createdBy.address}}
 									</div>
 									<div class="price col-f">
-										500 грн
+										{{item.totalPrice}} Грн.
 									</div>
 									<div class="date col-f">
-										date
+										<div class="date">
+											<div class="top-table-date">
+												{{item.date | date: 'dd MMMM, yyyy' : null : defLang}}
+											</div>
+											<div class="bottom-table-date">
+												{{item.date | date: 'h:mm a' : null : defLang}}
+											</div>
+										</div>
 									</div>
 									<div class="buttons col-f">
 										<div class="who-doing">
-											<div class="status cancel">
-												Отменен
-											</div>
+											<div class="status" [innerHTML]="item.status | status | safeHTML"></div>
 											<div class="name">
-												Василь Васильевич
+												{{item.manager.name}}
 											</div>
 										</div>
 									</div>
 								</div>
 							</div>
-							<mat-paginator [length]="lengthPagination"
-							               [pageSize]="pageSizePagination"
-							               [pageSizeOptions]="pageSizeOptionsPagination"
-							               (page)="pageEvent($event)"
-							               *ngIf="orders || orders.length > 0">
-							</mat-paginator>
+						</div>
+						<div class="no-content" *ngIf="orders && orders.length === 0">
+							У вас нет истории заказов
+						</div>
+					</ng-template>
+				</mat-tab>
+				<mat-tab label="Мои заказы">
+					<ng-template matTabContent>
+						<div class="loading" *ngIf="!loading">
+							loading...4
+						</div>
+						<div class="content" *ngIf="loading">
+							<div class="table-f">
+								<div class="row-f">
+									<div class="name col-f">
+										Имя
+									</div>
+									<div class="address col-f">
+										Адрес доставки
+									</div>
+									<div class="price col-f">
+										Цена
+									</div>
+									<div class="date col-f">
+										Дата создания
+									</div>
+									<div class="buttons col-f">
+									</div>
+								</div>
+								<div class="row-f" [routerLink]="'/orders-detail/' + item._id" *ngFor="let item of orders; let i = index">
+									<div class="name col-f" [matTooltip]="'Имя Фамилия'">
+										<div class="img">
+											<img src="./assets/images/user.svg" alt="">
+										</div>
+									</div>
+									<div class="address col-f">
+										{{item.createdBy.address}}
+									</div>
+									<div class="price col-f">
+										{{item.totalPrice}} Грн.
+									</div>
+									<div class="date col-f">
+										<div class="date">
+											<div class="top-table-date">
+												{{item.date | date: 'dd MMMM, yyyy' : null : defLang}}
+											</div>
+											<div class="bottom-table-date">
+												{{item.date | date: 'h:mm a' : null : defLang}}
+											</div>
+										</div>
+									</div>
+									<div class="buttons col-f">
+										<div class="who-doing">
+											<div class="status" [innerHTML]="item.status | status | safeHTML"></div>
+											<div class="name">
+												{{item.manager.name}}
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="no-content" *ngIf="orders && orders.length === 0">
+							У вас нет активных заказов
 						</div>
 					</ng-template>
 				</mat-tab>
 			</mat-tab-group>
+			<mat-paginator [length]="lengthPagination"
+			               [pageSize]="pageSizePagination"
+			               [pageSizeOptions]="pageSizeOptionsPagination"
+			               (page)="pageEvent($event)"
+			               *ngIf="loading && orders && orders.length > 0">
+			</mat-paginator>
 		</div>
 	</div>
 </div>

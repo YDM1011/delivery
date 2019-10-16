@@ -6,10 +6,28 @@
   line-height: 22px;
   max-width: 290px;
   margin: 0 auto;
+  position: relative;
+  .block{
+    position: absolute;
+    width: 100%;
+    height: 30px;
+    top: 0;
+    background: transparent;
+    .mainPhone{
+      background: transparent;
+      color: red;
+      border: none;
+      width: calc(100% - 40px);
+      height: 100%;
+      margin-left: 38px;
+      letter-spacing: 5px;
+    }
+  }
   .text{
     color: #fff;
     margin-top: 3px;
     margin-right: 5px;
+    position: relative;
   }
   input{
     width: 43px;
@@ -26,7 +44,7 @@
 input{
   width: 100%;
   max-width: 290px;
-  margin: 0 auto 25px;
+  margin: 0 auto 0px;
   border-radius: 0;
   border: none;
   border-bottom: 1px solid #fff;
