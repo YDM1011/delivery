@@ -33,6 +33,7 @@ export class PhoneComponent implements OnInit {
     this.thirdModel = this.mainPhone.slice(6, 10);
     this.phoneNumber = '+38' + this.firstModel + this.secondModel  + this.thirdModel;
     this.phone.emit(this.phoneNumber);
+    console.log(this.phoneNumber)
   }
   // keyPressFirst() {
   //   this.phoneNumber = '+38' + this.firstModel + this.secondModel  + this.thirdModel;

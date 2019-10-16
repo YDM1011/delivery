@@ -4,7 +4,8 @@ module.exports.preRead = async (req,res,next, backendApp) => {
 
 module.exports.preUpdate = async (req,res,next, backendApp) => {
     // try {
-    delete req.body.createdBy;
+    if (req.user.role === 'provider' || req.user.role === 'collaborator') {
+        delete req.body.createdBy;
         switch (parseInt(req.body.status)){
             case 0: req.body.updatedAt = new Date(); return next();
             case 1: req.body.updatedAt = new Date(); return next();
@@ -19,6 +20,10 @@ module.exports.preUpdate = async (req,res,next, backendApp) => {
             //     // await assign(req,res,next, backendApp, superManeger._id);
             //     return next();
         }
+    } else {
+        return next();
+    }
+
     // } catch(e) {
     //     res.notFound("Can't be update")
     // }
