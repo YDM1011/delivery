@@ -28,6 +28,7 @@ import {OrdersComponent} from './pages/orders/orders.component';
 import {IsLoginGuard} from "./is-login.guard";
 import {IsLogoutGuard} from "./is-logout.guard";
 import {BrandsIDComponent} from "./pages/brands-id/brands-id.component";
+import {EditAddressComponent} from "./pages/edit-address/edit-address.component";
 
 const routes: Routes = [
   {path: ':lang', component: InitLayoutComponent, children: [
@@ -51,6 +52,7 @@ const routes: Routes = [
       {path: 'my-info', component: MyInfoComponent},
       {path: 'my-bonuses', component: MyBonusesComponent},
       {path: 'my-address', component: MyAddressComponent},
+      {path: 'edit-address/:id', component: EditAddressComponent},
       {path: 'new-address', component: NewAddressComponent},
       {path: 'support', component: SupportComponent},
       {path: 'action/:id', component: ActionDetailComponent},

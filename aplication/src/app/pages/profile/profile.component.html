@@ -1,7 +1,7 @@
 <div class="other-header profile-header">
   <div class="img">
     <!--<img src="./assets/images/user.svg" alt="">-->
-    <app-img [fs]="me.img" [anyFs]="'assets/images/user.svg'"></app-img>
+    <app-img [fs]="me.img" [dir]="'avatar'" [anyFs]="'assets/images/user.svg'"></app-img>
   </div>
   <div class="info" *ngIf="login && me">
     <div class="name">

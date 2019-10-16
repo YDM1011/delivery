@@ -1,7 +1,7 @@
-<div class="cart-wrap">
+<div class="cart-wrap" *ngIf="data && language">
   <a routerLink="/{{language}}/provider/{{data._id}}" class="popular-item">
     <div class="sale">
-      <div class="top"></div>
+      <div class="top" *ngIf="isTop"></div>
       <!--    <div class="sale"></div>-->
     </div>
     <div class="img">

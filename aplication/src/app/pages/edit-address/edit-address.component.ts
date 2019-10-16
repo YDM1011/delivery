@@ -1,16 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import {AuthService} from "../../auth.service";
 import {CrudService} from "../../crud.service";
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
-  selector: 'app-new-address',
-  templateUrl: './new-address.component.html',
-  styleUrls: ['./new-address.component.scss']
+  selector: 'app-edit-address',
+  templateUrl: './edit-address.component.html',
+  styleUrls: ['./edit-address.component.scss']
 })
-export class NewAddressComponent implements OnInit {
+export class EditAddressComponent implements OnInit {
   public language: string;
   public cities;
+  public id;
   public address = {
     city: '',
     img: '',
@@ -21,18 +22,29 @@ export class NewAddressComponent implements OnInit {
     comment: '',
   };
   constructor(
-      private auth: AuthService,
-      private crud: CrudService,
-      private router: Router
+    private route: ActivatedRoute,
+    private auth: AuthService,
+    private crud: CrudService,
+    private router: Router
   ) { }
 
   ngOnInit() {
+    this.route.params.subscribe((params: any) => {
+      this.id = this.route.snapshot.paramMap.get('id');
+      this.init()
+    });
     this.auth.onLanguage.subscribe((v: string) => {
       this.language = v;
     });
-    this.crud.getCity().then((v:any)=>{
-      this.cities = v;
-      this.address.city = this.cities[0]._id
+
+  }
+  init(){
+    this.crud.get('shopAddress', this.id).then((v:any)=>{
+      if (!v) return;
+      this.address = v;
+      this.crud.getCity().then((v:any)=>{
+        this.cities = v;
+      })
     })
   }
   onFs(body) {
@@ -43,7 +55,7 @@ export class NewAddressComponent implements OnInit {
   }
   save(e) {
     e.preventDefault();
-    this.crud.post('shopAddress', this.address).then((v:any)=>{
+    this.crud.post('shopAddress', this.address, this.id).then((v:any)=>{
       if (!v) return;
       this.router.navigate(['/' + this.language + '/my-address']);
     })

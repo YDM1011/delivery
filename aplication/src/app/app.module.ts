@@ -79,6 +79,7 @@ import {MaterialModule} from "./material-module";
 import {UploadComponent} from "./components/upload/upload.component";
 import {DialogComponent} from "./components/upload/dialog/dialog.component";
 import { ImageCropperComponent } from './components/image-cropper/image-cropper.component';
+import { EditAddressComponent } from './pages/edit-address/edit-address.component';
 
 @NgModule({
   declarations: [
@@ -140,6 +141,7 @@ import { ImageCropperComponent } from './components/image-cropper/image-cropper.
     UploadComponent,
     DialogComponent,
     ImageCropperComponent,
+    EditAddressComponent,
   ],
   imports: [
     Ng5SliderModule,
