@@ -21,17 +21,15 @@ module.exports.preUpdate = async (req,res,next, backendApp) => {
         Product.findById(req.params.id)
             .exec((e,r)=>{
                 if (e) return res.serverError(e);
-                if (!r) return res.notFound('Not found!');
+                if (!r) return res.notFound('Not found!1');
                 if (r) {
                     let inc = parsePrice((r.price)*(req.body.count - r.count));
                     Basket.findOneAndUpdate({
-                        "createdBy": req.user.id,
-                        _id: req.body.basketOwner,
-                        status: 0
+                        products: {$in: r._id}
                     }, { $inc: {totalPrice:inc} }, {new:true})
                         .exec((e,r)=>{
                             if (e) return res.serverError(e);
-                            if (!r) return res.notFound('Not found!');
+                            if (!r) return res.notFound('Not found!2');
                             if (r) {next()}
                         })
                 }
@@ -84,7 +82,7 @@ const checkAndInitBasket = (req, backendApp, product) => {
                 };
                 Basket.create(data, (e,r)=>{
                     if (e) return rj(e);
-                    if (!r) return rj('Not found!');
+                    if (!r) return rj('Not found1!');
                     if (r) return rs(r);
                 })
             }
@@ -96,7 +94,7 @@ const checkAndInitBasket = (req, backendApp, product) => {
                 }, {$push:{products:product._id}, $inc: {totalPrice:parsePrice(product.count*product.price)}}, {new:true})
                     .exec((e,r)=>{
                         if (e) return rj(e);
-                        if (!r) return rj('Not found!');
+                        if (!r) return rj('Not found2!');
                         if (r) return rs(r);
                     })
             }
