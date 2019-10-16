@@ -26,7 +26,7 @@ export class OrdersComponent implements OnInit {
       if (!me) {return; }
       this.user = me;
       if (this.user && this.user.companyOwner) {
-        this.crud.get(`basket/count?query={"companyOwner":"${this.user.companyOwner}"}`).then((count: any) => {
+        this.crud.get(`basket/count?query={"companyOwner":"${this.user.companyOwner}","status":1}`).then((count: any) => {
           if (count) {
             this.lengthPagination = count.count;
             this.crud.get(`basket?query={"companyOwner":"${this.user.companyOwner}","status":1}&populate=[{"path":"products"},{"path":"createdBy"},{"path":"manager","select":"name"}]`).then((orders: any) => {

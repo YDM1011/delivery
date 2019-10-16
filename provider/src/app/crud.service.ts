@@ -46,25 +46,26 @@ export class CrudService {
 
     delete(api, id = null) {
         return new Promise((resolve, reject) => {
-            Swal.fire({
-                title: 'Do you confirm the deletion?',
-                type: 'warning',
-                showCloseButton: true,
-                showCancelButton: true,
-                focusConfirm: true,
-                reverseButtons: true,
-                cancelButtonText: 'Cancel!',
-                confirmButtonText: 'Delete',
-                confirmButtonColor: '#dd4535',
-            }).then((result) => {
-                if (result.value) {
-                    this.http.delete(`${this.api}${api}/${id ? id : ''}`).subscribe(data => {
-                        resolve(data || true);
-                    }, error => {
-                        reject(error);
-                    });
-                }
+            this.http.delete(`${this.api}${api}/${id ? id : ''}`).subscribe(data => {
+                resolve(data || true);
+            }, error => {
+                reject(error);
             });
+            // Swal.fire({
+            //     title: 'Do you confirm the deletion?',
+            //     type: 'warning',
+            //     showCloseButton: true,
+            //     showCancelButton: true,
+            //     focusConfirm: true,
+            //     reverseButtons: true,
+            //     cancelButtonText: 'Cancel!',
+            //     confirmButtonText: 'Delete',
+            //     confirmButtonColor: '#dd4535',
+            // }).then((result) => {
+            //     if (result.value) {
+            //
+            //     }
+            // });
         });
     }
 

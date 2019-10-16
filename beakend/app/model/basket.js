@@ -14,13 +14,16 @@ const schema = new Schema({
         type: Schema.Types.ObjectId,
         ref: "Product"
     }],
-    basketNumber: Number,
+    basketNumber: {
+        type: Number,
+        default: 0
+    },
     manager: {
         type: Schema.Types.ObjectId,
         ref: "Client"
     },
-    description: String,
-    status: Number,
+    description: {type: String, default: ''},
+    status: {type: Number, default: 0},
     totalPrice: Number,
     basketId: Number,
     lastUpdate: {type: Date, default: new Date()},

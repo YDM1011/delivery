@@ -12,8 +12,10 @@ import Swal from 'sweetalert2';
 export class OrdersDetailComponent implements OnInit {
   public user;
   public id;
-  public basket;
+  public basket: any;
+  public basketCopy;
   public editBasket = false;
+  public dialogOpen = false;
   public defLang = 'ru-UA';
   constructor(
       private crud: CrudService,
@@ -33,6 +35,7 @@ export class OrdersDetailComponent implements OnInit {
         this.crud.get(`basket?query={"_id":"${this.id}"}&populate=${populate}`).then((b: any) => {
           if (b && b.length > 0) {
             this.basket = Object.assign({}, b[0]);
+            this.basketCopy = Object.assign({}, b[0]);
           }
         });
       }
@@ -51,22 +54,6 @@ export class OrdersDetailComponent implements OnInit {
       }
     });
   }
-  saveChanges() {
-    console.log(this.basket);
-    // this.crud.post('basket', this.basket, this.basket._id, false).then((v) => {
-    //   if (v) {
-    //     const populate = JSON.stringify([{path: 'products', select: 'price count', populate: {path: 'orderOwner', select: 'name'}}, {path: 'createdBy', select: 'name address'}, {path: 'manager', select: 'name'}]);
-    //     this.crud.get(`basket?query={"_id":"${this.id}"}&populate=${populate}`).then((b: any) => {
-    //       if (b && b.length > 0) {
-    //         this.basket = Object.assign({}, b[0]);
-    //       }
-    //     });
-    //   }
-    // });
-  }
-  edit() {
-    this.editBasket = true;
-  }
 
   done() {
     this.crud.post('basket', {status: 4}, this.basket._id, false).then((v) => {
@@ -80,7 +67,84 @@ export class OrdersDetailComponent implements OnInit {
       }
     });
   }
-
+  cancelEdit() {
+    this.editBasket = false;
+  }
+  decrement(i) {
+    this.showDescription();
+    let count = this.basket.products[i].count;
+    count--;
+    if (count < 2) {
+      return;
+    }
+    this.basket.products[i].count--;
+    this.crud.post('product', {count: this.basket.products[i].count}, this.basket.products[i]._id).then();
+  }
+  increment(i) {
+    this.showDescription();
+    let count = this.basket.products[i].count;
+    count++;
+    if (count > this.basketCopy.products[i].count) {
+        Swal.fire({
+          title: 'Вы не можете превысить число заказа',
+          type: 'info',
+          confirmButtonColor: '#748AA1',
+          cancelButtonText: 'Назад',
+        });
+        return;
+    }
+    this.basket.products[i].count++;
+    this.crud.post('product', {count: this.basket.products[i].count}, this.basket.products[i]._id).then();
+  }
+  removeProduct(i) {
+    if (this.basket.products.length === 1) {
+      Swal.fire({
+        title: 'Вы уверены что хотите отменить заказ?',
+        type: 'warning',
+        showCloseButton: true,
+        showCancelButton: true,
+        focusConfirm: true,
+        reverseButtons: true,
+        cancelButtonText: 'Назад',
+        confirmButtonText: 'Отменить заказ',
+        confirmButtonColor: '#dd4535',
+      }).then((result) => {
+        if (result.value) {
+          this.crud.post('basket', {status: 5}, this.basket._id, false).then((v) => {
+            if (v) {
+              const populate = JSON.stringify([{path: 'products', select: 'price count', populate: {path: 'orderOwner', select: 'name'}}, {path: 'createdBy', select: 'name address'}, {path: 'manager', select: 'name'}]);
+              this.crud.get(`basket?query={"_id":"${this.id}"}&populate=${populate}`).then((b: any) => {
+                if (b && b.length > 0) {
+                  this.basket = Object.assign({}, b[0]);
+                  this.editBasket = false;
+                }
+              });
+            }
+          });
+        }
+      });
+      return;
+    }
+    Swal.fire({
+      title: 'Вы уверены что хотите удалить продукт c заказа?',
+      type: 'warning',
+      showCloseButton: true,
+      showCancelButton: true,
+      focusConfirm: true,
+      reverseButtons: true,
+      cancelButtonText: 'Назад',
+      confirmButtonText: 'Удалить продукт',
+      confirmButtonColor: '#dd4535',
+    }).then((result) => {
+      if (result.value) {
+        this.crud.delete('product', this.basket.products[i]._id).then((v: any) => {
+          if (v) {
+            this.basket.products.splice(i, 1);
+          }
+        });
+      }
+    });
+  }
   cancel() {
     Swal.fire({
       title: 'Вы уверены что хотите удалить заказ?',
@@ -89,8 +153,8 @@ export class OrdersDetailComponent implements OnInit {
       showCancelButton: true,
       focusConfirm: true,
       reverseButtons: true,
-      cancelButtonText: 'Cancel!',
-      confirmButtonText: 'Delete',
+      cancelButtonText: 'Назад',
+      confirmButtonText: 'Отменить заказ',
       confirmButtonColor: '#dd4535',
     }).then((result) => {
       if (result.value) {
@@ -107,4 +171,19 @@ export class OrdersDetailComponent implements OnInit {
       }
     });
   }
+  showDescription() {
+    if (this.basket.description.length === 0) {
+      this.dialogOpen = true;
+      return;
+    }
+    this.dialogOpen = false;
+  }
+
+  descriptionSubmit() {
+      this.crud.post('basket', {description: this.basket.description}, this.basket._id, false).then((v: any) => {
+        if (v) {
+          this.dialogOpen = false;
+        }
+      });
+    }
 }

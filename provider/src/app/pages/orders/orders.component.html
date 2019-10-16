@@ -55,7 +55,7 @@
 										<div class="who-doing" *ngIf="item.status !== 1">
 											<div class="status" [innerHTML]="item.status | status | safeHTML">
 											</div>
-											<div class="name">
+											<div class="name" *ngIf="item.manager && item.manager.name">
 												{{item.manager.name}}
 											</div>
 										</div>
@@ -117,7 +117,7 @@
 									<div class="buttons col-f">
 										<div class="who-doing">
 											<div class="status" [innerHTML]="item.status | status | safeHTML"></div>
-											<div class="name">
+											<div class="name" *ngIf="item.manager && item.manager.name">
 												{{item.manager.name}}
 											</div>
 										</div>
@@ -178,7 +178,7 @@
 									<div class="buttons col-f">
 										<div class="who-doing">
 											<div class="status" [innerHTML]="item.status | status | safeHTML"></div>
-											<div class="name">
+											<div class="name" *ngIf="item.manager && item.manager.name">
 												{{item.manager.name}}
 											</div>
 										</div>
@@ -197,7 +197,7 @@
 							loading...4
 						</div>
 						<div class="content" *ngIf="loading">
-							<div class="table-f">
+							<div class="table-f" *ngIf="orders && orders.length > 0">
 								<div class="row-f">
 									<div class="name col-f">
 										Имя
@@ -239,7 +239,7 @@
 									<div class="buttons col-f">
 										<div class="who-doing">
 											<div class="status" [innerHTML]="item.status | status | safeHTML"></div>
-											<div class="name">
+											<div class="name" *ngIf="item.manager && item.manager.name">
 												{{item.manager.name}}
 											</div>
 										</div>

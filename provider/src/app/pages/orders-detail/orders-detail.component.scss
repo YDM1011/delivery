@@ -19,6 +19,8 @@
       margin-right: 20px;
     }
     .content{
+      display: inline-flex;
+      align-items: center;
       color: #31394D;
     }
   }
@@ -33,8 +35,9 @@
     display: flex;
     align-items: center;
     color: #252733;
-    padding: 10px 0;
+    padding: 5px 0;
     margin-bottom: 10px;
+    min-height: 50px;
     .h{
       color: #748AA1;
     }
@@ -44,11 +47,24 @@
     }
     .count{
       width: 150px;
-      text-align: center;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      .count-item{
+        padding: 0 10px;
+      }
+      svg{
+        cursor: pointer;
+      }
     }
     .price{
       width: 150px;
       text-align: center;
+    }
+    .remove{
+      margin-left: 25px;
+      color: #E21B1B;
+      border: 1px solid #E21B1B;
     }
   }
 }
@@ -77,4 +93,47 @@
       border: 1px solid #E21B1B;
     }
   }
+}
+
+.dialog{
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 13;
+  .dialog-content{
+    border-radius: 10px;
+    padding: 30px 40px;
+    background: #fff;
+    z-index: 4;
+    textarea{
+      resize: none;
+      width: 100%;
+      height: 100px;
+    }
+    .buttons{
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin: 16px 0;
+    }
+  }
+  .dialog-close{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 3;
+    background: rgba(0, 0, 0, 0.36);
+  }
+}
+
+.edit-description{
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  margin-left: 15px;
 }
