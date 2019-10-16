@@ -98,64 +98,11 @@ const schema = new Schema({
         }],
     },
     collaborator: {
-        read: [{
-            model:'Company',
-            _id: 'companyOwner',
-            canBeId: [
-                {type:'refObj', fieldName: 'createdBy'},
-                {type:'array', fieldName: 'collaborators'}
-            ]
-        },{
-            model:'Product',
-            _id: '_id',
-            canBeId: [
-                {type:'refObj', fieldName: 'createdBy'}
-            ]
-        }],
-        update: [{
-            model:'Company',
-            _id: 'companyOwner',
-            canBeId: [
-                {type:'refObj', fieldName: 'createdBy'},
-                {type:'array', fieldName: 'collaborators'}
-            ]
-        },{
-            model:'Product',
-            _id: '_id',
-            canBeId: [
-                {type:'refObj', fieldName: 'createdBy'}
-            ]
-        }],
-        create: [{
-            model:'Company',
-            _id: 'companyOwner',
-            canBeId: [
-                {type:'refObj', fieldName: 'createdBy'},
-                {type:'array', fieldName: 'collaborators'}
-            ]
-        },{
-            model:'Product',
-            _id: '_id',
-            canBeId: [
-                {type:'refObj', fieldName: 'createdBy'}
-            ]
-        }],
-        delete: [{
-            model:'Company',
-            _id: 'companyOwner',
-            canBeId: [
-                {type:'refObj', fieldName: 'createdBy'},
-                {type:'array', fieldName: 'collaborators'}
-            ]
-        },{
-            model:'Product',
-            _id: '_id',
-            canBeId: [
-                {type:'refObj', fieldName: 'createdBy'}
-            ]
-        }],
+        read: [{public:true}],
+        update: [{public:true}],
+        create: [{public:true}],
+        delete: [{public:true}],
     },
-
 });
 
 schema.post('findOneAndRemove', (doc,next)=>{
@@ -166,7 +113,7 @@ schema.post('findOneAndRemove', (doc,next)=>{
             { new: true },(err,r)=>{
             if (r){
                 console.log(r.products.length, r);
-                r.products.length == 0 ? deleteBasket(r, next) : checkIsProduct(r, next);
+                r.products.length === 0 ? deleteBasket(r, next) : checkIsProduct(r, next);
             }
             // next()
         })
