@@ -3,23 +3,32 @@ module.exports.preRead = async (req,res,next, backendApp) => {
 };
 
 module.exports.preUpdate = async (req,res,next, backendApp) => {
+    const Basket = backendApp.mongoose.model('Basket');
     // try {
     if (req.user.role === 'provider' || req.user.role === 'collaborator') {
         delete req.body.createdBy;
-        switch (parseInt(req.body.status)){
-            case 0: req.body.updatedAt = new Date(); return next();
-            case 1: req.body.updatedAt = new Date(); return next();
-            case 2: req.body.updatedAt = new Date(); return next();
-            case 3: req.body.updatedAt = new Date(); return next();
-            case 4: req.body.updatedAt = new Date(); return next();
-            case 5: req.body.updatedAt = new Date(); return next();
-            case 6: req.body.updatedAt = new Date(); return next();
-            // case 2:
-            //     let superManeger = await checkRole(req, backendApp).catch(e=>{return res.notFound(e)});
-            //     if (superManeger && (superManeger.role == req.body.role)) return res.badRequest();
-            //     // await assign(req,res,next, backendApp, superManeger._id);
-            //     return next();
-        }
+        Basket.findById(req.params.id)
+            .exec((e,r)=>{
+                if (e) return res.serverError(e);
+                if (!r) return res.notFound('Not found!1');
+                if (r) {
+                    req.body.updatedAt = new Date(); return next();
+                }
+            });
+        // switch (parseInt(req.body.status)){
+        //     case 0: req.body.updatedAt = new Date(); return next();
+        //     case 1: req.body.updatedAt = new Date(); return next();
+        //     case 2: req.body.updatedAt = new Date(); return next();
+        //     case 3: req.body.updatedAt = new Date(); return next();
+        //     case 4: req.body.updatedAt = new Date(); return next();
+        //     case 5: req.body.updatedAt = new Date(); return next();
+        //     case 6: req.body.updatedAt = new Date(); return next();
+        //     // case 2:
+        //     //     let superManeger = await checkRole(req, backendApp).catch(e=>{return res.notFound(e)});
+        //     //     if (superManeger && (superManeger.role == req.body.role)) return res.badRequest();
+        //     //     // await assign(req,res,next, backendApp, superManeger._id);
+        //     //     return next();
+        // }
     } else {
         return next();
     }
@@ -32,7 +41,7 @@ module.exports.preUpdate = async (req,res,next, backendApp) => {
 module.exports.postUpdate = async (req, res, next, backendApp) => {
 
     let basket = req.erm.result;
-    if ((basket.status == 1 || basket.status == 2) && !basket.deliveryOwner) {
+    if ((basket.status === 1 || basket.status === 2) && !basket.deliveryOwner) {
         // let asgn = await assign(req,res,next, backendApp, basket.cleanerOwner);
         let cleaner = await getCleaner(basket.cleanerOwner).catch(e=>{return rj(e)});
         let valid = await validate(req,res,cleaner,backendApp).catch(e=>{return res.ok(basket)});
