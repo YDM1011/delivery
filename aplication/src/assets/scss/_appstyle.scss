@@ -367,6 +367,11 @@
     color: #fff;
     background: $main-color;
   }
+  &.remove{
+    color: #E21B1B;
+    background: #fff;
+    border: 1px solid #E21B1B;
+  }
 }
 
 .main-button{

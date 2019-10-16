@@ -30,25 +30,25 @@ export class NewAddressComponent implements OnInit {
     this.auth.onLanguage.subscribe((v: string) => {
       this.language = v;
     });
-    this.crud.getCity().then((v:any)=>{
+    this.crud.getCity().then((v: any) => {
       this.cities = v;
-      this.address.city = this.cities[0]._id
-    })
+      this.address.city = this.cities[0]._id;
+    });
   }
   onFs(body) {
     this.address.img = null;
-    setTimeout(()=>{
+    setTimeout(() => {
       this.address.img = body.file;
-    },0)
+    }, 0);
   }
   save(e) {
     e.preventDefault();
-    this.crud.post('shopAddress', this.address).then((v:any)=>{
-      if (!v) return;
+    this.crud.post('shopAddress', this.address).then((v: any) => {
+      if (!v) {return; }
       this.router.navigate(['/' + this.language + '/my-address']);
-    })
+    });
   }
-  select(e){
-    console.log(e.target.value)
+  select(e) {
+    console.log(e.value);
   }
 }
