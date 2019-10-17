@@ -8,6 +8,8 @@ import {AuthService} from '../../auth.service';
 })
 export class ConfirmOrderComponent implements OnInit {
   public language: string;
+  public user: any;
+  public address: any;
   public changeCity: boolean = false;
   @Output() closeConfirm = new EventEmitter();
   constructor(
@@ -18,8 +20,15 @@ export class ConfirmOrderComponent implements OnInit {
     this.auth.onLanguage.subscribe((v: string) => {
       this.language = v;
     });
+    this.auth.onMe.subscribe((v: string) => {
+      if (v) {
+        this.user = v;
+      }
+    });
   }
+  outputAddress() {
 
+  }
   cancelConfirmAddress(e) {
     this.changeCity = e.value;
   }

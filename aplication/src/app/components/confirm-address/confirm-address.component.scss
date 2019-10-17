@@ -50,6 +50,8 @@
 }
 .content{
   padding: 0 15px;
+  max-width: 768px;
+  margin: 0 auto;
   .address-info{
     display: flex;
     flex-wrap: wrap;

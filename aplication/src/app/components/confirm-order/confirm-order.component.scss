@@ -10,7 +10,8 @@
   padding: 10px 15px 40px;
   overflow-y: auto;
   .first-confirm{
-    margin-bottom: 20px;
+    max-width: 768px;
+    margin: 0 auto 20px;
     .confirm-address{
       background: #FFFFFF;
       border: 1px solid #E4E4E4;
@@ -64,7 +65,8 @@
     }
   }
   .second-confirm{
-    margin-top: 20px;
+    max-width: 768px;
+    margin: 20px auto 20px;
     padding-top: 20px;
     border-top: 1px solid #E4E4E4;
   }
