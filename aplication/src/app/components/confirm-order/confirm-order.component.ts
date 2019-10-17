@@ -1,5 +1,8 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {AuthService} from '../../auth.service';
+import {CrudService} from '../../crud.service';
+import {MatSnackBar} from "@angular/material";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-confirm-order',
@@ -7,13 +10,25 @@ import {AuthService} from '../../auth.service';
   styleUrls: ['./confirm-order.component.scss']
 })
 export class ConfirmOrderComponent implements OnInit {
+  @Input() basket;
+  @Output() closeConfirm = new EventEmitter();
   public language: string;
   public user: any;
-  public address: any;
+  public blockBTN = false;
   public changeCity: boolean = false;
-  @Output() closeConfirm = new EventEmitter();
+  public method = {
+    1: 'Наличными',
+    2: 'Отстрочка'
+  };
+  public obj = {
+    address: null,
+    payMethod: 1
+  };
   constructor(
-      private auth: AuthService
+      private auth: AuthService,
+      private crud: CrudService,
+      private snackBar: MatSnackBar,
+      private router: Router
   ) { }
 
   ngOnInit() {
@@ -23,14 +38,37 @@ export class ConfirmOrderComponent implements OnInit {
     this.auth.onMe.subscribe((v: string) => {
       if (v) {
         this.user = v;
-        console.log(this.user)
       }
     });
   }
-  outputAddress() {
-
+  confirm() {
+    if (!this.obj.address || !this.obj.payMethod) {
+      this.openSnackBar('Выберете адрес и способ оплаты',  'Ok');
+      return;
+    } else {
+      this.blockBTN = true;
+      this.crud.post(`basket`, {status: 1, deliveryAddress: this.obj.address._id, payMethod: this.method[this.obj.payMethod]}, this.basket._id).then((v: any) => {
+        if (v) {
+          this.openSnackBar('Ваш заказ оформлен',  'Ok');
+          this.auth.setCheckBasket(true);
+          this.closeConfirm.emit(false);
+        }
+      });
+    }
+  }
+  outputAddress(e) {
+    if (e) {
+      this.obj.address = e;
+      this.changeCity = false;
+    }
   }
   cancelConfirmAddress(e) {
     this.changeCity = e.value;
+  }
+
+  openSnackBar(message: string, action: string) {
+    this.snackBar.open(message, action, {
+      duration: 2000,
+    });
   }
 }

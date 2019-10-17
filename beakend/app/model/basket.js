@@ -22,6 +22,11 @@ const schema = new Schema({
         type: Schema.Types.ObjectId,
         ref: "Client"
     },
+    deliveryAddress: {
+        type: Schema.Types.ObjectId,
+        ref: "shopAddress"
+    },
+    payMethod: String,
     description: {type: String, default: ''},
     status: {type: Number, default: 0},
     totalPrice: Number,

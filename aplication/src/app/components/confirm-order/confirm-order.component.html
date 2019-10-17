@@ -16,13 +16,13 @@
           Адресс доставки
         </div>
       </div>
-      <div class="confirm-address">
+      <div class="confirm-address" *ngIf="obj.address">
         <div class="address-header">
           <div class="img">
-            <img src="./assets/images/tmp/cola.png" alt="">
+            <app-img [fs]="obj.address.img" [dir]="'address'" [anyFs]="'assets/images/provider.svg'"></app-img>
           </div>
           <div class="title-provider">
-            Магазин “Рукавичка”
+            {{obj.address.name}}
           </div>
         </div>
           <div class="block-info">
@@ -31,25 +31,24 @@
                 <path d="M7.0692 4.38281C5.6597 4.38281 4.51245 5.53006 4.51245 6.93956C4.51245 8.34906 5.6597 9.49631 7.0692 9.49631C8.4787 9.49631 9.62595 8.34906 9.62595 6.93956C9.62595 5.53006 8.4787 4.38281 7.0692 4.38281ZM7.0692 8.76581C6.06221 8.76581 5.24295 7.94656 5.24295 6.93956C5.24295 5.93257 6.06221 5.11331 7.0692 5.11331C8.0762 5.11331 8.89545 5.93257 8.89545 6.93956C8.89545 7.94656 8.0762 8.76581 7.0692 8.76581Z" fill="black"/>
                 <path d="M11.9574 2.05161C10.6344 0.728674 8.87537 0 7.00456 0C5.13339 0 3.37471 0.728674 2.05177 2.05161C-0.396498 4.49952 -0.700751 9.10532 1.39286 11.8958L7.00456 20L12.6079 11.9072C14.7099 9.10532 14.4056 4.49952 11.9574 2.05161ZM12.0154 11.4802L7.00456 18.7165L1.98566 11.4689C0.086728 8.93694 0.358839 4.77747 2.5686 2.56807C3.75347 1.3832 5.3288 0.7305 7.00456 0.7305C8.68033 0.7305 10.2557 1.3832 11.4409 2.56807C13.6507 4.77747 13.9228 8.93694 12.0154 11.4802Z" fill="black"/>
               </svg>
-              Киев
+              {{obj.address.city.name}}
             </div>
             <div class="address-item">
-              Дом 2
+              Дом {{obj.address.build}}
             </div>
             <div class="address-item">
-              ул. Шевченка
+              ул. {{obj.address.street}}
             </div>
             <div class="address-item">
-              Квартира 113
+              Квартира {{obj.address.department}}
             </div>
           </div>
-  
           <div class="comment">
-            За углом в арке
+            {{obj.address.comment}}
           </div>
         </div>
       <div class="another-address" (click)="changeCity = true">
-        Выбрать другой адрес
+        {{obj.address ? 'Выбрать другой адрес' : 'Выбрать адрес'}}
       </div>
     </div>
     <div class="second-confirm">
@@ -69,7 +68,7 @@
       </div>
     </div>
     <div class="buttons">
-      <button class="main-button color" (click)="closeConfirm.emit(false)">Оформить</button>
+      <button class="main-button color" (click)="confirm()" [disabled]="blockBTN">Оформить</button>
       <button class="back-btn" (click)="closeConfirm.emit(false)">Назад</button>
     </div>
   </div>

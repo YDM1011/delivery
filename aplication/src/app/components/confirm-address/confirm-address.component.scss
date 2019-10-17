@@ -11,6 +11,8 @@
 }
 .other-pages{
   padding: 70px 0 40px;
+  max-width: 768px;
+  margin: 0 auto;
 }
 ::ng-deep .mat-accordion .mat-expansion-panel{
   border-radius: 30px!important;
@@ -50,8 +52,6 @@
 }
 .content{
   padding: 0 15px;
-  max-width: 768px;
-  margin: 0 auto;
   .address-info{
     display: flex;
     flex-wrap: wrap;

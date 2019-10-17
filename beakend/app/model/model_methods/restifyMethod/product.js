@@ -34,7 +34,6 @@ module.exports.preUpdate = async (req,res,next, backendApp) => {
                             count = r.count
                         }
                     }
-
                     let inc = parsePrice((r.price)*(count - r.count));
                     Basket.findOneAndUpdate({
                         products: {$in: r._id}

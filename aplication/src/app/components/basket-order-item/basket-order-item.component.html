@@ -68,10 +68,10 @@
         {{data.totalPrice}} грн.
       </div>
     </div>
-    <button class="right" (click)="showConfirm = true">
+    <button class="right" (click)="openConfirmComponent()">
       Купить
     </button>
   </div>
 </div>
-<app-confirm-order *ngIf="showConfirm" (closeConfirm)="closeConfirm($event)"></app-confirm-order>
+<app-confirm-order *ngIf="showConfirm" (closeConfirm)="closeConfirm($event)" [basket]="data"></app-confirm-order>
 <app-remove-basket-item *ngIf="removeItemShow" (successRemove)="successRemove($event)" (closeRemove)="closeRemoveItem($event)" [data]="removeObj"></app-remove-basket-item>

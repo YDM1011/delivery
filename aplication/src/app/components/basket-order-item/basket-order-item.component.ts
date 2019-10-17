@@ -1,5 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {CrudService} from '../../crud.service';
+import {MatSnackBar} from "@angular/material";
 
 @Component({
   selector: 'app-basket-order-item',
@@ -18,7 +19,8 @@ export class BasketOrderItemComponent implements OnInit {
   public removeItemShow: boolean = false;
   public items = [];
   constructor(
-      private crud: CrudService
+      private crud: CrudService,
+      private snackBar: MatSnackBar
   ) { }
 
   ngOnInit() {
@@ -34,6 +36,7 @@ export class BasketOrderItemComponent implements OnInit {
   }
   closeConfirm(e) {
     this.showConfirm = e.value;
+    this.removeBasket.emit(true);
   }
   closeRemoveItem(e) {
     this.removeItemShow = e;
@@ -63,7 +66,7 @@ export class BasketOrderItemComponent implements OnInit {
   otherChack(it) {
     this.items[it].isChoise = !this.items[it].isChoise;
     this.crud.post(`product`, {verify: this.items[it].isChoise}, this.data.product[it]._id).then((v: any) => {
-      if (v){
+      if (v) {
         this.refreshBasket();
       }
     });
@@ -117,12 +120,21 @@ export class BasketOrderItemComponent implements OnInit {
   successRemove(e) {
     this.data.product.splice(e, 1);
     if (this.data.product.length === 0) {
-      this.removeBasket.emit(this.data._id);
+      this.removeBasket.emit(true);
     } else {
       this.refreshBasket();
     }
   }
-  checkAll() {
-
+  openConfirmComponent() {
+    if (this.data.totalPrice === 0) {
+      this.openSnackBar('Выберете товар поставщика',  'Ok');
+      return;
+    }
+    this.showConfirm = true;
+  }
+  openSnackBar(message: string, action: string) {
+    this.snackBar.open(message, action, {
+      duration: 2000,
+    });
   }
 }

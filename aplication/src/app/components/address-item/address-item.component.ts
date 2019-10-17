@@ -16,9 +16,6 @@ export class AddressItemComponent implements OnInit {
   ngOnInit() {
     this.auth.onLanguage.subscribe((v: string) => {
       this.language = v;
-    })
-
+    });
   }
-
-
 }

@@ -37,8 +37,15 @@ export class BasketComponent implements OnInit {
     });
   }
   removeBasket(e) {
+    this.loading = false;
     if (e) {
-      this.baskets.splice(this.crud.find('_id', e, this.baskets), 1);
+      const query = `?query={"status":0}&populate={"path":"companyOwner","select":"name img"}`;
+      this.crud.get('basket', '', query).then((v: any) => {
+        if (v) {
+          this.baskets = v;
+          this.loading = true;
+        }
+      });
       this.auth.setCheckBasket(true);
     }
   }
