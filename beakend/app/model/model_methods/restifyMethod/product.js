@@ -23,7 +23,7 @@ module.exports.preUpdate = async (req,res,next, backendApp) => {
                 if (e) return res.serverError(e);
                 if (!r) return res.notFound('Not found!1');
                 if (r) {
-                    let count = r.verify ? req.body.count : 0;
+                    let count = r.verify ? req.body.count || 0 : 0;
                     let inc = parsePrice((r.price)*(count - r.count));
                     Basket.findOneAndUpdate({
                         products: {$in: r._id}
