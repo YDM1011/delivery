@@ -10,8 +10,9 @@ import {CrudService} from "../../crud.service";
 })
 export class BasketComponent implements OnInit {
   public id: string;
-  public baskets;
+  public baskets = [];
   public language: string;
+  public loading: boolean = false;
   public removeItem: boolean = false;
   public showConfirm: boolean = false;
   constructor(
@@ -29,11 +30,10 @@ export class BasketComponent implements OnInit {
     });
     const query = `?query={"status":0}&populate={"path":"companyOwner","select":"name img"}`;
     this.crud.get('basket', '', query).then((v: any) => {
-      this.baskets = v;
+      if (v) {
+        this.baskets = v;
+        this.loading = true;
+      }
     });
   }
-  removeItembasket(e) {
-
-  }
-
 }

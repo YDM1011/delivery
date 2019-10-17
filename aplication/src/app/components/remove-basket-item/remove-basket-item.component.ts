@@ -17,13 +17,10 @@ export class RemoveBasketItemComponent implements OnInit {
 
   ngOnInit() {
   }
-
   remove() {
     this.crud.delete('product', this.data.obj._id).then((v: any) => {
-      if (v) {
-        this.successRemove.emit(this.data.index);
-        this.closeRemove.emit(false);
-      }
     });
+    this.successRemove.emit(this.data.index);
+    this.closeRemove.emit(false);
   }
 }

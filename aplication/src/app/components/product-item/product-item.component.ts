@@ -35,6 +35,7 @@ export class ProductItemComponent implements OnInit {
     this.crud.post('product', {orderOwner: order._id, count: this.count}).then((v: any) => {
       if (v) {
         this.count = 0;
+        this.auth.setCheckBasket(true);
         this.openSnackBar('Товар додан в корзину',  'Ok');
       }
     });
