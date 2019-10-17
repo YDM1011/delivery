@@ -27,13 +27,16 @@
 									</div>
 								</div>
 								<div class="row-f" [routerLink]="'/orders-detail/' + item._id" *ngFor="let item of orders; let i = index">
-									<div class="name col-f" [matTooltip]="item.createdBy.name">
+									<div class="name col-f" [matTooltip]="item.deliveryAddress.name">
 										<div class="img">
 											<img src="./assets/images/user.svg" alt="">
 										</div>
 									</div>
 									<div class="address col-f">
-										{{item.createdBy.address}}
+										{{item.deliveryAddress.city.name}},
+										ул. {{item.deliveryAddress.street}}
+										Дом {{item.deliveryAddress.build}}
+										Квартира {{item.deliveryAddress.department}}
 									</div>
 									<div class="price col-f">
 										{{item.totalPrice}} Грн.
@@ -93,13 +96,16 @@
 									</div>
 								</div>
 								<div class="row-f" [routerLink]="'/orders-detail/' + item._id" *ngFor="let item of orders; let i = index">
-									<div class="name col-f" [matTooltip]="'Имя Фамилия'">
+									<div class="name col-f" [matTooltip]="item.deliveryAddress.name">
 										<div class="img">
 											<img src="./assets/images/user.svg" alt="">
 										</div>
 									</div>
 									<div class="address col-f">
-										{{item.createdBy.address}}
+										{{item.deliveryAddress.city.name}},
+										ул. {{item.deliveryAddress.street}}
+										Дом {{item.deliveryAddress.build}}
+										Квартира {{item.deliveryAddress.department}}
 									</div>
 									<div class="price col-f">
 										{{item.totalPrice}} Грн.
@@ -136,7 +142,7 @@
 							loading...3
 						</div>
 						<div class="content" *ngIf="loading">
-							<div class="table-f">
+							<div class="table-f" *ngIf="orders && orders.length > 0">
 								<div class="row-f">
 									<div class="name col-f">
 										Имя
@@ -154,13 +160,16 @@
 									</div>
 								</div>
 								<div class="row-f" [routerLink]="'/orders-detail/' + item._id" *ngFor="let item of orders; let i = index">
-									<div class="name col-f" [matTooltip]="'Имя Фамилия'">
+									<div class="name col-f" [matTooltip]="item.deliveryAddress.name">
 										<div class="img">
 											<img src="./assets/images/user.svg" alt="">
 										</div>
 									</div>
 									<div class="address col-f">
-										{{item.createdBy.address}}
+										{{item.deliveryAddress.city.name}},
+										ул. {{item.deliveryAddress.street}}
+										Дом {{item.deliveryAddress.build}}
+										Квартира {{item.deliveryAddress.department}}
 									</div>
 									<div class="price col-f">
 										{{item.totalPrice}} Грн.
@@ -215,13 +224,16 @@
 									</div>
 								</div>
 								<div class="row-f" [routerLink]="'/orders-detail/' + item._id" *ngFor="let item of orders; let i = index">
-									<div class="name col-f" [matTooltip]="'Имя Фамилия'">
+									<div class="name col-f" [matTooltip]="item.deliveryAddress.name">
 										<div class="img">
 											<img src="./assets/images/user.svg" alt="">
 										</div>
 									</div>
 									<div class="address col-f">
-										{{item.createdBy.address}}
+										{{item.deliveryAddress.city.name}},
+										ул. {{item.deliveryAddress.street}}
+										Дом {{item.deliveryAddress.build}}
+										Квартира {{item.deliveryAddress.department}}
 									</div>
 									<div class="price col-f">
 										{{item.totalPrice}} Грн.

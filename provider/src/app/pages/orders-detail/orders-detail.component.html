@@ -38,7 +38,10 @@
 						Адресс доставки:
 					</div>
 					<div class="content">
-						{{basket.createdBy.address}}
+						{{basket.deliveryAddress.city.name}},
+						ул. {{basket.deliveryAddress.street}}
+						Дом {{basket.deliveryAddress.build}}
+						Квартира {{basket.deliveryAddress.department}}
 					</div>
 				</div>
 				<div class="info-item info-address">
