@@ -32,7 +32,9 @@
       <path d="M15.4052 7.05078H14.3847V12.8027H15.4052V7.05078Z" fill="#09C2C2"/>
     </svg>
     <div class="count">
-      0
+      <ng-container *ngIf="loadingCount">
+        {{count}}
+      </ng-container>
     </div>
   </a>
 </div>

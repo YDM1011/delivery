@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {AuthService} from "../../auth.service";
-import {CrudService} from "../../crud.service";
-import {Router} from "@angular/router";
-import {Me} from "../../interfaces/me";
+import {AuthService} from '../../auth.service';
+import {CrudService} from '../../crud.service';
+import {NavigationEnd, Router} from '@angular/router';
+import {Me} from '../../interfaces/me';
 
 @Component({
   selector: 'app-profile',
@@ -11,12 +11,13 @@ import {Me} from "../../interfaces/me";
 })
 export class ProfileComponent implements OnInit {
   public language: string;
+  public url;
   public me: Me;
   public data = {
-    mydata: {ua: "", ru: "Мои даные"},
-    address: {ua:"", ru: "Адреса доставки"},
-    enter: {ua:"", ru: "Вход"},
-    exit: {ua:"", ru: "Выйти"}
+    mydata: {ua: 'Мої дані', ru: 'Мои данные'},
+    address: {ua: 'Aдреси доставки', ru: 'Адреса доставки'},
+    enter: {ua: 'Вхід', ru: 'Вход'},
+    exit: {ua: 'Вихід', ru: 'Выйти'}
   };
   public login: boolean = false;
   constructor(
@@ -26,17 +27,24 @@ export class ProfileComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.url = decodeURI(this.route.url.substring(4));
+    this.route.events.subscribe((evt) => {
+      if (!(evt instanceof NavigationEnd)) {
+        return;
+      }
+      this.url = decodeURI(this.route.url.substring(4));
+    });
     this.auth.onLanguage.subscribe((v: string) => {
       this.language = v;
     });
-    this.auth.onMe.subscribe(v=>{
-      if (!v) return;
+    this.auth.onMe.subscribe(v => {
+      if (!v) {return; }
       this.me = v;
     });
     this.login = this.auth.isAuth();
   }
 
-  logut(){
+  logut() {
     this.crud.post('logout', {}, null).then((v: any) => {
       if (v) {
         localStorage.removeItem('userId');

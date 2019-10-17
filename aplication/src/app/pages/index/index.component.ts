@@ -10,6 +10,8 @@ import {Subscription} from "rxjs";
   styleUrls: ['./index.component.scss']
 })
 export class IndexComponent implements OnInit, OnDestroy {
+  public count = null;
+  public user;
   public notification$: any;
   public companyArr: any;
   public language: string;
@@ -18,6 +20,7 @@ export class IndexComponent implements OnInit, OnDestroy {
   public brandy = [];
   public topCompany = [];
   public toggleMain: boolean = true;
+  public loadingCount: boolean = true;
   public images = [`./assets/images/tmp/img-deli.png`, `./assets/images/tmp/img-product.png`, `./assets/images/tmp/img-deli.png`];
   public carentPhoto;
   public number: number = 0;
@@ -29,17 +32,29 @@ export class IndexComponent implements OnInit, OnDestroy {
   private _subscription: Subscription[] = [];
   constructor(
       private auth: AuthService,
-      private wsService:WebsocketService,
+      private wsService: WebsocketService,
       private crud: CrudService
   ) { }
 
   ngOnInit() {
+    this.auth.onMe.subscribe((v: any) => {
+      if (!v) {return; }
+      this.user = v;
+    });
+    if (this.user && this.user._id) {
+      this.basketCount();
+    }
+    this.auth.onCheckBasket.subscribe((v: any) => {
+      if (this.user && this.user._id) {
+        this.basketCount();
+      }
+    });
     this._subscription.push(this.auth.onLanguage.subscribe((v: string) => {
       this.language = v;
     }));
     this._subscription.push(this.auth.onCity.subscribe((v:any) => {
       if (v) {
-        this.crud.getCompany(v).then((arr)=>{
+        this.crud.getCompany(v).then((arr) => {
           this.curentCity = v;
           this.companyArr = arr;
           this.init();
@@ -55,16 +70,12 @@ export class IndexComponent implements OnInit, OnDestroy {
     this.notification$.subscribe(v => {
       this.playAudio();
     });
-
-
   }
-
   playAudio() {
     const audio = new Audio();
     audio.src = '../../../assets/audio/alert.mp3';
     audio.load();
     audio.play();
-
   }
 
   async init() {
@@ -72,22 +83,31 @@ export class IndexComponent implements OnInit, OnDestroy {
       if (!v) return;
       this.brandy = v;
       this.loaded.brand = true
-    }).catch(e=> { this.loaded.brand = true });
+    }).catch(e => { this.loaded.brand = true });
     await this.crud.getCategory().then((v: any) => {
       if (!v) return;
       this.category = v;
       this.loaded.category = true;
-    }).catch(e=> { this.loaded.category = true });
+    }).catch(e => { this.loaded.category = true });
     await this.crud.getTopCompany().then((v:any)=>{
       if (!v) return;
       this.topCompany = v;
       this.loaded.topCompany = true;
-    }).catch(e=> { this.loaded.topCompany = true });
+    }).catch(e => { this.loaded.topCompany = true});
   }
   changeCar(e) {
     this.carentPhoto = `url(${e})`;
   }
   ngOnDestroy() {
-    this._subscription.forEach(it=>it.unsubscribe());
+    this._subscription.forEach(it => it.unsubscribe());
+  }
+
+  basketCount() {
+    this.crud.get(`basket/count?query={"createdBy":"${this.user._id}"}`).then((count: any) => {
+      if (count) {
+        this.count = count.count;
+        this.loadingCount = true;
+      }
+    });
   }
 }

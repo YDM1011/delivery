@@ -1,14 +1,24 @@
 <div class="other-header profile-header">
   <div class="img">
-    <!--<img src="./assets/images/user.svg" alt="">-->
     <app-img [fs]="me.img" [dir]="'avatar'" [anyFs]="'assets/images/user.svg'"></app-img>
   </div>
   <div class="info" *ngIf="login && me">
-    <div class="name">
-      {{me.name}}
+    <div class="info-left">
+      <div class="name">
+        {{me.name}}
+      </div>
+      <div class="tel">
+        {{me.mobile}}
+      </div>
     </div>
-    <div class="tel">
-      {{me.mobile}}
+    <div class="info-right">
+      <div class="language" routerLink="/{{language === 'ua' ? 'ru' : 'ua'}}/{{url}}" >
+        <div class="title">
+          {{language === 'ua' ? 'ru' : 'ua'}}
+        </div>
+        <img *ngIf="language === 'ru'" src="./assets/images/ua.svg" alt="ua">
+        <img *ngIf="language === 'ua'" src="./assets/images/ru.svg" alt="ru">
+      </div>
     </div>
   </div>
 </div>

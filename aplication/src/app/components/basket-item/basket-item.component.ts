@@ -9,7 +9,8 @@ import {CrudService} from '../../crud.service';
 })
 export class BasketItemComponent implements OnInit {
   public user;
-  public count = 0;
+  public count = null;
+  public loadingCount = false;
   public language: string;
   constructor(
       private auth: AuthService,
@@ -24,6 +25,14 @@ export class BasketItemComponent implements OnInit {
     this.auth.onLanguage.subscribe((v: string) => {
       this.language = v;
     });
+    if (this.user && this.user._id) {
+      this.crud.get(`basket/count?query={"createdBy":"${this.user._id}"}`).then((count: any) => {
+        if (count) {
+          this.count = count.count;
+          this.loadingCount = true;
+        }
+      });
+    }
     this.auth.onCheckBasket.subscribe((v: any) => {
       if (this.user && this.user._id) {
         this.crud.get(`basket/count?query={"createdBy":"${this.user._id}"}`).then((count: any) => {
@@ -32,7 +41,7 @@ export class BasketItemComponent implements OnInit {
           }
         });
       }
-    })
+    });
   }
 
 }
