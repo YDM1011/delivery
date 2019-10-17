@@ -1,4 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {CrudService} from '../../crud.service';
 
 @Component({
   selector: 'app-remove-basket-item',
@@ -8,11 +9,21 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 export class RemoveBasketItemComponent implements OnInit {
   @Input() data;
   @Output() closeRemove = new EventEmitter();
+  @Output() successRemove = new EventEmitter();
 
-  constructor() { }
+  constructor(
+      private crud: CrudService
+  ) { }
 
   ngOnInit() {
-    console.log(this.data)
   }
 
+  remove() {
+    this.crud.delete('product', this.data.obj._id).then((v: any) => {
+      if (v) {
+        this.successRemove.emit(this.data.index);
+        this.closeRemove.emit(false);
+      }
+    });
+  }
 }
