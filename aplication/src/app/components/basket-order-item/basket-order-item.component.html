@@ -18,7 +18,7 @@
         <mat-checkbox class="green-checkbox" name="it1" [ngModel]="items[0].isChoise" (change)="otherChack(0)"></mat-checkbox>
         <div class="img">
 <!--          <img src="./assets/images/tmp/img-product.png" alt="">-->
-          <app-img [fs]="prod.orderOwner.img"></app-img>
+          <app-img [fs]="prod.orderOwner.img" [anyFs]="'assets/images/product.svg'"></app-img>
         </div>
         <div class="info">
           <div class="title">
@@ -73,4 +73,4 @@
   </div>
 </div>
 <app-confirm-order *ngIf="showConfirm" (closeConfirm)="closeConfirm($event)"></app-confirm-order>
-<app-remove-basket-item *ngIf="removeItemShow" (closeRemove)="removeItem($event)" [data]="removeObj" (successRemove)="successRemove($event)"></app-remove-basket-item>
+<app-remove-basket-item *ngIf="removeItemShow" (successRemove)="successRemove($event)" (closeRemove)="closeRemoveItem($event)" [data]="removeObj"></app-remove-basket-item>

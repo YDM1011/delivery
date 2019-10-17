@@ -31,7 +31,7 @@ export class BasketOrderItemComponent implements OnInit {
   closeConfirm(e) {
     this.showConfirm = e.value;
   }
-  removeItem(e) {
+  closeRemoveItem(e) {
     this.removeItemShow = e;
   }
   mainChack() {
@@ -47,7 +47,6 @@ export class BasketOrderItemComponent implements OnInit {
     }
   }
   otherChack(it) {
-    console.log(this.items);
     this.items[it].isChoise = !this.items[it].isChoise;
     let count = 0;
     let isAll = true;
@@ -64,10 +63,31 @@ export class BasketOrderItemComponent implements OnInit {
     this.chooseAll = isAll;
   }
   minus(i) {
-
+    const count = this.data.product[i].count--;
+    if (count < 1) {
+      this.crud.delete(`product`, this.data.product[i]._id).then((v: any) => {
+        if (v) {
+          this.data.product.splice(i, 1);
+          this.refreshBasket();
+          return;
+        }
+      });
+    } else {
+      this.data.product[i].count--
+      this.crud.post(`product`, {count: this.data.product[i].count}, this.data.product[i]._id).then((v: any) => {
+        if (v) {
+          this.refreshBasket();
+        }
+      });
+    }
   }
   plus(i) {
-    this.refreshBasket();
+    this.data.product[i].count++;
+    this.crud.post(`product`, {count: this.data.product[i].count}, this.data.product[i]._id).then((v: any) => {
+      if (v) {
+        this.refreshBasket();
+      }
+    });
   }
   refreshBasket() {
     this.crud.get(`basket?query={"_id":"${this.data._id}"}&select="totalPrice"`).then((v: any) => {
@@ -82,10 +102,9 @@ export class BasketOrderItemComponent implements OnInit {
     };
   }
   successRemove(e) {
-    if (e) {
-      this.data.product.splice(e, 1);
-      this.refreshBasket();
-    }
+    console.log(e);
+    this.data.product.splice(e, 1);
+    this.refreshBasket();
   }
   checkAll() {
 

@@ -51,7 +51,7 @@ export class AuthService {
       ua: 'uk',
       ru: 'ru-UA'
     };
-    this.dateTranslator.next(lang[data])
+    this.dateTranslator.next(lang[data]);
   }
   setTranslate(data) {
     this.translate.next(data);

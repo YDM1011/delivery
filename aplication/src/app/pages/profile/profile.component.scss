@@ -18,18 +18,43 @@
     }
   }
   .info{
-    .name{
-      font-weight: bold;
-      font-size: 18px;
-      line-height: 22px;
-      margin-bottom: 5px;
-      color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: calc(100% - 40px);
+    &-left{
+      .name{
+        font-weight: bold;
+        font-size: 18px;
+        line-height: 22px;
+        margin-bottom: 5px;
+        color: #fff;
+      }
+      .tel{
+        color: #fff;
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 17px;
+      }
     }
-    .tel{
-      color: #fff;
-      font-weight: 500;
-      font-size: 14px;
-      line-height: 17px;
+    &-right{
+      margin-left: auto;
+      .language{
+        display: flex;
+        align-items: center;
+        .title{
+          font-weight: bold;
+          font-size: 14px;
+          line-height: 17px;
+          color: #fff;
+          margin-right: 5px;
+          text-transform: uppercase;
+        }
+        img{
+          width: 15px;
+          height: 15px;
+        }
+      }
     }
   }
 }

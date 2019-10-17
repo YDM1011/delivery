@@ -9,10 +9,18 @@
   </h2>
   <app-basket-item></app-basket-item>
 </div>
-
-<div class="other-pages" *ngIf="baskets">
-  <mat-accordion *ngFor="let basket of baskets">
-    <app-basket-order-item [data]="basket"></app-basket-order-item>
-  </mat-accordion>
-</div>
+<ng-container *ngIf="loading">
+  <ng-container *ngIf="baskets && baskets.length === 0">
+    <div class="other-pages">
+      <p class="empty-basket">
+        {{'Корзина пуста' | trans:language}}
+      </p>
+    </div>
+  </ng-container>
+  <div class="other-pages" *ngIf="baskets && baskets.length > 0">
+    <mat-accordion *ngFor="let basket of baskets">
+      <app-basket-order-item [data]="basket"></app-basket-order-item>
+    </mat-accordion>
+  </div>
+</ng-container>
 <app-remove-basket-item *ngIf="removeItem"></app-remove-basket-item>
