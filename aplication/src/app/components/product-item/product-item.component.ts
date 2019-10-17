@@ -1,6 +1,7 @@
 import {Component, Input, OnInit, Output} from '@angular/core';
 import {AuthService} from "../../auth.service";
 import {CrudService} from "../../crud.service";
+import {MatSnackBar} from "@angular/material";
 
 @Component({
   selector: 'app-product-item',
@@ -13,27 +14,34 @@ export class ProductItemComponent implements OnInit {
   @Input() data;
   constructor(
       private auth: AuthService,
-      private crud: CrudService
+      private crud: CrudService,
+      private snackBar: MatSnackBar
   ) { }
 
   ngOnInit() {
     this.auth.onLanguage.subscribe((v: string) => {
       this.language = v;
-    })
+    });
   }
-  increment(){
+  increment() {
     this.count ++;
   }
-  decrement(){
-    if (this.count === 0) return;
+  decrement() {
+    if (this.count === 0) {return; }
     this.count --;
   }
 
-  addProduct(order){
-    this.crud.post('product', {orderOwner:order._id,count:this.count}).then(v=>{
-      this.count = 0;
-      alert("Success")
-    })
+  addProduct(order) {
+    this.crud.post('product', {orderOwner: order._id, count: this.count}).then((v: any) => {
+      if (v) {
+        this.count = 0;
+        this.openSnackBar('Товар додан в корзину',  'Ok');
+      }
+    });
   }
-
+  openSnackBar(message: string, action: string) {
+    this.snackBar.open(message, action, {
+      duration: 2000,
+    });
+  }
 }

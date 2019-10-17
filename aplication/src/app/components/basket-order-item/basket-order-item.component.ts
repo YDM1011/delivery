@@ -1,4 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
+import {CrudService} from '../../crud.service';
 
 @Component({
   selector: 'app-basket-order-item',
@@ -7,14 +8,22 @@ import {Component, Input, OnInit} from '@angular/core';
 })
 export class BasketOrderItemComponent implements OnInit {
   @Input() data;
+  public removeObj: any;
   public chooseAll: boolean = true;
   public showConfirm: boolean = false;
   public removeItemShow: boolean = false;
-  public items = [{isChoise: true, _id:123},{isChoise: true, _id:1233}];
-  constructor() { }
+  public items = [{isChoise: true, _id: 123}, {isChoise: true, _id: 1233}];
+  constructor(
+      private crud: CrudService
+  ) { }
 
   ngOnInit() {
-    this.mainChack()
+    this.mainChack();
+    this.crud.get(`product?query={"basketOwner":"${this.data._id}"}&populate={"path":"orderOwner","select":"img name price count"}`).then((v: any) => {
+      if (v && v.length > 0) {
+        this.data.product = v;
+      }
+    });
   }
   closeConfirm(e) {
     this.showConfirm = e.value;
@@ -22,19 +31,19 @@ export class BasketOrderItemComponent implements OnInit {
   removeItem(e) {
     this.removeItemShow = e;
   }
-  mainChack(){
+  mainChack() {
     this.chooseAll = !this.chooseAll;
     if (this.chooseAll) {
-      this.items.forEach((item,index)=> {
+      this.items.forEach((item, index) => {
         this.items[index]['isChoise'] = true;
-      })
+      });
     } else {
-      this.items.forEach((item,index)=> {
+      this.items.forEach((item, index) => {
         this.items[index]['isChoise'] = false;
-      })
+      });
     }
   }
-  otherChack(it){
+  otherChack(it) {
     console.log(this.items);
     this.items[it].isChoise = !this.items[it].isChoise;
     let count = 0;
@@ -44,14 +53,29 @@ export class BasketOrderItemComponent implements OnInit {
     //     item.isChoise = !item.isChoise
     //   }
     // });
-    this.items.forEach((item, index)=> {
-      if(!this.items[index].isChoise) {
+    this.items.forEach((item, index) => {
+      if (!this.items[index].isChoise) {
         isAll = false;
       }
     });
     this.chooseAll = isAll;
   }
-  checkAll(){
+  minus(i) {
+
+  }
+  plus(i) {
+    this.refreshBasket();
+  }
+  refreshBasket() {
+    this.crud.get(`basket?query={"_id":"${this.data._id}"}&select="totalPrice"`).then((v: any) => {
+      this.data.totalPrice = v[0].totalPrice;
+    });
+  }
+  removeProduct(i) {
+    this.removeItemShow = true;
+    this.removeObj = this.data.product[i];
+  }
+  checkAll() {
 
   }
 }

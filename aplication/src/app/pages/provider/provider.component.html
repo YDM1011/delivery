@@ -84,7 +84,7 @@
     <div class="category-box">
       <ng-container *ngIf="company.categories">
         <ng-container *ngIf="company.categories.length>0">
-          <a routerLink="/{{language}}/category/1" class="category-box-item" *ngFor="let category of company.categories">
+          <a class="category-box-item" *ngFor="let category of company.categories">
             <div class="svg">
               <app-img [fs]="category.mainCategory.img"></app-img>
             </div>

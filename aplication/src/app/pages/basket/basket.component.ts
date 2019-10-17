@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {AuthService} from '../../auth.service';
 import {CrudService} from "../../crud.service";
-import {query} from "@angular/animations";
 
 @Component({
   selector: 'app-basket',
@@ -28,10 +27,10 @@ export class BasketComponent implements OnInit {
     this.auth.onLanguage.subscribe((v: string) => {
       this.language = v;
     });
-    const query = `?query={"status":0}&populate={"path":"companyOwner"}`;
-    this.crud.get('basket', '', query).then((v:any)=>{
+    const query = `?query={"status":0}&populate={"path":"companyOwner","select":"name img"}`;
+    this.crud.get('basket', '', query).then((v: any) => {
       this.baskets = v;
-    })
+    });
   }
   removeItembasket(e) {
 
