@@ -40,10 +40,10 @@ export class IndexComponent implements OnInit, OnDestroy {
     this.auth.onMe.subscribe((v: any) => {
       if (!v) {return; }
       this.user = v;
+      if (this.user && this.user._id) {
+        this.basketCount();
+      }
     });
-    if (this.user && this.user._id) {
-      this.basketCount();
-    }
     this.auth.onCheckBasket.subscribe((v: any) => {
       if (this.user && this.user._id) {
         this.basketCount();

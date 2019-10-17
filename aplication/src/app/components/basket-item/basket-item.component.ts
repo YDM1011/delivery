@@ -21,23 +21,25 @@ export class BasketItemComponent implements OnInit {
     this.auth.onMe.subscribe((v: any) => {
       if (!v) {return; }
       this.user = v;
+      if (this.user && this.user._id) {
+        this.crud.get(`basket/count?query={"createdBy":"${this.user._id}"}`).then((count: any) => {
+          if (count) {
+            this.count = count.count;
+            this.loadingCount = true;
+          }
+        });
+      }
     });
     this.auth.onLanguage.subscribe((v: string) => {
       this.language = v;
     });
-    if (this.user && this.user._id) {
-      this.crud.get(`basket/count?query={"createdBy":"${this.user._id}"}`).then((count: any) => {
-        if (count) {
-          this.count = count.count;
-          this.loadingCount = true;
-        }
-      });
-    }
+
     this.auth.onCheckBasket.subscribe((v: any) => {
       if (this.user && this.user._id) {
         this.crud.get(`basket/count?query={"createdBy":"${this.user._id}"}`).then((count: any) => {
           if (count) {
             this.count = count.count;
+            this.loadingCount = true;
           }
         });
       }
