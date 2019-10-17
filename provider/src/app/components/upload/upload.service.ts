@@ -14,6 +14,10 @@ export class UploadService {
   public onFs = this.fs.asObservable();
   private multiple = new BehaviorSubject<any>(null);
   public onMultiple = this.multiple.asObservable();
+  private file = new BehaviorSubject<any>(null);
+  public onFile = this.file.asObservable();
+  private crop = new BehaviorSubject<any>(null);
+  public onCrop = this.crop.asObservable();
   constructor(private http: HttpClient) {}
   setNull(){
     this.fs = new BehaviorSubject<any>(null);
@@ -21,6 +25,13 @@ export class UploadService {
   }
   setMultiple(is){
     this.multiple.next(is ? true : false);
+  }
+
+  setFile(d){
+    this.file.next(d);
+  }
+  setCropper(d){
+    this.crop.next(d);
   }
 
   public upload(

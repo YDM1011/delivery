@@ -34,7 +34,7 @@ export class ProductComponent implements OnInit {
         this.crud.get(`order/count?query={"companyOwner":"${this.user.companies[0]._id}"}`).then((count: any) => {
           if (count) {
             this.lengthPagination = count.count;
-            this.crud.get(`order?query={"companyOwner":"${this.user.companies[0]._id}"}&skip=0&limit=${this.pageSizePagination}`).then((p: any) => {
+            this.crud.get(`order?query={"companyOwner":"${this.user.companies[0]._id}"}&skip=0&limit=${this.pageSizePagination}&sort={"date":-1}`).then((p: any) => {
               if (!p) {return; }
               this.products = p;
               this.loading = true;

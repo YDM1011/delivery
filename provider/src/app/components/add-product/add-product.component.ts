@@ -43,24 +43,40 @@ export class AddProductComponent implements OnInit {
   }
   create() {
     if (this.validation('product')) {
-      this.crud.post('upload2', {body: this.uploadObj}, null, false).then((u: any) => {
-        if (u) {
-          this.product['img'] = u.file;
-          this.product.categoryOwner = this.mainCategoryChoose;
-          this.product.brand = this.mainChooseBrand;
-          this.product.companyOwner = this.user.companies[0]._id;
-          this.crud.post('order', this.product).then((v: any) => {
-            if (v) {
-              this.outputNew.emit(v);
-              this.clearMainObj();
-            }
-          }).catch((error) => {
-            if (error && error.errors.price.name === 'CastError') {
-              Swal.fire('Error', 'Цена должна вводится через "." - точку', 'error').then();
-            } else if (error && error.errors.categoryOwner.message === 'Check category') {
-              Swal.fire('Error', 'У вас нет созданых категорий', 'error').then();
-            }
-          });
+      // this.crud.post('upload2', {body: this.uploadObj}, null, false).then((u: any) => {
+      //   if (u) {
+      //     this.product['img'] = u.file;
+      //     this.product.categoryOwner = this.mainCategoryChoose;
+      //     this.product.brand = this.mainChooseBrand;
+      //     this.product.companyOwner = this.user.companies[0]._id;
+      //     this.crud.post('order', this.product).then((v: any) => {
+      //       if (v) {
+      //         this.outputNew.emit(v);
+      //         this.clearMainObj();
+      //       }
+      //     }).catch((error) => {
+      //       if (error && error.errors.price.name === 'CastError') {
+      //         Swal.fire('Error', 'Цена должна вводится через "." - точку', 'error').then();
+      //       } else if (error && error.errors.categoryOwner.message === 'Check category') {
+      //         Swal.fire('Error', 'У вас нет созданых категорий', 'error').then();
+      //       }
+      //     });
+      //   }
+      // });
+
+      this.product.categoryOwner = this.mainCategoryChoose;
+      this.product.brand = this.mainChooseBrand;
+      this.product.companyOwner = this.user.companies[0]._id;
+      this.crud.post('order', this.product).then((v: any) => {
+        if (v) {
+          this.outputNew.emit(v);
+          this.clearMainObj();
+        }
+      }).catch((error) => {
+        if (error && error.errors.price.name === 'CastError') {
+          Swal.fire('Error', 'Цена должна вводится через "." - точку', 'error').then();
+        } else if (error && error.errors.categoryOwner.message === 'Check category') {
+          Swal.fire('Error', 'У вас нет созданых категорий', 'error').then();
         }
       });
     }
@@ -69,8 +85,8 @@ export class AddProductComponent implements OnInit {
     this.cancelAdd.emit(false);
   }
   onFs(e) {
-    this.uploadObj = e;
-    this.product.img = e.name;
+    // this.uploadObj = e;
+    this.product.img = e.file;
   }
 
   clearMainObj() {

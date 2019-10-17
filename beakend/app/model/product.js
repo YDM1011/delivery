@@ -21,6 +21,7 @@ const schema = new Schema({
         ref: "Order",
         required: [true, "Check Order"]
     },
+    verify: {type: Boolean, default: true},
     lastUpdate: {type: Date},
     date: {type: Date, default: new Date()}
 },{

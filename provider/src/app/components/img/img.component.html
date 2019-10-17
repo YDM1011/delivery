@@ -1,2 +1,9 @@
-<img *ngIf="fs && !product" alt="" src="{{domain}}/upload/{{fs}}">
-<!--<img *ngIf="fs && product" alt="" src="{{domain}}/upload/product{{fs}}">-->
+
+<ng-container *ngIf="anyFs && !fs; else fsTmp">
+  <img *ngIf="anyFs" alt="{{anyFs}}" src="{{domain}}/{{anyFs}}">
+</ng-container>
+
+<ng-template #fsTmp>
+  <img *ngIf="fs" alt="{{fs}}" src="{{domain}}/upload/{{dir?dir+'/':''}}{{fs}}">
+</ng-template>
+

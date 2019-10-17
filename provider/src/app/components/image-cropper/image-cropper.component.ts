@@ -1,6 +1,7 @@
-import {AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import Cropper from "cropperjs";
 import {CrudService} from "../../crud.service";
+import {environment} from "../../../../../aplication/src/environments/environment";
 
 interface imageSlice {
   fileName: string,
@@ -16,9 +17,11 @@ interface imageSlice {
 export class ImageCropperComponent implements OnInit, AfterViewInit {
   @ViewChild("image", { static: false })
   public imageElement: ElementRef;
+  public domain = environment.domain;
 
-  @Input("src")
-  public imageSource: string;
+  @Output() done = new EventEmitter();
+  @Input("src") imageSource;
+  @Input() dir:string;
 
   public imageDestination: string;
   private cropper: Cropper;
@@ -35,6 +38,7 @@ export class ImageCropperComponent implements OnInit, AfterViewInit {
     this.cropper = new Cropper(this.imageElement.nativeElement, {
       zoomable: false,
       scalable: false,
+      checkCrossOrigin: false,
       aspectRatio: 1,
       crop: () => {
         // const canvas = this.cropper.getCroppedCanvas();
@@ -42,6 +46,7 @@ export class ImageCropperComponent implements OnInit, AfterViewInit {
       }
     });
   }
+
   rotete() {
     const canvas = this.cropper.rotate(90);
     // this.imageDestination = canvas.toDataURL("image/png");
@@ -62,6 +67,7 @@ export class ImageCropperComponent implements OnInit, AfterViewInit {
     console.log(canvas);
     // this.imageDestination = canvas.toDataURL("image/png");
   }
+
   getData() {
     const canvas = this.cropper.getData();
     console.log(canvas);
@@ -72,11 +78,21 @@ export class ImageCropperComponent implements OnInit, AfterViewInit {
       yy:[canvas.x, canvas.x+canvas.width],
       xx:[canvas.y, canvas.y+canvas.height]
     };
-    this.crud.post('imgSlice', this.imageData, null, null)
+    let link = 'imgSlice';
+    if (this.dir) link = link + '/'+this.dir;
+
+    console.log(link)
+    this.crud.post(link , this.imageData, null)
       .then(v=>{
         console.log(v)
+        this.done.emit(v)
       }).catch(e=>console.log(e))
     // this.imageDestination = canvas.toDataURL("image/png");
   }
-  public ngOnInit() { }
+  public ngOnInit() {
+
+  }
+  // ngAfterViewInit(){
+  //
+  // }
 }

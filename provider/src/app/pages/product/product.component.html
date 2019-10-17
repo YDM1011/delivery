@@ -50,7 +50,7 @@
 						<div class="row-r"  *ngFor="let item of products; let index = index">
 							<div class="col">
 								<div class="img">
-									<app-img [fs]="item.img"></app-img>
+									<app-img [dir]="'product'" [fs]="item.img"></app-img>
 								</div>
 								{{item.name}}
 							</div>

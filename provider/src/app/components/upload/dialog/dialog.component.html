@@ -6,11 +6,11 @@
   <input type="file" #file style="display: none" (change)="onFilesAdded()" />
 </ng-container>
 
-<div class="container" fxLayout="column" fxLayoutAlign="space-evenly stretch">
+<div class="container" fxLayout="column" fxLayoutAlign="space-evenly stretch" *ngIf="!(data.cropper && step == 2)">
   <div>
     <h1 mat-dialog-title>Upload Files</h1>
     <h3 *ngIf="data.tooltip">{{data.tooltip}}</h3>
-    <button [disabled]="uploading || uploadSuccessful" mat-raised-button color="primary" class="green-dialog-btn" (click)="addFiles()">
+    <button [disabled]="uploading || uploadSuccessful" mat-raised-button class="green-dialog-btn" (click)="addFiles()">
       Add Files
     </button>
   </div>
@@ -28,9 +28,23 @@
   </mat-dialog-content>
 </div>
 
+<ng-container *ngIf="!data.cropper">
+  <!-- This are the actions of the dialog, containing the primary and the cancel button-->
+  <mat-dialog-actions class="actions" style="margin-bottom: 5px">
+    <button *ngIf="showCancelButton" mat-button mat-dialog-close>Cancel</button>
+    <button class="green-dialog-btn" mat-raised-button [disabled]="disBtn" (click)="closeDialog()">{{primaryButtonText}}</button>
+  </mat-dialog-actions>
+</ng-container>
 
-<!-- This are the actions of the dialog, containing the primary and the cancel button-->
-<mat-dialog-actions class="actions" style="margin-bottom: 5px">
-  <button *ngIf="showCancelButton" mat-button mat-dialog-close>Cancel</button>
-  <button class="green-dialog-btn" mat-raised-button [disabled]="disBtn" (click)="closeDialog()">{{primaryButtonText}}</button>
-</mat-dialog-actions>
+<ng-container *ngIf="data.cropper && step == 1">
+  <!-- This are the actions of the dialog, containing the primary and the cancel button-->
+  <mat-dialog-actions class="actions" style="margin-bottom: 5px">
+    <button *ngIf="showCancelButton" mat-button mat-dialog-close>Cancel</button>
+    <button class="green-dialog-btn" mat-raised-button [disabled]="disBtn" (click)="closeDialog()">next</button>
+  </mat-dialog-actions>
+</ng-container>
+
+<ng-container *ngIf="data.cropper && step == 2 && img">
+  <app-image-cropper [src]="img.file" [dir]="data.dir" (done)="send($event)"></app-image-cropper>
+</ng-container>
+

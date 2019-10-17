@@ -3,9 +3,13 @@
 <!--<button (click)="getCropBoxData()">getCropBoxData</button> <br>-->
 <!--<button (click)="getCanvasData()">getCanvasData</button> <br>-->
 <!--<button (click)="getImageData()">getImageData</button> <br>-->
-<button (click)="getData()">getData</button> <br>
-
-<div class="img-container">
-  <img #image [src]="imageSource">
+<div class="wrap-cropper">
+  <div class="img-container">
+    <!--<img #image [src]="domain+'/upload/'+imageSource">-->
+    <img #image src="https://piligrim-test.pp.ua/assets/images/tmp/semki.png" crossorigin="">
+  </div>
+  <!--<img [src]="imageDestination" class="img-preview">-->
+  <div class="btn-wrap">
+    <button (click)="getData()" class="cansel-popup-btn">getData</button>
+  </div>
 </div>
-<!--<img [src]="imageDestination" class="img-preview">-->

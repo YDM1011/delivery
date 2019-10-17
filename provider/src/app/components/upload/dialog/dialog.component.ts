@@ -15,6 +15,8 @@ export class DialogComponent implements OnInit {
   @ViewChild('file') file;
   public disBtn = true;
   public multiple;
+  public step = 1;
+  public img;
   public files: Set<File> = new Set();
 
   constructor(
@@ -27,11 +29,15 @@ export class DialogComponent implements OnInit {
     this.uploadService.onMultiple.subscribe(v => {
       this.multiple = v;
     });
-  }
-  ngOnChanges() {
-    // this.multiple = this.uploadService.multiple
-  }
+    this.uploadService.onFile.subscribe(v=>{
+      console.log(v);
+      if (v){
+        this.img = v;
+        this.step = 2;
+      }
 
+    })
+  }
   progress;
   canBeClosed = true;
   primaryButtonText = 'Upload';
@@ -61,7 +67,11 @@ export class DialogComponent implements OnInit {
   addFiles() {
     this.file.nativeElement.click();
   }
-
+  next(){}
+  send(v){
+    this.uploadService.setCropper(v);
+    this.dialogRef.close();
+  }
   closeDialog() {
     // if everything was uploaded already, just close the dialog
     if (this.uploadSuccessful) {
