@@ -27,7 +27,12 @@ module.exports.preUpdate = async (req,res,next, backendApp) => {
                     if (!req.body.count){
                         count = req.body.verify ? r.count*2 : 0;
                     } else {
-                        count = req.body.count;
+                        if (r.verify) {
+                            count = req.body.count
+                        } else {
+                            // req.body.count = r.count;
+                            count = r.count
+                        }
                     }
 
                     let inc = parsePrice((r.price)*(count - r.count));
