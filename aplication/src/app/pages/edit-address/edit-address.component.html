@@ -13,12 +13,23 @@
   </p>
   <div class="form">
     <input type="text" placeholder="Название торговой точки" name="name" [(ngModel)]="address.name">
-    <select *ngIf="cities" name="city" [(ngModel)]="address.city" (change)="select($event)">
-      <option *ngFor="let city of cities" [value]="city._id">
-        <app-img [fs]="city.img" [anyFs]="'assets/images/city.svg'"></app-img>
-        {{city.name}}
-      </option>
-    </select>
+<!--    <select *ngIf="cities" name="city" [(ngModel)]="address.city" (change)="select($event)">-->
+<!--      <option *ngFor="let city of cities" [value]="city._id">-->
+<!--        <app-img [fs]="city.img" [anyFs]="'assets/images/city.svg'"></app-img>-->
+<!--        {{city.name}}-->
+<!--      </option>-->
+<!--    </select>-->
+    <div class="city-block">
+      <mat-form-field *ngIf="cities" >
+        <mat-label>Город</mat-label>
+        <mat-select [(value)]="address.city" (selectionChange)="select($event)">
+          <mat-option *ngFor="let city of cities" [value]="city._id">
+<!--            <app-img [fs]="city.img" [anyFs]="'assets/images/city.svg'"></app-img>-->
+            {{city.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
     <input type="text" placeholder="Улица" name="street" [(ngModel)]="address.street">
     <div class="home">
       <input type="text" placeholder="Дом" name="build" [(ngModel)]="address.build">

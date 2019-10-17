@@ -13,7 +13,12 @@
 .remove{
   margin-top: 10px;
 }
-
+.city-block{
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  margin-top: -15px;
+}
 p{
   width: 240px;
   margin: 0 auto;
