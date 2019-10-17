@@ -44,17 +44,21 @@ export class BasketOrderItemComponent implements OnInit {
       this.items.forEach((item, index) => {
         this.items[index]['isChoise'] = true;
         this.crud.post(`product`, {verify: true}, item._id).then();
+        this.refreshBasket();
       });
     } else {
       this.items.forEach((item, index) => {
         this.items[index]['isChoise'] = false;
         this.crud.post(`product`, {verify: false}, item._id).then();
+        this.refreshBasket();
+
       });
     }
   }
   otherChack(it) {
     this.items[it].isChoise = !this.items[it].isChoise;
     this.crud.post(`product`, {verify: this.items[it].isChoise}, this.data.product[it]._id).then();
+    this.refreshBasket();
     let isAll = true;
     this.items.forEach((item, index) => {
       if (!this.items[index].isChoise) {

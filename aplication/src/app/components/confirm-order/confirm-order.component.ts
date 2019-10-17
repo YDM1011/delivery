@@ -23,6 +23,7 @@ export class ConfirmOrderComponent implements OnInit {
     this.auth.onMe.subscribe((v: string) => {
       if (v) {
         this.user = v;
+        console.log(this.user)
       }
     });
   }
