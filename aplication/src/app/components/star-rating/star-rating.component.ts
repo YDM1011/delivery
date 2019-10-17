@@ -12,7 +12,6 @@ export class StarRatingComponent implements OnInit {
   @Input('color') private color: string;
   @Output() private ratingUpdated = new EventEmitter();
 
-  private snackBarDuration: number = 2000;
   public ratingArr = [];
 
   constructor() {
@@ -23,9 +22,6 @@ export class StarRatingComponent implements OnInit {
     }
   }
   onClick(rating: number) {
-    // this.snackBar.open('You rated ' + rating + ' / ' + this.starCount, '', {
-    //   duration: this.snackBarDuration
-    // });
     this.ratingUpdated.emit(rating);
     return false;
   }
@@ -38,9 +34,4 @@ export class StarRatingComponent implements OnInit {
     }
   }
 
-}
-export enum StarRatingColor {
-  primary = "primary",
-  accent = "accent",
-  warn = "warn"
 }

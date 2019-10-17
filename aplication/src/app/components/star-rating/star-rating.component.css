@@ -7,4 +7,8 @@ button{
 }
 .mat-ic{
     color: #FFCD00;
+    line-height: normal;
+}
+.mat-button, .mat-flat-button, .mat-icon-button, .mat-stroked-button{
+    line-height: normal;
 }
