@@ -11,6 +11,7 @@
   background: rgba(0, 0, 0, 0.7);
   z-index: 12345;
   .remove{
+    min-width: 310px;
     position: relative;
     padding: 10px;
     background: #fff;
@@ -71,24 +72,24 @@
         .count{
           display: flex;
           align-items: center;
-          .minus, .plus{
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 100%;
-            height: 100%;
-            max-width: 21px;
-            max-height: 21px;
-            min-width: 21px;
-            min-height: 21px;
-            border: 1px solid #F3F3F3;
-            box-sizing: border-box;
-            box-shadow: 0 4px 3px rgba(0, 0, 0, 0.03);
-            border-radius: 50%;
-            pointer-events: none;
-            background: #fff;
-            padding: 0;
-          }
+          //.minus, .plus{
+          //  display: flex;
+          //  align-items: center;
+          //  justify-content: center;
+          //  width: 100%;
+          //  height: 100%;
+          //  max-width: 21px;
+          //  max-height: 21px;
+          //  min-width: 21px;
+          //  min-height: 21px;
+          //  border: 1px solid #F3F3F3;
+          //  box-sizing: border-box;
+          //  box-shadow: 0 4px 3px rgba(0, 0, 0, 0.03);
+          //  border-radius: 50%;
+          //  pointer-events: none;
+          //  background: #fff;
+          //  padding: 0;
+          //}
           .count-item{
             min-width: 22px;
             font-size: 14px;

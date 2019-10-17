@@ -8,7 +8,10 @@ import {CrudService} from '../../crud.service';
 })
 export class BasketOrderItemComponent implements OnInit {
   @Input() data;
-  public removeObj: any;
+  public removeObj = {
+    index: null,
+    obj: null
+  };
   public chooseAll: boolean = true;
   public showConfirm: boolean = false;
   public removeItemShow: boolean = false;
@@ -73,7 +76,16 @@ export class BasketOrderItemComponent implements OnInit {
   }
   removeProduct(i) {
     this.removeItemShow = true;
-    this.removeObj = this.data.product[i];
+    this.removeObj = {
+      index: i,
+      obj: this.data.product[i]
+    };
+  }
+  successRemove(e) {
+    if (e) {
+      this.data.product.splice(e, 1);
+      this.refreshBasket();
+    }
   }
   checkAll() {
 

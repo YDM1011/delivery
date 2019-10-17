@@ -29,7 +29,7 @@
           </div>
           <div class="count">
             <button class="minus" (click)="minus(i)"></button>
-            <div class="count-item">2</div>
+            <div class="count-item">{{prod.count}}</div>
             <button class="plus" (click)="plus(i)"></button>
           </div>
         </div>
@@ -73,4 +73,4 @@
   </div>
 </div>
 <app-confirm-order *ngIf="showConfirm" (closeConfirm)="closeConfirm($event)"></app-confirm-order>
-<app-remove-basket-item *ngIf="removeItemShow" (closeRemove)="removeItem($event)" [data]="removeObj"></app-remove-basket-item>
+<app-remove-basket-item *ngIf="removeItemShow" (closeRemove)="removeItem($event)" [data]="removeObj" (successRemove)="successRemove($event)"></app-remove-basket-item>

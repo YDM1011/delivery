@@ -10,19 +10,19 @@
     </div>
     <div class="remove-item">
       <div class="img">
-        <app-img [fs]="data.orderOwner.img" [anyFs]="'assets/images/tmp/img-product.png'"></app-img>
+        <app-img [fs]="data.obj.orderOwner.img" [anyFs]="'assets/images/tmp/img-product.png'"></app-img>
       </div>
       <div class="info">
         <div class="title">
-          {{data.orderOwner.name}}
+          {{data.obj.orderOwner.name}}
         </div>
         <div class="price">
-          {{data.orderOwner.price}} грн.
+          {{data.obj.orderOwner.price}} грн.
         </div>
         <div class="count">
-          <button class="minus">-</button>
-          <div class="count-item">2</div>
-          <button class="plus">+</button>
+          <button class="minus"></button>
+          <div class="count-item">{{data.obj.count}}</div>
+          <button class="plus"></button>
         </div>
       </div>
 <!--      <div class="provider-title">-->
@@ -36,7 +36,7 @@
 <!--      </div>-->
     </div>
     <div class="buttons">
-      <button class="main-button color" (click)="closeRemove.emit(false)">Удалить</button>
+      <button class="main-button color" (click)="remove()">Удалить</button>
       <button class="back-btn" (click)="closeRemove.emit(false)">Отмена</button>
     </div>
   </div>
