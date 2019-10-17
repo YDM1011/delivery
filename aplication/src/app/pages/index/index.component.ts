@@ -44,11 +44,12 @@ export class IndexComponent implements OnInit, OnDestroy {
         this.basketCount();
       }
     });
-    this.auth.onCheckBasket.subscribe((v: any) => {
+    this._subscription.push(this.auth.onCheckBasket.subscribe((v: any) => {
       if (this.user && this.user._id) {
+        console.log(v)
         this.basketCount();
       }
-    });
+    }));
     this._subscription.push(this.auth.onLanguage.subscribe((v: string) => {
       this.language = v;
     }));
