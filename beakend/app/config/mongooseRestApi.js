@@ -206,8 +206,9 @@ const canUpdate = (options) => {
 const schemaPre = {
     Read: (req, res, next) => callMethod(req, res, next, 'preRead'),
     Save: (req, res, next) => {
-        req.body.date = req.body.date ? req.body.date : new Date();
+        req.body.date = new Date();
         if (req.user) req.body.createdBy = req.user._id;
+        console.log(req.body)
         callMethod(req, res, next, 'preSave')
     },
     Update: (req, res, next) => {

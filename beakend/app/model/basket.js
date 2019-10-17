@@ -161,10 +161,12 @@ const schema = new Schema({
 });
 
 schema.post('save', (doc,next)=>{
+    console.log("TEST!!!!!!!!!!!!!!!!!!!!!!!!")
     mongoose.model('Basket')
         .findOne({})
         .sort({date:-1})
         .exec((e,r)=>{
+            console.log(e,r)
             mongoose.model('Basket')
                 .findOneAndUpdate({_id:doc._id}, {basketNumber: (r.basketNumber+1)}, {new:true})
                 .exec((e,r)=>{

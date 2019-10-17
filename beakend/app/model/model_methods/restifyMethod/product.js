@@ -85,6 +85,7 @@ const checkAndInitBasket = (req, backendApp, product) => {
             if (e) return rj(e);
             if (!r){
                 let data = {
+                    date: new Date(),
                     companyOwner: product.companyOwner,
                     createdBy: req.user._id,
                     products: [product._id],
