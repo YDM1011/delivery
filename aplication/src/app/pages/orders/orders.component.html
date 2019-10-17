@@ -13,23 +13,21 @@
 <div class="other-pages">
   <div class="popular-section">
     <div class="popular-section-button">
-      <button [class.active]="toggleMain" (click)="toggleMain = true">
+      <button [class.active]="toggleMain" (click)="getBaskets()">
         В ожидании
       </button>
-      <button [class.active]="!toggleMain" (click)="toggleMain = false">
+      <button [class.active]="!toggleMain" (click)="getSuccessBasket()">
         Доставлены
       </button>
     </div>
     <div class="popular-section-box" *ngIf="toggleMain">
       <mat-accordion>
-        <app-orders-item></app-orders-item>
-        <app-orders-item></app-orders-item>
+        <app-orders-item [order]="item" (removeOrder)="removeOrder($event)" *ngFor="let item of orders"></app-orders-item>
       </mat-accordion>
     </div>
     <div class="popular-section-box" *ngIf="!toggleMain">
       <mat-accordion>
-        <app-orders-item></app-orders-item>
-        <app-orders-item></app-orders-item>
+        <app-orders-item [order]="item" *ngFor="let item of orders"></app-orders-item>
       </mat-accordion>
     </div>
   </div>

@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import {environment} from '../environments/environment';
 import {AuthService} from "./auth.service";
-import Swal from 'sweetalert2';
 
 @Injectable({
   providedIn: 'root'
@@ -80,7 +79,7 @@ export class CrudService {
       return arr;
   }
 
-  getCompany(city){
+  getCompany(city) {
     this.city = city;
     return new Promise((resolve, reject) => {
       const populate = '&populate='+JSON.stringify({path:'brands'});

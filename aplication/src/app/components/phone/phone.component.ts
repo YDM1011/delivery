@@ -11,9 +11,9 @@ export class PhoneComponent implements OnInit {
   @ViewChild('firstInput', {static: false}) firstInput: ElementRef;
   @ViewChild('secondInput', {static: false}) secondInput: ElementRef;
   @ViewChild('thirdInput', {static: false}) thirdInput: ElementRef;
-  public firstModel: string = '';
-  public secondModel: string = '';
-  public thirdModel: string = '';
+  public firstModel = '';
+  public secondModel = '';
+  public thirdModel = '';
   public phoneNumber = '';
   public mainPhone = '';
   constructor() { }
@@ -33,7 +33,6 @@ export class PhoneComponent implements OnInit {
     this.thirdModel = this.mainPhone.slice(6, 10);
     this.phoneNumber = '+38' + this.firstModel + this.secondModel  + this.thirdModel;
     this.phone.emit(this.phoneNumber);
-    console.log(this.phoneNumber)
   }
   // keyPressFirst() {
   //   this.phoneNumber = '+38' + this.firstModel + this.secondModel  + this.thirdModel;

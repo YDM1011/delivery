@@ -1,18 +1,18 @@
 <div class="order-box">
-  <mat-expansion-panel class="order-panel">
+  <mat-expansion-panel class="order-panel" (opened)="getProduct()">
     <mat-expansion-panel-header collapsedHeight="*" expandedHeight="*">
       <mat-panel-title>
         <div class="title-panel">
           <div class="title">
-            Номер заказа:
+            {{'Номер заказа:' | trans:language}}
             <div class="title-number">
-              37848494
+              {{order.basketNumber}}
             </div>
           </div>
           <div class="title">
-            Время заказа:
+            {{'Время заказа:' | trans:language}}
             <div class="title-number">
-              15:08   12/12/20
+              {{order.date | date: 'HH:mm  dd/MM/yy'}}
             </div>
           </div>
         </div>
@@ -26,69 +26,25 @@
           <path d="M10.8391 11.3086H10.5493V8.49609C10.5493 8.33432 10.4195 8.20312 10.2595 8.20312H6.78217C6.62216 8.20312 6.4924 8.33432 6.4924 8.49609V11.3086H6.20262C6.0426 11.3086 5.91284 11.4398 5.91284 11.6016C5.91284 11.7633 6.0426 11.8945 6.20262 11.8945H10.8391C10.9991 11.8945 11.1288 11.7633 11.1288 11.6016C11.1288 11.4398 10.9991 11.3086 10.8391 11.3086ZM9.96972 11.3086H7.07195V8.78906H9.96972V11.3086Z" fill="#29909E"/>
           <path d="M9.10043 12.4805H6.78221C6.62219 12.4805 6.49243 12.6117 6.49243 12.7734C6.49243 12.9352 6.62219 13.0664 6.78221 13.0664H9.10043C9.26044 13.0664 9.3902 12.9352 9.3902 12.7734C9.3902 12.6117 9.26044 12.4805 9.10043 12.4805Z" fill="#09C2C2"/>
         </svg>
-        Поставщик “Фреш продукты РУКОВИЧКА”
+        {{order.companyOwner.name}}
       </div>
-      <div class="content-item">
+      <div class="content-item" *ngFor="let item of getProducts">
         <div class="img">
-          <img src="./assets/images/tmp/img-product.png" alt="">
+          <app-img [fs]="item.orderOwner.img" [anyFs]="'assets/images/provider.svg'"></app-img>
         </div>
         <div class="info">
           <div class="title">
-            Свежее мясо  свинины с Канады
+            {{item.orderOwner.name}}
           </div>
           <div class="price">
-            560.90 грн.
+            {{item.orderOwner.price}} грн.
           </div>
           <div class="count">
-            <button class="minus">-</button>
-            <div class="count-item">2</div>
-            <button class="plus">+</button>
+            <button class="minus"></button>
+            <div class="count-item">{{item.count}}</div>
+            <button class="plus"></button>
           </div>
         </div>
-        <!--      <div class="remove">-->
-        <!--        <svg width="11" height="11" viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg">-->
-        <!--          <g opacity="0.5" clip-path="url(#clip0)">-->
-        <!--            <path d="M5.47852 -0.0214844C2.44091 -0.0214844 -0.0214844 2.44091 -0.0214844 5.47852C-0.0214844 8.51612 2.44091 10.9785 5.47852 10.9785C8.51612 10.9785 10.9785 8.51612 10.9785 5.47852C10.9749 2.44242 8.51461 -0.0178757 5.47852 -0.0214844ZM5.47852 10.291C2.82066 10.291 0.666016 8.13637 0.666016 5.47852C0.666016 2.82066 2.82066 0.666016 5.47852 0.666016C8.13637 0.666016 10.291 2.82066 10.291 5.47852C10.2882 8.13519 8.13519 10.2882 5.47852 10.291Z" fill="black"/>-->
-        <!--            <path d="M8.1523 2.80463C8.01803 2.67044 7.80041 2.67044 7.66622 2.80463L5.47859 4.99226L3.29096 2.80463C3.15903 2.66809 2.94142 2.66431 2.80488 2.79624C2.66833 2.92808 2.66456 3.1457 2.79648 3.28224C2.79925 3.28509 2.80202 3.28795 2.80488 3.29072L4.99251 5.47835L2.80488 7.66598C2.66833 7.79782 2.66456 8.01543 2.79648 8.15206C2.92833 8.2886 3.14594 8.29238 3.28248 8.16045C3.28534 8.15768 3.28819 8.15491 3.29096 8.15206L5.47859 5.96443L7.66622 8.15206C7.80276 8.2839 8.02038 8.28013 8.15222 8.14358C8.28087 8.0104 8.28087 7.79916 8.15222 7.66598L5.96467 5.47835L8.1523 3.29072C8.2865 3.15652 8.2865 2.93891 8.1523 2.80463Z" fill="black"/>-->
-        <!--          </g>-->
-        <!--          <defs>-->
-        <!--            <clipPath id="clip0">-->
-        <!--              <rect width="11" height="11" fill="white"/>-->
-        <!--            </clipPath>-->
-        <!--          </defs>-->
-        <!--        </svg>-->
-        <!--      </div>-->
-      </div>
-      <div class="content-item">
-        <div class="img">
-          <img src="./assets/images/tmp/img-product.png" alt="">
-        </div>
-        <div class="info">
-          <div class="title">
-            Свежее мясо  свинины с Канады
-          </div>
-          <div class="price">
-            560.90 грн.
-          </div>
-          <div class="count">
-            <button class="minus">-</button>
-            <div class="count-item">2</div>
-            <button class="plus">+</button>
-          </div>
-        </div>
-        <!--      <div class="remove">-->
-        <!--        <svg width="11" height="11" viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg">-->
-        <!--          <g opacity="0.5" clip-path="url(#clip0)">-->
-        <!--            <path d="M5.47852 -0.0214844C2.44091 -0.0214844 -0.0214844 2.44091 -0.0214844 5.47852C-0.0214844 8.51612 2.44091 10.9785 5.47852 10.9785C8.51612 10.9785 10.9785 8.51612 10.9785 5.47852C10.9749 2.44242 8.51461 -0.0178757 5.47852 -0.0214844ZM5.47852 10.291C2.82066 10.291 0.666016 8.13637 0.666016 5.47852C0.666016 2.82066 2.82066 0.666016 5.47852 0.666016C8.13637 0.666016 10.291 2.82066 10.291 5.47852C10.2882 8.13519 8.13519 10.2882 5.47852 10.291Z" fill="black"/>-->
-        <!--            <path d="M8.1523 2.80463C8.01803 2.67044 7.80041 2.67044 7.66622 2.80463L5.47859 4.99226L3.29096 2.80463C3.15903 2.66809 2.94142 2.66431 2.80488 2.79624C2.66833 2.92808 2.66456 3.1457 2.79648 3.28224C2.79925 3.28509 2.80202 3.28795 2.80488 3.29072L4.99251 5.47835L2.80488 7.66598C2.66833 7.79782 2.66456 8.01543 2.79648 8.15206C2.92833 8.2886 3.14594 8.29238 3.28248 8.16045C3.28534 8.15768 3.28819 8.15491 3.29096 8.15206L5.47859 5.96443L7.66622 8.15206C7.80276 8.2839 8.02038 8.28013 8.15222 8.14358C8.28087 8.0104 8.28087 7.79916 8.15222 7.66598L5.96467 5.47835L8.1523 3.29072C8.2865 3.15652 8.2865 2.93891 8.1523 2.80463Z" fill="black"/>-->
-        <!--          </g>-->
-        <!--          <defs>-->
-        <!--            <clipPath id="clip0">-->
-        <!--              <rect width="11" height="11" fill="white"/>-->
-        <!--            </clipPath>-->
-        <!--          </defs>-->
-        <!--        </svg>-->
-        <!--      </div>-->
       </div>
     </div>
   </mat-expansion-panel>
@@ -99,16 +55,16 @@
       <path d="M6.92174 6.10449C6.68395 6.10449 6.49097 6.29748 6.49097 6.53526V10.1968C6.49097 10.4346 6.68395 10.6276 6.92174 10.6276C7.15952 10.6276 7.3525 10.4346 7.3525 10.1968V6.53526C7.3525 6.29726 7.15952 6.10449 6.92174 6.10449Z" fill="white"/>
     </svg>
     <div class="no-pay-title">
-      Не оплачено! Требуется оплата.
+      {{'Не оплачено! Требуется оплата.' | trans:language}}
     </div>
   </div>
   <div class="basket-buttons">
     <div class="address">
       <div class="img">
-        <img src="./assets/images/tmp/cola.png" alt="">
+        <app-img [fs]="order.deliveryAddress.img" [anyFs]="'assets/images/provider.svg'"></app-img>
       </div>
       <div class="title">
-        Магазин “Рукавичка”
+        {{order.deliveryAddress.name}}
       </div>
       <div class="location">
         <svg width="11" height="15" viewBox="0 0 11 15" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -118,29 +74,26 @@
       </div>
     </div>
     <div class="pay-method">
-      Способ оплаты:
+      {{'Способ оплаты:' | trans:language}}
       <span class="pay-method-title">
-      наличными
+      {{order.payMethod}}
     </span>
     </div>
     <div class="left">
       <div class="left-title">
-        Всего к оплате:
+        {{'Всего к оплате:' | trans:language}}
       </div>
       <div class="left-price">
-        23 405 грн.
+        {{order.totalPrice}} грн.
       </div>
     </div>
     <button class="right">
-    <span class="status">
-      <span class="lamp waiting">
-      </span>
-      В ожидании
+    <span class="status" [innerHTML]="order.status | status | safeHTML">
     </span>
     </button>
     <div class="cancel-order">
-    <span>
-      Отменить заказ
+    <span *ngIf="order.status === 1" (click)="cancelOrder()">
+      {{'Отменить заказ' | trans:language}}
     </span>
     </div>
   </div>

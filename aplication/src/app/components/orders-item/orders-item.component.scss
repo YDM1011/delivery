@@ -136,15 +136,6 @@
       .count{
         display: flex;
         align-items: center;
-        .minus, .plus{
-          min-width: 22px;
-          border: 1px solid #F3F3F3;
-          box-sizing: border-box;
-          box-shadow: 0px 4px 3px rgba(0, 0, 0, 0.03);
-          border-radius: 15px;
-          pointer-events: none;
-          background: #fff;
-        }
         .count-item{
           width: max-content;
           min-width: 22px;
@@ -152,6 +143,7 @@
           line-height: 17px;
           text-align: center;
           padding: 0 3px;
+          margin-top: -2px;
         }
       }
     }
@@ -208,19 +200,6 @@
       font-weight: normal;
       font-size: 14px;
       line-height: 17px;
-      .lamp{
-        display: block;
-        width: 11px;
-        height: 11px;
-        border-radius: 50%;
-        margin-right: 10px;
-        &.waiting{
-          background: #FFC700;
-        }
-        &.done{
-          background: #CCCCCC;
-        }
-      }
     }
   }
   .address{

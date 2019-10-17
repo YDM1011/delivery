@@ -80,6 +80,8 @@ import {UploadComponent} from "./components/upload/upload.component";
 import {DialogComponent} from "./components/upload/dialog/dialog.component";
 import { ImageCropperComponent } from './components/image-cropper/image-cropper.component';
 import { EditAddressComponent } from './pages/edit-address/edit-address.component';
+import { StatusPipe } from './pipe/status.pipe';
+import { SaveHTMLPipe } from './pipe/save-html.pipe';
 
 @NgModule({
   declarations: [
@@ -142,6 +144,8 @@ import { EditAddressComponent } from './pages/edit-address/edit-address.componen
     DialogComponent,
     ImageCropperComponent,
     EditAddressComponent,
+    StatusPipe,
+    SaveHTMLPipe,
   ],
   imports: [
     Ng5SliderModule,
