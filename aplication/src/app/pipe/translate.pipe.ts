@@ -1,6 +1,6 @@
 import {Pipe, PipeTransform} from '@angular/core';
 import {AuthService} from '../auth.service';
-import {CrudService} from "../crud.service";
+import {CrudService} from '../crud.service';
 
 @Pipe({
   name: 'trans',
@@ -21,7 +21,7 @@ export class TranslatePipe implements PipeTransform {
       }
     });
     this.auth.onLanguage.subscribe((v: string) => {
-      if (!v) return;
+      if (!v) {return; }
       this.lang = v;
     });
   }
@@ -33,7 +33,7 @@ export class TranslatePipe implements PipeTransform {
     return this.translate();
   }
   translate() {
-    console.log(this.obj);
+    // console.log(this.obj);
     if (!this.obj[String(this.value)]) return this.newWord(this.value);
     if (this.obj[String(this.value)] && this.obj[String(this.value)][this.lang]) {
       return this.obj[String(this.value)][this.lang];
