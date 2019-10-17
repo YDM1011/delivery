@@ -82,6 +82,7 @@ import { ImageCropperComponent } from './components/image-cropper/image-cropper.
 import { EditAddressComponent } from './pages/edit-address/edit-address.component';
 import { StatusPipe } from './pipe/status.pipe';
 import { SaveHTMLPipe } from './pipe/save-html.pipe';
+import { ShowProviderCategoryComponent } from './components/show-provider-category/show-provider-category.component';
 
 @NgModule({
   declarations: [
@@ -146,6 +147,7 @@ import { SaveHTMLPipe } from './pipe/save-html.pipe';
     EditAddressComponent,
     StatusPipe,
     SaveHTMLPipe,
+    ShowProviderCategoryComponent,
   ],
   imports: [
     Ng5SliderModule,

@@ -84,7 +84,7 @@
     <div class="category-box">
       <ng-container *ngIf="company.categories">
         <ng-container *ngIf="company.categories.length>0">
-          <a class="category-box-item" *ngFor="let category of company.categories">
+          <a class="category-box-item" *ngFor="let category of company.categories" (click)="activeCategoryId = category._id">
             <div class="svg">
               <app-img [fs]="category.mainCategory.img"></app-img>
             </div>
@@ -120,26 +120,26 @@
     </div>
   </div>
   <div class="catalog">
-
     <ng-container *ngIf="company.categories.length>0">
-      <ng-container *ngFor="let category of company.categories">
-        <div class="wrap-category">
-          <div class="wrap-title" (click)="getProduct(category._id)">{{category.name}}</div>
-          <div class="product-content">
-            <ng-container *ngIf="products[category._id]">
-              <ng-container *ngFor="let order of products[category._id]">
-                <app-product-item [data]="order"></app-product-item> <br>
-              </ng-container>
-            </ng-container>
-          </div>
-        </div>
-        <!--<ng-container *ngIf="category.orders.length>0">-->
-          <!--<ng-container *ngFor="let order of category.orders">-->
+      <app-show-provider-category [catId]="activeCategoryId"></app-show-provider-category>
+<!--      <ng-container *ngFor="let category of company.categories">-->
+<!--        <div class="wrap-category">-->
+<!--          <div class="wrap-title" (click)="getProduct(category._id)">{{category.name}}</div>-->
+<!--          <div class="product-content">-->
+<!--            <ng-container *ngIf="products[category._id]">-->
+<!--              <ng-container *ngFor="let order of products[category._id]">-->
+<!--                <app-product-item [data]="order"></app-product-item> <br>-->
+<!--              </ng-container>-->
+<!--            </ng-container>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--        &lt;!&ndash;<ng-container *ngIf="category.orders.length>0">&ndash;&gt;-->
+<!--          &lt;!&ndash;<ng-container *ngFor="let order of category.orders">&ndash;&gt;-->
 
-          <!--</ng-container>-->
-        <!--</ng-container>-->
+<!--          &lt;!&ndash;</ng-container>&ndash;&gt;-->
+<!--        &lt;!&ndash;</ng-container>&ndash;&gt;-->
 
-      </ng-container>
+<!--      </ng-container>-->
     </ng-container>
   </div>
 </div>
