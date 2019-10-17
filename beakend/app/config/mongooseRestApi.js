@@ -1,4 +1,5 @@
 let restFunction = {};
+const fs = require('fs');
 module.exports = backendApp => {
     // const restify = require('express-restify-mongoose');
     const restify = require('express-restify-mongoose');
@@ -11,6 +12,48 @@ module.exports = backendApp => {
             if (!req.body.ws) return next();
             backendApp.events.callWS.emit('message', req.body.ws);
             next()
+        };
+        const checkFile = (req,res,next) => {
+            if (!req.params.id) return next();
+            let prop;
+            if (req.body.img){
+                prop = 'img'
+            } else if (req.body.image){
+                prop = 'image'
+            } else {
+                prop = null;
+            }
+            new Promise((rs,rj)=>{
+                model.findOne({_id:req.params.id}).exec((e,r)=>{
+                    console.log("upload", e,r)
+                    if (e) return rj(e);
+                    if (!r) return rj("Not Found!");
+                    if (prop) {
+                        rs(r[prop])
+                    } else {
+                        let result = r.img || r.image;
+                        console.log(r.img, r.image)
+                        rs(result)
+                    }
+
+                })
+            }).then(mainName => {
+                console.log(mainName)
+                if (!mainName) return next();
+                fs.unlink("upload/"+mainName, fsCallbeack=>{
+                    fs.unlink("upload/address/"+mainName, fsCallbeack=>{
+                        fs.unlink("upload/avatar/"+mainName, fsCallbeack=>{
+                            fs.unlink("upload/product/"+mainName, fsCallbeack=>{
+                                next()
+                            });
+                        });
+                    });
+                });
+            }).catch(e=>{
+                res.serverError(e)
+            })
+
+
         };
 
         if (model.schema.options.createRestApi) {
@@ -53,6 +96,7 @@ module.exports = backendApp => {
                     backendApp.middlewares.isLoggedIn,
                     isVerify(backendApp),
                     canUpdate(modelOpt),
+                    checkFile,
                     schemaPre.Update],
                 postUpdate: [update_ws, schemaPre.PostUpdate],
                 preDelete: [
@@ -63,6 +107,7 @@ module.exports = backendApp => {
                     backendApp.middlewares.isLoggedIn,
                     isVerify(backendApp),
                     canUpdate(modelOpt),
+                    checkFile,
                     schemaPre.Delete],
                 postDelete: [update_ws, schemaPre.PostDelete],
                 // preCustomLink: backendApp.middlewares.isLoggedIn
@@ -175,6 +220,7 @@ const schemaPre = {
     PostDelete: (req, res, next) => callMethod(req, res, next, 'postDelete'),
     PostRead: (req, res, next) => callMethod(req, res, next, 'postRead'),
 };
+
 const nextS = (req, res, next) => next();
 const forbidden = (req, res, next) => res.forbidden("Not access!");
 const callMethod = (req,res,next,method) => {

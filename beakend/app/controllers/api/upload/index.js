@@ -27,4 +27,17 @@ module.exports = (backendApp, router) => {
             res.ok({file:v})
         })
     });
+    router.post('/deleteFile', [], function (req, res, next) {
+        const mainName = req.body.file;
+        fs.unlink("upload/"+mainName, fsCallbeack=>{
+            fs.unlink("upload/address/"+mainName, fsCallbeack=>{
+                fs.unlink("upload/avatar/"+mainName, fsCallbeack=>{
+                    fs.unlink("upload/product/"+mainName, fsCallbeack=>{
+                        res.ok({file: mainName});
+                    });
+                });
+            });
+        });
+    });
+
 };
