@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {CrudService} from '../../crud.service';
 
 @Component({
@@ -8,23 +8,27 @@ import {CrudService} from '../../crud.service';
 })
 export class BasketOrderItemComponent implements OnInit {
   @Input() data;
+  @Output() removeBasket = new EventEmitter();
   public removeObj = {
     index: null,
     obj: null
   };
-  public chooseAll: boolean = true;
+  public chooseAll: boolean = false;
   public showConfirm: boolean = false;
   public removeItemShow: boolean = false;
-  public items = [{isChoise: true, _id: 123}, {isChoise: true, _id: 1233}];
+  public items = [];
   constructor(
       private crud: CrudService
   ) { }
 
   ngOnInit() {
     this.mainChack();
-    this.crud.get(`product?query={"basketOwner":"${this.data._id}"}&populate={"path":"orderOwner","select":"img name price count"}`).then((v: any) => {
+    this.crud.get(`product?query={"basketOwner":"${this.data._id}"}&populate={"path":"orderOwner","select":"img name price count discount"}`).then((v: any) => {
       if (v && v.length > 0) {
         this.data.product = v;
+        this.data.product.forEach((item) => {
+          this.items.push({isChoise: item.verify, _id: item._id});
+        });
       }
     });
   }
@@ -39,22 +43,19 @@ export class BasketOrderItemComponent implements OnInit {
     if (this.chooseAll) {
       this.items.forEach((item, index) => {
         this.items[index]['isChoise'] = true;
+        this.crud.post(`product`, {verify: true}, item._id).then();
       });
     } else {
       this.items.forEach((item, index) => {
         this.items[index]['isChoise'] = false;
+        this.crud.post(`product`, {verify: false}, item._id).then();
       });
     }
   }
   otherChack(it) {
     this.items[it].isChoise = !this.items[it].isChoise;
-    let count = 0;
+    this.crud.post(`product`, {verify: this.items[it].isChoise}, this.data.product[it]._id).then();
     let isAll = true;
-    // this.items.forEach((item, index)=> {
-    //   if (it == index) {
-    //     item.isChoise = !item.isChoise
-    //   }
-    // });
     this.items.forEach((item, index) => {
       if (!this.items[index].isChoise) {
         isAll = false;
@@ -63,17 +64,17 @@ export class BasketOrderItemComponent implements OnInit {
     this.chooseAll = isAll;
   }
   minus(i) {
-    const count = this.data.product[i].count--;
+    let count = this.data.product[i].count;
+    count--;
     if (count < 1) {
       this.crud.delete(`product`, this.data.product[i]._id).then((v: any) => {
         if (v) {
           this.data.product.splice(i, 1);
-          this.refreshBasket();
-          return;
+          this.removeBasket.emit(this.data._id);
         }
       });
     } else {
-      this.data.product[i].count--
+      this.data.product[i].count--;
       this.crud.post(`product`, {count: this.data.product[i].count}, this.data.product[i]._id).then((v: any) => {
         if (v) {
           this.refreshBasket();
@@ -102,9 +103,12 @@ export class BasketOrderItemComponent implements OnInit {
     };
   }
   successRemove(e) {
-    console.log(e);
     this.data.product.splice(e, 1);
-    this.refreshBasket();
+    if (this.data.product.length === 0) {
+      this.removeBasket.emit(this.data._id);
+    } else {
+      this.refreshBasket();
+    }
   }
   checkAll() {
 

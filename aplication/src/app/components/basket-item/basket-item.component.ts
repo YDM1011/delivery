@@ -22,7 +22,7 @@ export class BasketItemComponent implements OnInit {
       if (!v) {return; }
       this.user = v;
       if (this.user && this.user._id) {
-        this.crud.get(`basket/count?query={"createdBy":"${this.user._id}"}`).then((count: any) => {
+        this.crud.get(`basket/count?query={"createdBy":"${this.user._id}","status":0}`).then((count: any) => {
           if (count) {
             this.count = count.count;
             this.loadingCount = true;
@@ -36,7 +36,7 @@ export class BasketItemComponent implements OnInit {
 
     this.auth.onCheckBasket.subscribe((v: any) => {
       if (this.user && this.user._id) {
-        this.crud.get(`basket/count?query={"createdBy":"${this.user._id}"}`).then((count: any) => {
+        this.crud.get(`basket/count?query={"createdBy":"${this.user._id}","status":0}`).then((count: any) => {
           if (count) {
             this.count = count.count;
             this.loadingCount = true;

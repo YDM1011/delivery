@@ -75,4 +75,4 @@
   </div>
 </div>
 
-<app-confirm-address *ngIf="changeCity" (cancelConfirmAddress)="cancelConfirmAddress($event)"></app-confirm-address>
+<app-confirm-address *ngIf="changeCity" (cancelConfirmAddress)="cancelConfirmAddress($event)" (outputConfirmAddress)="outputAddress($event)"></app-confirm-address>

@@ -19,7 +19,7 @@
   </ng-container>
   <div class="other-pages" *ngIf="baskets && baskets.length > 0">
     <mat-accordion *ngFor="let basket of baskets">
-      <app-basket-order-item [data]="basket"></app-basket-order-item>
+      <app-basket-order-item [data]="basket" (removeBasket)="removeBasket($event)"></app-basket-order-item>
     </mat-accordion>
   </div>
 </ng-container>

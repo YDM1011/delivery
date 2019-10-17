@@ -88,8 +88,8 @@ export class IndexComponent implements OnInit, OnDestroy {
       if (!v) return;
       this.category = v;
       this.loaded.category = true;
-    }).catch(e => { this.loaded.category = true });
-    await this.crud.getTopCompany().then((v:any)=>{
+    }).catch(e => { this.loaded.category = true});
+    await this.crud.getTopCompany().then((v:any) => {
       if (!v) return;
       this.topCompany = v;
       this.loaded.topCompany = true;
@@ -103,7 +103,7 @@ export class IndexComponent implements OnInit, OnDestroy {
   }
 
   basketCount() {
-    this.crud.get(`basket/count?query={"createdBy":"${this.user._id}"}`).then((count: any) => {
+    this.crud.get(`basket/count?query={"createdBy":"${this.user._id}","status":0}`).then((count: any) => {
       if (count) {
         this.count = count.count;
         this.loadingCount = true;
