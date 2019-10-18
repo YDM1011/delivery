@@ -27,6 +27,10 @@ const schema = new Schema({
         type: Schema.Types.ObjectId,
         ref: "Brand"
     },
+    countBought: {
+        type: Number,
+        default: 0
+    },
     subCategory: [CustomField],
     name: {type: String, required: [true, "Name is required"]},
     des: String,

@@ -31,7 +31,7 @@ export class BasketComponent implements OnInit {
     this.auth.onLanguage.subscribe((v: string) => {
       this.language = v;
     });
-    const query = `?query={"status":0}&populate={"path":"companyOwner","select":"name img"}`;
+    const query = `?query={"status":0}&populate={"path":"companyOwner","select":"name img createdBy"}`;
     this.crud.get('basket', '', query).then((v: any) => {
       if (v) {
         this.baskets = v;
@@ -42,7 +42,7 @@ export class BasketComponent implements OnInit {
   removeBasket(e) {
     this.loading = false;
     if (e) {
-      const query = `?query={"status":0}&populate={"path":"companyOwner","select":"name img"}`;
+      const query = `?query={"status":0}&populate={"path":"companyOwner","select":"name img createdBy"}`;
       this.crud.get('basket', '', query).then((v: any) => {
         if (v) {
           this.baskets = v;
@@ -54,6 +54,8 @@ export class BasketComponent implements OnInit {
   }
 
   soket() {
-    this.wsService.send(WS.SEND.CONFIRM_ORDER, '5d88c82d4d8c0714e4d6f3f3', {data: "Hello"});
+    console.log(this.baskets)
+    if (!this.baskets[0].companyOwner && !this.baskets[0].companyOwner.createdBy) return;
+    this.wsService.send(WS.SEND.CONFIRM_ORDER, this.baskets[0].companyOwner.createdBy, {data: "Hello"});
   }
 }

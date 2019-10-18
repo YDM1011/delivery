@@ -7,7 +7,7 @@ module.exports = {
         name: 'Smart'
     },
     port: process.env.PORT || 8000,
-    WSport: process.env.WS || 6761,
+    WSport: process.env.WS || 6762,
     db: 'mongodb://localhost:27017/smart',
     jwtSecret: process.env.JWTSECRET || "secret",
     email: {

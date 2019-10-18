@@ -33,4 +33,37 @@ module.exports = function (backendApp, router) {
             })
 
     });
+    router.post('/favoriteProduct', [backendApp.middlewares.isLoggedIn], (req, res, next) => {
+        const Order = backendApp.mongoose.model('Order');
+        const Client = backendApp.mongoose.model('Client');
+        console.log(req.body.productId)
+        Order
+            .findOne({_id:req.body.productId})
+            .exec((e,r)=>{
+                if(e) return res.serverError(e);
+                if(!r) return res.badRequest("Not valid Product!");
+
+                Client
+                    .findOneAndUpdate({$and:[
+                            {_id:req.user._id},
+                            {favoriteProduct: {$in:req.body.productId}}
+                    ]},
+                    {$pull:{favoriteProduct:req.body.productId}}, {new:true})
+                    .exec((e,r)=>{
+                        if(e) return res.serverError(e);
+                        if(r) return res.ok(r.favoriteProduct);
+
+                        Client
+                            .findOneAndUpdate({_id:req.user._id},
+                                {$push:{favoriteProduct:req.body.productId}}, {new:true})
+                            .exec((e,r)=>{
+                                if(e) return res.serverError(e);
+                                if(!r) return res.serverError("Not valid Company!");
+
+                                res.ok(r.favoriteProduct);
+                            })
+                    })
+            })
+
+    });
 };

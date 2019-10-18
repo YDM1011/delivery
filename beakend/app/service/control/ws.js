@@ -12,10 +12,11 @@ wsControllers.forEach((controller) => {
 module.exports = (backendApp, socket = null, data = null) => {
 
     wss.on('connection', async (ws, req) => {
-        console.log("authorization",req.headers.authorization)
+        console.log("authorization",req.headers)
         let tokenData =  parseAuthorization(req.headers.authorization);
         let userData;
         if (!tokenData) tokenData =  parseAA(req.headers.authorization);
+        console.log("tokenData", tokenData)
         if (tokenData){
             userData = await checkToken(backendApp, tokenData).catch(e=>{console.error(e)});
             saveConnect(userData, wss, ws);
@@ -163,12 +164,19 @@ const messageSend = (event, userData, wss, client) => {
             return
         }
         /** All user's requests and send response to 1 client of all requests */
-        wss[to] ? wss[to].forEach(ws=>{
+        // wss[to] ? wss[to].forEach(ws=>{
+        //     ws.send(JSON.stringify({
+        //         event: event,
+        //         data: data
+        //     }));
+        // }) : '';
+
+        wss.clients.forEach(ws=>{
             ws.send(JSON.stringify({
                 event: event,
                 data: data
             }));
-        }) : '';
+        });
     };
     const send = (event, data) => {
         if (res.to == 'admin1'){

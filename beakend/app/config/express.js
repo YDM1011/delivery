@@ -42,7 +42,7 @@ const init = (app, config) =>{
         res.header('Access-Control-Allow-Credentials', 'true');
         res.header('Access-Control-Allow-Origin', req.headers.origin || config.site.domain || '*');
         res.header('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE, OPTIONS');
-        res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Cookies, Cookie, Content-Length, PortalRequest, X-Requested-With');
+        res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, WS, Cookies, Cookie, Content-Length, PortalRequest, X-Requested-With');
         //intercepts OPTIONS method
         if ('OPTIONS' === req.method) {
             res.send();

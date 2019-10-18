@@ -123,52 +123,14 @@ const schema = new Schema({
         create: [{private:true}],
         delete: [{private:true}],
     },
-    // client: [{private:true}],
-    // provider: [
-    //     {
-    //         model:'Company',
-    //         _id: 'companyOwner',
-    //         canBeId: [
-    //             {type:'refObj', fieldName: 'createdBy'},
-    //             {type:'array', fieldName: 'collaborators'}
-    //         ]
-    //     },{
-    //         model:'Basket',
-    //         _id: '_id',
-    //         canBeId: [
-    //             {type:'refObj', fieldName: 'createdBy'}
-    //         ]
-    //     }
-    // ],
-    // collaborator: [
-    //     {
-    //         model:'Company',
-    //         _id: 'companyOwner',
-    //         canBeId: [
-    //             {type:'refObj', fieldName: 'createdBy'},
-    //             {type:'array', fieldName: 'collaborators'}
-    //         ]
-    //     },{
-    //         model:'Basket',
-    //         _id: '_id',
-    //         canBeId: [
-    //             {type:'refObj', fieldName: 'createdBy'}
-    //         ]
-    //     }
-    // ],
-    // admin: [{public:true}],
-    // sa: [{public:true}],
 });
 
 schema.post('save', (doc,next)=>{
-    console.log("TEST!!!!!!!!!!!!!!!!!!!!!!!!")
     mongoose.model('Basket')
-        .findOne({})
-        .sort({date:-1})
+        .count({})
         .exec((e,r)=>{
-            console.log(e,r)
             mongoose.model('Basket')
-                .findOneAndUpdate({_id:doc._id}, {basketNumber: (r.basketNumber+1)}, {new:true})
+                .findOneAndUpdate({_id:doc._id}, {basketNumber: (r)}, {new:true})
                 .exec((e,r)=>{
                     next()
                 });

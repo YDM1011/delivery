@@ -116,6 +116,18 @@ export class CrudService {
       });
     });
   }
+  getDetailProduct(id){
+    return new Promise((resolve, reject) => {
+      const populate = '?populate='+JSON.stringify([{path:'createdBy'}]);
+      this.get('order', id, populate).then((v:any)=>{
+        if (v) {
+          resolve(v)
+        } else {
+          reject()
+        }
+      });
+    });
+  }
   getCategoryName(name,city){
     const params = `${name}/${city}`;
     return new Promise((resolve, reject) => {
@@ -323,6 +335,17 @@ export class CrudService {
       return new Promise((rs,rj)=>{
         this.post('favoriteCompany', data).then(v=>{
           console.log(v)
+          if (v) {
+            rs(v)
+          } else {
+            rj()
+          }
+        })
+      })
+  }
+  favoriteProduct(data){
+      return new Promise((rs,rj)=>{
+        this.post('favoriteProduct', data).then(v=>{
           if (v) {
             rs(v)
           } else {

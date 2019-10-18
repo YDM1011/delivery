@@ -29,7 +29,11 @@ module.exports = backendApp => {
                     if (e) return rj(e);
                     if (!r) return rj("Not Found!");
                     if (prop) {
-                        rs(r[prop])
+                        if (r[prop] === req.body[prop]){
+                            rs('return')
+                        } else {
+                            rs(r[prop])
+                        }
                     } else {
                         let result = r.img || r.image;
                         console.log(r.img, r.image)
@@ -39,7 +43,7 @@ module.exports = backendApp => {
                 })
             }).then(mainName => {
                 console.log(mainName)
-                if (!mainName) return next();
+                if (!mainName || mainName === 'return') return next();
                 fs.unlink("upload/"+mainName, fsCallbeack=>{
                     fs.unlink("upload/address/"+mainName, fsCallbeack=>{
                         fs.unlink("upload/avatar/"+mainName, fsCallbeack=>{

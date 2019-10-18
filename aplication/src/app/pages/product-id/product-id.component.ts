@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {AuthService} from "../../auth.service";
 import {CrudService} from "../../crud.service";
+import {ActivatedRoute} from "@angular/router";
+import {Me} from "../../interfaces/me";
 
 @Component({
   selector: 'app-product-id',
@@ -9,62 +11,52 @@ import {CrudService} from "../../crud.service";
 })
 export class ProductIDComponent implements OnInit {
   public language: string;
-  public favoriteShow: boolean = false;
   public count: number = 0;
-  public favoriteLocal;
+  public favoriteShow;
+  public id;
+  public me:Me;
+  public product;
 
   constructor(
       private auth: AuthService,
-      private crud: CrudService
+      private crud: CrudService,
+      private route: ActivatedRoute,
   ) { }
 
   ngOnInit() {
     this.auth.onLanguage.subscribe((v: string) => {
       this.language = v;
     });
-    this.favoriteLocal = JSON.parse(localStorage.getItem('favorite'));
-    if (!this.favoriteLocal) {
-      this.favoriteLocal  = {
-        providers: [],
-        products: []
-      };
-    }
-    if (this.favoriteLocal && this.favoriteLocal.products.length > 0) {
-      let index;
-      index = this.crud.find('_id', 1, this.favoriteLocal.products);
-      if(index !== undefined){
+    this.route.params.subscribe((params: any) => {
+      this.id = this.route.snapshot.paramMap.get('id');
+      this.init();
+    });
+    this.auth.onMe.subscribe((v: any) => {
+      this.me = v;
+      if (this.me && this.me.favoriteProduct && (this.me.favoriteProduct.indexOf(this.id) >- 1))
         this.favoriteShow = true;
+    });
+  }
+  init() {
+    this.crud.getDetailProduct(this.id).then((v: any) => {
+      if (v) {
+        this.product = v;
       }
-    }
-  }
-
-  increment(){
-    this.count ++;
-  }
-  decrement(){
-    if (this.count === 0) return;
-    this.count --;
+    });
   }
 
   favorite(e){
-    if (e === true) {
-      this.favoriteShow = e;
-      let obj = {
-        _id: 1
-      };
-      this.favoriteLocal.products.push(obj);
-      localStorage.setItem('favorite', JSON.stringify(this.favoriteLocal))
-    } else {
-      this.favoriteLocal = JSON.parse(localStorage.getItem('favorite'));
-      if (this.favoriteLocal) {
-        let index;
-        index = this.crud.find('_id', 1, this.favoriteLocal.products);
-        if(index !== undefined){
+    this.crud.favoriteProduct({productId: this.id}).then((v: any) => {
+      if (v) {
+        this.me.favoriteProduct = v;
+        if (v && (v.indexOf(this.id) >- 1)) {
+          this.favoriteShow = true;
+        } else {
           this.favoriteShow = false;
-          this.favoriteLocal.products.splice(index, 1);
-          localStorage.setItem('favorite', JSON.stringify(this.favoriteLocal))
         }
       }
-    }
+    });
   }
+  increment(){}
+  decrement(){}
 }
