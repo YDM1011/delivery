@@ -11,8 +11,8 @@ export class MyAddressComponent implements OnInit {
   public language: string;
   public localStorage = localStorage ;
   public addressWorks;
-  public data ={
-    address: {ua:'', ru:'Cписок адресов магазинов пуст!'}
+  public data = {
+    address: {ua: 'Список адрес магазинів порожній!', ru: 'Cписок адресов магазинов пуст!'}
   };
   constructor(
       private auth: AuthService,
@@ -26,8 +26,18 @@ export class MyAddressComponent implements OnInit {
     const query = `?query={"createdBy":"${this.localStorage.getItem('userId')}"}`;
     const populate = `&populate={"path":"city"}`;
 
-    this.crud.get('shopAddress', '', query+populate).then((v: any) => {
+    this.crud.get('shopAddress', '', query + populate).then((v: any) => {
       this.addressWorks = v;
-    })
+    });
+  }
+  refreshAddress(e) {
+    if (e) {
+      const query = `?query={"createdBy":"${this.localStorage.getItem('userId')}"}`;
+      const populate = `&populate={"path":"city"}`;
+
+      this.crud.get('shopAddress', '', query + populate).then((v: any) => {
+        this.addressWorks = v;
+      });
+    }
   }
 }

@@ -63,10 +63,4 @@ export class EditAddressComponent implements OnInit {
   select(e) {
     this.address.city = e.value;
   }
-  removeAddress() {
-    this.crud.delete('shopAddress', this.id).then((v: any) => {
-      if (v) {
-      }
-    });
-  }
 }

@@ -49,14 +49,17 @@
       color: rgba(0, 0, 0, 0.51);
     }
   }
-  .edit-address{
+  .edit-address, .remove-address{
     display: block;
     color: #09C2C2;
     text-decoration: underline;
     text-align: center;
     width: 100%;
-    margin: 15px 0 5px;
+    margin: 10px 0 5px;
     font-size: 14px;
     line-height: 17px;
+  }
+  .remove-address{
+    color: #E21B1B;
   }
 }

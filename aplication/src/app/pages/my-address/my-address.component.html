@@ -5,7 +5,7 @@
 
 <div class="other-pages" *ngIf="language && addressWorks">
   <mat-accordion *ngIf="addressWorks && addressWorks.length>0; else empty">
-    <app-address-item [data]="address" *ngFor="let address of addressWorks"></app-address-item>
+    <app-address-item [data]="address" *ngFor="let address of addressWorks" (chackAddress)="refreshAddress($event)"></app-address-item>
   </mat-accordion>
   
   <a routerLink="/{{language}}/new-address" class="new-address">
