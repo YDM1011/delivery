@@ -1,8 +1,8 @@
-<div class="other-header profile-header">
+<div class="other-header profile-header" *ngIf="login && me">
   <div class="img">
     <app-img [fs]="me.img" [dir]="'avatar'" [anyFs]="'assets/images/user.svg'"></app-img>
   </div>
-  <div class="info" *ngIf="login && me">
+  <div class="info">
     <div class="info-left">
       <div class="name">
         {{me.name}}

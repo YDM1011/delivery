@@ -85,6 +85,7 @@ import { SaveHTMLPipe } from './pipe/save-html.pipe';
 import { ShowProviderCategoryComponent } from './components/show-provider-category/show-provider-category.component';
 import { LoadingComponent } from './components/loading/loading.component';
 import { ShowProviderBrandsComponent } from './components/show-provider-brands/show-provider-brands.component';
+import { BackBtnComponent } from './components/back-btn/back-btn.component';
 
 @NgModule({
   declarations: [
@@ -152,6 +153,7 @@ import { ShowProviderBrandsComponent } from './components/show-provider-brands/s
     ShowProviderCategoryComponent,
     LoadingComponent,
     ShowProviderBrandsComponent,
+    BackBtnComponent,
   ],
   imports: [
     Ng5SliderModule,

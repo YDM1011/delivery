@@ -45,4 +45,5 @@ export class BrandsComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this._subscription.forEach(it=>it.unsubscribe());
   }
+
 }

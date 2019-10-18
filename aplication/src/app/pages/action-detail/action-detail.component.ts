@@ -21,6 +21,6 @@ export class ActionDetailComponent implements OnInit {
     });
     this.auth.onLanguage.subscribe((v: string) => {
       this.language = v;
-    })
+    });
   }
 }
