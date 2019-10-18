@@ -84,6 +84,7 @@ import { StatusPipe } from './pipe/status.pipe';
 import { SaveHTMLPipe } from './pipe/save-html.pipe';
 import { ShowProviderCategoryComponent } from './components/show-provider-category/show-provider-category.component';
 import { LoadingComponent } from './components/loading/loading.component';
+import { ShowProviderBrandsComponent } from './components/show-provider-brands/show-provider-brands.component';
 
 @NgModule({
   declarations: [
@@ -150,6 +151,7 @@ import { LoadingComponent } from './components/loading/loading.component';
     SaveHTMLPipe,
     ShowProviderCategoryComponent,
     LoadingComponent,
+    ShowProviderBrandsComponent,
   ],
   imports: [
     Ng5SliderModule,

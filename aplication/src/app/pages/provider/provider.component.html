@@ -84,7 +84,7 @@
     <div class="category-box">
       <ng-container *ngIf="company.categories">
         <ng-container *ngIf="company.categories.length>0">
-          <a class="category-box-item" *ngFor="let category of company.categories" (click)="activeCategoryId = category._id">
+          <a class="category-box-item" *ngFor="let category of company.categories" (click)="activeCategory(category._id)">
             <div class="svg">
               <app-img [fs]="category.mainCategory.img"></app-img>
             </div>
@@ -107,7 +107,7 @@
     <div class="category-box">
       <ng-container *ngIf="company.brands">
         <ng-container *ngIf="company.brands.length>0">
-          <a routerLink="/{{language}}/brand/1" class="category-box-item" *ngFor="let brand of company.brands">
+          <a class="category-box-item" *ngFor="let brand of company.brands" (click)="activeBrands(brand._id)">
             <div class="svg">
               <app-img [fs]="brand.img"></app-img>
             </div>
@@ -121,7 +121,8 @@
   </div>
   <div class="catalog">
     <ng-container *ngIf="company.categories.length>0">
-      <app-show-provider-category [catId]="activeCategoryId"></app-show-provider-category>
+      <app-show-provider-category [catId]="activeCategoryId" *ngIf="showCategory"></app-show-provider-category>
+      <app-show-provider-brands [brandId]="activeBrandsId" *ngIf="showBrands"></app-show-provider-brands>
 <!--      <ng-container *ngFor="let category of company.categories">-->
 <!--        <div class="wrap-category">-->
 <!--          <div class="wrap-title" (click)="getProduct(category._id)">{{category.name}}</div>-->

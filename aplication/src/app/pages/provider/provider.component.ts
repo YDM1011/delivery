@@ -15,6 +15,9 @@ export class ProviderComponent implements OnInit {
   public me;
   public company;
   public activeCategoryId;
+  public activeBrandsId;
+  public showCategory = true;
+  public showBrands = false;
   public products = {};
   constructor(
       private auth: AuthService,
@@ -57,5 +60,15 @@ export class ProviderComponent implements OnInit {
         }
       }
     });
+  }
+  activeCategory(id) {
+    this.showCategory = true;
+    this.showBrands = false;
+    this.activeCategoryId = id;
+  }
+  activeBrands(id) {
+    this.showBrands = true;
+    this.showCategory = false;
+    this.activeBrandsId = id;
   }
 }
