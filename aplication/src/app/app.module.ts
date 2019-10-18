@@ -83,6 +83,7 @@ import { EditAddressComponent } from './pages/edit-address/edit-address.componen
 import { StatusPipe } from './pipe/status.pipe';
 import { SaveHTMLPipe } from './pipe/save-html.pipe';
 import { ShowProviderCategoryComponent } from './components/show-provider-category/show-provider-category.component';
+import { LoadingComponent } from './components/loading/loading.component';
 
 @NgModule({
   declarations: [
@@ -148,6 +149,7 @@ import { ShowProviderCategoryComponent } from './components/show-provider-catego
     StatusPipe,
     SaveHTMLPipe,
     ShowProviderCategoryComponent,
+    LoadingComponent,
   ],
   imports: [
     Ng5SliderModule,

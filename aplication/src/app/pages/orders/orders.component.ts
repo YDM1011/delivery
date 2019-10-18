@@ -30,6 +30,7 @@ export class OrdersComponent implements OnInit {
       this.user = me;
       this.crud.get(`basket?query={"createdBy":"${this.user._id}","$or":[{"status":1},{"status":2},{"status":3}]}&populate=[{"path":"deliveryAddress","select":"name img"},{"path":"companyOwner","select":"name"}]`).then((v: any) => {
         this.orders = v;
+        this.loading = true
       });
     });
   }
