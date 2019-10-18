@@ -6,12 +6,10 @@
 <div class="other-pages">
   <div class="my-info" *ngIf="me">
     <div class="img">
-      <!--<img src="./assets/images/user.svg" alt="">-->
       <app-img [dir]="'avatar'" [fs]="me.img" [anyFs]="'assets/images/user.svg'"></app-img>
     </div>
-    <app-upload (onCrop)="onFs($event)" [cropper]="true" [dir]="'avatar'" ></app-upload>
-    <!--<ng-container *ngIf="img">-->
-    <!--</ng-container>-->
+    <span class="replace" (click)="replace()" *ngIf="me.img">Изменить</span>
+    <app-upload (onCrop)="onFs($event)" [cropper]="true" [dir]="'avatar'" *ngIf="!me.img"></app-upload>
     <p>{{data.article[language]}}</p>
     <form class="form" (submit)="save($event)">
       <input type="text" placeholder="ФИО" [(ngModel)]="me.name" name="name">
@@ -27,6 +25,5 @@
       <button type="submit" class="main-button color">{{data.save[language]}}</button>
       <a routerLink="/{{language}}/profile" class="back-btn">{{data.back[language]}}</a>
     </form>
-
   </div>
 </div>

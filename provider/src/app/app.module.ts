@@ -42,6 +42,9 @@ import { EditProductComponent } from './components/edit-product/edit-product.com
 import { SearchFilterComponent } from './components/search-filter/search-filter.component';
 import { StatusPipe } from './pipe/status.pipe';
 import { SafeHtmlPipe } from './pipe/safe-html.pipe';
+import {WebsocketModule} from "./websocket";
+import {environment} from "../environments/environment";
+import { ScrollTopDirective } from './directives/scroll-top.directive';
 
 @NgModule({
   declarations: [
@@ -72,6 +75,7 @@ import { SafeHtmlPipe } from './pipe/safe-html.pipe';
     SearchFilterComponent,
     StatusPipe,
     SafeHtmlPipe,
+    ScrollTopDirective,
   ],
   imports: [
     BrowserAnimationsModule,
@@ -83,7 +87,10 @@ import { SafeHtmlPipe } from './pipe/safe-html.pipe';
     MaterialModule,
     Ng2SearchPipeModule,
     ReactiveFormsModule,
-    NgxMaterialTimepickerModule
+    NgxMaterialTimepickerModule,
+    WebsocketModule.config({
+      url: environment.ws
+    }),
   ],
   exports: [MaterialModule],
   providers: [CookieService, {provide: HTTP_INTERCEPTORS, useClass: ApiInterceptor, multi: true},

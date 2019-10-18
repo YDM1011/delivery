@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output} from '@angular/core';
 import {MatDialog} from "@angular/material";
 import {UploadService} from "./upload.service";
 import {DialogComponent} from "./dialog/dialog.component";
@@ -9,7 +9,7 @@ import {CrudService} from "../../crud.service";
   templateUrl: './upload.component.html',
   styleUrls: ['./upload.component.scss']
 })
-export class UploadComponent implements OnInit, OnDestroy {
+export class UploadComponent implements OnInit, OnDestroy, OnChanges {
   @Output() onFs = new EventEmitter();
   @Output() onCrop = new EventEmitter();
   @Input() multiple = true;
@@ -26,18 +26,18 @@ export class UploadComponent implements OnInit, OnDestroy {
       if (v) {
         this.onFs.emit(v);
         if (this.cropper && !v.file) {
-          this.crud.post('upload2', {body: v}).then((v: any) => {
-            if (!v) return;
-            this.uploadService.setFile(v)
+          this.crud.post('upload2', {body: v}, null).then((v: any) => {
+            if (!v) {return; }
+            this.uploadService.setFile(v);
           }).catch(e => console.log(e));
         }
       }
     });
-    this.uploadService.onCrop.subscribe(v=>{
-      if(v){
+    this.uploadService.onCrop.subscribe(v => {
+      if (v) {
         this.onCrop.emit(v);
       }
-    })
+    });
   }
 
   ngOnChanges() {

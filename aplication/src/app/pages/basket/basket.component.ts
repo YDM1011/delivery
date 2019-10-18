@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {AuthService} from '../../auth.service';
 import {CrudService} from "../../crud.service";
+import {WebsocketService} from "../../websocket";
+import {WS} from "../../websocket/websocket.events";
 
 @Component({
   selector: 'app-basket',
@@ -18,7 +20,8 @@ export class BasketComponent implements OnInit {
   constructor(
       private route: ActivatedRoute,
       private auth: AuthService,
-      private crud: CrudService
+      private crud: CrudService,
+      private wsService: WebsocketService
   ) { }
 
   ngOnInit() {
@@ -48,5 +51,9 @@ export class BasketComponent implements OnInit {
       });
       this.auth.setCheckBasket(true);
     }
+  }
+
+  soket() {
+    this.wsService.send(WS.SEND.CONFIRM_ORDER, '5d88c82d4d8c0714e4d6f3f3', {data: "Hello"});
   }
 }

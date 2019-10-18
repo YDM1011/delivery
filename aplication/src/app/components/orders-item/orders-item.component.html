@@ -61,10 +61,11 @@
   <div class="basket-buttons">
     <div class="address">
       <div class="img">
-        <app-img [fs]="order.deliveryAddress.img" [anyFs]="'assets/images/provider.svg'"></app-img>
+        <app-img *ngIf="!order.deliveryAddress" [anyFs]="'assets/images/provider.svg'"></app-img>
+        <app-img *ngIf="order.deliveryAddress" [fs]="order.deliveryAddress.img" [anyFs]="'assets/images/provider.svg'"></app-img>
       </div>
       <div class="title">
-        {{order.deliveryAddress.name}}
+        {{order.deliveryAddress ? order.deliveryAddress.name : "Адрес не доступен"}}
       </div>
       <div class="location">
         <svg width="11" height="15" viewBox="0 0 11 15" fill="none" xmlns="http://www.w3.org/2000/svg">

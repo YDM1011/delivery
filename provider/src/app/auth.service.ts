@@ -21,8 +21,14 @@ export class AuthService {
   private language = new BehaviorSubject<any>(null);
   public onLanguage = this.language.asObservable();
 
+  private wsOrder = new BehaviorSubject<any>(null);
+  public onWsOrder = this.wsOrder.asObservable();
+
   constructor() { }
 
+  setWsOrder(data) {
+    this.wsOrder.next(data);
+  }
   setSettings(data) {
       this.settings.next(data);
   }

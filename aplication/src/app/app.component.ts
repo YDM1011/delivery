@@ -30,7 +30,7 @@ export class AppComponent {
         this.crud.get('setting').then((v: any) => {
           this.setting = Object.assign({}, v);
           this.auth.setSettings(this.setting);
-          if (this.setting.city){
+          if (this.setting.city) {
             this.auth.setCity(this.setting.city);
           }
           this.loaded = true;

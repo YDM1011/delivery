@@ -22,6 +22,11 @@ export class OrdersComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.auth.onWsOrder.subscribe((ws: any) => {
+      if (ws) {
+        console.log(ws);
+      }
+    });
     this.auth.onMe.subscribe((me: any) => {
       if (!me) {return; }
       this.user = me;

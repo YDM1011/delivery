@@ -27,16 +27,19 @@
 									</div>
 								</div>
 								<div class="row-f" [routerLink]="'/orders-detail/' + item._id" *ngFor="let item of orders; let i = index">
-									<div class="name col-f" [matTooltip]="item.deliveryAddress.name">
+									<div class="name col-f" [matTooltip]="item.deliveryAddress ? item.deliveryAddress.name : 'Название не извесно'">
 										<div class="img">
 											<img src="./assets/images/user.svg" alt="">
 										</div>
 									</div>
-									<div class="address col-f">
+									<div class="address col-f" *ngIf="item.deliveryAddress">
 										{{item.deliveryAddress.city.name}},
 										ул. {{item.deliveryAddress.street}}
 										Дом {{item.deliveryAddress.build}}
 										Квартира {{item.deliveryAddress.department}}
+									</div>
+									<div class="address col-f" *ngIf="!item.deliveryAddress">
+										Адресс не доступен
 									</div>
 									<div class="price col-f">
 										{{item.totalPrice}} Грн.
@@ -96,16 +99,19 @@
 									</div>
 								</div>
 								<div class="row-f" [routerLink]="'/orders-detail/' + item._id" *ngFor="let item of orders; let i = index">
-									<div class="name col-f" [matTooltip]="item.deliveryAddress.name">
+									<div class="name col-f" [matTooltip]="item.deliveryAddress ? item.deliveryAddress.name : 'Название не извесно'">
 										<div class="img">
 											<img src="./assets/images/user.svg" alt="">
 										</div>
 									</div>
-									<div class="address col-f">
+									<div class="address col-f" *ngIf="item.deliveryAddress">
 										{{item.deliveryAddress.city.name}},
 										ул. {{item.deliveryAddress.street}}
 										Дом {{item.deliveryAddress.build}}
 										Квартира {{item.deliveryAddress.department}}
+									</div>
+									<div class="address col-f" *ngIf="!item.deliveryAddress">
+										Адресс не доступен
 									</div>
 									<div class="price col-f">
 										{{item.totalPrice}} Грн.
@@ -160,16 +166,19 @@
 									</div>
 								</div>
 								<div class="row-f" [routerLink]="'/orders-detail/' + item._id" *ngFor="let item of orders; let i = index">
-									<div class="name col-f" [matTooltip]="item.deliveryAddress.name">
+									<div class="name col-f" [matTooltip]="item.deliveryAddress ? item.deliveryAddress.name : 'Название не извесно'">
 										<div class="img">
 											<img src="./assets/images/user.svg" alt="">
 										</div>
 									</div>
-									<div class="address col-f">
+									<div class="address col-f" *ngIf="item.deliveryAddress">
 										{{item.deliveryAddress.city.name}},
 										ул. {{item.deliveryAddress.street}}
 										Дом {{item.deliveryAddress.build}}
 										Квартира {{item.deliveryAddress.department}}
+									</div>
+									<div class="address col-f" *ngIf="!item.deliveryAddress">
+										Адресс не доступен
 									</div>
 									<div class="price col-f">
 										{{item.totalPrice}} Грн.
@@ -224,16 +233,19 @@
 									</div>
 								</div>
 								<div class="row-f" [routerLink]="'/orders-detail/' + item._id" *ngFor="let item of orders; let i = index">
-									<div class="name col-f" [matTooltip]="item.deliveryAddress.name">
+									<div class="name col-f" [matTooltip]="item.deliveryAddress ? item.deliveryAddress.name : 'Название не извесно'">
 										<div class="img">
 											<img src="./assets/images/user.svg" alt="">
 										</div>
 									</div>
-									<div class="address col-f">
+									<div class="address col-f" *ngIf="item.deliveryAddress">
 										{{item.deliveryAddress.city.name}},
 										ул. {{item.deliveryAddress.street}}
 										Дом {{item.deliveryAddress.build}}
 										Квартира {{item.deliveryAddress.department}}
+									</div>
+									<div class="address col-f" *ngIf="!item.deliveryAddress">
+										Адресс не доступен
 									</div>
 									<div class="price col-f">
 										{{item.totalPrice}} Грн.

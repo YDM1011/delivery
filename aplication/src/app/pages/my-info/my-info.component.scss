@@ -13,9 +13,16 @@
   align-items: center;
   flex-direction: column;
   .img{
-    img{
-
-    }
+    flex: 1 1;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-bottom: 5px;
+  }
+  .replace{
+    margin-top: 3px;
+    text-decoration: underline;
   }
   .add-photo{
     color: #09C2C2;
