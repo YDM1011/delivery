@@ -29,7 +29,7 @@ export class OrdersItemComponent implements OnInit {
     if (this.getProducts.length > 0) {
       return;
     } else {
-      this.crud.get(`product?query={"createdBy":"${this.order.createdBy}"}&populate=[{"path":"orderOwner","select":"price name img discount"}]`).then((v: any) => {
+      this.crud.get(`product?query={"basketOwner":"${this.order._id}"}&populate=[{"path":"orderOwner","select":"price name img discount"}]`).then((v: any) => {
         if (v) {
           this.getProducts = v;
           this.order.products = this.getProducts;
