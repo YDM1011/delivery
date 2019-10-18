@@ -14,7 +14,7 @@ export class ApiInterceptor implements HttpInterceptor {
     // intercept request and add token
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         // modify request
-      console.log(this.localStorage.getItem('token'));
+      // console.log(this.localStorage.getItem('token'));
         if (this.localStorage.getItem('token')) {
           this.obj = {
             setHeaders: {

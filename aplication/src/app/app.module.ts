@@ -86,6 +86,8 @@ import { ShowProviderCategoryComponent } from './components/show-provider-catego
 import { LoadingComponent } from './components/loading/loading.component';
 import { ShowProviderBrandsComponent } from './components/show-provider-brands/show-provider-brands.component';
 import { BackBtnComponent } from './components/back-btn/back-btn.component';
+import {ScrollingModule} from "@angular/cdk/scrolling";
+import { ScrollUpdateDirective } from './directives/scroll-update.directive';
 
 @NgModule({
   declarations: [
@@ -154,8 +156,10 @@ import { BackBtnComponent } from './components/back-btn/back-btn.component';
     LoadingComponent,
     ShowProviderBrandsComponent,
     BackBtnComponent,
+    ScrollUpdateDirective,
   ],
   imports: [
+    ScrollingModule,
     Ng5SliderModule,
     MatIconModule,
     MatTooltipModule,
