@@ -23,6 +23,7 @@ const init = (app, config) =>{
     app.use(compress());
     app.use(flash());
     app.use('/upload', express.static(path.join(__dirname, '../../upload')));
+    app.use('/', express.static('../../../admin/dist/admin'));
     app.use('/', express.static(config.root + 'public'));
 
     app.use(methodOverride());
