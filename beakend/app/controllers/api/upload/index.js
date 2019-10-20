@@ -5,12 +5,10 @@ const path = require('path');
 module.exports = (backendApp, router) => {
     router.post('/upload', [], function (req, res, next) {
         let form = new IncomingForm();
-        let fileBody;
         form.on('file', (field, file) => {
-            fileBody = file
+            res.ok(file);
         });
         form.parse(req);
-
         // let form = new IncomingForm();
         // let readStream, createStream, fileName;
         // form.on('file', (field, file) => {
@@ -19,18 +17,17 @@ module.exports = (backendApp, router) => {
         //     createStream = fs.createWriteStream(path.join(__dirname, '../../../../upload/'+fileName));
         //     readStream.pipe(createStream);
         // });
-        form.on('end', (e) => {
-            res.ok(fileBody);
-        });
+        // form.on('end', (e) => {
+        //     res.ok({file: fileName});
+        // });
         // form.parse(req);
     });
-    router.post('/upload2', [], async (req, res, next) => {
-        let file = await backendApp.service.upload(req.body.body, backendApp).catch(e=>{
-            return res.serverError(e)
-        });
-
-        res.ok({file:file})
-        process.nextTick()
+    router.post('/upload2', [], function (req, res, next) {
+        backendApp.service.upload(req.body.body, backendApp).then(v=>{
+            setTimeout(()=>{
+                res.ok({file:v})
+            },1000)
+        })
     });
     router.post('/deleteFile', [], function (req, res, next) {
         const mainName = req.body.file;

@@ -20,9 +20,7 @@ module.exports = (reqFile, backendApp) => {
             .pipe(createStream);
 
         readStream.on('end', ()=>{
-            readStream.close();
-            setTimeout(()=>{rs(fileName)},100)
-
+            rs(fileName)
         })
     });
 };
