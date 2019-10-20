@@ -53,24 +53,26 @@ export class CityComponent implements OnInit {
         Swal.fire('Error', 'Картинка города не может быть пуста', 'error').then();
         return;
     }
-    this.crud.post('upload2', {body: this.uploadObj}, null, false).then((v: any) => {
-      if (!v) {return; }
-      this.addShow = false;
-      this.city['img'] = v.file;
-      this.crud.post('city', this.city).then((v: any) => {
-        if (v) {
-          this.citys.push(v);
-          this.uploadObj = {};
-          this.city = {
-            img: '',
-            name: ''
-          };
-          this.crud.get('city/count').then((count: any) => {
-            if (!count) {return; }
-            this.lengthPagination = count.count;
-          });
-        }
-      });
+    // this.crud.post('upload2', {body: this.uploadObj}, null, false).then((v: any) => {
+    //   if (!v) {return; }
+    //
+    //   this.city['img'] = v.file;
+    //
+    // });
+    this.crud.post('city', this.city).then((v: any) => {
+      if (v) {
+        this.addShow = false;
+        this.citys.push(v);
+        this.uploadObj = {};
+        this.city = {
+          img: '',
+          name: ''
+        };
+        this.crud.get('city/count').then((count: any) => {
+          if (!count) {return; }
+          this.lengthPagination = count.count;
+        });
+      }
     });
   }
 
@@ -86,13 +88,13 @@ export class CityComponent implements OnInit {
     });
   }
   onFs(e) {
-    this.uploadObj = e;
-    this.city.img = e.name;
+    // this.uploadObj = e;
+    this.city.img = e.file;
   }
 
   onFsEdit(e) {
-    this.uploadObj = e;
-    this.editObjCopy.img = e.name;
+    // this.uploadObj = e;
+    this.editObjCopy.img = e.file;
     this.formCheck();
   }
   edit(i) {
