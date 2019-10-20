@@ -25,10 +25,11 @@ const init = (app, config) =>{
     app.use('/upload', express.static(path.join(__dirname, '../../upload')));
     // app.use('/', express.static('../../../admin/dist/admin'));
     // app.use('/', express.static(config.root + 'public'));
-    app.use('/', express.static(path.join(__dirname, '../../../aplication/dist/application')));
     app.use('/', express.static(path.join(__dirname, '../../../admin/dist/admin')));
+    app.use('/', express.static(path.join(__dirname, '../../../aplication/dist/application')));
+
     app.use('/', express.static(path.join(__dirname, '../../../provider/dist/provider')));
-    
+
     app.use(methodOverride());
     app.use(function (req, res, next) {
         if (req.query.accessToken) {
