@@ -9,8 +9,8 @@ module.exports = (backendApp, router) => {
         let readStream, createStream, fileName;
         form.on('file', (field, file) => {
 
-            readStream = fs.createReadStream(reqFile.path);
-            fileName = new Date().getTime() + '--' + reqFile.name;
+            readStream = fs.createReadStream(file.path);
+            fileName = new Date().getTime() + '--' + file.name;
             createStream = fs.createWriteStream(path.join(__dirname, '../../../upload/'+fileName));
             const roundedCornerResizer =
                 sharp()
