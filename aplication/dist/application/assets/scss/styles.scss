@@ -5,7 +5,6 @@
 *{
   box-sizing: border-box;
   outline: none;
-  color: #1C1C1C;
 }
 input, textarea{
   -moz-appearance: none;
@@ -28,6 +27,7 @@ body{
   height: 100%;
   scroll-behavior: smooth;
   overflow-x: hidden;
+  color: #1C1C1C;
 }
 //@media screen and (min-width: 320px) and (max-width: 767px) and (orientation: landscape) {
 //   html{

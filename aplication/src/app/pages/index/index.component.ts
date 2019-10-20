@@ -15,7 +15,7 @@ export class IndexComponent implements OnInit, OnDestroy {
   public notification$: any;
   public companyArr: any;
   public language: string;
-  public curentCity = {};
+  public curentCity:any = {};
   public category = [];
   public brandy = [];
   public topCompany = [];
