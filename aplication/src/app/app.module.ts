@@ -62,7 +62,7 @@ import { NumbersOnlyDirective } from './directives/numbers-only.directive';
 import {MatCarouselModule} from "@ngmodule/material-carousel";
 import { RemoveOrdersComponent } from './components/remove-orders/remove-orders.component';
 import {StarRatingComponent} from "./components/star-rating/star-rating.component";
-import {MatIcon, MatIconModule, MatSnackBar, MatTooltipModule} from "@angular/material";
+import {MatIconModule, MatTooltipModule} from "@angular/material";
 import { FilterComponent } from './components/filter/filter.component';
 import {Ng5SliderModule} from "ng5-slider";
 import {HttpClientModule} from "@angular/common/http";
@@ -177,7 +177,7 @@ import { ScrollUpdateDirective } from './directives/scroll-update.directive';
     WebsocketModule.config({
       url: environment.ws
     }),
-    // ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
+
   ],
   entryComponents: [
     DialogComponent,
@@ -188,3 +188,4 @@ import { ScrollUpdateDirective } from './directives/scroll-update.directive';
 })
 export class AppModule { }
 //
+// ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
