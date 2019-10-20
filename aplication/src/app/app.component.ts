@@ -20,7 +20,7 @@ export class AppComponent {
 
   constructor(
     private swPush: SwPush,
-    private webNotificationService: WebNotificationService,
+    // private webNotificationService: WebNotificationService,
       private auth: AuthService,
       private crud: CrudService
   ) {
@@ -45,10 +45,10 @@ export class AppComponent {
       }
     });
 
-    try {
-      this.webNotificationService.subscribeToNotification();
-    } catch (e) {
-    }
+    // try {
+    //   this.webNotificationService.subscribeToNotification();
+    // } catch (e) {
+    // }
 
   }
 }

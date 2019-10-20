@@ -69,7 +69,6 @@ import {HttpClientModule} from "@angular/common/http";
 import {WebsocketModule} from './websocket';
 import {environment} from "../environments/environment";
 import { BrandItemComponent } from './components/brand-item/brand-item.component';
-import {ServiceWorkerModule} from "@angular/service-worker";
 import { BrandsIDComponent } from './pages/brands-id/brands-id.component';
 import { WorkTimeComponent } from './components/work-time/work-time.component';
 import { PopupDirective } from './directives/popup.directive';
@@ -178,7 +177,7 @@ import { ScrollUpdateDirective } from './directives/scroll-update.directive';
     WebsocketModule.config({
       url: environment.ws
     }),
-    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
+    // ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   entryComponents: [
     DialogComponent,
