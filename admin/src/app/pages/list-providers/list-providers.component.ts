@@ -46,7 +46,7 @@ export class ListProvidersComponent implements OnInit {
       }
     });
     this.crud.get('city').then((c: any) => {
-      if (c) {
+      if (c && c.length > 0) {
         this.city = c;
         this.company.city = this.city[0]._id;
       }
