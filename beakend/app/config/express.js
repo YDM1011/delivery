@@ -23,8 +23,8 @@ const init = (app, config) =>{
     app.use(compress());
     app.use(flash());
     app.use('/upload', express.static(path.join(__dirname, '../../upload')));
-    app.use('/', express.static('../../../admin/dist/admin'));
-    app.use('/', express.static(config.root + 'public'));
+    // app.use('/', express.static('../../../admin/dist/admin'));
+    // app.use('/', express.static(config.root + 'public'));
 
     app.use(methodOverride());
     app.use(function (req, res, next) {
@@ -83,6 +83,7 @@ const init = (app, config) =>{
 
     app.get("/", (req, res, next) => {
         const host = req.hostname;
+        console.log("host:", host);
         switch (host.split('.')[0]) {
             case 'client':
                 res.status(200);
