@@ -5,9 +5,9 @@ const path = require('path');
 module.exports = (backendApp, router) => {
     router.post('/upload', [], function (req, res, next) {
         let form = new IncomingForm();
+        let fileBody;
         form.on('file', (field, file) => {
-            res.ok(file);
-            delete form
+            fileBody = file
         });
         form.parse(req);
 
@@ -19,9 +19,9 @@ module.exports = (backendApp, router) => {
         //     createStream = fs.createWriteStream(path.join(__dirname, '../../../../upload/'+fileName));
         //     readStream.pipe(createStream);
         // });
-        // form.on('end', (e) => {
-        //     res.ok({file: fileName});
-        // });
+        form.on('end', (e) => {
+            res.ok(fileBody);
+        });
         // form.parse(req);
     });
     router.post('/upload2', [], async (req, res, next) => {
