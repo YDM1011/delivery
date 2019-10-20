@@ -25,6 +25,8 @@ module.exports = (backendApp, router) => {
     router.post('/upload2', [], function (req, res, next) {
         backendApp.service.upload(req.body.body, backendApp).then(v=>{
             res.ok({file:v})
+        }).catch(e=>{
+            res.serverError(e)
         })
     });
     router.post('/deleteFile', [], function (req, res, next) {

@@ -4,9 +4,8 @@ const path = require('path');
 const sharp = require('sharp');
 
 module.exports = (body, backendApp) => {
-    const reqFile = body;
-    console.log(reqFile);
     return new Promise((rs,rj)=>{
+        const reqFile = body;
         let readStream, createStream, fileName;
         readStream = fs.createReadStream(reqFile.path);
         fileName = new Date().getTime() + '--' + reqFile.name;
@@ -22,8 +21,8 @@ module.exports = (body, backendApp) => {
             .pipe(createStream);
 
         readStream.on('end', ()=>{
+            readStream.close();
             rs(fileName)
-
         })
     });
 };
