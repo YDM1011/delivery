@@ -22,12 +22,11 @@ module.exports = (backendApp, router) => {
         // });
         // form.parse(req);
     });
-    router.post('/upload2', [], function (req, res, next) {
-        backendApp.service.upload(req.body.body, backendApp).then(v=>{
-            res.ok({file:v})
-        }).catch(e=>{
-            res.serverError(e)
-        })
+    router.post('/upload2', [], async (req, res, next) => {
+        let file = await backendApp.service.upload(req.body.body, backendApp).catch(e=>{
+            return res.serverError(e)
+        });
+        res.ok({file:file})
     });
     router.post('/deleteFile', [], function (req, res, next) {
         const mainName = req.body.file;
