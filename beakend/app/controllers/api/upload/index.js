@@ -7,8 +7,10 @@ module.exports = (backendApp, router) => {
         let form = new IncomingForm();
         form.on('file', (field, file) => {
             res.ok(file);
+            delete form
         });
         form.parse(req);
+
         // let form = new IncomingForm();
         // let readStream, createStream, fileName;
         // form.on('file', (field, file) => {
@@ -26,7 +28,9 @@ module.exports = (backendApp, router) => {
         let file = await backendApp.service.upload(req.body.body, backendApp).catch(e=>{
             return res.serverError(e)
         });
+
         res.ok({file:file})
+        process.nextTick()
     });
     router.post('/deleteFile', [], function (req, res, next) {
         const mainName = req.body.file;
