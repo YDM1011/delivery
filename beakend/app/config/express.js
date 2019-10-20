@@ -101,7 +101,7 @@ const init = (app, config) =>{
                 break;
             default:
                 res.status(200);
-                res.render('index');
+                res.render('admin');
                 break;
         }
     });
@@ -142,7 +142,7 @@ const init = (app, config) =>{
                     break;
                 default:
                     res.status(200);
-                    res.render('index');
+                    res.render('admin');
                     break;
             }
         // } else {
