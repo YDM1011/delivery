@@ -50,9 +50,7 @@ export class MyInfoComponent implements OnInit {
     setTimeout(() => {
       this.me.img = body.file;
     }, 0);
-    this.save(null);
   }
-
 
   save(e) {
     e.preventDefault();
@@ -62,6 +60,5 @@ export class MyInfoComponent implements OnInit {
   }
   replace() {
     this.me.img = '';
-
   }
 }
