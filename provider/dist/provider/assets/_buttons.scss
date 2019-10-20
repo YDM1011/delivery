@@ -1,0 +1,122 @@
+.main-button, .main-button-color{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  color: #748AA1;
+  border: 1px solid #748AA1;
+  border-radius: 8px;
+  font-weight: 600;
+  width: 150px;
+  height: 40px;
+  cursor: pointer;
+  line-height: normal;
+}
+
+.main-button-color{
+  background: #009688;
+  color: #FFFFFF;
+  border: 1px solid #009688;
+}
+
+.button-add{
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  position: relative;
+  color: #009688;
+  background: #fff;
+  font-weight: normal;
+  border: 0;
+  cursor: pointer;
+  width: max-content;
+  &:before{
+    content: '+';
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 0px;
+    left: -10px;
+    width: 15px;
+    height: 15px;
+    padding: 0;
+    line-height: normal;
+    text-align: center;
+    background: #009688;
+    color: #fff;
+    border-radius: 50%;
+  }
+  .content{
+    margin-left: 10px;
+  }
+}
+
+.mat-chip-file{
+  display: inline-flex;
+  align-items: center;
+  max-width: 186px;
+  padding: 5px;
+  border: 1px solid #B8C5D3;
+  border-radius: 15px;
+  color: #748AA1;
+  background: #fff!important;
+  .content{
+    font-size: 16px;
+    line-height: 20px;
+    max-width: 140px;
+    white-space: nowrap; /* Отменяем перенос текста */
+    overflow: hidden; /* Обрезаем содержимое */
+    padding: 0 5px; /* Поля */
+    text-overflow: ellipsis;
+  }
+  .remove-mat-chip{
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    border-radius: 50%;
+    border: 1px solid #E21B1B;
+    width: 17px;
+    height: 17px;
+    padding: 0;
+    background: #fff;
+    cursor: pointer;
+    &:before{
+      content: '';
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: absolute;
+      height: 5px;
+      width: 5px;
+      color: #E21B1B;
+      background: url(./assets/images/remove-chip.svg) no-repeat;
+      background-size: cover;
+    }
+  }
+}
+.trash-btn{
+  display:block;
+  width: 20px;
+  height: 20px;
+  background: url(./assets/images/trash.svg) no-repeat;
+  background-size: contain;
+  cursor: pointer;
+}
+.edit-btn{
+  display:block;
+  width: 20px;
+  height: 20px;
+  background: url(./assets/images/edit.svg) no-repeat;
+  background-size: contain;
+  cursor: pointer;
+}
+.link-btn{
+  display:block;
+  width: 20px;
+  height: 20px;
+  background: url(./assets/images/link.svg) no-repeat;
+  background-size: contain;
+  cursor: pointer;
+}
