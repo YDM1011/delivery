@@ -52,21 +52,21 @@ export class BrandsComponent implements OnInit {
       Swal.fire('Error', 'Картинка бренда не может быть пуста', 'error');
       return;
     }
-    this.crud.post('upload2', {body: this.uploadObj}).then((v: any) => {
-      if (!v) return;
-      this.brand['img'] = v.file;
-      this.crud.post('brand', this.brand).then((v: any) => {
-        if (v) {
-          this.brands.push(v);
-          this.uploadObj = {};
-          this.brand = {
-            img: '',
-            name: ''
-          };
-          this.addShow = false;
-        }
-      });
-    }).catch( e => console.log(e));
+    this.crud.post('brand', this.brand).then((v: any) => {
+      if (v) {
+        this.brands.unshift(v);
+        this.brand = {
+          img: '',
+          name: ''
+        };
+        this.addShow = false;
+      }
+    });
+    // this.crud.post('upload2', {body: this.uploadObj}).then((v: any) => {
+    //   if (!v) return;
+    //   this.brand['img'] = v.file;
+    //
+    // }).catch( e => console.log(e));
   }
 
   delete(i) {
@@ -82,8 +82,12 @@ export class BrandsComponent implements OnInit {
     });
   }
   onFs(e) {
-    this.uploadObj = e;
-    this.brand.img = e.name;
+    // this.uploadObj = e;
+    this.brand.img = e.file;
+  }
+  onFsEdit(e) {
+    // this.uploadObj = e;
+    this.editObjCopy.img = e.file;
   }
   edit(i) {
     this.editObj = Object.assign({}, this.brands[i]);
@@ -94,23 +98,6 @@ export class BrandsComponent implements OnInit {
     this.editShow = true;
   }
   confirmEdit() {
-    if (this.uploadObj && this.uploadObj['name']) {
-      this.crud.post('upload2', {body: this.uploadObj}, null, false).then((v: any) => {
-        if (!v) {return; }
-        this.editShow = false;
-        this.editObj.img = v.file;
-        this.editObjCopy.img = v.file;
-        this.confirmEditCityCrud();
-      });
-    } else {
-      this.confirmEditCityCrud();
-    }
-  }
-  onFsEdit(e) {
-    this.uploadObj = e;
-    this.editObjCopy.img = e.name;
-  }
-  confirmEditCityCrud() {
     this.editObjCopy.img = this.editObj.img;
     if (this.editObj.name === '') {
       Swal.fire('Error', 'Название бренда не может быть пустым', 'error').then();
@@ -134,7 +121,7 @@ export class BrandsComponent implements OnInit {
         };
         this.uploadObj = {};
       }
-    }).catch( e => console.log(e));
+    });
   }
 
   openAdd() {

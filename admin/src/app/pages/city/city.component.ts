@@ -62,8 +62,8 @@ export class CityComponent implements OnInit {
     this.crud.post('city', this.city).then((v: any) => {
       if (v) {
         this.addShow = false;
-        this.citys.push(v);
-        this.uploadObj = {};
+        this.citys.unshift(v);
+        // this.uploadObj = {};
         this.city = {
           img: '',
           name: ''
