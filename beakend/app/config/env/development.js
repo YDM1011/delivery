@@ -9,6 +9,7 @@ module.exports = {
   port: process.env.PORT || 3000,
   WSport: process.env.WS || 6760,
   db: 'mongodb://localhost:27017',
+  dbConnect: true,
   jwtSecret: process.env.JWTSECRET || "secret",
   email: {
       host: "smtp.mail.yahoo.com",

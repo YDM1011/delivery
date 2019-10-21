@@ -6,8 +6,14 @@ const glob = require('glob');
 const mongoose = require('mongoose');
 
 mongoose.Promise = global.Promise;
-
-mongoose.connect(config.db); //{ useNewUrlParser: true }
+if (config.dbConnect) {
+    mongoose.connect(config.db); //{ useNewUrlParser: true }
+} else {
+    mongoose.connect(config.db); //
+    mongoose.set('useNewUrlParser', true);
+    mongoose.set('useFindAndModify', false);
+    mongoose.set('useCreateIndex', true);
+}
 const db = mongoose.connection;
 db.on('error', function () {
     throw new Error('unable to connect to database at ' + config.db);
