@@ -9,7 +9,7 @@ module.exports = {
     port: process.env.PORT || 8000,
     WSport: process.env.WS || 6761,
     db: 'mongodb://localhost:27017/smart',
-    dbConnect: true,
+    dbConnect: false,
     jwtSecret: process.env.JWTSECRET || "secret",
     email: {
         host: "smtp.mail.yahoo.com",
