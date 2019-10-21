@@ -56,13 +56,12 @@ export class ActionComponent implements OnInit {
     this.auth.onMe.subscribe((v: any) => {
       if (!v) { return; }
       this.user = v;
-      if (this.user.companies && this.user.companies[0]) {
-        this.company = this.user.companies[0];
+        this.company = this.user.companyOwner;
         if (this.company) {
-          this.crud.get(`action/count?query={"companyOwner":"${this.company._id}"}`).then((c: any) => {
+          this.crud.get(`action/count?query={"companyOwner":"${this.company}"}`).then((c: any) => {
             if (c.count > 0) {
               this.lengthPagination = c.count;
-              this.crud.get(`action?query={"companyOwner":"${this.company._id}"}&populate={"path":"client"}&skip=0&limit=${this.pageSizePagination}`).then((a: any) => {
+              this.crud.get(`action?query={"companyOwner":"${this.company}"}&populate={"path":"client"}&skip=0&limit=${this.pageSizePagination}`).then((a: any) => {
                 if (a && a.length > 0) {
                   this.actions = a;
                   this.loading = true;
@@ -70,14 +69,13 @@ export class ActionComponent implements OnInit {
               });
             }
           });
-          this.crud.get(`order?query={"companyOwner":"${this.company._id}"}`).then((p: any) => {
+          this.crud.get(`order?query={"companyOwner":"${this.company}"}`).then((p: any) => {
             if (p && p.length > 0) {
               this.products = p;
               this.productChoose = this.products[0]._id;
             }
           });
         }
-      }
     });
   }
   removeUserChip(i) {
@@ -100,7 +98,7 @@ export class ActionComponent implements OnInit {
   create(e) {
     e.preventDefault();
     this.action.orderOwner = this.productChoose;
-    this.action.companyOwner = this.company._id;
+    this.action.companyOwner = this.company;
     if (!this.action.description) {
       Swal.fire('Error', 'Описание акции не может быть пустым', 'error');
       return;
@@ -117,39 +115,40 @@ export class ActionComponent implements OnInit {
       this.action.actionGlobal = false;
       this.action.client = this.userChoose;
     }
-    this.crud.post('upload2', {body : this.uploadObj}, null, false).then((u: any) => {
-      if (u) {
-        this.action.img = u.file;
-        this.crud.post('action', this.action).then((v: any) => {
-          if (v) {
-            this.actions.push(v);
-            this.user.companies[0].categories = this.actions;
-            this.crud.get(`action/count?query={"companyOwner":"${this.company._id}"}`).then((c: any) => {
-              if (c.count > 0) {
-                this.lengthPagination = c.count;
-              }
-            });
-            this.action = {
-              description: '',
-              img: '',
-              companyOwner: '',
-              orderOwner: '',
-              client: [],
-              actionGlobal: true,
-            };
-            this.productChoose = null;
-            this.addShow = false;
+    this.crud.post('action', this.action).then((v: any) => {
+      if (v) {
+        this.actions.unshift(v);
+        this.user.companies[0].categories = this.actions;
+        this.crud.get(`action/count?query={"companyOwner":"${this.company}"}`).then((c: any) => {
+          if (c.count > 0) {
+            this.lengthPagination = c.count;
           }
         });
+        this.action = {
+          description: '',
+          img: '',
+          companyOwner: '',
+          orderOwner: '',
+          client: [],
+          actionGlobal: true,
+        };
+        this.productChoose = null;
+        this.addShow = false;
       }
     });
+
+    // this.crud.post('upload2', {body : this.uploadObj}, null, false).then((u: any) => {
+    //   if (u) {
+    //     this.action.img = u.file;
+    //   }
+    // });
   }
 
   delete(i) {
     this.crud.delete('action', this.actions[i]._id).then((v: any) => {
       if (v) {
         this.actions.splice(i, 1);
-        this.crud.get(`action/count?query={"companyOwner":"${this.company._id}"}`).then((c: any) => {
+        this.crud.get(`action/count?query={"companyOwner":"${this.company}"}`).then((c: any) => {
           if (c.count > 0) {
             this.lengthPagination = c.count;
           }
@@ -217,13 +216,13 @@ export class ActionComponent implements OnInit {
     this.isBlok = is;
   }
   onFsEdit(e) {
-    this.uploadObj = e;
-    this.editObj.img = e.name;
+    // this.uploadObj = e;
+    this.editObj.img = e.file;
     this.formCheck();
   }
   onFs(e) {
-    this.uploadObj = e;
-    this.action.img = e.name;
+    // this.uploadObj = e;
+    this.action.img = e.file;
   }
   formCheck() {
     this.btnBlok(this.validate());
@@ -279,7 +278,7 @@ export class ActionComponent implements OnInit {
   }
   outputSearch(e) {
     if (!e) {
-      this.crud.get(`action?query={"companyOwner":"${this.company._id}"}&populate={"path":"client"}&skip=0&limit=${this.pageSizePagination}`).then((a: any) => {
+      this.crud.get(`action?query={"companyOwner":"${this.company}"}&populate={"path":"client"}&skip=0&limit=${this.pageSizePagination}`).then((a: any) => {
         if (a && a.length > 0) {
           this.actions = a;
         }
@@ -289,7 +288,7 @@ export class ActionComponent implements OnInit {
     }
   }
   pageEvent(e) {
-    this.crud.get(`action?query={"companyOwner":"${this.company._id}"}&populate={"path":"client"}&skip=${e.pageIndex  * e.pageSize}&limit=${e.pageSize}`).then((c: any) => {
+    this.crud.get(`action?query={"companyOwner":"${this.company}"}&populate={"path":"client"}&skip=${e.pageIndex  * e.pageSize}&limit=${e.pageSize}`).then((c: any) => {
       if (!c) {
         return;
       }
