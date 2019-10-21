@@ -45,38 +45,39 @@ export class CategoryComponent implements OnInit {
     });
   }
   onFs(e) {
-    this.uploadObj = e;
-    this.category.img = e.name;
+    // this.uploadObj = e;
+    this.category.img = e.file;
   }
   onFsEdit(e) {
-    this.uploadObj = e;
-    this.editObjCopy.img = e.name;
+    // this.uploadObj = e;
+    this.editObjCopy.img = e.file;
     this.formCheck();
   }
   create() {
-    if (this.category.name === '' || !this.category.img) {
+    if (!this.category.name || !this.category.img) {
       Swal.fire('Error', 'Все поля должны быть заполнены', 'error').then();
       return;
     }
-    this.crud.post('upload2', {body: this.uploadObj}, null, false).then((v: any) => {
-      if (!v) {return; }
-      this.category.img = v.file;
-      this.crud.post('mainCategory', this.category).then((v: any) => {
-        if (v) {
-          this.categorys.push(v);
-          this.addShow = false;
-          this.crud.get('mainCategory/count').then((count: any) => {
-            if (!count) {return; }
-            this.lengthPagination = count.count;
-          });
-          this.uploadObj = {};
-          this.category = {
-            name: '',
-            img: ''
-          };
-        }
-      });
+    this.crud.post('mainCategory', this.category).then((v: any) => {
+      if (v) {
+        this.categorys.unshift(v);
+        this.addShow = false;
+        this.crud.get('mainCategory/count').then((count: any) => {
+          if (!count) {return; }
+          this.lengthPagination = count.count;
+        });
+        // this.uploadObj = {};
+        this.category = {
+          name: '',
+          img: ''
+        };
+      }
     });
+    // this.crud.post('upload2', {body: this.uploadObj}, null, false).then((v: any) => {
+    //   if (!v) {return; }
+    //   this.category.img = v.file;
+    //
+    // });
   }
 
   delete(i) {
@@ -107,17 +108,7 @@ export class CategoryComponent implements OnInit {
       Swal.fire('Error', 'Картинка категории не может быть пуста', 'error').then();
       return;
     }
-    if (this.uploadObj && this.uploadObj['name']) {
-      this.crud.post('upload2', {body: this.uploadObj}, null, false).then((v: any) => {
-        if (!v) {return; }
-        this.editObj.img = v.file;
-        this.editObjCopy.img = v.file;
-        this.editShow = false;
-        this.confirmEditCategoryCrud();
-      });
-    } else {
-      this.confirmEditCategoryCrud();
-    }
+    this.confirmEditCategoryCrud();
   }
   confirmEditCategoryCrud() {
     this.crud.post('mainCategory', this.editObjCopy, this.editObj['_id']).then((v: any) => {
