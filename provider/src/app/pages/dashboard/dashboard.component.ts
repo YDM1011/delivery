@@ -9,14 +9,16 @@ import {AuthService} from '../../auth.service';
 })
 export class DashboardComponent implements OnInit {
   public user;
+  public loading: boolean = false;
   constructor(
       private crud: CrudService,
       private auth: AuthService
   ) { }
 
   ngOnInit() {
+    this.loading = true;
     this.auth.onMe.subscribe((v: any) => {
-      if(!v) return;
+      if (!v) {return; }
       this.user = Object.assign({}, v);
     });
   }
