@@ -11,7 +11,7 @@ module.exports = (backendApp, router) => {
 
             readStream = fs.createReadStream(file.path);
             fileName = new Date().getTime() + '--' + file.name;
-            createStream = fs.createWriteStream(path.join(__dirname, '../../../upload/'+fileName));
+            createStream = fs.createWriteStream(path.join(__dirname, '../../../../upload/'+fileName));
             const roundedCornerResizer =
                 sharp()
                     .resize(500)
