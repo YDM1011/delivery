@@ -9,7 +9,7 @@ mongoose.Promise = global.Promise;
 if (config.dbConnect) {
     mongoose.connect(config.db); //{ useNewUrlParser: true }
 } else {
-    mongoose.connect(config.db); //
+    mongoose.connect(config.db, { useNewUrlParser: true }); //
     mongoose.set('useNewUrlParser', true);
     mongoose.set('useFindAndModify', false);
     mongoose.set('useCreateIndex', true);
