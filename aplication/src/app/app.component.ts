@@ -45,10 +45,5 @@ export class AppComponent {
       }
     });
 
-    // try {
-    //   this.webNotificationService.subscribeToNotification();
-    // } catch (e) {
-    // }
-
   }
 }
