@@ -9,7 +9,7 @@
       <app-img [dir]="'avatar'" [fs]="me.img" [anyFs]="'assets/images/user.svg'"></app-img>
     </div>
     <span class="replace" (click)="replace()" *ngIf="me.img">Изменить</span>
-    <app-upload (onCrop)="onFs($event)" [cropper]="true" [dir]="'avatar'" *ngIf="!me.img"></app-upload>
+    <app-upload (onCrop)="onFs($event)"  [dir]="'avatar'" *ngIf="!me.img"></app-upload>
     <p>{{data.article[language]}}</p>
     <form class="form" (submit)="save($event)">
       <input type="text" placeholder="ФИО" [(ngModel)]="me.name" name="name">

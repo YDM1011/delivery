@@ -51,22 +51,17 @@ export class SettingsComponent implements OnInit {
     });
   }
   create() {
-    if (this.company.img === this.companyCopy.img) {
-      delete  this.companyCopy.img;
-      this.crud.post('company', this.companyCopy, this.company._id).then((v: any) => {
-        this.user.companies[0] = v;
-        this.company = v;
-        this.auth.setMe(this.user);
-        this.formCheck();
-      });
-    } else {
-      this.crud.post('company', this.company, this.company._id).then((v: any) => {
-        this.user.companies[0] = v;
-        this.company = v;
-        this.companyCopy.img = v.img.split('--')[1];
-        this.auth.setMe(this.user);
-      });
+    if (this.companyCopy.img === '') {
+      Swal.fire('Error', 'Заполните поле с картинкой', 'error').then();
+      return;
     }
+    this.crud.post('company', this.company, this.company._id).then((v: any) => {
+      this.user.companies[0] = v;
+      this.company = v;
+      this.companyCopy.img = v.img.split('--')[1];
+      this.auth.setMe(this.user);
+      this.isBlok = false;
+    });
   }
   onFs(e) {
     this.company.img = e.file;

@@ -48,7 +48,7 @@ export class CategoryComponent implements OnInit {
     this.auth.onMe.subscribe((v: any) => {
       if (!v) { return; }
       this.user = v;
-      if (this.user.companies[0] && this.user.companies[0].categories.length > 0) {
+      if (this.user.companies[0]) {
         this.crud.get(`category/count?query={"companyOwner": "${this.user.companies[0]._id}"}`).then((count: any) => {
           if (count) {
             this.lengthPagination = count.count;
@@ -78,7 +78,7 @@ export class CategoryComponent implements OnInit {
     this.category.companyOwner = this.user.companies[0]._id;
     this.crud.post('category', this.category).then((v: any) => {
       if (v) {
-        this.categorys.push(v);
+        this.categorys.unshift(v);
         this.category = {
           name: '',
           companyOwner: '',

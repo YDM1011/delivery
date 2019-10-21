@@ -8,8 +8,8 @@
 				Создать Продукт
 			</div>
 		</div>
-		<app-add-product *ngIf="products.length > 0" (outputNew)="newProduct($event)" [brands]="brands" (cancelAdd)="cancelAdd($event)"></app-add-product>
-		<div *ngIf="products.length === 0 && categorys && categorys.length === 0" class="nocategory">
+		<app-add-product *ngIf="categorys.length > 0" (outputNew)="newProduct($event)" [brands]="brands" [categorys]="categorys" (cancelAdd)="cancelAdd($event)"></app-add-product>
+		<div *ngIf="categorys && categorys.length === 0" class="nocategory">
 			У вас нет категорий, создайте категорию тогда вы сможете создать продукт
 		</div>
 	</div>

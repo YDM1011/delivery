@@ -10,13 +10,13 @@ import Swal from 'sweetalert2';
 })
 export class AddProductComponent implements OnInit {
   @Input() brands;
+  @Input() categorys;
   @Output() outputNew = new EventEmitter();
   @Output() cancelAdd = new EventEmitter();
   public user;
   public mainCategoryChoose;
   public mainChooseBrand;
   public uploadObj;
-  public categorys = [];
     public product = {
     name: '',
     des: '',
