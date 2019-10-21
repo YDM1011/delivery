@@ -1,3 +1,6 @@
+<ng-container *ngIf="!loading">
+	<app-loading></app-loading>
+</ng-container>
 <div class="contain" *ngIf="basket">
 	<div class="contain__group">
 		<div class="contain__group-header">
@@ -38,10 +41,15 @@
 						Адресс доставки:
 					</div>
 					<div class="content">
-						{{basket.deliveryAddress.city.name}},
-						ул. {{basket.deliveryAddress.street}}
-						Дом {{basket.deliveryAddress.build}}
-						Квартира {{basket.deliveryAddress.department}}
+						<ng-container *ngIf="basket.deliveryAddress">
+							{{basket.deliveryAddress.city.name}},
+							ул. {{basket.deliveryAddress.street}}
+							Дом {{basket.deliveryAddress.build}}
+							Квартира {{basket.deliveryAddress.department}}
+						</ng-container>
+						<ng-container *ngIf="!basket.deliveryAddress">
+							Адресс не доступен
+						</ng-container>
 					</div>
 				</div>
 				<div class="info-item info-address">

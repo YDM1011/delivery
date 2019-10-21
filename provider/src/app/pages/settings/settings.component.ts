@@ -17,6 +17,7 @@ export class SettingsComponent implements OnInit {
   public uploadObj;
   public cityChoose;
   public isBlok: boolean = false;
+  public loading: boolean = false;
 
   constructor(
       private crud: CrudService,
@@ -27,20 +28,26 @@ export class SettingsComponent implements OnInit {
     this.auth.onMe.subscribe((v: any) => {
       if (!v) {return; }
       this.user = Object.assign({}, v);
-      this.user.companies[0].img = this.user.companies[0].img ? this.user.companies[0].img.split("--")[1] : '';
-      this.company = this.user.companies[0];
-      this.companyCopy = Object.assign({}, this.user.companies[0]);
-      if (!this.company.city) {
-        this.company['city'] = null;
-        this.companyCopy['city'] = '';
-        return;
-      }
-      this.cityChoose = this.company.city;
-      this.cityChoose = this.company.city;
-    });
-    this.crud.get('city').then((v: any) => {
-      if (!v) {return; }
-      this.city = v;
+      // this.user.companies[0].img = this.user.companies[0].img ? this.user.companies[0].img.split("--")[1] : '';
+      this.companyId = this.user.companyOwner;
+      this.crud.get('city').then((v: any) => {
+        if (!v) {return; }
+        this.city = v;
+      });
+      this.crud.get('company', this.companyId).then((c: any) => {
+        if (c) {
+          this.company = c;
+          this.companyCopy = Object.assign({}, this.company);
+          this.companyCopy.img = this.companyCopy.img ? this.companyCopy.img.split('--')[1] : null;
+          if (this.company.city) {
+            this.cityChoose = this.company.city;
+          }  else {
+              this.company['city'] = null;
+              this.companyCopy['city'] = null;
+          }
+          this.loading = true;
+        }
+      });
     });
   }
   create() {
@@ -48,34 +55,22 @@ export class SettingsComponent implements OnInit {
       delete  this.companyCopy.img;
       this.crud.post('company', this.companyCopy, this.company._id).then((v: any) => {
         this.user.companies[0] = v;
-        this.company = this.user.companies[0];
+        this.company = v;
         this.auth.setMe(this.user);
         this.formCheck();
       });
     } else {
-      if (!this.uploadObj) {
-        Swal.fire('Error', 'Поле с картинкой не может быть пустым', 'error').then();
-        return;
-      }
       this.crud.post('company', this.company, this.company._id).then((v: any) => {
-        v.img = v.img.split('--')[1];
         this.user.companies[0] = v;
         this.company = v;
-        this.companyCopy.img = v.img;
+        this.companyCopy.img = v.img.split('--')[1];
         this.auth.setMe(this.user);
-        this.formCheck();
       });
-      // this.crud.post('upload2', {body: this.uploadObj}, null, false).then((u: any) => {
-      //   if (u) {
-      //     this.company['img'] = u.file;
-      //
-      //   }
-      // });
     }
   }
   onFs(e) {
-    this.uploadObj = e;
-    this.companyCopy.img = e.name;
+    this.company.img = e.file;
+    this.companyCopy.img = e.file.split('--')[1];
     this.formCheck();
   }
   changeCity(o) {

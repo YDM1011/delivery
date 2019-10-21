@@ -1,3 +1,6 @@
+<ng-container *ngIf="!loading">
+	<app-loading></app-loading>
+</ng-container>
 <div class="contain">
 	<div class="contain__group"  *ngIf="addShow">
 		<div class="contain__group-header">
@@ -67,7 +70,7 @@
 			</button>
 		</div>
 		<ng-container *ngIf="!loading" class="loading">
-			loading
+			Loading...
 		</ng-container>
 		<ng-container *ngIf="loading">
 			<div class="main-section">

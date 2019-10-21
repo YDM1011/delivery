@@ -45,6 +45,8 @@ import { SafeHtmlPipe } from './pipe/safe-html.pipe';
 import {WebsocketModule} from "./websocket";
 import {environment} from "../environments/environment";
 import { ScrollTopDirective } from './directives/scroll-top.directive';
+import {LoadingComponent} from "./components/loading/loading.component";
+import {LottieAnimationViewModule} from "ng-lottie";
 
 @NgModule({
   declarations: [
@@ -76,6 +78,7 @@ import { ScrollTopDirective } from './directives/scroll-top.directive';
     StatusPipe,
     SafeHtmlPipe,
     ScrollTopDirective,
+    LoadingComponent
   ],
   imports: [
     BrowserAnimationsModule,
@@ -91,6 +94,7 @@ import { ScrollTopDirective } from './directives/scroll-top.directive';
     WebsocketModule.config({
       url: environment.ws
     }),
+    LottieAnimationViewModule.forRoot()
   ],
   exports: [MaterialModule],
   providers: [CookieService, {provide: HTTP_INTERCEPTORS, useClass: ApiInterceptor, multi: true},

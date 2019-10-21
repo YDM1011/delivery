@@ -1,3 +1,6 @@
+<ng-container *ngIf="!loading">
+	<app-loading></app-loading>
+</ng-container>
 <div class="contain">
 	<div class="contain__group">
 		<div class="contain__group-header">
@@ -11,7 +14,7 @@
 				<mat-form-field class="example-full-width" *ngIf="company">
 					<input type="text" placeholder="Название комнании" aria-label="Text" name="name" matInput [(ngModel)]="companyCopy.name">
 				</mat-form-field>
-				<mat-form-field class="example-half">
+				<mat-form-field class="example-half" *ngIf="city && city.length > 0">
 					<mat-label>City</mat-label>
 					<mat-select #o [(value)]="cityChoose" (selectionChange)="changeCity(o.value)">
 						<mat-option *ngFor="let item of city" [value]="item._id">

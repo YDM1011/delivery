@@ -1,3 +1,6 @@
+<ng-container *ngIf="!loading">
+	<app-loading></app-loading>
+</ng-container>
 <ng-container>
 	<div class="create-client">
 		<div class="contain" *ngIf="showCollaborator">
@@ -63,7 +66,7 @@
 		</div>
 		<div class="main-section">
 			<ng-container class="loading" *ngIf="!loading">
-				loading...
+				Loading...
 			</ng-container>
 			<ng-container *ngIf="loading">
 				<div class="table" *ngIf="clients && clients.length > 0">

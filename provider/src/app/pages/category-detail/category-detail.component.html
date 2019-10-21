@@ -1,3 +1,6 @@
+<ng-container *ngIf="!loading">
+	<app-loading></app-loading>
+</ng-container>
 <div class="contain">
 	<div class="contain__group"  *ngIf="addShow">
 		<div class="contain__group-header">
@@ -18,7 +21,7 @@
 		<app-edit-product (cancelEdit)="cancelEdit($event)" [brands]="brands" (outputChanges)="outputEdit($event)" [obj]="editObj"></app-edit-product>
 	</div>
 	<ng-container class="loading" *ngIf="!loading">
-		loading ...
+		Loading ...
 	</ng-container>
 	<ng-container *ngIf="loading">
 		<div class="contain__group">

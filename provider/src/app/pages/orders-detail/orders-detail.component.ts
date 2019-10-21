@@ -16,6 +16,7 @@ export class OrdersDetailComponent implements OnInit {
   public basketCopy;
   public editBasket = false;
   public dialogOpen = false;
+  public loading = false;
   public defLang = 'ru-UA';
   constructor(
       private crud: CrudService,
@@ -35,11 +36,10 @@ export class OrdersDetailComponent implements OnInit {
       }
     });
   }
-
   takeOrder() {
     this.crud.post('basket', {status: 2, manager: this.user._id}, this.basket._id, false).then((v) => {
       if (v) {
-        const populate = JSON.stringify([{path: 'products', select: 'price count', populate: {path: 'orderOwner', select: 'name'}}, {path: 'createdBy', select: 'name address'}, {path: 'manager', select: 'name'}]);
+        const populate = JSON.stringify([{path: 'products', select: 'price count', populate: {path: 'orderOwner', select: 'name'}}, {path: 'createdBy', select: 'name address'},{path: 'deliveryAddress', populate: {path: 'city'}, select: 'name street build department' }, {path: 'manager', select: 'name'}]);
         this.crud.get(`basket?query={"_id":"${this.id}"}&populate=${populate}`).then((b: any) => {
           if (b && b.length > 0) {
             this.basket = b[0];
@@ -52,7 +52,7 @@ export class OrdersDetailComponent implements OnInit {
   done() {
     this.crud.post('basket', {status: 4}, this.basket._id, false).then((v) => {
       if (v) {
-        const populate = JSON.stringify([{path: 'products', select: 'price count', populate: {path: 'orderOwner', select: 'name'}}, {path: 'createdBy', select: 'name address'}, {path: 'manager', select: 'name'}]);
+        const populate = JSON.stringify([{path: 'products', select: 'price count', populate: {path: 'orderOwner', select: 'name'}}, {path: 'createdBy', select: 'name address'},{path: 'deliveryAddress', populate: {path: 'city'}, select: 'name street build department' }, {path: 'manager', select: 'name'}]);
         this.crud.get(`basket?query={"_id":"${this.id}"}&populate=${populate}`).then((b: any) => {
           if (b && b.length > 0) {
             this.basket = b[0];
@@ -108,7 +108,7 @@ export class OrdersDetailComponent implements OnInit {
         if (result.value) {
           this.crud.post('basket', {status: 5}, this.basket._id, false).then((v) => {
             if (v) {
-              const populate = JSON.stringify([{path: 'products', select: 'price count', populate: {path: 'orderOwner', select: 'name'}}, {path: 'createdBy', select: 'name address'}, {path: 'manager', select: 'name'}]);
+              const populate = JSON.stringify([{path: 'products', select: 'price count', populate: {path: 'orderOwner', select: 'name'}}, {path: 'createdBy', select: 'name address'},{path: 'deliveryAddress', populate: {path: 'city'}, select: 'name street build department' }, {path: 'manager', select: 'name'}]);
               this.crud.get(`basket?query={"_id":"${this.id}"}&populate=${populate}`).then((b: any) => {
                 if (b && b.length > 0) {
                   this.basket = Object.assign({}, b[0]);
@@ -158,7 +158,7 @@ export class OrdersDetailComponent implements OnInit {
       if (result.value) {
         this.crud.post('basket', {status: 5}, this.basket._id, false).then((v) => {
           if (v) {
-            const populate = JSON.stringify([{path: 'products', select: 'price count', populate: {path: 'orderOwner', select: 'name'}}, {path: 'createdBy', select: 'name address'}, {path: 'manager', select: 'name'}]);
+            const populate = JSON.stringify([{path: 'products', select: 'price count', populate: {path: 'orderOwner', select: 'name'}}, {path: 'createdBy', select: 'name address'}, {path: 'deliveryAddress', populate: {path: 'city'}, select: 'name street build department' }, {path: 'manager', select: 'name'}]);
             this.crud.get(`basket?query={"_id":"${this.id}"}&populate=${populate}`).then((b: any) => {
               if (b && b.length > 0) {
                 this.basket = b[0];
@@ -175,6 +175,7 @@ export class OrdersDetailComponent implements OnInit {
       if (b && b.length > 0) {
         this.basket = Object.assign({}, b[0]);
         this.basketCopy = Object.assign({}, b[0]);
+        this.loading = true;
       }
     });
   }
@@ -190,6 +191,16 @@ export class OrdersDetailComponent implements OnInit {
       this.crud.post('basket', {description: this.basket.description}, this.basket._id, false).then((v: any) => {
         if (v) {
           this.dialogOpen = false;
+          this.crud.post('basket', {status: 3, manager: this.user._id}, this.basket._id, false).then((v) => {
+            if (v) {
+              const populate = JSON.stringify([{path: 'products', select: 'price count', populate: {path: 'orderOwner', select: 'name'}}, {path: 'createdBy', select: 'name address'}, {path: 'deliveryAddress', populate: {path: 'city'}, select: 'name street build department' }, {path: 'manager', select: 'name'}]);
+              this.crud.get(`basket?query={"_id":"${this.id}"}&populate=${populate}`).then((b: any) => {
+                if (b && b.length > 0) {
+                  this.basket = b[0];
+                }
+              });
+            }
+          });
         }
       });
     }

@@ -100,7 +100,7 @@ export class OrdersComponent implements OnInit {
     this.crud.get(`basket/count?query={"companyOwner":"${this.user.companyOwner}"}`).then((count: any) => {
       if (count) {
         this.lengthPagination = count.count;
-        this.crud.get(`basket?query={"companyOwner":"${this.user.companyOwner}", "status":2}&populate=[{"path":"products"},{"path":"createdBy"},{"path":"deliveryAddress","populate":"city","select":"name build street department"},{"path":"manager","select":"name"}]&skip=${skip}&limit=${limit}`).then((orders: any) => {
+        this.crud.get(`basket?query={"companyOwner":"${this.user.companyOwner}", "$or":[{"status":2},{"status":3}]}&populate=[{"path":"products"},{"path":"createdBy"},{"path":"deliveryAddress","populate":"city","select":"name build street department"},{"path":"manager","select":"name"}]&skip=${skip}&limit=${limit}`).then((orders: any) => {
           if (!orders) {return; }
           this.orders = orders;
           this.loading = true;
