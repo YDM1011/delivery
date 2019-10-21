@@ -70,43 +70,46 @@ export class EditProductComponent implements OnInit, OnChanges {
       }
       this.editObj.brand = this.mainChooseBrand;
       this.editObj.categoryOwner = this.mainCategoryChoose;
-      if (!this.uploadObj) {
-        this.editObj.img = this.editObjCopy.img;
-        this.crud.post('order', this.editObj, this.editObj['_id']).then((v: any) => {
-          if (v) {
-            this.obj = v;
-            this.outputChanges.emit(this.obj);
-            this.cancelEdit.emit(false);
-            this.editObj = null;
-            this.editObjCopy = null;
-          }
-        }).catch((error) => {
-          if (error && error.errors.price.name === 'CastError') {
-            Swal.fire('Error', 'Цена должна вводится через "." - точку', 'error').then();
-            return;
-          }
-        });
-      } else {
-        this.crud.post('upload2', {body: this.uploadObj}, null, false).then((u: any) => {
-          if (u) {
-            this.editObj.img = u.file;
-            this.crud.post('order', this.editObj, this.editObj['_id']).then((v: any) => {
-              if (v) {
-                this.obj = v;
-                this.outputChanges.emit(this.obj);
-                this.isBlok = false;
-                this.uploadObj = null;
-              }
-            }).catch((error) => {
-              if (error && error.errors.price.name === 'CastError') {
-                Swal.fire('Error', 'Цена должна вводится через "." - точку', 'error').then();
-                return;
-              }
-            });
-          }
-        });
-      }
+
+      this.editObj.img = this.editObjCopy.img;
+      this.crud.post('order', this.editObj, this.editObj['_id']).then((v: any) => {
+        if (v) {
+          this.obj = v;
+          this.outputChanges.emit(this.obj);
+          this.cancelEdit.emit(false);
+          this.editObj = null;
+          this.editObjCopy = null;
+        }
+      }).catch((error) => {
+        if (error && error.errors.price.name === 'CastError') {
+          Swal.fire('Error', 'Цена должна вводится через "." - точку', 'error').then();
+          return;
+        }
+      });
       this.isBlok = false;
+
+      // if (!this.uploadObj) {
+      //
+      // } else {
+      //   this.crud.post('upload2', {body: this.uploadObj}, null, false).then((u: any) => {
+      //     if (u) {
+      //       this.editObj.img = u.file;
+      //       this.crud.post('order', this.editObj, this.editObj['_id']).then((v: any) => {
+      //         if (v) {
+      //           this.obj = v;
+      //           this.outputChanges.emit(this.obj);
+      //           this.isBlok = false;
+      //           this.uploadObj = null;
+      //         }
+      //       }).catch((error) => {
+      //         if (error && error.errors.price.name === 'CastError') {
+      //           Swal.fire('Error', 'Цена должна вводится через "." - точку', 'error').then();
+      //           return;
+      //         }
+      //       });
+      //     }
+      //   });
+      // }
     }
   }
 
@@ -120,8 +123,8 @@ export class EditProductComponent implements OnInit, OnChanges {
   }
 
   onFsEdit(e) {
-    this.uploadObj = e;
-    this.editObj.img = e.name;
+    // this.uploadObj = e;
+    this.editObj.img = e.file;
     this.formCheck();
   }
 

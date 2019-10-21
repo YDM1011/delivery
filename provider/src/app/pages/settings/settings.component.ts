@@ -12,6 +12,7 @@ export class SettingsComponent implements OnInit {
   public user;
   public companyCopy;
   public company;
+  public companyId;
   public city;
   public uploadObj;
   public cityChoose;
@@ -56,19 +57,20 @@ export class SettingsComponent implements OnInit {
         Swal.fire('Error', 'Поле с картинкой не может быть пустым', 'error').then();
         return;
       }
-      this.crud.post('upload2', {body: this.uploadObj}, null, false).then((u: any) => {
-        if (u) {
-          this.company['img'] = u.file;
-          this.crud.post('company', this.company, this.company._id).then((v: any) => {
-            v.img = v.img.split('--')[1];
-            this.user.companies[0] = v;
-            this.company = v;
-            this.companyCopy.img = v.img;
-            this.auth.setMe(this.user);
-            this.formCheck();
-          });
-        }
+      this.crud.post('company', this.company, this.company._id).then((v: any) => {
+        v.img = v.img.split('--')[1];
+        this.user.companies[0] = v;
+        this.company = v;
+        this.companyCopy.img = v.img;
+        this.auth.setMe(this.user);
+        this.formCheck();
       });
+      // this.crud.post('upload2', {body: this.uploadObj}, null, false).then((u: any) => {
+      //   if (u) {
+      //     this.company['img'] = u.file;
+      //
+      //   }
+      // });
     }
   }
   onFs(e) {
