@@ -22,7 +22,7 @@
 				<input matInput type="text" placeholder="Address company" name="name-address" [(ngModel)]="company.address" autocomplete="off">
 			</mat-form-field>
 			<mat-form-field *ngIf="city && city.length>0">
-				<mat-label>Product</mat-label>
+				<mat-label>Город</mat-label>
 				<mat-select [(value)]="company.city">
 					<mat-option *ngFor="let item of city" [value]="item._id">
 						{{item.name}}
