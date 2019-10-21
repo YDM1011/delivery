@@ -21,9 +21,14 @@
 			<mat-form-field class="example-full-width">
 				<input matInput type="text" placeholder="Address company" name="name-address" [(ngModel)]="company.address" autocomplete="off">
 			</mat-form-field>
-			<select [(ngModel)]="company.city" name="choose" *ngIf="city && city.length>0">
-				<option *ngFor="let item of city" [value]="item._id">{{item.name}}</option>
-			</select>
+			<mat-form-field *ngIf="city && city.length>0">
+				<mat-label>Product</mat-label>
+				<mat-select [(value)]="company.city">
+					<mat-option *ngFor="let item of city" [value]="item._id">
+						{{item.name}}
+					</mat-option>
+				</mat-select>
+			</mat-form-field>
 			<div class="group-buttons">
 				<div class="left">
 				</div>
@@ -33,9 +38,9 @@
 				</div>
 			</div>
 		</form>
-		<ng-section *ngIf="city && city.length===0">
+		<ng-container *ngIf="city && city.length===0">
 			У вас нет городов, вы не можете создать поставщика
-		</ng-section>
+		</ng-container>
 	</div>
 	
 	<div class="contain__group">
@@ -100,7 +105,7 @@
 					</mat-paginator>
 				</div>
 				<div class="no-content" *ngIf="list && list.length === 0">
-					У вас нет администраторов
+					У вас нет поставщиков
 				</div>
 			</div>
 		</ng-container>
