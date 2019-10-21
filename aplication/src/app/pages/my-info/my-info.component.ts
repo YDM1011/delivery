@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {AuthService} from '../../auth.service';
 import {CrudService} from '../../crud.service';
 import {Me} from '../../interfaces/me';
-
+import Swal from "sweetalert2";
 @Component({
   selector: 'app-my-info',
   templateUrl: './my-info.component.html',
@@ -17,6 +17,7 @@ export class MyInfoComponent implements OnInit {
     mydata: {ua: 'Мої дані', ru: 'Мои даные'},
     article: {ua: 'Вкажіть Ваше ім\'я і номер телефону', ru: 'Укажите Ваше имя и номер телефона'},
     save: {ua: 'Зберегти', ru: 'Сохранить'},
+    saved: {ua: 'Збережено', ru: 'Сохранино'},
     back: {ua: 'Назад', ru: 'Назад'}
   };
   constructor(
@@ -55,7 +56,7 @@ export class MyInfoComponent implements OnInit {
   save(e) {
     e.preventDefault();
     this.crud.post('client', this.me, this.me._id).then((v: any) => {
-      console.log('success update');
+      Swal.fire(this.data.saved[this.language], '', 'success');
     });
   }
   replace() {
