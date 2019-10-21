@@ -56,26 +56,27 @@ export class ActionComponent implements OnInit {
     this.auth.onMe.subscribe((v: any) => {
       if (!v) { return; }
       this.user = v;
+      if (this.user && this.user.companyOwner) {
         this.company = this.user.companyOwner;
-        if (this.company) {
-          this.crud.get(`action/count?query={"companyOwner":"${this.company}"}`).then((c: any) => {
-            if (c.count > 0) {
-              this.lengthPagination = c.count;
-              this.crud.get(`action?query={"companyOwner":"${this.company}"}&populate={"path":"client"}&skip=0&limit=${this.pageSizePagination}`).then((a: any) => {
-                if (a && a.length > 0) {
-                  this.actions = a;
-                  this.loading = true;
-                }
-              });
-            }
-          });
-          this.crud.get(`order?query={"companyOwner":"${this.company}"}`).then((p: any) => {
-            if (p && p.length > 0) {
-              this.products = p;
-              this.productChoose = this.products[0]._id;
-            }
-          });
-        }
+
+        this.crud.get(`order?query={"companyOwner":"${this.company}"}`).then((p: any) => {
+          if (p && p.length > 0) {
+            this.products = p;
+            this.productChoose = this.products[0]._id;
+          }
+        });
+        this.crud.get(`action/count?query={"companyOwner":"${this.company}"}`).then((c: any) => {
+          if (c) {
+            this.lengthPagination = c.count;
+            this.crud.get(`action?query={"companyOwner":"${this.company}"}&populate={"path":"client"}&skip=0&limit=${this.pageSizePagination}`).then((a: any) => {
+              if (a && a.length > 0) {
+                this.actions = a;
+                this.loading = true;
+              }
+            });
+          }
+        });
+      }
     });
   }
   removeUserChip(i) {
