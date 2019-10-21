@@ -17,13 +17,15 @@ module.exports = (backendApp, router) => {
             req.body.yy[ind] = parseInt(it);
             if (req.body.yy[ind] < 1) req.body.yy[ind] = 1
         });
-
+        console.log(req.body, fileName)
         imageToSlices(path.join(__dirname, '../../../../upload/'+fileName),
             req.body.xx, req.body.yy,
             {
                 saveToDataUrl: true
             }, (v) => {
+            console.log("OK!!!!!!")
                 minification(fileName, v[4].dataURI, req.params.dir, (err,info)=>{
+                    console.log(err,info)
                     res.ok({file:fileName})
                 })
             }

@@ -10,13 +10,13 @@ module.exports = (reqFile, backendApp) => {
         fileName = new Date().getTime() + '--' + reqFile.name;
         createStream = fs.createWriteStream(path.join(__dirname, '../../../upload/'+fileName));
 
-        const roundedCornerResizer =
-            sharp()
-                .resize(500)
-                .png();
+        // const roundedCornerResizer =
+        //     sharp()
+        //         .resize(500)
+        //         .png();
 
         readStream
-            .pipe(roundedCornerResizer)
+            // .pipe(roundedCornerResizer)
             .pipe(createStream);
 
         readStream.on('end', ()=>{

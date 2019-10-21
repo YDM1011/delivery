@@ -25,11 +25,11 @@ export class UploadComponent implements OnInit, OnDestroy, OnChanges {
     this.uploadService.onFs.subscribe(v => {
       if (v) {
         this.onFs.emit(v);
-        if (this.cropper && !v.file) {
-          this.crud.post('upload2', {body: v}, null).then((v: any) => {
-            if (!v) {return; }
+        if (this.cropper) {
+          // this.crud.post('upload2', {body: v}, null).then((v: any) => {
+          //   if (!v) {return; }
             this.uploadService.setFile(v);
-          }).catch(e => console.log(e));
+          // }).catch(e => console.log(e));
         }
       }
     });
