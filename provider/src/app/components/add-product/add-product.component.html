@@ -6,7 +6,7 @@
 		<input matInput type="text" placeholder="Опис продукта" [(ngModel)]="product.des" name="des" autocomplete="off">
 	</mat-form-field>
 	<mat-form-field class="example-full-width">
-		<input matInput type="text" placeholder="Ціна" [(ngModel)]="product.price" name="price" autocomplete="off">
+		<input matInput type="number" placeholder="Ціна" [(ngModel)]="product.price" name="price" autocomplete="off">
 	</mat-form-field>
 	<div *ngIf="categorys.length > 0">
 		<mat-form-field>

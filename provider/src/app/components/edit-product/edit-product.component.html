@@ -36,7 +36,10 @@
 	</mat-form-field>
 	<div class="group-buttons">
 		<div class="left">
-			<app-upload (onFs)="onFsEdit($event)" *ngIf="editObj && editObj.img === ''"></app-upload>
+			<div class="img" *ngIf="editObj.img !== ''">
+				<app-img [dir]="'product'" [fs]="editObjCopy.img" *ngIf="editObj && editObj.img"></app-img>
+			</div>
+			<app-upload (onCrop)="onFsEdit($event)" *ngIf="editObj && editObj.img === ''" [cropper]="true" [dir]="'product'"></app-upload>
 			<div class="mat-chip-file" *ngIf="editObj && editObj.img !== ''">
 				<div class="content">{{editObj.img}}</div>
 				<div class="remove-mat-chip" (click)="editObj.img = ''; formCheck()"></div>

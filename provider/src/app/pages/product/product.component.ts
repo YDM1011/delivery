@@ -31,10 +31,10 @@ export class ProductComponent implements OnInit {
     this.auth.onMe.subscribe((v: any) => {
       if (!v) { return; }
       this.user = v;
-      if (this.user) {
+      if (this.user && this.user.companyOwner) {
         this.companyId = this.user.companyOwner;
         this.crud.get(`category?query={"companyOwner":"${this.companyId}"}`).then((v: any) => {
-          if(v && v.length > 0) {
+          if (v && v.length > 0) {
             this.categorys = v;
           }
         });
@@ -85,7 +85,7 @@ export class ProductComponent implements OnInit {
 
   newProduct(e) {
     if (e) {
-      this.products.push(e);
+      this.products.unshift(e);
       this.addShow = false;
     }
   }

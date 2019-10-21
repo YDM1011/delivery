@@ -16,6 +16,7 @@ export class AddProductComponent implements OnInit {
   public user;
   public mainCategoryChoose;
   public mainChooseBrand;
+  public companyId;
   public uploadObj;
     public product = {
     name: '',
@@ -35,11 +36,13 @@ export class AddProductComponent implements OnInit {
     this.auth.onMe.subscribe((v: any) => {
       if (!v) { return; }
       this.user = v;
-      this.categorys = v.companies[0].categories;
-      if (this.categorys && this.categorys.length > 0) {
-        this.mainCategoryChoose = this.categorys[0]._id;
+      if (this.user.companyOwner) {
+        this.companyId = this.user.companyOwner;
       }
     });
+    if (this.categorys && this.categorys.length > 0) {
+      this.mainCategoryChoose = this.categorys[0]._id;
+    }
   }
   create() {
     if (this.validation('product')) {
@@ -66,18 +69,20 @@ export class AddProductComponent implements OnInit {
 
       this.product.categoryOwner = this.mainCategoryChoose;
       this.product.brand = this.mainChooseBrand;
-      this.product.companyOwner = this.user.companies[0]._id;
+      this.product.companyOwner = this.companyId;
+      console.log(this.product)
       this.crud.post('order', this.product).then((v: any) => {
         if (v) {
           this.outputNew.emit(v);
           this.clearMainObj();
         }
       }).catch((error) => {
-        if (error && error.errors.price.name === 'CastError') {
-          Swal.fire('Error', 'Цена должна вводится через "." - точку', 'error').then();
-        } else if (error && error.errors.categoryOwner.message === 'Check category') {
-          Swal.fire('Error', 'У вас нет созданых категорий', 'error').then();
-        }
+        console.log(error)
+        // if (error && error.errors.price && error.errors.price.name === 'CastError') {
+        //   Swal.fire('Error', 'Цена должна вводится через "." - точку', 'error').then();
+        // } else if (error && error.errors.categoryOwner.message === 'Check category') {
+        //   Swal.fire('Error', 'У вас нет созданых категорий', 'error').then();
+        // }
       });
     }
   }
