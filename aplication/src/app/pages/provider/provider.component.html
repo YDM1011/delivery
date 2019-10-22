@@ -73,7 +73,7 @@
     </div>
   </div>
   
-  <ng-container *ngIf="company.categories">
+  <ng-container *ngIf="company && company.categories">
     <ng-container *ngIf="company.categories.length > 0">
       <div class="category">
         <div class="category-header">
@@ -95,7 +95,7 @@
       </div>
     </ng-container>
   </ng-container>
-  <ng-container *ngIf="company.brands">
+  <ng-container *ngIf="company && company.brands">
     <ng-container *ngIf="company.brands.length > 0">
       <div class="brandy">
         <div class="category-header">

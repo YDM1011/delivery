@@ -45,6 +45,7 @@ export class ProviderComponent implements OnInit {
     this.crud.getDetailCompany(this.id, this.company).then((v: any) => {
       if (v) {
         this.company = v;
+        console.log(this.company);
         if (this.company && this.company.categories.length > 0) {
           this.activeCategoryId = this.company.categories[0]._id;
           this.loading = true;
