@@ -34,7 +34,7 @@ export class ProductLeazyComponent implements OnInit {
               // console.log(this.order)
             });
         });
-    } else if(this.filter == 'brand') {
+    } else if (this.filter === 'brand') {
       this.crud.orderByBrandCount(this.value)
         .then((orderCount: any) => {
           this.orderCount = orderCount.count;
