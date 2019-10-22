@@ -58,7 +58,6 @@ export class ActionComponent implements OnInit {
       this.user = v;
       if (this.user && this.user.companyOwner) {
         this.company = this.user.companyOwner;
-
         this.crud.get(`order?query={"companyOwner":"${this.company}"}`).then((p: any) => {
           if (p && p.length > 0) {
             this.products = p;
@@ -69,7 +68,7 @@ export class ActionComponent implements OnInit {
           if (c) {
             this.lengthPagination = c.count;
             this.crud.get(`action?query={"companyOwner":"${this.company}"}&populate={"path":"client"}&skip=0&limit=${this.pageSizePagination}`).then((a: any) => {
-              if (a && a.length > 0) {
+              if (a) {
                 this.actions = a;
                 this.loading = true;
               }
