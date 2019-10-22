@@ -41,7 +41,7 @@ export class UploadComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   ngOnChanges() {
-    this.uploadService.setMultiple(this.multiple);
+    // this.uploadService.setMultiple(this.multiple);
   }
   openUploadDialog() {
     const dialogRef = this.dialog.open(DialogComponent, { width: '360px', height: '360px',

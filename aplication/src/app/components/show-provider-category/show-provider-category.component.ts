@@ -23,7 +23,7 @@ export class ShowProviderCategoryComponent implements OnInit, OnChanges {
     this.products = [];
     this.route.params.subscribe((params: any) => {
       this.id = this.route.snapshot.paramMap.get('id');
-      const query = `?query={"companyOwner":"${this.id}","categoryOwner":"${this.catId}"}&limit=1&skip=0`;
+      const query = `?query={"companyOwner":"${this.id}","categoryOwner":"${this.catId}"}&limit=5&skip=0`;
       this.crud.get('order', '', query).then(v => {
         if (v) {
           this.products = this.products.concat(v);
@@ -32,18 +32,17 @@ export class ShowProviderCategoryComponent implements OnInit, OnChanges {
     });
   }
 
-  getProduct(id) {
-    const skip = this.products ? this.products.length : 0;
-    const query = `?query={"companyOwner":"${this.id}","categoryOwner":"${id}"}&limit=5&skip=${skip}`;
-    this.crud.get('order', '', query).then(v => {
-      if (v) {
-        this.products = this.products.concat(v);
-      }
-    });
-  }
+  // getProduct(id) {
+  //   const skip = this.products ? this.products.length : 0;
+  //   const query = `?query={"companyOwner":"${this.id}","categoryOwner":"${id}"}&limit=5&skip=${skip}`;
+  //   this.crud.get('order', '', query).then(v => {
+  //     if (v) {
+  //       this.products = this.products.concat(v);
+  //     }
+  //   });
+  // }
   getOutput(e) {
     if (e) {
-      console.log(e)
       this.products = this.products.concat(e);
     }
   }

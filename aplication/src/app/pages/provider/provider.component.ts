@@ -18,6 +18,7 @@ export class ProviderComponent implements OnInit {
   public activeBrandsId;
   public showCategory = true;
   public showBrands = false;
+  public loading = false;
   public products = {};
   constructor(
       private auth: AuthService,
@@ -45,6 +46,7 @@ export class ProviderComponent implements OnInit {
         this.company = v;
         if (this.company && this.company.categories.length > 0) {
           this.activeCategoryId = this.company.categories[0]._id;
+          this.loading = true;
         }
       }
     });

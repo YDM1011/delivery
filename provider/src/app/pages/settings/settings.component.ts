@@ -36,9 +36,9 @@ export class SettingsComponent implements OnInit {
       });
       this.crud.get('company', this.companyId).then((c: any) => {
         if (c) {
-          this.company = c;
-          this.companyCopy = Object.assign({}, this.company);
-          this.companyCopy.img = this.companyCopy.img ? this.companyCopy.img.split('--')[1] : null;
+          this.company = Object.assign({}, c);
+          this.companyCopy = Object.assign({}, c);
+          this.companyCopy.img = this.companyCopy.img ? this.companyCopy.img.split('--')[1] : '';
           if (this.company.city) {
             this.cityChoose = this.company.city;
           }  else {
@@ -55,10 +55,11 @@ export class SettingsComponent implements OnInit {
       Swal.fire('Error', 'Заполните поле с картинкой', 'error').then();
       return;
     }
-    this.crud.post('company', this.company, this.company._id).then((v: any) => {
+    this.crud.post('company', {name: this.companyCopy.name, city: this.companyCopy.city, img: this.company.img}, this.company._id).then((v: any) => {
       this.user.companies[0] = v;
-      this.company = v;
-      this.companyCopy.img = v.img.split('--')[1];
+      this.company = Object.assign({}, v);
+      this.companyCopy = Object.assign({}, v);
+      this.companyCopy.img = this.companyCopy.img ? this.companyCopy.img.split('--')[1] : '';
       this.auth.setMe(this.user);
       this.isBlok = false;
     });
@@ -75,7 +76,9 @@ export class SettingsComponent implements OnInit {
   validate() {
     let isTrue = false;
     for (const key in this.company) {
-      if (this.company[key] !== this.companyCopy[key]) {isTrue = true; }
+      if (this.company[key] !== this.companyCopy[key]) {
+        isTrue = true;
+      }
     }
     return isTrue;
   }

@@ -1,7 +1,7 @@
 import {AfterViewInit, Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import Cropper from "cropperjs";
 import {CrudService} from "../../crud.service";
-import {environment} from "../../../../../aplication/src/environments/environment";
+import {environment} from "../../../environments/environment";
 
 interface imageSlice {
   fileName: string,

@@ -1,10 +1,12 @@
+<ng-container *ngIf="!loading">
+
+</ng-container>
 <div class="other-header">
   <app-back-btn></app-back-btn>
-  <h2>Поставщик</h2>
+  <h2 *ngIf="loading">{{company ? company.name : 'Поставщик'}}</h2>
   <app-basket-item></app-basket-item>
 </div>
-
-<div class="other-pages" *ngIf="company">
+<div class="other-pages" *ngIf="loading && company">
   <div class="popular-item">
     <ng-container *ngIf="me">
       <div class="favorite" (click)="favoriteCompany()">

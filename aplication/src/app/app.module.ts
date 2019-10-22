@@ -87,6 +87,8 @@ import { ShowProviderBrandsComponent } from './components/show-provider-brands/s
 import { BackBtnComponent } from './components/back-btn/back-btn.component';
 import {ScrollingModule} from "@angular/cdk/scrolling";
 import { ScrollUpdateDirective } from './directives/scroll-update.directive';
+import { ScrollUpdateBrandsDirective } from './directives/scroll-update-brands.directive';
+import { ScrollTopDirective } from './directives/scroll-top.directive';
 
 @NgModule({
   declarations: [
@@ -156,6 +158,8 @@ import { ScrollUpdateDirective } from './directives/scroll-update.directive';
     ShowProviderBrandsComponent,
     BackBtnComponent,
     ScrollUpdateDirective,
+    ScrollUpdateBrandsDirective,
+    ScrollTopDirective,
   ],
   imports: [
     ScrollingModule,

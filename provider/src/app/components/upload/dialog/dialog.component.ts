@@ -3,7 +3,7 @@ import {UploadService} from "../upload.service";
 import {MatDialogRef} from "@angular/material";
 import {forkJoin} from "rxjs";
 import { Inject } from '@angular/core';
-import {MAT_DIALOG_DATA} from '@angular/material'
+import {MAT_DIALOG_DATA} from '@angular/material';
 
 @Component({
   selector: 'app-dialog',

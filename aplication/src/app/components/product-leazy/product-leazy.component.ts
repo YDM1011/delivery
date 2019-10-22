@@ -23,46 +23,46 @@ export class ProductLeazyComponent implements OnInit {
     this.auth.onLanguage.subscribe((v: string) => {
       this.language = v;
     });
-    if (this.filter == 'category' || !this.filter){
+    if (this.filter === 'category' || !this.filter) {
       this.crud.orderByCategoryCount(this.value)
-        .then((orderCount:any)=>{
+        .then((orderCount: any) => {
           this.orderCount = orderCount.count;
-          this.crud.orderByCategory(this.value,0)
-            .then((order)=>{
-              console.log(order)
-              this.order = this.order.concat(order)
-              console.log(this.order)
+          this.crud.orderByCategory(this.value, 0)
+            .then((order) => {
+              // console.log(order)
+              this.order = this.order.concat(order);
+              // console.log(this.order)
             });
         });
-    } else if(this.filter == 'brand'){
+    } else if(this.filter == 'brand') {
       this.crud.orderByBrandCount(this.value)
-        .then((orderCount:any)=>{
+        .then((orderCount: any) => {
           this.orderCount = orderCount.count;
-          this.crud.orderByBrand(this.value,0)
-            .then((order)=>{
-              console.log(order)
-              this.order = this.order.concat(order)
-              console.log(this.order)
+          this.crud.orderByBrand(this.value, 0)
+            .then((order) => {
+              // console.log(order)
+              this.order = this.order.concat(order);
+              // console.log(this.order)
             });
         });
     }
 
   }
-  increment(){
+  increment() {
     this.count ++;
   }
-  decrement(){
-    if (this.count === 0) return;
+  decrement() {
+    if (this.count === 0) {return; }
     this.count --;
   }
 
-  alert(text){
-    alert(text)
+  alert(text) {
+    alert(text);
   }
-  loadOrder(){
-    this.crud.orderByCategory(this.value,this.order.length)
-      .then((order)=>{
-        this.order.push(order)
+  loadOrder() {
+    this.crud.orderByCategory(this.value, this.order.length)
+      .then((order) => {
+        this.order.push(order);
       });
   }
 }

@@ -2,7 +2,7 @@
   <div class="sign-content">
     <h3>Подтверждение</h3>
     <form (submit)="confirm()" *ngIf="data">
-      <input type="password" placeholder="Введите код из смс" name="confirm" [(ngModel)]="data['smsCode']">
+      <input type="number" placeholder="Введите код из смс" name="confirm" [(ngModel)]="data['smsCode']">
       <button type="submit" class="main-button-bold">Подтвердить</button>
     </form>
   </div>

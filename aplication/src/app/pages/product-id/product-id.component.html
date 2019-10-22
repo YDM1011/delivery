@@ -1,17 +1,19 @@
 <div class="other-header">
   <app-back-btn></app-back-btn>
-  <h2>Продукт</h2>
+  <h2>{{product && product.name ? product.name : ''}}</h2>
   <app-basket-item></app-basket-item>
 </div>
-
-<div class="other-pages">
+<ng-container *ngIf="!loading">
+  <app-loading></app-loading>
+</ng-container>
+<div class="other-pages" *ngIf="loading && product">
   <div class="product">
     <div class="img">
-      <img src="./assets/images/tmp/img-product.png" alt="">
+      <app-img [fs]="product.img" [anyFs]="'assets/images/product.svg'"></app-img>
     </div>
     <div class="title">
       <div class="title-item">
-        Красная рыба ФОРЕЛЬ с Аляски
+        {{product.name}}
       </div>
       <div class="favorite">
         <div class="favorite-item" *ngIf="favoriteShow" (click)="favorite()">
@@ -30,21 +32,21 @@
     </div>
     <div class="package">
       <div class="count-sold">
-        1002 продано
+        {{product.countBought}} продано
       </div>
     </div>
     <div class="price">
-      <div class="price-element sale">
+      <div class="price-element" [class.sale]="product && product.discount">
         <div class="price-item">
-          560.90 грн.
+          {{product.price}} Грн.
         </div>
         <div class="new-price">
-          500 грн.
+          {{product && product.discount ? product.discount + 'Грн.' : ''}}
         </div>
       </div>
       <div class="count">
         <div class="count-title">
-          Количество
+          {{'Количество' | trans:language}}
         </div>
         <div class="count-minus" *ngIf="count>0" (click)="decrement()">
           -
@@ -58,7 +60,9 @@
       </div>
     </div>
     <div class="buttons">
-      <button class="baton-basket" [class.active]="count>0">В корзину <svg width="20" height="20" viewBox="0 0 26 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <button class="baton-basket" (click)="addProduct(id)" [disabled]="count===0" [class.active]="count>0">
+        {{'В корзину' | trans:language }}
+        <svg width="20" height="20" viewBox="0 0 26 25" fill="none" xmlns="http://www.w3.org/2000/svg">
         <g clip-path="url(#clip0)">
           <path class="basket-svg" d="M16.7901 20.3906C15.6687 20.3906 14.797 21.3086 14.797 22.4268C14.797 23.5449 15.7176 24.4629 16.7901 24.4629C17.8625 24.4629 18.7832 23.5449 18.7832 22.4268C18.7832 21.3086 17.8625 20.3906 16.7901 20.3906ZM16.7901 23.4424C16.2269 23.4424 15.8205 22.9834 15.8205 22.4219C15.8205 21.8604 16.2808 21.4014 16.7901 21.4014C17.2994 21.4014 17.7597 21.8604 17.7597 22.4219C17.7597 22.9834 17.2994 23.4424 16.7901 23.4424Z" fill="black"/>
           <path class="basket-svg" d="M5.91386 20.3906C4.79244 20.3906 3.92078 21.3086 3.92078 22.4268C3.92078 23.5449 4.84141 24.4629 5.91386 24.4629C7.03527 24.4629 7.90694 23.5449 7.90694 22.4268C7.90694 21.3086 6.9863 20.3906 5.91386 20.3906ZM5.91386 23.4424C5.3507 23.4424 4.94425 22.9834 4.94425 22.4219C4.94425 21.8604 5.40457 21.4014 5.91386 21.4014C6.47701 21.4014 6.88347 21.8604 6.88347 22.4219C6.88347 22.9883 6.42804 23.4424 5.91386 23.4424Z" fill="black"/>
@@ -73,24 +77,24 @@
           </clipPath>
         </defs>
       </svg></button>
-      <button class="baton-buy main-button color" [class.active]="count>0">Купить сейчас</button>
+      <button class="baton-buy main-button color" [class.active]="count>0">
+        {{'Купить сейчас' | trans:language}}
+      </button>
     </div>
     <div class="description">
       <div class="description-title">
-        Описание
+        {{'Описание' | trans:language}}
       </div>
-      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores illum molestias officia omnis sit soluta, tenetur! Adipisci, aliquid aperiam blanditiis, consectetur cupiditate enim eos esse itaque laborum libero molestias mollitia odio omnis perferendis quae quas quasi quibusdam rem similique veritatis!
+      {{product.des}}
     </div>
   </div>
   <app-provider-item></app-provider-item>
-  <!--<div class="releted">-->
-    <!--<div class="releted-header">-->
-      <!--С этим товаром покупают-->
-    <!--</div>-->
-    <!--<app-product-item></app-product-item>-->
-    <!--<app-product-item></app-product-item>-->
-    <!--<app-product-item></app-product-item>-->
-    <!--<app-product-item></app-product-item>-->
-    <!--<app-product-item></app-product-item>-->
-  <!--</div>-->
+  <div class="releted" *ngIf="categorys && categorys.length > 0">
+    <div class="releted-header">
+      {{'С этим товаром покупают' | trans:language}}
+    </div>
+    <ng-container *ngFor="let item of categorys">
+      <app-product-item [data]="item"></app-product-item>
+    </ng-container>
+  </div>
 </div>

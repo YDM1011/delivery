@@ -41,6 +41,9 @@
     overflow: hidden;
   }
   .block-info{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     width: calc(100% - 60px);
   }
   .block-second{
@@ -75,6 +78,7 @@
     .work-time{
       display: flex;
       align-items: center;
+      color: #545454;
       svg{
         margin-right: 5px;
       }
