@@ -50,6 +50,10 @@ export class ProductIDComponent implements OnInit {
         this.crud.get(`order?query={"companyOwner":"${this.product.companyOwner}","categoryOwner":"${this.product.categoryOwner}"}&skip=0&limit=5`).then((v: any) => {
           if (v && v.length > 0) {
             this.categorys = v;
+            const index = this.crud.find('_id', this.id, this.categorys);
+            if (this.categorys[index]) {
+              this.categorys.splice(index, 1);
+            }
           }
         });
       }
