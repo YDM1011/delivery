@@ -83,7 +83,7 @@ export class IndexComponent implements OnInit, OnDestroy {
     await this.crud.getBrands().then((v: any) => {
       if (!v) return;
       this.brandy = v;
-      this.loaded.brand = true
+      this.loaded.brand = true;
     }).catch(e => { this.loaded.brand = true });
     await this.crud.getCategory().then((v: any) => {
       if (!v) return;
