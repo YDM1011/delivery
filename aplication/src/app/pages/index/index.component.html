@@ -58,7 +58,6 @@
           (change)="changeCar(images[$event])"
   >
     <mat-carousel-slide
-            #matCarouselSlide
             *ngFor="let slide of images; let i = index"
             [image]="slide"
             overlayColor="#00000040"

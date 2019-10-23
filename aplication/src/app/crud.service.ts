@@ -103,8 +103,7 @@ export class CrudService {
   getDetailCompany(id, company = null){
     return new Promise((resolve, reject) => {
       let skip = company ? company.categories.orders.length : 0;
-
-      const populate = '?populate='+JSON.stringify([{path:'brands'},
+      const populate = '?populate='+JSON.stringify([{path:'brands'}, {path:'action'},
         {path:'categories', populate:{path:'mainCategory'}, select:'-orders'},
         {path:'createdBy'},{path:'city'}]);
       this.get('company', id, populate).then((v:any)=>{

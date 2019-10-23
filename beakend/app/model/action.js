@@ -6,8 +6,11 @@ const Schema = mongoose.Schema;
  * role - manedger 1/2 superManedger 1/2 client
  */
 const schem = new Schema({
+    name: String,
     description: String,
     img: String,
+    dateStart: Date,
+    dateEnd: Date,
     client: [{
         type: Schema.Types.ObjectId,
         ref: "Client"

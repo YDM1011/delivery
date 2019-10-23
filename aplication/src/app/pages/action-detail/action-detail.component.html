@@ -3,20 +3,18 @@
   <h2>
     {{"Акция" | trans:language }}
   </h2>
-  
   <app-basket-item></app-basket-item>
 </div>
 
-<div class="other-pages">
-  <app-action-item></app-action-item>
+<div class="other-pages" *ngIf="action">
+  <app-action-item [obj]="action"></app-action-item>
 
   <div class="buttons">
-    <a routerLink="/{{language}}/provider/1" class="main-button color">
+    <a routerLink="/{{language}}/provider/{{action.companyOwner._id}}" class="main-button color">
       Перейти к поставщику
     </a>
-    <a routerLink="/{{language}}/notification" class="back-btn">
+    <a (click)="back()" class="back-btn">
       Назад
     </a>
-    
   </div>
 </div>

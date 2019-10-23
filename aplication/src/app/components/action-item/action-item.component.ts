@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {AuthService} from '../../auth.service';
 
 @Component({
@@ -7,6 +7,7 @@ import {AuthService} from '../../auth.service';
   styleUrls: ['./action-item.component.scss']
 })
 export class ActionItemComponent implements OnInit {
+  @Input() obj;
   public language: string;
 
   constructor(

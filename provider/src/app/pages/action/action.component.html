@@ -16,7 +16,10 @@
 		</div>
 		<form class="add-section" (submit)="create($event)" *ngIf="products && products.length > 0">
 			<mat-form-field class="example-full-width">
-				<input matInput type="text" placeholder="Описание акции" name="name" [(ngModel)]="action.description" autocomplete="off">
+				<input matInput type="text" placeholder="Название акции" name="name" [(ngModel)]="action.name" autocomplete="off">
+			</mat-form-field>
+			<mat-form-field class="example-full-width">
+				<input matInput type="text" placeholder="Описание акции" name="description" [(ngModel)]="action.description" autocomplete="off">
 			</mat-form-field>
 			<mat-form-field>
 				<mat-label>Product</mat-label>
@@ -58,6 +61,18 @@
 					</mat-option>
 				</mat-autocomplete>
 			</mat-form-field>
+			<div class="datepikers">
+				<mat-form-field class="pik">
+					<input matInput [matDatepicker]="picker" name="date1" [min]="date" [(ngModel)]="action.dateStart" (focus)="picker.open()" placeholder="Дата начала акции" (dateChange)="formCheck()">
+					<mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+					<mat-datepicker #picker></mat-datepicker>
+				</mat-form-field>
+				<mat-form-field class="pik">
+					<input matInput [matDatepicker]="picker2" name="date2" [min]="action.dateStart" [(ngModel)]="action.dateEnd" (focus)="picker2.open()" placeholder="Дата окончания акции" (dateChange)="formCheck()">
+					<mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+					<mat-datepicker #picker2></mat-datepicker>
+				</mat-form-field>
+			</div>
 			<div class="group-buttons">
 				<div class="left">
 					<app-upload (onFs)="onFs($event)" *ngIf="action && action.img === ''"></app-upload>
@@ -82,7 +97,10 @@
 		</div>
 		<form (keyup)="formCheck()" (submit)="confirmEditCategoryCrud($event)" class="edit-section" *ngIf="editShow">
 			<mat-form-field class="example-full-width">
-				<input matInput type="text" placeholder="Описание акции" name="name" [(ngModel)]="editObj.description" autocomplete="off">
+				<input matInput type="text" placeholder="Название акции" name="name" [(ngModel)]="editObj.name" autocomplete="off">
+			</mat-form-field>
+			<mat-form-field class="example-full-width">
+				<input matInput type="text" placeholder="Описание акции" name="description" [(ngModel)]="editObj.description" autocomplete="off">
 			</mat-form-field>
 			<mat-form-field>
 				<mat-label>Product</mat-label>
@@ -98,6 +116,18 @@
 						{{item.login}}
 					</mat-chip>
 				</mat-chip-list>
+			</div>
+			<div class="datepikers">
+				<mat-form-field class="pik">
+					<input matInput [matDatepicker]="picker" name="date1" [min]="date" [(ngModel)]="editObj.dateStart" (focus)="picker.open()" placeholder="Дата начала акции" (dateChange)="formCheck()">
+					<mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+					<mat-datepicker #picker></mat-datepicker>
+				</mat-form-field>
+				<mat-form-field class="pik">
+					<input matInput [matDatepicker]="picker2" name="date2" [min]="editObj.dateStart" [(ngModel)]="editObj.dateEnd" (focus)="picker2.open()" placeholder="Дата окончания акции" (dateChange)="formCheck()">
+					<mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+					<mat-datepicker #picker2></mat-datepicker>
+				</mat-form-field>
 			</div>
 			<div class="group-buttons">
 				<div class="left">
@@ -146,7 +176,7 @@
 						</div>
 						<div class="row-r" *ngFor="let item of actions; let index = index">
 							<div class="col">
-								{{item.description}}
+								{{item.name}}
 							</div>
 							<div class="col">
 							</div>

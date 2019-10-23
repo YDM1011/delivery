@@ -9,10 +9,13 @@
 			</div>
 		</div>
 		
-		<div class="add-section">
-			<form action="" (keyup)="formCheck()">
-				<mat-form-field class="example-full-width" *ngIf="loading && company">
+		<div class="add-section" *ngIf="loading && company">
+			<form (keyup)="formCheck()">
+				<mat-form-field class="example-full-width">
 					<input type="text" placeholder="Название комнании" aria-label="Text" name="name" matInput [(ngModel)]="companyCopy.name">
+				</mat-form-field>
+				<mat-form-field class="example-full-width">
+					<input type="number" placeholder="Номер телефона компании" aria-label="Text" name="phone" matInput [(ngModel)]="companyCopy.companyMobile">
 				</mat-form-field>
 				<mat-form-field class="example-half" *ngIf="city && city.length > 0">
 					<mat-label>City</mat-label>

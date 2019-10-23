@@ -14,6 +14,10 @@ const timeRangeSchema = {
     isWeekend: {type: Boolean, default: false}
 };
 const schem = new Schema({
+    companyMobile: {
+        type: String,
+        default: null
+    },
     createdBy: {
         type: Schema.Types.ObjectId,
         ref: "Client"
@@ -44,8 +48,7 @@ const schem = new Schema({
     rating: Number,
     action: [{
         type: Schema.Types.ObjectId,
-        ref: "Action",
-        default: null
+        ref: "Action"
     }],
     city: {
         type: Schema.Types.ObjectId,

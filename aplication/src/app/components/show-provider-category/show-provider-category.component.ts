@@ -1,6 +1,6 @@
 import {Component, Input, OnChanges, OnInit} from '@angular/core';
-import {CrudService} from "../../crud.service";
-import {ActivatedRoute} from "@angular/router";
+import {CrudService} from '../../crud.service';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-show-provider-category',
@@ -21,7 +21,7 @@ export class ShowProviderCategoryComponent implements OnInit, OnChanges {
 
   ngOnChanges() {
     this.products = [];
-    this.route.params.subscribe((params: any) => {
+    this.route.params.subscribe(() => {
       this.id = this.route.snapshot.paramMap.get('id');
       const query = `?query={"companyOwner":"${this.id}","categoryOwner":"${this.catId}"}&limit=5&skip=0`;
       this.crud.get('order', '', query).then(v => {
@@ -31,16 +31,6 @@ export class ShowProviderCategoryComponent implements OnInit, OnChanges {
       });
     });
   }
-
-  // getProduct(id) {
-  //   const skip = this.products ? this.products.length : 0;
-  //   const query = `?query={"companyOwner":"${this.id}","categoryOwner":"${id}"}&limit=5&skip=${skip}`;
-  //   this.crud.get('order', '', query).then(v => {
-  //     if (v) {
-  //       this.products = this.products.concat(v);
-  //     }
-  //   });
-  // }
   getOutput(e) {
     if (e) {
       this.products = this.products.concat(e);

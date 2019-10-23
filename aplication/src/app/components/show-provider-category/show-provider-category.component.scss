@@ -3,5 +3,6 @@
   overflow-y: auto;
   overflow: -moz-scrollbars-none;
   -ms-overflow-style: none;
+  margin-top: 15px;
   &::-webkit-scrollbar { width: 0 !important }
 }

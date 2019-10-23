@@ -9,6 +9,7 @@ import Swal from 'sweetalert2';
   styleUrls: ['./action.component.scss']
 })
 export class ActionComponent implements OnInit {
+  public date = new Date();
   public lengthPagination = 0;
   public pageSizePagination = 10;
   public pageSizeOptionsPagination: number[] = [5, 10, 15];
@@ -18,7 +19,6 @@ export class ActionComponent implements OnInit {
   public defLang = 'ru-UA';
   public isBlok = false;
   public loading = false;
-
   public globalAction = true;
   public userAction = false;
   public addShow = false;
@@ -31,20 +31,26 @@ export class ActionComponent implements OnInit {
   public inputChange;
   public uploadObj;
   public editObj = {
+    name: '',
     description: '',
     img: '',
     companyOwner: '',
     orderOwner: '',
     client: [],
     actionGlobal: true,
+    dateStart: new Date(),
+    dateEnd: new Date()
   };
   public action = {
+    name: '',
     description: '',
     img: '',
     companyOwner: '',
     orderOwner: '',
     client: [],
     actionGlobal: true,
+    dateEnd: new Date(),
+    dateStart: new Date(),
   };
 
   constructor(
@@ -125,12 +131,15 @@ export class ActionComponent implements OnInit {
           }
         });
         this.action = {
+          name: '',
           description: '',
           img: '',
           companyOwner: '',
           orderOwner: '',
           client: [],
           actionGlobal: true,
+          dateStart: new Date(),
+          dateEnd: new Date(),
         };
         this.productChoose = null;
         this.addShow = false;
@@ -188,12 +197,15 @@ export class ActionComponent implements OnInit {
         this.isBlok = false;
         this.editShow = false;
         this.editObj = {
+          name: '',
           description: '',
           img: '',
           companyOwner: '',
           orderOwner: '',
           client: [],
           actionGlobal: true,
+          dateStart: new Date(),
+          dateEnd: new Date()
         };
       }
     });
@@ -240,12 +252,15 @@ export class ActionComponent implements OnInit {
       this.productChoose = this.products[0]._id;
     }
     this.action = {
+      name: '',
       description: '',
       img: '',
       companyOwner: '',
       orderOwner: '',
       client: [],
       actionGlobal: true,
+      dateStart: new Date(),
+      dateEnd: new Date()
     };
   }
   cancelEdit() {
@@ -254,12 +269,15 @@ export class ActionComponent implements OnInit {
     this.inputChange = '';
     this.userChoose = [];
     this.editObj = {
+      name: '',
       description: '',
       img: '',
       companyOwner: '',
       orderOwner: '',
       client: [],
-      actionGlobal: true
+      actionGlobal: true,
+      dateStart: new Date(),
+      dateEnd: new Date()
     };
   }
   changeTypeActionGlobal() {
