@@ -132,6 +132,21 @@
   }
 }
 
+.carousel-slide{
+  height: 100px;
+}
+.action{
+  margin: 0 0 10px;
+  &-box{
+    height: 100px;
+    .action-item{
+      border-radius: 15px;
+      overflow: hidden;
+      height: 100px;
+      width: 100%;
+    }
+  }
+}
 
 ::ng-deep .mat-ic{
   height: auto!important;

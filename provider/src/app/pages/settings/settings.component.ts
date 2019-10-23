@@ -55,7 +55,7 @@ export class SettingsComponent implements OnInit {
       Swal.fire('Error', 'Заполните поле с картинкой', 'error').then();
       return;
     }
-    this.crud.post('company', {name: this.companyCopy.name, city: this.companyCopy.city, img: this.company.img}, this.company._id).then((v: any) => {
+    this.crud.post('company', {name: this.companyCopy.name, city: this.companyCopy.city, companyMobile: this.companyCopy.companyMobile, img: this.company.img}, this.company._id).then((v: any) => {
       this.user.companies[0] = v;
       this.company = Object.assign({}, v);
       this.companyCopy = Object.assign({}, v);

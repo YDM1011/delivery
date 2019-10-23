@@ -59,7 +59,7 @@
         <path d="M14.9826 6.61682C14.7008 4.96424 13.922 3.46046 12.7253 2.26377C11.5286 1.06708 10.0249 0.288277 8.37228 0.00651579C8.14117 -0.0346403 7.92273 0.123652 7.88157 0.35476C7.84358 0.589033 7.99871 0.807477 8.23298 0.848633C9.70827 1.09873 11.0538 1.79839 12.1238 2.86528C13.1939 3.93534 13.8904 5.28083 14.1405 6.75611C14.1753 6.96506 14.3557 7.11069 14.5615 7.11069C14.5868 7.11069 14.609 7.10752 14.6343 7.10436C14.8654 7.06953 15.0237 6.84792 14.9826 6.61682Z" fill="#09C2C2"/>
       </svg>
       <div class="text">
-        {{company.createdBy.mobile}}
+        {{company.companyMobile ? company.companyMobile : company.createdBy.mobile}}
       </div>
     </div>
     <div class="location">
@@ -72,6 +72,39 @@
       </div>
     </div>
   </div>
+  <ng-container *ngIf="company && company.action">
+    <ng-container *ngIf="company.action.length > 0">
+      <div class="action">
+        <div class="action-box">
+          <mat-carousel
+                  timings="250ms ease-in"
+                  [autoplay]="true"
+                  interval="4000"
+                  color="accent"
+                  maxWidth="100%"
+                  proportion="30"
+                  height="100px"
+                  [loop]="false"
+                  [hideArrows]="true"
+                  [hideIndicators]="true"
+                  [useKeyboard]="true"
+                  [useMouseWheel]="false"
+                  orientation="ltr"
+                  class="carousel-my"
+          >
+            <mat-carousel-slide
+                    *ngFor="let slide of company.action; let i = index"
+                    [hideOverlay]="true"
+            >
+                        <div [routerLink]="'/' + language +'/action/' + slide._id" class="action-item">
+                          <app-img [fs]="slide.img"></app-img>
+                        </div>
+            </mat-carousel-slide>
+          </mat-carousel>
+        </div>
+      </div>
+    </ng-container>
+  </ng-container>
   
   <ng-container *ngIf="company && company.categories">
     <ng-container *ngIf="company.categories.length > 0">
@@ -85,7 +118,9 @@
         <div class="category-box">
               <a class="category-box-item" *ngFor="let category of company.categories" (click)="activeCategory(category._id)">
                 <div class="svg">
-                  <app-img [fs]="category && category.mainCategory.img ? category.mainCategory.img : ''" [anyFs]="'assets/images/brand.svg'"></app-img>
+                  <div class="img">
+                    <app-img [fs]="category && category.mainCategory.img ? category.mainCategory.img : ''" [anyFs]="'assets/images/brand.svg'"></app-img>
+                  </div>
                 </div>
                 <div class="title">
                   {{category.name}}
@@ -98,16 +133,18 @@
   <ng-container *ngIf="company && company.brands">
     <ng-container *ngIf="company.brands.length > 0">
       <div class="brandy">
-        <div class="category-header">
+        <div class="brandy-header">
           <h3>
             Бренды
           </h3>
           <a routerLink="/{{language}}/brands">Все</a>
         </div>
-        <div class="category-box">
-              <a class="category-box-item" *ngFor="let brand of company.brands" (click)="activeBrands(brand._id)">
+        <div class="brandy-box">
+              <a class="brandy-box-item" *ngFor="let brand of company.brands" (click)="activeBrands(brand._id)">
                 <div class="svg">
-                  <app-img [fs]="brand && brand.img ? brand.img : ''" [anyFs]="'assets/images/brans.svg'"></app-img>
+                  <div class="img">
+                    <app-img [fs]="brand && brand.img ? brand.img : ''" [anyFs]="'assets/images/brans.svg'"></app-img>
+                  </div>
                 </div>
                 <div class="title">
                   {{brand.name}}

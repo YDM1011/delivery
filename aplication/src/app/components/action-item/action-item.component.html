@@ -1,4 +1,4 @@
-<a routerLink="/{{language}}/action/1" class="action-item">
+<a [routerLink]="'/'+language+'/product/'+obj.orderOwner" class="action-item">
 	<span class="img">
 		<span class="title-provider">
 			<svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -7,18 +7,19 @@
 				<path d="M12.9805 11.3086H12.6875V8.49609C12.6875 8.33432 12.5563 8.20312 12.3945 8.20312H8.87891C8.71713 8.20312 8.58594 8.33432 8.58594 8.49609V11.3086H8.29297C8.13119 11.3086 8 11.4398 8 11.6016C8 11.7633 8.13119 11.8945 8.29297 11.8945H12.9805C13.1422 11.8945 13.2734 11.7633 13.2734 11.6016C13.2734 11.4398 13.1422 11.3086 12.9805 11.3086ZM12.1016 11.3086H9.17188V8.78906H12.1016V11.3086Z" fill="#29909E"/>
 				<path d="M11.2227 12.4805H8.87891C8.71713 12.4805 8.58594 12.6117 8.58594 12.7734C8.58594 12.9352 8.71713 13.0664 8.87891 13.0664H11.2227C11.3844 13.0664 11.5156 12.9352 11.5156 12.7734C11.5156 12.6117 11.3844 12.4805 11.2227 12.4805Z" fill="#09C2C2"/>
 			</svg>
-
-			Поставщик “Фреш продукты РУКОВИЧКА”
+			{{obj.companyOwner.name}}
 		</span>
-		<img src="./assets/images/tmp/img-deli.png" alt="">
+		<app-img [fs]="obj.img"></app-img>
 	</span>
 	<span class="title-action">
-		Название акции
+	{{obj.name}}
 	</span>
 	<p>
-		Короткое описание акции данного поставщика. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+		{{obj.description}}
 	</p>
-	<span class="date">
-		с 12.12.19 до 14.09.20
+	<span class="date" *ngIf="obj.dateStart && obj.dateEnd">
+		{{ obj.dateStart | date: 'dd.MM.yy'}}
+		до
+		{{ obj.dateEnd| date: 'dd.MM.yy'}}
 	</span>
 </a>

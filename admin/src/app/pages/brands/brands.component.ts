@@ -87,7 +87,7 @@ export class BrandsComponent implements OnInit {
   }
   onFsEdit(e) {
     // this.uploadObj = e;
-    this.editObjCopy.img = e.file;
+    this.editObj.img = e.file;
   }
   edit(i) {
     this.editObj = Object.assign({}, this.brands[i]);
