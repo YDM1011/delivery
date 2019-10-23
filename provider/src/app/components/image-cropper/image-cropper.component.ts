@@ -1,7 +1,7 @@
 import {AfterViewInit, Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import Cropper from "cropperjs";
 import {CrudService} from "../../crud.service";
-import {environment} from "../../../../../aplication/src/environments/environment";
+import {environment} from "../../../environments/environment";
 
 interface imageSlice {
   fileName: string,
@@ -72,21 +72,21 @@ export class ImageCropperComponent implements OnInit, AfterViewInit {
     const canvas = this.cropper.getData();
     console.log(canvas);
     const path = this.imageSource.split('/');
-    let file = path[path.length-1];
+    const file = path[path.length - 1];
     this.imageData = {
       fileName: file,
-      yy:[canvas.x, canvas.x+canvas.width],
-      xx:[canvas.y, canvas.y+canvas.height]
+      yy: [canvas.x, canvas.x + canvas.width],
+      xx: [canvas.y, canvas.y + canvas.height]
     };
     let link = 'imgSlice';
-    if (this.dir) link = link + '/'+this.dir;
+    if (this.dir) link = link + '/' + this.dir;
 
-    console.log(link)
-    this.crud.post(link , this.imageData, null)
-      .then(v=>{
+    // console.log(link)
+    this.crud.post(link , this.imageData, null, false)
+      .then(v => {
         console.log(v)
-        this.done.emit(v)
-      }).catch(e=>console.log(e))
+        this.done.emit(v);
+      }).catch(e => console.log(e));
     // this.imageDestination = canvas.toDataURL("image/png");
   }
   public ngOnInit() {

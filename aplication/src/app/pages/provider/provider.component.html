@@ -1,10 +1,12 @@
+<ng-container *ngIf="!loading">
+
+</ng-container>
 <div class="other-header">
   <app-back-btn></app-back-btn>
-  <h2>Поставщик</h2>
+  <h2 *ngIf="loading">{{company ? company.name : 'Поставщик'}}</h2>
   <app-basket-item></app-basket-item>
 </div>
-
-<div class="other-pages" *ngIf="company">
+<div class="other-pages" *ngIf="loading && company">
   <div class="popular-item">
     <ng-container *ngIf="me">
       <div class="favorite" (click)="favoriteCompany()">
@@ -33,7 +35,7 @@
       </a>
     </ng-container>
     <div class="img">
-      <app-img [fs]="company.img"></app-img>
+      <app-img [fs]="company && company.img ? company.img : ''" [anyFs]="'assets/images/provider.svg'"></app-img>
     </div>
     <div class="block-info">
       <div class="block-title">
@@ -70,73 +72,55 @@
       </div>
     </div>
   </div>
-  <div class="category">
-    <div class="category-header">
-      <h3>
-        Категории
-      </h3>
-      <a routerLink="/{{language}}/category">Все</a>
-    </div>
-    <div class="category-box">
-      <ng-container *ngIf="company.categories">
-        <ng-container *ngIf="company.categories.length>0">
-          <a class="category-box-item" *ngFor="let category of company.categories" (click)="activeCategory(category._id)">
-            <div class="svg">
-              <app-img [fs]="category.mainCategory.img"></app-img>
-            </div>
-            <div class="title">
-              {{category.name}}
-            </div>
-          </a>
-        </ng-container>
-      </ng-container>
-
-    </div>
-  </div>
-  <div class="brandy">
-    <div class="category-header">
-      <h3>
-        Бренды
-      </h3>
-      <a routerLink="/{{language}}/brands">Все</a>
-    </div>
-    <div class="category-box">
-      <ng-container *ngIf="company.brands">
-        <ng-container *ngIf="company.brands.length>0">
-          <a class="category-box-item" *ngFor="let brand of company.brands" (click)="activeBrands(brand._id)">
-            <div class="svg">
-              <app-img [fs]="brand.img"></app-img>
-            </div>
-            <div class="title">
-              {{brand.name}}
-            </div>
-          </a>
-        </ng-container>
-      </ng-container>
-    </div>
-  </div>
+  
+  <ng-container *ngIf="company && company.categories">
+    <ng-container *ngIf="company.categories.length > 0">
+      <div class="category">
+        <div class="category-header">
+          <h3>
+            Категории
+          </h3>
+          <a routerLink="/{{language}}/category">Все</a>
+        </div>
+        <div class="category-box">
+              <a class="category-box-item" *ngFor="let category of company.categories" (click)="activeCategory(category._id)">
+                <div class="svg">
+                  <app-img [fs]="category && category.mainCategory.img ? category.mainCategory.img : ''" [anyFs]="'assets/images/brand.svg'"></app-img>
+                </div>
+                <div class="title">
+                  {{category.name}}
+                </div>
+              </a>
+        </div>
+      </div>
+    </ng-container>
+  </ng-container>
+  <ng-container *ngIf="company && company.brands">
+    <ng-container *ngIf="company.brands.length > 0">
+      <div class="brandy">
+        <div class="category-header">
+          <h3>
+            Бренды
+          </h3>
+          <a routerLink="/{{language}}/brands">Все</a>
+        </div>
+        <div class="category-box">
+              <a class="category-box-item" *ngFor="let brand of company.brands" (click)="activeBrands(brand._id)">
+                <div class="svg">
+                  <app-img [fs]="brand && brand.img ? brand.img : ''" [anyFs]="'assets/images/brans.svg'"></app-img>
+                </div>
+                <div class="title">
+                  {{brand.name}}
+                </div>
+              </a>
+        </div>
+      </div>
+    </ng-container>
+  </ng-container>
   <div class="catalog">
-    <ng-container *ngIf="company.categories.length>0">
+    <ng-container *ngIf="company.categories.length > 0">
       <app-show-provider-category [catId]="activeCategoryId" *ngIf="showCategory"></app-show-provider-category>
       <app-show-provider-brands [brandId]="activeBrandsId" *ngIf="showBrands"></app-show-provider-brands>
-<!--      <ng-container *ngFor="let category of company.categories">-->
-<!--        <div class="wrap-category">-->
-<!--          <div class="wrap-title" (click)="getProduct(category._id)">{{category.name}}</div>-->
-<!--          <div class="product-content">-->
-<!--            <ng-container *ngIf="products[category._id]">-->
-<!--              <ng-container *ngFor="let order of products[category._id]">-->
-<!--                <app-product-item [data]="order"></app-product-item> <br>-->
-<!--              </ng-container>-->
-<!--            </ng-container>-->
-<!--          </div>-->
-<!--        </div>-->
-<!--        &lt;!&ndash;<ng-container *ngIf="category.orders.length>0">&ndash;&gt;-->
-<!--          &lt;!&ndash;<ng-container *ngFor="let order of category.orders">&ndash;&gt;-->
-
-<!--          &lt;!&ndash;</ng-container>&ndash;&gt;-->
-<!--        &lt;!&ndash;</ng-container>&ndash;&gt;-->
-
-<!--      </ng-container>-->
     </ng-container>
   </div>
 </div>

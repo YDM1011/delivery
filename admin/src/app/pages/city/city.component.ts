@@ -127,6 +127,7 @@ export class CityComponent implements OnInit {
       Swal.fire('Error', 'Картинка города не может быть пуста', 'error').then();
       return;
     }
+    this.editObj.img = this.editObjCopy.img;
     this.crud.post('city', this.editObj, this.editObj['_id']).then((v: any) => {
       if (v) {
         this.editShow = false;

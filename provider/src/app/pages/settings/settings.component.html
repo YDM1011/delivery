@@ -11,7 +11,7 @@
 		
 		<div class="add-section">
 			<form action="" (keyup)="formCheck()">
-				<mat-form-field class="example-full-width" *ngIf="company">
+				<mat-form-field class="example-full-width" *ngIf="loading && company">
 					<input type="text" placeholder="Название комнании" aria-label="Text" name="name" matInput [(ngModel)]="companyCopy.name">
 				</mat-form-field>
 				<mat-form-field class="example-half" *ngIf="city && city.length > 0">
@@ -25,10 +25,12 @@
 			</form>
 			<div class="group-buttons">
 				<div class="left">
-					<div class="mat-chip-file" *ngIf="companyCopy && companyCopy.img && companyCopy.img !== ''; else upload">
-						<div class="content">{{companyCopy.img}}</div>
-						<div class="remove-mat-chip" (click)="companyCopy.img = ''; formCheck()"></div>
-					</div>
+					<ng-container *ngIf="companyCopy && companyCopy.img; else upload">
+						<div class="mat-chip-file">
+							<div class="content">{{companyCopy.img}}</div>
+							<div class="remove-mat-chip" (click)="companyCopy.img = ''; formCheck()"></div>
+						</div>
+					</ng-container>
 				</div>
 				<div class="right" *ngIf="isBlok">
 					<button class="main-button-color" (click)="create()">Сохранить</button>

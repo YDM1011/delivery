@@ -133,7 +133,8 @@ schema.post('save', (doc,next)=>{
                                 })
                                 .exec((e,r)=>{
                                     let obj = r && r.brandCount ? r.brandCount : {};
-                                    if (r && r.brandCount[doc.brand]){
+                                    console.log(r.brandCount, doc.brand);
+                                    if (r && r.brandCount  && r.brandCount[doc.brand]){
                                         obj = r.brandCount;
                                         obj[doc.brand] += 1;
                                     } else

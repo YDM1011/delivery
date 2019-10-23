@@ -26,26 +26,28 @@ export class WorkTimeComponent implements OnInit {
     });
   }
   setTimeAll(range, v) {
-    v = !v;
+    this.isBlok = true;
+    // v = !v;
     if (v) {
       this.time[range].isWeekend = false;
       this.time[range].isTimeRange = false;
-    } else {
-      this.time[range].isTimeRange = true;
+      this.time[range].isAllTime = true;
+      return;
     }
-    this.time[range].isAllTime = v;
-    this.isBlok = true;
+    this.time[range].isTimeRange = true;
+    this.time[range].isAllTime = false;
   }
   setTimeWeekend(range, v) {
-    v = !v;
+    this.isBlok = true;
+    // v = !v;
     if (v) {
       this.time[range].isAllTime = false;
       this.time[range].isTimeRange = false;
-    } else {
-      this.time[range].isTimeRange = true;
+      this.time[range].isWeekend = true;
+      return;
     }
-    this.time[range].isWeekend = v;
-    this.isBlok = true;
+    this.time[range].isTimeRange = true;
+    this.time[range].isWeekend = false;
   }
   setTimeStart(range, v) {
     this.time[range].timeStart = v;
@@ -56,6 +58,7 @@ export class WorkTimeComponent implements OnInit {
     this.isBlok = true;
   }
   saveTime() {
+    console.log(this.time);
     this.user.companies[0].workTime = this.time;
     this.crud.post('company', {workTime: this.time}, this.user.companies[0]._id).then((v: any) => {
       if (v) {

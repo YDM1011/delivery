@@ -1,4 +1,12 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {
+  AfterViewChecked,
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output
+} from '@angular/core';
 import {CrudService} from '../../crud.service';
 import {AuthService} from '../../auth.service';
 import Swal from 'sweetalert2';
@@ -8,7 +16,7 @@ import Swal from 'sweetalert2';
   templateUrl: './add-product.component.html',
   styleUrls: ['./add-product.component.scss']
 })
-export class AddProductComponent implements OnInit {
+export class AddProductComponent implements OnInit, AfterViewChecked {
   @Input() brands;
   @Input() categorys;
   @Output() outputNew = new EventEmitter();
@@ -16,6 +24,7 @@ export class AddProductComponent implements OnInit {
   public user;
   public mainCategoryChoose;
   public mainChooseBrand;
+  public companyId;
   public uploadObj;
     public product = {
     name: '',
@@ -28,18 +37,26 @@ export class AddProductComponent implements OnInit {
   };
   constructor(
       private crud: CrudService,
-      private auth: AuthService
+      private auth: AuthService,
+      private cdRef: ChangeDetectorRef
   ) { }
 
   ngOnInit() {
     this.auth.onMe.subscribe((v: any) => {
       if (!v) { return; }
       this.user = v;
-      this.categorys = v.companies[0].categories;
-      if (this.categorys && this.categorys.length > 0) {
-        this.mainCategoryChoose = this.categorys[0]._id;
+      if (this.user.companyOwner) {
+        this.companyId = this.user.companyOwner;
       }
     });
+    if (this.categorys && this.categorys.length > 0) {
+      this.mainCategoryChoose = this.categorys[0]._id;
+    }
+  }
+  removeImg() {
+    delete this.product.img;
+    this.product['img'] = '';
+    console.log(this.product)
   }
   create() {
     if (this.validation('product')) {
@@ -66,18 +83,18 @@ export class AddProductComponent implements OnInit {
 
       this.product.categoryOwner = this.mainCategoryChoose;
       this.product.brand = this.mainChooseBrand;
-      this.product.companyOwner = this.user.companies[0]._id;
+      this.product.companyOwner = this.companyId;
       this.crud.post('order', this.product).then((v: any) => {
         if (v) {
           this.outputNew.emit(v);
           this.clearMainObj();
         }
       }).catch((error) => {
-        if (error && error.errors.price.name === 'CastError') {
-          Swal.fire('Error', 'Цена должна вводится через "." - точку', 'error').then();
-        } else if (error && error.errors.categoryOwner.message === 'Check category') {
-          Swal.fire('Error', 'У вас нет созданых категорий', 'error').then();
-        }
+        // if (error && error.errors.price && error.errors.price.name === 'CastError') {
+        //   Swal.fire('Error', 'Цена должна вводится через "." - точку', 'error').then();
+        // } else if (error && error.errors.categoryOwner.message === 'Check category') {
+        //   Swal.fire('Error', 'У вас нет созданых категорий', 'error').then();
+        // }
       });
     }
   }
@@ -85,6 +102,7 @@ export class AddProductComponent implements OnInit {
     this.cancelAdd.emit(false);
   }
   onFs(e) {
+    console.log(e);
     // this.uploadObj = e;
     this.product.img = e.file;
   }
@@ -100,7 +118,9 @@ export class AddProductComponent implements OnInit {
       brand: '',
     };
   }
-
+  ngAfterViewChecked() {
+      this.cdRef.detectChanges();
+  }
   validation(obj) {
     if (this[obj].name === '') {
       Swal.fire('Error', 'Название продукта не может быть пустым', 'error');

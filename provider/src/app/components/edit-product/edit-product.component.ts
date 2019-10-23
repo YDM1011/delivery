@@ -74,11 +74,8 @@ export class EditProductComponent implements OnInit, OnChanges {
       this.editObj.img = this.editObjCopy.img;
       this.crud.post('order', this.editObj, this.editObj['_id']).then((v: any) => {
         if (v) {
-          this.obj = v;
-          this.outputChanges.emit(this.obj);
+          this.outputChanges.emit(v);
           this.cancelEdit.emit(false);
-          this.editObj = null;
-          this.editObjCopy = null;
         }
       }).catch((error) => {
         if (error && error.errors.price.name === 'CastError') {
@@ -123,8 +120,8 @@ export class EditProductComponent implements OnInit, OnChanges {
   }
 
   onFsEdit(e) {
-    // this.uploadObj = e;
-    this.editObj.img = e.file;
+    this.editObj.img = e.file.split('--')[1];
+    this.editObjCopy.img = e.file;
     this.formCheck();
   }
 

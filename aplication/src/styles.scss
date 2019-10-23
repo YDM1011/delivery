@@ -10,9 +10,13 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   width: 100%!important;
 }
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+//body { }
+body {height: 100%; margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 .cropper-canvas {
   outline: 1px solid #000;
+}
+::ng-deep .mat-button-focus-overlay, .mat-button-ripple.mat-ripple{
+  display: none!important;
+  background: transparent!important;
 }

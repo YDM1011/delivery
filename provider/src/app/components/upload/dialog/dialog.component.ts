@@ -3,7 +3,7 @@ import {UploadService} from "../upload.service";
 import {MatDialogRef} from "@angular/material";
 import {forkJoin} from "rxjs";
 import { Inject } from '@angular/core';
-import {MAT_DIALOG_DATA} from '@angular/material'
+import {MAT_DIALOG_DATA} from '@angular/material';
 
 @Component({
   selector: 'app-dialog',
@@ -29,14 +29,14 @@ export class DialogComponent implements OnInit {
     this.uploadService.onMultiple.subscribe(v => {
       this.multiple = v;
     });
-    this.uploadService.onFile.subscribe(v=>{
-      console.log(v);
-      if (v){
+    this.uploadService.onFile.subscribe(v => {
+      // console.log(v);
+      if (v) {
         this.img = v;
         this.step = 2;
       }
 
-    })
+    });
   }
   progress;
   canBeClosed = true;
@@ -67,8 +67,8 @@ export class DialogComponent implements OnInit {
   addFiles() {
     this.file.nativeElement.click();
   }
-  next(){}
-  send(v){
+  next() {}
+  send(v) {
     this.uploadService.setCropper(v);
     this.dialogRef.close();
   }

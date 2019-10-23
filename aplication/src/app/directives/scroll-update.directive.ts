@@ -2,10 +2,10 @@ import {AfterViewInit, Directive, ElementRef, EventEmitter, Input, Output} from 
 import {CrudService} from "../crud.service";
 
 @Directive({
-  selector: '[appScrollUpdate]'
+  selector: '[appScrollUpdateCategory]'
 })
 export class ScrollUpdateDirective implements AfterViewInit  {
-  @Input('appScrollUpload') scrollUpload;
+  // @Input('appScrollUpload') scrollUpload;
   @Input() folder;
   @Input() idCompany;
   @Input() idCategory;
@@ -33,44 +33,22 @@ export class ScrollUpdateDirective implements AfterViewInit  {
           this.count = count.count;
           block.onscroll = e => {
             if ((e.srcElement.scrollTop + (e.target.offsetHeight * 1.2) > e.target.scrollHeight) && this.triger) {
-              console.log(this.triger)
               this.triger = false;
               this.upload();
             }
           };
         }
       });
-
-      //
-      // const query1 = JSON.stringify({'createdBy.itemId': this.id});
-      // this.crud.get(`order/count?query=${query1}`).then((v: any) => {
-      //   this.count = v.count;
-      //   block.onscroll = e => {
-      //     if ((e.srcElement.scrollTop + (e.target.offsetHeight * 1.2) > e.target.scrollHeight) && this.triger) {
-      //       this.triger = false;
-      //       this.upload();
-      //     }
-      //   };
-      // });
   }
   upload() {
-    if (this.count <= this.skip * 1) {return; }
-    console.log('upload')
-    const query = `?query={"companyOwner":"${this.idCompany}","categoryOwner":"${this.idCategory}"}&limit=1&skip=${this.skip * 1}`;
+    if (this.count <= this.skip * 5) {return; }
+    const query = `?query={"companyOwner":"${this.idCompany}","categoryOwner":"${this.idCategory}"}&limit=5&skip=${this.skip * 5}`;
     this.crud.get('order', '', query).then((v: any) => {
-      console.log(v)
       if (v) {
         this.skip++;
         this.triger = true;
         this.output.emit(v);
       }
     });
-
-      // const populate = JSON.stringify({path: 'orders', options: {skip: this.skip * 8, limit: 8, sort: {updatedAt: -1}}, populate: [{path: 'products'}, {path: 'cleanerOwner', select: 'name'}, {path: 'deliveryOwner', select: 'name superManager'}]});
-      // this.crud.get(`actionLog/${this.id}?populate=${populate}`).then((basket: any) => {
-      //   this.skip++;
-      //   this.triger = true;
-      //   this.output.emit(basket);
-      // });
-    }
+  }
 }

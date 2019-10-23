@@ -178,24 +178,24 @@ export class CrudService {
         });
     });
   }
-  orderByCategoryCount(categoryId){
+  orderByCategoryCount(categoryId) {
     return new Promise((resolve, reject) => {
         this.get('orderByCategoryCount', categoryId, ).then((v: any) => {
           if (v) {
-            resolve(v)
+            resolve(v);
           } else {
-            reject()
+            reject();
           }
         });
     });
   }
-  orderByBrandCount(categoryId){
+  orderByBrandCount(categoryId) {
     return new Promise((resolve, reject) => {
         this.get('orderByBrandCount', categoryId, ).then((v: any) => {
           if (v) {
-            resolve(v)
+            resolve(v);
           } else {
-            reject()
+            reject();
           }
         });
     });
@@ -214,7 +214,7 @@ export class CrudService {
               let triger = {};
               let arr = [];
               v.forEach(it => {
-                if (it.mainCategory){
+                if (it.mainCategory) {
                   if (triger[it.mainCategory._id]) return;
                   it["img"] =  `${this.domain}/upload/${it.mainCategory.img}` || defIcon;
                   it["name"] = `${it.mainCategory.name}`;

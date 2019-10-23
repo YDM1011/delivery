@@ -88,6 +88,8 @@ import { BackBtnComponent } from './components/back-btn/back-btn.component';
 import {ScrollingModule} from "@angular/cdk/scrolling";
 import { ScrollUpdateDirective } from './directives/scroll-update.directive';
 import {CroperComponent, TouchStart} from "./components/croper/croper.component";
+import { ScrollUpdateBrandsDirective } from './directives/scroll-update-brands.directive';
+import { ScrollTopDirective } from './directives/scroll-top.directive';
 
 @NgModule({
   declarations: [
@@ -157,6 +159,8 @@ import {CroperComponent, TouchStart} from "./components/croper/croper.component"
     ShowProviderBrandsComponent,
     BackBtnComponent,
     ScrollUpdateDirective,
+    ScrollUpdateBrandsDirective,
+    ScrollTopDirective,
     CroperComponent,
     TouchStart
   ],

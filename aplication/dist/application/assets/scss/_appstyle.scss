@@ -167,6 +167,7 @@
         background: #fff;
         border: 1px solid #F3F3F3;
         box-shadow: 0 2px 3px rgba(9, 194, 194, 0.1);
+        padding: 5px;
         img{
           width: 35px;
           height: 35px;
@@ -307,6 +308,9 @@
     font-weight: bold;
     font-size: 18px;
     line-height: 22px;
+    text-align: center;
+    width:100%;
+    max-width: calc(100% - 100px);
   }
 }
 @media (min-width: 768px){

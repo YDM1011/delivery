@@ -6,7 +6,7 @@
 		<input matInput type="text" placeholder="Опис продукта" [(ngModel)]="product.des" name="des" autocomplete="off">
 	</mat-form-field>
 	<mat-form-field class="example-full-width">
-		<input matInput type="text" placeholder="Ціна" [(ngModel)]="product.price" name="price" autocomplete="off">
+		<input matInput type="number" placeholder="Ціна" [(ngModel)]="product.price" name="price" autocomplete="off">
 	</mat-form-field>
 	<div *ngIf="categorys.length > 0">
 		<mat-form-field>
@@ -30,12 +30,11 @@
 	</div>
 	<div class="group-buttons">
 		<div class="left">
-			<!--<app-upload (onFs)="onFs($event)" *ngIf="product && product.img === ''"></app-upload>-->
-      <app-img [dir]="'product'" [fs]="product.img" *ngIf="product && product.img"></app-img>
-      <app-upload (onCrop)="onFs($event)" *ngIf="product && product.img === ''" [cropper]="true" [dir]="'product'"></app-upload>
-			<div class="mat-chip-file" *ngIf="product && product.img !== ''">
+			<app-img *ngIf="product && product.img" [dir]="'product'" [fs]="product.img"></app-img>
+            <app-upload (onCrop)="onFs($event)" *ngIf="product && !product.img" [cropper]="true" [dir]="'product'"></app-upload>
+			<div class="mat-chip-file" *ngIf="product && product.img">
 				<div class="content">{{product.img}}</div>
-				<div class="remove-mat-chip" (click)="product.img = ''"></div>
+				<div class="remove-mat-chip" (click)="removeImg()"></div>
 			</div>
 		</div>
 		<div class="right">

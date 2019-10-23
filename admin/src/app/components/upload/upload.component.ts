@@ -10,6 +10,7 @@ import {UploadService} from "./upload.service";
 })
 export class UploadComponent implements OnInit, OnDestroy, OnChanges {
   @Output() onFs = new EventEmitter();
+  @Output() onCrop = new EventEmitter();
   @Input() multiple = true;
   @Input() defType = {'image/png': true, 'image/jpg': true, 'image/jpeg': true};
   @Input() tooltip = '';

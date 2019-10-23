@@ -31,14 +31,9 @@ export class ShowProviderBrandsComponent implements OnInit, OnChanges {
       });
     });
   }
-
-  getProduct(id) {
-    const skip = this.products ? this.products.length : 0;
-    const query = `?query={"companyOwner":"${this.id}","brand":"${id}"}&limit=1&skip=${skip}`;
-    this.crud.get('order', '', query).then(v => {
-      if (v) {
-        this.products = this.products.concat(v);
-      }
-    });
+  getOutput(e) {
+    if (e) {
+      this.products = this.products.concat(e);
+    }
   }
 }

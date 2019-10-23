@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {AuthService} from "../../auth.service";
-import {CrudService} from "../../crud.service";
-import {ActivatedRoute} from "@angular/router";
+import {AuthService} from '../../auth.service';
+import {CrudService} from '../../crud.service';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-provider',
@@ -18,6 +18,7 @@ export class ProviderComponent implements OnInit {
   public activeBrandsId;
   public showCategory = true;
   public showBrands = false;
+  public loading = false;
   public products = {};
   constructor(
       private auth: AuthService,
@@ -29,22 +30,25 @@ export class ProviderComponent implements OnInit {
     this.auth.onLanguage.subscribe((v: string) => {
       this.language = v;
     });
-    this.route.params.subscribe((params: any) => {
+    this.route.params.subscribe(() => {
       this.id = this.route.snapshot.paramMap.get('id');
       this.init();
     });
     this.auth.onMe.subscribe((v: string) => {
       this.me = v;
-      if (this.me && this.me.favoriteCompany && (this.me.favoriteCompany.indexOf(this.id) >- 1))
+      if (this.me && this.me.favoriteCompany && (this.me.favoriteCompany.indexOf(this.id) > -1)) {
         this.favoriteShow = true;
+      }
     });
   }
   init() {
     this.crud.getDetailCompany(this.id, this.company).then((v: any) => {
       if (v) {
         this.company = v;
+        console.log(this.company);
         if (this.company && this.company.categories.length > 0) {
           this.activeCategoryId = this.company.categories[0]._id;
+          this.loading = true;
         }
       }
     });
@@ -53,11 +57,11 @@ export class ProviderComponent implements OnInit {
     this.crud.favoriteCompany({companyId: this.id}).then((v: any) => {
       if (v) {
         this.me.favoriteCompany = v;
-        if (v && (v.indexOf(this.id) >- 1)) {
+        if (v && (v.indexOf(this.id) > -1)) {
           this.favoriteShow = true;
-        } else {
-          this.favoriteShow = false;
+          return;
         }
+        this.favoriteShow = false;
       }
     });
   }

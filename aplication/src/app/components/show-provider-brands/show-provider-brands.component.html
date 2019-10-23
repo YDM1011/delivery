@@ -1,5 +1,4 @@
-<ng-container *ngFor="let item of products">
-	<app-product-item [data]="item"></app-product-item>
-</ng-container>
+<cdk-virtual-scroll-viewport itemSize="120" class="viewport" appScrollUpdateBrands [idBrand]="brandId" [idCompany]="id" (output)="getOutput($event)">
+	<app-product-item [data]="item" *cdkVirtualFor="let item of products"></app-product-item>
+</cdk-virtual-scroll-viewport>
 
-<button (click)="getProduct(brandId)" *ngIf="products && products.length > 0">Load more</button>
