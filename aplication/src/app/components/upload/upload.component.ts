@@ -36,6 +36,7 @@ export class UploadComponent implements OnInit, OnDestroy, OnChanges {
     this.uploadService.onCrop.subscribe(v => {
       if (v) {
         this.onCrop.emit(v);
+        this.onCrop = new EventEmitter();
       }
     });
   }

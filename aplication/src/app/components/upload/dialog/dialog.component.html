@@ -5,7 +5,7 @@
 <ng-container *ngIf="!multiple">
   <input type="file" #file style="display: none" (change)="onFilesAdded()" />
 </ng-container>
-
+<!--<img src="{{this.img.file}}" alt="" *ngIf="this.img">-->
 <div class="container" fxLayout="column" fxLayoutAlign="space-evenly stretch" *ngIf="!(data.cropper && step == 2)">
   <div>
     <h1 mat-dialog-title>Upload Files</h1>
@@ -45,6 +45,6 @@
 </ng-container>
 
 <ng-container *ngIf="data.cropper && step == 2 && img">
-  <app-image-cropper [src]="img.file" [dir]="data.dir" (done)="send($event)"></app-image-cropper>
+  <app-image-cropper *ngIf="img.file" [src]="img.file" [dir]="data.dir" (done)="send($event)"></app-image-cropper>
 </ng-container>
 

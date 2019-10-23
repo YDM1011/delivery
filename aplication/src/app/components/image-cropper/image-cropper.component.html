@@ -5,8 +5,9 @@
 <!--<button (click)="getImageData()">getImageData</button> <br>-->
 <div class="wrap-cropper">
   <div class="img-container">
-    <img #image [src]="domain+'/upload/'+imageSource">
+    <!--<img #image [src]="domain+'/upload/'+imageSource">-->
     <!--<img #image src="https://client.piligrim-test.pp.ua/assets/images/tmp/img-deli.png">-->
+    <app-croper [src]="domain+'/upload/'+imageSource" (data)="onCrop($event)"></app-croper>
   </div>
   <!--<img [src]="imageDestination" class="img-preview">-->
   <div class="btn-wrap">

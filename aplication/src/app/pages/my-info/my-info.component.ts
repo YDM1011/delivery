@@ -47,9 +47,18 @@ export class MyInfoComponent implements OnInit {
     //   if (!v) {return; }
     //   this.img = v.file;
     // }).catch( e => console.log(e));
+    console.log("body", body.file)
+    console.log("Me",this.me.img)
+    if (this.me.img === body.file) return this.me.img = null;
     this.me.img = null;
+
+
     setTimeout(() => {
       this.me.img = body.file;
+      body = null;
+      this.crud.post('client', this.me, this.me._id).then((v: any) => {
+        Swal.fire(this.data.saved[this.language], '', 'success');
+      });
     }, 0);
   }
 

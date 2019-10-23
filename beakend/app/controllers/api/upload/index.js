@@ -7,17 +7,30 @@ module.exports = (backendApp, router) => {
     router.post('/upload', [], function (req, res, next) {
         let form = new IncomingForm();
         let readStream, createStream, fileName;
-        let transform = sharp().resize(400);
+        const transformer =  sharp()
+            .resize(500);
         form.on('file', (field, file) => {
             readStream = fs.createReadStream(file.path);
             fileName = new Date().getTime() + '--' + file.name;
             createStream = fs.createWriteStream(path.join(__dirname, '../../../../upload/'+fileName));
-            readStream.pipe(transform).pipe(createStream);
+            readStream.pipe(transformer).pipe(createStream).on('finish', ()=>{
+                    res.ok({file:fileName})
+                });
         });
         form.on('end', (e) => {
-            res.ok({file: fileName});
+            // let readableStream = fs.createReadStream('upload/'+fileName);
+            // let writableStream = fs.createWriteStream('upload/'+fileName);
+            // const transformer =  sharp()
+            //     .resize(500);
+            // readableStream
+            //     .pipe(transformer)
+            //     .pipe(writableStream).on('finish', ()=>{
+            //     res.ok({file:fileName})
+            // });
+            // res.ok({file:fileName})
         });
         form.parse(req);
+
     });
 
     router.post('/deleteFile', [], function (req, res, next) {

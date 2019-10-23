@@ -69,6 +69,10 @@ export class DialogComponent implements OnInit {
   next(){}
   send(v){
     this.uploadService.setCropper(v);
+    this.file.nativeElement.value = "";
+    this.img = '';
+    this.files = new Set();
+    console.log(this.file.nativeElement)
     this.dialogRef.close();
   }
   closeDialog() {

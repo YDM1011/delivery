@@ -35,16 +35,7 @@ export class ImageCropperComponent implements OnInit, AfterViewInit {
   }
 
   public ngAfterViewInit() {
-    this.cropper = new Cropper(this.imageElement.nativeElement, {
-      zoomable: false,
-      scalable: false,
-      checkCrossOrigin: false,
-      aspectRatio: 1,
-      crop: () => {
-        // const canvas = this.cropper.getCroppedCanvas();
-        // this.imageDestination = canvas.toDataURL("image/png");
-      }
-    });
+
   }
 
   rotete() {
@@ -67,33 +58,27 @@ export class ImageCropperComponent implements OnInit, AfterViewInit {
     console.log(canvas);
     // this.imageDestination = canvas.toDataURL("image/png");
   }
-
-  getData() {
-    const canvas = this.cropper.getData();
-    console.log(canvas);
+  onCrop(e){
     const path = this.imageSource.split('/');
     let file = path[path.length-1];
     this.imageData = {
       fileName: file,
-      yy:[canvas.x, canvas.x+canvas.width],
-      xx:[canvas.y, canvas.y+canvas.height]
+      yy:[e.y, e.height],
+      xx:[e.x, e.width]
     };
+    console.log(this.imageData)
+  }
+  getData() {
     let link = 'imgSlice';
     if (this.dir) link = link + '/'+this.dir;
 
-    console.log(link)
     this.crud.post(link , this.imageData, null)
       .then(v=>{
-        console.log(v)
         this.done.emit(v)
       }).catch(e=>console.log(e))
-    // this.imageDestination = canvas.toDataURL("image/png");
   }
   public ngOnInit() {
 
   }
-  // ngAfterViewInit(){
-    //
-  // }
 }
 
