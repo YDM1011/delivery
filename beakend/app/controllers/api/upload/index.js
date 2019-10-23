@@ -14,8 +14,8 @@ module.exports = (backendApp, router) => {
             fileName = new Date().getTime() + '--' + file.name;
             createStream = fs.createWriteStream(path.join(__dirname, '../../../../upload/'+fileName));
             readStream.pipe(transformer).pipe(createStream).on('finish', ()=>{
-                    res.ok({file:fileName})
-                });
+                res.ok({file:fileName})
+            });
         });
         form.on('end', (e) => {
             // let readableStream = fs.createReadStream('upload/'+fileName);

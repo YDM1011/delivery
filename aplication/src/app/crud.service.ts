@@ -297,7 +297,7 @@ export class CrudService {
     let page = 0;
     let limit = 7;
     return new Promise((resolve, reject) => {
-      const query = `?query={"city":"${this.city._id}"}&sort={"rating":-1}&limit=${page}&skip=${limit*page}`;
+      const query = `?query={"city":"${this.city._id}","verify":true}&sort={"rating":-1}&limit=${page}&skip=${limit*page}`;
       this.get('company', '', query).then((v:any)=>{
         if (v) {
           resolve(v)
