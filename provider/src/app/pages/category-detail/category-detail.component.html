@@ -8,7 +8,7 @@
 				Создать продукт
 			</div>
 		</div>
-		<app-add-product (outputNew)="newProduct($event)" [brands]="brands" (cancelAdd)="cancelAdd($event)"></app-add-product>
+		<app-add-product (outputNew)="newProduct($event)" [brands]="brands" [categorys]="categorys"  (cancelAdd)="cancelAdd($event)"></app-add-product>
 		
 	</div>
 	
@@ -18,7 +18,7 @@
 				Редактировать продукт
 			</div>
 		</div>
-		<app-edit-product (cancelEdit)="cancelEdit($event)" [brands]="brands" (outputChanges)="outputEdit($event)" [obj]="editObj"></app-edit-product>
+		<app-edit-product (cancelEdit)="cancelEdit($event)" [brands]="brands" [categorys]="categorys"  (outputChanges)="outputEdit($event)" [obj]="editObj"></app-edit-product>
 	</div>
 	<ng-container class="loading" *ngIf="!loading">
 		Loading ...

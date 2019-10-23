@@ -201,7 +201,7 @@ const canUpdate = (options) => {
             if (opt || req.error.success) {
                 return next()
             } else {
-                res.notFound("No one document1")
+                res.notFound("No one document12", opt)
             }
 
         }).catch(e=>{console.log(e); res.badRequest(e)});
@@ -212,11 +212,11 @@ const schemaPre = {
     Save: (req, res, next) => {
         req.body.date = new Date();
         if (req.user) req.body.createdBy = req.user._id;
-        console.log(req.body)
         callMethod(req, res, next, 'preSave')
     },
     Update: (req, res, next) => {
         req.body.lastUpdate = req.body.lastUpdate ? req.body.lastUpdate : new Date();
+        delete req.body.createdBy;
         callMethod(req, res, next, 'preUpdate')
     },
     Delete: (req, res, next) => callMethod(req, res, next, 'preDel'),
@@ -240,7 +240,7 @@ const callMethod = (req,res,next,method) => {
             next()
         }
     } else {
-        console.log("method", method);
+        // console.log("method", method);
         next()
     }
 };
@@ -281,6 +281,7 @@ const checkOwnerPost = (req,res,next,options) => {
             console.log(req.erm.query.query)
             if (!req.erm.query.query) { return rs(false); }
             mongoose.model(model).findOne(req.erm.query.query).exec((e,r)=>{
+                console.log("ok!!", e,r, model, req.erm.query.query)
                 if (e) return rj(e);
                 if (!r) return rs(false);
                 if (r) {

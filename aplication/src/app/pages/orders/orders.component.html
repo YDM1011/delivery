@@ -29,6 +29,11 @@
           <app-orders-item [order]="item" *ngFor="let item of orders"></app-orders-item>
         </mat-accordion>
       </div>
+      <ng-container *ngIf="orders && orders.length === 0">
+        <div class="empty-block">
+          У вас нет активных заказов
+        </div>
+      </ng-container>
     </div>
   </div>
 </ng-container>
