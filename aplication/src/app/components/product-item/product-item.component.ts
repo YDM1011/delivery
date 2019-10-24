@@ -12,6 +12,7 @@ export class ProductItemComponent implements OnInit {
   public count: number = 0;
   public language: string;
   @Input() data;
+  @Input() company;
   constructor(
       private auth: AuthService,
       private crud: CrudService,
