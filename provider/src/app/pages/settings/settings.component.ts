@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {CrudService} from '../../crud.service';
 import {AuthService} from '../../auth.service';
-import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-settings',
@@ -16,8 +15,9 @@ export class SettingsComponent implements OnInit {
   public city;
   public uploadObj;
   public cityChoose;
-  public isBlok: boolean = false;
-  public loading: boolean = false;
+  public isBlok = false;
+  public loading = false;
+  public body = {};
 
   constructor(
       private crud: CrudService,
@@ -28,7 +28,6 @@ export class SettingsComponent implements OnInit {
     this.auth.onMe.subscribe((v: any) => {
       if (!v) {return; }
       this.user = Object.assign({}, v);
-      // this.user.companies[0].img = this.user.companies[0].img ? this.user.companies[0].img.split("--")[1] : '';
       this.companyId = this.user.companyOwner;
       this.crud.get('city').then((v: any) => {
         if (!v) {return; }
@@ -38,12 +37,11 @@ export class SettingsComponent implements OnInit {
         if (c) {
           this.company = Object.assign({}, c);
           this.companyCopy = Object.assign({}, c);
-          this.companyCopy.img = this.companyCopy.img ? this.companyCopy.img.split('--')[1] : '';
           if (this.company.city) {
             this.cityChoose = this.company.city;
           }  else {
-              this.company['city'] = null;
-              this.companyCopy['city'] = null;
+              this.company.city = null;
+              this.companyCopy.city = null;
           }
           this.loading = true;
         }
@@ -51,33 +49,31 @@ export class SettingsComponent implements OnInit {
     });
   }
   create() {
-    if (this.companyCopy.img === '') {
-      Swal.fire('Error', 'Заполните поле с картинкой', 'error').then();
-      return;
-    }
-    this.crud.post('company', {name: this.companyCopy.name, city: this.companyCopy.city, companyMobile: this.companyCopy.companyMobile, img: this.company.img}, this.company._id).then((v: any) => {
+    this.crud.post('company', this.body, this.company._id).then((v: any) => {
       this.user.companies[0] = v;
       this.company = Object.assign({}, v);
       this.companyCopy = Object.assign({}, v);
-      this.companyCopy.img = this.companyCopy.img ? this.companyCopy.img.split('--')[1] : '';
       this.auth.setMe(this.user);
       this.isBlok = false;
+      this.body = {};
     });
   }
   onFs(e) {
-    this.company.img = e.file;
-    this.companyCopy.img = e.file.split('--')[1];
+    this.companyCopy.img = e.file;
     this.formCheck();
   }
   changeCity(o) {
-    this.companyCopy['city'] = o;
+    this.companyCopy.city = o;
     this.formCheck();
   }
   validate() {
     let isTrue = false;
     for (const key in this.company) {
       if (this.company[key] !== this.companyCopy[key]) {
+        this.body[key] = this.companyCopy[key];
         isTrue = true;
+      } else {
+        delete this.body[key];
       }
     }
     return isTrue;

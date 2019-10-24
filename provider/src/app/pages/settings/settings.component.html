@@ -30,7 +30,7 @@
 				<div class="left">
 					<ng-container *ngIf="companyCopy && companyCopy.img; else upload">
 						<div class="mat-chip-file">
-							<div class="content">{{companyCopy.img}}</div>
+							<div class="content">{{companyCopy.img.split('--')[1]}}</div>
 							<div class="remove-mat-chip" (click)="companyCopy.img = ''; formCheck()"></div>
 						</div>
 					</ng-container>
