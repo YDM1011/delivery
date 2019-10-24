@@ -10,24 +10,20 @@ module.exports = (backendApp, router) => {
         const transformer =  sharp()
             .resize(500);
         form.on('file', (field, file) => {
-            readStream = fs.createReadStream(file.path);
-            fileName = new Date().getTime() + '--' + file.name;
-            createStream = fs.createWriteStream(path.join(__dirname, '../../../../upload/'+fileName));
-            readStream.pipe(transformer).pipe(createStream).on('finish', ()=>{
-                res.ok({file:fileName})
-            });
+            try{
+                readStream = fs.createReadStream(file.path);
+                fileName = new Date().getTime() + '--' + file.name;
+                createStream = fs.createWriteStream(path.join(__dirname, '../../../../upload/'+fileName));
+                readStream.pipe(transformer).pipe(createStream).on('finish', ()=>{
+                    res.ok({file:fileName})
+                });
+            } catch(e) {
+                res.notFound("Error!")
+            }
+
         });
         form.on('end', (e) => {
-            // let readableStream = fs.createReadStream('upload/'+fileName);
-            // let writableStream = fs.createWriteStream('upload/'+fileName);
-            // const transformer =  sharp()
-            //     .resize(500);
-            // readableStream
-            //     .pipe(transformer)
-            //     .pipe(writableStream).on('finish', ()=>{
-            //     res.ok({file:fileName})
-            // });
-            // res.ok({file:fileName})
+
         });
         form.parse(req);
 

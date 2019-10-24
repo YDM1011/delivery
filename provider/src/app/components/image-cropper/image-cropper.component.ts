@@ -68,26 +68,24 @@ export class ImageCropperComponent implements OnInit, AfterViewInit {
     // this.imageDestination = canvas.toDataURL("image/png");
   }
 
-  getData() {
-    const canvas = this.cropper.getData();
-    console.log(canvas);
+  onCrop(e){
     const path = this.imageSource.split('/');
-    const file = path[path.length - 1];
+    let file = path[path.length-1];
     this.imageData = {
       fileName: file,
-      yy: [canvas.x, canvas.x + canvas.width],
-      xx: [canvas.y, canvas.y + canvas.height]
+      yy:[e.y, e.height],
+      xx:[e.x, e.width]
     };
+    console.log(this.imageData)
+  }
+  getData() {
     let link = 'imgSlice';
-    if (this.dir) link = link + '/' + this.dir;
+    if (this.dir) link = link + '/'+this.dir;
 
-    // console.log(link)
-    this.crud.post(link , this.imageData, null, false)
-      .then(v => {
-        console.log(v)
-        this.done.emit(v);
-      }).catch(e => console.log(e));
-    // this.imageDestination = canvas.toDataURL("image/png");
+    this.crud.post(link , this.imageData, null)
+      .then(v=>{
+        this.done.emit(v)
+      }).catch(e=>console.log(e))
   }
   public ngOnInit() {
 

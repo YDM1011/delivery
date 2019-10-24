@@ -4,7 +4,7 @@ import { filter, map } from 'rxjs/operators';
 import { WebSocketSubject, WebSocketSubjectConfig } from 'rxjs/webSocket';
 
 import { share, distinctUntilChanged, takeWhile } from 'rxjs/operators';
-import { IWebsocketService, IWsMessage, WebSocketConfig } from './websocket.interfaces';
+import {IWebsocketService, IWsMessage, WebSocketConfig} from './websocket.interfaces';
 import { config } from './websocket.config';
 
 
@@ -48,6 +48,9 @@ export class WebsocketService implements IWebsocketService, OnDestroy {
                 next: (event: Event) => {
                     console.log('WebSocket connected!');
                     this.connection$.next(true);
+                    this.send('connect', '', {}, localStorage.getItem('token'));
+
+
                 }
             }
         };

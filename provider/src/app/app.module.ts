@@ -47,6 +47,7 @@ import {environment} from "../environments/environment";
 import { ScrollTopDirective } from './directives/scroll-top.directive';
 import {LoadingComponent} from "./components/loading/loading.component";
 import {LottieAnimationViewModule} from "ng-lottie";
+import {CroperComponent, TouchStart} from './components/croper/croper.component';
 
 @NgModule({
   declarations: [
@@ -78,7 +79,9 @@ import {LottieAnimationViewModule} from "ng-lottie";
     StatusPipe,
     SafeHtmlPipe,
     ScrollTopDirective,
-    LoadingComponent
+    LoadingComponent,
+    CroperComponent,
+    TouchStart
   ],
   imports: [
     BrowserAnimationsModule,

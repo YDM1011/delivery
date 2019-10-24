@@ -7,6 +7,7 @@ export const WS = {
         ON_CONFIRM_ORDER: 'on-order-confirm'
     },
     SEND: {
+        CONNECT: 'CONNECT',
         SEND_TEXT: 'set-text',
         NOTIFICATION: 'form-notification',
         REMOVE_TEXT: 'remove-text',

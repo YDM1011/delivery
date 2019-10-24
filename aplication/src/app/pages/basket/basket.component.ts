@@ -55,6 +55,6 @@ export class BasketComponent implements OnInit {
 
   soket() {
     if (!this.baskets[0].companyOwner && !this.baskets[0].companyOwner.createdBy) return;
-    this.wsService.send(WS.SEND.CONFIRM_ORDER, this.baskets[0].companyOwner.createdBy, {data: "Hello"}, 'token');
+    this.wsService.send(WS.SEND.CONFIRM_ORDER, this.baskets[0].companyOwner.createdBy, {data: "Hello"}, localStorage.getItem('token'));
   }
 }

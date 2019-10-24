@@ -2,58 +2,33 @@ const imageToSlices = require('image-to-slices');
 const path = require('path');
 const sharp = require('sharp');
 const fs = require('fs');
-//
-// imageToSlices.configure({
-//     clipperOptions: {
-//         canvas: require('canvas')
-//     }
-// });
+
 module.exports = (backendApp, router) => {
     router.post('/imgSlice/:dir?', [], (req,res,next) => {
-        let fileName = req.body.fileName;
-        let x = req.body.xx;
-        let y = req.body.yy;
-        // console.log(req.params.dir);
-        // req.body.xx.forEach((it,ind)=>{
-        //     req.body.xx[ind] = parseInt(it);
-        //    if (req.body.xx[ind] < 1) req.body.xx[ind] = 1
-        // });`
-        // req.body.yy.forEach((it,ind)=>{
-        //     req.body.yy[ind] = parseInt(it);
-        //     if (req.body.yy[ind] < 1) req.body.yy[ind] = 1
-        // });
-        // console.log(req.body, fileName)
-        // imageToSlices(path.join(__dirname, '../../../../upload/'+fileName),
-        //     req.body.xx, req.body.yy,
-        //     {
-        //         saveToDataUrl: true
-        //     }, (v) => {
-        //     console.log("OK!!!!!!")
-        //         minification(fileName, v[4].dataURI, req.params.dir, (err,info)=>{
-        //             console.log(err,info)
-        //             res.ok({file:fileName})
-        //         })
-        //     }
-        // );
-
-        let dir = req.params.dir ? req.params.dir+'/' : '';
-        console.log('upload/'+ dir + fileName);
+        const fileName = req.body.fileName;
+        const x = req.body.xx;
+        const y = req.body.yy;
+        const dir = req.params.dir ? req.params.dir+'/' : '';
         let readableStream = fs.createReadStream('upload/'+fileName);
         let writableStream = fs.createWriteStream('upload/'+ dir + fileName);
         const left= parseInt(x[0]);
         const top= parseInt(y[0]);
         const width= parseInt(x[1]);
         const height= parseInt(y[1]);
-        console.log(left, top, width, height);
-        const transformer =  sharp()
-            .extract({ left: left, top: top, width: width, height: height })
-            .resize(200);
+        try {
+            const transformer =  sharp()
+                .extract({ left: left, top: top, width: width, height: height })
+                .resize(200);
 
-        readableStream
-            .pipe(transformer)
-            .pipe(writableStream).on('finish', ()=>{
-            res.ok({file:fileName})
-        });
+            readableStream
+                .pipe(transformer)
+                .pipe(writableStream).on('finish', ()=>{
+                res.ok({file:fileName})
+            });
+        } catch(e) {
+            res.notFound("Error!")
+        }
+
     });
 };
 

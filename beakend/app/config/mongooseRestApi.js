@@ -42,7 +42,6 @@ module.exports = backendApp => {
 
                 })
             }).then(mainName => {
-                console.log(mainName)
                 if (!mainName || mainName === 'return') return next();
                 fs.unlink("upload/"+mainName, fsCallbeack=>{
                     fs.unlink("upload/address/"+mainName, fsCallbeack=>{

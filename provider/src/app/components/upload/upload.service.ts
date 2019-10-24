@@ -22,6 +22,10 @@ export class UploadService {
   setNull(){
     this.fs = new BehaviorSubject<any>(null);
     this.onFs = this.fs.asObservable();
+    this.file = new BehaviorSubject<any>(null);
+    this.onFile = this.file.asObservable();
+    this.crop = new BehaviorSubject<any>(null);
+    this.onCrop = this.crop.asObservable();
   }
   setMultiple(is){
     this.multiple.next(is ? true : false);
