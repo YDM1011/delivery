@@ -10,8 +10,42 @@
   <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500&display=swap" rel="stylesheet">
+  <style>
+    .loading{
+      position: fixed;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      width: 100%;
+      top: 0;
+      left: 0;
+      background: rgba(26, 26, 26, 0.13);
+      z-index: 100;
+    }
+    #loadingItem{
+      width: 280px;
+      height: 280px;
+    }
+  </style>
 </head>
 <body>
-  <app-root></app-root>
+  <app-root>
+    <div class="loading">
+      <div id="loadingItem"></div>
+    </div>
+  </app-root>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.5.9/lottie.js" integrity="sha256-RVQVF5NKgGRQ+0CFMav1cnEcS1hxh9BqMUbQW8B+Cqo=" crossorigin="anonymous"></script>
+  <script>
+    lottie.loadAnimation({
+      container: loadingItem, // the dom element that will contain the animation
+      renderer: 'canvas',
+      width: 280,
+      height: 280,
+      loop: true,
+      autoplay: true,
+      path: './assets/loading.json' // the path to the animation json
+    });
+  </script>
 </body>
 </html>

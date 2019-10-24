@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import {AuthService} from "./auth.service";
 import {CrudService} from "./crud.service";
+import {Subscription} from "rxjs";
 // import {WebNotificationService} from "./web-notification.service";
 // import {SwPush} from "@angular/service-worker";
 
@@ -15,11 +16,14 @@ export class AppComponent {
   public setting: any;
   public me: any;
   public loaded = false;
+  public count;
   // public isEnabled = this.swPush.isEnabled;
   // public isGranted = Notification.permission === 'granted';
 
   // private swPush: SwPush,
   // private webNotificationService: WebNotificationService,
+  private _subscription: Subscription[] = [];
+
   constructor(
       private auth: AuthService,
       private crud: CrudService
@@ -35,15 +39,33 @@ export class AppComponent {
           }
           this.loaded = true;
         });
-        if (this.localStorage.getItem('token')){
+        if (this.localStorage.getItem('token')) {
           this.crud.get('me').then((v: any) => {
             this.me = Object.assign({}, v);
             this.auth.setMe(this.me);
+            if (this.me && this.me._id) {
+              this.crud.get(`basket/count?query={"createdBy":"${this.me._id}","status":0}`).then((count: any) => {
+                if (count) {
+                  this.count = count.count;
+                  this.auth.setBasketCount(this.count);
+                }
+              });
+            }
           });
         }
-
       }
     });
-
+    this.auth.onCheckBasket.subscribe((v: any) => {
+      if (v) {
+        if (this.me && this.me._id) {
+          this.crud.get(`basket/count?query={"createdBy":"${this.me._id}","status":0}`).then((count: any) => {
+            if (count) {
+              this.count = count.count;
+              this.auth.setBasketCount(this.count);
+            }
+          });
+        }
+      }
+    });
   }
 }

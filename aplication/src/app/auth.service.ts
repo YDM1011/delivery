@@ -19,6 +19,9 @@ export class AuthService {
   private me = new BehaviorSubject<any>(null);
   public onMe = this.me.asObservable();
 
+  private basketCount = new BehaviorSubject<any>(null);
+  public onBasketCount = this.basketCount.asObservable();
+
   private translate = new BehaviorSubject<any>(null);
   public onTranslate = this.translate.asObservable();
 
@@ -43,6 +46,9 @@ export class AuthService {
   }
   setMe(data) {
       this.me.next(data);
+  }
+  setBasketCount(data) {
+    this.basketCount.next(data);
   }
   setLanguage(data) {
     this.language.next(data);
