@@ -12,6 +12,7 @@ export class ProductLeazyComponent implements OnInit {
   public orderCount: number = 0;
   public language: string;
   public order = [];
+  @Input() company;
   @Input() value;
   @Input() filter = 'category';
   constructor(
