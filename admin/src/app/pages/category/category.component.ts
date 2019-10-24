@@ -17,14 +17,18 @@ export class CategoryComponent implements OnInit {
   public editShow = false;
   public isBlok = false;
   public categorys = [];
+  public brands = [];
+  public mainChooseBrand = null;
   public uploadObj;
   public page = {pageSize: 5, pageIndex: 0};
   public editObjCopy;
   public subcategoryName = '';
+  public editArrayBrands = [];
   public editObj = {
     name: '',
     img: '',
-    subCategory: []
+    subCategory: [],
+    brands: []
   };
   public category = {
     name: '',
@@ -45,27 +49,42 @@ export class CategoryComponent implements OnInit {
         this.loading = true;
       });
     });
+    this.crud.get('brand?select=["name"]').then((b: any) => {
+      if (!b) {return; }
+      this.brands = b;
+    });
   }
   onFs(e) {
-    // this.uploadObj = e;
     this.category.img = e.file;
   }
   onFsEdit(e) {
-    // this.uploadObj = e;
     this.editObj.img = e.file;
-    this.editObjCopy.img = e.file.split("--")[1];
+    this.editObjCopy.img = e.file.split('--')[1];
     this.formCheck();
+  }
+  addBrands() {
+    if (this.mainChooseBrand) {
+      if (this.editObjCopy.brands.indexOf(this.mainChooseBrand) !== -1) {
+        return;
+      }
+      this.editObjCopy.brands.push(this.mainChooseBrand);
+      this.showBrandsName();
+      this.mainChooseBrand = null;
+    }
   }
   addSubCatergory(e) {
     e.preventDefault();
     if (this.subcategoryName) {
       this.editObjCopy.subCategory.push(this.subcategoryName);
       this.subcategoryName = '';
-      console.log(this.editObjCopy.subCategory)
     }
   }
   removeSub(i) {
     this.editObjCopy.subCategory.splice(i, 1);
+  }
+  removeBrands(i) {
+    this.editObjCopy.brands.splice(i, 1);
+    this.showBrandsName();
   }
   create() {
     if (!this.category.name || !this.category.img) {
@@ -80,18 +99,12 @@ export class CategoryComponent implements OnInit {
           if (!count) {return; }
           this.lengthPagination = count.count;
         });
-        // this.uploadObj = {};
         this.category = {
           name: '',
           img: ''
         };
       }
     });
-    // this.crud.post('upload2', {body: this.uploadObj}, null, false).then((v: any) => {
-    //   if (!v) {return; }
-    //   this.category.img = v.file;
-    //
-    // });
   }
 
   delete(i) {
@@ -108,10 +121,16 @@ export class CategoryComponent implements OnInit {
   edit(i) {
     this.editObj = Object.assign({}, this.categorys[i]);
     this.editObjCopy = Object.assign({}, this.categorys[i]);
+    this.showBrandsName();
     this.formCheck();
     this.editObjCopy.img = this.editObjCopy.img ? this.editObjCopy.img.split("--")[1] : '';
     this.addShow = false;
     this.editShow = true;
+  }
+  showBrandsName () {
+    this.editArrayBrands = this.editObjCopy.brands.map((item, index) => {
+      return this.brands[this.crud.find('_id', item, this.brands)];
+    });
   }
   confirmEdit() {
     if (this.editObjCopy.name === '') {
@@ -133,7 +152,8 @@ export class CategoryComponent implements OnInit {
         this.editObj = {
           name: '',
           img: '',
-          subCategory: []
+          subCategory: [],
+          brands: []
         };
       }
     });
@@ -154,7 +174,8 @@ export class CategoryComponent implements OnInit {
     this.editObj = {
       name: '',
       img: '',
-      subCategory: []
+      subCategory: [],
+      brands: []
     };
   }
   validate() {
@@ -174,8 +195,9 @@ export class CategoryComponent implements OnInit {
     if (this.editObj.subCategory && (this.editObj.subCategory.length !== this.editObjCopy.subCategory.length)) {
       this.btnBlok(true);
     }
-    console.log(this.editObj);
-    console.log(this.editObjCopy);
+    if (this.editObj.brands && (this.editObj.brands.length !== this.editObjCopy.brands.length)) {
+      this.btnBlok(true);
+    }
   }
   outputSearch(e) {
     if (!e) {

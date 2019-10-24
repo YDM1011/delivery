@@ -26,9 +26,9 @@ export class FilterComponent implements OnInit {
   ngOnInit() {
     this.auth.onLanguage.subscribe((v: string) => {
       this.language = v;
-    })
+    });
   }
-  closefilter(){
+  closefilter() {
     this.closeFilter.emit(false);
   }
   priceFilterFunc(){

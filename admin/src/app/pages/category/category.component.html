@@ -35,6 +35,22 @@
 			<mat-form-field class="example-full-width">
 				<input matInput type="text" placeholder="Категория" name="name" [(ngModel)]="editObjCopy.name" autocomplete="off">
 			</mat-form-field>
+			<div  *ngIf="brands && brands.length > 0">
+				<div class="box-subcategory">
+					<div class="mat-chip-file" *ngFor="let item of editArrayBrands; let i = index">
+						<div class="content">{{item.name}}</div>
+						<div class="remove-mat-chip" (click)="removeBrands(i); formCheck()"></div>
+					</div>
+				</div>
+				<mat-form-field>
+					<mat-label>Бренд</mat-label>
+					<mat-select [(value)]="mainChooseBrand" (selectionChange)="addBrands(); formCheck()">
+						<mat-option *ngFor="let item of brands" [value]="item.id">
+							{{item.name}}
+						</mat-option>
+					</mat-select>
+				</mat-form-field>
+			</div>
 			<div class="subcategory">
 				<div class="box-subcategory" *ngIf="editObjCopy && editObjCopy.subCategory && editObjCopy.subCategory.length > 0">
 					<div class="mat-chip-file" *ngFor="let item of editObjCopy.subCategory; let i = index">
