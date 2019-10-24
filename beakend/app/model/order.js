@@ -14,10 +14,19 @@ const schema = new Schema({
         ref: "Category",
         required: [true, "Check category"]
     },
+    mainCategory: {
+        type: Schema.Types.ObjectId,
+        ref: "mainCategory",
+    },
     companyOwner: {
         type: Schema.Types.ObjectId,
         ref: "Company",
         required: [true, "Check Company"]
+    },
+    сityLink: {
+        type: Schema.Types.ObjectId,
+        ref: "сityLink",
+        required: [true, "City is required"]
     },
     action: {
         type: Schema.Types.ObjectId,

@@ -37,6 +37,7 @@ module.exports = (backendApp, router) => {
                 req.body.token = getToken(req.body.login);
                 req.body.pass = md5(req.body.pass);
                 req.body.mobile = req.body.mobile ? req.body.mobile.toLowerCase() : req.body.login;
+                req.body['date'] = new Date();
                 if (req.user){
                     if (req.user.role == 'sa' || req.user.role == 'admin'){
                         req.body.verify = true;

@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const Company = mongoose.model('Company');
 const Client = mongoose.model('Client');
+const сityLink = backendApp.mongoose.model("сityLink");
 
 module.exports = class Signup {
     constructor (req, res, result = null, backendApp) {
@@ -30,21 +31,25 @@ module.exports = class Signup {
         this.init()
     }
     createCompany() {
-
-        Company.create({
-            city:this.req.companyBody.city,
-            name:this.req.companyBody.name,
-            address:this.req.companyBody.address,
-            createdBy: this.result._id,
-            verify: true
-        }, (e,r)=>{
-            if (e) return this.res.serverError(e);
-            if (!r) return this.res.badRequest();
-            Client.findOneAndUpdate({_id: this.result._id}, {$push:{companies: r._id},companyOwner:r._id }).exec((e,r)=>{
-                if (e) return this.res.serverError(e);
-                if (!r) return this.res.notFound("Not found");
-                if (r) return this.res.ok(r);
-            });
+        сityLink.create({cityOwner:this.req.companyBody.city}, (e,r)=>{
+            if (r) {
+                Company.create({
+                    city:this.req.companyBody.city,
+                    сityLink:r._id,
+                    name:this.req.companyBody.name,
+                    address:this.req.companyBody.address,
+                    createdBy: this.result._id,
+                    verify: false
+                }, (e,r)=>{
+                    if (e) return this.res.serverError(e);
+                    if (!r) return this.res.badRequest();
+                    Client.findOneAndUpdate({_id: this.result._id}, {$push:{companies: r._id},companyOwner:r._id }).exec((e,r)=>{
+                        if (e) return this.res.serverError(e);
+                        if (!r) return this.res.notFound("Not found");
+                        if (r) return this.res.ok(r);
+                    });
+                })
+            }
         })
     }
     validator() {

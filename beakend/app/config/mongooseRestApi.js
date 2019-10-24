@@ -418,7 +418,7 @@ const checkOwner = (req,res,next,options) => {
                                 const checkId = r[it._id] ? r[it._id].toString() : null;
                                 it.canBeId.forEach(idChecker => {
                                     if (idChecker.fieldName == '_id') {
-                                        if (checkId == req.user._id){
+                                        if (checkId == req.user._id) {
                                             req.error.success = true;
                                             rs(query)
                                         }
@@ -510,9 +510,7 @@ const checkOwner = (req,res,next,options) => {
                     });
                 }
             }
-
         });
         return objPromise
     }
-
-}
+};

@@ -55,6 +55,11 @@ const schem = new Schema({
         ref: "City",
         required: [true, "City is required"]
     },
+    сityLink: {
+        type: Schema.Types.ObjectId,
+        ref: "сityLink",
+        required: [true, "City is required"]
+    },
     img: {type: String, default: ''},
     workTime: {
         name: {type: String},

@@ -43,4 +43,9 @@ export class CategoryIDComponent implements OnInit {
   closeFilter(e) {
     this.showFilter = e;
   }
+
+  getOrders(companyId){
+    /** companyId brand mainCategory subcategory */
+    
+  }
 }
