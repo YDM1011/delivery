@@ -7,12 +7,14 @@
 <div class="other-pages">
   <div class="filter-sort">
     <div class="sort">
-      <div class="sort-title">
-        Сортировка
-        <svg width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M5.19935 5.55956L9.9167 0.842218C10.0278 0.731147 10.0278 0.553016 9.9167 0.441945C9.80563 0.330875 9.6275 0.330875 9.51642 0.441945L5.00026 4.95811L0.484098 0.441945C0.373028 0.330875 0.194897 0.330875 0.083827 0.441945C0.0293388 0.496432 -9.22915e-09 0.569781 -1.23437e-08 0.641033C-1.54583e-08 0.712286 0.0272436 0.785634 0.083827 0.840122L4.80117 5.55747C4.91015 5.66854 5.09038 5.66854 5.19935 5.55956Z" fill="black"/>
-        </svg>
-      </div>
+      <mat-form-field class="sort-select">
+        <mat-select [(value)]="selectedSort" (selectionChange)="sortChanges()">
+          <mat-option [value]="0">Сортировка</mat-option>
+          <mat-option value="option1">От дешевых к дорогим</mat-option>
+          <mat-option value="option2">От дорогих к дешевым</mat-option>
+          <mat-option value="option3">Новинки</mat-option>
+        </mat-select>
+      </mat-form-field>
     </div>
     <div class="filter" (click)="showFilter = true">
       <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">

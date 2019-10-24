@@ -2,7 +2,8 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
+  margin-top: -15px;
   .filter{
     display: flex;
     align-items: center;
@@ -196,4 +197,14 @@
       }
     }
   }
+}
+::ng-deep .mat-form-field.sort-select{
+  width: 100px;
+}
+::ng-deep .mat-form-field.sort-select .mat-form-field-underline {
+  display: none;
+}
+
+::ng-deep .mat-form-field.sort-select .mat-form-field-appearance-legacy .mat-form-field-wrapper {
+  padding-bottom: 0;
 }
