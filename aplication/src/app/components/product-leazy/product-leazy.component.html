@@ -1,6 +1,6 @@
 <ng-container *ngIf="order.length>0">
 <ng-container *ngFor="let ord of order">
-  <app-product-item [data]="ord"></app-product-item>
+  <app-product-item [data]="ord" [company]="company"></app-product-item>
 </ng-container>
   <ng-container *ngIf="orderCount<order.length">
   <button class="btn" (click)="loadOrder()">more</button>

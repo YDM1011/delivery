@@ -17,6 +17,7 @@ export class ProductIDComponent implements OnInit {
   public id;
   public me: Me;
   public product;
+  public company;
   public loading = false;
   public categorys = [];
 
@@ -46,6 +47,11 @@ export class ProductIDComponent implements OnInit {
     this.crud.getDetailProduct(this.id).then((v: any) => {
       if (v) {
         this.product = v;
+        this.crud.getDetailCompany(this.product.companyOwner).then((v: any) => {
+          if (v) {
+            this.company = v;
+          }
+        });
         this.loading = true;
         this.crud.get(`order?query={"companyOwner":"${this.product.companyOwner}","categoryOwner":"${this.product.categoryOwner}"}&skip=0&limit=5`).then((v: any) => {
           if (v && v.length > 0) {

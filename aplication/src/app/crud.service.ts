@@ -100,7 +100,7 @@ export class CrudService {
       // resolve(Category);
     });
   }
-  getDetailCompany(id, company = null){
+  getDetailCompany(id, company = null) {
     return new Promise((resolve, reject) => {
       let skip = company ? company.categories.orders.length : 0;
       const populate = '?populate='+JSON.stringify([{path:'brands'}, {path:'action'},

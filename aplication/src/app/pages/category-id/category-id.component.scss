@@ -169,6 +169,16 @@
   }
 }
 
+.sort{
+  &-title{
+    display: flex;
+    align-items: center;
+    svg{
+      margin-left: 10px;
+    }
+  }
+}
+
 @media (min-width: 375px) {
   .product-item {
     &-box {

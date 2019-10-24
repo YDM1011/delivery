@@ -88,7 +88,9 @@
       {{product.des}}
     </div>
   </div>
-  <app-provider-item></app-provider-item>
+  
+  <app-provider-item [isTop]="false" [data]="company"></app-provider-item>
+  
   <div class="releted" *ngIf="categorys && categorys.length > 0">
     <div class="releted-header">
       {{'С этим товаром покупают' | trans:language}}
