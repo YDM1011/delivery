@@ -32,10 +32,10 @@ export class CategoryIDComponent implements OnInit {
   init() {
     this.auth.onCity.subscribe((city: any) => {
       if (city) {
-        this.crud.getCategoryName(this.id, city._id).then((companies) => {
-          this.companies = companies;
-          console.log(this.companies);
-        });
+        // this.crud.getCategoryName(this.id, city._id).then((companies) => {
+        //   this.companies = companies;
+        //   console.log(this.companies);
+        // });
       }
     });
   }
@@ -46,6 +46,6 @@ export class CategoryIDComponent implements OnInit {
 
   getOrders(companyId){
     /** companyId brand mainCategory subcategory */
-    
+
   }
 }

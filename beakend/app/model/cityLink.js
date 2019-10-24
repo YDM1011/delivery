@@ -51,4 +51,18 @@ const schem = new Schema({
         delete: [{private:true}],
     },
 });
-mongoose.model('сityLink', schem);
+schem.post('save', (doc, next)=>{
+    const City = mongoose.model('City');
+    City.findOneAndUpdate({_id: doc.cityOwner}, {$push:{links:doc._id}}).exec((e,r)=>{
+        if (e) return next(e);
+        next()
+    });
+});
+schem.post('findOneAndRemove', (doc, next)=>{
+    const City = mongoose.model('City');
+    City.findOneAndUpdate({_id: doc.cityOwner}, {$pull:{links:doc._id}}).exec((e,r)=>{
+        if (e) return next(e);
+        next()
+    });
+});
+mongoose.model('cityLink', schem);
