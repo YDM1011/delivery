@@ -11,7 +11,7 @@ import {CrudService} from '../../crud.service';
 export class CategoryIDComponent implements OnInit {
   public id: string;
   public language: string;
-  public companies;
+  public orders;
   public showFilter = false;
   constructor(
       private route: ActivatedRoute,
@@ -36,6 +36,19 @@ export class CategoryIDComponent implements OnInit {
         //   this.companies = companies;
         //   console.log(this.companies);
         // });
+        let arr = [];
+        console.log(city)
+        if(city.links){
+          city.links.forEach(it=>{
+            if (it)
+              arr.push({"cityLink":it})
+          });
+        }
+
+        const query = `?query=${arr.length>0 ? JSON.stringify( {$or:arr} ) : {} }`;
+        this.crud.get('order', '',  query).then((orders) => {
+          this.orders = orders;
+        });
       }
     });
   }

@@ -23,9 +23,14 @@
   </div>
   
   <div class="products">
-    <ng-container *ngIf="companies">
-      <ng-container *ngFor="let company of companies">
-        <app-product-leazy [value]="company.category" [company]="company"></app-product-leazy>
+    <!--<ng-container *ngIf="companies">-->
+      <!--<ng-container *ngFor="let company of companies">-->
+        <!--<app-product-leazy [value]="company.category" [company]="company"></app-product-leazy>-->
+      <!--</ng-container>-->
+    <!--</ng-container>-->
+    <ng-container *ngFor="let order of orders">
+      <ng-container *ngIf="order">
+        <app-product-item [data]="order" [company]="order.company"></app-product-item>
       </ng-container>
     </ng-container>
   </div>
