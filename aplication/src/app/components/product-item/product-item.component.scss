@@ -5,6 +5,7 @@
   border-bottom: 1px solid #E4E4E4;
   margin-bottom: 10px;
   position: relative;
+  width: 100%;
   svg{
     margin-right: 5px;
   }
@@ -16,7 +17,8 @@
 }
 
 .product-item{
-  display: block;
+  display: flex;
+  flex-direction: column;
   background: #FFFFFF;
   border: 1px solid #F3F3F3;
   box-sizing: border-box;
@@ -26,6 +28,7 @@
   margin-bottom: 15px;
   &-box{
     display: flex;
+
     align-items: flex-start;
     position: relative;
     margin-bottom: 10px;

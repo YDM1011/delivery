@@ -37,7 +37,7 @@ export class ListProvidersComponent implements OnInit {
     this.crud.get('client/count?query={"role": "provider"}').then((count: any) => {
       if (count) {
         this.lengthPagination = count.count;
-        this.crud.get(`client?query={"role":"provider"}&populate={"path":"companyOwner","select":"img verify"}&skip=0&limit=${this.lengthPagination}`).then((v: any) => {
+        this.crud.get(`client?query={"role":"provider"}&populate={"path":"companyOwner","select":"img verify"}&sort={"date":-1}&skip=0&limit=${this.lengthPagination}`).then((v: any) => {
           if (!v) {return; }
           this.list = v;
           this.loading = true;
@@ -60,9 +60,14 @@ export class ListProvidersComponent implements OnInit {
       return;
     }
     this.crud.post('signup', {client: this.client, company: this.company}).then((v: any) => {
-      this.list.push(v);
-      this.clearObj();
-      this.addShow = false;
+      if (v) {
+        this.crud.get(`client?query={"_id":"${v._id}","role":"provider"}&populate={"path":"companyOwner","select":"img verify"}&sort={"date":-1}`).then((v: any) => {
+          if (!v) {return; }
+          this.list.unshift(v[0]);
+        });
+        this.addShow = false;
+        this.clearObj();
+      }
     }).catch((error) => {
       if (error && error.error === 'User with this login created') {
         Swal.fire('Error', 'Номер телефона уже используется', 'error').then();
@@ -91,7 +96,7 @@ export class ListProvidersComponent implements OnInit {
   }
   outputSearch(e) {
     if (!e) {
-      this.crud.get(`client?query={"role":"provider"}&populate={"path":"companyOwner","select":"img verify"}&skip=0&limit=${this.lengthPagination}`).then((v: any) => {
+      this.crud.get(`client?query={"role":"provider"}&populate={"path":"companyOwner","select":"img date verify"}&skip=0&limit=${this.lengthPagination}`).then((v: any) => {
         if (!v) {return; }
         this.list = v;
       });
@@ -108,7 +113,7 @@ export class ListProvidersComponent implements OnInit {
     });
   }
   pageEvent(e) {
-    this.crud.get(`client?query={"role":"provider"}&populate={"path":"companyOwner","select":"img verify"}&skip=${e.pageIndex  * e.pageSize}&limit=${e.pageSize}`).then((l: any) => {
+    this.crud.get(`client?query={"role":"provider"}&populate={"path":"companyOwner","select":"img verify"}&sort={"date":-1}&skip=${e.pageIndex  * e.pageSize}&limit=${e.pageSize}`).then((l: any) => {
       if (!l) {
         return;
       }

@@ -100,7 +100,7 @@
 								</div>
 							</div>
 							<div class="col">
-								<button class="main-button-color" (click)="verifyCompany(false, item.companyOwner._id, index)" *ngIf="item.companyOwner && item.companyOwner.verify">Выключить</button>
+								<button class="main-button-color red" (click)="verifyCompany(false, item.companyOwner._id, index)" *ngIf="item.companyOwner && item.companyOwner.verify">Выключить</button>
 								<button class="main-button-color" (click)="verifyCompany(true, item.companyOwner._id, index)" *ngIf="item.companyOwner && !item.companyOwner.verify">Включить</button>
 							</div>
 						</div>
