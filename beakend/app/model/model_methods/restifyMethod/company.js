@@ -1,9 +1,17 @@
 module.exports.preUpdate = (req, res, next, backendApp) => {
-    if (!req.body.$push) return next();
+    if (req.body.city) {
+        backendApp.mongoose.model('Company')
+            .findOne({_id: req.params.id})
+            .exec((e,r)=>{
+                if (!r || e) res.serverError();
+                backendApp.mongoose.model('сityLink')
+                    .findOneAndUpdate({_id: r.сityLink}, {cityOwner: req.body.city})
+                    .exec((e,r)=>{
+                        next()
+                    })
+            })
 
-    backendApp.mongoose.model(req.erm.model.modelName)
-        .findOneAndUpdate({_id:req.params.id}, {$push:req.body.$push}, {new:true})
-        .exec((e,r)=>{
-            next()
-        })
+    } else {
+        next()
+    }
 };
