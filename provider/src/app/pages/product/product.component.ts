@@ -33,7 +33,7 @@ export class ProductComponent implements OnInit {
       this.user = v;
       if (this.user && this.user.companyOwner) {
         this.companyId = this.user.companyOwner;
-        this.crud.get(`category?query={"companyOwner":"${this.companyId}"}`).then((v: any) => {
+        this.crud.get(`category?query={"companyOwner":"${this.companyId}"}&populate={"path":"mainCategory","select":"subCategory"}`).then((v: any) => {
           if (v && v.length > 0) {
             this.categorys = v;
           }
@@ -41,7 +41,7 @@ export class ProductComponent implements OnInit {
         this.crud.get(`order/count?query={"companyOwner":"${this.companyId}"}`).then((count: any) => {
           if (count) {
             this.lengthPagination = count.count;
-            this.crud.get(`order?query={"companyOwner":"${this.companyId}"}&skip=0&limit=${this.pageSizePagination}&sort={"date":-1}`).then((p: any) => {
+            this.crud.get(`order?query={"companyOwner":"${this.companyId}"}&populate={"path":"categoryOwner","populate":"mainCategory","select":"mainCategory subCategory"}&skip=0&limit=${this.pageSizePagination}&sort={"date":-1}`).then((p: any) => {
               if (!p) {return; }
               this.products = p;
               this.loading = true;
@@ -98,7 +98,7 @@ export class ProductComponent implements OnInit {
   }
   outputSearch(e) {
     if (!e) {
-      this.crud.get(`order?query={"companyOwner":"${this.companyId}"}&skip=0&limit=${this.pageSizePagination}`).then((p: any) => {
+      this.crud.get(`order?query={"companyOwner":"${this.companyId}"}&populate={"path":"categoryOwner","populate":"mainCategory","select":"mainCategory subCategory"}&skip=0&limit=${this.pageSizePagination}`).then((p: any) => {
         if (!p) {return; }
         this.products = p;
       });
@@ -107,7 +107,7 @@ export class ProductComponent implements OnInit {
     }
   }
   pageEvent(e) {
-    this.crud.get(`order?query={"companyOwner":"${this.companyId}"}&skip=${e.pageIndex  * e.pageSize}&limit=${e.pageSize}`).then((p: any) => {
+    this.crud.get(`order?query={"companyOwner":"${this.companyId}"}&populate={"path":"categoryOwner","populate":"mainCategory","select":"mainCategory subCategory"}&skip=${e.pageIndex  * e.pageSize}&limit=${e.pageSize}`).then((p: any) => {
       if (!p) {return; }
       this.products = p;
       this.loading = true;

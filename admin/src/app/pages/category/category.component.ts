@@ -20,9 +20,11 @@ export class CategoryComponent implements OnInit {
   public uploadObj;
   public page = {pageSize: 5, pageIndex: 0};
   public editObjCopy;
+  public subcategoryName = '';
   public editObj = {
     name: '',
     img: '',
+    subCategory: []
   };
   public category = {
     name: '',
@@ -50,8 +52,20 @@ export class CategoryComponent implements OnInit {
   }
   onFsEdit(e) {
     // this.uploadObj = e;
-    this.editObjCopy.img = e.file;
+    this.editObj.img = e.file;
+    this.editObjCopy.img = e.file.split("--")[1];
     this.formCheck();
+  }
+  addSubCatergory(e) {
+    e.preventDefault();
+    if (this.subcategoryName) {
+      this.editObjCopy.subCategory.push(this.subcategoryName);
+      this.subcategoryName = '';
+      console.log(this.editObjCopy.subCategory)
+    }
+  }
+  removeSub(i) {
+    this.editObjCopy.subCategory.splice(i, 1);
   }
   create() {
     if (!this.category.name || !this.category.img) {
@@ -111,13 +125,15 @@ export class CategoryComponent implements OnInit {
     this.confirmEditCategoryCrud();
   }
   confirmEditCategoryCrud() {
+    this.editObjCopy.img = this.editObj.img;
     this.crud.post('mainCategory', this.editObjCopy, this.editObj['_id']).then((v: any) => {
       if (v) {
         this.categorys[this.crud.find('_id', this.editObj['_id'], this.categorys)] = v;
         this.editShow = false;
         this.editObj = {
           name: '',
-          img: ''
+          img: '',
+          subCategory: []
         };
       }
     });
@@ -137,7 +153,8 @@ export class CategoryComponent implements OnInit {
     this.editShow = false;
     this.editObj = {
       name: '',
-      img: ''
+      img: '',
+      subCategory: []
     };
   }
   validate() {
@@ -154,6 +171,11 @@ export class CategoryComponent implements OnInit {
 
   formCheck() {
     this.btnBlok(this.validate());
+    if (this.editObj.subCategory && (this.editObj.subCategory.length !== this.editObjCopy.subCategory.length)) {
+      this.btnBlok(true);
+    }
+    console.log(this.editObj);
+    console.log(this.editObjCopy);
   }
   outputSearch(e) {
     if (!e) {

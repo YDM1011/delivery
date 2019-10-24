@@ -1,3 +1,26 @@
 .right-section-table {
   padding: 19px 0 !important;
 }
+
+.example-full-width {
+  width: 100%;
+}
+
+.box-subcategory{
+  display: flex;
+  flex-wrap: wrap;
+  .mat-chip-file{
+    margin: 0 10px 10px 0;
+  }
+}
+
+.sub-input{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  .main-button-color{
+    margin-left: 25px;
+    width: 340px;
+    padding: 0 15px;
+  }
+}

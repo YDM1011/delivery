@@ -31,7 +31,7 @@ const schema = new Schema({
         type: Number,
         default: 0
     },
-    subCategory: [CustomField],
+    subCategory: String,
     name: {type: String, required: [true, "Name is required"]},
     des: String,
     discount: Number,

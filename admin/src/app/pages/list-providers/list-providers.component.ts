@@ -1,6 +1,5 @@
-import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {CrudService} from "../../crud.service";
-import {MatPaginator, MatTableDataSource} from "@angular/material";
 import Swal from "sweetalert2";
 
 @Component({
@@ -38,7 +37,7 @@ export class ListProvidersComponent implements OnInit {
     this.crud.get('client/count?query={"role": "provider"}').then((count: any) => {
       if (count) {
         this.lengthPagination = count.count;
-        this.crud.get(`client?query={"role": "provider"}&skip=0&limit=${this.lengthPagination}`).then((v: any) => {
+        this.crud.get(`client?query={"role":"provider"}&populate={"path":"companyOwner","select":"img verify"}&skip=0&limit=${this.lengthPagination}`).then((v: any) => {
           if (!v) {return; }
           this.list = v;
           this.loading = true;
@@ -92,7 +91,7 @@ export class ListProvidersComponent implements OnInit {
   }
   outputSearch(e) {
     if (!e) {
-      this.crud.get(`client?query={"role": "provider"}&skip=0&limit=${this.lengthPagination}`).then((v: any) => {
+      this.crud.get(`client?query={"role":"provider"}&populate={"path":"companyOwner","select":"img verify"}&skip=0&limit=${this.lengthPagination}`).then((v: any) => {
         if (!v) {return; }
         this.list = v;
       });
@@ -100,9 +99,16 @@ export class ListProvidersComponent implements OnInit {
       this.list = e;
     }
   }
-
+  verifyCompany(e, id, index) {
+    this.crud.post(`company`, {verify: e, img: this.list[index].companyOwner.img}, id).then((v: any) => {
+      if (v) {
+        console.log(v)
+        this.list[index].companyOwner.verify = v.verify;
+      }
+    });
+  }
   pageEvent(e) {
-    this.crud.get(`client?query={"role": "provider"}&skip=${e.pageIndex  * e.pageSize}&limit=${e.pageSize}`).then((l: any) => {
+    this.crud.get(`client?query={"role":"provider"}&populate={"path":"companyOwner","select":"img verify"}&skip=${e.pageIndex  * e.pageSize}&limit=${e.pageSize}`).then((l: any) => {
       if (!l) {
         return;
       }

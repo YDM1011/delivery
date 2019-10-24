@@ -9,18 +9,27 @@
 		<input matInput type="number" placeholder="Ціна" [(ngModel)]="product.price" name="price" autocomplete="off">
 	</mat-form-field>
 	<div *ngIf="categorys.length > 0">
-		<mat-form-field>
-			<mat-label>Category</mat-label>
-			<mat-select [(value)]="mainCategoryChoose">
+		<mat-form-field style="margin-right: 25px">
+			<mat-label>Категория</mat-label>
+			<mat-select [(value)]="mainCategoryChoose" (selectionChange)="selectSubCategory(mainCategoryChoose)">
 				<mat-option *ngFor="let item of categorys" [value]="item._id">
 					{{item.name}}
+				</mat-option>
+			</mat-select>
+		</mat-form-field>
+		<mat-form-field *ngIf="subCategoryArray && subCategoryArray.length > 0">
+			<mat-label>Подкатегория</mat-label>
+			<mat-select [(value)]="subCategoryChoose">
+				<mat-option [value]="null">-</mat-option>
+				<mat-option *ngFor="let item of subCategoryArray" [value]="item">
+					{{item}}
 				</mat-option>
 			</mat-select>
 		</mat-form-field>
 	</div>
 	<div  *ngIf="brands && brands.length > 0">
 		<mat-form-field>
-			<mat-label>Brands</mat-label>
+			<mat-label>Бренд</mat-label>
 			<mat-select [(value)]="mainChooseBrand">
 				<mat-option *ngFor="let item of brands" [value]="item._id">
 					{{item.name}}

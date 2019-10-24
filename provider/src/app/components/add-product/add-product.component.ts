@@ -22,6 +22,8 @@ export class AddProductComponent implements OnInit, AfterViewChecked {
   @Output() outputNew = new EventEmitter();
   @Output() cancelAdd = new EventEmitter();
   public user;
+  public subCategoryArray;
+  public subCategoryChoose;
   public mainCategoryChoose;
   public mainChooseBrand;
   public companyId;
@@ -33,6 +35,7 @@ export class AddProductComponent implements OnInit, AfterViewChecked {
     price: null,
     companyOwner: '',
     categoryOwner: '',
+    subCategory: '',
     brand: '',
   };
   constructor(
@@ -51,37 +54,21 @@ export class AddProductComponent implements OnInit, AfterViewChecked {
     });
     if (this.categorys && this.categorys.length > 0) {
       this.mainCategoryChoose = this.categorys[0]._id;
+      this.selectSubCategory(this.mainCategoryChoose);
     }
+  }
+  selectSubCategory(id) {
+    const index = this.crud.find('_id', id, this.categorys);
+    this.subCategoryArray = this.categorys[index].mainCategory.subCategory;
   }
   removeImg() {
     delete this.product.img;
     this.product['img'] = '';
-    console.log(this.product)
   }
   create() {
     if (this.validation('product')) {
-      // this.crud.post('upload2', {body: this.uploadObj}, null, false).then((u: any) => {
-      //   if (u) {
-      //     this.product['img'] = u.file;
-      //     this.product.categoryOwner = this.mainCategoryChoose;
-      //     this.product.brand = this.mainChooseBrand;
-      //     this.product.companyOwner = this.user.companies[0]._id;
-      //     this.crud.post('order', this.product).then((v: any) => {
-      //       if (v) {
-      //         this.outputNew.emit(v);
-      //         this.clearMainObj();
-      //       }
-      //     }).catch((error) => {
-      //       if (error && error.errors.price.name === 'CastError') {
-      //         Swal.fire('Error', 'Цена должна вводится через "." - точку', 'error').then();
-      //       } else if (error && error.errors.categoryOwner.message === 'Check category') {
-      //         Swal.fire('Error', 'У вас нет созданых категорий', 'error').then();
-      //       }
-      //     });
-      //   }
-      // });
-
       this.product.categoryOwner = this.mainCategoryChoose;
+      this.product.subCategory = this.subCategoryChoose;
       this.product.brand = this.mainChooseBrand;
       this.product.companyOwner = this.companyId;
       this.crud.post('order', this.product).then((v: any) => {
@@ -102,8 +89,6 @@ export class AddProductComponent implements OnInit, AfterViewChecked {
     this.cancelAdd.emit(false);
   }
   onFs(e) {
-    console.log(e);
-    // this.uploadObj = e;
     this.product.img = e.file;
   }
 
@@ -115,6 +100,7 @@ export class AddProductComponent implements OnInit, AfterViewChecked {
       price: null,
       companyOwner: '',
       categoryOwner: '',
+      subCategory: '',
       brand: '',
     };
   }

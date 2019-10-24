@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, OnChanges, OnInit, Output} from '@angular/core';
-import Swal from "sweetalert2";
-import {CrudService} from "../../crud.service";
-import {AuthService} from "../../auth.service";
+import Swal from 'sweetalert2';
+import {CrudService} from '../../crud.service';
+import {AuthService} from '../../auth.service';
 
 @Component({
   selector: 'app-edit-product',
@@ -11,11 +11,13 @@ import {AuthService} from "../../auth.service";
 export class EditProductComponent implements OnInit, OnChanges {
   @Input() obj;
   @Input() brands;
+  @Input() categorys;
   @Output() outputChanges = new EventEmitter();
   @Output() cancelEdit = new EventEmitter();
+  public subCategoryChoose;
   public mainChooseBrand;
   public mainCategoryChoose;
-  public categorys = [];
+  public subCategoryArray = [];
   public showSale = false;
   public isBlok = false;
   public uploadObj = null;
@@ -42,20 +44,29 @@ export class EditProductComponent implements OnInit, OnChanges {
     this.auth.onMe.subscribe((v: any) => {
       if (!v) { return; }
       if (v && v.companies.length > 0) {
-        this.categorys = v.companies[0].categories;
+        this.init();
       }
     });
+  }
+  init() {
     this.editObj = Object.assign({}, this.obj);
     this.editObj.img = this.obj.img.split('--')[1];
     this.editObjCopy = Object.assign({}, this.obj);
     this.mainChooseBrand = this.obj.brand;
-    this.mainCategoryChoose = this.obj.categoryOwner;
+    this.mainCategoryChoose = this.obj.categoryOwner._id;
+    this.selectSubCategory(this.mainCategoryChoose);
+    this.subCategoryChoose = this.obj.subCategory;
     if (this.editObj.discount) {
       this.showSale = true;
       return;
     } else {
       this.showSale = false;
     }
+  }
+
+  selectSubCategory(id) {
+    const index = this.crud.find('_id', id, this.categorys);
+    this.subCategoryArray = this.categorys[index].mainCategory.subCategory;
   }
   confirmEditCategoryCrud(e) {
     e.preventDefault();
@@ -70,7 +81,7 @@ export class EditProductComponent implements OnInit, OnChanges {
       }
       this.editObj.brand = this.mainChooseBrand;
       this.editObj.categoryOwner = this.mainCategoryChoose;
-
+      this.editObj.subCategory = this.subCategoryChoose;
       this.editObj.img = this.editObjCopy.img;
       this.crud.post('order', this.editObj, this.editObj['_id']).then((v: any) => {
         if (v) {
@@ -84,29 +95,6 @@ export class EditProductComponent implements OnInit, OnChanges {
         }
       });
       this.isBlok = false;
-
-      // if (!this.uploadObj) {
-      //
-      // } else {
-      //   this.crud.post('upload2', {body: this.uploadObj}, null, false).then((u: any) => {
-      //     if (u) {
-      //       this.editObj.img = u.file;
-      //       this.crud.post('order', this.editObj, this.editObj['_id']).then((v: any) => {
-      //         if (v) {
-      //           this.obj = v;
-      //           this.outputChanges.emit(this.obj);
-      //           this.isBlok = false;
-      //           this.uploadObj = null;
-      //         }
-      //       }).catch((error) => {
-      //         if (error && error.errors.price.name === 'CastError') {
-      //           Swal.fire('Error', 'Цена должна вводится через "." - точку', 'error').then();
-      //           return;
-      //         }
-      //       });
-      //     }
-      //   });
-      // }
     }
   }
 
@@ -115,6 +103,7 @@ export class EditProductComponent implements OnInit, OnChanges {
     this.formCheck();
   }
   changeSelectCategory(c) {
+    this.selectSubCategory(c);
     this.editObjCopy['categoryOwner'] = c;
     this.formCheck();
   }

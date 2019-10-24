@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const schem = new Schema({
-    name: {type: String, unique: true, required: [true, "Category Name is required and unique"]},
+    name: {type: String, required: [true, "Category Name is required and unique"]},
     orders: [{
         type: Schema.Types.ObjectId,
         ref: "Order"

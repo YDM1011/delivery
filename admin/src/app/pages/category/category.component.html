@@ -6,9 +6,9 @@
 			</div>
 		</div>
 		<div class="add-section">
-			<label>
-				<input type="text" placeholder="Категория" [(ngModel)]="category.name">
-			</label>
+			<mat-form-field class="example-full-width">
+				<input matInput type="text" placeholder="Категория" name="name" [(ngModel)]="category.name" autocomplete="off">
+			</mat-form-field>
 			<div class="group-buttons">
 				<div class="left">
           <app-upload (onFs)="onFs($event)" [multiple]="false" *ngIf="category && category.img == ''"></app-upload>
@@ -32,16 +32,30 @@
 			</div>
 		</div>
 		<form (submit)="confirmEdit()" (keyup)="formCheck()" class="edit-section">
-			<label>
-				<input type="text" placeholder="Категория" name="name" [(ngModel)]="editObjCopy.name">
-			</label>
+			<mat-form-field class="example-full-width">
+				<input matInput type="text" placeholder="Категория" name="name" [(ngModel)]="editObjCopy.name" autocomplete="off">
+			</mat-form-field>
+			<div class="subcategory">
+				<div class="box-subcategory" *ngIf="editObjCopy && editObjCopy.subCategory && editObjCopy.subCategory.length > 0">
+					<div class="mat-chip-file" *ngFor="let item of editObjCopy.subCategory; let i = index">
+						<div class="content">{{item}}</div>
+						<div class="remove-mat-chip" (click)="removeSub(i); formCheck()"></div>
+					</div>
+				</div>
+				<div class="sub-input">
+					<mat-form-field class="example-full-width">
+						<input matInput type="text" placeholder="Подкатегория" name="nameSubcategory" [(ngModel)]="subcategoryName" autocomplete="off">
+					</mat-form-field>
+					<button class="main-button-color" (click)="addSubCatergory($event)">Додать подкатегорию</button>
+				</div>
+			</div>
 			<div class="group-buttons">
 				<div class="left">
-          <app-upload (onFs)="onFsEdit($event)" [multiple]="false" *ngIf="editObjCopy && editObjCopy.img === ''"></app-upload>
-          <div class="mat-chip-file" *ngIf="editObjCopy && editObjCopy.img !== ''">
-            <div class="content">{{editObjCopy.img}}</div>
-            <div class="remove-mat-chip" (click)="editObjCopy.img = ''; formCheck()"></div>
-          </div>
+                    <app-upload (onFs)="onFsEdit($event)" [multiple]="false" *ngIf="editObjCopy && editObjCopy.img === ''"></app-upload>
+		            <div class="mat-chip-file" *ngIf="editObjCopy && editObjCopy.img !== ''">
+			          <div class="content">{{editObjCopy.img}}</div>
+		              <div class="remove-mat-chip" (click)="editObjCopy.img = ''; formCheck()"></div>
+                    </div>
 				</div>
 				<div class="right">
 					<button class="main-button" type="reset" (click)="cancelEdit()">Отмена</button>
