@@ -8,6 +8,10 @@ const Schema = mongoose.Schema;
 const schem = new Schema({
     name: String,
     img: String,
+    links: [{
+        type: Schema.Types.ObjectId,
+        ref: "cityLink",
+    }],
     lastUpdate: {type: Date},
     date: {type: Date, default: new Date()}
 },{

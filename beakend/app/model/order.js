@@ -23,9 +23,9 @@ const schema = new Schema({
         ref: "Company",
         required: [true, "Check Company"]
     },
-    сityLink: {
+    cityLink: {
         type: Schema.Types.ObjectId,
-        ref: "сityLink",
+        ref: "cityLink",
         required: [true, "City is required"]
     },
     action: {

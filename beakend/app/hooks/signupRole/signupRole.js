@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Company = mongoose.model('Company');
 const Client = mongoose.model('Client');
-const сityLink = backendApp.mongoose.model("сityLink");
+const cityLink = backendApp.mongoose.model("cityLink");
 
 module.exports = class Signup {
     constructor (req, res, result = null, backendApp) {
@@ -31,11 +31,11 @@ module.exports = class Signup {
         this.init()
     }
     createCompany() {
-        сityLink.create({cityOwner:this.req.companyBody.city}, (e,r)=>{
+        cityLink.create({cityOwner:this.req.companyBody.city}, (e,r)=>{
             if (r) {
                 Company.create({
                     city:this.req.companyBody.city,
-                    сityLink:r._id,
+                    cityLink:r._id,
                     name:this.req.companyBody.name,
                     address:this.req.companyBody.address,
                     createdBy: this.result._id,

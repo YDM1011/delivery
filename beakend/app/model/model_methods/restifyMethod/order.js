@@ -13,12 +13,12 @@ module.exports.preSave = async (req,res,next, backendApp) => {
                 if (!r) return res.notFound("Not Found Category");
                 backendApp.mongoose.model('Company')
                     .findOne({_id:req.body.companyOwner})
-                    .select('сityLink')
+                    .select('cityLink')
                     .exec((e,r1)=>{
                         if (e) return res.serverError(e);
                         if (!r1) return res.notFound("Not Found Category");
                         req.body['mainCategory'] = r.mainCategory;
-                        req.body['сityLink'] = r1.сityLink;
+                        req.body['cityLink'] = r1.cityLink;
                         console.log(req.body)
                         next()
                     })
