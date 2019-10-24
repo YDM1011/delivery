@@ -13,6 +13,7 @@ export class CategoryIDComponent implements OnInit {
   public language: string;
   public companies;
   public showFilter = false;
+  public selectedSort = 0;
   constructor(
       private route: ActivatedRoute,
       private auth: AuthService,
@@ -47,5 +48,8 @@ export class CategoryIDComponent implements OnInit {
   getOrders(companyId){
     /** companyId brand mainCategory subcategory */
     
+  }
+  sortChanges() {
+
   }
 }
