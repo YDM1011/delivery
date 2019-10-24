@@ -127,12 +127,11 @@ export class CrudService {
       });
     });
   }
-  getCategoryName(name,city){
-    const params = `${name}/${city}`;
+  getCategoryName(name){
+    const params = `${name}`;
     return new Promise((resolve, reject) => {
         this.get('categoryByMainName', params, ).then((v: any) => {
           if (v) {
-
             resolve(v)
           } else {
             reject("Not found!")

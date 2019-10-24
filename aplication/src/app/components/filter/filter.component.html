@@ -13,14 +13,13 @@
 				<div class="sub-category">
 					<div class="sub-title">
 						Подкатегории
-						<a>Показать еще</a>
 					</div>
-					<div class="sub-container">
-						<mat-checkbox class="filter-check">Черный чай</mat-checkbox>
-						<mat-checkbox class="filter-check">Зеленый чай</mat-checkbox>
-						<mat-checkbox class="filter-check">Травяной чай</mat-checkbox>
-<!--						<mat-checkbox class="filter-check">Мятный чай</mat-checkbox>-->
-<!--						<mat-checkbox class="filter-check">Ягодный чай</mat-checkbox>-->
+					<div class="sub-container" *ngIf="mainCategory">
+            <ng-container *ngIf="mainCategory.subCategory">
+              <ng-container *ngIf="mainCategory.subCategory.length>0">
+                <mat-checkbox class="filter-check" *ngFor="let sub of mainCategory.subCategory" [value]="sub" (change)="getCheckSub($event)">{{sub}}</mat-checkbox>
+              </ng-container>
+            </ng-container>
 					</div>
 				</div>
 				<div class="sub-brands">
@@ -59,16 +58,6 @@
 								</div>
 							</div>
 						</mat-checkbox>
-<!--						<mat-checkbox class="filter-check filter-sub">-->
-<!--							<div class="sub-brand-item">-->
-<!--								<div class="img">-->
-<!--									<img src="./assets/images/tmp/cola.png" alt="">-->
-<!--								</div>-->
-<!--								<div class="title">-->
-<!--									leys-->
-<!--								</div>-->
-<!--							</div>-->
-<!--						</mat-checkbox>-->
 					</div>
 				</div>
 				<div class="sub-price">
@@ -81,11 +70,13 @@
 							<span class="from">до</span>
 							<input type="text" [(ngModel)]="priceMax">
 						</div>
-						<ng5-slider [(value)]="priceMin" [(highValue)]="priceMax" [options]="options" (userChangeEnd)="priceFilterFunc()"></ng5-slider>
+            <ng-container *ngIf="priceMax && isInit">
+						<ng5-slider  [(value)]="priceMin" [(highValue)]="priceMax" [options]="options" (userChangeEnd)="priceFilterFunc()"></ng5-slider>
+            </ng-container>
 					</div>
 				</div>
 				<div class="buttons">
-					<button class="main-button color" (click)="closefilter()">Применить</button>
+					<button class="main-button color" (click)="initfilter()">Применить</button>
 					<button class="back-btn" (click)="closefilter()">Сбросить</button>
 				</div>
 			</div>

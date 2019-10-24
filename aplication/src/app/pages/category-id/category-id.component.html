@@ -38,4 +38,4 @@
   </div>
 </div>
 
-<app-filter *ngIf="showFilter" (closeFilter)="closeFilter($event)"></app-filter>
+<app-filter *ngIf="showFilter" [mainCategory]="mainCategory" (onFilter)="reinit($event)" [city]="city" (closeFilter)="closeFilter($event)"></app-filter>

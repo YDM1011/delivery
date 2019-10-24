@@ -1,5 +1,5 @@
 module.exports = (backendApp, router) => {
-    router.get('/categoryByMainName/:name/:city', [], (req,res,next) => {
+    router.get('/categoryByMainName/:name', [], (req,res,next) => {
         const mainCategoryName = req.params.name;
         const maincity = req.params.city;
         const mainCategory = backendApp.mongoose.model('MainCategory');
@@ -36,30 +36,10 @@ module.exports = (backendApp, router) => {
         };
         mainCategory
             .findOne({name:mainCategoryName})
-            .select('_id')
             .exec((e,r)=>{
-                response(e,r, mCat=>{
-                    Company.find({$and:[
-                            {mainCategories: {$in:mCat._id}},
-                            {city:maincity}
-                        ]})
-                        .select('name _id img category')
-                        .exec((e,r)=>{
-                            response(e,r,info=>{
-                                Promise.all(getPromise(info, mCat)).then(v=>{
-                                    // let arr = [];
-                                    // v.forEach(t=>{
-                                    //     arr.push(t);
-                                    // });
-                                    res.ok(v)
-                                }).catch(e => {
-                                    console.error(e);
-                                    res.serverError(e)
-                                });
-
-                            })
-                        })
-                })
+                if (e) res.serverError(e);
+                if (!r) res.notFound("Not found!")
+                if (r) res.ok(r)
             })
     });
     router.get('/orderByCategory/:categoryId/:skip', [], (req,res,next) => {

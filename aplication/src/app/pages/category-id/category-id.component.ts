@@ -12,6 +12,8 @@ export class CategoryIDComponent implements OnInit {
   public id: string;
   public language: string;
   public orders;
+  public city;
+  public mainCategory;
   public showFilter = false;
   public selectedSort = 0;
   constructor(
@@ -33,27 +35,39 @@ export class CategoryIDComponent implements OnInit {
   init() {
     this.auth.onCity.subscribe((city: any) => {
       if (city) {
-        // this.crud.getCategoryName(this.id, city._id).then((companies) => {
-        //   this.companies = companies;
-        //   console.log(this.companies);
-        // });
-        let arr = [];
-        console.log(city)
-        if(city.links){
-          city.links.forEach(it=>{
-            if (it)
-              arr.push({"cityLink":it})
-          });
-        }
+        this.city = city
+        this.crud.getCategoryName(this.id).then((mainCategory) => {
+          this.mainCategory = mainCategory
 
-        const query = `?query=${arr.length>0 ? JSON.stringify( {$or:arr} ) : {} }`;
-        this.crud.get('order', '',  query).then((orders) => {
-          this.orders = orders;
+          let arr = [];
+          if(this.city.links){
+            this.city.links.forEach(it=>{
+              if (it)
+                arr.push({"cityLink":it})
+            });
+          }
+
+          const query = `?query={"$and":[${arr.length>0 ? JSON.stringify( {$or:arr} ) : {} },{"mainCategory":"${this.mainCategory._id}"}]}`;
+          this.crud.get('order', '',  query).then((orders) => {
+            this.orders = orders;
+          });
         });
       }
     });
   }
-
+  reinit(e){
+    let arr = [];
+    if(this.city.links){
+      this.city.links.forEach(it=>{
+        if (it)
+          arr.push({"cityLink":it})
+      });
+    }
+    const query = `?query={"$and":[${arr.length>0 ? JSON.stringify( {$or:arr} ) : {} },{"mainCategory":"${this.mainCategory._id}"},${e}]}`;
+    this.crud.get('order', '',  query).then((orders) => {
+      this.orders = orders;
+    });
+  }
   closeFilter(e) {
     this.showFilter = e;
   }
