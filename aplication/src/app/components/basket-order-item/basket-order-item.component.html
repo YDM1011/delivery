@@ -5,7 +5,7 @@
       <mat-panel-title>
         <div class="title-panel">
           <div class="img">
-            <app-img [fs]="data.companyOwner.img ? prod.orderOwner.img : ''" [anyFs]="'assets/images/provider.svg'"></app-img>
+            <app-img [fs]="data.companyOwner.img ? data.companyOwner.img : ''" [anyFs]="'assets/images/provider.svg'"></app-img>
           </div>
           <div class="title">
             {{data.companyOwner.name}}
