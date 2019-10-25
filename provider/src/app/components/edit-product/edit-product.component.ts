@@ -41,6 +41,7 @@ export class EditProductComponent implements OnInit, OnChanges {
     }
   }
   ngOnInit() {
+    console.log(this.obj)
     this.auth.onMe.subscribe((v: any) => {
       if (!v) { return; }
       if (v && v.companies.length > 0) {
