@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {CrudService} from '../../crud.service';
-import {MatSnackBar} from "@angular/material";
+import {MatSnackBar} from '@angular/material';
 
 @Component({
   selector: 'app-basket-order-item',
@@ -24,6 +24,7 @@ export class BasketOrderItemComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    console.log(this.data)
     this.mainChack();
     this.crud.get(`product?query={"basketOwner":"${this.data._id}"}&populate={"path":"orderOwner","select":"img name price count discount"}`).then((v: any) => {
       if (v && v.length > 0) {

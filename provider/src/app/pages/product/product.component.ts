@@ -85,7 +85,11 @@ export class ProductComponent implements OnInit {
 
   newProduct(e) {
     if (e) {
-      this.products.unshift(e);
+      this.crud.get(`order?query={"companyOwner":"${this.companyId}"}&populate={"path":"categoryOwner","populate":"mainCategory","select":"mainCategory subCategory"}&skip=0&limit=${this.pageSizePagination}&sort={"date":-1}`).then((p: any) => {
+        if (!p) {return; }
+        this.products = p;
+        this.loading = true;
+      });
       this.addShow = false;
     }
   }

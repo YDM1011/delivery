@@ -29,15 +29,15 @@
 						 </div>
 					 </div>
 					 <div class="count">
-						 <div class="count-minus" *ngIf="count>0" (click)="decrement()">
-							 -
-						 </div>
+						 <button class="minus" *ngIf="count>0" (click)="decrement()">
+							
+						 </button>
 						 <div class="count-count" *ngIf="count>0">
 							 {{count}}
 						 </div>
-						 <div class="count-plus" (click)="increment()">
-							 +
-						 </div>
+						 <button class="plus" (click)="increment()">
+							
+						 </button>
 					 </div>
 				 </div>
 				 <div class="price">
@@ -78,15 +78,15 @@
           </div>
         </div>
         <div class="count">
-          <div class="count-minus" *ngIf="count>0" (click)="decrement()">
-            -
-          </div>
+          <button class="minus" *ngIf="count>0" (click)="decrement()">
+          
+          </button>
           <div class="count-count" *ngIf="count>0">
             {{count}}
           </div>
-          <div class="count-plus" (click)="increment()">
-            +
-          </div>
+          <button class="plus" (click)="increment()">
+          
+          </button>
         </div>
       </div>
       <div class="price">
