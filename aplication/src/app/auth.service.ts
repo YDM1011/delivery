@@ -34,9 +34,18 @@ export class AuthService {
   private checkBasket = new BehaviorSubject<any>(null);
   public onCheckBasket = this.checkBasket.asObservable();
 
+  private defCrop = new BehaviorSubject<any>(null);
+  public onDefCrop = this.defCrop.asObservable();
+
   constructor(
       private cookieService: CookieService
   ) { }
+
+  callDefCrop(){
+    this.defCrop.next(true);
+    this.defCrop = new BehaviorSubject<any>(null);
+    this.onDefCrop = this.defCrop.asObservable();
+  }
 
   setCheckBasket(data) {
     this.checkBasket.next(data);

@@ -18,6 +18,7 @@ export class FilterComponent implements OnInit {
   public isInit=false;
   public priceMin = 0;
   public sub = [];
+  public brand = [];
   @Input() mainCategory;
   @Input() city;
   options: Options = {
@@ -33,7 +34,7 @@ export class FilterComponent implements OnInit {
   ngOnInit() {
     this.auth.onLanguage.subscribe((v: string) => {
       this.language = v;
-    })
+    });
 
     let arr = [];
     if(this.city.links){
@@ -44,7 +45,7 @@ export class FilterComponent implements OnInit {
     }
 
     const query = `?query={"$and":[${arr.length>0 ? JSON.stringify( {$or:arr} ) : {} },{"mainCategory":"${this.mainCategory._id}"}]}
-    &sort={price:-1}&limit=1`;
+    &sort={"price":-1}&limit=1&skip=0`;
     this.crud.get('order', '',  query).then((max) => {
       this.priceMax = max[0].price;
       this.options = {
@@ -58,16 +59,23 @@ export class FilterComponent implements OnInit {
     this.closeFilter.emit(false);
   }
   initfilter(){
-    let sub = JSON.stringify( {$or:this.sub});
-    this.onFilter.emit(sub);
+    let sum = JSON.stringify( {$and:[{price:{$lte:this.priceMax} },{price:{$gte: this.priceMin}}]});
+    let sub = this.sub.length>0 ? JSON.stringify( {$or:this.sub}) : '';
+    let brand = this.brand.length>0 ? JSON.stringify( {$or:this.brand}) : '';
+    this.onFilter.emit((sub ? ','+sub : '') + (brand ? ','+brand : '') + (sum ? ','+sum : '') );
     this.closeFilter.emit(false);
   }
   priceFilterFunc(){
 
+    console.log(this.priceMax, this.priceMin)
   }
   getCheckSub(e){
-    if (!e.checked) return
+    if (!e.checked) return;
     this.sub.push({subCategory:e.source.value});
     console.log(this.sub, {"subCategory":e.source.value})
+  }
+  getCheckBrand(e){
+    if (!e.checked) return;
+    this.brand.push({brand:e.source.value});
   }
 }

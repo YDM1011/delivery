@@ -10,9 +10,8 @@
       <mat-form-field class="sort-select">
         <mat-select [(value)]="selectedSort" (selectionChange)="sortChanges()">
           <mat-option [value]="0">Сортировка</mat-option>
-          <mat-option value="option1">От дешевых к дорогим</mat-option>
-          <mat-option value="option2">От дорогих к дешевым</mat-option>
-          <mat-option value="option3">Новинки</mat-option>
+          <mat-option [value]="1">От дешевых к дорогим</mat-option>
+          <mat-option [value]="2">От дорогих к дешевым</mat-option>
         </mat-select>
       </mat-form-field>
     </div>

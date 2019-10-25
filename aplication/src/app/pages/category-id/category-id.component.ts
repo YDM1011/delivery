@@ -13,9 +13,11 @@ export class CategoryIDComponent implements OnInit {
   public language: string;
   public orders;
   public city;
+  public sort;
+  public filter;
   public mainCategory;
   public showFilter = false;
-  public selectedSort = 0;
+  public selectedSort:number = 0;
   constructor(
       private route: ActivatedRoute,
       private auth: AuthService,
@@ -35,10 +37,9 @@ export class CategoryIDComponent implements OnInit {
   init() {
     this.auth.onCity.subscribe((city: any) => {
       if (city) {
-        this.city = city
+        this.city = city;
         this.crud.getCategoryName(this.id).then((mainCategory) => {
-          this.mainCategory = mainCategory
-
+          this.mainCategory = mainCategory;
           let arr = [];
           if(this.city.links){
             this.city.links.forEach(it=>{
@@ -55,15 +56,17 @@ export class CategoryIDComponent implements OnInit {
       }
     });
   }
-  reinit(e){
+  reinit(e = this.filter){
     let arr = [];
+    this.filter = e;
     if(this.city.links){
       this.city.links.forEach(it=>{
         if (it)
           arr.push({"cityLink":it})
       });
     }
-    const query = `?query={"$and":[${arr.length>0 ? JSON.stringify( {$or:arr} ) : {} },{"mainCategory":"${this.mainCategory._id}"},${e}]}`;
+
+    const query = `?query={"$and":[${arr.length>0 ? JSON.stringify( {$or:arr} ) : {} },{"mainCategory":"${this.mainCategory._id}"}${this.filter ? this.filter :''}]}&sort=${this.sort}`;
     this.crud.get('order', '',  query).then((orders) => {
       this.orders = orders;
     });
@@ -72,11 +75,21 @@ export class CategoryIDComponent implements OnInit {
     this.showFilter = e;
   }
 
-  getOrders(companyId){
+  getOrders(companyId) {
     /** companyId brand mainCategory subcategory */
 
   }
   sortChanges() {
-
+    switch (this.selectedSort) {
+      case 1:
+        this.sort = JSON.stringify({price:1});
+        break;
+      case 2:
+        this.sort = JSON.stringify({price:-1});
+        break;
+      default: return
+    }
+    this.reinit();
+    console.log(this.selectedSort)
   }
 }

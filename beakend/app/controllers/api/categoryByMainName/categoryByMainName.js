@@ -36,9 +36,10 @@ module.exports = (backendApp, router) => {
         };
         mainCategory
             .findOne({name:mainCategoryName})
+            .populate({path: 'brands'})
             .exec((e,r)=>{
                 if (e) res.serverError(e);
-                if (!r) res.notFound("Not found!")
+                if (!r) res.notFound("Not found!");
                 if (r) res.ok(r)
             })
     });

@@ -9,7 +9,11 @@ const schem = new Schema({
     name: {type: String, unique: true},
     img: String,
     subCategory: [{type: String}],
-    brands: [{type: String}],
+    brands: [{
+        type: Schema.Types.ObjectId,
+        ref: "Brand",
+        default: null
+    }],
     lastUpdate: {type: Date},
     date: {type: Date, default: new Date()}
 },{

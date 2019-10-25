@@ -1,5 +1,5 @@
 <div class="filter-box">
-	<div class="overlay" (click)="closeFilter.emit(false)">
+	<div class="overlay" >
 		<div class="filter-content">
 			<div class="other-header filter-header">
 				<a (click)="closefilter()" class="back">
@@ -25,39 +25,22 @@
 				<div class="sub-brands">
 					<div class="sub-title">
 						Бренд
-						<a>Показать еще</a>
 					</div>
-					<div class="sub-container">
-						<mat-checkbox class="filter-check filter-sub">
-							<div class="sub-brand-item">
-								<div class="img">
-									<img src="./assets/images/tmp/cola.png" alt="">
-								</div>
-								<div class="title">
-									leys
-								</div>
-							</div>
-						</mat-checkbox>
-						<mat-checkbox class="filter-check filter-sub">
-							<div class="sub-brand-item">
-								<div class="img">
-									<img src="./assets/images/tmp/cola.png" alt="">
-								</div>
-								<div class="title">
-									leys
-								</div>
-							</div>
-						</mat-checkbox>
-						<mat-checkbox class="filter-check filter-sub">
-							<div class="sub-brand-item">
-								<div class="img">
-									<img src="./assets/images/tmp/cola.png" alt="">
-								</div>
-								<div class="title">
-									leys
-								</div>
-							</div>
-						</mat-checkbox>
+					<div class="sub-container" *ngIf="mainCategory">
+            <ng-container *ngIf="mainCategory.brands">
+              <ng-container *ngIf="mainCategory.brands.length>0">
+                <mat-checkbox class="filter-check filter-sub" *ngFor="let brand of mainCategory.brands" [value]="brand._id" (change)="getCheckBrand($event)">
+                  <div class="sub-brand-item">
+                    <div class="img">
+                     <app-img [fs]="brand.img"></app-img>
+                    </div>
+                    <div class="title">
+                      {{brand.name}}
+                    </div>
+                  </div>
+                </mat-checkbox>
+              </ng-container>
+            </ng-container>
 					</div>
 				</div>
 				<div class="sub-price">
