@@ -119,7 +119,21 @@ const schema = new Schema({
                     ]
                 }
         ],
-        update: [{private:true}],
+        update: [
+            {
+                model:'Company',
+                _id: 'companyOwner',
+                canBeId: [
+                    {type:'refObj', fieldName: 'createdBy'},
+                    {type:'array', fieldName: 'collaborators'}
+                ]
+            },{
+                model:'Basket',
+                _id: '_id',
+                canBeId: [
+                    {type:'refObj', fieldName: 'createdBy'}
+                ]
+            }],
         create: [{private:true}],
         delete: [{private:true}],
     },

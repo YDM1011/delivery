@@ -21,19 +21,24 @@
       </div>
       <div class="popular-section-box" *ngIf="toggleMain">
         <mat-accordion>
-          <app-orders-item [order]="item" (removeOrder)="removeOrder($event)" *ngFor="let item of orders"></app-orders-item>
+          <app-orders-item [order]="item" (removeOrder)="removeOrder($event)" (confirmOrder)="confirmOrder($event)" *ngFor="let item of orders"></app-orders-item>
         </mat-accordion>
+        <ng-container *ngIf="orders && orders.length === 0">
+          <div class="empty-block">
+            У вас нет активных заказов
+          </div>
+        </ng-container>
       </div>
       <div class="popular-section-box" *ngIf="!toggleMain">
         <mat-accordion>
           <app-orders-item [order]="item" *ngFor="let item of orders"></app-orders-item>
         </mat-accordion>
+        <ng-container *ngIf="orders && orders.length === 0">
+          <div class="empty-block">
+            У вас нет доставленых или отменненых заказов
+          </div>
+        </ng-container>
       </div>
-      <ng-container *ngIf="orders && orders.length === 0">
-        <div class="empty-block">
-          У вас нет активных заказов
-        </div>
-      </ng-container>
     </div>
   </div>
 </ng-container>

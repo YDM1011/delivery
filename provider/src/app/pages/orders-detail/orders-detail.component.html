@@ -54,11 +54,18 @@
 				</div>
 				<div class="info-item info-address">
 					<div class="title">
-						Описание к заказу
+						Способ оплаты
+					</div>
+					<div class="content">
+						{{basket.payMethod ? basket.payMethod : '–'}}</div>
+				</div>
+				<div class="info-item info-address">
+					<div class="title">
+						Сообщение клиенту
 					</div>
 					<div class="content">
 						{{basket.description ? basket.description : '–'}}
-						<img class="edit-description" src="./assets/images/edit-d.svg" alt="edit description" (click)="dialogOpen = true">
+						<img class="edit-description" src="./assets/images/edit-d.svg" alt="edit description" (click)="showDescription()">
 					</div>
 				</div>
 			</div>
@@ -112,10 +119,11 @@
 						<button class="main-button remove" *ngIf="basket.status === 1" (click)="cancel()">Отменить</button>
 						<button class="main-button edit" *ngIf="basket.status === 1" (click)="editBasket = true; showDescription()">Редактировать</button>
 						<button class="main-button-color" *ngIf="basket.status === 1" (click)="takeOrder()">Взять заказ</button>
-						<button class="main-button-color" *ngIf="basket.status === 2 || basket.status === 3" (click)="done()">Готово</button>
+						<button class="main-button-color" *ngIf="basket.status === 2" (click)="done()">Готово</button>
 					</ng-container>
 					<ng-container *ngIf="editBasket">
 						<button class="main-button back" (click)="cancelEdit()">Назад</button>
+						<button class="main-button-color" *ngIf="basket.status === 1" (click)="confirmDescriptionSubmit()">Сохранить</button>
 					</ng-container>
 				</div>
 			</div>
@@ -126,11 +134,11 @@
 <div class="dialog" *ngIf="dialogOpen">
 	<div class="dialog-content">
 		<form (submit)="descriptionSubmit()">
-			<h2>Опишите причину изменений заказа</h2>
+			<h2>Сообщение клиенту</h2>
 			<textarea name="description" [(ngModel)]="basket.description"></textarea>
 			<div class="buttons">
-				<button class="main-button back" (click)="dialogOpen = false">Отмена</button>
-				<button type="submit" class="main-button-color">Готово</button>
+				<button class="main-button back" (click)="basket.description = ''; dialogOpen = false">Отмена</button>
+				<button type="submit" class="main-button-color">Сохранить</button>
 			</div>
 		</form>
 	</div>

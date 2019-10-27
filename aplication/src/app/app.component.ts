@@ -45,10 +45,8 @@ export class AppComponent {
             this.auth.setMe(this.me);
             if (this.me && this.me._id) {
               this.crud.get(`basket/count?query={"createdBy":"${this.me._id}","status":0}`).then((count: any) => {
-                if (count) {
-                  this.count = count.count;
-                  this.auth.setBasketCount(this.count);
-                }
+                this.count = count.count;
+                this.auth.setBasketCount(this.count);
               });
             }
           });

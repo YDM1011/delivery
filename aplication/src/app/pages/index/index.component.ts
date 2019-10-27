@@ -46,6 +46,7 @@ export class IndexComponent implements OnInit, OnDestroy {
     });
     this._subscription.push(this.auth.onBasketCount.subscribe((v: any) => {
       this.count = v;
+      console.log(this.count)
       this.loadingCount = true;
     }));
     this._subscription.push(this.auth.onLanguage.subscribe((v: string) => {

@@ -157,7 +157,10 @@
   flex-wrap: wrap;
   margin-bottom: 15px;
   border-radius: 0 0 30px 30px;
-  border: 1px solid #E4E4E4;
+  border-top: 0;
+  border-right: 1px solid #E4E4E4;
+  border-left: 1px solid #E4E4E4;
+  border-bottom: 1px solid #E4E4E4;
 
   &.order-done-width{
     width: calc(100% - 28px);
@@ -251,7 +254,7 @@
   .cancel-order{
     width: 100%;
     text-align: center;
-    padding: 5px 0;
+    padding: 8px 0;
     span{
       text-decoration: underline;
       color: #29909E;

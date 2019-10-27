@@ -14,7 +14,7 @@ export class StatusPipe implements PipeTransform {
         break;
       case 2: res = '<div class="status__title confirm">Подтвердждено</div>';
         break;
-      case 3: res = '<div class="status__title edit">Изменено менеджером</div>';
+      case 3: res = '<div class="status__title edit">Изменено менеджером, ожидайте подтверждения от клиента</div>';
         break;
       case 4: res = '<div class="status__title done">Готово</div>';
         break;
