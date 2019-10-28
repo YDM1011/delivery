@@ -63,8 +63,11 @@ export class AppComponent {
             if (count) {
               this.count = count.count;
               this.auth.setBasketCount(this.count);
+              return;
             }
           });
+        } else {
+          this.auth.setBasketCount(0);
         }
       }
     });

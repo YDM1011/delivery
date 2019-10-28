@@ -9,6 +9,12 @@
     <app-basket-item></app-basket-item>
   </div>
   <div class="other-pages" *ngIf="loading">
+    <ng-container *ngIf="address && address.length === 0">
+      <p class="empty-address">
+        У вас нет адресов
+      </p>
+      <button routerLink="/{{language}}/new-address" class="main-button color">Создать город</button>
+    </ng-container>
     <mat-radio-group [(ngModel)]="addressChoose">
       <mat-accordion>
         <mat-expansion-panel *ngFor="let item of address">

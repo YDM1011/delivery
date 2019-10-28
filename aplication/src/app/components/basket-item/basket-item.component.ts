@@ -25,7 +25,11 @@ export class BasketItemComponent implements OnInit, OnDestroy {
     }));
 
     this._subscription.push(this.auth.onBasketCount.subscribe((v: any) => {
-      this.count = v;
+      if (v) {
+        this.count = v;
+      } else {
+        this.count = 0;
+      }
       this.loadingCount = true;
     }));
   }

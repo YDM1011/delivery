@@ -38,13 +38,13 @@ export class IndexComponent implements OnInit, OnDestroy {
     this.auth.onMe.subscribe((v: any) => {
       if (!v) {return; }
       this.user = v;
-      if (this.user && this.user._id) {
-        this.basketCount();
-      }
     });
     this._subscription.push(this.auth.onBasketCount.subscribe((v: any) => {
-      this.count = v;
-      console.log(this.count)
+      if (v) {
+        this.count = v;
+      } else {
+        this.count = 0;
+      }
       this.loadingCount = true;
     }));
     this._subscription.push(this.auth.onLanguage.subscribe((v: string) => {
@@ -57,13 +57,9 @@ export class IndexComponent implements OnInit, OnDestroy {
           this.companyArr = arr;
           this.init();
         });
-
       }
     }));
     this.carentPhoto = `url(${this.images[0]})`;
-
-    // this.wsService.send(WS.SEND.NOTIFICATION, 'admin1',  { data: 'test sf' });
-
   }
 
 
@@ -89,14 +85,5 @@ export class IndexComponent implements OnInit, OnDestroy {
   }
   ngOnDestroy() {
     this._subscription.forEach(it => it.unsubscribe());
-  }
-
-  basketCount() {
-    this.crud.get(`basket/count?query={"createdBy":"${this.user._id}","status":0}`).then((count: any) => {
-      if (count) {
-        this.count = count.count;
-        this.loadingCount = true;
-      }
-    });
   }
 }

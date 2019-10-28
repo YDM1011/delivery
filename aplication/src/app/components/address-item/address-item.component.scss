@@ -4,6 +4,9 @@
   border: 1px solid #E4E4E4!important;
   margin-bottom: 15px!important;
 }
+::ng-deep .address-panel .mat-expansion-panel-body{
+  padding: 0!important;
+}
 ::ng-deep .mat-expansion-panel-header{
   padding: 13px 15px!important;
 }
@@ -33,6 +36,7 @@
     display: flex;
     flex-wrap: wrap;
     align-items: flex-start;
+    padding: 0 10px;
     .address-info{
       width: 50%;
       padding: 5px;

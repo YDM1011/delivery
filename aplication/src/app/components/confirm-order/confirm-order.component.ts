@@ -41,7 +41,7 @@ export class ConfirmOrderComponent implements OnInit {
     this.auth.onMe.subscribe((v: string) => {
       if (v) {
         this.user = v;
-        this.crud.get(`shopAddress?query={"createdBy":"${this.user._id}"}`).then((v: any) => {
+        this.crud.get(`shopAddress?query={"createdBy":"${this.user._id}"}&populate={"path":"city"}`).then((v: any) => {
           if (v) {
             this.obj.address = v[0];
           }
@@ -57,7 +57,6 @@ export class ConfirmOrderComponent implements OnInit {
       this.blockBTN = true;
       this.crud.post(`basket`, {status: 1, deliveryAddress: this.obj.address._id, payMethod: this.method[this.obj.payMethod]}, this.basket._id).then((v: any) => {
         if (v) {
-          this.wsService.send(WS.SEND.CONFIRM_ORDER, v.companyOwner.createdBy, {data: 'Hello'}, localStorage.getItem('token'));
           this.openSnackBar('Ваш заказ оформлен',  'Ok');
           this.auth.setCheckBasket(true);
           this.closeConfirm.emit(false);

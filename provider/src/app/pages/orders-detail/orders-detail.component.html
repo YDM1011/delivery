@@ -1,17 +1,17 @@
 <ng-container *ngIf="!loading">
 	<app-loading></app-loading>
 </ng-container>
-<div class="contain" *ngIf="basket">
+<div class="contain" *ngIf="basketCopy">
 	<div class="contain__group">
 		<div class="contain__group-header">
 			<div class="title">
-				Заказ № {{basket.basketNumber}}
+				Заказ № {{basketCopy.basketCopyNumber}}
 			</div>
 			<div class="status-info">
-				<div class="name" *ngIf="basket.manager && basket.manager.name">
-				{{basket.manager.name}}
+				<div class="name" *ngIf="basketCopy.manager && basketCopy.manager.name">
+				{{basketCopy.manager.name}}
 				</div>
-				<div class="status" [innerHTML]="basket.status | status | safeHTML">
+				<div class="status" [innerHTML]="basketCopy.status | status | safeHTML">
 				</div>
 			</div>
 		</div>
@@ -23,9 +23,9 @@
 						Дата создания:
 					</div>
 					<div class="content">
-						{{basket.date | date: 'dd MMMM, yyyy'  : null : defLang}}
+						{{basketCopy.date | date: 'dd MMMM, yyyy'  : null : defLang}}
 						-
-						{{basket.date | date: 'hh:mm'  : null : defLang}}
+						{{basketCopy.date | date: 'hh:mm'  : null : defLang}}
 					</div>
 				</div>
 				<div class="info-item info-name">
@@ -33,7 +33,7 @@
 						Имя:
 					</div>
 					<div class="content">
-						{{basket.createdBy.name}}
+						{{basketCopy.createdBy.name}}
 					</div>
 				</div>
 				<div class="info-item info-address">
@@ -41,13 +41,13 @@
 						Адресс доставки:
 					</div>
 					<div class="content">
-						<ng-container *ngIf="basket.deliveryAddress">
-							{{basket.deliveryAddress.city.name}},
-							ул. {{basket.deliveryAddress.street}}
-							Дом {{basket.deliveryAddress.build}}
-							Квартира {{basket.deliveryAddress.department}}
+						<ng-container *ngIf="basketCopy.deliveryAddress">
+							{{basketCopy.deliveryAddress.city.name}},
+							ул. {{basketCopy.deliveryAddress.street}}
+							Дом {{basketCopy.deliveryAddress.build}}
+							Квартира {{basketCopy.deliveryAddress.department}}
 						</ng-container>
-						<ng-container *ngIf="!basket.deliveryAddress">
+						<ng-container *ngIf="!basketCopy.deliveryAddress">
 							Адресс не доступен
 						</ng-container>
 					</div>
@@ -57,14 +57,14 @@
 						Способ оплаты
 					</div>
 					<div class="content">
-						{{basket.payMethod ? basket.payMethod : '–'}}</div>
+						{{basketCopy.payMethod ? basketCopy.payMethod : '–'}}</div>
 				</div>
 				<div class="info-item info-address">
 					<div class="title">
 						Сообщение клиенту
 					</div>
 					<div class="content">
-						{{basket.description ? basket.description : '–'}}
+						{{basketCopy.description ? basketCopy.description : '–'}}
 						<img class="edit-description" src="./assets/images/edit-d.svg" alt="edit description" (click)="showDescription()">
 					</div>
 				</div>
@@ -81,18 +81,18 @@
 						Цена
 					</div>
 				</div>
-				<div class="product-item" *ngFor="let item of basket.products; let i = index">
+				<div class="product-item" *ngFor="let item of basketCopy.products; let i = index">
 					<div class="name">
 						{{item.orderOwner.name}}
 					</div>
 					<div class="count">
-						<svg class="decrement" *ngIf="editBasket" (click)="decrement(i)" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<svg class="decrement" *ngIf="editBasket" (click)="decrement(i, item._id)" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
 							<path d="M19.6429 10C19.6429 15.3256 15.3256 19.6429 10 19.6429C4.6744 19.6429 0.357144 15.3256 0.357144 10C0.357144 4.6744 4.6744 0.357144 10 0.357144C15.3256 0.357144 19.6429 4.6744 19.6429 10Z" stroke="#009688" stroke-width="0.714287"/>
 							<path d="M5.71387 9.28564H14.2853V10.7142H5.71387V9.28564Z" fill="#748AA1"/>
 						</svg>
 						<span class="count-item">{{item.count }} шт.</span>
 						
-						<svg class="increment" *ngIf="editBasket" (click)="increment(i)" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<svg class="increment" *ngIf="editBasket" (click)="increment(i, item._id)" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
 							<path d="M19.6429 10C19.6429 15.3256 15.3256 19.6429 10 19.6429C4.6744 19.6429 0.357144 15.3256 0.357144 10C0.357144 4.6744 4.6744 0.357144 10 0.357144C15.3256 0.357144 19.6429 4.6744 19.6429 10Z" stroke="#009688" stroke-width="0.714287"/>
 							<path d="M10.6083 9.4626H14.0067V10.9274H10.6083V14.7779H9.05135V10.9274H5.6529V9.4626H9.05135V5.90511H10.6083V9.4626Z" fill="#748AA1"/>
 						</svg>
@@ -109,21 +109,21 @@
 				<div class="left">
 					Всего
 					<div class="total-price">
-						{{basket.totalPrice}}
+						{{basketCopy.totalPrice}}
 					</div>
 					Грн.
 				</div>
 				<div class="right">
 					<ng-container *ngIf="!editBasket">
 						<button class="main-button back" [routerLink]="'/orders'">Назад</button>
-						<button class="main-button remove" *ngIf="basket.status === 1" (click)="cancel()">Отменить</button>
-						<button class="main-button edit" *ngIf="basket.status === 1" (click)="editBasket = true; showDescription()">Редактировать</button>
-						<button class="main-button-color" *ngIf="basket.status === 1" (click)="takeOrder()">Взять заказ</button>
-						<button class="main-button-color" *ngIf="basket.status === 2" (click)="done()">Готово</button>
+						<button class="main-button remove" *ngIf="basketCopy.status === 1" (click)="cancel()">Отменить</button>
+						<button class="main-button edit" *ngIf="basketCopy.status === 1" (click)="editBasket = true">Редактировать</button>
+						<button class="main-button-color" *ngIf="basketCopy.status === 1" (click)="takeOrder()">Взять заказ</button>
+						<button class="main-button-color" *ngIf="basketCopy.status === 2 && user._id === basketCopy.manager || user.role === 'provider'" (click)="done()">Готово</button>
 					</ng-container>
 					<ng-container *ngIf="editBasket">
 						<button class="main-button back" (click)="cancelEdit()">Назад</button>
-						<button class="main-button-color" *ngIf="basket.status === 1" (click)="confirmDescriptionSubmit()">Сохранить</button>
+						<button class="main-button-color" *ngIf="basketCopy.status === 1" (click)="confirmDescriptionSubmit()">Сохранить</button>
 					</ng-container>
 				</div>
 			</div>
@@ -135,9 +135,9 @@
 	<div class="dialog-content">
 		<form (submit)="descriptionSubmit()">
 			<h2>Сообщение клиенту</h2>
-			<textarea name="description" [(ngModel)]="basket.description"></textarea>
+			<textarea name="description" [(ngModel)]="basketCopy.description"></textarea>
 			<div class="buttons">
-				<button class="main-button back" (click)="basket.description = ''; dialogOpen = false">Отмена</button>
+				<button class="main-button back" (click)="basketCopy.description = ''; dialogOpen = false">Отмена</button>
 				<button type="submit" class="main-button-color">Сохранить</button>
 			</div>
 		</form>
