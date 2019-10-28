@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import {AuthService} from "./auth.service";
 import {CrudService} from "./crud.service";
 import {Subscription} from "rxjs";
+import {WS} from "./websocket/websocket.events";
+import {WebsocketService} from "./websocket";
 // import {WebNotificationService} from "./web-notification.service";
 // import {SwPush} from "@angular/service-worker";
 
@@ -17,6 +19,7 @@ export class AppComponent {
   public me: any;
   public loaded = false;
   public count;
+
   // public isEnabled = this.swPush.isEnabled;
   // public isGranted = Notification.permission === 'granted';
 
@@ -65,5 +68,7 @@ export class AppComponent {
         }
       }
     });
+
+
   }
 }

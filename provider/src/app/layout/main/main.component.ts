@@ -23,8 +23,6 @@ export class MainComponent implements OnInit {
     // websockets
     this.notificationOrders$ = this.wsService.on(WS.ON.ON_CONFIRM_ORDER);
     this.notificationOrders$.subscribe(v => {
-      console.log(v);
-      console.log(JSON.parse(v).data);
       this.auth.setWsOrder(JSON.parse(v).data);
       // this.playAudio();
     });

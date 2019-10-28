@@ -56,29 +56,6 @@ module.exports = (backendApp, socket = null, data = null) => {
 
 };
 
-const parseAuthorization = (str) => {
-    if (!str) return;
-    // let tokenName = findTokenName(str);
-    // let token = str.split(tokenName+'=')[1].split(';')[0];
-    const token = str.split(" ");
-    const tokenName = str;
-    return {name:tokenName, token:token, model: 'Client'}
-};
-const parseAA = (str) => {
-    if (!str) return;
-    // let tokenName = findTokenName(str);
-    // let token = str.split(tokenName+'=')[1].split(';')[0];
-    const token = str.split(" ");
-    const tokenName = str;
-    return {name:tokenName, token:token, model: 'Admin'}
-};
-
-const findTokenName = (str) => {
-    if (str && (str.search('adminToken') > -1)) return 'adminToken';
-    if (str && (str.search('token') > -1)) return 'token';
-    return null
-};
-
 const checkToken = (backendApp,tokenData) => {
     const jwt = require('jsonwebtoken');
     const Schema = backendApp.mongoose.model(tokenData.model);
@@ -87,6 +64,7 @@ const checkToken = (backendApp,tokenData) => {
             if (err) {
                 return rj("Token error");
             } else {
+                console.log(data);
                 Schema.findOne({login: data.login})
                     .exec((err, info)=>{
                         if (err) return rj(err);
@@ -187,7 +165,7 @@ const messageSend = (event, userData, wss, client) => {
         // });
     };
     const send = (event, data) => {
-        if (res.to == 'admin1'){
+        if (res.to == 'admin'){
             backendApp.mongoose.model('Admin').findOne({}).exec((e,r)=>{
                 if (r) {
                     sendTo(r._id, event, data);

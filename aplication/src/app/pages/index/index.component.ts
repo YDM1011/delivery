@@ -12,7 +12,6 @@ import {Subscription} from 'rxjs';
 export class IndexComponent implements OnInit, OnDestroy {
   public count = null;
   public user;
-  public notification$: any;
   public companyArr: any;
   public language: string;
   public curentCity: any = {};
@@ -32,7 +31,6 @@ export class IndexComponent implements OnInit, OnDestroy {
   private _subscription: Subscription[] = [];
   constructor(
       private auth: AuthService,
-      private wsService: WebsocketService,
       private crud: CrudService
   ) { }
 
@@ -65,18 +63,9 @@ export class IndexComponent implements OnInit, OnDestroy {
     this.carentPhoto = `url(${this.images[0]})`;
 
     // this.wsService.send(WS.SEND.NOTIFICATION, 'admin1',  { data: 'test sf' });
-    this.notification$ = this.wsService.on(WS.ON.ON_NOTIFICATION);
 
-    this.notification$.subscribe(v => {
-      this.playAudio();
-    });
   }
-  playAudio() {
-    const audio = new Audio();
-    audio.src = '../../../assets/audio/alert.mp3';
-    audio.load();
-    audio.play();
-  }
+
 
   async init() {
     await this.crud.getBrands().then((v: any) => {

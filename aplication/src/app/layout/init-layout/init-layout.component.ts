@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, NavigationEnd, Router} from "@angular/router";
 import {AuthService} from "../../auth.service";
 import {ConnectionService} from 'ng-connection-service';
+import {WS} from "../../websocket/websocket.events";
+import {WebsocketService} from "../../websocket";
 
 @Component({
   selector: 'app-init-layout',
@@ -11,8 +13,11 @@ import {ConnectionService} from 'ng-connection-service';
 export class InitLayoutComponent implements OnInit {
   status = 'online';
   isConnected = true;
+  public notification$: any;
+
   constructor(
-      private connectionService: ConnectionService,
+    private wsService: WebsocketService,
+    private connectionService: ConnectionService,
       private auth: AuthService,
       private router: Router,
       private route: ActivatedRoute
@@ -36,6 +41,12 @@ export class InitLayoutComponent implements OnInit {
       }
     });
 
+    this.notification$ = this.wsService.on(WS.ON.ON_NOTIFICATION);
+
+    this.notification$.subscribe(v => {
+      this.playAudio();
+    });
+
     this.route.params.subscribe((params: any) => {
       this.auth.setLanguage(this.route.snapshot.paramMap.get('lang'));
     });
@@ -48,6 +59,15 @@ export class InitLayoutComponent implements OnInit {
         left: 0
       });
     });
+
   }
+
+  playAudio() {
+    const audio = new Audio();
+    audio.src = '../../../assets/audio/alert.mp3';
+    audio.load();
+    audio.play();
+  }
+
 
 }
