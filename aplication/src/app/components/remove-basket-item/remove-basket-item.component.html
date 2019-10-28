@@ -10,7 +10,7 @@
     </div>
     <div class="remove-item">
       <div class="img">
-        <app-img [fs]="data.obj.orderOwner.img" [anyFs]="'assets/images/tmp/img-product.png'"></app-img>
+        <app-img *ngIf="data.obj.orderOwner" [fs]="data.obj.orderOwner.img" [anyFs]="'assets/images/tmp/img-product.png'"></app-img>
       </div>
       <div class="info">
         <div class="title">

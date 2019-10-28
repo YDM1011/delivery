@@ -18,9 +18,9 @@
         <mat-checkbox class="green-checkbox basket-checkbox" name="it1" [ngModel]="items[i].isChoise" (change)="otherChack(i)"></mat-checkbox>
         <div class="img">
 <!--          <img src="./assets/images/tmp/img-product.png" alt="">-->
-          <app-img [fs]="prod.orderOwner.img ? prod.orderOwner.img : ''" [anyFs]="'assets/images/product.svg'"></app-img>
+          <app-img *ngIf="prod.orderOwner" [fs]="prod.orderOwner.img ? prod.orderOwner.img : ''" [anyFs]="'assets/images/product.svg'"></app-img>
         </div>
-        <div class="info">
+        <div class="info" *ngIf="prod.orderOwner">
           <div class="title">
             {{prod.orderOwner.name}}
           </div>
