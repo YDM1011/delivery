@@ -97,7 +97,7 @@ export class OrdersComponent implements OnInit {
     });
   }
   tab1(skip, limit) {
-    this.crud.get(`basket/count?query={"companyOwner":"${this.user.companyOwner}"}`).then((count: any) => {
+    this.crud.get(`basket/count?query={"companyOwner":"${this.user.companyOwner}", "$or":[{"status":2},{"status":3}]}`).then((count: any) => {
       if (count) {
         this.lengthPagination = count.count;
         this.crud.get(`basket?query={"companyOwner":"${this.user.companyOwner}", "$or":[{"status":2},{"status":3}]}&populate=[{"path":"products"},{"path":"createdBy"},{"path":"deliveryAddress","populate":"city","select":"name build street department"},{"path":"manager","select":"name"}]&skip=${skip}&limit=${limit}`).then((orders: any) => {
@@ -109,7 +109,7 @@ export class OrdersComponent implements OnInit {
     });
   }
   tab2(skip, limit) {
-    this.crud.get(`basket/count?query={"companyOwner":"${this.user.companyOwner}"}`).then((count: any) => {
+    this.crud.get(`basket/count?query={"companyOwner":"${this.user.companyOwner}", "$or":[{"status":4},{"status":5}]}`).then((count: any) => {
       if (count) {
         this.lengthPagination = count.count;
         const query = JSON.stringify({companyOwner: this.user.companyOwner, $or: [{status: 4}, {status: 5}]});
@@ -122,7 +122,8 @@ export class OrdersComponent implements OnInit {
     });
   }
   tab3(skip, limit) {
-    this.crud.get(`basket/count?query={"companyOwner":"${this.user.companyOwner}"}`).then((count: any) => {
+    const queryCount = JSON.stringify({manager: this.user._id, $or: [{status: 2}, {status: 3}]});
+    this.crud.get(`basket/count?query=${queryCount}`).then((count: any) => {
       if (count) {
         this.lengthPagination = count.count;
         const query = JSON.stringify({manager: this.user._id, $or: [{status: 2}, {status: 3}]});

@@ -9,7 +9,7 @@
     <div class="sort">
       <mat-form-field class="sort-select">
         <mat-select [(value)]="selectedSort" (selectionChange)="sortChanges()">
-          <mat-option [value]="0">Сортировка</mat-option>
+          <mat-option [value]="0">Новинки</mat-option>
           <mat-option [value]="1">От дешевых к дорогим</mat-option>
           <mat-option [value]="2">От дорогих к дешевым</mat-option>
         </mat-select>
@@ -24,16 +24,9 @@
   </div>
   
   <div class="products">
-    <!--<ng-container *ngIf="companies">-->
-      <!--<ng-container *ngFor="let company of companies">-->
-        <!--<app-product-leazy [value]="company.category" [company]="company"></app-product-leazy>-->
-      <!--</ng-container>-->
-    <!--</ng-container>-->
-    <ng-container *ngFor="let order of orders">
-      <ng-container *ngIf="order">
-        <app-product-item [data]="order" [company]="order.company"></app-product-item>
-      </ng-container>
-    </ng-container>
+    <cdk-virtual-scroll-viewport *ngIf="mainCategory && orders.length>0" itemSize="120" class="viewport" appCategoryProductUpload [sortFilter]="sort" [cityLinkArr]="CityLinksArr" [filter]="filter" [mainCategory]="mainCategory" (output)="getOutput($event)">
+      <app-product-item *cdkVirtualFor="let order of orders" [data]="order" [company]="order.company"></app-product-item>
+    </cdk-virtual-scroll-viewport>
   </div>
 </div>
 

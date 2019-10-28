@@ -54,7 +54,7 @@
 						<span class="from">до</span>
 						<input type="text" [(ngModel)]="priceMax">
 					</div>
-					<ng-container *ngIf="priceMax && isInit">
+					<ng-container>
 						<ng5-slider  [(value)]="priceMin" [(highValue)]="priceMax" [options]="options" (userChangeEnd)="priceFilterFunc()"></ng5-slider>
 					</ng-container>
 				</div>

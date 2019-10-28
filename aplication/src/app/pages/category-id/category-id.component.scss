@@ -1,15 +1,37 @@
+.viewport{
+  margin-top: 40px;
+  height: calc(100vh - 180px);
+  overflow-y: auto;
+  overflow: -moz-scrollbars-none;
+  -ms-overflow-style: none;
+  &::-webkit-scrollbar { width: 0 !important }
+}
+
 .filter-sort{
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 5px;
-  margin-top: -15px;
+  position: fixed;
+  top: 50px;
+  padding: 10px 10px 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  max-width: 768px;
+  background: #fff;
+  z-index: 2;
   .filter{
     display: flex;
     align-items: center;
     svg{
       margin-right: 5px;
     }
+  }
+}
+
+@media (min-width:768px) {
+  .filter-sort{
+    left: calc(50% - 384px);
   }
 }
 
