@@ -62,6 +62,5 @@ const generatePassword = () => {
     return retVal;
 };
 const getToken = login =>{
-    console.log(backendApp.config.jwtSecret);
     return jwt.sign({login: login}, backendApp.config.jwtSecret);
 };

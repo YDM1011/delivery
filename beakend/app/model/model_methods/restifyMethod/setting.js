@@ -8,7 +8,6 @@ module.exports.preSave = async (req, res, next, backendApp) => {
         delete req.body.createdBy;
         Setting.findOne({owner:req.user._id})
             .exec((e,r)=>{
-                console.log(e,r)
                 if (e) return res.serverError(e);
                 if (!r) {
                     req.body['owner'] = req.user._id;

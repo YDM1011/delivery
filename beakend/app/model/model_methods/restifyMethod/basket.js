@@ -4,39 +4,44 @@ module.exports.preRead = async (req,res,next, backendApp) => {
 
 module.exports.preUpdate = async (req,res,next, backendApp) => {
     const Basket = backendApp.mongoose.model('Basket');
-    // try {
-    if (req.user.role === 'provider' || req.user.role === 'collaborator') {
-        delete req.body.createdBy;
-        Basket.findById(req.params.id)
-            .populate({path:'products'})
-            .exec((e,r)=>{
-                if (e) return res.serverError(e);
-                if (!r) return res.notFound('Not found!1');
-                if (r) {
-                    console.log(r, req.body)
-                    if (req.body.status == 4) {
-                        r.products.forEach(prod=>{
-                            backendApp.mongoose.model('Order')
-                                .findOneAndUpdate({_id:prod.orderOwner}, {$inc:{countBought:(prod.count)}}, {new:true})
-                                .exec((e,r)=>{ });
-                        })
-                    }
-                    return next();
-                }
-            });
-    } else {
-        return next();
-    }
+    try {
 
-    // } catch(e) {
-    //     res.notFound("Can't be update")
-    // }
+        if (req.user.role === 'provider' || req.user.role === 'collaborator') {
+            delete req.body.createdBy;
+            Basket.findById(req.params.id)
+                .populate({path:'products'})
+                .exec((e,r)=>{
+                    if (e) return res.serverError(e);
+                    if (!r) return res.notFound('Not found!1');
+                    if (r) {
+                        console.log(r, req.body)
+                        if (req.body.status == 4) {
+                            r.products.forEach(prod=>{
+                                backendApp.mongoose.model('Order')
+                                    .findOneAndUpdate({_id:prod.orderOwner}, {$inc:{countBought:(prod.count)}}, {new:true})
+                                    .exec((e,r)=>{ });
+                            })
+                        }
+                        return next();
+                    }
+                });
+        } else {
+            return next();
+        }
+
+    } catch(e) {
+        res.notFound("Can't be update")
+    }
 };
 
 module.exports.postUpdate = async (req, res, next, backendApp) => {
 
     let basket = req.erm.result;
-    if ((basket.status === 1 || basket.status === 2) && !basket.deliveryOwner) {
+    if (req.user.role == 'client') {
+        sendToProvider(backendApp, basket, req)
+    }
+
+    if (basket.status === 1 || basket.status === 2) {
         // let asgn = await assign(req,res,next, backendApp, basket.cleanerOwner);
         let cleaner = await getCleaner(basket.cleanerOwner).catch(e=>{return rj(e)});
         let valid = await validate(req,res,cleaner,backendApp).catch(e=>{return res.ok(basket)});
@@ -51,24 +56,6 @@ module.exports.postUpdate = async (req, res, next, backendApp) => {
         if (!valid) return next();
         let dataBasket = await updateBasketByCleaner(req, basket.cleanerOwner);
         res.ok(dataBasket);
-    } else if (basket.status == 2 && basket.deliveryOwner) {
-        let delivery = await getDelivery(basket.deliveryOwner).catch(e=>{return rj(e)});
-        let valid = await validateDeliveri(req,res,delivery,backendApp).catch(e=>{return res.ok(basket)});
-        if (valid === 'mainAssign') {
-            return next();
-        } else {
-            let obj = {
-                delivery:basket.deliveryOwner,
-                $push:{orders:basket._id, ordersOpen:basket._id},
-                $inc: {ordersCount:1, ordersOpenCount:1},
-                updated: new Date(),
-            };
-            await ActionLogUpdate(req.body.managerDeliveryOwner, obj, backendApp, next);
-            if (!valid) return next();
-            let dataBasket = await updateBasketByCleaner(req, basket.deliveryOwner);
-            res.ok(dataBasket);
-        }
-
     } else if (basket.status == 5) {
         let cleaner = await getCleaner(basket.cleanerOwner).catch(e=>{return rj(e)});
         let cleanerUpdated = await setMoneyToCleaner(req, basket, cleaner).catch(e=>res.notFound(e));
@@ -76,6 +63,29 @@ module.exports.postUpdate = async (req, res, next, backendApp) => {
     } else {
         next()
     }
+};
+
+const sendToProvider = (backendApp, basket, req) => {
+    backendApp.mongoose.model('Company')
+        .findById(basket.companyOwner)
+        .exec((e,r)=>{
+            if (r) {
+                backendApp.events.callWS.emit('message', JSON.stringify({
+                    event:"order-confirm",
+                    data: {data:basket},
+                    to: r.createdBy
+                }));
+                if (r.collaborators && r.collaborators.length>1){
+                    r.collaborators.forEach(it=>{
+                        backendApp.events.callWS.emit('message', JSON.stringify({
+                            event:"order-confirm",
+                            data: {data:basket},
+                            to: it
+                        }));
+                    })
+                }
+            }
+        });
 };
 
 const assign =  (req,res,next, backendApp, superManeger)=>{

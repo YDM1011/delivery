@@ -7,11 +7,9 @@ module.exports = (req, res, next) => {
   if (req.jwt) {
       const jwt = require('jsonwebtoken');
       const protect = req.cookies['token'] || req.jwt.token || req.headers.authorization;
-      console.log(protect);
       if(!protect) return tryAsAdmin(req, res, next);
 
       const connect = protect.split(" ");
-      console.log(connect)
       jwt.verify(connect[0], config.jwtSecret, (err,data)=>{
           if (err) return res.serverError("Token error");
 
@@ -42,7 +40,6 @@ const tryAsAdmin = (req,res,next) => {
             if (!req.user) return res.serverError("Token error");
             return next()
         }else{
-            console.log(data)
             Admin.findOne({login: data.login })
                 .exec((err, infoA)=>{
                     if (err) return next(err);

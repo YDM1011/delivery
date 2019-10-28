@@ -6,7 +6,6 @@ module.exports = backendApp => {
     const modelNames = backendApp.mongoose.modelNames();
 
     modelNames.forEach( modelName => {
-        console.log(modelName);
         const model = backendApp.mongoose.model(modelName);
         let update_ws = (req, res, next) =>{
             if (!req.body.ws) return next();
@@ -25,7 +24,6 @@ module.exports = backendApp => {
             }
             new Promise((rs,rj)=>{
                 model.findOne({_id:req.params.id}).exec((e,r)=>{
-                    console.log("upload", e,r)
                     if (e) return rj(e);
                     if (!r) return rj("Not Found!");
                     if (prop) {
@@ -36,7 +34,6 @@ module.exports = backendApp => {
                         }
                     } else {
                         let result = r.img || r.image;
-                        console.log(r.img, r.image)
                         rs(result)
                     }
 
@@ -177,7 +174,6 @@ const canRead = (options) => {
             } else {
                 req.erm.query['query'] = typeof opt == 'object' ? opt : {};
             }
-            console.log(req.erm.query['query'])
             if (req.error.success) {
                 if (req.erm.query['query'] === true) req.erm.query['query'] = {};
                 return next()
@@ -193,7 +189,6 @@ const canUpdate = (options) => {
         const objPromise = checkOwnerPost(req,res,next,options);
         Promise.all(objPromise).then(query => {
             let opt;
-            console.log(query)
             opt = query.some(it => {
                 if (it) return it
             });
@@ -234,8 +229,6 @@ const callMethod = (req,res,next,method) => {
             // res.ok('');
             schem[method](req, res, next, backendApp);
         } catch (e) {
-            // res.ok('');
-            console.log(method, e);
             next()
         }
     } else {
@@ -277,10 +270,8 @@ const checkOwnerPost = (req,res,next,options) => {
             } else {
                 req.erm.query['query'] = query;
             }
-            console.log(req.erm.query.query)
             if (!req.erm.query.query) { return rs(false); }
             mongoose.model(model).findOne(req.erm.query.query).exec((e,r)=>{
-                console.log("ok!!", e,r, model, req.erm.query.query)
                 if (e) return rj(e);
                 if (!r) return rs(false);
                 if (r) {
@@ -317,7 +308,6 @@ const checkOwnerPost = (req,res,next,options) => {
                                             obj[idChecker.fieldName] = req.user._id.toString();
                                             backendApp.mongoose.model(it.model)
                                                 .findOne(obj).exec((e1, r1) => {
-                                                console.log(e1,r1)
                                                 if (e1) rj(e1);
                                                 if (!r1) {
                                                     rs(false)
@@ -327,7 +317,6 @@ const checkOwnerPost = (req,res,next,options) => {
                                                 }
                                             })
                                         } else {
-                                            console.log("&&!&!&!")
                                             rs(false)
                                         }
 
@@ -338,7 +327,6 @@ const checkOwnerPost = (req,res,next,options) => {
                                         obj[idChecker.fieldName] = {$in:req.user._id.toString()};
                                         backendApp.mongoose.model(it.model)
                                             .findOne(obj).exec((e1, r1) => {
-                                                console.log(e1,r1)
                                             if (e1) rj(e1);
                                             if (!r1) {
                                                 rs(false)
@@ -403,7 +391,6 @@ const checkOwner = (req,res,next,options) => {
         return objPromise
     } else
     {
-        console.log("Err");
         objPromise = [];
         options[role].read.forEach( it =>{
             if (it.model) {

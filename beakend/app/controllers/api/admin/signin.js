@@ -34,7 +34,6 @@ module.exports = (backendApp, router) => {
                         ]
                     },{pass:md5(req.body.pass)}],
                 }).exec(function (err, user) {
-                    console.log(err,user);
                     if (err) return res.serverError(err);
                     if (!user) {
                         return res.notFound('Password or login invalid!');

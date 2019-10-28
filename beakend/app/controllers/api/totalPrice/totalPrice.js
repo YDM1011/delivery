@@ -13,10 +13,8 @@ module.exports = function (backendApp, router) {
                         r.map(obj=>{
                             price += obj.totalPrice
                         });
-                        console.log(price, price%0.01);
                         price = String(price)
                         price =parseFloat(price.split('.')[1] ?  parseInt(price)+'.'+price.split('.')[1].slice(0,2) : price);
-                        console.log(price)
                         res.ok({totalPrice:price})
                     };
                 })

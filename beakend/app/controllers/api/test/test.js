@@ -6,7 +6,6 @@ module.exports = function (backendApp, router) {
             .findOne({})
             .sort({date:-1})
             .exec((e,r)=>{
-                console.log(e,r)
                 res.ok(r)
             });
     });
@@ -58,7 +57,6 @@ const createBasket = (data,backendApp) => {
         //     if (!r) return rj("One of Basket is invalid!");
         //     if (r) return rs(r)
         // });
-        console.log(data);
         setTimeout (()=>{
             data['_id'] = Math.random();
             rs(data)

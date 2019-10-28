@@ -4,9 +4,6 @@ module.exports = (backendApp, router) => {
     const cleaner = backendApp.mongoose.model('Cleaner');
     router.post('/withdrawMoney/:id', [backendApp.middlewares.isAdmin], async (req, res, next) => {
         let dataWithdraw = await getDataNotification(req, adminNotification).catch(e => {return res.notFound(e)});
-        console.log(dataWithdraw);
-        console.log(dataWithdraw.amount);
-        console.log(dataWithdraw.cleanerId);
         if (dataWithdraw && dataWithdraw.amount && dataWithdraw.cleanerId){
             let dataCleaner = await getDataCleaner(dataWithdraw, cleaner).catch(e => {return res.notFound(e)});
             if (checkAmount(dataCleaner, dataWithdraw)) {

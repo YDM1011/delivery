@@ -85,7 +85,6 @@ const init = (app, config) =>{
 
     app.get("/", (req, res, next) => {
         const host = req.hostname;
-        console.log("host:", host);
         switch (host.split('.')[0]) {
             case 'client':
                 res.status(200);

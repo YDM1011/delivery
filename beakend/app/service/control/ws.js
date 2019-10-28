@@ -13,12 +13,15 @@ module.exports = (backendApp, socket = null, data = null) => {
 
     wss.on('connection', (ws, req) => {
         let userData;
-        backendApp.events.callWS.on('message',(event)=>{
-            // ws.send(JSON.stringify(event))
-            try {
-                messageSend(JSON.stringify(event), userData, wss, ws)
-            } catch (e) {return}
-
+        backendApp.events.callWS.on('message', async (event)=>{
+            const data = JSON.parse(event);
+            if (data.event !== 'connect') {
+                try {
+                    messageSend(JSON.stringify(event), wss, ws)
+                } catch (e) {
+                    return
+                }
+            }
         });
 
         ws.on('message', async (event) => {
@@ -32,14 +35,15 @@ module.exports = (backendApp, socket = null, data = null) => {
                     if(!userData) {
                         userData = await checkToken(backendApp, {token:data.token, model: 'Admin'}).catch(e=>{console.error(e)});
                     }
-                    saveConnect(userData, wss, ws);
+                    if (userData) saveConnect(userData, wss, ws);
+
                 }
             } else {
-                userData = await checkToken(backendApp, {token:data.token, model: 'Client'}).catch(e=>{console.error(e)});
-                if(!userData) {
-                    userData = await checkToken(backendApp, {token:data.token, model: 'Admin'}).catch(e=>{console.error(e)});
-                }
-                messageSend(event, userData, wss, ws)
+                // userData = await checkToken(backendApp, {token:data.token, model: 'Client'}).catch(e=>{console.error(e)});
+                // if(!userData) {
+                //     userData = await checkToken(backendApp, {token:data.token, model: 'Admin'}).catch(e=>{console.error(e)});
+                // }
+                messageSend(event, wss, ws)
             }
         });
 
@@ -97,66 +101,56 @@ const removeConnect = (userId, wss, index = null) => {
  * @param ws
  */
 const saveConnect = (userData, wss, ws) => {
-    ws['userId'] = userData._id;
-    let connectsItem = wss[userData._id];
-    console.log(typeof connectsItem);
-    if (connectsItem){
+    if (wss[userData._id]){
         /** update */
-        let lastIndex = connectsItem.length - 1;
-        if(!connectsItem[lastIndex]){
-            delete wss[userData._id];
-            wss[userData._id] = [];
-            ws['index'] = wss[userData._id].length + 1;
-            wss[userData._id].push(ws);
-            console.log("break dont save", ws['index'])
-            return
-        }
-        ws['index'] = (connectsItem[lastIndex].index || lastIndex) + 1;
-        connectsItem.push(ws);
+        delete wss[userData._id];
+        wss[userData._id] = [];
+        ws['userId'] = userData._id;
+        wss[userData._id].push(ws);
     } else {
         /** create */
         delete wss[userData._id];
         wss[userData._id] = [];
-        ws['index'] = wss[userData._id].length + 1;
+        ws['userId'] = userData._id;
         wss[userData._id].push(ws);
 
     }
     /** logger connects **/
-    console.log("save as",ws['index']);
+    console.log("save as",wss[userData._id].length, userData._id);
     wss[userData._id].forEach((i,it)=>{
-        console.log("saveds", i.index)
+        console.log("saveds", i.userId, userData._id)
     })
 };
 
-const messageSend = (event, userData, wss, client) => {
-    console.log("data",event, userData)
+const messageSend = (event, wss, client) => {
     const data = JSON.parse(event);
     const res = JSON.parse(data);
 
     const sendTo = (to, event, data) => {
-        if (!userData) {
-            client.send(JSON.stringify({
-                event: event,
-                data: "ok!!"
-            }))
-        }
+        // if (!userData) {
+        //     client.send(JSON.stringify({
+        //         event: event,
+        //         data: "ok!!"
+        //     }))
+        // }
         if (!to) {
-            wss[userData._id].forEach(ws=>{
-                ws.send(JSON.stringify({
-                    event: event,
-                    data: "ok!!"
-                }));
-            });
+            // wss[userData._id].forEach(ws=>{
+            //     ws.send(JSON.stringify({
+            //         event: event,
+            //         data: "ok!!"
+            //     }));
+            // });
             return
         }
         /** All user's requests and send response to 1 client of all requests */
         wss[to] ? wss[to].forEach(ws=>{
+            console.log("Sender",to)
             ws.send(JSON.stringify({
                 event: event,
-                data: data
+                data: res.data
             }));
         }) : '';
-
+        //
         // wss.clients.forEach(ws=>{
         //     ws.send(JSON.stringify({
         //         event: event,

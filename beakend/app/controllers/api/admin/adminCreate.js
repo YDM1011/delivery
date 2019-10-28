@@ -34,7 +34,6 @@ module.exports = (backendApp, router) => {
     });
 
     const getToken = login =>{
-        console.log(backendApp.config.jwtSecret);
         return jwt.sign({login: login}, backendApp.config.jwtSecret);
     };
 };

@@ -18,4 +18,3 @@ module.exports = _.extend({
   IS_PRODUCTION: env === "production",
   RC_VERSION: process.env.RC_VERSION || "1.0.0"
 }, envConfig);
-console.log(env);

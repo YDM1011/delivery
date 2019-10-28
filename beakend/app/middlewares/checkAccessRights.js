@@ -40,7 +40,6 @@ module.exports = (permission, allowFunction) => {
     // }));
 
     const isValid = await checkPerm(req, res, next);
-    console.log("tes",isValid)
     if (isValid) return next()
 
     res.forbidden('Access denided')

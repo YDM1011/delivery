@@ -7,7 +7,6 @@ module.exports.preRead = async (req,res,next, backendApp) => {
 const readStep = async (req,res,next,backendApp) => {
     return new Promise((rs,rj)=>{
         // req.erm.query = {populate:{path:'superManager'}};
-        console.log("ok!!!",req.erm);
         rs()
     })
 };
@@ -59,7 +58,6 @@ module.exports.preSave = async (req, res, next, backendApp) => {
             // if (user) {
             req.body['createdBy'] = req.user._id;
             let product = await createProduct(req, backendApp).catch(e => {return res.notFound(e)});
-            console.log("product",product);
             let basket = await checkAndInitBasket(req, backendApp, product).catch(e => {return res.notFound(e)});
             await setBasketToProduct(product, backendApp, basket).catch(e => {return res.notFound(e)});
             product.basketOwner = basket._id;
@@ -125,7 +123,6 @@ const createProduct = (req,backendApp) => {
                 if (!r0) return rj("One of product is invalid!");
                 data['price'] = r0.price;
                 data['companyOwner'] = r0.companyOwner;
-                console.log("Created product",data);
                 Product.create(data,(e,r)=>{
 
                     if (e) return rj(e);
@@ -161,7 +158,6 @@ const getSettings = (req,backendApp) => {
     return new Promise((rs,rj)=>{
         Setting.findOne({})
             .exec((e,r)=>{
-                console.log(e,r,"tew")
                 if (e) return rj(e);
                 if (!r) return rs({percentage: 1});
                 if (r){

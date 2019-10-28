@@ -3,7 +3,6 @@ const jwt = require('jsonwebtoken');
 module.exports = (backendApp, router) => {
 
     const getToken = login =>{
-        console.log(backendApp.config.jwtSecret);
         return jwt.sign({login: login}, backendApp.config.jwtSecret);
     };
 
@@ -67,12 +66,10 @@ module.exports = (backendApp, router) => {
                                 .exec((e1,r1)=>{
                                     if (e1) return res.serverError(e1);
                                     if (!r1) return res.badRequest();
-                                    console.log(r1);
                                     return postSignup(req, res, r);
                                 });
                         }
                     } else {
-                        console.log(r);
                         return postSignup(req, res, r);
                     }
 

@@ -4,7 +4,6 @@ module.exports = function (backendApp, router) {
         const Product = backendApp.mongoose.model("Product");
         try {
             let Prods = await getBasketsProduct(req,backendApp);
-            console.log(Prods);
             if (!Prods || Prods.length==0) return res.ok([]);
             Product.find({
                 $or: Prods
@@ -43,7 +42,6 @@ const getBasketsProduct = (req,backendApp) =>{
                         })
                         // arr = arr.concat(it.products)
                     });
-                    console.log(r, arr);
                     rs(arr)
                 }
             })
