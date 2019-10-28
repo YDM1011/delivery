@@ -60,7 +60,7 @@ export class WorkTimeComponent implements OnInit {
   saveTime() {
     console.log(this.time);
     this.user.companies[0].workTime = this.time;
-    this.crud.post('company', {workTime: this.time}, this.user.companies[0]._id).then((v: any) => {
+    this.crud.post('company', {workTime: this.time}, this.user.companyOwner).then((v: any) => {
       if (v) {
         this.auth.setMe(this.user);
       }
