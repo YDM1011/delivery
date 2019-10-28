@@ -1,7 +1,6 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import Swal from 'sweetalert2';
 import {AuthService} from '../../auth.service';
-import {MatPaginator, MatTableDataSource} from '@angular/material';
 import {CrudService} from '../../crud.service';
 
 @Component({
@@ -16,7 +15,6 @@ export class CreateComponent implements OnInit {
   public loading = false;
   public showCollaborator = false;
   public user;
-
   public editShow = false;
   public isBlok = false;
   public defLang = 'ru-UA';
@@ -46,17 +44,17 @@ export class CreateComponent implements OnInit {
       if (!v) {return; }
       this.user = v;
       if (this.user && this.user.companies.length > 0) {
-        this.crud.get(`client/count?query={"companyOwner":"${this.user.companies[0]._id}"}`).then((count: any) => {
+        this.crud.get(`client/count?query={"companyOwner":"${this.user.companyOwner}"}`).then((count: any) => {
           if (count) {
             this.lengthPagination = count.count;
-            this.crud.get(`client?query={"companyOwner": "${this.user.companies[0]._id}"}&skip=0&limit=${this.pageSizePagination}`).then((c: any) => {
+            this.crud.get(`client?query={"companyOwner": "${this.user.companyOwner}"}&skip=0&limit=${this.pageSizePagination}`).then((c: any) => {
               if (c) {
                 this.clients = c;
                 this.loading = true;
               }
-            })
+            });
           }
-        })
+        });
       }
     });
   }
@@ -67,7 +65,7 @@ export class CreateComponent implements OnInit {
       Swal.fire('Error', 'Все поля обязательны', 'error').then();
       return;
     }
-    this.client.companyOwner = this.user.companies[0]._id;
+    this.client.companyOwner = this.user.companyOwner;
     this.crud.post('signup', this.client).then((v: any) => {
       if (!v) {return; }
       this.clients.push(v);
@@ -85,7 +83,7 @@ export class CreateComponent implements OnInit {
       Swal.fire('Error', 'Название категории не может быть пустым', 'error').then();
       return;
     }
-    this.editObj.companyOwner = this.user.companies[0]._id;
+    this.editObj.companyOwner = this.user.companyOwner;
     this.crud.post('client', {name: this.editObj.name}, this.editObj._id).then((v: any) => {
       if (v) {
         this.editShow = false;
@@ -115,7 +113,7 @@ export class CreateComponent implements OnInit {
     this.crud.delete('client', this.clients[i]._id).then((v: any) => {
       if (v) {
         this.clients.splice(i, 1);
-        this.crud.get(`client/count?query={"companyOwner":"${this.user.companies[0]._id}"}`).then((c: any) => {
+        this.crud.get(`client/count?query={"companyOwner":"${this.user.companyOwner}"}`).then((c: any) => {
           if (!c) {return; }
           this.clients = c;
         });
@@ -157,17 +155,17 @@ export class CreateComponent implements OnInit {
   }
   outputSearch(e) {
     if (!e) {
-      this.crud.get(`client?query={"companyOwner": "${this.user.companies[0]._id}"}&skip=0&limit=${this.pageSizePagination}`).then((c: any) => {
+      this.crud.get(`client?query={"companyOwner": "${this.user.companyOwner}"}&skip=0&limit=${this.pageSizePagination}`).then((c: any) => {
         if (c) {
           this.clients = c;
         }
-      })
+      });
     } else {
       this.clients = e;
     }
   }
   pageEvent(e) {
-    this.crud.get(`client?query={"companyOwner":"${this.user.companies[0]._id}"}&skip=${e.pageIndex  * e.pageSize}&limit=${e.pageSize}`).then((c: any) => {
+    this.crud.get(`client?query={"companyOwner":"${this.user.companyOwner}"}&skip=${e.pageIndex  * e.pageSize}&limit=${e.pageSize}`).then((c: any) => {
       if (!c) {return; }
       this.clients = c;
     });

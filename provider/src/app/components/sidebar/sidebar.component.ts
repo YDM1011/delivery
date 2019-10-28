@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {AuthService} from "../../auth.service";
 
 @Component({
   selector: 'app-sidebar',
@@ -6,10 +7,18 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./sidebar.component.scss']
 })
 export class SidebarComponent implements OnInit {
-
-  constructor() { }
+  public user;
+  constructor(
+      private auth: AuthService
+  ) { }
 
   ngOnInit() {
+    this.auth.onMe.subscribe((v: any) => {
+      if (v) {
+        this.user = v;
+        console.log(v)
+      }
+    })
   }
 
 }

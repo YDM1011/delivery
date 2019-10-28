@@ -41,18 +41,20 @@ export class CategoryComponent implements OnInit {
 
   ngOnInit() {
     this.crud.get('mainCategory').then((v: any) => {
-      if (!v || v.length === 0)  { return; }
+      if (!v)  { return; }
       this.mainCategory = v;
       this.mainCategoryChoose = this.mainCategory[0]._id;
     });
     this.auth.onMe.subscribe((v: any) => {
       if (!v) { return; }
       this.user = v;
-      if (this.user.companies[0]) {
-        this.crud.get(`category/count?query={"companyOwner": "${this.user.companies[0]._id}"}`).then((count: any) => {
+      if (this.user.companyOwner) {
+        this.crud.get(`category/count?query={"companyOwner": "${this.user.companyOwner}"}`).then((count: any) => {
+          console.log(count)
           if (count) {
             this.lengthPagination = count.count;
-            this.crud.get(`category?query={"companyOwner": "${this.user.companies[0]._id}"}&skip=0&limit=${this.pageSizePagination}`).then((c: any) => {
+            this.crud.get(`category?query={"companyOwner": "${this.user.companyOwner}"}&sort={"date":-1}&skip=0&limit=${this.pageSizePagination}`).then((c: any) => {
+              console.log(c)
               if (c) {
                 this.categorys = c;
                 this.loading = true;
@@ -75,7 +77,7 @@ export class CategoryComponent implements OnInit {
       return;
     }
     this.category.mainCategory = this.mainCategoryChoose;
-    this.category.companyOwner = this.user.companies[0]._id;
+    this.category.companyOwner = this.user.companyOwner;
     this.crud.post('category', this.category).then((v: any) => {
       if (v) {
         this.categorys.unshift(v);
@@ -87,7 +89,7 @@ export class CategoryComponent implements OnInit {
         };
         this.mainCategoryChoose = null;
         this.addShow = false;
-        this.crud.get(`category/count?query={"companyOwner": "${this.user.companies[0]._id}"}`).then((count: any) => {
+        this.crud.get(`category/count?query={"companyOwner": "${this.user.companyOwner}"}`).then((count: any) => {
           if (count) {
             this.lengthPagination = count.count;
           }
@@ -100,7 +102,7 @@ export class CategoryComponent implements OnInit {
     this.crud.delete('category', this.categorys[i]._id).then((v: any) => {
       if (v) {
         this.categorys.splice(i, 1);
-        this.crud.get(`category/count?query={"companyOwner": "${this.user.companies[0]._id}"}`).then((count: any) => {
+        this.crud.get(`category/count?query={"companyOwner": "${this.user.companyOwner}"}`).then((count: any) => {
           if (count) {
             this.lengthPagination = count.count;
           }
@@ -130,8 +132,6 @@ export class CategoryComponent implements OnInit {
       if (v) {
         this.editShow = false;
         this.categorys[this.crud.find('_id', this.editObj['_id'], this.categorys)] = v;
-        this.user.companies[0].categories = this.categorys;
-        this.auth.setMe(this.user);
         this.isBlok = false;
         this.editShow = false;
         this.editObj = {
@@ -187,7 +187,7 @@ export class CategoryComponent implements OnInit {
   }
   outputSearch(e) {
     if (!e) {
-      this.crud.get(`category?query={"companyOwner": "${this.user.companies[0]._id}"}&skip=0&limit=${this.pageSizePagination}`).then((c: any) => {
+      this.crud.get(`category?query={"companyOwner": "${this.user.companyOwner}"}&skip=0&limit=${this.pageSizePagination}`).then((c: any) => {
         if (c) {
           this.categorys = c;
         }
@@ -197,7 +197,7 @@ export class CategoryComponent implements OnInit {
     }
   }
   pageEvent(e) {
-    this.crud.get(`category?query={"companyOwner":"${this.user.companies[0]._id}"}&skip=${e.pageIndex  * e.pageSize}&limit=${e.pageSize}`).then((c: any) => {
+    this.crud.get(`category?query={"companyOwner":"${this.user.companyOwner}"}&skip=${e.pageIndex  * e.pageSize}&limit=${e.pageSize}`).then((c: any) => {
       if (!c) {
         return;
       }

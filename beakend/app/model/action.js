@@ -83,8 +83,22 @@ const schem = new Schema({
     },
     collaborator: {
         read: [{public:true}],
-        update: [{private:true}],
-        create: [{private:true}],
+        update: [{
+            model:'Company',
+            _id: 'companyOwner',
+            canBeId: [
+                {type:'refObj', fieldName: 'createdBy'},
+                {type:'array', fieldName: 'collaborators'}
+            ]
+        }],
+        create: [{
+            model:'Company',
+            _id: 'companyOwner',
+            canBeId: [
+                {type:'refObj', fieldName: 'createdBy'},
+                {type:'array', fieldName: 'collaborators'}
+            ]
+        }],
         delete: [{
             model:'Company',
             _id: 'companyOwner',

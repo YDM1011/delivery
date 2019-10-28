@@ -36,7 +36,7 @@
 			</div>
 			<ng-container *ngIf="loading">
 				<div class="table" *ngIf="products && products.length > 0">
-					<app-search-filter [inputApi]="'order'" [inputQuery]="'name'" [queryValue]="'companyOwner'" [querySearch]="user.companies[0]._id" (output)="outputSearch($event)"></app-search-filter>
+					<app-search-filter [inputApi]="'order'" [inputQuery]="'name'" [queryValue]="'companyOwner'" [querySearch]="user.companyOwner" (output)="outputSearch($event)"></app-search-filter>
 					<div class="table-content">
 						<div class="row-h">
 							<div class="col">

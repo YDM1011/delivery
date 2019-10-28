@@ -54,11 +54,11 @@ export class DebtorComponent implements OnInit {
     this.auth.onMe.subscribe((v: any) => {
       if (!v) { return; }
       this.user = v;
-      if (this.user && this.user.companies.length > 0) {
-        this.crud.get(`debtor/count?query={"companyOwner": "${this.user.companies[0]._id}"}`).then((count: any) => {
+      if (this.user && this.user.companyOwner) {
+        this.crud.get(`debtor/count?query={"companyOwner": "${this.user.companyOwner}"}`).then((count: any) => {
           if (count) {
             this.lengthPagination = count.count;
-            this.crud.get(`debtor?query={"companyOwner": "${this.user.companies[0]._id}"}&populate={"path":"clientOwner"}&skip=0&limit=${this.pageSizePagination}`).then((d: any) => {
+            this.crud.get(`debtor?query={"companyOwner": "${this.user.companyOwner}"}&populate={"path":"clientOwner"}&skip=0&limit=${this.pageSizePagination}`).then((d: any) => {
               if (d) {
                 this.debtors = d;
                 this.loading = true;
@@ -78,7 +78,7 @@ export class DebtorComponent implements OnInit {
   create() {
     const index = this.crud.find('login', this.inputChange, this.searchDebtors);
     this.debtor.clientOwner = this.searchDebtors[index]._id;
-    this.debtor.companyOwner = this.user.companies[0]._id;
+    this.debtor.companyOwner = this.user.companyOwner;
     this.debtor['login'] = this.searchDebtors[index].login;
     if (this.debtor.clientOwner === '') {
       Swal.fire('Error', 'Выберете должника по номеру телефона', 'error');
@@ -94,10 +94,10 @@ export class DebtorComponent implements OnInit {
     }
     this.crud.post('debtor', this.debtor).then((v: any) => {
       if (v) {
-        this.crud.get(`debtor/count?query={"companyOwner": "${this.user.companies[0]._id}"}`).then((count: any) => {
+        this.crud.get(`debtor/count?query={"companyOwner": "${this.user.companyOwner}"}`).then((count: any) => {
           if (count) {
             this.lengthPagination = count.count;
-            this.crud.get(`debtor?query={"companyOwner": "${this.user.companies[0]._id}"}&populate={"path":"clientOwner"}&skip=0&limit=${this.pageSizePagination}`).then((d: any) => {
+            this.crud.get(`debtor?query={"companyOwner": "${this.user.companyOwner}"}&populate={"path":"clientOwner"}&skip=0&limit=${this.pageSizePagination}`).then((d: any) => {
               if (d) {
                 this.debtors = d;
                 this.loading = true;
@@ -122,7 +122,7 @@ export class DebtorComponent implements OnInit {
     this.crud.delete('debtor', this.debtors[i]._id).then((v: any) => {
       if (v) {
         this.debtors.splice(i, 1);
-        this.crud.get(`debtor/count?query={"companyOwner":"${this.user.companies[0]._id}"}`).then((count: any) => {
+        this.crud.get(`debtor/count?query={"companyOwner":"${this.user.companyOwner}"}`).then((count: any) => {
           if (!count) {return; }
           this.lengthPagination  = count.count;
         });
@@ -205,7 +205,7 @@ export class DebtorComponent implements OnInit {
   }
   outputSearch(e) {
     if (!e) {
-      this.crud.get(`debtor?query={"companyOwner": "${this.user.companies[0]._id}"}&populate={"path":"clientOwner"}&skip=0&limit=${this.pageSizePagination}`).then((d: any) => {
+      this.crud.get(`debtor?query={"companyOwner": "${this.user.companyOwner}"}&populate={"path":"clientOwner"}&skip=0&limit=${this.pageSizePagination}`).then((d: any) => {
         if (d) {
           this.debtors = d;
         }
@@ -215,7 +215,7 @@ export class DebtorComponent implements OnInit {
     }
   }
   pageEvent(e) {
-    this.crud.get(`debtor?query={"companyOwner":"${this.user.companies[0]._id}"}&populate={"path":"clientOwner"}&skip=${e.pageIndex  * e.pageSize}&limit=${e.pageSize}`).then((d: any) => {
+    this.crud.get(`debtor?query={"companyOwner":"${this.user.companyOwner}"}&populate={"path":"clientOwner"}&skip=${e.pageIndex  * e.pageSize}&limit=${e.pageSize}`).then((d: any) => {
       if (!d) {return; }
       this.debtors = d;
     });
