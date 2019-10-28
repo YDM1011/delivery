@@ -1,8 +1,10 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {AuthService} from '../../auth.service';
 import {CrudService} from '../../crud.service';
-import {MatSnackBar} from "@angular/material";
-import {Router} from "@angular/router";
+import {MatSnackBar} from '@angular/material';
+import {Router} from '@angular/router';
+import {WS} from '../../websocket/websocket.events';
+import {WebsocketService} from '../../websocket';
 
 @Component({
   selector: 'app-confirm-order',
@@ -28,7 +30,8 @@ export class ConfirmOrderComponent implements OnInit {
       private auth: AuthService,
       private crud: CrudService,
       private snackBar: MatSnackBar,
-      private router: Router
+      private router: Router,
+      private wsService: WebsocketService
   ) { }
 
   ngOnInit() {
@@ -38,6 +41,11 @@ export class ConfirmOrderComponent implements OnInit {
     this.auth.onMe.subscribe((v: string) => {
       if (v) {
         this.user = v;
+        this.crud.get(`shopAddress?query={"createdBy":"${this.user._id}"}`).then((v: any) => {
+          if (v) {
+            this.obj.address = v[0];
+          }
+        });
       }
     });
   }
@@ -49,6 +57,7 @@ export class ConfirmOrderComponent implements OnInit {
       this.blockBTN = true;
       this.crud.post(`basket`, {status: 1, deliveryAddress: this.obj.address._id, payMethod: this.method[this.obj.payMethod]}, this.basket._id).then((v: any) => {
         if (v) {
+          this.wsService.send(WS.SEND.CONFIRM_ORDER, v.companyOwner.createdBy, {data: 'Hello'}, localStorage.getItem('token'));
           this.openSnackBar('Ваш заказ оформлен',  'Ok');
           this.auth.setCheckBasket(true);
           this.closeConfirm.emit(false);

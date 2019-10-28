@@ -34,6 +34,14 @@ export class OrdersComponent implements OnInit {
       });
     });
   }
+  confirmOrder(e) {
+    if (e) {
+      this.openSnackBar('Ваш заказ был подтвержден',  'Ok');
+      this.crud.get(`basket?query={"_id":"${e}","$or":[{"status":1},{"status":2},{"status":3}]}&populate=[{"path":"deliveryAddress","select":"name img"},{"path":"companyOwner","select":"name"}]`).then((v: any) => {
+        this.orders[this.crud.find('_id', e, this.orders)] = v[0];
+      });
+    }
+  }
   removeOrder(e) {
     if (e) {
       this.openSnackBar('Ваш заказ был отменен',  'Ok');

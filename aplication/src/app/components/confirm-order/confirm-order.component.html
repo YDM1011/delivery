@@ -61,9 +61,9 @@
         </div>
       </div>
       <div class="second-box">
-        <mat-radio-group aria-label="Select an option">
-          <mat-radio-button value="1">наличными</mat-radio-button>
-          <mat-radio-button value="2">отсрочка</mat-radio-button>
+        <mat-radio-group aria-label="Select an option" [(ngModel)]="obj.payMethod">
+          <mat-radio-button [value]="1">наличными</mat-radio-button>
+          <mat-radio-button [value]="2">отсрочка</mat-radio-button>
         </mat-radio-group>
       </div>
     </div>

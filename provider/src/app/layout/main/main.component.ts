@@ -15,7 +15,6 @@ export class MainComponent implements OnInit {
   public notificationOrders$;
   constructor(
       private auth: AuthService,
-
       private crud: CrudService,
       private wsService: WebsocketService
   ) {}

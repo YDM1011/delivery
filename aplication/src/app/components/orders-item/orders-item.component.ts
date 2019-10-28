@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {CrudService} from '../../crud.service';
-import {AuthService} from "../../auth.service";
+import {AuthService} from '../../auth.service';
 
 @Component({
   selector: 'app-orders-item',
@@ -9,9 +9,10 @@ import {AuthService} from "../../auth.service";
 })
 export class OrdersItemComponent implements OnInit {
   @Input() order;
-  public removeOrders: boolean = true;
+  public removeOrders = true;
   public language: string;
   @Output() removeOrder = new EventEmitter();
+  @Output() confirmOrder = new EventEmitter();
   public getProducts = [];
   constructor(
       private crud: CrudService,
@@ -37,11 +38,16 @@ export class OrdersItemComponent implements OnInit {
       });
     }
   }
+  confirmChanges(id) {
+    this.crud.post(`basket`, {status: 2}, id).then(() => {
+      this.confirmOrder.emit(id);
+    });
+  }
   cancelOrder() {
     this.crud.post('basket', {status: 5}, this.order._id).then((v: any) => {
       if (v) {
         this.removeOrder.emit(true);
       }
-    })
+    });
   }
 }

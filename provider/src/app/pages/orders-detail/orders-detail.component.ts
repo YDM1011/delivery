@@ -65,7 +65,7 @@ export class OrdersDetailComponent implements OnInit {
     this.editBasket = false;
   }
   decrement(i) {
-    this.showDescription();
+    // this.showDescription();
     let count = this.basket.products[i].count;
     count--;
     if (count < 2) {
@@ -76,7 +76,7 @@ export class OrdersDetailComponent implements OnInit {
     this.refresh();
   }
   increment(i) {
-    this.showDescription();
+    // this.showDescription();
     let count = this.basket.products[i].count;
     count++;
     if (count > this.basketCopy.products[i].count) {
@@ -180,28 +180,28 @@ export class OrdersDetailComponent implements OnInit {
     });
   }
   showDescription() {
-    if (this.basket.description.length === 0) {
       this.dialogOpen = true;
-      return;
-    }
-    this.dialogOpen = false;
+      if (!this.basket.description) {
+        this.basket.description = 'Ваш заказ был изменен, подтвердите изменения';
+      }
   }
-
   descriptionSubmit() {
-      this.crud.post('basket', {description: this.basket.description}, this.basket._id, false).then((v: any) => {
-        if (v) {
-          this.dialogOpen = false;
-          this.crud.post('basket', {status: 3, manager: this.user._id}, this.basket._id, false).then((v) => {
-            if (v) {
-              const populate = JSON.stringify([{path: 'products', select: 'price count', populate: {path: 'orderOwner', select: 'name'}}, {path: 'createdBy', select: 'name address'}, {path: 'deliveryAddress', populate: {path: 'city'}, select: 'name street build department' }, {path: 'manager', select: 'name'}]);
-              this.crud.get(`basket?query={"_id":"${this.id}"}&populate=${populate}`).then((b: any) => {
-                if (b && b.length > 0) {
-                  this.basket = b[0];
-                }
-              });
-            }
-          });
-        }
-      });
+    this.crud.post('basket', {description: this.basket.description}, this.basket._id, false).then((v: any) => {
+      if (v) {
+        this.dialogOpen = false;
+      }
+    });
+  }
+  confirmDescriptionSubmit() {
+    this.crud.post('basket', {status: 3, manager: this.user._id}, this.basket._id, false).then((v) => {
+      if (v) {
+        const populate = JSON.stringify([{path: 'products', select: 'price count', populate: {path: 'orderOwner', select: 'name'}}, {path: 'createdBy', select: 'name address'}, {path: 'deliveryAddress', populate: {path: 'city'}, select: 'name street build department' }, {path: 'manager', select: 'name'}]);
+        this.crud.get(`basket?query={"_id":"${this.id}"}&populate=${populate}`).then((b: any) => {
+          if (b && b.length > 0) {
+            this.basket = b[0];
+          }
+        });
+      }
+    });
     }
 }

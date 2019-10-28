@@ -1,67 +1,67 @@
 <div class="filter-box">
-	<div class="overlay" >
-		<div class="filter-content">
-			<div class="other-header filter-header">
-				<a (click)="closefilter()" class="back">
-					<svg width="18" height="8" viewBox="0 0 18 8" fill="none" xmlns="http://www.w3.org/2000/svg">
-						<path d="M0.646446 3.64645C0.451185 3.84171 0.451185 4.15829 0.646446 4.35355L3.82843 7.53553C4.02369 7.73079 4.34027 7.73079 4.53553 7.53553C4.7308 7.34027 4.7308 7.02369 4.53553 6.82843L1.70711 4L4.53553 1.17157C4.7308 0.97631 4.7308 0.659727 4.53553 0.464465C4.34027 0.269203 4.02369 0.269203 3.82843 0.464465L0.646446 3.64645ZM18 3.5L1 3.5L1 4.5L18 4.5L18 3.5Z" fill="white"/>
-					</svg>
-				</a>
-				<h2>Фильтры</h2>
+	<div class="overlay" (click)="closefilter()">
+	</div>
+	<div class="filter-content">
+		<div class="other-header filter-header">
+			<a (click)="closefilter()" class="back">
+				<svg width="18" height="8" viewBox="0 0 18 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+					<path d="M0.646446 3.64645C0.451185 3.84171 0.451185 4.15829 0.646446 4.35355L3.82843 7.53553C4.02369 7.73079 4.34027 7.73079 4.53553 7.53553C4.7308 7.34027 4.7308 7.02369 4.53553 6.82843L1.70711 4L4.53553 1.17157C4.7308 0.97631 4.7308 0.659727 4.53553 0.464465C4.34027 0.269203 4.02369 0.269203 3.82843 0.464465L0.646446 3.64645ZM18 3.5L1 3.5L1 4.5L18 4.5L18 3.5Z" fill="white"/>
+				</svg>
+			</a>
+			<h2>Фильтры</h2>
+		</div>
+		<div class="other-pages">
+			<div class="sub-category">
+				<div class="sub-title">
+					Подкатегории
+				</div>
+				<div class="sub-container" *ngIf="mainCategory">
+					<ng-container *ngIf="mainCategory.subCategory">
+						<ng-container *ngIf="mainCategory.subCategory.length>0">
+							<mat-checkbox class="filter-check" *ngFor="let sub of mainCategory.subCategory" [value]="sub" (change)="getCheckSub($event)">{{sub}}</mat-checkbox>
+						</ng-container>
+					</ng-container>
+				</div>
 			</div>
-			<div class="other-pages">
-				<div class="sub-category">
-					<div class="sub-title">
-						Подкатегории
-					</div>
-					<div class="sub-container" *ngIf="mainCategory">
-            <ng-container *ngIf="mainCategory.subCategory">
-              <ng-container *ngIf="mainCategory.subCategory.length>0">
-                <mat-checkbox class="filter-check" *ngFor="let sub of mainCategory.subCategory" [value]="sub" (change)="getCheckSub($event)">{{sub}}</mat-checkbox>
-              </ng-container>
-            </ng-container>
-					</div>
+			<div class="sub-brands">
+				<div class="sub-title">
+					Бренд
 				</div>
-				<div class="sub-brands">
-					<div class="sub-title">
-						Бренд
-					</div>
-					<div class="sub-container" *ngIf="mainCategory">
-            <ng-container *ngIf="mainCategory.brands">
-              <ng-container *ngIf="mainCategory.brands.length>0">
-                <mat-checkbox class="filter-check filter-sub" *ngFor="let brand of mainCategory.brands" [value]="brand._id" (change)="getCheckBrand($event)">
-                  <div class="sub-brand-item">
-                    <div class="img">
-                     <app-img [fs]="brand.img"></app-img>
-                    </div>
-                    <div class="title">
-                      {{brand.name}}
-                    </div>
-                  </div>
-                </mat-checkbox>
-              </ng-container>
-            </ng-container>
-					</div>
+				<div class="sub-container" *ngIf="mainCategory">
+					<ng-container *ngIf="mainCategory.brands">
+						<ng-container *ngIf="mainCategory.brands.length>0">
+							<mat-checkbox class="filter-check filter-sub" *ngFor="let brand of mainCategory.brands" [value]="brand._id" (change)="getCheckBrand($event)">
+								<div class="sub-brand-item">
+									<div class="img">
+										<app-img [fs]="brand.img"></app-img>
+									</div>
+									<div class="title">
+										{{brand.name}}
+									</div>
+								</div>
+							</mat-checkbox>
+						</ng-container>
+					</ng-container>
 				</div>
-				<div class="sub-price">
-					<div class="sub-title">
-						Диапазон цен
+			</div>
+			<div class="sub-price">
+				<div class="sub-title">
+					Диапазон цен
+				</div>
+				<div class="sub-container">
+					<div class="price-filter">
+						<input type="text" [(ngModel)]="priceMin">
+						<span class="from">до</span>
+						<input type="text" [(ngModel)]="priceMax">
 					</div>
-					<div class="sub-container">
-						<div class="price-filter">
-							<input type="text" [(ngModel)]="priceMin">
-							<span class="from">до</span>
-							<input type="text" [(ngModel)]="priceMax">
-						</div>
-            <ng-container *ngIf="priceMax && isInit">
+					<ng-container *ngIf="priceMax && isInit">
 						<ng5-slider  [(value)]="priceMin" [(highValue)]="priceMax" [options]="options" (userChangeEnd)="priceFilterFunc()"></ng5-slider>
-            </ng-container>
-					</div>
+					</ng-container>
 				</div>
-				<div class="buttons">
-					<button class="main-button color" (click)="initfilter()">Применить</button>
-					<button class="back-btn" (click)="closefilter()">Сбросить</button>
-				</div>
+			</div>
+			<div class="buttons">
+				<button class="main-button color" (click)="initfilter()">Применить</button>
+				<button class="back-btn" (click)="closefilter()">Сбросить</button>
 			</div>
 		</div>
 	</div>
