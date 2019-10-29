@@ -30,4 +30,4 @@
   </div>
 </div>
 
-<app-filter *ngIf="showFilter" [mainCategory]="mainCategory" (onFilter)="reinit($event)" [city]="city" (closeFilter)="closeFilter($event)"></app-filter>
+<app-filter *ngIf="showFilter" [mainCategory]="mainCategory" (onFilter)="reinit($event)" (onCopyFilter)="copyFilter($event)" [filterInput]="copyfilterObj" [city]="city" (closeFilter)="closeFilter($event)"></app-filter>

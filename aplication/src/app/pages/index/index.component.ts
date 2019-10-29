@@ -1,7 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {AuthService} from '../../auth.service';
-import {WS} from '../../websocket/websocket.events';
-import {WebsocketService} from '../../websocket';
 import {CrudService} from '../../crud.service';
 import {Subscription} from 'rxjs';
 @Component({

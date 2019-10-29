@@ -2,9 +2,6 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {AuthService} from '../../auth.service';
 import {CrudService} from '../../crud.service';
 import {MatSnackBar} from '@angular/material';
-import {Router} from '@angular/router';
-import {WS} from '../../websocket/websocket.events';
-import {WebsocketService} from '../../websocket';
 
 @Component({
   selector: 'app-confirm-order',
@@ -17,7 +14,7 @@ export class ConfirmOrderComponent implements OnInit {
   public language: string;
   public user: any;
   public blockBTN = false;
-  public changeCity: boolean = false;
+  public changeCity = false;
   public method = {
     1: 'Наличными',
     2: 'Отстрочка'
@@ -30,8 +27,6 @@ export class ConfirmOrderComponent implements OnInit {
       private auth: AuthService,
       private crud: CrudService,
       private snackBar: MatSnackBar,
-      private router: Router,
-      private wsService: WebsocketService
   ) { }
 
   ngOnInit() {

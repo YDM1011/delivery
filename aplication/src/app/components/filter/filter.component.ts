@@ -12,6 +12,7 @@ import {CrudService} from '../../crud.service';
 export class FilterComponent implements OnInit {
   @Output() closeFilter = new EventEmitter();
   @Output() onFilter = new EventEmitter();
+  @Output() onCopyFilter = new EventEmitter();
   public language: string;
   public priceFilter = 0;
   public priceMax = 0;
@@ -21,6 +22,7 @@ export class FilterComponent implements OnInit {
   public brand = [];
   @Input() mainCategory;
   @Input() city;
+  @Input() filterInput;
   options: Options = {
     floor: this.priceFilter,
     ceil: this.priceMax,
@@ -53,6 +55,13 @@ export class FilterComponent implements OnInit {
         floor: this.priceFilter,
         ceil: this.priceMax,
       };
+      if (this.filterInput) {
+        console.log(this.filterInput)
+        this.priceMin = this.filterInput.priceMin;
+        this.priceMax = this.filterInput.priceMax;
+        this.sub = this.filterInput.sub;
+        this.brand = this.filterInput.brand;
+      }
       this.isInit = true;
     });
   }
@@ -64,15 +73,23 @@ export class FilterComponent implements OnInit {
     const sub = this.sub.length > 0 ? JSON.stringify( {$or: this.sub}) : '';
     const brand = this.brand.length > 0 ? JSON.stringify( {$or: this.brand}) : '';
     this.onFilter.emit((sub ? ',' + sub : '') + (brand ? ',' + brand : '') + (sum ? ',' + sum : '') );
+    this.onCopyFilter.emit(
+        {
+      priceMin: this.priceMin,
+      priceMax: this.priceMax,
+      sub: this.sub,
+      brand: this.brand}
+      );
     this.closeFilter.emit(false);
   }
   priceFilterFunc() {
     console.log(this.priceMax, this.priceMin);
   }
-  getCheckSub(e) {
-    if (!e.checked) {return; }
+  getCheckSub(e, i) {
+    if (!e.checked) {
+      this.sub.splice(i, 1);
+      return; }
     this.sub.push({subCategory: e.source.value});
-    console.log(this.sub, {subCategory: e.source.value});
   }
   getCheckBrand(e) {
     if (!e.checked) {return; }

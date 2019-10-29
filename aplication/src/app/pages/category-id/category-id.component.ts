@@ -19,6 +19,7 @@ export class CategoryIDComponent implements OnInit {
   public showFilter = false;
   public selectedSort = 0;
   public CityLinksArr = [];
+  public copyfilterObj;
   constructor(
       private route: ActivatedRoute,
       private auth: AuthService,
@@ -79,7 +80,9 @@ export class CategoryIDComponent implements OnInit {
   closeFilter(e) {
     this.showFilter = e;
   }
-
+  copyFilter(e) {
+    this.copyfilterObj = e;
+  }
   sortChanges() {
     switch (this.selectedSort) {
       case 0:
