@@ -21,14 +21,17 @@
 			<mat-form-field class="example-full-width">
 				<input matInput type="text" placeholder="Описание акции" name="description" [(ngModel)]="action.description" autocomplete="off">
 			</mat-form-field>
-			<mat-form-field>
-				<mat-label>Product</mat-label>
-				<mat-select [(value)]="productChoose">
-					<mat-option *ngFor="let item of products" [value]="item._id">
-						{{item.name}}
-					</mat-option>
-				</mat-select>
-			</mat-form-field>
+			<div class="product-check">
+				<mat-checkbox class="check-item" [(ngModel)]="actionForProduct" name="actionForProduct">Додать продукт до акции</mat-checkbox>
+				<mat-form-field *ngIf="actionForProduct">
+					<mat-label>Product</mat-label>
+					<mat-select [(value)]="productChoose">
+						<mat-option *ngFor="let item of products" [value]="item._id">
+							{{item.name}}
+						</mat-option>
+					</mat-select>
+				</mat-form-field>
+			</div>
 			<div class="block-check">
 				<mat-checkbox class="check-item" [(ngModel)]="globalAction" name="global" (change)="changeTypeActionGlobal()">Глобальная акция</mat-checkbox>
 				<mat-checkbox class="check-item" [(ngModel)]="userAction" name="user" (change)="changeTypeActionUser()">Для клиента</mat-checkbox>
@@ -102,7 +105,7 @@
 			<mat-form-field class="example-full-width">
 				<input matInput type="text" placeholder="Описание акции" name="description" [(ngModel)]="editObj.description" autocomplete="off">
 			</mat-form-field>
-			<mat-form-field>
+			<mat-form-field *ngIf="editObj && editObj.orderOwner">
 				<mat-label>Product</mat-label>
 				<mat-select [(value)]="productChoose" (selectionChange)="selectValid()">
 					<mat-option *ngFor="let item of products" [value]="item._id">

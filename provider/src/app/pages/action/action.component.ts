@@ -20,6 +20,7 @@ export class ActionComponent implements OnInit {
   public isBlok = false;
   public loading = false;
   public globalAction = true;
+  public actionForProduct = false;
   public userAction = false;
   public addShow = false;
   public editShow = false;
@@ -103,7 +104,6 @@ export class ActionComponent implements OnInit {
   }
   create(e) {
     e.preventDefault();
-    this.action.orderOwner = this.productChoose;
     this.action.companyOwner = this.company;
     if (!this.action.description) {
       Swal.fire('Error', 'Описание акции не может быть пустым', 'error');
@@ -113,9 +113,10 @@ export class ActionComponent implements OnInit {
       Swal.fire('Error', 'Додайте картинку', 'error');
       return;
     }
-    if (!this.action.orderOwner) {
-      Swal.fire('Error', 'Выберете к каком продукту относится акция', 'error');
-      return;
+    if (this.actionForProduct) {
+      this.action.orderOwner = this.productChoose;
+    } else {
+      delete this.action.orderOwner;
     }
     if (!this.globalAction) {
       this.action.actionGlobal = false;

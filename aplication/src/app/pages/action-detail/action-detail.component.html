@@ -10,8 +10,8 @@
   <app-action-item [obj]="action"></app-action-item>
 
   <div class="buttons">
-    <a routerLink="/{{language}}/provider/{{action.companyOwner._id}}" class="main-button color">
-      Перейти к поставщику
+    <a routerLink="/{{language}}/product/{{action.orderOwner}}" class="main-button color" *ngIf="action.orderOwner">
+      Перейти к продукту
     </a>
     <a (click)="back()" class="back-btn">
       Назад
