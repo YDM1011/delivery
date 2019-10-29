@@ -19,6 +19,7 @@ export class FilterComponent implements OnInit {
   public isInit = false;
   public priceMin = 0;
   public sub = [];
+  public subChack = [];
   public brand = [];
   @Input() mainCategory;
   @Input() city;
@@ -62,8 +63,29 @@ export class FilterComponent implements OnInit {
         this.sub = this.filterInput.sub;
         this.brand = this.filterInput.brand;
       }
+      this.chackSubCategory();
       this.isInit = true;
     });
+  }
+  chackSubCategory() {
+    for (let i = 0; i < this.mainCategory.subCategory.length; i++) {
+      if (this.sub.length === 0) {
+        this.subChack[i] = false;
+      }
+      this.sub.forEach((item, index) => {
+        if (this.mainCategory.subCategory[i] === item.subCategory) {
+          this.subChack[i] = true;
+        } else {
+          this.subChack[i] = false;
+        }
+        // if (this.mainCategory.subCategory.indexOf(item.subCategory) !== -1) {
+        //   this.subChack[i] = true;
+        // } else {
+        //   this.subChack[i] = false;
+        // }
+        console.log(this.subChack);
+      });
+    }
   }
   closefilter() {
     this.closeFilter.emit(false);

@@ -18,7 +18,7 @@
 				<div class="sub-container" *ngIf="mainCategory">
 					<ng-container *ngIf="mainCategory.subCategory">
 						<ng-container *ngIf="mainCategory.subCategory.length>0">
-							<mat-checkbox class="filter-check" *ngFor="let sub of mainCategory.subCategory; let index = index;" [checked]="filterInput.sub" [value]="sub" (change)="getCheckSub($event, index)">{{sub}}</mat-checkbox>
+							<mat-checkbox class="filter-check" *ngFor="let sub of mainCategory.subCategory; let index = index;" [checked]="subChack[index]"  [value]="sub" (change)="getCheckSub($event, index)">{{sub}}</mat-checkbox>
 						</ng-container>
 					</ng-container>
 				</div>
