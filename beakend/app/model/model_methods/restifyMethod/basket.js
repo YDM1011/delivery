@@ -37,8 +37,20 @@ module.exports.preUpdate = async (req,res,next, backendApp) => {
 module.exports.postUpdate = async (req, res, next, backendApp) => {
 
     let basket = req.erm.result;
-    if (req.user.role == 'client') {
-        sendToProvider(backendApp, basket, req)
+    if (req.user.role === 'client') {
+        backendApp.mongoose.model('Basket').findById(req.params.id)
+            .populate({path:'deliveryAddress', populate:{path:'city'}})
+            .populate({path:'manager', select:'name'})
+            .exec((e,r)=>{
+                if (r) sendToProvider(backendApp, r, req)
+            });
+    } else if (req.user.role === 'provider' || req.user.role === 'collaborator') {
+        backendApp.mongoose.model('Basket').findById(req.params.id)
+            .populate({path:'deliveryAddress', populate:{path:'city'}})
+            .populate({path:'manager', select:'name'})
+            .exec((e,r)=>{
+                if (r) sendToClient(backendApp, r, req)
+            });
     }
 
     if (basket.status === 1 || basket.status === 2) {
@@ -70,23 +82,29 @@ const sendToProvider = (backendApp, basket, req) => {
         .findById(basket.companyOwner)
         .exec((e,r)=>{
             if (r) {
-                console.log("SENDER", backendApp.events.callWS.listenerCount ('message'))
                 backendApp.events.callWS.emit('message', JSON.stringify({
                     event:"order-confirm",
                     data: {data:basket},
                     to: r.createdBy
                 }));
-                // if (r.collaborators && r.collaborators.length>1){
-                //     r.collaborators.forEach(it=>{
-                //         backendApp.events.callWS.emit('message', JSON.stringify({
-                //             event:"order-confirm",
-                //             data: {data:basket},
-                //             to: it
-                //         }));
-                //     })
-                // }
+                if (r.collaborators && r.collaborators.length>1){
+                    r.collaborators.forEach(it=>{
+                        backendApp.events.callWS.emit('message', JSON.stringify({
+                            event:"order-confirm",
+                            data: {data:basket},
+                            to: it
+                        }));
+                    })
+                }
             }
         });
+};
+const sendToClient = (backendApp, basket, req) => {
+    backendApp.events.callWS.emit('message', JSON.stringify({
+        event:"order-confirm",
+        data: {data:basket},
+        to: basket.createdBy
+    }));
 };
 
 const assign =  (req,res,next, backendApp, superManeger)=>{

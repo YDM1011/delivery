@@ -40,7 +40,6 @@ module.exports = (backendApp, socket = null, data = null) => {
                     ws['userId'] = userData.id;
                     // delete WSDB[String(userData.id)]
                     WSDB[String(userData.id)] = ws;
-                    console.log('WSDB',WSDB)
                     // if (userData) saveConnect(userData, glob.WSDB, ws);
                 }
             } else {
