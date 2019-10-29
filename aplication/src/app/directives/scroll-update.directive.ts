@@ -5,7 +5,6 @@ import {CrudService} from "../crud.service";
   selector: '[appScrollUpdateCategory]'
 })
 export class ScrollUpdateDirective implements AfterViewInit  {
-  // @Input('appScrollUpload') scrollUpload;
   @Input() folder;
   @Input() idCompany;
   @Input() idCategory;
@@ -34,6 +33,7 @@ export class ScrollUpdateDirective implements AfterViewInit  {
           block.onscroll = e => {
             if ((e.srcElement.scrollTop + (e.target.offsetHeight * 1.2) > e.target.scrollHeight) && this.triger) {
               this.triger = false;
+              console.log(this.triger)
               this.upload();
             }
           };

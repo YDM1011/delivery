@@ -17,7 +17,9 @@ export class CategoryIDComponent implements OnInit {
   public filter;
   public mainCategory;
   public showFilter = false;
-  public selectedSort:number = 0;
+  public selectedSort = 0;
+  public CityLinksArr = [];
+  public copyfilterObj;
   constructor(
       private route: ActivatedRoute,
       private auth: AuthService,
@@ -25,6 +27,7 @@ export class CategoryIDComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.sort = JSON.stringify({date: -1});
     this.route.params.subscribe(() => {
       this.id = this.route.snapshot.paramMap.get('id');
       this.init();
@@ -40,15 +43,16 @@ export class CategoryIDComponent implements OnInit {
         this.city = city;
         this.crud.getCategoryName(this.id).then((mainCategory) => {
           this.mainCategory = mainCategory;
-          let arr = [];
-          if(this.city.links){
-            this.city.links.forEach(it=>{
-              if (it)
-                arr.push({"cityLink":it})
+          const arr = [];
+          if (this.city.links) {
+            this.city.links.forEach(it => {
+              if (it) {
+                arr.push({cityLink: it});
+                this.CityLinksArr.push({cityLink: it});
+              }
             });
           }
-
-          const query = `?query={"$and":[${arr.length>0 ? JSON.stringify( {$or:arr} ) : {} },{"mainCategory":"${this.mainCategory._id}"}]}`;
+          const query = `?query={"$and":[${arr.length > 0 ? JSON.stringify( {$or: arr} ) : {} },{"mainCategory":"${this.mainCategory._id}"}]}&skip=0&limit=5&sort=${this.sort}`;
           this.crud.get('order', '',  query).then((orders) => {
             this.orders = orders;
           });
@@ -56,17 +60,19 @@ export class CategoryIDComponent implements OnInit {
       }
     });
   }
-  reinit(e = this.filter){
-    let arr = [];
+  reinit(e = this.filter) {
+    const arr = [];
     this.filter = e;
-    if(this.city.links){
-      this.city.links.forEach(it=>{
-        if (it)
-          arr.push({"cityLink":it})
+    if (this.city.links) {
+      this.city.links.forEach(it => {
+        if (it) {
+          arr.push({cityLink: it});
+          this.CityLinksArr.push({cityLink: it});
+        }
       });
     }
 
-    const query = `?query={"$and":[${arr.length>0 ? JSON.stringify( {$or:arr} ) : {} },{"mainCategory":"${this.mainCategory._id}"}${this.filter ? this.filter :''}]}&sort=${this.sort}`;
+    const query = `?query={"$and":[${arr.length > 0 ? JSON.stringify( {$or: arr} ) : {} },{"mainCategory":"${this.mainCategory._id}"}${this.filter ? this.filter : ''}]}&skip=0&limit=5&sort=${this.sort}`;
     this.crud.get('order', '',  query).then((orders) => {
       this.orders = orders;
     });
@@ -74,22 +80,25 @@ export class CategoryIDComponent implements OnInit {
   closeFilter(e) {
     this.showFilter = e;
   }
-
-  getOrders(companyId) {
-    /** companyId brand mainCategory subcategory */
-
+  copyFilter(e) {
+    this.copyfilterObj = e;
   }
   sortChanges() {
     switch (this.selectedSort) {
+      case 0:
+        this.sort = JSON.stringify({date: -1});
+        break;
       case 1:
-        this.sort = JSON.stringify({price:1});
+        this.sort = JSON.stringify({price: 1});
         break;
       case 2:
-        this.sort = JSON.stringify({price:-1});
+        this.sort = JSON.stringify({price: -1});
         break;
-      default: return
+      default: return;
     }
     this.reinit();
-    console.log(this.selectedSort)
+  }
+  getOutput(e) {
+    this.orders = this.orders.concat(e);
   }
 }

@@ -1,8 +1,8 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
-import {AuthService} from "../../auth.service";
-import {Options} from "ng5-slider";
-import {CrudService} from "../../crud.service";
+import {ActivatedRoute} from '@angular/router';
+import {AuthService} from '../../auth.service';
+import {Options} from 'ng5-slider';
+import {CrudService} from '../../crud.service';
 
 @Component({
   selector: 'app-filter',
@@ -12,15 +12,17 @@ import {CrudService} from "../../crud.service";
 export class FilterComponent implements OnInit {
   @Output() closeFilter = new EventEmitter();
   @Output() onFilter = new EventEmitter();
+  @Output() onCopyFilter = new EventEmitter();
   public language: string;
   public priceFilter = 0;
-  public priceMax;
-  public isInit=false;
+  public priceMax = 0;
+  public isInit = false;
   public priceMin = 0;
   public sub = [];
   public brand = [];
   @Input() mainCategory;
   @Input() city;
+  @Input() filterInput;
   options: Options = {
     floor: this.priceFilter,
     ceil: this.priceMax,
@@ -36,15 +38,16 @@ export class FilterComponent implements OnInit {
       this.language = v;
     });
 
-    let arr = [];
-    if(this.city.links){
-      this.city.links.forEach(it=>{
-        if (it)
-          arr.push({"cityLink":it})
+    const arr = [];
+    if (this.city.links) {
+      this.city.links.forEach(it => {
+        if (it) {
+          arr.push({cityLink: it});
+        }
       });
     }
 
-    const query = `?query={"$and":[${arr.length>0 ? JSON.stringify( {$or:arr} ) : {} },{"mainCategory":"${this.mainCategory._id}"}]}
+    const query = `?query={"$and":[${arr.length > 0 ? JSON.stringify( {$or: arr} ) : {} },{"mainCategory":"${this.mainCategory._id}"}]}
     &sort={"price":-1}&limit=1&skip=0`;
     this.crud.get('order', '',  query).then((max) => {
       this.priceMax = max[0].price;
@@ -52,30 +55,44 @@ export class FilterComponent implements OnInit {
         floor: this.priceFilter,
         ceil: this.priceMax,
       };
-      this.isInit = true
+      if (this.filterInput) {
+        console.log(this.filterInput)
+        this.priceMin = this.filterInput.priceMin;
+        this.priceMax = this.filterInput.priceMax;
+        this.sub = this.filterInput.sub;
+        this.brand = this.filterInput.brand;
+      }
+      this.isInit = true;
     });
   }
-  closefilter(){
+  closefilter() {
     this.closeFilter.emit(false);
   }
-  initfilter(){
-    let sum = JSON.stringify( {$and:[{price:{$lte:this.priceMax} },{price:{$gte: this.priceMin}}]});
-    let sub = this.sub.length>0 ? JSON.stringify( {$or:this.sub}) : '';
-    let brand = this.brand.length>0 ? JSON.stringify( {$or:this.brand}) : '';
-    this.onFilter.emit((sub ? ','+sub : '') + (brand ? ','+brand : '') + (sum ? ','+sum : '') );
+  initfilter() {
+    const sum = JSON.stringify( {$and: [{price: {$lte: this.priceMax} }, {price: {$gte: this.priceMin}}]});
+    const sub = this.sub.length > 0 ? JSON.stringify( {$or: this.sub}) : '';
+    const brand = this.brand.length > 0 ? JSON.stringify( {$or: this.brand}) : '';
+    this.onFilter.emit((sub ? ',' + sub : '') + (brand ? ',' + brand : '') + (sum ? ',' + sum : '') );
+    this.onCopyFilter.emit(
+        {
+      priceMin: this.priceMin,
+      priceMax: this.priceMax,
+      sub: this.sub,
+      brand: this.brand}
+      );
     this.closeFilter.emit(false);
   }
-  priceFilterFunc(){
-
-    console.log(this.priceMax, this.priceMin)
+  priceFilterFunc() {
+    console.log(this.priceMax, this.priceMin);
   }
-  getCheckSub(e){
-    if (!e.checked) return;
-    this.sub.push({subCategory:e.source.value});
-    console.log(this.sub, {"subCategory":e.source.value})
+  getCheckSub(e, i) {
+    if (!e.checked) {
+      this.sub.splice(i, 1);
+      return; }
+    this.sub.push({subCategory: e.source.value});
   }
-  getCheckBrand(e){
-    if (!e.checked) return;
-    this.brand.push({brand:e.source.value});
+  getCheckBrand(e) {
+    if (!e.checked) {return; }
+    this.brand.push({brand: e.source.value});
   }
 }

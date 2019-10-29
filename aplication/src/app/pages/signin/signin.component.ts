@@ -52,13 +52,14 @@ export class SigninComponent implements OnInit {
 
   signin(e) {
     e.preventDefault();
-    if (this.checkDetaSignUp(this.data)) return;
-    this.crud.signin(this.data).then((v:any)=>{
+    if (this.checkDetaSignUp(this.data)) {return; }
+    this.crud.signin(this.data).then((v: any) => {
       localStorage.setItem('userId', v.userId);
       localStorage.setItem('token', v.token);
       this.auth.setMe(v.user);
+      this.auth.setCheckBasket(true);
       this.route.navigate(['']);
-    })
+    });
   }
 
   checkDetaSignUp(data) {
@@ -71,6 +72,6 @@ export class SigninComponent implements OnInit {
       this.dataError.pass = "pass_err";
       isErr = true;
     }
-    return isErr
+    return isErr;
   }
 }

@@ -82,17 +82,9 @@ export class AuthService {
     }
   }
 
-  setCompanyCity(arr){
+  setCompanyCity(arr) {
     this.company.next(arr);
   }
 
-
-  // isAuthAdmin() {
-  //   if (localStorage.getItem('adminId')) {
-  //     return true;
-  //   } else {
-  //     return false;
-  //   }
-  // }
 }
 

@@ -24,7 +24,7 @@ export class InitLayoutComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    if (navigator.onLine){
+    if (navigator.onLine) {
       this.status = 'online';
       this.isConnected = true;
     } else {

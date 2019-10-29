@@ -50,11 +50,9 @@ export class CategoryComponent implements OnInit {
       this.user = v;
       if (this.user.companyOwner) {
         this.crud.get(`category/count?query={"companyOwner": "${this.user.companyOwner}"}`).then((count: any) => {
-          console.log(count)
           if (count) {
             this.lengthPagination = count.count;
             this.crud.get(`category?query={"companyOwner": "${this.user.companyOwner}"}&sort={"date":-1}&skip=0&limit=${this.pageSizePagination}`).then((c: any) => {
-              console.log(c)
               if (c) {
                 this.categorys = c;
                 this.loading = true;

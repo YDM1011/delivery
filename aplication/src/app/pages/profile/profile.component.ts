@@ -47,6 +47,7 @@ export class ProfileComponent implements OnInit {
   logut() {
     this.crud.post('logout', {}, null).then((v: any) => {
       if (v) {
+        this.auth.setBasketCount(0);
         localStorage.removeItem('userId');
         localStorage.removeItem('token');
         this.route.navigate(['/']);
