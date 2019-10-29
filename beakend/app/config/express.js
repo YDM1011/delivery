@@ -56,8 +56,7 @@ const init = (app, config) =>{
         }
     });
     app.use(require("../../app/responces"));
-    const EventEmitter = require('events');
-    class Emitter extends EventEmitter {}
+    const events = require('events');
     let backendApp = {
         app: app,
         config: config,
@@ -65,7 +64,7 @@ const init = (app, config) =>{
         express: express,
         service: {},
         events: {
-            callWS: new Emitter()
+            callWS: new events.EventEmitter()
         }
     };
     global.backendApp = backendApp;

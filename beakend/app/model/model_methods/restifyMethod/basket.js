@@ -70,20 +70,21 @@ const sendToProvider = (backendApp, basket, req) => {
         .findById(basket.companyOwner)
         .exec((e,r)=>{
             if (r) {
+                console.log("SENDER", backendApp.events.callWS.listenerCount ('message'))
                 backendApp.events.callWS.emit('message', JSON.stringify({
                     event:"order-confirm",
                     data: {data:basket},
                     to: r.createdBy
                 }));
-                if (r.collaborators && r.collaborators.length>1){
-                    r.collaborators.forEach(it=>{
-                        backendApp.events.callWS.emit('message', JSON.stringify({
-                            event:"order-confirm",
-                            data: {data:basket},
-                            to: it
-                        }));
-                    })
-                }
+                // if (r.collaborators && r.collaborators.length>1){
+                //     r.collaborators.forEach(it=>{
+                //         backendApp.events.callWS.emit('message', JSON.stringify({
+                //             event:"order-confirm",
+                //             data: {data:basket},
+                //             to: it
+                //         }));
+                //     })
+                // }
             }
         });
 };

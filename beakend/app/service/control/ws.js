@@ -1,29 +1,31 @@
-const WebSocketServer = require('ws').Server;
+const WebSocketServer = require('ws');
 const wsEvent = {};
-const wss = new WebSocketServer({ port: backendApp.config.WSport, path: '/ws' });
+const wss = new WebSocketServer.Server({ port: backendApp.config.WSport, path: '/ws' });
 const glob = require('glob');
 const wsControllers = glob.sync(backendApp.config.root+'/service/wsEvents/*.js');
-
+let WSDB = {};
 wsControllers.forEach((controller) => {
     let wsController = require(controller)();
     wsEvent[wsController.event] = wsController.fun;
 });
 
 module.exports = (backendApp, socket = null, data = null) => {
-
-    wss.on('connection', (ws, req) => {
-        let userData;
-        backendApp.events.callWS.on('message', async (event)=>{
-            const data = JSON.parse(event);
-            if (data.event !== 'connect') {
-                try {
-                    messageSend(JSON.stringify(event), wss, ws)
-                } catch (e) {
-                    return
-                }
+    backendApp.events.callWS.on('message', async (event)=>{
+        const data = JSON.parse(event);
+        if (data.event !== 'connect') {
+            try {
+                console.log(Object.size(WSDB))
+                messageSend(JSON.stringify(event), WSDB)
+            } catch (e) {
+                return
             }
-        });
-
+        }
+    });
+    backendApp.events.callWS.on('close',(userId = null)=>{
+        delete WSDB[String(userId)]
+    });
+    wss.on('connection', (ws) => {
+        let userData;
         ws.on('message', async (event) => {
             const data = JSON.parse(JSON.parse(event));
             if (data.event === 'connect'){
@@ -35,25 +37,25 @@ module.exports = (backendApp, socket = null, data = null) => {
                     if(!userData) {
                         userData = await checkToken(backendApp, {token:data.token, model: 'Admin'}).catch(e=>{console.error(e)});
                     }
-                    if (userData) saveConnect(userData, wss, ws);
-
+                    ws['userId'] = userData.id;
+                    // delete WSDB[String(userData.id)]
+                    WSDB[String(userData.id)] = ws;
+                    console.log('WSDB',WSDB)
+                    // if (userData) saveConnect(userData, glob.WSDB, ws);
                 }
             } else {
                 // userData = await checkToken(backendApp, {token:data.token, model: 'Client'}).catch(e=>{console.error(e)});
                 // if(!userData) {
                 //     userData = await checkToken(backendApp, {token:data.token, model: 'Admin'}).catch(e=>{console.error(e)});
                 // }
-                messageSend(event, wss, ws)
+                // messageSend(event, WSDB)
             }
         });
 
-        backendApp.events.callWS.on('close',(userId = null)=>{
-            removeConnect(userId || ws.userId, wss);
-            console.log('disconnected',ws.userId);
-        });
         ws.on('close', () => {
-            console.log('disconnected',ws.userId, ws.index);
-            removeConnect(ws.userId, wss, ws.index);
+            console.log('disconnected', ws.userId);
+            // removeConnect(ws.userId, glob.WSDB, ws.index);
+            delete WSDB[ws.userId]
         });
 
     });
@@ -82,16 +84,19 @@ const checkToken = (backendApp,tokenData) => {
         });
     });
 };
-const removeConnect = (userId, wss, index = null) => {
-    if (!wss[userId]) return;
+const removeConnect = (userId, WSDB, index = null) => {
+    userId = String(userId);
+    delete glob.WSDB[userId];
+    console.log("del exit",glob.WSDB[userId])
 
     if (index) {
         const isLargeNumber = element => {
             return element.index == index;
         };
-        wss[userId].splice(wss[userId].findIndex(isLargeNumber), 1);
+        glob.WSDB[userId].splice(glob.WSDB[userId].findIndex(isLargeNumber), 1);
     } else {
-        delete wss[userId];
+        delete glob.WSDB[userId];
+        console.log("del exit",glob.WSDB[userId])
     }
 };
 /**
@@ -100,29 +105,11 @@ const removeConnect = (userId, wss, index = null) => {
  * @param wss
  * @param ws
  */
-const saveConnect = (userData, wss, ws) => {
-    if (wss[userData._id]){
-        /** update */
-        delete wss[userData._id];
-        wss[userData._id] = [];
-        ws['userId'] = userData._id;
-        wss[userData._id].push(ws);
-    } else {
-        /** create */
-        delete wss[userData._id];
-        wss[userData._id] = [];
-        ws['userId'] = userData._id;
-        wss[userData._id].push(ws);
-
-    }
-    /** logger connects **/
-    console.log("save as",wss[userData._id].length, userData._id);
-    wss[userData._id].forEach((i,it)=>{
-        console.log("saveds", i.userId, userData._id)
-    })
+const saveConnect = (userData, WSDB, ws) => {
+    ws['userId'] = String(userData._id);
 };
 
-const messageSend = (event, wss, client) => {
+const messageSend = (event, WSDB) => {
     const data = JSON.parse(event);
     const res = JSON.parse(data);
 
@@ -143,19 +130,31 @@ const messageSend = (event, wss, client) => {
             return
         }
         /** All user's requests and send response to 1 client of all requests */
-        wss[to] ? wss[to].forEach(ws=>{
-            console.log("Sender",to)
-            ws.send(JSON.stringify({
-                event: event,
-                data: res.data
-            }));
-        }) : '';
-        //
-        // wss.clients.forEach(ws=>{
+        // WSDB[to].forEach(ws=>{
+        //     console.log("Sender",to)
         //     ws.send(JSON.stringify({
         //         event: event,
-        //         data: data
+        //         data: res.data
         //     }));
+        // });
+
+        WSDB[to].send(JSON.stringify({
+            event: event,
+            data: res.data
+        }));
+
+        // wss.clients.forEach(client=>{
+        //     let triger;
+        //     if (client == ws && !triger) {
+        //         ws.send(JSON.stringify({
+        //             event: event,
+        //             data: res.data
+        //         }));
+        //         triger = true;
+        //         console.log("Deleted!!!")
+        //     } else {
+        //
+        //     }
         // });
     };
     const send = (event, data) => {
