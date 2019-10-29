@@ -30,7 +30,7 @@
       </div>
       <div class="content-item" *ngFor="let item of getProducts">
         <div class="img">
-          <app-img [fs]="item.orderOwner.img" [anyFs]="'assets/images/provider.svg'"></app-img>
+          <app-img [fs]="item.orderOwner ? item.orderOwner.img : ''" [anyFs]="'assets/images/provider.svg'"></app-img>
         </div>
         <div class="info">
           <div class="title">
@@ -65,7 +65,7 @@
     <div class="address">
       <div class="img">
         <app-img *ngIf="!order.deliveryAddress" [anyFs]="'assets/images/provider.svg'"></app-img>
-        <app-img *ngIf="order.deliveryAddress" [fs]="order.deliveryAddress.img" [anyFs]="'assets/images/provider.svg'"></app-img>
+        <app-img *ngIf="order.deliveryAddress" [fs]="order.deliveryAddress ? order.deliveryAddress.img : ''" [anyFs]="'assets/images/provider.svg'"></app-img>
       </div>
       <div class="title">
         {{order.deliveryAddress ? order.deliveryAddress.name : "Адрес не доступен"}}
