@@ -49,7 +49,8 @@ module.exports = {
                     }, {verify: true}, {new:true}).exec((e,r)=>{
                         if (e) return rj(e);
                         if (!r) return rj('Password or login invalid!');
-                        r.signin(req,res,backendApp);
+                        rs(r)
+                        // r.signin(req,res,backendApp);
                     })
                 }
             });

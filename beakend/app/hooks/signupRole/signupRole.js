@@ -8,6 +8,8 @@ module.exports = class Signup {
         this.req = req;
         this.res = res;
         this.result = result;
+        this.backendApp = backendApp;
+        this.isConfirm;
     }
 
     async init () {
@@ -28,6 +30,7 @@ module.exports = class Signup {
     }
     async confirmSmsCode() {
         this.result = await backendApp.service.sms.confirmSmsCode(this.req, this.res, backendApp);
+        this.isConfirm = true;
         this.init()
     }
     createCompany() {
@@ -46,7 +49,13 @@ module.exports = class Signup {
                     Client.findOneAndUpdate({_id: this.result._id}, {$push:{companies: r._id},companyOwner:r._id }).exec((e,r)=>{
                         if (e) return this.res.serverError(e);
                         if (!r) return this.res.notFound("Not found");
-                        if (r) return this.res.ok(r);
+                        if (r){
+                            if (this.isConfirm) {
+                                return r.signin(this.req,this.res,this.backendApp);
+                            } else {
+                                return this.res.ok(r);
+                            }
+                        }
                     });
                 })
             }
