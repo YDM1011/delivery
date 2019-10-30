@@ -1,13 +1,13 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {AuthService} from "../../auth.service";
-import {CrudService} from "../../crud.service";
+import {Component, OnInit} from '@angular/core';
+import {AuthService} from '../../auth.service';
+import {CrudService} from '../../crud.service';
 
 interface SignUp {
-  login: string,
-  pass: string,
-  name: string,
-  role: string,
-  smsCode?: string
+  login: string;
+  pass: string;
+  name: string;
+  role: string;
+  smsCode?: string;
 }
 
 @Component({
@@ -16,17 +16,17 @@ interface SignUp {
   styleUrls: ['./signup.component.scss']
 })
 export class SignupComponent implements OnInit {
-  public verification = false;
+  public verification = true;
   public language: string;
   public phone;
-  public data:SignUp = new class implements SignUp {
+  public data: SignUp = new class implements SignUp {
     smsCode: string;
     login: string;
     name: string;
     pass: string;
     role: string = 'client';
   };
-  public dataError = {login:'',name:'',pass:'',};
+  public dataError = {login: '', name: '', pass: ''};
   public t_nameplaceholder = {
     ru: 'ФИО',
     ua: 'ПІБ'
@@ -52,9 +52,9 @@ export class SignupComponent implements OnInit {
     ua: 'Регистрация'
   };
   public errors = {
-    login_err: {ru:'Введите номер мобильного', ua:'тест'},
-    name_err: {ru:'Введите ФИО', ua:'тест'},
-    pass_err: {ru:'Создайте пароль', ua:'тест'}
+    login_err: {ru: 'Введите номер мобильного', ua: 'тест'},
+    name_err: {ru: 'Введите ФИО', ua: 'тест'},
+    pass_err: {ru: 'Создайте пароль', ua: 'тест'}
   };
   constructor(
     private crud: CrudService,
@@ -67,30 +67,29 @@ export class SignupComponent implements OnInit {
     });
   }
 
-  signup(e){
+  signup(e) {
     e.preventDefault();
-    if (this.checkDetaSignUp(this.data)) return;
-    this.crud.signup(this.data).then(v=>{
+    if (this.checkDetaSignUp(this.data)) {return; }
+    this.crud.signup(this.data).then(v => {
       console.log(v);
       this.verification = true;
-    })
-
+    });
   }
 
   checkDetaSignUp(data) {
     let isErr = false;
     if (!data.login) {
-      this.dataError.login = "login_err";
+      this.dataError.login = 'login_err';
       isErr = true;
     }
     if (!data.name) {
-      this.dataError.name = "name_err";
+      this.dataError.name = 'name_err';
       isErr = true;
     }
     if (!data.pass) {
-      this.dataError.pass = "pass_err";
+      this.dataError.pass = 'pass_err';
       isErr = true;
     }
-    return isErr
+    return isErr;
   }
 }

@@ -1,0 +1,141 @@
+.error{
+  color: #c31212;
+  font-size: 11px;
+  margin: 3px 0;
+  display: block;
+  width: 100%;
+}
+.registration{
+    width: 100%;
+    height: 100%;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  .registration-content{
+    padding: 50px;
+    background: #fff;
+    z-index: 4;
+    width: 100%;
+    max-width: 600px;
+    .registration-title{
+      font-weight: 500;
+      font-size: 21px;
+      line-height: 30px;
+      text-transform: uppercase;
+      width: 100%;
+      position: relative;
+      margin-bottom: 50px;
+      &:before{
+        content: '';
+        position: absolute;
+        display: block;
+        height: 2px;
+        width: 100%;
+        background: #009688;
+        bottom: -10px;
+      }
+    }
+    .registration-form{
+      label{
+        display: flex;
+        flex-direction: column;
+        margin: 0 0 15px;
+        &:nth-last-of-type(1){
+          margin-bottom: 0;
+        }
+        span{
+          font-weight: 500;
+          font-size: 14px;
+          line-height: 21px;
+        }
+        input{
+          width: 100%;
+          padding: 10px 15px;
+          font-weight: normal;
+          border: 0;
+          border-bottom: 0.5px solid #979797;
+          &::placeholder {
+            color: #DADADA;
+            font-size: 14px;
+          }
+        }
+      }
+      button{
+        display: block;
+        margin: 30px auto 0;
+        width: max-content;
+        padding: 10px 40px;
+        border: 0;
+        border-radius: 10px;
+        background: #009688;
+        color: #fff;
+        cursor: pointer;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .registration {
+    width: 100%;
+    height: 100%;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .registration-content {
+      padding: 20px 20px;
+      .registration-title {
+        font-size: 18px;
+      }
+    }
+  }
+}
+::ng-deep .city-select.mat-form-field-appearance-outline .mat-form-field-outline-end{
+  border-radius: 0!important;
+}
+::ng-deep .city-select.mat-form-field-appearance-outline .mat-form-field-outline-start{
+  border-radius: 0!important;
+}
+
+::ng-deep .city-select.mat-form-field-appearance-outline .mat-form-field-outline-thick{
+  color: #979797!important;
+}
+
+.example-full-width{
+  width: 100%;
+}
+::ng-deep .mat-focused .mat-form-field-label {
+  /*change color of label*/
+  color: #009688 !important;
+}
+
+::ng-deep.mat-form-field-underline {
+  /*change color of underline*/
+  background-color: #DFE0EB !important;
+}
+
+::ng-deep.mat-form-field-ripple {
+  /*change color of underline when focused*/
+  background-color: #009688 !important;;
+}
+::ng-deep .mat-primary .mat-option.mat-selected:not(.mat-option-disabled){
+  color: #009688!important;
+}
+::ng-deep .mat-form-field.mat-focused.mat-primary .mat-select-arrow{
+  color: #009688!important;
+}
+
+::ng-deep .mat-tab-group.mat-primary .mat-ink-bar, .mat-tab-nav-bar.mat-primary .mat-ink-bar{
+  background: #009688;
+}
+
+::ng-deep .mat-checkbox .mat-checkbox-frame {
+  border-color: #009688!important;
+}
+
+::ng-deep .mat-checkbox-checked .mat-checkbox-background {
+  background-color: #009688 !important;
+}

@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
+import {CrudService} from '../../crud.service';
 import {Router} from '@angular/router';
 import {AuthService} from '../../auth.service';
-import {CrudService} from '../../crud.service';
 
 @Component({
   selector: 'app-verification',
@@ -19,6 +19,7 @@ export class VerificationComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    console.log(this.data)
     this.auth.onLanguage.subscribe((v: string) => {
       this.language = v;
     });
@@ -34,4 +35,5 @@ export class VerificationComponent implements OnInit {
       });
     }
   }
+
 }

@@ -48,6 +48,8 @@ import { ScrollTopDirective } from './directives/scroll-top.directive';
 import {LoadingComponent} from "./components/loading/loading.component";
 import {LottieAnimationViewModule} from "ng-lottie";
 import {CroperComponent, TouchStart} from './components/croper/croper.component';
+import { SignUpComponent } from './pages/sign-up/sign-up.component';
+import { VerificationComponent } from './components/verification/verification.component';
 
 @NgModule({
   declarations: [
@@ -81,7 +83,9 @@ import {CroperComponent, TouchStart} from './components/croper/croper.component'
     ScrollTopDirective,
     LoadingComponent,
     CroperComponent,
-    TouchStart
+    TouchStart,
+    SignUpComponent,
+    VerificationComponent
   ],
   imports: [
     BrowserAnimationsModule,

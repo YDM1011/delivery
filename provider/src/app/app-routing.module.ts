@@ -16,6 +16,7 @@ import {WorkTimeComponent} from './pages/work-time/work-time.component';
 import {ActionComponent} from './pages/action/action.component';
 import {OrdersComponent} from './pages/orders/orders.component';
 import {OrdersDetailComponent} from './pages/orders-detail/orders-detail.component';
+import {SignUpComponent} from './pages/sign-up/sign-up.component';
 
 const routes: Routes = [
   {path: '', component: MainComponent, children: [
@@ -34,6 +35,7 @@ const routes: Routes = [
 
       ], canActivate: [AdminLoginedGuard]},
   {path: 'login', component: LoginComponent, canActivate: [AdminLogoutGuard]},
+  {path: 'signup', component: SignUpComponent},
   {path: '**', component: NotFoundComponent},
 ];
 
