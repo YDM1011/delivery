@@ -21,3 +21,62 @@
 .example-full-width {
   width: 100%;
 }
+.img-avatar{
+  max-width: 40px;
+  display: flex;
+  object-fit: contain;
+  height: 40px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-right: 10px;
+}
+.img-address{
+  max-width: 60px;
+  display: flex;
+  object-fit: contain;
+  height: 60px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-bottom: 5px;
+}
+.debtor-wrap:hover .hover-title{
+  z-index: 2;
+  opacity: 1;
+  bottom: 10px;
+}
+.debtor-wrap{
+  position: relative;
+}
+.hover-title{
+  display: inline-flex;
+  align-items: center;
+  padding: 10px 15px;
+  height: 60px;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 4px 6px 15px rgba(0, 0, 0, 0.15);
+  position: absolute;
+  border-radius: 15px;
+  bottom: -30px;
+  left: 15px;
+  z-index: -1;
+  opacity: 0;
+  transition: .5s;
+}
+.tel{
+  text-decoration: underline;
+  color: #369;
+}
+.wrap-address-name{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-right: 10px;
+
+}
+.address-title{
+  text-align: center;
+}
+.wrap-address p{
+  margin: 0;
+}

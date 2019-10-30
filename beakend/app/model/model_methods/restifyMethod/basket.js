@@ -53,6 +53,22 @@ module.exports.postUpdate = async (req, res, next, backendApp) => {
             });
     }
 
+    if (basket.status === 2){
+        backendApp.mongoose.model('Debtor')
+            .create({
+                createdBy: basket.manager,
+                clientOwner: basket.createdBy,
+                companyOwner: basket.companyOwner,
+                value: basket.totalPrice,
+                basket: basket._id,
+                lastUpdate: new Date(),
+                date: new Date(),
+                dataCall: new Date(new Date().getTime() + 1000*60*60*24*7)
+            }, (e,r)=>{
+
+            });
+    }
+
     if (basket.status === 1 || basket.status === 2) {
         // let asgn = await assign(req,res,next, backendApp, basket.cleanerOwner);
         let cleaner = await getCleaner(basket.cleanerOwner).catch(e=>{return rj(e)});

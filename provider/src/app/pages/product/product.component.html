@@ -2,7 +2,7 @@
 	<app-loading></app-loading>
 </ng-container>
 <div class="contain">
-	<div class="contain__group"  *ngIf="addShow">
+	<div class="contain__group open-close-container" [@openClose]="addShow ? true : false" *ngIf="addShow">
 		<div class="contain__group-header">
 			<div class="title">
 				Создать Продукт
@@ -13,7 +13,7 @@
 			У вас нет категорий, создайте категорию тогда вы сможете создать продукт
 		</div>
 	</div>
-	<div class="contain__group"  *ngIf="editShow">
+	<div class="contain__group open-close-container" [@openClose]="editShow ? true : false" *ngIf="editShow">
 		<div class="contain__group-header">
 			<div class="title">
 				Редактировать продукт
@@ -69,6 +69,7 @@
 								</div>
 							</div>
 							<div class="col">
+								<span class="top-btn status__title" (click)="isTop(item)" [class.done]="item.isTop" >top</span>
 								<span class="edit-btn" (click)="edit(index)" appScrollTop></span>
 								<span class="trash-btn" (click)="delete(index)"></span>
 							</div>

@@ -1,5 +1,5 @@
 .viewport{
-  height: 400px;
+  height: calc(100vh - 70px - 60px);
   overflow-y: auto;
   overflow: -moz-scrollbars-none;
   -ms-overflow-style: none;

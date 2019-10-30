@@ -91,6 +91,7 @@ import {CroperComponent, TouchStart} from "./components/croper/croper.component"
 import { ScrollUpdateBrandsDirective } from './directives/scroll-update-brands.directive';
 import { ScrollTopDirective } from './directives/scroll-top.directive';
 import { CategoryProductUploadDirective } from './directives/category-product-upload.directive';
+import { ScrollSmoothDirective } from './directives/scroll-smooth.directive';
 
 @NgModule({
   declarations: [
@@ -164,7 +165,8 @@ import { CategoryProductUploadDirective } from './directives/category-product-up
     ScrollTopDirective,
     CroperComponent,
     TouchStart,
-    CategoryProductUploadDirective
+    CategoryProductUploadDirective,
+    ScrollSmoothDirective
   ],
   imports: [
     ScrollingModule,

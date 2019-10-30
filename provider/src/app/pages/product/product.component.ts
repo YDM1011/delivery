@@ -1,11 +1,24 @@
 import {Component, OnInit} from '@angular/core';
 import {CrudService} from '../../crud.service';
 import {AuthService} from '../../auth.service';
+import {animate, state, style, transition, trigger} from "@angular/animations";
 
 @Component({
   selector: 'app-product',
   templateUrl: './product.component.html',
-  styleUrls: ['./product.component.scss']
+  styleUrls: ['./product.component.scss'],
+  animations: [
+    trigger('openClose', [
+      transition(':enter', [
+        style({transform: 'translateY(-10%)', opacity: 0, overflow: 'hidden', height:0}),
+        animate('300ms', style({transform: 'translateY(0)', opacity: 1, height:'570px', overflow: 'hidden'}))
+      ]),
+      transition(':leave', [
+        style({transform: 'translateY(0)', opacity: 1, height:'570px', overflow: 'hidden'}),
+        animate('300ms', style({transform: 'translateY(-10%)', opacity: 0, overflow: 'hidden', height:0}))
+      ]),
+    ]),
+  ],
 })
 export class ProductComponent implements OnInit {
   public lengthPagination = 0;
@@ -56,9 +69,27 @@ export class ProductComponent implements OnInit {
     });
   }
   edit(i) {
-    this.editObj = this.products[i];
     this.addShow = false;
-    this.editShow = true;
+
+    if (!this.editShow) {
+      this.editShow = true;
+    } else {
+      this.editShow = false;
+      setTimeout(()=>{
+        this.editShow = true;
+      }, 300)
+    }
+    this.editObj = this.products[i];
+
+  }
+  isTop(obj){
+    console.log(obj.isTop)
+
+    this.crud.post(`orderTop/${obj._id}`,{isTop: obj.isTop ? false : true}).then((v: any) => {
+      if (v) {
+        obj.isTop = v.isTop
+      }
+    });
   }
   openAdd() {
     this.addShow = true;

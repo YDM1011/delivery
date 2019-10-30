@@ -41,6 +41,17 @@ export class DebtorComponent implements OnInit {
     dataCall: '',
   };
 
+  public txt = {
+    address: {ua:'',ru:'Адрес'},
+    debs: {ua:'',ru:'Должник'},
+    date: {ua:'',ru:'Отстрочка'},
+    c: {ua:'',ru:'м.'},
+    s: {ua:'',ru:'ул.'},
+    b: {ua:'',ru:'дом'},
+    d: {ua:'',ru:'кв.'}
+  };
+
+  public populate = '&populate=[{"path":"clientOwner"},{"path":"basket","populate":{"path":"deliveryAddress","populate":{"path":"city"}}}]';
   constructor(
       private crud: CrudService,
       private auth: AuthService
@@ -58,7 +69,7 @@ export class DebtorComponent implements OnInit {
         this.crud.get(`debtor/count?query={"companyOwner": "${this.user.companyOwner}"}`).then((count: any) => {
           if (count) {
             this.lengthPagination = count.count;
-            this.crud.get(`debtor?query={"companyOwner": "${this.user.companyOwner}"}&populate={"path":"clientOwner"}&skip=0&limit=${this.pageSizePagination}`).then((d: any) => {
+            this.crud.get(`debtor?query={"companyOwner": "${this.user.companyOwner}"}${this.populate}&skip=0&limit=${this.pageSizePagination}`).then((d: any) => {
               if (d) {
                 this.debtors = d;
                 this.loading = true;
@@ -97,7 +108,7 @@ export class DebtorComponent implements OnInit {
         this.crud.get(`debtor/count?query={"companyOwner": "${this.user.companyOwner}"}`).then((count: any) => {
           if (count) {
             this.lengthPagination = count.count;
-            this.crud.get(`debtor?query={"companyOwner": "${this.user.companyOwner}"}&populate={"path":"clientOwner"}&skip=0&limit=${this.pageSizePagination}`).then((d: any) => {
+            this.crud.get(`debtor?query={"companyOwner": "${this.user.companyOwner}"}${this.populate}&skip=0&limit=${this.pageSizePagination}`).then((d: any) => {
               if (d) {
                 this.debtors = d;
                 this.loading = true;
@@ -205,7 +216,7 @@ export class DebtorComponent implements OnInit {
   }
   outputSearch(e) {
     if (!e) {
-      this.crud.get(`debtor?query={"companyOwner": "${this.user.companyOwner}"}&populate={"path":"clientOwner"}&skip=0&limit=${this.pageSizePagination}`).then((d: any) => {
+      this.crud.get(`debtor?query={"companyOwner": "${this.user.companyOwner}"}${this.populate}&skip=0&limit=${this.pageSizePagination}`).then((d: any) => {
         if (d) {
           this.debtors = d;
         }
@@ -215,7 +226,7 @@ export class DebtorComponent implements OnInit {
     }
   }
   pageEvent(e) {
-    this.crud.get(`debtor?query={"companyOwner":"${this.user.companyOwner}"}&populate={"path":"clientOwner"}&skip=${e.pageIndex  * e.pageSize}&limit=${e.pageSize}`).then((d: any) => {
+    this.crud.get(`debtor?query={"companyOwner":"${this.user.companyOwner}"}${this.populate}&skip=${e.pageIndex  * e.pageSize}&limit=${e.pageSize}`).then((d: any) => {
       if (!d) {return; }
       this.debtors = d;
     });

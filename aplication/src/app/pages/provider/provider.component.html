@@ -116,7 +116,7 @@
           <a routerLink="/{{language}}/category">Все</a>
         </div>
         <div class="category-box">
-              <a class="category-box-item" *ngFor="let category of company.categories" (click)="activeCategory(category._id)">
+              <a [appScrollSmooth]="catalog" class="category-box-item" *ngFor="let category of company.categories" (click)="activeCategory(category._id)">
                 <div class="svg">
                   <div class="img">
                     <app-img [fs]="category && category.mainCategory.img ? category.mainCategory.img : ''" [anyFs]="'assets/images/brand.svg'"></app-img>
@@ -140,7 +140,7 @@
           <a routerLink="/{{language}}/brands">Все</a>
         </div>
         <div class="brandy-box">
-              <a class="brandy-box-item" *ngFor="let brand of company.brands" (click)="activeBrands(brand._id)">
+              <a [appScrollSmooth]="catalog" class="brandy-box-item" *ngFor="let brand of company.brands" (click)="activeBrands(brand._id)">
                 <div class="svg">
                   <div class="img">
                     <app-img [fs]="brand && brand.img ? brand.img : ''" [anyFs]="'assets/images/brans.svg'"></app-img>
@@ -154,7 +154,7 @@
       </div>
     </ng-container>
   </ng-container>
-  <div class="catalog">
+  <div class="catalog" [appScrollSmooth]="catalog" #catalog>
     <ng-container *ngIf="company.categories.length > 0">
       <app-show-provider-category [catId]="activeCategoryId" *ngIf="showCategory"></app-show-provider-category>
       <app-show-provider-brands [brandId]="activeBrandsId" *ngIf="showBrands"></app-show-provider-brands>

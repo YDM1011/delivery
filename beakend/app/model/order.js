@@ -40,6 +40,7 @@ const schema = new Schema({
         type: Number,
         default: 0
     },
+    isTop: {type: Boolean, default: false},
     subCategory: String,
     name: {type: String, required: [true, "Name is required"]},
     des: String,

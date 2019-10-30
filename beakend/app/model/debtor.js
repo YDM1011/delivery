@@ -20,10 +20,10 @@ const schem = new Schema({
         ref: "Company",
         required: [true, "Company is required"]
     },
-    // basket: {
-    //     type: Schema.Types.ObjectId,
-    //     ref: "Basket"
-    // },
+    basket: {
+        type: Schema.Types.ObjectId,
+        ref: "Basket"
+    },
     login: {type: String, default: ''},
     value: Number,
     dataCall: Date,

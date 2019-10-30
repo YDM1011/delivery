@@ -5,10 +5,10 @@ const config = require('../config/config');
 
 module.exports = (req, res, next) => {
   if (req.jwt) {
+
       const jwt = require('jsonwebtoken');
       const protect = req.cookies['token'] || req.jwt.token || req.headers.authorization;
       if(!protect) return tryAsAdmin(req, res, next);
-
       const connect = protect.split(" ");
       jwt.verify(connect[0], config.jwtSecret, (err,data)=>{
           if (err) return res.serverError("Token error");
