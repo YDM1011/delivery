@@ -28,27 +28,31 @@ module.exports = (backendApp, socket = null, data = null) => {
         let userData;
         ws.on('message', async (event) => {
             const data = JSON.parse(JSON.parse(event));
-            if (data.event === 'connect'){
-                // let tokenData =  parseAuthorization(req.headers.authorization);
+            try {
 
-                // if (!tokenData) tokenData =  parseAA(req.headers.authorization);
-                if (data.token){
-                    userData = await checkToken(backendApp, {token:data.token, model: 'Client'}).catch(e=>{console.error(e)});
-                    if(!userData) {
-                        userData = await checkToken(backendApp, {token:data.token, model: 'Admin'}).catch(e=>{console.error(e)});
+                if (data.event === 'connect'){
+                    // let tokenData =  parseAuthorization(req.headers.authorization);
+
+                    // if (!tokenData) tokenData =  parseAA(req.headers.authorization);
+                    if (data.token){
+                        userData = await checkToken(backendApp, {token:data.token, model: 'Client'}).catch(e=>{console.error(e)});
+                        if(!userData) {
+                            userData = await checkToken(backendApp, {token:data.token, model: 'Admin'}).catch(e=>{console.error(e)});
+                        }
+                        ws['userId'] = userData.id;
+                        // delete WSDB[String(userData.id)]
+                        WSDB[String(userData.id)] = ws;
+                        // if (userData) saveConnect(userData, glob.WSDB, ws);
                     }
-                    ws['userId'] = userData.id;
-                    // delete WSDB[String(userData.id)]
-                    WSDB[String(userData.id)] = ws;
-                    // if (userData) saveConnect(userData, glob.WSDB, ws);
+                } else {
+                    // userData = await checkToken(backendApp, {token:data.token, model: 'Client'}).catch(e=>{console.error(e)});
+                    // if(!userData) {
+                    //     userData = await checkToken(backendApp, {token:data.token, model: 'Admin'}).catch(e=>{console.error(e)});
+                    // }
+                    // messageSend(event, WSDB)
                 }
-            } else {
-                // userData = await checkToken(backendApp, {token:data.token, model: 'Client'}).catch(e=>{console.error(e)});
-                // if(!userData) {
-                //     userData = await checkToken(backendApp, {token:data.token, model: 'Admin'}).catch(e=>{console.error(e)});
-                // }
-                // messageSend(event, WSDB)
-            }
+            } catch (e) {}
+
         });
 
         ws.on('close', () => {

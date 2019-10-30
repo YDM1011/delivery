@@ -54,6 +54,8 @@
       color: #FF5C00;
       font-size: 8px;
       line-height: 10px;
+      z-index: 1;
+      overflow: hidden;
     }
   }
   .block-title{
@@ -146,6 +148,17 @@
       width: 100%;
     }
   }
+}
+@media (min-width: 414px) {
+  .action{
+    &-box{
+      height: 150px;
+      .action-item{
+        height: 150px;
+      }
+    }
+  }
+
 }
 
 ::ng-deep .mat-ic{

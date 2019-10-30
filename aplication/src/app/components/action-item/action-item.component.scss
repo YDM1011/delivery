@@ -49,3 +49,11 @@
     margin-top: 5px;
   }
 }
+
+@media (min-width: 414px) {
+  .action-item {
+    .img {
+      max-height: 250px;
+    }
+  }
+}

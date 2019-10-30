@@ -99,7 +99,7 @@ const init = (app, config) =>{
                 break;
             default:
                 res.status(200);
-                res.render('client');
+                res.render('index');
                 break;
         }
     });

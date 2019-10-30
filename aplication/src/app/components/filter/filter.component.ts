@@ -19,7 +19,9 @@ export class FilterComponent implements OnInit {
   public isInit = false;
   public priceMin = 0;
   public sub = [];
+  public subChack = [];
   public brand = [];
+  public brandChack = [];
   @Input() mainCategory;
   @Input() city;
   @Input() filterInput;
@@ -56,16 +58,63 @@ export class FilterComponent implements OnInit {
         ceil: this.priceMax,
       };
       if (this.filterInput) {
-        console.log(this.filterInput)
         this.priceMin = this.filterInput.priceMin;
         this.priceMax = this.filterInput.priceMax;
         this.sub = this.filterInput.sub;
         this.brand = this.filterInput.brand;
       }
+      this.chackSubCategory();
+      this.chackBrands();
       this.isInit = true;
     });
   }
+  chackSubCategory() {
+    for (let i = 0; i < this.mainCategory.subCategory.length; i++) {
+      if (this.sub.length === 0) {
+        this.subChack[i] = false;
+      }
+      this.sub.forEach((item, index) => {
+        if (this.mainCategory.subCategory[i] === item.subCategory) {
+          this.subChack[i] = true;
+          return;
+        } else {
+          if (this.subChack[i]) {
+            return;
+          }
+          this.subChack[i] = false;
+        }
+      });
+    }
+  }
+  chackBrands() {
+    for (let i = 0; i < this.mainCategory.brands.length; i++) {
+      if (this.brand.length === 0) {
+        this.brandChack[i] = false;
+      }
+      this.brand.forEach((item, index) => {
+        if (this.mainCategory.brands[i]._id === item.brand) {
+          this.brandChack[i] = true;
+          return;
+        } else {
+          if (this.brandChack[i]) {
+            return;
+          }
+          this.brandChack[i] = false;
+        }
+      });
+    }
+  }
   closefilter() {
+    this.onFilter.emit(
+        ('') + ('') + ('')
+    );
+    this.onCopyFilter.emit(
+        {
+          priceMin: 0,
+          priceMax: this.options.ceil,
+          sub: [],
+          brand: []}
+    );
     this.closeFilter.emit(false);
   }
   initfilter() {
@@ -83,7 +132,7 @@ export class FilterComponent implements OnInit {
     this.closeFilter.emit(false);
   }
   priceFilterFunc() {
-    console.log(this.priceMax, this.priceMin);
+    // console.log(this.priceMax, this.priceMin);
   }
   getCheckSub(e, i) {
     if (!e.checked) {
@@ -91,8 +140,10 @@ export class FilterComponent implements OnInit {
       return; }
     this.sub.push({subCategory: e.source.value});
   }
-  getCheckBrand(e) {
-    if (!e.checked) {return; }
+  getCheckBrand(e, i) {
+    if (!e.checked) {
+      this.brand.splice(i, 1);
+      return; }
     this.brand.push({brand: e.source.value});
   }
 }

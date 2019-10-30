@@ -31,13 +31,39 @@
         font-size: 18px;
         color: #979797;
         letter-spacing: 1.3px;
-        &:nth-of-type(1){
-          margin-bottom: 25px;
-        }
+      }
+      .signup{
+        border: none;
+        background: #fff;
+        margin: 10px 0 10px auto;
+        cursor: pointer;
       }
       button{
-        margin: 25px auto;
+        margin: 25px auto 25px;
       }
     }
+  }
+}
+.error{
+  margin: 5px 0;
+  font-size: 12px;
+  color: #c31212;
+}
+.login-label{
+  display: flex;
+  align-items: center;
+  margin-bottom: 25px;
+  width: 100%;
+  color: #979797;
+  position: relative;
+  .absolute{
+    position: absolute;
+    left: 6px;
+    font-size: 18px;
+    top: calc(50% - 10px);
+  }
+  input{
+    width: 100%;
+    padding: 0 0 0 40px!important;
   }
 }

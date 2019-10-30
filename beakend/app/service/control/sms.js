@@ -28,12 +28,13 @@ module.exports = {
         const Client = backendApp.mongoose.model('Client');
         req.body.login = req.body.login.slice(-10).toLowerCase();
         return new Promise((rs,rj)=> {
+            console.log(req.body)
             Client.findOne({
                 $and: [{
                     $or: [
                         {login: req.body.login}
                     ]
-                }, {pass: md5(req.body.pass)}, {smsCode: md5(req.body.smsCode)}]
+                }, {pass: md5(req.body.pass)}, {smsCode: md5(String(req.body.smsCode))}]
             }).exec((err, user) => {
                 if (err) return rj(err);
                 if (!user) return rj('Password or login invalid!');
@@ -44,7 +45,7 @@ module.exports = {
                                 {login: req.body.login},
                                 {mobile: req.body.login}
                             ]
-                        }, {pass: md5(req.body.pass)}, {smsCode: md5(req.body.smsCode)}]
+                        }, {pass: md5(req.body.pass)}, {smsCode: md5(String(req.body.smsCode))}]
                     }, {verify: true}, {new:true}).exec((e,r)=>{
                         if (e) return rj(e);
                         if (!r) return rj('Password or login invalid!');

@@ -18,7 +18,7 @@
 				<div class="sub-container" *ngIf="mainCategory">
 					<ng-container *ngIf="mainCategory.subCategory">
 						<ng-container *ngIf="mainCategory.subCategory.length>0">
-							<mat-checkbox class="filter-check" *ngFor="let sub of mainCategory.subCategory; let index = index;" [checked]="filterInput.sub" [value]="sub" (change)="getCheckSub($event, index)">{{sub}}</mat-checkbox>
+							<mat-checkbox class="filter-check" *ngFor="let sub of mainCategory.subCategory; let index = index;" [checked]="subChack[index]"  [value]="sub" (change)="getCheckSub($event, index)">{{sub}}</mat-checkbox>
 						</ng-container>
 					</ng-container>
 				</div>
@@ -30,7 +30,7 @@
 				<div class="sub-container" *ngIf="mainCategory">
 					<ng-container *ngIf="mainCategory.brands">
 						<ng-container *ngIf="mainCategory.brands.length>0">
-							<mat-checkbox class="filter-check filter-sub" *ngFor="let brand of mainCategory.brands" [value]="brand._id" (change)="getCheckBrand($event)">
+							<mat-checkbox class="filter-check filter-sub" *ngFor="let brand of mainCategory.brands; let index = index" [checked]="brandChack[index]" [value]="brand._id" (change)="getCheckBrand($event, index)">
 								<div class="sub-brand-item">
 									<div class="img">
 										<app-img [fs]="brand.img"></app-img>

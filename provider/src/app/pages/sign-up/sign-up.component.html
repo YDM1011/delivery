@@ -1,0 +1,55 @@
+<div class="registration active" id="registration">
+	<div class="registration-content">
+		<div class="registration-title">
+			{{title_signup[language]}}
+		</div>
+		<form (submit)="signup($event)" class="registration-form">
+			<mat-form-field class="example-full-width">
+				<input type="text" placeholder="Имя" aria-label="Text" name="name" matInput [(ngModel)]="client.name" autocomplete="off">
+				<mat-hint>
+					<span class="error" *ngIf="dataError.name && !client['name']">{{errors[dataError.name][language]}}</span>
+				</mat-hint>
+			</mat-form-field>
+			<mat-form-field class="example-full-width">
+				<input type="text" placeholder="Телефон (*без коду країни)" aria-label="Text" name="login" matInput [(ngModel)]="client.login" autocomplete="off">
+				<mat-hint>
+					<span class="error" *ngIf="dataError.login && !client['login']">{{errors[dataError.login][language]}}</span>
+					<span class="error" *ngIf="dataError.loginError">{{errors[dataError.loginError][language]}}</span>
+				</mat-hint>
+			</mat-form-field>
+			<mat-form-field class="example-full-width">
+				<input type="password" placeholder="Пароль" aria-label="pass" name="pass" matInput [(ngModel)]="client.pass" autocomplete="off">
+				<mat-hint>
+					<span class="error" *ngIf="dataError.pass && !client['pass']">{{errors[dataError.pass][language]}}</span>
+				</mat-hint>
+			</mat-form-field>
+			<mat-form-field class="example-full-width">
+				<input type="text" placeholder="Назва компанії" aria-label="Text" name="name company" matInput [(ngModel)]="company.name" autocomplete="off">
+				<mat-hint>
+					<span class="error" *ngIf="dataError.nameCompany && !company['name']">{{errors[dataError.nameCompany][language]}}</span>
+				</mat-hint>
+			</mat-form-field>
+			<mat-form-field class="example-full-width">
+				<input type="text" placeholder="Адрес компании без города" aria-label="Text" name="name company" matInput [(ngModel)]="company.address" autocomplete="off">
+				<mat-hint>
+					<span class="error" *ngIf="dataError.address && !company['address']">{{errors[dataError.address][language]}}</span>
+				</mat-hint>
+			</mat-form-field>
+			<label for="city"  *ngIf="city && city.length > 0">
+				<span id="city">Город</span>
+				<mat-form-field class="example-half city-select">
+					<mat-select #o [(value)]="cityChoose" (selectionChange)="changeCity(o.value)" >
+						<mat-option *ngFor="let item of city" [value]="item._id" class="city-input">
+							{{item.name}}
+						</mat-option>
+					</mat-select>
+				</mat-form-field>
+			</label>
+			<button type="submit">
+				{{t_submit[language]}}
+			</button>
+		</form>
+	</div>
+</div>
+
+<app-verification *ngIf="verificationShow" [data]="client"></app-verification>

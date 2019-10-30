@@ -106,6 +106,7 @@
 .category{
   position: relative;
   padding: 10px 0 10px;
+  z-index: 2;
   &:before{
     content: '';
     position: absolute;

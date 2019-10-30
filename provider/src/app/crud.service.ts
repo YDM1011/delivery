@@ -51,21 +51,6 @@ export class CrudService {
             }, error => {
                 reject(error);
             });
-            // Swal.fire({
-            //     title: 'Do you confirm the deletion?',
-            //     type: 'warning',
-            //     showCloseButton: true,
-            //     showCancelButton: true,
-            //     focusConfirm: true,
-            //     reverseButtons: true,
-            //     cancelButtonText: 'Cancel!',
-            //     confirmButtonText: 'Delete',
-            //     confirmButtonColor: '#dd4535',
-            // }).then((result) => {
-            //     if (result.value) {
-            //
-            //     }
-            // });
         });
     }
 
@@ -90,5 +75,31 @@ export class CrudService {
             arr.push(obj._id);
         });
         return arr;
+    }
+
+    confirmAuth(data) {
+        return new Promise((rs, rj) => {
+            this.post('confirmAuth', data, false).then(v => {
+                console.log(v);
+                if (v) {
+                    rs(v);
+                } else {
+                    rj();
+                }
+            });
+        });
+    }
+    signup(client, company) {
+        return new Promise((rs, rj) => {
+            this.post('signup', {client, company}, false).then(v => {
+                if (v) {
+                    rs(v);
+                }
+            }).catch((error) => {
+                if (error) {
+                    rj(error);
+                }
+            });
+        });
     }
 }
