@@ -22,22 +22,23 @@ export class OrdersComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+
     this.auth.onLanguage.subscribe((v: string) => {
       this.language = v;
     });
     this.auth.onMe.subscribe((me: any) => {
       if (!me) {return; }
       this.user = me;
-      this.crud.get(`basket?query={"createdBy":"${this.user._id}","$or":[{"status":1},{"status":2},{"status":3}]}&populate=[{"path":"deliveryAddress","select":"name img"},{"path":"companyOwner","select":"name"}]`).then((v: any) => {
+      this.crud.get(`basket?query={"createdBy":"${this.user._id}","$or":[{"status":1},{"status":2},{"status":3}]}&populate=[{"path":"deliveryAddress","select":"name img"},{"path":"companyOwner","select":"name"}]&sort={'date':-1}`).then((v: any) => {
         this.orders = v;
-        this.loading = true
+        this.loading = true;
       });
     });
   }
   confirmOrder(e) {
     if (e) {
       this.openSnackBar('Ваш заказ был подтвержден',  'Ok');
-      this.crud.get(`basket?query={"_id":"${e}","$or":[{"status":1},{"status":2},{"status":3}]}&populate=[{"path":"deliveryAddress","select":"name img"},{"path":"companyOwner","select":"name"}]`).then((v: any) => {
+      this.crud.get(`basket?query={"_id":"${e}","$or":[{"status":1},{"status":2},{"status":3}]}&populate=[{"path":"deliveryAddress","select":"name img"},{"path":"companyOwner","select":"name"}]&sort={'date':-1}`).then((v: any) => {
         this.orders[this.crud.find('_id', e, this.orders)] = v[0];
       });
     }
@@ -45,20 +46,20 @@ export class OrdersComponent implements OnInit {
   removeOrder(e) {
     if (e) {
       this.openSnackBar('Ваш заказ был отменен',  'Ok');
-      this.crud.get(`basket?query={"createdBy":"${this.user._id}","$or":[{"status":1},{"status":2},{"status":3}]}&populate=[{"path":"deliveryAddress","select":"name img"},{"path":"companyOwner","select":"name"}]`).then((v: any) => {
+      this.crud.get(`basket?query={"createdBy":"${this.user._id}","$or":[{"status":1},{"status":2},{"status":3}]}&populate=[{"path":"deliveryAddress","select":"name img"},{"path":"companyOwner","select":"name"}]&sort={'date':-1}`).then((v: any) => {
         this.orders = v;
       });
     }
   }
   getBaskets() {
     this.toggleMain = true;
-    this.crud.get(`basket?query={"createdBy":"${this.user._id}","$or":[{"status":1},{"status":2},{"status":3}]}&populate=[{"path":"deliveryAddress","select":"name img"},{"path":"companyOwner","select":"name"}]`).then((v: any) => {
+    this.crud.get(`basket?query={"createdBy":"${this.user._id}","$or":[{"status":1},{"status":2},{"status":3}]}&populate=[{"path":"deliveryAddress","select":"name img"},{"path":"companyOwner","select":"name"}]&sort={'date':-1}`).then((v: any) => {
       this.orders = v;
     });
   }
   getSuccessBasket() {
     this.toggleMain = false;
-    this.crud.get(`basket?query={"createdBy":"${this.user._id}","$or":[{"status":4},{"status":5}]}&populate=[{"path":"deliveryAddress","select":"name img"},{"path":"companyOwner","select":"name"}]`).then((v: any) => {
+    this.crud.get(`basket?query={"createdBy":"${this.user._id}","$or":[{"status":4},{"status":5}]}&populate=[{"path":"deliveryAddress","select":"name img"},{"path":"companyOwner","select":"name"}]&sort={'date':-1}`).then((v: any) => {
       this.orders = v;
     });
   }
