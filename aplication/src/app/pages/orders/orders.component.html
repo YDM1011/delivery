@@ -20,9 +20,9 @@
         </button>
       </div>
       <div class="popular-section-box" *ngIf="toggleMain">
-        <mat-accordion>
-          <app-orders-item [order]="item" (removeOrder)="removeOrder($event)" (confirmOrder)="confirmOrder($event)" *ngFor="let item of orders"></app-orders-item>
-        </mat-accordion>
+        <cdk-virtual-scroll-viewport itemSize="205" class="viewport" appUpdateScrollOrders (output)="getOutput($event)" [userId]="this.user._id" [type]="'new'">
+          <app-orders-item [order]="item" (removeOrder)="removeOrder($event, index)" (confirmOrder)="confirmOrder($event)" *cdkVirtualFor="let item of orders; let index = index"></app-orders-item>
+        </cdk-virtual-scroll-viewport>
         <ng-container *ngIf="orders && orders.length === 0">
           <div class="empty-block">
             У вас нет активных заказов
@@ -30,9 +30,9 @@
         </ng-container>
       </div>
       <div class="popular-section-box" *ngIf="!toggleMain">
-        <mat-accordion>
+        <cdk-virtual-scroll-viewport itemSize="205" class="viewport" appUpdateScrollOrders (output)="getOutput($event)" [userId]="this.user._id" [type]="'old'">
           <app-orders-item [order]="item" *ngFor="let item of orders"></app-orders-item>
-        </mat-accordion>
+        </cdk-virtual-scroll-viewport>
         <ng-container *ngIf="orders && orders.length === 0">
           <div class="empty-block">
             У вас нет доставленых или отменненых заказов

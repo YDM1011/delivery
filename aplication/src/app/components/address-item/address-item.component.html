@@ -3,7 +3,7 @@
     <mat-panel-title>
       <div class="title-panel">
         <div class="img">
-          <app-img [fs]="data.img" [dir]="'address'" [anyFs]="'assets/images/city.svg'"></app-img>
+          <app-img [fs]="data.img ? data.img : ''" [dir]="'address'" [anyFs]="'assets/images/city.svg'"></app-img>
         </div>
         <div class="title">
           {{data.name}}
