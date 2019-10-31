@@ -3,7 +3,9 @@
 </ng-container>
 <div class="other-header">
   <app-back-btn></app-back-btn>
-  <h2 *ngIf="loading">{{company ? company.name : 'Поставщик'}}</h2>
+  <h2 *ngIf="loading && company">
+    {{company ? company.name : 'Поставщик'}}
+  </h2>
   <app-basket-item></app-basket-item>
 </div>
 <div class="other-pages" *ngIf="loading && company">
