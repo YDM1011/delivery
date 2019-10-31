@@ -31,7 +31,7 @@ import {BrandsIDComponent} from "./pages/brands-id/brands-id.component";
 import {EditAddressComponent} from "./pages/edit-address/edit-address.component";
 
 const lang = () =>{
-  return localStorage.getItem('language');
+  return localStorage.getItem('language') || 'ru';
 };
 
 const routes: Routes = [
