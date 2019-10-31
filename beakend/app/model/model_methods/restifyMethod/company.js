@@ -23,3 +23,24 @@ module.exports.preUpdate = (req, res, next, backendApp) => {
         next()
     }
 };
+// module.exports.postRead = (req,res,next, backendApp)=>{
+//     let companies = req.erm.result;
+//     let arrPromise = [];
+//     let result = [];
+//     companies.forEach((company,i)=>{
+//         arrPromise.push(new Promise((rs,rj)=>{
+//             backendApp.mongoose.model('Action')
+//                 .count({$or:[{actionGlobal:true},{client:{$in:req.user._id}}], companyOwner:company._id})
+//                 .exec((e,r)=>{
+//
+//                     company['actionCount'] = r || 0;
+//                     result.push(company);
+//                     console.log(result);
+//                     rs(r)
+//                 })
+//         }))
+//     });
+//     Promise.all(arrPromise).then(v=>{
+//         res.ok(result)
+//     })
+// };

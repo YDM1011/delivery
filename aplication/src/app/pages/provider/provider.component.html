@@ -72,8 +72,8 @@
       </div>
     </div>
   </div>
-  <ng-container *ngIf="company && company.action">
-    <ng-container *ngIf="company.action.length > 0">
+  <ng-container *ngIf="company && actions">
+    <ng-container *ngIf="actions.length > 0">
       <div class="action">
         <div class="action-box">
           <mat-carousel
@@ -93,7 +93,7 @@
                   class="carousel-my"
           >
             <mat-carousel-slide
-                    *ngFor="let slide of company.action; let i = index"
+                    *ngFor="let slide of actions; let i = index"
                     [hideOverlay]="true"
             >
                         <div [routerLink]="'/' + language +'/action/' + slide._id" class="action-item">

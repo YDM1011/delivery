@@ -14,6 +14,7 @@ export class ProviderComponent implements OnInit {
   public id;
   public me;
   public company;
+  public actions;
   public activeCategoryId;
   public activeBrandsId;
   public showCategory = true;
@@ -45,13 +46,19 @@ export class ProviderComponent implements OnInit {
     this.crud.getDetailCompany(this.id, this.company).then((v: any) => {
       if (v) {
         this.company = v;
-        console.log(this.company);
+
+        let query = `?query=${JSON.stringify({$or:[{actionGlobal:true},{client:{$in:localStorage.getItem('userId')}}], companyOwner:this.company._id})}`; //
+        this.crud.get('action', '', query).then((v:any)=>{
+          this.actions = v
+        });
+
         if (this.company && this.company.categories.length > 0) {
           this.activeCategoryId = this.company.categories[0]._id;
           this.loading = true;
         }
       }
     });
+
   }
   favoriteCompany() {
     this.crud.favoriteCompany({companyId: this.id}).then((v: any) => {
