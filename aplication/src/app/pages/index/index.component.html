@@ -36,7 +36,7 @@
     </div>
   </a>
 </div>
-<ng-container *ngIf="!loaded.brand && !loaded.category && !loaded.topCompany">
+<ng-container *ngIf="!loaded.brand || !loaded.category || !loaded.topCompany || !loaded.topCompany">
   <app-loading></app-loading>
 </ng-container>
 <div class="slider">
