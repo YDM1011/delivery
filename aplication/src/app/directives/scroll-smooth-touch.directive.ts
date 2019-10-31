@@ -1,16 +1,17 @@
 import {Directive, ElementRef, HostListener, Input} from '@angular/core';
 
 @Directive({
-  selector: '[appScrollSmooth]'
+  selector: '[appScrollSmoothTouch]'
 })
-export class ScrollSmoothDirective {
+export class ScrollSmoothTouchDirective {
 
-  @HostListener('click', ['$event'])
+  @HostListener('mousedown', ['$event'])
+  @HostListener('touchstart', ['$event'])
   onDragStart(event) {
     this.init()
   }
 
-  @Input('appScrollSmooth') el;
+  @Input('appScrollSmoothTouch') el;
 
   constructor(el: ElementRef){
     // window.scroll({top:document.getElementsByClassName('catalog')[0].offsetTop-70, behavior:'smooth'})
@@ -20,6 +21,6 @@ export class ScrollSmoothDirective {
 
   init(){
     if (window.pageYOffset+70 < this.el.offsetTop)
-    window.scroll({top:this.el.offsetTop-70, behavior:'smooth'})
+      window.scroll({top:this.el.offsetTop-70, behavior:'smooth'})
   }
 }

@@ -24,6 +24,9 @@ export class AuthService {
   private wsOrder = new BehaviorSubject<any>(null);
   public onWsOrder = this.wsOrder.asObservable();
 
+  private defCrop = new BehaviorSubject<any>(null);
+  public onDefCrop = this.defCrop.asObservable();
+
   constructor() { }
 
   setWsOrder(data) {
@@ -53,6 +56,11 @@ export class AuthService {
       return true;
     }
     return false;
+  }
+  callDefCrop(){
+    this.defCrop.next(true);
+    this.defCrop = new BehaviorSubject<any>(null);
+    this.onDefCrop = this.defCrop.asObservable();
   }
 }
 

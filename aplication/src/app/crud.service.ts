@@ -305,6 +305,26 @@ export class CrudService {
       });
     });
   }
+  getTopProduct() {
+    let page = 0;
+    let limit = 7;
+    return new Promise((resolve, reject) => {
+      let links = [];
+      this.city.links.forEach(it=>{
+        links.push({cityLink: it})
+      });
+      const query = `?query={"$or":${JSON.stringify(links)},"isTop":true}
+      &populate={"path":"companyOwner"}
+      &sort={"rating":-1}&limit=${page}&skip=${limit*page}`;
+      this.get('order', '', query).then((v:any)=>{
+        if (v) {
+          resolve(v)
+        } else {
+          reject()
+        }
+      });
+    });
+  }
   signup(data){
       return new Promise((rs,rj)=>{
         this.post('signup', data).then(v=>{

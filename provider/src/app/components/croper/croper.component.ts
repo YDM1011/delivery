@@ -1,4 +1,15 @@
-import {Component, Directive, EventEmitter, HostListener, Input, OnInit, Output} from '@angular/core';
+import {
+  Component,
+  Directive,
+  ElementRef,
+  EventEmitter,
+  HostListener,
+  Input,
+  OnInit,
+  Output,
+  ViewChild
+} from '@angular/core';
+import {AuthService} from "../../auth.service";
 
 @Directive({selector: '[crop]'})
 export class TouchStart {
@@ -57,11 +68,33 @@ export class TouchStart {
   styleUrls: ['./croper.component.scss']
 })
 export class CroperComponent implements OnInit {
-
+  @ViewChild("image", { static: false })
+  public imageElement: ElementRef;
   @Output() data = new EventEmitter();
-  @Input() src;
-  constructor() { }
+  @Output() dataDef = new EventEmitter();
+  @Input() srcImg;
+  public def;
+  constructor(
+    private auth: AuthService
+  ) { }
 
   ngOnInit() {
+    this.auth.onDefCrop.subscribe(v=>{
+      if (v) {
+        let img = document.getElementById('cropper-img') as HTMLImageElement;
+        let rateX =  img.naturalWidth / img.clientWidth;
+        let rateY = img.naturalHeight / img.clientHeight;
+        this.def = {
+          x: rateX * (img.clientWidth/2 - 50),
+          y: rateY * (img.clientHeight/2 - 50),
+          width: rateX*100,
+          height: rateX*100,
+        };
+        this.dataDef.emit(this.def);
+      }
+    })
+  }
+  send(e){
+    this.data.emit(e)
   }
 }

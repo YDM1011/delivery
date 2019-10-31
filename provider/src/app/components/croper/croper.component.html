@@ -1,9 +1,9 @@
-<div class="cropper-wrap" *ngIf="src">
+<div class="cropper-wrap" *ngIf="srcImg">
   <div class="cropper-img" >
     <div class="sliser">
-      <img [src]="src" alt="" id="cropper-img" class="img-croper">
+      <img src="{{srcImg}}" #image alt="" id="cropper-img" class="img-croper">
     </div>
-    <div class="mask" crop (data)="data.emit($event)"></div>
+    <div class="mask" crop (data)="send($event)"></div>
     <div class="mask-glass">
       <div class="t"></div>
       <div class="r"></div>

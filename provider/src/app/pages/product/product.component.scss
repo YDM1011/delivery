@@ -12,3 +12,21 @@
 .example-full-width {
   width: 100%;
 }
+.top-btn.done {
+  background-color: #FF5C00;
+}
+.top-btn{
+  border-radius: 50%;
+  padding: 3px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 20px;
+  width: 20px;
+  background: #bdbdbd;
+  color: #fff;
+  font-size: 7px;
+  text-transform: uppercase;
+  margin-right: 10px;
+  cursor: pointer;
+}

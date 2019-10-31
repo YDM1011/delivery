@@ -30,6 +30,10 @@ import {IsLogoutGuard} from "./is-logout.guard";
 import {BrandsIDComponent} from "./pages/brands-id/brands-id.component";
 import {EditAddressComponent} from "./pages/edit-address/edit-address.component";
 
+const lang = () =>{
+  return localStorage.getItem('language');
+};
+
 const routes: Routes = [
   {path: ':lang', component: InitLayoutComponent, children: [
       {path: '', component: IndexComponent},
@@ -58,7 +62,7 @@ const routes: Routes = [
       {path: 'action/:id', component: ActionDetailComponent},
       {path: 'orders', component: OrdersComponent, canActivate: [IsLoginGuard]},
     ]},
-  {path: '', redirectTo: 'ru', pathMatch: 'full'},
+  {path: '', redirectTo: lang(), pathMatch: 'full'},
   {path: '**', component: NotFoundComponent},
 ];
 
@@ -66,4 +70,6 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {
+
+}

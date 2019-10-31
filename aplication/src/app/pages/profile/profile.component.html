@@ -12,7 +12,7 @@
       </div>
     </div>
     <div class="info-right">
-      <div class="language" routerLink="/{{language === 'ua' ? 'ru' : 'ua'}}/{{url}}" >
+      <div class="language" routerLink="/{{language === 'ua' ? 'ru' : 'ua'}}/{{url}}" (click)="setLang(language === 'ua' ? 'ru' : 'ua')" >
         <div class="title">
           {{language === 'ua' ? 'ru' : 'ua'}}
         </div>

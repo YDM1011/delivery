@@ -25,3 +25,21 @@
 .icon-preload{
   background: #e3ecec;
 }
+.top-btn.done {
+  background-color: #FF5C00;
+}
+.top-btn{
+  border-radius: 50%;
+  padding: 3px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 15px;
+  width: 15px;
+  background: #bdbdbd;
+  color: #fff!important;
+  font-size: 7px;
+  text-transform: uppercase;
+  margin-left: 10px;
+  cursor: pointer;
+}

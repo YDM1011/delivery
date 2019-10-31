@@ -99,6 +99,7 @@ export class EditProductComponent implements OnInit, OnChanges {
     }
   }
 
+
   changeSelectBrand(b) {
     this.editObjCopy['brand'] = b;
     this.formCheck();

@@ -6,26 +6,26 @@ const fs = require('fs');
 module.exports = (backendApp, router) => {
     router.post('/imgSlice/:dir?', [], (req,res,next) => {
         try {
-        const fileName = req.body.fileName;
-        const x = req.body.xx;
-        const y = req.body.yy;
-        const dir = req.params.dir ? req.params.dir+'/' : '';
-        let readableStream = fs.createReadStream('upload/'+fileName);
-        let writableStream = fs.createWriteStream('upload/'+ dir + fileName);
-        const left= parseInt(x[0]);
-        const top= parseInt(y[0]);
-        const width= parseInt(x[1]);
-        const height= parseInt(y[1]);
+            const fileName = req.body.fileName;
+            const x = req.body.xx;
+            const y = req.body.yy;
+            const dir = req.params.dir ? req.params.dir+'/' : '';
+            let readableStream = fs.createReadStream('upload/'+fileName);
+            let writableStream = fs.createWriteStream('upload/'+ dir + fileName);
+            const left= parseInt(x[0]);
+            const top= parseInt(y[0]);
+            const width= parseInt(x[1]);
+            const height= parseInt(y[1]);
 
-        const transformer =  sharp()
-            .extract({ left: left, top: top, width: width, height: height })
-            .resize(200);
+            const transformer =  sharp()
+                .extract({ left: left, top: top, width: width, height: height })
+                .resize(200);
 
-        readableStream
-            .pipe(transformer)
-            .pipe(writableStream).on('finish', ()=>{
-            res.ok({file:fileName})
-        });
+            readableStream
+                .pipe(transformer)
+                .pipe(writableStream).on('finish', ()=>{
+                res.ok({file:fileName})
+            });
         } catch(e) {
             res.notFound("Error!")
         }

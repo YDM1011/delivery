@@ -18,7 +18,10 @@
         У вас нет избранных поставщиков
       </p>
       <ng-container *ngIf="favoriteCompany.length > 0">
-        <app-provider-item [isTop]="false" [data]="item" *ngFor="let item of favoriteCompany"></app-provider-item>
+        <div class="wrap-favorite" *ngFor="let item of favoriteCompany">
+          <app-provider-item [isTop]="false" [data]="item"></app-provider-item>
+          <div class="favorite-disable" [class.true]="item.verify"></div>
+        </div>
       </ng-container>
     </div>
     <div class="popular-section-box" *ngIf="!toggleMain">

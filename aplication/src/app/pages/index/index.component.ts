@@ -16,6 +16,7 @@ export class IndexComponent implements OnInit, OnDestroy {
   public category = [];
   public brandy = [];
   public topCompany = [];
+  public topProduct = [];
   public toggleMain = true;
   public loadingCount = true;
   public images = [`./assets/images/tmp/img-deli.png`, `./assets/images/tmp/img-product.png`, `./assets/images/tmp/img-deli.png`];
@@ -24,6 +25,7 @@ export class IndexComponent implements OnInit, OnDestroy {
   public loaded = {
     category: false,
     topCompany: false,
+    topProduct: false,
     brand: false
   };
   private _subscription: Subscription[] = [];
@@ -77,6 +79,11 @@ export class IndexComponent implements OnInit, OnDestroy {
       this.topCompany = v;
       this.loaded.topCompany = true;
     }).catch((e) => { this.loaded.topCompany = true; });
+    await this.crud.getTopProduct().then((v: any) => {
+      if (!v) {return; }
+      this.topProduct = v;
+      this.loaded.topProduct = true;
+    }).catch((e) => { this.loaded.topProduct = true; });
   }
   changeCar(e) {
     this.carentPhoto = `url(${e})`;

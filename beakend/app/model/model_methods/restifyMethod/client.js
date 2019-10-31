@@ -12,5 +12,6 @@ module.exports.preUpdate = (req,res,next, backendApp) => {
     console.log("OK!!!!")
     delete req.body.createdBy;
     delete req.body._id;
+    delete req.body.debtors;
     next()
 };

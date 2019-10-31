@@ -154,7 +154,7 @@
       </div>
     </ng-container>
   </ng-container>
-  <div class="catalog" [appScrollSmooth]="catalog" #catalog>
+  <div class="catalog" [appScrollSmoothTouch]="catalog" #catalog>
     <ng-container *ngIf="company.categories.length > 0">
       <app-show-provider-category [catId]="activeCategoryId" *ngIf="showCategory"></app-show-provider-category>
       <app-show-provider-brands [brandId]="activeBrandsId" *ngIf="showBrands"></app-show-provider-brands>

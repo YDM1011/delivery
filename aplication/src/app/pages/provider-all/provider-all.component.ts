@@ -26,7 +26,7 @@ export class ProviderAllComponent implements OnInit {
     })
     this.auth.onCity.subscribe((v:any) => {
       if (v) {
-        const query = `?query={"city":"${v._id}"}`;
+        const query = `?query={"city":"${v._id}","verify":true}`;
         this.crud.get('company', '', query).then((arr)=>{
           this.curentCity = v;
           this.companyArr = arr;

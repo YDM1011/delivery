@@ -23,6 +23,7 @@ const init = (app, config) =>{
     app.use(compress());
     app.use(flash());
     app.use('/upload', express.static(path.join(__dirname, '../../upload')));
+    app.use('/', express.static(path.join(__dirname, '../../public')));
     // app.use('/', express.static('../../../admin/dist/admin'));
     // app.use('/', express.static(config.root + 'public'));
     app.use('/', express.static(path.join(__dirname, '../../../admin/dist/admin')));
@@ -123,7 +124,7 @@ const init = (app, config) =>{
         //     res.render('index');
         //     return
         // }
-        // if(err.status == 404) {
+        if(err.status == 404) {
             const host = req.hostname;
             switch (host.split('.')[0]) {
                 case 'client':
@@ -143,10 +144,10 @@ const init = (app, config) =>{
                     res.render('client');
                     break;
             }
-        // } else {
-        //     res.status(err.status || 500);
-        //     res.render('index');
-        // }
+        } else {
+            res.status(err.status || 500);
+            res.render('error', {error: err});
+        }
         // render the error page
 
 

@@ -113,10 +113,10 @@
 <div class="popular-section">
   <div class="popular-section-button">
     <button [class.active]="toggleMain" (click)="toggleMain = true">
-      Поставщики
+      Поставщики <span class="top-btn done">топ</span>
     </button>
     <button [class.active]="!toggleMain" (click)="toggleMain = false">
-      Товары
+      Товары <span class="top-btn done">топ</span>
     </button>
   </div>
   <div class="popular-section-box" *ngIf="toggleMain">
@@ -127,9 +127,12 @@
     </ng-container>
   </div>
   <div class="popular-section-box" *ngIf="!toggleMain">
-    <app-product-item></app-product-item>
-    <app-product-item></app-product-item>
-    <app-product-item></app-product-item>
+
+    <ng-container *ngIf="loaded.topProduct">
+      <ng-container *ngFor="let it of topProduct">
+        <app-product-item [data]="it" [company]="it.companyOwner"></app-product-item>
+      </ng-container>
+    </ng-container>
   </div>
   <a routerLink="/{{language}}/provider-all" class="index-all" *ngIf="toggleMain">
     Все поставщики города

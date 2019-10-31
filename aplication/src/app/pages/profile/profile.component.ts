@@ -54,4 +54,8 @@ export class ProfileComponent implements OnInit {
       }
     });
   }
+  setLang(language) {
+    localStorage.setItem('language', language);
+    console.log(language)
+  }
 }

@@ -86,7 +86,9 @@ export class AddProductComponent implements OnInit, AfterViewChecked {
     }
   }
   cancelAddBtn() {
-    this.cancelAdd.emit(false);
+    this.crud.post('deleteFile', {file: this.product.img}).then((v: any) => {
+      this.cancelAdd.emit(false);
+    });
   }
   onFs(e) {
     this.product.img = e.file;
