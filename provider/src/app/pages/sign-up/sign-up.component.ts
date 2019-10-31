@@ -6,6 +6,7 @@ interface SignUp {
   name: string;
   role: string;
   smsCode?: string;
+  company: any;
 }
 @Component({
   selector: 'app-sign-up',
@@ -29,6 +30,7 @@ export class SignUpComponent implements OnInit {
     name: string;
     pass: string;
     role: string = 'provider';
+    company: any;
   };
   public dataError = {login: '', name: '', pass: '', nameCompany: '', address: '', loginError: ''};
   public t_nameplaceholder = {
@@ -78,6 +80,7 @@ export class SignUpComponent implements OnInit {
     if (this.checkDetaSignUp(this.client) && this.checkDetaCompanySignUp(this.company)) {return; }
     this.crud.signup(this.client, this.company).then(v => {
       if (v) {
+        this.client.company = this.company;
         this.verificationShow = true;
         console.log(v);
       }

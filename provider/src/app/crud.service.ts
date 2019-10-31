@@ -79,7 +79,7 @@ export class CrudService {
 
     confirmAuth(data) {
         return new Promise((rs, rj) => {
-            this.post('confirmAuth', data, false).then(v => {
+            this.post('confirmAuth', data, null, false).then(v => {
                 console.log(v);
                 if (v) {
                     rs(v);
@@ -91,7 +91,7 @@ export class CrudService {
     }
     signup(client, company) {
         return new Promise((rs, rj) => {
-            this.post('signup', {client, company}, false).then(v => {
+            this.post('signup', {client, company}, null, false).then(v => {
                 if (v) {
                     rs(v);
                 }

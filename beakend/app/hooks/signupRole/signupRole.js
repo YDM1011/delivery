@@ -31,6 +31,9 @@ module.exports = class Signup {
     async confirmSmsCode() {
         this.result = await backendApp.service.sms.confirmSmsCode(this.req, this.res, backendApp);
         this.isConfirm = true;
+        if (this.req.body.company) {
+            this.req.companyBody = this.req.body.company;
+        }
         this.init()
     }
     createCompany() {

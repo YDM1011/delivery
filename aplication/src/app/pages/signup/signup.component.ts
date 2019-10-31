@@ -16,7 +16,7 @@ interface SignUp {
   styleUrls: ['./signup.component.scss']
 })
 export class SignupComponent implements OnInit {
-  public verification = true;
+  public verification = false;
   public language: string;
   public phone;
   public data: SignUp = new class implements SignUp {

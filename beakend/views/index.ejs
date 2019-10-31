@@ -6,6 +6,8 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Landing</title>
+    <link rel="stylesheet" href="../public/assets/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="../public/assets/css/owl.theme.default.min.css">
     <link rel="stylesheet" href="../public/assets/css/landing-style.css">
 </head>
 <body>
@@ -15,11 +17,11 @@
             <a href="#" class="logo">
             </a>
             <nav>
-                <a href="" class="link">Переваги</a>
-                <a href="" class="link">Можливості</a>
-                <a href="" class="link">Вартість</a>
-                <a href="" class="link">Контакти</a>
-                <a href="" class="btn">Авторизация</a>
+                <a href="#thirth" class="link">Переваги</a>
+                <a href="#second" class="link">Можливості</a>
+                <a href="#fifth" class="link">Вартість</a>
+                <a href="#contact" class="link">Контакти</a>
+                <a href="https://provider.piligrim-test.pp.ua/login" class="btn">Авторизация</a>
             </nav>
         </div>
     </div>
@@ -34,8 +36,8 @@
                 Eat healthy and
                 Natural Food
             </h1>
-            <a class="button" target="_blank" href="https://provider.piligrim-test.pp.ua">Войдите как поставщик</a>
-            <button class="button" id="openRegistration">Зарегистрироваться</button>
+            <a class="button" href="https://provider.piligrim-test.pp.ua/login">Войдите как поставщик</a>
+            <a class="button" href="https://provider.piligrim-test.pp.ua/signup">Зарегистрироваться</a>
 
             <div class="block-links">
                 <a href="">
@@ -62,16 +64,22 @@
         </div>
     </div>
     <div class="slider">
-        <div class="slider-item">
-            <img src="./img/image.jpg" alt="">
+        <div class="owl-carousel owl-theme">
+            <div class="slider-item">
+                <img src="../public/assets/img/image.jpg" alt="">
+            </div>
+            <div class="slider-item">
+                <img src="../public/assets/img/image.jpg" alt="">
+            </div>
         </div>
-        <div class="slider-btn">
-            <div class="left">
+
+        <div class="slider-btn owl-nav">
+            <div class="left owl-prev" >
                 <svg width="14" height="26" viewBox="0 0 14 26" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M0.34479 12.4817L12.6099 0.216587C12.8987 -0.0721957 13.3618 -0.0721957 13.6506 0.216587C13.9394 0.50537 13.9394 0.968513 13.6506 1.2573L1.90858 12.9993L13.6506 24.7413C13.9394 25.0301 13.9394 25.4933 13.6506 25.782C13.5089 25.9237 13.3182 26 13.133 26C12.9477 26 12.757 25.9292 12.6153 25.782L0.350238 13.5169C0.0614548 13.2336 0.0614567 12.765 0.34479 12.4817Z" fill="black"/>
                 </svg>
             </div>
-            <div class="right">
+            <div class="right owl-next">
                 <svg width="14" height="26" viewBox="0 0 14 26" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M13.6552 13.5183L1.39011 25.7834C1.10133 26.0722 0.638183 26.0722 0.3494 25.7834C0.0606168 25.4946 0.0606169 25.0315 0.3494 24.7427L12.0914 13.0007L0.349404 1.25866C0.0606211 0.969873 0.0606212 0.506733 0.349404 0.217951C0.491071 0.0762826 0.681777 9.59832e-08 0.867034 1.28375e-07C1.05229 1.60766e-07 1.243 0.0708334 1.38466 0.217951L13.6498 12.4831C13.9385 12.7664 13.9385 13.235 13.6552 13.5183Z" fill="white"/>
                 </svg>
@@ -79,9 +87,9 @@
         </div>
     </div>
 </section>
-<section class="second">
+<section class="second" id="second">
     <div class="img">
-        <img src="./img/section-second.jpg" alt="">
+        <img src="../public/assets/img/section-second.jpg" alt="">
     </div>
     <div class="container">
         <div class="second-block">
@@ -98,7 +106,7 @@
         </div>
     </div>
 </section>
-<section class="third">
+<section class="third" id="thirth">
     <div class="container">
         <div class="third-box">
             <h3>
@@ -174,7 +182,7 @@
     <div class="container">
         <div class="fourth-box">
             <div class="left">
-                <img src="./img/download.png" alt="download">
+                <img src="../public/assets/img/download.png" alt="download">
             </div>
             <div class="right">
                 <h3>
@@ -189,9 +197,9 @@
         </div>
     </div>
 </section>
-<section class="fifth">
+<section class="fifth" id="fifth">
     <div class="img">
-        <img src="./img/fifth.jpg" alt="">
+        <img src="../public/assets/img/fifth.jpg" alt="">
     </div>
     <div class="container">
         <div class="second-block">
@@ -208,7 +216,7 @@
         </div>
     </div>
 </section>
-<section class="contact">
+<section class="contact" id="contact">
     <div class="container">
         <div class="contact-box">
             <h3>Контакти</h3>
@@ -302,5 +310,19 @@
 <div class="copyright">
     <a href="https://piligrim.pro">Piligrim 2019</a>
 </div>
+<script src="../public/assets/js/jquery.js"></script>
+<script src="../public/assets/js/owl.carousel.min.js"></script>
+<script>
+    $(function () {
+        $('.owl-carousel').owlCarousel(
+            {
+                loop: false,
+                nav:true,
+                items: 1,
+                navContainer: '.slider-btn',
+            }
+        );
+    })
+</script>
 </body>
 </html>

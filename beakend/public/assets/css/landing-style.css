@@ -320,6 +320,9 @@ template {
     font-family: "MontserratBold";
     src: url("../fonts/Montserrat-Bold.woff2") format("woff2"), url("../fonts/Montserrat-Bold.ttf") format("ttf"); }
 
+body, html {
+    scroll-behavior: smooth; }
+
 body {
     color: #1C1C1C;
     font-family: Montserrat,sans-serif;
@@ -349,6 +352,12 @@ a {
     -webkit-box-pack: justify;
     -ms-flex-pack: justify;
     justify-content: space-between; }
+
+.header-top .logo {
+    width: 190px;
+    height: 60px;
+    background: url("../img/logo-white.svg") no-repeat center;
+    background-size: contain; }
 
 .header-top nav {
     display: -webkit-box;
@@ -514,6 +523,28 @@ a {
     bottom: 0;
     right: 0; }
 
+.first .slider .slider-btn button.owl-prev {
+    z-index: 4;
+    width: 50%;
+    height: 70px;
+    border: 0;
+    background: transparent;
+    cursor: pointer; }
+
+.first .slider .slider-btn button.owl-prev span {
+    color: transparent; }
+
+.first .slider .slider-btn button.owl-next {
+    z-index: 4;
+    width: 50%;
+    height: 70px;
+    border: 0;
+    background: transparent;
+    cursor: pointer; }
+
+.first .slider .slider-btn button.owl-next span {
+    color: transparent; }
+
 .first .slider .slider-btn .left, .first .slider .slider-btn .right {
     display: -webkit-box;
     display: -ms-flexbox;
@@ -527,9 +558,14 @@ a {
     color: #000;
     width: 50%;
     height: 70px;
-    background: #fff; }
+    background: #fff;
+    position: absolute; }
+
+.first .slider .slider-btn .left {
+    left: 0; }
 
 .first .slider .slider-btn .right {
+    right: 0;
     color: #fff;
     background: #09C2C2; }
 
@@ -1042,15 +1078,15 @@ a {
     .footer-box .buttons-links a {
         margin: 0 15px; } }
 
-@media screen and (max-width: 768px) {
-    .header {
-        height: 78px; }
+@media screen and (max-width: 858px) {
     .header-top nav .link {
         font-size: 18px;
         margin-left: 25px;
         display: none; }
     .header-top nav .btn {
-        font-size: 16px; }
+        font-size: 16px; } }
+
+@media screen and (max-width: 768px) {
     .first {
         margin-bottom: 60px;
         padding-bottom: 520px; }
@@ -1121,7 +1157,9 @@ a {
         align-items: center;
         width: 140px;
         bottom: 0;
-        right: 0; }
+        right: 0;
+        z-index: 3;
+    }
     .first .slider .slider-btn .left, .first .slider .slider-btn .right {
         display: -webkit-box;
         display: -ms-flexbox;
@@ -1444,3 +1482,30 @@ a {
     background: #09C2C2;
     color: #fff;
     cursor: pointer; }
+
+.owl-carousel {
+    position: relative;
+    height: 100%; }
+
+.owl-carousel .owl-stage-outer {
+    height: 100%; }
+
+.owl-carousel .owl-stage-outer .owl-stage {
+    height: 100%; }
+
+.owl-carousel .owl-item {
+    height: 100%; }
+
+.owl-carousel .owl-dots {
+    position: absolute;
+    -webkit-transform: rotate(-90deg);
+    -ms-transform: rotate(-90deg);
+    transform: rotate(-90deg);
+    top: 50%;
+    right: 5px; }
+
+.owl-carousel .owl-dots .owl-dot span {
+    background: #C4C4C4; }
+
+.owl-carousel .owl-dots .owl-dot.active span {
+    background: #09C2C2; }
