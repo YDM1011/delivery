@@ -7,6 +7,9 @@ import {CookieService} from "ngx-cookie-service";
 })
 export class AuthService {
 
+  private updateOrder = new BehaviorSubject<any>(null);
+  public onUpdateOrder = this.updateOrder.asObservable();
+
   private settings = new BehaviorSubject<any>(null);
   public onSettings = this.settings.asObservable();
 
@@ -47,6 +50,9 @@ export class AuthService {
     this.onDefCrop = this.defCrop.asObservable();
   }
 
+  setUpdateOrder(data) {
+    this.updateOrder.next(data);
+  }
   setCheckBasket(data) {
     this.checkBasket.next(data);
   }

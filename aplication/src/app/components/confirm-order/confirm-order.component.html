@@ -40,7 +40,7 @@
               ул. {{obj.address.street}}
             </div>
             <div class="address-item">
-              Квартира {{obj.address.department}}
+              Квартира {{obj.address.department ? obj.address.department : '--'}}
             </div>
           </div>
           <div class="comment">

@@ -13,11 +13,11 @@
       <p class="empty-address">
         У вас нет адресов
       </p>
-      <button routerLink="/{{language}}/new-address" class="main-button color">Создать город</button>
+      <button routerLink="/{{language}}/new-address" class="main-button color">Создать адрес</button>
     </ng-container>
     <mat-radio-group [(ngModel)]="addressChoose">
       <mat-accordion>
-        <mat-expansion-panel *ngFor="let item of address">
+        <mat-expansion-panel class="address-mat" *ngFor="let item of address">
           <mat-expansion-panel-header expandedHeight="*" collapsedHeight="*">
             <mat-panel-title>
               <div class="title-panel">

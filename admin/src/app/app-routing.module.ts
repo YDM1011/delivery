@@ -1,19 +1,19 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import {SettingsComponent} from "./pages/settings/settings.component";
-import {CityComponent} from "./pages/city/city.component";
-import {TranslateComponent} from "./pages/translate/translate.component";
-import {CategoryComponent} from "./pages/category/category.component";
-import {BrandsComponent} from "./pages/brands/brands.component";
-import {DashboardComponent} from "./pages/dashboard/dashboard.component";
-import {ListProvidersComponent} from "./pages/list-providers/list-providers.component";
-import {ListClientsComponent} from "./pages/list-clients/list-clients.component";
-import {LoginComponent} from "./pages/login/login.component";
-import {NotFoundComponent} from "./pages/not-found/not-found.component";
-import {AdminLogoutGuard} from "./admin-logout.guard";
-import {MainComponent} from "./layout/main/main.component";
-import {AdminLoginedGuard} from "./admin-logined.guard";
-import {ListAdminsComponent} from "./pages/list-admins/list-admins.component";
+import {SettingsComponent} from './pages/settings/settings.component';
+import {CityComponent} from './pages/city/city.component';
+import {TranslateComponent} from './pages/translate/translate.component';
+import {CategoryComponent} from './pages/category/category.component';
+import {BrandsComponent} from './pages/brands/brands.component';
+import {DashboardComponent} from './pages/dashboard/dashboard.component';
+import {ListProvidersComponent} from './pages/list-providers/list-providers.component';
+import {ListClientsComponent} from './pages/list-clients/list-clients.component';
+import {LoginComponent} from './pages/login/login.component';
+import {NotFoundComponent} from './pages/not-found/not-found.component';
+import {AdminLogoutGuard} from './admin-logout.guard';
+import {MainComponent} from './layout/main/main.component';
+import {AdminLoginedGuard} from './admin-logined.guard';
+import {ListAdminsComponent} from './pages/list-admins/list-admins.component';
 
 const routes: Routes = [
   {path: '', component: MainComponent, canActivate: [AdminLoginedGuard], children: [

@@ -27,7 +27,7 @@
         ул. {{data.street}}
       </div>
       <div class="flat address-info">
-        Квартира {{data.department}}
+        Квартира {{data.department ? data.department : '--'}}
       </div>
       <div class="comment">
         {{data.comment}}

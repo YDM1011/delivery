@@ -24,9 +24,13 @@ export class MainComponent implements OnInit {
   ngOnInit() {
     this.notificationOrders$ = this.wsService.on(WS.ON.ON_CONFIRM_ORDER);
     this.notificationOrders$.subscribe(v => {
-      this.auth.setWsOrder(v.data._id);
+      this.auth.setWsOrder(v.data);
       this.playAudio();
-      this.openSnackBar('У вас новый заказ',  'Ok');
+      if (v.data.manager) {
+        this.openSnackBar('Клиент подтвердил изменения',  'Ok');
+      } else {
+        this.openSnackBar('У вас новый заказ',  'Ok');
+      }
     });
 
     if (!localStorage.getItem('userId')) { return; }
