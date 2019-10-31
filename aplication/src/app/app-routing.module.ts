@@ -67,7 +67,7 @@ const routes: Routes = [
       {path: 'action/:id', component: ActionDetailComponent},
       {path: 'orders', component: OrdersComponent, canActivate: [IsLoginGuard]},
     ]},
-  {path: '', redirectTo: lang, pathMatch: 'full'},
+  {path: '', redirectTo: 'ru', pathMatch: 'full'},
   {path: '**', component: NotFoundComponent},
 ];
 
