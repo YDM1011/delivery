@@ -23,6 +23,11 @@ const schem = new Schema({
         type: Schema.Types.ObjectId,
         ref: "Order"
     },
+    cityLink: {
+        type: Schema.Types.ObjectId,
+        ref: "cityLink",
+        required: [true, "City is required"]
+    },
     actionGlobal: {type: Boolean, default: true},
     updatedAt: {type: Date},
     date: {type: Date, default: new Date()}

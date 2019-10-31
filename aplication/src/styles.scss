@@ -20,3 +20,7 @@ body {height: 100%; margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif
   display: none!important;
   background: transparent!important;
 }
+
+.action-box img{
+  object-fit: contain!important;
+}

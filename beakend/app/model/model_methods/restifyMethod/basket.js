@@ -41,6 +41,7 @@ module.exports.postUpdate = async (req, res, next, backendApp) => {
         backendApp.mongoose.model('Basket').findById(req.params.id)
             .populate({path:'deliveryAddress', populate:{path:'city'}})
             .populate({path:'manager', select:'name'})
+            .populate({path:'companyOwner', select:'name'})
             .exec((e,r)=>{
                 if (r) sendToProvider(backendApp, r, req)
             });
@@ -48,6 +49,7 @@ module.exports.postUpdate = async (req, res, next, backendApp) => {
         backendApp.mongoose.model('Basket').findById(req.params.id)
             .populate({path:'deliveryAddress', populate:{path:'city'}})
             .populate({path:'manager', select:'name'})
+            .populate({path:'companyOwner', select:'name'})
             .exec((e,r)=>{
                 if (r) sendToClient(backendApp, r, req)
             });
