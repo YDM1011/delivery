@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import {AuthService} from "./auth.service";
 import {CrudService} from "./crud.service";
 import {Subscription} from "rxjs";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-root',
@@ -15,13 +16,24 @@ export class AppComponent {
   public me: any;
   public loaded = false;
   public count;
+  public language;
+  public url;
 
   private _subscription: Subscription[] = [];
 
   constructor(
       private auth: AuthService,
-      private crud: CrudService
+      private crud: CrudService,
+      private route: Router
   ) {
+    if (localStorage.getItem('language')) {
+      this.language = localStorage.getItem('language');
+      this.url = decodeURI(this.route.url.substring(4));
+      this.route.navigate(['' + '/' + this.language]);
+    } else {
+      this.language = 'ru';
+      localStorage.setItem('language', this.language);
+    }
     this.crud.get('translator').then((v: any) => {
       if (v) {
         this.auth.setTranslate(v);

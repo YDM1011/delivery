@@ -30,14 +30,6 @@ import {IsLogoutGuard} from "./is-logout.guard";
 import {BrandsIDComponent} from "./pages/brands-id/brands-id.component";
 import {EditAddressComponent} from "./pages/edit-address/edit-address.component";
 
-const lang = localStorage.getItem('language') ? localStorage.getItem('language') : 'ru';
-// function lang() {
-//     if (localStorage.getItem('language')) {
-//         return localStorage.getItem('language');
-//     } else {
-//         return 'ru';
-//     }
-// }
 
 const routes: Routes = [
   {path: ':lang', component: InitLayoutComponent, children: [
