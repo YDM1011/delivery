@@ -1157,7 +1157,9 @@ a {
         align-items: center;
         width: 140px;
         bottom: 0;
-        right: 0; }
+        right: 0;
+        z-index: 3;
+    }
     .first .slider .slider-btn .left, .first .slider .slider-btn .right {
         display: -webkit-box;
         display: -ms-flexbox;
