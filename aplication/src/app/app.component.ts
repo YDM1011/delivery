@@ -2,10 +2,6 @@ import { Component } from '@angular/core';
 import {AuthService} from "./auth.service";
 import {CrudService} from "./crud.service";
 import {Subscription} from "rxjs";
-import {WS} from "./websocket/websocket.events";
-import {WebsocketService} from "./websocket";
-// import {WebNotificationService} from "./web-notification.service";
-// import {SwPush} from "@angular/service-worker";
 
 @Component({
   selector: 'app-root',
@@ -20,11 +16,6 @@ export class AppComponent {
   public loaded = false;
   public count;
 
-  // public isEnabled = this.swPush.isEnabled;
-  // public isGranted = Notification.permission === 'granted';
-
-  // private swPush: SwPush,
-  // private webNotificationService: WebNotificationService,
   private _subscription: Subscription[] = [];
 
   constructor(

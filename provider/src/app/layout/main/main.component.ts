@@ -22,7 +22,6 @@ export class MainComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    // websockets
     this.notificationOrders$ = this.wsService.on(WS.ON.ON_CONFIRM_ORDER);
     this.notificationOrders$.subscribe(v => {
       this.auth.setWsOrder(v.data._id);
