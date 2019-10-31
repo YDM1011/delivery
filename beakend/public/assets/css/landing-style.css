@@ -521,7 +521,9 @@ a {
     align-items: center;
     width: 140px;
     bottom: 0;
-    right: 0; }
+    right: 0;
+    z-index: 3;
+}
 
 .first .slider .slider-btn button.owl-prev {
     z-index: 4;
