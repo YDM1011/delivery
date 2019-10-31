@@ -1,15 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {CrudService} from '../../crud.service';
 import {ActivatedRoute} from '@angular/router';
 import {AuthService} from '../../auth.service';
 import Swal from 'sweetalert2';
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-orders-detail',
   templateUrl: './orders-detail.component.html',
   styleUrls: ['./orders-detail.component.scss']
 })
-export class OrdersDetailComponent implements OnInit {
+export class OrdersDetailComponent implements OnInit, OnDestroy {
   public user;
   public id;
   public basket: any;
@@ -18,6 +19,7 @@ export class OrdersDetailComponent implements OnInit {
   public dialogOpen = false;
   public loading = false;
   public defLang = 'ru-UA';
+  private _subscription: Subscription[] = [];
   constructor(
       private crud: CrudService,
       private route: ActivatedRoute,
@@ -25,16 +27,26 @@ export class OrdersDetailComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.auth.onMe.subscribe((me: any) => {
+    this._subscription.push(this.auth.onWsOrder.subscribe((ws: any) => {
+      if (ws) {
+        if (ws._id === this.id) {
+          this.refresh();
+        }
+      }
+    }));
+    this._subscription.push(this.auth.onMe.subscribe((me: any) => {
       if (!me) {return; }
       this.user = me;
-    });
-    this.route.params.subscribe(() => {
+    }));
+    this._subscription.push(this.route.params.subscribe(() => {
       this.id = this.route.snapshot.paramMap.get('id');
       if (this.id) {
         this.refresh();
       }
-    });
+    }));
+  }
+  ngOnDestroy() {
+    this._subscription.forEach(i => i.unsubscribe());
   }
   takeOrder() {
     this.crud.post('basket', {status: 2, manager: this.user._id}, this.basket._id, false).then((v) => {
@@ -42,7 +54,7 @@ export class OrdersDetailComponent implements OnInit {
         const populate = JSON.stringify([{path: 'products', select: 'price count', populate: {path: 'orderOwner', select: 'name'}}, {path: 'createdBy', select: 'name address'},{path: 'deliveryAddress', populate: {path: 'city'}, select: 'name street build department' }, {path: 'manager', select: 'name'}]);
         this.crud.get(`basket?query={"_id":"${this.id}"}&populate=${populate}`).then((b: any) => {
           if (b && b.length > 0) {
-            this.basket = b[0];
+            this.basketCopy = b[0];
           }
         });
       }
@@ -181,24 +193,29 @@ export class OrdersDetailComponent implements OnInit {
   }
   showDescription() {
       this.dialogOpen = true;
-      if (!this.basket.description) {
-        this.basket.description = 'Ваш заказ был изменен, подтвердите изменения';
+      if (!this.basketCopy.description) {
+        this.basketCopy.description = 'Ваш заказ был изменен, подтвердите изменения';
       }
   }
   descriptionSubmit() {
-    this.crud.post('basket', {description: this.basket.description}, this.basket._id, false).then((v: any) => {
+    this.crud.post('basket', {description: this.basketCopy.description}, this.basket._id, false).then((v: any) => {
       if (v) {
         this.dialogOpen = false;
       }
     });
   }
   confirmDescriptionSubmit() {
+    if (!this.basketCopy.description) {
+      this.showDescription();
+      return;
+    }
     this.crud.post('basket', {status: 3, manager: this.user._id}, this.basket._id, false).then((v) => {
       if (v) {
         const populate = JSON.stringify([{path: 'products', select: 'price count', populate: {path: 'orderOwner', select: 'name'}}, {path: 'createdBy', select: 'name address'}, {path: 'deliveryAddress', populate: {path: 'city'}, select: 'name street build department' }, {path: 'manager', select: 'name'}]);
         this.crud.get(`basket?query={"_id":"${this.id}"}&populate=${populate}`).then((b: any) => {
           if (b && b.length > 0) {
             this.basketCopy = b[0];
+            this.editBasket = false;
           }
         });
       }

@@ -65,7 +65,7 @@
 					</div>
 					<div class="content">
 						{{basketCopy.description ? basketCopy.description : '–'}}
-						<img class="edit-description" src="./assets/images/edit-d.svg" alt="edit description" (click)="showDescription()">
+						<img class="edit-description" src="./assets/images/edit-d.svg" alt="edit description" *ngIf="basketCopy.status === 1" (click)="showDescription()">
 					</div>
 				</div>
 			</div>

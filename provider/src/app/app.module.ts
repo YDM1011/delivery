@@ -106,7 +106,7 @@ import { VerificationComponent } from './components/verification/verification.co
   exports: [MaterialModule],
   providers: [CookieService, {provide: HTTP_INTERCEPTORS, useClass: ApiInterceptor, multi: true},
     {provide: LOCALE_ID, useValue: 'ru-UA'}, {provide: LOCALE_ID, useValue: 'uk'},
-    { provide: MatPaginatorIntl, useValue: getDutchPaginatorIntl() }],
+    { provide: MatPaginatorIntl, useValue: getDutchPaginatorIntl()}],
   entryComponents: [
     DialogComponent,
   ],

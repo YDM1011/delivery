@@ -24,11 +24,12 @@ export class OrdersComponent implements OnInit {
   ngOnInit() {
     this.auth.onWsOrder.subscribe((ws: any) => {
       if (ws) {
-        this.crud.get(`basket?query={"_id":"${ws}","status":1}&populate=[{"path":"deliveryAddress","populate":"city","select":"name build street department"},{"path":"manager","select":"name"}]`).then((v: any) => {
-          if (v) {
-            this.orders.unshift(v[0]);
-          }
-        });
+        const index = this.crud.find('_id', ws._id, this.orders);
+        if (typeof index === 'number') {
+          this.orders[index] = ws;
+        } else {
+          this.orders.unshift(ws);
+        }
       }
     });
     this.auth.onMe.subscribe((me: any) => {
@@ -38,7 +39,7 @@ export class OrdersComponent implements OnInit {
         this.crud.get(`basket/count?query={"companyOwner":"${this.user.companyOwner}","status":1}`).then((count: any) => {
           if (count) {
             this.lengthPagination = count.count;
-            this.crud.get(`basket?query={"companyOwner":"${this.user.companyOwner}","status":1}&populate=[{"path":"deliveryAddress","populate":"city","select":"name build street department"},{"path":"manager","select":"name"}]`).then((orders: any) => {
+            this.crud.get(`basket?query={"companyOwner":"${this.user.companyOwner}","status":1}&populate=[{"path":"deliveryAddress","populate":"city","select":"name build street department"},{"path":"manager","select":"name"}]&sort={"date":-1}`).then((orders: any) => {
               if (!orders) {return; }
               this.orders = orders;
               this.loading = true;
@@ -92,7 +93,7 @@ export class OrdersComponent implements OnInit {
     this.crud.get(`basket/count?query={"companyOwner":"${this.user.companyOwner}"}`).then((count: any) => {
       if (count) {
         this.lengthPagination = count.count;
-        this.crud.get(`basket?query={"companyOwner":"${this.user.companyOwner}", "status":1}&populate=[{"path":"deliveryAddress","populate":"city","select":"name build street department"},{"path":"manager","select":"name"}]&skip=${skip}&limit=${limit}`).then((orders: any) => {
+        this.crud.get(`basket?query={"companyOwner":"${this.user.companyOwner}", "status":1}&populate=[{"path":"deliveryAddress","populate":"city","select":"name build street department"},{"path":"manager","select":"name"}]&skip=${skip}&limit=${limit}&sort={"date":-1}`).then((orders: any) => {
           if (!orders) {return; }
           this.orders = orders;
           this.loading = true;
@@ -104,7 +105,7 @@ export class OrdersComponent implements OnInit {
     this.crud.get(`basket/count?query={"companyOwner":"${this.user.companyOwner}", "$or":[{"status":2},{"status":3}]}`).then((count: any) => {
       if (count) {
         this.lengthPagination = count.count;
-        this.crud.get(`basket?query={"companyOwner":"${this.user.companyOwner}", "$or":[{"status":2},{"status":3}]}&populate=[{"path":"deliveryAddress","populate":"city","select":"name build street department"},{"path":"manager","select":"name"}]&skip=${skip}&limit=${limit}`).then((orders: any) => {
+        this.crud.get(`basket?query={"companyOwner":"${this.user.companyOwner}", "$or":[{"status":2},{"status":3}]}&populate=[{"path":"deliveryAddress","populate":"city","select":"name build street department"},{"path":"manager","select":"name"}]&skip=${skip}&limit=${limit}&sort={"date":-1}`).then((orders: any) => {
           if (!orders) {return; }
           this.orders = orders;
           this.loading = true;
@@ -117,7 +118,7 @@ export class OrdersComponent implements OnInit {
       if (count) {
         this.lengthPagination = count.count;
         const query = JSON.stringify({companyOwner: this.user.companyOwner, $or: [{status: 4}, {status: 5}]});
-        this.crud.get(`basket?query=${query}&populate=[{"path":"deliveryAddress","populate":"city","select":"name build street department"},{"path":"manager","select":"name"}]&skip=${skip}&limit=${limit}`).then((orders: any) => {
+        this.crud.get(`basket?query=${query}&populate=[{"path":"deliveryAddress","populate":"city","select":"name build street department"},{"path":"manager","select":"name"}]&skip=${skip}&limit=${limit}&sort={"date":-1}`).then((orders: any) => {
           if (!orders) {return; }
           this.orders = orders;
           this.loading = true;
@@ -131,7 +132,7 @@ export class OrdersComponent implements OnInit {
       if (count) {
         this.lengthPagination = count.count;
         const query = JSON.stringify({manager: this.user._id, $or: [{status: 2}, {status: 3}]});
-        this.crud.get(`basket?query=${query}&populate=[{"path":"deliveryAddress","populate":"city","select":"name build street department"},{"path":"manager","select":"name"}]&skip=${skip}&limit=${limit}`).then((orders: any) => {
+        this.crud.get(`basket?query=${query}&populate=[{"path":"deliveryAddress","populate":"city","select":"name build street department"},{"path":"manager","select":"name"}]&skip=${skip}&limit=${limit}&sort={"date":-1}`).then((orders: any) => {
           if (!orders) {return; }
           this.orders = orders;
           this.loading = true;
