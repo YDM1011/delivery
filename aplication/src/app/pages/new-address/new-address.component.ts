@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {AuthService} from "../../auth.service";
 import {CrudService} from "../../crud.service";
 import {Router} from "@angular/router";
+import {MatSnackBar} from "@angular/material";
 
 @Component({
   selector: 'app-new-address',
@@ -20,10 +21,20 @@ export class NewAddressComponent implements OnInit {
     department: '',
     comment: '',
   };
+
+  public snackMessageError = {
+    ru: 'Укажите название торговой точки, улицу и дом',
+    ua: 'Вкажіть назву торгової точки, вулицю і будинок'
+  };
+  public snackMessageSuccess = {
+    ru: 'Адрес создан',
+    ua: 'Адреса створена'
+  };
   constructor(
       private auth: AuthService,
       private crud: CrudService,
-      private router: Router
+      private router: Router,
+      private snackBar: MatSnackBar
   ) { }
 
   ngOnInit() {
@@ -42,9 +53,14 @@ export class NewAddressComponent implements OnInit {
     }, 0);
   }
   save(e) {
+    if (!this.address.name || !this.address.street || !this.address.build) {
+      this.openSnackBar(this.snackMessageError[this.language],  'Ok');
+      return;
+    }
     e.preventDefault();
     this.crud.post('shopAddress', this.address).then((v: any) => {
       if (!v) {return; }
+      this.openSnackBar(this.snackMessageSuccess[this.language],  'Ok');
       this.router.navigate(['/' + this.language + '/my-address']);
     });
   }
@@ -54,5 +70,10 @@ export class NewAddressComponent implements OnInit {
   removeImg() {
     delete this.address.img;
     this.address.img = '';
+  }
+  openSnackBar(message: string, action: string) {
+    this.snackBar.open(message, action, {
+      duration: 2000,
+    });
   }
 }

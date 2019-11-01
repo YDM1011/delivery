@@ -20,12 +20,11 @@ export class BasketComponent implements OnInit {
   constructor(
       private route: ActivatedRoute,
       private auth: AuthService,
-      private crud: CrudService,
-      private wsService: WebsocketService
+      private crud: CrudService
   ) { }
 
   ngOnInit() {
-    this.route.params.subscribe((params: any) => {
+    this.route.params.subscribe(() => {
       this.id = this.route.snapshot.paramMap.get('id');
     });
     this.auth.onLanguage.subscribe((v: string) => {
@@ -42,19 +41,17 @@ export class BasketComponent implements OnInit {
   removeBasket(e) {
     this.loading = false;
     if (e) {
-      const query = `?query={"status":0}&populate={"path":"companyOwner","select":"name img createdBy"}`;
-      this.crud.get('basket', '', query).then((v: any) => {
-        if (v) {
-          this.baskets = v;
-          this.loading = true;
-        }
-      });
-      this.auth.setCheckBasket(true);
+      setTimeout(() => {
+        const query = `?query={"status":0}&populate={"path":"companyOwner","select":"name img createdBy"}`;
+        this.crud.get('basket', '', query).then((v: any) => {
+          if (v) {
+            this.baskets = v;
+            // console.log(v);
+            this.loading = true;
+          }
+        });
+        this.auth.setCheckBasket(true);
+      }, 10)
     }
-  }
-
-  soket() {
-    if (!this.baskets[0].companyOwner && !this.baskets[0].companyOwner.createdBy) return;
-    this.wsService.send(WS.SEND.CONFIRM_ORDER, this.baskets[0].companyOwner.createdBy, {data: "Hello"}, localStorage.getItem('token'));
   }
 }

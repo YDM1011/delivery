@@ -26,7 +26,6 @@ export class BasketOrderItemComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    console.log(this.data)
     this.mainChack();
     this.crud.get(`product?query={"basketOwner":"${this.data._id}"}&populate={"path":"orderOwner","select":"img name price count discount"}`).then((v: any) => {
       if (v && v.length > 0) {

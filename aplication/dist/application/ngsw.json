@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1572594404096,
+  "timestamp": 1572619877906,
   "index": "/index.html",
   "assetGroups": [
     {
@@ -10,11 +10,11 @@
       "urls": [
         "/favicon.ico",
         "/index.html",
-        "/main.9ef09a7c37463dbed68d.js",
+        "/main.f5e7077df01471e4dfe6.js",
         "/polyfills-es5.7716d8dd642a0d9864f9.js",
         "/polyfills.ffc476ee7df9c02b7945.js",
         "/runtime.8fbc2fd6f12647d93e24.js",
-        "/styles.4402ec90ad801045fb78.css"
+        "/styles.e3be79afdd19c50c8252.css"
       ],
       "patterns": []
     },
@@ -62,6 +62,7 @@
         "/assets/images/plus.svg",
         "/assets/images/product.svg",
         "/assets/images/provider.svg",
+        "/assets/images/remove-chip.svg",
         "/assets/images/ru.svg",
         "/assets/images/tmp/beaf.svg",
         "/assets/images/tmp/bread.svg",
@@ -87,7 +88,8 @@
         "/assets/scss/_variable.scss",
         "/assets/scss/styles.scss",
         "/minus.11f6825b95fcd9991883.svg",
-        "/plus.d4b9efd9a41268074962.svg"
+        "/plus.d4b9efd9a41268074962.svg",
+        "/remove-chip.0ed8ec9656735a3161a0.svg"
       ],
       "patterns": [
         "https:\\/\\/fonts\\.googleapis\\.com\\/.*"
@@ -147,6 +149,7 @@
     "/assets/images/plus.svg": "730c3cf8c5803e092b885ec96b9e560c4626e3b4",
     "/assets/images/product.svg": "0d2cbac4f2adf8def7bf019addf792c85336b415",
     "/assets/images/provider.svg": "9ed6076767bf6758444df98a8c0e137751c69ff6",
+    "/assets/images/remove-chip.svg": "54da8f4a484e41aea900238c8b3323b6a310f85a",
     "/assets/images/ru.svg": "2c69c428f05f41c76c3062334204240c7e583209",
     "/assets/images/tmp/beaf.svg": "431ec1b79263f074a19a67cd016a2e67fdf1ef92",
     "/assets/images/tmp/bread.svg": "8a5551bcb906fca7a620d558ebb4a00168e07c97",
@@ -165,21 +168,22 @@
     "/assets/loading.json": "1a0d267dc23ff71f9ee4f1a89f2636aba33f3902",
     "/assets/not-connection.json": "b4ebc54474ec1ba3661d275a2682286cb9e25cfa",
     "/assets/not-found.json": "384f957d4d39e9b31c1fd388e26e432d9e7cfa64",
-    "/assets/scss/_appstyle.scss": "6c58206a9017031cc0f6ed48682549ac23503115",
+    "/assets/scss/_appstyle.scss": "a1b41f367c28116400e85b3164a8387168f14749",
     "/assets/scss/_fonts.scss": "21b7a6e3560bdb61585b63e61dd76a55dc9865d9",
     "/assets/scss/_menu.scss": "8114e02e74b7615a4e82eb068148761bf1269356",
     "/assets/scss/_normalize.scss": "7e400ee6c695526f4c0055bd5f4d96141ce129c1",
     "/assets/scss/_variable.scss": "85b063eae7503c006911523d21513222df295900",
     "/assets/scss/styles.scss": "6f725e615a04dae0ceb81357a1d556deb9c3e489",
     "/favicon.ico": "84161b857f5c547e3699ddfbffc6d8d737542e01",
-    "/index.html": "92b9099143c8cef22713a0e7cc98320b6f08e558",
-    "/main.9ef09a7c37463dbed68d.js": "b8961614b1b0d69b36aa8efd33e64715a012c31e",
+    "/index.html": "b0a2a53b2c31d61b6e4af9b143f398cd12f3f274",
+    "/main.f5e7077df01471e4dfe6.js": "4d9234d83d1169d93c1b427e404a845200e6cf2a",
     "/minus.11f6825b95fcd9991883.svg": "7784355a2e005d1a36797298ce656fe87f0ddb42",
     "/plus.d4b9efd9a41268074962.svg": "730c3cf8c5803e092b885ec96b9e560c4626e3b4",
     "/polyfills-es5.7716d8dd642a0d9864f9.js": "9d8470a6053852e77ee43b505664317f721b13ae",
     "/polyfills.ffc476ee7df9c02b7945.js": "e68240c3b4dc50491b1b65d39a7791c1572712a0",
+    "/remove-chip.0ed8ec9656735a3161a0.svg": "54da8f4a484e41aea900238c8b3323b6a310f85a",
     "/runtime.8fbc2fd6f12647d93e24.js": "a9aafcf49f49145093fc831efd9b8e2f6c71bb9c",
-    "/styles.4402ec90ad801045fb78.css": "1476792503b4f4c486b89eff84dbe5d820f9fdbc"
+    "/styles.e3be79afdd19c50c8252.css": "458b4a6c5446d623b9997248b8539f1b517ef633"
   },
   "navigationUrls": [
     {

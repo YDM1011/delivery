@@ -26,7 +26,6 @@ export class FavoritesComponent implements OnInit {
     this.auth.onMe.subscribe(v=>{
       if (!v) return;
       this.me = v;
-      console.log(this.me)
       let fcs = [];
       let fps = [];
       this.me.favoriteCompany.forEach(it=>{
