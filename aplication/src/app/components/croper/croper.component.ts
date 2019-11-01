@@ -33,23 +33,23 @@ export class TouchStart {
   @HostListener('mousemove', ['$event'])
   @HostListener('touchmove', ['$event'])
   onDragMove(event) {
-    if (!this.trigerStart) return;
+    if (!this.trigerStart) {return; }
     event.preventDefault();
-    let clientY = (event.offsetY || event.targetTouches[0].clientY);
-    let clientX = (event.offsetX || event.targetTouches[0].clientX);
-    if ((-(this.startX - clientX) <= event.target.clientWidth/2 - this.width) &&
-      ((this.startX - clientX) <= event.target.clientWidth/2 - this.width)){
+    const clientY = (event.offsetY || event.targetTouches[0].clientY);
+    const clientX = (event.offsetX || event.targetTouches[0].clientX);
+    if ((-(this.startX - clientX) <= event.target.clientWidth / 2 - this.width) &&
+      ((this.startX - clientX) <= event.target.clientWidth / 2 - this.width)) {
       document.getElementById('cropper-img').style.left = -(this.startX - clientX)  + 'px';
     } else if (this.startX - clientX < 0) {
-      document.getElementById('cropper-img').style.left = event.target.clientWidth/2 - this.width  + 'px';
+      document.getElementById('cropper-img').style.left = event.target.clientWidth / 2 - this.width  + 'px';
     } else if (this.startX - clientX > 0) {
-      document.getElementById('cropper-img').style.left = -(event.target.clientWidth/2 - this.width)  + 'px';
+      document.getElementById('cropper-img').style.left = -(event.target.clientWidth / 2 - this.width)  + 'px';
     }
     if ((-(this.startY - clientY) <= event.target.clientHeight/2 - this.width) &&
-      ((this.startY - clientY) <= event.target.clientHeight/2 - this.width)){
+      ((this.startY - clientY) <= event.target.clientHeight/2 - this.width)) {
       document.getElementById('cropper-img').style.top = -(this.startY - clientY)  + 'px';
     } else if (this.startY - clientY < 0) {
-      document.getElementById('cropper-img').style.top = event.target.clientHeight/2 - this.width  + 'px';
+      document.getElementById('cropper-img').style.top = event.target.clientHeight / 2 - this.width  + 'px';
     } else if (this.startY - clientY > 0) {
       document.getElementById('cropper-img').style.top = -(event.target.clientHeight/2 - this.width)  + 'px';
     }
@@ -63,10 +63,10 @@ export class TouchStart {
     let img = document.getElementById('cropper-img') as HTMLImageElement;
     let rateX =  img.naturalWidth / event.target.clientWidth;
     let rateY = img.naturalHeight / event.target.clientHeight;
-    if (((-parseInt(img.style.left) <= event.target.clientWidth/2 - this.width) &&
-      (parseInt(img.style.left) <= event.target.clientWidth/2 - this.width)) &&
-      ((-parseInt(img.style.top) <= event.target.clientHeight/2 - this.width) &&
-        (parseInt(img.style.top) <= event.target.clientHeight/2 - this.width))){
+    if (((-parseInt(img.style.left) <= event.target.clientWidth / 2 - this.width) &&
+      (parseInt(img.style.left) <= event.target.clientWidth / 2 - this.width)) &&
+      ((-parseInt(img.style.top) <= event.target.clientHeight / 2 - this.width) &&
+        (parseInt(img.style.top) <= event.target.clientHeight/ 2 - this.width))) {
       this.data.emit({
         x: rateX * (event.target.clientWidth/2 - this.width - parseInt(img.style.left)),
         y: rateY * (event.target.clientHeight/2 - this.width - parseInt(img.style.top)),

@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {AuthService} from '../../auth.service';
 import {CrudService} from '../../crud.service';
 import {Me} from '../../interfaces/me';
-import Swal from "sweetalert2";
+import {MatSnackBar} from '@angular/material';
 @Component({
   selector: 'app-my-info',
   templateUrl: './my-info.component.html',
@@ -13,6 +13,8 @@ export class MyInfoComponent implements OnInit {
   public pass = 'password';
   public img;
   public me: Me;
+  public copyMe;
+  public isBlok = false;
   public data = {
     mydata: {ua: 'Мої дані', ru: 'Мои даные'},
     article: {ua: 'Вкажіть Ваше ім\'я і номер телефону', ru: 'Укажите Ваше имя и номер телефона'},
@@ -20,9 +22,14 @@ export class MyInfoComponent implements OnInit {
     saved: {ua: 'Збережено', ru: 'Сохранино'},
     back: {ua: 'Назад', ru: 'Назад'}
   };
+  public snackMessage = {
+    ru: 'Даные сохранены',
+    ua: 'Дані збережено'
+};
   constructor(
       private auth: AuthService,
-      private crud: CrudService
+      private crud: CrudService,
+      private snackBar: MatSnackBar
   ) { }
 
   ngOnInit() {
@@ -32,6 +39,7 @@ export class MyInfoComponent implements OnInit {
     this.auth.onMe.subscribe(v => {
       if (!v) {return; }
       this.me = v;
+      this.copyMe = Object.assign({}, this.me)
     });
   }
 
@@ -43,32 +51,51 @@ export class MyInfoComponent implements OnInit {
     }
   }
   onFs(body) {
-    // this.crud.post('upload2', {body: body}).then((v: any) => {
-    //   if (!v) {return; }
-    //   this.img = v.file;
-    // }).catch( e => console.log(e));
-    console.log("body", body.file)
-    console.log("Me",this.me.img)
-    if (this.me.img === body.file) return this.me.img = null;
+    if (this.me.img === body.file) {
+      return this.me.img = null;
+    }
     this.me.img = null;
-
-
     setTimeout(() => {
       this.me.img = body.file;
       body = null;
-      this.crud.post('client', this.me, this.me._id).then((v: any) => {
-        Swal.fire(this.data.saved[this.language], '', 'success');
+      this.crud.post('client', {img: this.me.img}, this.me._id).then((v: any) => {
+        this.openSnackBar(this.snackMessage[this.language],  'Ok');
       });
     }, 0);
   }
 
   save(e) {
     e.preventDefault();
-    this.crud.post('client', this.me, this.me._id).then((v: any) => {
-      Swal.fire(this.data.saved[this.language], '', 'success');
+    this.crud.post('client', {name: this.me.name, mobile: this.me.mobile, img: this.me.img}, this.me._id).then((v: any) => {
+      this.me = v;
+      this.copyMe = Object.assign({}, this.me);
+      this.formCheck();
+      this.openSnackBar(this.snackMessage[this.language],  'Ok');
     });
   }
   replace() {
     this.me.img = '';
+  }
+
+  validate() {
+    let isTrue = false;
+    for (const key in this.me) {
+      if (this.me[key] !== this.copyMe[key]) {isTrue = true; }
+    }
+    return isTrue;
+  }
+
+  btnBlok(is) {
+    this.isBlok = is;
+  }
+
+  formCheck() {
+    this.btnBlok(this.validate());
+  }
+
+  openSnackBar(message: string, action: string) {
+    this.snackBar.open(message, action, {
+      duration: 2000,
+    });
   }
 }

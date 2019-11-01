@@ -1,21 +1,21 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {AuthService} from "../../auth.service";
-import {CrudService} from "../../crud.service";
+import {AuthService} from '../../auth.service';
+import {CrudService} from '../../crud.service';
 
 interface Company {
-  img: string,
-  name: string,
-  rating?: number,
-  address?: string,
-  categories?: [],
-  action?: [],
-  actionCount?: number,
-  city: object,
-  workTime?: object,
-  verify: boolean,
-  date: string,
-  lastUpdate: string,
-  _id:string,
+  img: string;
+  name: string;
+  rating?: number;
+  address?: string;
+  categories?: [];
+  action?: [];
+  actionCount?: number;
+  city: object;
+  workTime?: object;
+  verify: boolean;
+  date: string;
+  lastUpdate: string;
+  _id: string;
 }
 
 @Component({
@@ -34,7 +34,6 @@ export class ProviderItemComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    console.log(this.data)
     this.auth.onLanguage.subscribe((v: string) => {
       this.language = v;
       this.init();

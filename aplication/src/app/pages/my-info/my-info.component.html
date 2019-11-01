@@ -6,14 +6,14 @@
 <div class="other-pages">
   <div class="my-info" *ngIf="me">
     <div class="img">
-      <app-img  [dir]="'avatar'" [fs]="me.img" [anyFs]="'assets/images/user.svg'"></app-img>
+      <app-img  [dir]="'avatar'" [fs]="me.img ? me.img : ''" [anyFs]="'assets/images/user.svg'"></app-img>
     </div>
     <span class="replace" (click)="replace()" *ngIf="me.img">Изменить</span>
     <app-upload (onCrop)="onFs($event)" [cropper]="true"  [dir]="'avatar'" *ngIf="!me.img"></app-upload>
     <p>{{data.article[language]}}</p>
-    <form class="form" (submit)="save($event)">
+    <form class="form" (submit)="save($event)" (keyup)="formCheck()">
       <input type="text" placeholder="ФИО" [(ngModel)]="me.name" name="name">
-      <app-phone [number]="me.mobile" (phone)="me.mobile"></app-phone>
+      <app-phone [number]="me.mobile" (phone)="me.mobile" (change)="formCheck()"></app-phone>
       <!--<div class="pass-label">-->
         <!--<input type="password" [type]="pass" placeholder="Новый пароль" autocomplete="off">-->
         <!--<div class="show" (click)="showPass()">-->
@@ -22,7 +22,7 @@
           <!--</svg>-->
         <!--</div>-->
       <!--</div>-->
-      <button type="submit" class="main-button color">{{data.save[language]}}</button>
+      <button type="submit" class="main-button color" *ngIf="isBlok">{{data.save[language]}}</button>
       <a routerLink="/{{language}}/profile" class="back-btn">{{data.back[language]}}</a>
     </form>
   </div>

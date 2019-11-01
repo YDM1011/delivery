@@ -82,7 +82,7 @@ export class CrudService {
   getCompany(city) {
     this.city = city;
     return new Promise((resolve, reject) => {
-      const populate = '&populate=' + JSON.stringify({path:'brands'});
+      const populate = '&populate=' + JSON.stringify({path: 'brands'});
       const query = `?query={"city":"${this.city._id}"}${populate}&select=_id,brands`;
       this.get('company', '', query).then((v: any) => {
         if (v) {
@@ -91,7 +91,7 @@ export class CrudService {
           v.map(it => arr.push({companyOwner: it._id}));
           this.CompanyArr = arr;
           this.auth.setCompanyCity(arr);
-          console.log(this.CompanyArr)
+          // console.log(this.CompanyArr);
           resolve(arr);
         } else {
           reject();
