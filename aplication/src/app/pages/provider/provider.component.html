@@ -133,7 +133,7 @@
     </ng-container>
   </ng-container>
   <ng-container *ngIf="company && company.brands">
-    <ng-container *ngIf="company.brands[0] && company.brands.length > 0">
+    <ng-container *ngIf="company.brands.length > 0">
       <div class="brandy">
         <div class="brandy-header">
           <h3>
@@ -142,8 +142,9 @@
           <a routerLink="/{{language}}/brands">Все</a>
         </div>
         <div class="brandy-box">
-              <a [appScrollSmooth]="catalog" class="brandy-box-item" *ngFor="let brand of company.brands" (click)="activeBrands(brand._id)">
-                <ng-container *ngIf="brand">
+          <ng-container *ngFor="let brand of company.brands">
+              <ng-container *ngIf="brand">
+                <a [appScrollSmooth]="catalog" class="brandy-box-item"  (click)="activeBrands(brand._id)">
                   <div class="svg">
                     <div class="img">
                       <app-img [fs]="brand && brand.img ? brand.img : ''" [anyFs]="'assets/images/brans.svg'"></app-img>
@@ -152,8 +153,9 @@
                   <div class="title">
                     {{brand.name}}
                   </div>
-                </ng-container>
-              </a>
+                </a>
+              </ng-container>
+          </ng-container>
         </div>
       </div>
     </ng-container>

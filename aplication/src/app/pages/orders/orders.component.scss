@@ -3,7 +3,8 @@
 }
 .viewport{
   width: 100%;
-  height: calc(100vh - 160px);
+  height: calc(100vh - 185px);
+  margin-top: 35px;
   overflow-y: auto;
   overflow: -moz-scrollbars-none;
   -ms-overflow-style: none;
