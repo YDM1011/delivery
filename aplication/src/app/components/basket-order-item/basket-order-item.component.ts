@@ -1,6 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {CrudService} from '../../crud.service';
 import {MatSnackBar} from '@angular/material';
+import {AuthService} from "../../auth.service";
 
 @Component({
   selector: 'app-basket-order-item',
@@ -20,6 +21,7 @@ export class BasketOrderItemComponent implements OnInit {
   public items = [];
   constructor(
       private crud: CrudService,
+      private auth: AuthService,
       private snackBar: MatSnackBar
   ) { }
 
@@ -34,6 +36,11 @@ export class BasketOrderItemComponent implements OnInit {
         });
       }
     });
+    this.auth.onConfirmOrder.subscribe(v=>{
+      if (!v) return;
+      this.showConfirm = true;
+      this.auth.resetConfirm()
+    })
   }
   closeConfirm(e) {
     this.showConfirm = e.value;

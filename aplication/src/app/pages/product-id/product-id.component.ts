@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {AuthService} from '../../auth.service';
 import {CrudService} from '../../crud.service';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {Me} from '../../interfaces/me';
 import {MatSnackBar} from '@angular/material';
 
@@ -25,6 +25,7 @@ export class ProductIDComponent implements OnInit {
       private auth: AuthService,
       private crud: CrudService,
       private route: ActivatedRoute,
+      private router: Router,
       private snackBar: MatSnackBar
   ) { }
 
@@ -91,6 +92,18 @@ export class ProductIDComponent implements OnInit {
         this.count = 0;
         this.auth.setCheckBasket(true);
         this.openSnackBar('Товар додан в корзину',  'Ok');
+      }
+    });
+  }
+  byNow(id){
+    console.log(id)
+    this.crud.post('product', {orderOwner: id, count: this.count}).then((v: any) => {
+      if (v) {
+        this.count = 0;
+        this.auth.setConfirmOrder(v)
+        this.router.navigate(['/' + this.language + '/basket']);
+        // this.auth.setCheckBasket(true);
+        // this.openSnackBar('Товар додан в корзину',  'Ok');
       }
     });
   }
