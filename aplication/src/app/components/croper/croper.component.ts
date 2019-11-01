@@ -1,5 +1,4 @@
 import {
-  AfterViewInit,
   Component,
   Directive,
   ElementRef,
@@ -10,7 +9,6 @@ import {
   Output,
   ViewChild
 } from '@angular/core';
-import {CrudService} from "../../crud.service";
 import {AuthService} from "../../auth.service";
 import {Options} from "ng5-slider";
 
@@ -37,17 +35,23 @@ export class TouchStart {
   onDragMove(event) {
     if (!this.trigerStart) return;
     event.preventDefault();
-    let img = document.getElementById('cropper-img') as HTMLImageElement;
     let clientY = (event.offsetY || event.targetTouches[0].clientY);
     let clientX = (event.offsetX || event.targetTouches[0].clientX);
-    console.log(this.startX - clientX)
     if ((-(this.startX - clientX) <= event.target.clientWidth/2 - this.width) &&
       ((this.startX - clientX) <= event.target.clientWidth/2 - this.width)){
       document.getElementById('cropper-img').style.left = -(this.startX - clientX)  + 'px';
+    } else if (this.startX - clientX < 0) {
+      document.getElementById('cropper-img').style.left = event.target.clientWidth/2 - this.width  + 'px';
+    } else if (this.startX - clientX > 0) {
+      document.getElementById('cropper-img').style.left = -(event.target.clientWidth/2 - this.width)  + 'px';
     }
     if ((-(this.startY - clientY) <= event.target.clientHeight/2 - this.width) &&
       ((this.startY - clientY) <= event.target.clientHeight/2 - this.width)){
       document.getElementById('cropper-img').style.top = -(this.startY - clientY)  + 'px';
+    } else if (this.startY - clientY < 0) {
+      document.getElementById('cropper-img').style.top = event.target.clientHeight/2 - this.width  + 'px';
+    } else if (this.startY - clientY > 0) {
+      document.getElementById('cropper-img').style.top = -(event.target.clientHeight/2 - this.width)  + 'px';
     }
   }
 
@@ -59,28 +63,17 @@ export class TouchStart {
     let img = document.getElementById('cropper-img') as HTMLImageElement;
     let rateX =  img.naturalWidth / event.target.clientWidth;
     let rateY = img.naturalHeight / event.target.clientHeight;
-    console.log(event)
-    let clientY = (event.offsetY || event.changedTouches[0].clientY);
-    let clientX = (event.offsetX || event.changedTouches[0].clientX);
-    // this.data.emit({
-    //   x: rateX * (event.target.clientWidth/2 - this.width - parseInt(img.style.left)),
-    //   y: rateY * (event.target.clientHeight/2 - this.width - parseInt(img.style.top)),
-    //   width: rateX*this.width*2,
-    //   height: rateX*this.width*2,
-    // });
-    if (((-(this.startX - clientX) <= event.target.clientWidth/2 - this.width) &&
-      ((this.startX - clientX) <= event.target.clientWidth/2 - this.width)) &&
-      ((-(this.startY - clientY) <= event.target.clientHeight/2 - this.width) &&
-        ((this.startY - clientY) <= event.target.clientHeight/2 - this.width))){
-      console.log("true")
+    if (((-parseInt(img.style.left) <= event.target.clientWidth/2 - this.width) &&
+      (parseInt(img.style.left) <= event.target.clientWidth/2 - this.width)) &&
+      ((-parseInt(img.style.top) <= event.target.clientHeight/2 - this.width) &&
+        (parseInt(img.style.top) <= event.target.clientHeight/2 - this.width))){
       this.data.emit({
-        x: rateX * (event.target.clientWidth/2 - this.width - parseFloat(img.style.left)),
-        y: rateY * (event.target.clientHeight/2 - this.width - parseFloat(img.style.top)),
+        x: rateX * (event.target.clientWidth/2 - this.width - parseInt(img.style.left)),
+        y: rateY * (event.target.clientHeight/2 - this.width - parseInt(img.style.top)),
         width: rateX*this.width*2,
         height: rateX*this.width*2,
       });
     } else {
-      console.log("False")
       this.data.emit({
         x: NaN,
         y: NaN,
@@ -127,7 +120,6 @@ export class CroperComponent implements OnInit{
           width: rateX*this.width*2,
           height: rateX*this.width*2,
         };
-        console.log(this.def)
         this.dataDef.emit(this.def);
       }
     })
@@ -144,21 +136,20 @@ export class CroperComponent implements OnInit{
 
     img.style.left = '0px';
     img.style.top = '0px';
-    // if (img.clientHeight/2 -  (img.clientWidth - img.clientWidth * (this.max / 100))/2 > 0) {
-      this.width = (this.max/100) * img.clientHeight/2;
 
-      top.style.height = img.clientHeight/2 -  this.width + "px";
-      top.style.left = img.clientWidth/2 - this.width + "px";
-      top.style.width = this.width*2 +1 + 'px';
+    this.width = (this.max/100) * img.clientHeight/2;
 
-      left.style.width = img.clientWidth/2 - this.width + 'px';
+    top.style.height = img.clientHeight/2 -  this.width + "px";
+    top.style.left = img.clientWidth/2 - this.width + "px";
+    top.style.width = this.width*2 +1 + 'px';
 
-      bottom.style.height = img.clientHeight/2 -  this.width + "px";
-      bottom.style.right = img.clientWidth/2 - this.width + "px";
-      bottom.style.width = this.width*2 +1 + 'px';
+    left.style.width = img.clientWidth/2 - this.width + 'px';
 
-      right.style.width = img.clientWidth/2 -  this.width + "px";
-    // }
+    bottom.style.height = img.clientHeight/2 -  this.width + "px";
+    bottom.style.right = img.clientWidth/2 - this.width + "px";
+    bottom.style.width = this.width*2 +1 + 'px';
+
+    right.style.width = img.clientWidth/2 -  this.width + "px";
 
   }
 }
