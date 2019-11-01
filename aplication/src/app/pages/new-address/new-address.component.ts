@@ -51,4 +51,8 @@ export class NewAddressComponent implements OnInit {
   select(e) {
     console.log(e.value);
   }
+  removeImg() {
+    delete this.address.img;
+    this.address.img = '';
+  }
 }

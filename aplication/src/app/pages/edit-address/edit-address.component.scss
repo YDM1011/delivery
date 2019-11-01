@@ -91,6 +91,15 @@ p{
   justify-content: flex-start;
   width: 100%;
   margin: 0 0 15px;
+  .img{
+    display: flex;
+    justify-content: center;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-right: 10px;
+  }
   svg{
     margin-right: 5px;
   }

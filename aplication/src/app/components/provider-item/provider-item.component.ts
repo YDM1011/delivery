@@ -34,17 +34,18 @@ export class ProviderItemComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    console.log(this.data)
     this.auth.onLanguage.subscribe((v: string) => {
       this.language = v;
-      this.init()
-    })
+      this.init();
+    });
   }
 
-  init(){
-    let query = `/count?query=${JSON.stringify({$or:[{actionGlobal:true},{client:{$in:localStorage.getItem('userId')}}], companyOwner:this.data._id})}`; //
-    this.crud.get('action', '', query).then((v:any)=>{
-      this.data.actionCount = v.count
-    })
+  init() {
+    const query = `/count?query=${JSON.stringify({$or: [{actionGlobal: true}, {client: {$in: localStorage.getItem('userId')}}], companyOwner: this.data._id})}`; //
+    this.crud.get('action', '', query).then((v: any) => {
+      this.data.actionCount = v.count;
+    });
   }
 
 }

@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import {AuthService} from "./auth.service";
 import {CrudService} from "./crud.service";
 import {Subscription} from "rxjs";
-import {Router} from "@angular/router";
+import {NavigationEnd, Router} from "@angular/router";
 
 @Component({
   selector: 'app-root',
@@ -26,10 +26,10 @@ export class AppComponent {
       private crud: CrudService,
       private route: Router
   ) {
+    this.url = decodeURI(this.route.url.substring(4));
     if (localStorage.getItem('language')) {
       this.language = localStorage.getItem('language');
-      this.url = decodeURI(this.route.url.substring(4));
-      this.route.navigate(['' + '/' + this.language]);
+      this.route.navigate(['/' + this.language + '/' + this.url]);
     } else {
       this.language = 'ru';
       localStorage.setItem('language', this.language);

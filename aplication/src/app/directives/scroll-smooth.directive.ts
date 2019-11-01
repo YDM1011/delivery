@@ -7,19 +7,20 @@ export class ScrollSmoothDirective {
 
   @HostListener('click', ['$event'])
   onDragStart(event) {
-    this.init()
+    this.init();
   }
 
   @Input('appScrollSmooth') el;
 
-  constructor(el: ElementRef){
+  constructor(el: ElementRef) {
     // window.scroll({top:document.getElementsByClassName('catalog')[0].offsetTop-70, behavior:'smooth'})
     this.el = el.nativeElement as HTMLImageElement;
-    console.log(this.el)
+    // console.log(this.el)
   }
 
-  init(){
-    if (window.pageYOffset+70 < this.el.offsetTop)
-    window.scroll({top:this.el.offsetTop-70, behavior:'smooth'})
+  init() {
+    if (window.pageYOffset + 70 < this.el.offsetTop) {
+      window.scroll({top: this.el.offsetTop - 70, behavior: 'smooth'});
+    }
   }
 }

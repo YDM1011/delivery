@@ -89,7 +89,9 @@
     </div>
   </div>
   
-  <app-provider-item [isTop]="false" [data]="company"></app-provider-item>
+  <ng-container *ngIf="company">
+    <app-provider-item [isTop]="false" [data]="company"></app-provider-item>
+  </ng-container>
   
   <div class="releted" *ngIf="categorys && categorys.length > 0">
     <div class="releted-header">
