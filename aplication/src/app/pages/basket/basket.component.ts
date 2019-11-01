@@ -41,17 +41,15 @@ export class BasketComponent implements OnInit {
   removeBasket(e) {
     this.loading = false;
     if (e) {
-      setTimeout(() => {
-        const query = `?query={"status":0}&populate={"path":"companyOwner","select":"name img createdBy"}`;
-        this.crud.get('basket', '', query).then((v: any) => {
-          if (v) {
-            this.baskets = v;
-            // console.log(v);
-            this.loading = true;
-          }
-        });
-        this.auth.setCheckBasket(true);
-      }, 10)
+      const query = `?query={"status":0}&populate={"path":"companyOwner","select":"name img createdBy"}`;
+      this.crud.get('basket', '', query).then((v: any) => {
+        if (v) {
+          this.baskets = v;
+          // console.log(v);
+          this.loading = true;
+        }
+      });
+      this.auth.setCheckBasket(true);
     }
   }
 }
