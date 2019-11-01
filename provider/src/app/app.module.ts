@@ -50,6 +50,7 @@ import {LottieAnimationViewModule} from "ng-lottie";
 import {CroperComponent, TouchStart} from './components/croper/croper.component';
 import { SignUpComponent } from './pages/sign-up/sign-up.component';
 import { VerificationComponent } from './components/verification/verification.component';
+import {Ng5SliderModule} from "ng5-slider";
 
 @NgModule({
   declarations: [
@@ -101,6 +102,7 @@ import { VerificationComponent } from './components/verification/verification.co
     WebsocketModule.config({
       url: environment.ws
     }),
+    Ng5SliderModule,
     LottieAnimationViewModule.forRoot()
   ],
   exports: [MaterialModule],
