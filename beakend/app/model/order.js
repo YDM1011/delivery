@@ -155,6 +155,7 @@ schema.post('save', (doc,next)=>{
                             $pull:{brands:doc.brand},
                         })
                         .exec((e,r)=>{
+                            if(!doc.brand) return next();
                             mongoose.model('Company')
                                 .findOneAndUpdate({_id: doc.companyOwner}, {
                                     $push:{brands:doc.brand},
@@ -180,6 +181,73 @@ schema.post('save', (doc,next)=>{
                         })
                 })
         });
+
+});
+schema.post('findOneAndUpdate', (doc,next)=>{
+    mongoose.model('Category')
+        .findOneAndUpdate({_id:doc.categoryOwner},{$pull:{orders:doc._id}})
+        .exec((err,r)=>{
+            mongoose.model('Brand')
+                .findOneAndUpdate({_id:doc.brand},{$pull:{orders:doc._id}})
+                .exec((err,r)=>{
+                    mongoose.model('Company')
+                        .findOneAndUpdate(
+                            { "brands": doc.brand },
+                            { "$unset": { "brands.$": "" } },
+                            { "multi": true },
+                            (e,r) => {
+                                mongoose.model('Company')
+                                    .findOneAndUpdate(
+                                        { "brands": null },
+                                        { "$pull": { "brands": null } },
+                                        { "multi": true },
+                                        (e,r) => {
+
+                                            mongoose.model('Category')
+                                                .findOneAndUpdate({_id:doc.categoryOwner},{$push:{orders:doc._id}})
+                                                .exec((err,r)=>{
+                                                    mongoose.model('Brand')
+                                                        .findOneAndUpdate({_id:doc.brand},{$push:{orders:doc._id}})
+                                                        .exec((err,r)=>{
+                                                            mongoose.model('Company')
+                                                                .findOneAndUpdate({_id: doc.companyOwner}, {
+                                                                    $pull:{brands:doc.brand},
+                                                                })
+                                                                .exec((e,r)=>{
+                                                                    if(!doc.brand) return next();
+                                                                    mongoose.model('Company')
+                                                                        .findOneAndUpdate({_id: doc.companyOwner}, {
+                                                                            $push:{brands:doc.brand},
+                                                                        })
+                                                                        .exec((e,r)=>{
+                                                                            let obj = r && r.brandCount ? r.brandCount : {};
+                                                                            console.log(r.brandCount, doc.brand);
+                                                                            if (r && r.brandCount  && r.brandCount[doc.brand]){
+                                                                                obj = r.brandCount;
+                                                                                obj[doc.brand] += 1;
+                                                                            } else
+                                                                            if (r && (!r.brandCount || !r.brandCount[doc.brand])){
+                                                                                obj[doc.brand] = 1;
+                                                                            }
+                                                                            mongoose.model('Company')
+                                                                                .findOneAndUpdate({_id: doc.companyOwner}, {
+                                                                                    brandCount: obj
+                                                                                })
+                                                                                .exec((e,r)=>{
+                                                                                    next()
+                                                                                })
+                                                                        })
+                                                                })
+                                                        })
+                                                });
+
+                                        }
+                                    )
+                            }
+                        )
+                })
+        })
+
 
 });
 

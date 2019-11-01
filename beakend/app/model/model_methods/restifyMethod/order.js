@@ -28,6 +28,22 @@ module.exports.preSave = async (req,res,next, backendApp) => {
     }
 };
 
+module.exports.preUpdate = async (req,res,next, backendApp) => {
+    if (req.body.categoryOwner) {
+        backendApp.mongoose.model('Category')
+            .findOne({_id:req.body.categoryOwner})
+            .select('mainCategory')
+            .exec((e,r)=>{
+                if (e) return res.serverError(e);
+                if (!r) return res.notFound("Not Found Category");
+                req.body['mainCategory'] = r.mainCategory;
+                next()
+            })
+    } else {
+        next()
+    }
+};
+
 // const createManeger = (req, backendApp) => {
 //     return new Promise((rs,rj)=>{
 //

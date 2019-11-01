@@ -26,17 +26,19 @@
           <path d="M10.8391 11.3086H10.5493V8.49609C10.5493 8.33432 10.4195 8.20312 10.2595 8.20312H6.78217C6.62216 8.20312 6.4924 8.33432 6.4924 8.49609V11.3086H6.20262C6.0426 11.3086 5.91284 11.4398 5.91284 11.6016C5.91284 11.7633 6.0426 11.8945 6.20262 11.8945H10.8391C10.9991 11.8945 11.1288 11.7633 11.1288 11.6016C11.1288 11.4398 10.9991 11.3086 10.8391 11.3086ZM9.96972 11.3086H7.07195V8.78906H9.96972V11.3086Z" fill="#29909E"/>
           <path d="M9.10043 12.4805H6.78221C6.62219 12.4805 6.49243 12.6117 6.49243 12.7734C6.49243 12.9352 6.62219 13.0664 6.78221 13.0664H9.10043C9.26044 13.0664 9.3902 12.9352 9.3902 12.7734C9.3902 12.6117 9.26044 12.4805 9.10043 12.4805Z" fill="#09C2C2"/>
         </svg>
+        <ng-container *ngIf="order.companyOwner">
         {{order.companyOwner.name}}
+        </ng-container>
       </div>
       <div class="content-item" *ngFor="let item of getProducts">
         <div class="img">
           <app-img [fs]="item.orderOwner ? item.orderOwner.img : ''" [anyFs]="'assets/images/provider.svg'"></app-img>
         </div>
         <div class="info">
-          <div class="title">
+          <div class="title" *ngIf="item.orderOwner">
             {{item.orderOwner.name}}
           </div>
-          <div class="price">
+          <div class="price" *ngIf="item.orderOwner">
             {{item.orderOwner.price}} грн.
           </div>
           <div class="count">
