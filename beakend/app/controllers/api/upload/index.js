@@ -29,6 +29,7 @@ module.exports = (backendApp, router) => {
 
     });
 
+
     router.post('/deleteFile', [], function (req, res, next) {
         const mainName = req.body.file;
         fs.unlink("upload/"+mainName, fsCallbeack=>{
