@@ -70,29 +70,29 @@ module.exports.postUpdate = async (req, res, next, backendApp) => {
 
             });
     }
-
-    if (basket.status === 1 || basket.status === 2) {
-        // let asgn = await assign(req,res,next, backendApp, basket.cleanerOwner);
-        let cleaner = await getCleaner(basket.cleanerOwner).catch(e=>{return rj(e)});
-        let valid = await validate(req,res,cleaner,backendApp).catch(e=>{return res.ok(basket)});
-
-        let obj = {
-            cleaner:basket.cleanerOwner,
-            $push:{orders:basket._id, ordersOpen:basket._id},
-            $inc: {ordersCount:1, ordersOpenCount:1},
-            updated: new Date(),
-        };
-        await ActionLogUpdate(req.body.managerCleanerOwner, obj, backendApp, next);
-        if (!valid) return next();
-        let dataBasket = await updateBasketByCleaner(req, basket.cleanerOwner);
-        res.ok(dataBasket);
-    } else if (basket.status == 5) {
-        let cleaner = await getCleaner(basket.cleanerOwner).catch(e=>{return rj(e)});
-        let cleanerUpdated = await setMoneyToCleaner(req, basket, cleaner).catch(e=>res.notFound(e));
-        res.ok(cleanerUpdated)
-    } else {
-        next()
-    }
+    next()
+    // if (basket.status === 1 || basket.status === 2) {
+    //     // let asgn = await assign(req,res,next, backendApp, basket.cleanerOwner);
+    //     let cleaner = await getCleaner(basket.cleanerOwner).catch(e=>{return rj(e)});
+    //     let valid = await validate(req,res,cleaner,backendApp).catch(e=>{return res.ok(basket)});
+    //
+    //     let obj = {
+    //         cleaner:basket.cleanerOwner,
+    //         $push:{orders:basket._id, ordersOpen:basket._id},
+    //         $inc: {ordersCount:1, ordersOpenCount:1},
+    //         updated: new Date(),
+    //     };
+    //     await ActionLogUpdate(req.body.managerCleanerOwner, obj, backendApp, next);
+    //     if (!valid) return next();
+    //     let dataBasket = await updateBasketByCleaner(req, basket.cleanerOwner);
+    //     res.ok(dataBasket);
+    // } else if (basket.status == 5) {
+    //     let cleaner = await getCleaner(basket.cleanerOwner).catch(e=>{return rj(e)});
+    //     let cleanerUpdated = await setMoneyToCleaner(req, basket, cleaner).catch(e=>res.notFound(e));
+    //     res.ok(cleanerUpdated)
+    // } else {
+    //     next()
+    // }
 };
 
 const sendToProvider = (backendApp, basket, req) => {
