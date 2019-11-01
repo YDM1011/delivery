@@ -36,7 +36,7 @@
     </div>
   </a>
 </div>
-<ng-container *ngIf="!loaded.brand && !loaded.category && !loaded.topCompany">
+<ng-container *ngIf="!loaded.brand || !loaded.category || !loaded.topCompany || !loaded.topCompany">
   <app-loading></app-loading>
 </ng-container>
 <div class="slider">
@@ -113,10 +113,12 @@
 <div class="popular-section">
   <div class="popular-section-button">
     <button [class.active]="toggleMain" (click)="toggleMain = true">
-      Поставщики <span class="top-btn done">топ</span>
+      Поставщики
+<!--      <span class="top-btn done">топ</span>-->
     </button>
     <button [class.active]="!toggleMain" (click)="toggleMain = false">
-      Товары <span class="top-btn done">топ</span>
+      Товары
+<!--      <span class="top-btn done">топ</span>-->
     </button>
   </div>
   <div class="popular-section-box" *ngIf="toggleMain">
@@ -127,7 +129,6 @@
     </ng-container>
   </div>
   <div class="popular-section-box" *ngIf="!toggleMain">
-
     <ng-container *ngIf="loaded.topProduct">
       <ng-container *ngFor="let it of topProduct">
         <app-product-item [data]="it" [company]="it.companyOwner"></app-product-item>

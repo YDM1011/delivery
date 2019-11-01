@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {AuthService} from '../../auth.service';
 import {CrudService} from '../../crud.service';
 import {MatSnackBar} from "@angular/material";
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-orders',
@@ -14,15 +15,16 @@ export class OrdersComponent implements OnInit {
   public orders = [];
   public loading = false;
   public user: any;
+  private _subscription: Subscription[] = [];
+
   constructor(
       private auth: AuthService,
       private crud: CrudService,
       private snackBar: MatSnackBar
-
   ) { }
 
   ngOnInit() {
-    this.auth.onUpdateOrder.subscribe((o: any) => {
+    this._subscription.push(this.auth.onUpdateOrder.subscribe((o: any) => {
       if (o) {
         const index = this.crud.find('_id', o._id, this.orders);
         if (typeof index === 'number') {
@@ -31,44 +33,40 @@ export class OrdersComponent implements OnInit {
           this.orders.unshift(o);
         }
       }
-    });
-    this.auth.onLanguage.subscribe((v: string) => {
+    }));
+    this._subscription.push(this.auth.onLanguage.subscribe((v: string) => {
       this.language = v;
-    });
-    this.auth.onMe.subscribe((me: any) => {
+    }));
+    this._subscription.push(this.auth.onMe.subscribe((me: any) => {
       if (!me) {return; }
       this.user = me;
-      this.crud.get(`basket?query={"createdBy":"${this.user._id}","$or":[{"status":1},{"status":2},{"status":3}]}&populate=[{"path":"deliveryAddress","select":"name img"},{"path":"companyOwner","select":"name"}]&sort={"date":-1}`).then((v: any) => {
+      this.crud.get(`basket?query={"createdBy":"${this.user._id}","$or":[{"status":1},{"status":2},{"status":3}]}&populate=[{"path":"deliveryAddress","select":"name img"},{"path":"companyOwner","select":"name"}]&skip=0&limit=5&sort={"date":-1}`).then((v: any) => {
         this.orders = v;
         this.loading = true;
       });
-    });
+    }));
   }
   confirmOrder(e) {
     if (e) {
       this.openSnackBar('Ваш заказ был подтвержден',  'Ok');
-      this.crud.get(`basket?query={"_id":"${e}","$or":[{"status":1},{"status":2},{"status":3}]}&populate=[{"path":"deliveryAddress","select":"name img"},{"path":"companyOwner","select":"name"}]&sort={"date":-1}`).then((v: any) => {
+      this.crud.get(`basket?query={"_id":"${e}","$or":[{"status":1},{"status":2},{"status":3}]}&populate=[{"path":"deliveryAddress","select":"name img"},{"path":"companyOwner","select":"name"}]&skip=0&limit=5&sort={"date":-1}`).then((v: any) => {
         this.orders[this.crud.find('_id', e, this.orders)] = v[0];
       });
     }
   }
-  removeOrder(e) {
-    if (e) {
+  removeOrder(e, i) {
       this.openSnackBar('Ваш заказ был отменен',  'Ok');
-      this.crud.get(`basket?query={"createdBy":"${this.user._id}","$or":[{"status":1},{"status":2},{"status":3}]}&populate=[{"path":"deliveryAddress","select":"name img"},{"path":"companyOwner","select":"name"}]&sort={"date":-1}`).then((v: any) => {
-        this.orders = v;
-      });
-    }
+      this.orders.splice(i, 1);
   }
   getBaskets() {
     this.toggleMain = true;
-    this.crud.get(`basket?query={"createdBy":"${this.user._id}","$or":[{"status":1},{"status":2},{"status":3}]}&populate=[{"path":"deliveryAddress","select":"name img"},{"path":"companyOwner","select":"name"}]&sort={"date":-1}`).then((v: any) => {
+    this.crud.get(`basket?query={"createdBy":"${this.user._id}","$or":[{"status":1},{"status":2},{"status":3}]}&populate=[{"path":"deliveryAddress","select":"name img"},{"path":"companyOwner","select":"name"}]&skip=0&limit=5&sort={"date":-1}`).then((v: any) => {
       this.orders = v;
     });
   }
   getSuccessBasket() {
     this.toggleMain = false;
-    this.crud.get(`basket?query={"createdBy":"${this.user._id}","$or":[{"status":4},{"status":5}]}&populate=[{"path":"deliveryAddress","select":"name img"},{"path":"companyOwner","select":"name"}]&sort={"date":-1}`).then((v: any) => {
+    this.crud.get(`basket?query={"createdBy":"${this.user._id}","$or":[{"status":4},{"status":5}]}&populate=[{"path":"deliveryAddress","select":"name img"},{"path":"companyOwner","select":"name"}]&skip=0&limit=5&sort={"date":-1}`).then((v: any) => {
       this.orders = v;
     });
   }
@@ -76,5 +74,10 @@ export class OrdersComponent implements OnInit {
     this.snackBar.open(message, action, {
       duration: 2000,
     });
+  }
+  getOutput(e) {
+    if (e) {
+      this.orders = this.orders.concat(e);
+    }
   }
 }

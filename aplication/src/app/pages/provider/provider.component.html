@@ -3,7 +3,9 @@
 </ng-container>
 <div class="other-header">
   <app-back-btn></app-back-btn>
-  <h2 *ngIf="loading">{{company ? company.name : 'Поставщик'}}</h2>
+  <h2 *ngIf="loading && company">
+    {{company ? company.name : 'Поставщик'}}
+  </h2>
   <app-basket-item></app-basket-item>
 </div>
 <div class="other-pages" *ngIf="loading && company">
@@ -39,7 +41,7 @@
     </div>
     <div class="block-info">
       <div class="block-title">
-        {{company.name}}
+        {{company.name ? company.name : '--'}}
       </div>
       <div class="block-second">
         <div class="raiting">
@@ -140,16 +142,20 @@
           <a routerLink="/{{language}}/brands">Все</a>
         </div>
         <div class="brandy-box">
-              <a [appScrollSmooth]="catalog" class="brandy-box-item" *ngFor="let brand of company.brands" (click)="activeBrands(brand._id)">
-                <div class="svg">
-                  <div class="img">
-                    <app-img [fs]="brand && brand.img ? brand.img : ''" [anyFs]="'assets/images/brans.svg'"></app-img>
+          <ng-container *ngFor="let brand of company.brands">
+              <ng-container *ngIf="brand">
+                <a [appScrollSmooth]="catalog" class="brandy-box-item"  (click)="activeBrands(brand._id)">
+                  <div class="svg">
+                    <div class="img">
+                      <app-img [fs]="brand && brand.img ? brand.img : ''" [anyFs]="'assets/images/brans.svg'"></app-img>
+                    </div>
                   </div>
-                </div>
-                <div class="title">
-                  {{brand.name}}
-                </div>
-              </a>
+                  <div class="title">
+                    {{brand.name}}
+                  </div>
+                </a>
+              </ng-container>
+          </ng-container>
         </div>
       </div>
     </ng-container>

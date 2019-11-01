@@ -93,6 +93,7 @@ import { ScrollTopDirective } from './directives/scroll-top.directive';
 import { CategoryProductUploadDirective } from './directives/category-product-upload.directive';
 import { ScrollSmoothDirective } from './directives/scroll-smooth.directive';
 import { ScrollSmoothTouchDirective } from './directives/scroll-smooth-touch.directive';
+import {UpdateScrollOrdersDirective} from "./directives/update-scroll-orders.directive";
 
 @NgModule({
   declarations: [
@@ -168,7 +169,8 @@ import { ScrollSmoothTouchDirective } from './directives/scroll-smooth-touch.dir
     TouchStart,
     CategoryProductUploadDirective,
     ScrollSmoothDirective,
-    ScrollSmoothTouchDirective
+    ScrollSmoothTouchDirective,
+    UpdateScrollOrdersDirective
   ],
   imports: [
     ScrollingModule,

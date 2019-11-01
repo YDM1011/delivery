@@ -26,11 +26,15 @@ export class MainComponent implements OnInit {
     this.notificationOrders$.subscribe(v => {
       this.auth.setWsOrder(v.data);
       this.playAudio();
-      if (v.data.manager) {
-        this.openSnackBar('Клиент подтвердил изменения',  'Ok');
-      } else {
-        this.openSnackBar('У вас новый заказ',  'Ok');
+      if (v.data.status === 5) {
+        this.openSnackBar('Клиент отменил заказ',  'Ok');
+        return;
       }
+      if (v.data.manager && v.data.status === 2) {
+        this.openSnackBar('Клиент подтвердил изменения',  'Ok');
+        return;
+      }
+      this.openSnackBar('У вас новый заказ',  'Ok');
     });
 
     if (!localStorage.getItem('userId')) { return; }

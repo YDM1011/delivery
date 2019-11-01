@@ -293,12 +293,21 @@
 }
 
 .popular-section{
-  margin: 10px 0;
+  //margin: 10px 0 10px;
+  position: relative;
   &-button{
     display: flex;
     align-items: center;
     justify-content: space-between;
     margin-bottom: 15px;
+    &.fixed{
+      position: fixed;
+      top: 55px;
+      width: 100%;
+      padding: 20px 0 7px;
+      z-index: 4;
+      background: #fff;
+    }
     button{
       width: 50%;
       color: #BBBBBB;

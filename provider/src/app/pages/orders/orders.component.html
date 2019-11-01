@@ -284,7 +284,8 @@
 			               [pageSize]="pageSizePagination"
 			               [pageSizeOptions]="pageSizeOptionsPagination"
 			               (page)="pageEvent($event)"
-			               *ngIf="loading && orders && orders.length > 0">
+			               *ngIf="loading && orders && orders.length > 0"
+			               appScrollTop>
 			</mat-paginator>
 		</div>
 	</div>
