@@ -46,7 +46,7 @@ export class TouchStart {
       document.getElementById('cropper-img').style.left = -(event.target.clientWidth/2 - this.width)  + 'px';
     }
     if ((-(this.startY - clientY) <= event.target.clientHeight/2 - this.width) &&
-      ((this.startY - clientY) <= event.target.clientHeight/2 - this.width)){
+      ((this.startY - clientY) <= event.target.clientHeight/2 - this.width)) {
       document.getElementById('cropper-img').style.top = -(this.startY - clientY)  + 'px';
     } else if (this.startY - clientY < 0) {
       document.getElementById('cropper-img').style.top = event.target.clientHeight/2 - this.width  + 'px';
