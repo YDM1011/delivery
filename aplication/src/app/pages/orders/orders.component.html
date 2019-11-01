@@ -20,7 +20,7 @@
         </button>
       </div>
       <div class="popular-section-box" *ngIf="toggleMain">
-        <cdk-virtual-scroll-viewport itemSize="205" class="viewport" appUpdateScrollOrders (output)="getOutput($event)" [userId]="this.user._id" [type]="'new'">
+        <cdk-virtual-scroll-viewport itemSize="205" class="viewport" appUpdateScrollOrders (output)="getOutput($event)" [userId]="this.user._id" [type]="'new'" *ngIf="orders && orders.length > 0">
           <app-orders-item [order]="item" (removeOrder)="removeOrder($event, index)" (confirmOrder)="confirmOrder($event)" *cdkVirtualFor="let item of orders; let index = index"></app-orders-item>
         </cdk-virtual-scroll-viewport>
         <ng-container *ngIf="orders && orders.length === 0">
@@ -30,8 +30,8 @@
         </ng-container>
       </div>
       <div class="popular-section-box" *ngIf="!toggleMain">
-        <cdk-virtual-scroll-viewport itemSize="205" class="viewport" appUpdateScrollOrders (output)="getOutput($event)" [userId]="this.user._id" [type]="'old'">
-          <app-orders-item [order]="item" *ngFor="let item of orders"></app-orders-item>
+        <cdk-virtual-scroll-viewport itemSize="205" class="viewport" appUpdateScrollOrders (output)="getOutput($event)" [userId]="this.user._id" [type]="'old'" *ngIf="orders && orders.length > 0">
+          <app-orders-item [order]="item" *cdkVirtualFor="let item of orders"></app-orders-item>
         </cdk-virtual-scroll-viewport>
         <ng-container *ngIf="orders && orders.length === 0">
           <div class="empty-block">

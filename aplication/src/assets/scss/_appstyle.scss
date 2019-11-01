@@ -646,3 +646,47 @@ button:active{
     }
   }
 }
+.mat-chip-file{
+  display: inline-flex;
+  align-items: center;
+  max-width: 186px;
+  padding: 5px;
+  border: 1px solid #B8C5D3;
+  border-radius: 15px;
+  color: #748AA1;
+  background: #fff!important;
+  .content{
+    font-size: 16px;
+    line-height: 20px;
+    max-width: 140px;
+    white-space: nowrap; /* Отменяем перенос текста */
+    overflow: hidden; /* Обрезаем содержимое */
+    padding: 0 5px; /* Поля */
+    text-overflow: ellipsis;
+  }
+  .remove-mat-chip{
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    border-radius: 50%;
+    border: 1px solid #E21B1B;
+    width: 17px;
+    height: 17px;
+    padding: 0;
+    background: #fff;
+    cursor: pointer;
+    &:before{
+      content: '';
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: absolute;
+      height: 5px;
+      width: 5px;
+      color: #E21B1B;
+      background: url("./assets/images/remove-chip.svg") no-repeat;
+      background-size: cover;
+    }
+  }
+}

@@ -33,10 +33,14 @@
     </div>
     <input type="text" placeholder="Дополнительно" name="comment" [(ngModel)]="address.comment">
     <div class="photo-upload">
-      <div class="img">
+      <div class="img" *ngIf="address.img">
         <app-img [dir]="'address'" [fs]="address.img" [anyFs]="''"></app-img>
       </div>
-      <app-upload (onCrop)="onFs($event)"  [dir]="'address'"></app-upload>
+        <div class="mat-chip-file" *ngIf="address && address.img">
+            <div class="content">{{address.img.split('--')[1]}}</div>
+            <div class="remove-mat-chip" (click)="removeImg()"></div>
+        </div>
+      <app-upload (onCrop)="onFs($event)" [cropper]="true" [dir]="'address'" *ngIf="!address.img"></app-upload>
     </div>
   </div>
   <button class="main-button color " type="submit">

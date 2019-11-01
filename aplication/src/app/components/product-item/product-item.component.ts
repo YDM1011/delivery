@@ -1,8 +1,8 @@
-import {Component, Input, OnDestroy, OnInit, Output} from '@angular/core';
-import {AuthService} from "../../auth.service";
-import {CrudService} from "../../crud.service";
-import {MatSnackBar} from "@angular/material";
-import {Subscription} from "rxjs";
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {AuthService} from '../../auth.service';
+import {CrudService} from '../../crud.service';
+import {MatSnackBar} from '@angular/material';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-product-item',
@@ -10,12 +10,16 @@ import {Subscription} from "rxjs";
   styleUrls: ['./product-item.component.scss']
 })
 export class ProductItemComponent implements OnInit, OnDestroy {
-  public count: number = 0;
+  public count = 0;
   public language: string;
   public user;
   @Input() data;
   @Input() company;
   private _subscription: Subscription[] = [];
+  public snackMessage = {
+    ru: 'Товар додан в корзину',
+    ua: 'Товар доданий у кошик'
+  };
   constructor(
       private auth: AuthService,
       private crud: CrudService,
@@ -56,7 +60,7 @@ export class ProductItemComponent implements OnInit, OnDestroy {
       if (v) {
         this.count = 0;
         this.auth.setCheckBasket(true);
-        this.openSnackBar('Товар додан в корзину',  'Ok');
+        this.openSnackBar(this.snackMessage[this.language],  'Ok');
       }
     });
   }

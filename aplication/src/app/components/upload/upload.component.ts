@@ -1,8 +1,8 @@
 import {Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output} from '@angular/core';
-import {MatDialog} from "@angular/material";
-import {UploadService} from "./upload.service";
-import {DialogComponent} from "./dialog/dialog.component";
-import {CrudService} from "../../crud.service";
+import {MatDialog} from '@angular/material';
+import {UploadService} from './upload.service';
+import {DialogComponent} from './dialog/dialog.component';
+import {CrudService} from '../../crud.service';
 
 @Component({
   selector: 'app-upload',

@@ -63,4 +63,8 @@ export class EditAddressComponent implements OnInit {
   select(e) {
     this.address.city = e.value;
   }
+  removeImg() {
+    delete this.address.img;
+    this.address.img = '';
+  }
 }
