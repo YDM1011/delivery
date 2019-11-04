@@ -10,16 +10,16 @@
   <div class="other-pages">
     <div class="headline">
       Оцените работу поставщика
+      "{{data.name}}"
     </div>
     <div class="svg">
-      <mat-star-rating class="mat-rating-big" [starCount]="5" [rating]="raiting" (ratingUpdated)="updateRaiting($event)"></mat-star-rating>
+      <mat-star-rating class="mat-rating-big" [starCount]="5" [rating]="rating" (ratingUpdated)="updateRaiting($event)"></mat-star-rating>
     </div>
-  
     <div class="comment-input">
       <input type="text" [(ngModel)]="comment" placeholder="Коментарий">
     </div>
     <div class="buttons">
-      <a (click)="close()" class="main-button color">
+      <a (click)="confirm($event)" class="main-button color">
         Оценить
       </a>
       <a (click)="close()" class="back-btn">

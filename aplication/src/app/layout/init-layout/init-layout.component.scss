@@ -31,3 +31,7 @@
   background-color: #009688 !important;
 }
 
+::ng-deep .mat-button-ripple.mat-ripple{
+  display: none!important;
+}
+
