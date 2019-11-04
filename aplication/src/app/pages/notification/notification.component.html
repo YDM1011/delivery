@@ -6,7 +6,7 @@
 
 <div class="other-pages">
   <div class="popular-section">
-    <div class="popular-section-button">
+    <div class="popular-section-button fixed">
       <button [class.active]="toggleMain" (click)="toggleMain = true">
         Акции
       </button>
@@ -15,11 +15,14 @@
       </button>
     </div>
     <div class="popular-section-box" *ngIf="toggleMain">
-<!--      <app-action-item></app-action-item>-->
-<!--      <app-action-item></app-action-item>-->
-<!--      <app-action-item></app-action-item>-->
-<!--      <app-action-item></app-action-item>-->
-<!--      <app-action-item></app-action-item>-->
+        <ng-container *ngIf="loading">
+            <cdk-virtual-scroll-viewport itemSize="300" class="viewport" appScrollUpdateAction (output)="getOutput($event)" *ngIf="action && action.length > 0">
+                <app-action-item  *cdkVirtualFor="let item of action" [obj]="item"></app-action-item>
+            </cdk-virtual-scroll-viewport>
+            <div class="empty" *ngIf="action && action.length === 0">
+                У вас нет персональных акций
+            </div>
+        </ng-container>
     </div>
     <div class="popular-section-box" *ngIf="!toggleMain">
 <!--      <app-rating-service-item (click)="showRaiting = true"></app-rating-service-item>-->

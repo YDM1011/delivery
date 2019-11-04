@@ -338,12 +338,11 @@ export class CrudService {
   signin(data){
       return new Promise((rs, rj) => {
         this.post('signin', data).then(v => {
-          console.log(v)
           if (v) {
             rs(v);
-          } else {
-            rj();
           }
+        }).catch((error) => {
+          rj(error);
         });
       });
   }
