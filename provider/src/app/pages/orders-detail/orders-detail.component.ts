@@ -62,16 +62,35 @@ export class OrdersDetailComponent implements OnInit, OnDestroy {
   }
 
   done() {
-    this.crud.post('basket', {status: 4}, this.basket._id, false).then((v) => {
-      if (v) {
-        const populate = JSON.stringify([{path: 'products', select: 'price count', populate: {path: 'orderOwner', select: 'name'}}, {path: 'createdBy', select: 'name address'},{path: 'deliveryAddress', populate: {path: 'city'}, select: 'name street build department' }, {path: 'manager', select: 'name'}]);
-        this.crud.get(`basket?query={"_id":"${this.id}"}&populate=${populate}`).then((b: any) => {
-          if (b && b.length > 0) {
-            this.basketCopy = Object.assign({}, b[0]);
-          }
-        });
-      }
-    });
+    if (this.basketCopy.payMethod === 'Наличными') {
+      Swal.fire({
+        title: 'Заказ был оплачен?',
+        type: 'warning',
+        showCloseButton: true,
+        showCancelButton: true,
+        focusConfirm: true,
+        reverseButtons: true,
+        cancelButtonText: 'Не оплачено',
+        confirmButtonText: 'Оплачен',
+        confirmButtonColor: '#dd4535',
+      }).then((result) => {
+        if (result.value){
+          this.crud.post('basket', {status: 4}, this.basket._id, false).then((v) => {
+            if (v) {
+              this.basketCopy.status = 4;
+            }
+          });
+        } else {
+          return;
+        }
+      });
+    } else {
+      this.crud.post('basket', {status: 4}, this.basket._id, false).then((v) => {
+        if (v) {
+          this.basketCopy.status = 4;
+        }
+      });
+    }
   }
   cancelEdit() {
     this.editBasket = false;

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {AuthService} from '../../auth.service';
 import {CrudService} from '../../crud.service';
 import {MatSnackBar} from "@angular/material";
@@ -9,7 +9,7 @@ import {Subscription} from "rxjs";
   templateUrl: './orders.component.html',
   styleUrls: ['./orders.component.scss']
 })
-export class OrdersComponent implements OnInit {
+export class OrdersComponent implements OnInit, OnDestroy {
   public language: string;
   public toggleMain = true;
   public orders = [];
@@ -23,16 +23,6 @@ export class OrdersComponent implements OnInit {
       private snackBar: MatSnackBar
   ) { }
   ngOnInit() {
-    this._subscription.push(this.auth.onUpdateOrder.subscribe((order: any) => {
-      if (order) {
-        const index = this.crud.find('_id', order._id, this.orders);
-        if (index !== -1) {
-          this.orders[index].status = order.status;
-        } else {
-          this.orders.unshift(order);
-        }
-      }
-    }));
     this._subscription.push(this.auth.onLanguage.subscribe((v: string) => {
       this.language = v;
     }));
@@ -44,6 +34,21 @@ export class OrdersComponent implements OnInit {
         this.loading = true;
       });
     }));
+    this._subscription.push(this.auth.onUpdateOrder.subscribe((order: any) => {
+      if (order  && this.orders) {
+        const index = this.crud.find('_id', order._id, this.orders);
+        if (this.orders[index]) {
+          this.orders[index].status = order.status;
+        } else {
+          this.orders.unshift(order);
+        }
+      }
+    }));
+  }
+  ngOnDestroy() {
+    this._subscription.forEach((item) => {
+      item.unsubscribe();
+    })
   }
   confirmOrder(e) {
     if (e) {
