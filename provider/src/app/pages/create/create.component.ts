@@ -47,7 +47,7 @@ export class CreateComponent implements OnInit {
         this.crud.get(`client/count?query={"companyOwner":"${this.user.companyOwner}"}`).then((count: any) => {
           if (count) {
             this.lengthPagination = count.count;
-            this.crud.get(`client?query={"companyOwner": "${this.user.companyOwner}"}&skip=0&limit=${this.pageSizePagination}`).then((c: any) => {
+            this.crud.get(`client?query={"companyOwner": "${this.user.companyOwner}"}&skip=0&limit=${this.pageSizePagination}&sort={"date":-1}`).then((c: any) => {
               if (c) {
                 this.clients = c;
                 this.loading = true;
@@ -165,7 +165,7 @@ export class CreateComponent implements OnInit {
     }
   }
   pageEvent(e) {
-    this.crud.get(`client?query={"companyOwner":"${this.user.companyOwner}"}&skip=${e.pageIndex  * e.pageSize}&limit=${e.pageSize}`).then((c: any) => {
+    this.crud.get(`client?query={"companyOwner":"${this.user.companyOwner}"}&skip=${e.pageIndex  * e.pageSize}&limit=${e.pageSize}&sort={"date":-1}`).then((c: any) => {
       if (!c) {return; }
       this.clients = c;
     });

@@ -22,15 +22,14 @@ export class OrdersComponent implements OnInit {
       private crud: CrudService,
       private snackBar: MatSnackBar
   ) { }
-
   ngOnInit() {
-    this._subscription.push(this.auth.onUpdateOrder.subscribe((o: any) => {
-      if (o) {
-        const index = this.crud.find('_id', o._id, this.orders);
-        if (typeof index === 'number') {
-          this.orders[index] = o;
+    this._subscription.push(this.auth.onUpdateOrder.subscribe((order: any) => {
+      if (order) {
+        const index = this.crud.find('_id', order._id, this.orders);
+        if (index !== -1) {
+          this.orders[index].status = order.status;
         } else {
-          this.orders.unshift(o);
+          this.orders.unshift(order);
         }
       }
     }));

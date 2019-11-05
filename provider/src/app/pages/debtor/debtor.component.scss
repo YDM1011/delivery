@@ -17,7 +17,9 @@
     }
   }
 }
-
+.center-column{
+  text-align: center;
+}
 .example-full-width {
   width: 100%;
 }
@@ -79,4 +81,11 @@
 }
 .wrap-address p{
   margin: 0;
+}
+.img-address{
+  margin: 0 auto;
+  width: 60px;
+  app-img{
+    width: 100%;
+  }
 }

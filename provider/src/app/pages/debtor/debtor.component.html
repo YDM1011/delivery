@@ -88,14 +88,14 @@
 					<app-search-filter [inputApi]="'debtor'" [inputQuery]="'login'" [queryValue]="'companyOwner'" [querySearch]="user.companies[0]._id" [populate]="'clientOwner'" (output)="outputSearch($event)"></app-search-filter>
 					<div class="table-content">
 						<div class="row-h">
-							<div class="col">
-								address
+							<div class="col center-column">
+								Адрес
+							</div>
+							<div class="col center-column">
+                                Долг и номер заказа
 							</div>
 							<div class="col">
-                debs
-							</div>
-							<div class="col">
-								date
+								Дата
 							</div>
 							<div class="col">
 							</div>
@@ -111,27 +111,26 @@
                       {{item.basket.deliveryAddress.name}}
                     </div>
                   </div>
-                  <div class="wrap-address">
-                    <p *ngIf="item.basket.deliveryAddress.city.name">
-                      с {{item.basket.deliveryAddress.city.name}}
-                    </p>
-                    <p *ngIf="item.basket.deliveryAddress.street">
-                      s {{item.basket.deliveryAddress.street}}
-                    </p>
-                    <p *ngIf="item.basket.deliveryAddress.build">
-                      b {{item.basket.deliveryAddress.build}}
-                    </p>
-                    <p *ngIf="item.basket.deliveryAddress.department">
-                      d {{item.basket.deliveryAddress.department}}
-                    </p>
+                  <div class="wrap-address center-column">
+                    <span *ngIf="item.basket.deliveryAddress.city.name">
+	                    {{item.basket.deliveryAddress.city.name}}
+                    </span>
+                    <span *ngIf="item.basket.deliveryAddress.street">
+                      {{item.basket.deliveryAddress.street}}
+                    </span>
+                    <span *ngIf="item.basket.deliveryAddress.build">
+                      дом {{item.basket.deliveryAddress.build}}
+                    </span>
+                    <span *ngIf="item.basket.deliveryAddress.department">
+                      кв. {{item.basket.deliveryAddress.department}}
+                    </span>
                   </div>
                 </div>
                 <div class="col">
-                  <div class="col-column">
-                    <p class="status__title remove">needed {{item.value}} грн</p>
-                    <p>order {{item.basket.basketNumber}}</p>
+                  <div class="col-column center-column">
+                    <p class="status__title remove">Долг {{item.value}} грн</p>
+                    <p>Заказ №{{item.basket.basketNumber}}</p>
                   </div>
-
                 </div>
                 <div class="col">
                   <div class="date">
@@ -162,7 +161,6 @@
                   </div>
                 </div>
               </div>
-
             </ng-container>
 					</div>
 					

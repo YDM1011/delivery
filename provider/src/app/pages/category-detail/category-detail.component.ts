@@ -50,7 +50,7 @@ export class CategoryDetailComponent implements OnInit {
         this.crud.get(`order/count?query={"categoryOwner":"${this.id}"}`).then((c: any) => {
           if (c.count > 0) {
             this.lengthPagination = c.count;
-            this.crud.get(`order?query={"categoryOwner":"${this.id}"}&populate={"path":"categoryOwner","populate":"mainCategory","select":"mainCategory subCategory"}&skip=0&limit=${this.pageSizePagination}`).then((v: any) => {
+            this.crud.get(`order?query={"categoryOwner":"${this.id}"}&populate={"path":"categoryOwner","populate":"mainCategory","select":"mainCategory subCategory"}&skip=0&limit=${this.pageSizePagination}&sort={"date":-1}`).then((v: any) => {
               if (!v || v.length === 0) {return; }
               this.products = v;
             });
@@ -105,7 +105,7 @@ export class CategoryDetailComponent implements OnInit {
     }
   }
   pageEvent(e) {
-    this.crud.get(`order?query={"categoryOwner":"${this.id}"}&populate={"path":"categoryOwner","populate":"mainCategory","select":"mainCategory subCategory"}&skip=${e.pageIndex  * e.pageSize}&limit=${e.pageSize}`).then((p: any) => {
+    this.crud.get(`order?query={"categoryOwner":"${this.id}"}&populate={"path":"categoryOwner","populate":"mainCategory","select":"mainCategory subCategory"}&skip=${e.pageIndex  * e.pageSize}&limit=${e.pageSize}&sort={"date":-1}`).then((p: any) => {
       if (!p) {
         return;
       }

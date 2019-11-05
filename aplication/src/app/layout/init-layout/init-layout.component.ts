@@ -27,7 +27,6 @@ export class InitLayoutComponent implements OnInit {
   ngOnInit() {
     this.notificationOrders$ = this.wsService.on(WS.ON.ON_CONFIRM_ORDER);
     this.notificationOrders$.subscribe(v => {
-      console.log(v.data);
       this.auth.setUpdateOrder(v.data);
     });
     if (navigator.onLine) {

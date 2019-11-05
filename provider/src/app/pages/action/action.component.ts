@@ -74,7 +74,7 @@ export class ActionComponent implements OnInit {
         this.crud.get(`action/count?query={"companyOwner":"${this.company}"}`).then((c: any) => {
           if (c) {
             this.lengthPagination = c.count;
-            this.crud.get(`action?query={"companyOwner":"${this.company}"}&populate={"path":"client"}&skip=0&limit=${this.pageSizePagination}`).then((a: any) => {
+            this.crud.get(`action?query={"companyOwner":"${this.company}"}&populate={"path":"client"}&skip=0&limit=${this.pageSizePagination}&sort={"date":-1}`).then((a: any) => {
               if (a) {
                 this.actions = a;
                 this.loading = true;
@@ -146,12 +146,6 @@ export class ActionComponent implements OnInit {
         this.addShow = false;
       }
     });
-
-    // this.crud.post('upload2', {body : this.uploadObj}, null, false).then((u: any) => {
-    //   if (u) {
-    //     this.action.img = u.file;
-    //   }
-    // });
   }
 
   delete(i) {
@@ -307,7 +301,7 @@ export class ActionComponent implements OnInit {
     }
   }
   pageEvent(e) {
-    this.crud.get(`action?query={"companyOwner":"${this.company}"}&populate={"path":"client"}&skip=${e.pageIndex  * e.pageSize}&limit=${e.pageSize}`).then((c: any) => {
+    this.crud.get(`action?query={"companyOwner":"${this.company}"}&populate={"path":"client"}&skip=${e.pageIndex  * e.pageSize}&limit=${e.pageSize}&sort={"date":-1}`).then((c: any) => {
       if (!c) {
         return;
       }

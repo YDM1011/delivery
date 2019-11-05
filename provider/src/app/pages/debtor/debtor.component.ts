@@ -69,7 +69,7 @@ export class DebtorComponent implements OnInit {
         this.crud.get(`debtor/count?query={"companyOwner": "${this.user.companyOwner}"}`).then((count: any) => {
           if (count) {
             this.lengthPagination = count.count;
-            this.crud.get(`debtor?query={"companyOwner": "${this.user.companyOwner}"}${this.populate}&skip=0&limit=${this.pageSizePagination}`).then((d: any) => {
+            this.crud.get(`debtor?query={"companyOwner": "${this.user.companyOwner}"}${this.populate}&skip=0&limit=${this.pageSizePagination}&sort={"date":-1}`).then((d: any) => {
               if (d) {
                 this.debtors = d;
                 this.loading = true;
@@ -82,7 +82,7 @@ export class DebtorComponent implements OnInit {
   }
   change() {
     const query = JSON.stringify({login: {$regex: this.inputChange, $options: 'gi'}});
-    this.crud.get(`client?query=${query}&select=["login", "img"]&limit=10`).then((v: any) => {
+    this.crud.get(`client?query=${query}&select=["login","img"]&limit=10`).then((v: any) => {
       this.searchDebtors = v;
     });
   }
@@ -108,7 +108,7 @@ export class DebtorComponent implements OnInit {
         this.crud.get(`debtor/count?query={"companyOwner": "${this.user.companyOwner}"}`).then((count: any) => {
           if (count) {
             this.lengthPagination = count.count;
-            this.crud.get(`debtor?query={"companyOwner": "${this.user.companyOwner}"}${this.populate}&skip=0&limit=${this.pageSizePagination}`).then((d: any) => {
+            this.crud.get(`debtor?query={"companyOwner": "${this.user.companyOwner}"}${this.populate}&skip=0&limit=${this.pageSizePagination}&sort={"date":-1}`).then((d: any) => {
               if (d) {
                 this.debtors = d;
                 this.loading = true;
@@ -226,7 +226,7 @@ export class DebtorComponent implements OnInit {
     }
   }
   pageEvent(e) {
-    this.crud.get(`debtor?query={"companyOwner":"${this.user.companyOwner}"}${this.populate}&skip=${e.pageIndex  * e.pageSize}&limit=${e.pageSize}`).then((d: any) => {
+    this.crud.get(`debtor?query={"companyOwner":"${this.user.companyOwner}"}${this.populate}&skip=${e.pageIndex  * e.pageSize}&limit=${e.pageSize}&sort={"date":-1}`).then((d: any) => {
       if (!d) {return; }
       this.debtors = d;
     });
