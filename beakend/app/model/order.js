@@ -196,6 +196,7 @@ schema.post('findOneAndUpdate', (doc,next)=>{
                             { "$unset": { "brands.$": "" } },
                             { "multi": true },
                             (e,r) => {
+                                console.log(r, doc.brand)
                                 mongoose.model('Company')
                                     .findOneAndUpdate(
                                         { "brands": null },

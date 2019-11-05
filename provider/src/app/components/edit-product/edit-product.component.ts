@@ -90,7 +90,7 @@ export class EditProductComponent implements OnInit, OnChanges {
           this.cancelEdit.emit(false);
         }
       }).catch((error) => {
-        if (error && error.errors.price.name === 'CastError') {
+        if (error && error.errors && error.errors.price.name === 'CastError') {
           Swal.fire('Error', 'Цена должна вводится через "." - точку', 'error').then();
           return;
         }

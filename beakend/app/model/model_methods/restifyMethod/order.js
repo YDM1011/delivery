@@ -37,13 +37,45 @@ module.exports.preUpdate = async (req,res,next, backendApp) => {
                 if (e) return res.serverError(e);
                 if (!r) return res.notFound("Not Found Category");
                 req.body['mainCategory'] = r.mainCategory;
-                next()
+                updateBrand(req,res,next, backendApp)
             })
     } else {
-        next()
+        updateBrand(req,res,next, backendApp)
     }
 };
 
+module.exports.preDel = (req, res, next, backendApp) => {
+    updateBrand(req, res, next, backendApp)
+};
+
+const updateBrand = (req, res, next, backendApp) =>{
+    const Company = backendApp.mongoose.model('Company');
+    const Order = backendApp.mongoose.model('Order');
+
+    Order.findOne({_id: req.params.id})
+        .exec((e,order)=>{
+            if (e) return res.serverError(e);
+            if (!order) return res.notFound("Not Found!");
+            if (!order.brand) return next();
+            Company.findOneAndUpdate({_id: order.companyOwner}, {
+                $pull:{brands:order.brand},
+            })
+            .exec((e,r)=>{
+                let obj = r && r.brandCount ? r.brandCount : {};
+                if (r && r.brandCount  && r.brandCount[order.brand]) {
+                    obj = r.brandCount;
+                    obj[order.brand] -= 1;
+                }
+                Company.findOneAndUpdate({_id: order.companyOwner}, {
+                        brandCount: obj
+                    })
+                    .exec((e,r)=>{
+                        next()
+                    })
+            })
+        });
+
+};
 // const createManeger = (req, backendApp) => {
 //     return new Promise((rs,rj)=>{
 //

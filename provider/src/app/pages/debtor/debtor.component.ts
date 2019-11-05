@@ -158,9 +158,10 @@ export class DebtorComponent implements OnInit {
     }
     this.crud.post('debtor', {value: this.editObj.value, dataCall: this.editObj.dataCall}, this.editObj['_id']).then((v: any) => {
       if (v) {
-        const newObj = v;
-        newObj.client = this.user;
-        this.debtors[this.crud.find('_id', this.editObj['_id'], this.debtors)] = newObj;
+        // const newObj = v;
+        // newObj.client = this.user;
+        this.debtors[this.crud.find('_id', this.editObj['_id'], this.debtors)].value = this.editObj.value;
+        this.debtors[this.crud.find('_id', this.editObj['_id'], this.debtors)].dataCall = this.editObj.dataCall;
         this.editShow = false;
         this.isBlok = false;
         this.editObj = {

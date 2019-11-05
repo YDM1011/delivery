@@ -5,11 +5,23 @@
   position: relative;
   width: 100%;
   overflow: hidden;
+  max-height: 225px;
+  display: flex;
 }
 img.img-croper{
   user-select: none;
   position: relative;
-  //display: flex;
+  display: flex;
+  max-height: 225px;
+}
+//.cropper-img .slider{
+//  display: inline-flex;
+//}
+.cropper-img{
+  display: inline-flex;
+  position: relative;
+  margin: 0 auto;
+  overflow: hidden;
 }
 .mask{
   position: absolute;
@@ -22,9 +34,10 @@ img.img-croper{
 }
 .mask-glass .t{
   position: absolute;
-  width: 100px;
+  //width: 100px;
   height: calc(50% - 50px);
   top: 0;
+  right: calc(50% - 50px);
   left: calc(50% - 50px);
 }
 .mask-glass .b{
@@ -32,7 +45,8 @@ img.img-croper{
   height: calc(50% - 50px);
   bottom: 0;
   right: calc(50% - 50px);
-  width: 100px;
+  left: calc(50% - 50px);
+  //width: 100px;
 }
 .mask-glass .l{
   position: absolute;
