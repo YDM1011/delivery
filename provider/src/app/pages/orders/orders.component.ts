@@ -1,13 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {CrudService} from '../../crud.service';
 import {AuthService} from '../../auth.service';
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-orders',
   templateUrl: './orders.component.html',
   styleUrls: ['./orders.component.scss']
 })
-export class OrdersComponent implements OnInit {
+export class OrdersComponent implements OnInit, OnDestroy {
   public lengthPagination = 0;
   public pageSizePagination = 10;
   public pageSizeOptionsPagination: number[] = [5, 10, 15];
@@ -16,15 +17,16 @@ export class OrdersComponent implements OnInit {
   public orders = [];
   public defLang = 'ru-UA';
   public user = null;
+  private _subscription: Subscription[] = [];
   constructor(
       private crud: CrudService,
       private auth: AuthService
   ) { }
 
   ngOnInit() {
-    this.auth.onWsOrder.subscribe((ws: any) => {
+    this._subscription.push(this.auth.onWsOrder.subscribe((ws: any) => {
       if (ws) {
-        console.log(ws)
+        console.log('in components', ws);
         const index = this.crud.find('_id', ws._id, this.orders);
         if (typeof index === 'number') {
           this.orders[index] = ws;
@@ -32,8 +34,8 @@ export class OrdersComponent implements OnInit {
           this.orders.unshift(ws);
         }
       }
-    });
-    this.auth.onMe.subscribe((me: any) => {
+    }));
+    this._subscription.push(this.auth.onMe.subscribe((me: any) => {
       if (!me) {return; }
       this.user = me;
       if (this.user && this.user.companyOwner) {
@@ -48,7 +50,12 @@ export class OrdersComponent implements OnInit {
           }
         });
       }
-    });
+    }));
+  }
+  ngOnDestroy() {
+    this._subscription.forEach((item) => {
+      item.unsubscribe();
+    })
   }
   selectChange(e) {
     this.loading = false;
