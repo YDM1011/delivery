@@ -110,8 +110,9 @@ module.exports.postUpdate = async (req, res, next, backendApp) => {
 
 const sendToProvider = (backendApp, basket, req) => {
     backendApp.mongoose.model('Company')
-        .findById(basket.companyOwner)
+        .findById(basket.companyOwner.id)
         .exec((e,r)=>{
+            console.log(e,r)
             if (r) {
                 backendApp.events.callWS.emit('message', JSON.stringify({
                     event:"order-confirm",
