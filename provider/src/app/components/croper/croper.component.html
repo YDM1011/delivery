@@ -1,9 +1,9 @@
 <div class="cropper-wrap" *ngIf="srcImg">
   <div class="cropper-img" >
     <div class="sliser">
-      <img src="{{srcImg}}" #image alt="" id="cropper-img" class="img-croper">
+      <img src="{{srcImg}}"  #image alt="" id="cropper-img" class="img-croper">
     </div>
-    <div class="mask" crop (data)="send($event)"></div>
+    <div class="mask" [crop]="width" (data)="send($event)"></div>
     <div class="mask-glass">
       <div class="t"></div>
       <div class="r"></div>
@@ -13,5 +13,4 @@
   </div>
   <div class="cropper-sliser"></div>
 </div>
-<ng5-slider [(value)]="max" [options]="options" (userChange)="priceFilterFunc()"></ng5-slider>
-
+<ng5-slider [(value)]="max" [options]="options" (userChange)="priceFilterFunc()" (userChangeEnd)="priceFilterFuncEnd()"></ng5-slider>

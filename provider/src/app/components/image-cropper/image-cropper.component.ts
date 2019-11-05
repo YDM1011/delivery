@@ -50,6 +50,7 @@ export class ImageCropperComponent implements OnInit {
   onCropDef(e){
     const path = this.imageSource.split('/');
     let file = path[path.length-1];
+    if (!e) return this.getData();
     this.imageData = {
       fileName: file,
       yy:[e.y, e.height],
@@ -69,7 +70,7 @@ export class ImageCropperComponent implements OnInit {
         this.done.emit(v)
       }).catch(e=>console.log(e))
   }
-  public ngOnInit() {
+  ngOnInit() {
 
   }
   // ngAfterViewInit(){
