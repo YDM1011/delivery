@@ -102,6 +102,33 @@
         font-size: 12px;
         line-height: 15px;
       }
+
+      .price-element{
+        display: flex;
+        flex-direction: column;
+        .price-item{
+          font-weight: bold;
+          font-size: 14px;
+          line-height: 17px;
+        }
+        .new-price{
+          display: none;
+        }
+      }
+      .sale{
+        .price-item{
+          text-decoration-line: line-through;
+          font-size: 12px;
+          line-height: 15px;
+        }
+        .new-price{
+          display: block;
+          color: #FF3131;
+          font-weight: bold;
+          font-size: 18px;
+          line-height: 22px;
+        }
+      }
       .price{
         font-weight: bold;
         font-size: 14px;
