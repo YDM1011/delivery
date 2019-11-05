@@ -1,0 +1,77 @@
+.dashboard{
+  width: calc(100% + 50px);
+  margin-left: -25px;
+  background: #F5F6FA;
+  margin-top: -25px;
+  &__header{
+    padding-bottom: 20px;
+    &-title{
+      color: #009688;
+      font-weight: 600;
+      font-size: 21px;
+      line-height: 26px;
+      padding: 15px 0;
+    }
+    &-filter{
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 60px;
+      box-shadow: 0 1px 4px #E5E9F2;
+      border-radius: 5px;
+      background: #fff;
+      padding: 0 30px;
+      .date, .city, .providers{
+        display: flex;
+        align-items: center;
+        span{
+          color: #748AA1;
+          margin-right: 10px;
+        }
+      }
+      .date{
+        span{
+          &:nth-of-type(2){
+            margin-right: 15px;
+          }
+        }
+        .date-box{
+          display: inline-flex;
+          align-items: center;
+          svg{
+            margin-right: 5px;
+          }
+          .mat-date-pick{
+            width: 90px;
+            color: #31394D;
+          }
+          .date-input{
+            border: 0;
+            border-bottom:1px solid #DADADA;
+            width: 100%;
+          }
+          &:nth-of-type(1){
+            margin-right: 10px;
+          }
+        }
+      }
+      .city{
+        display: inline-flex;
+        align-items: center;
+        margin: 0 auto 0 50px;
+        .select-city{
+          width: 80px;
+          margin-bottom: -5px;
+        }
+      }
+      .providers{
+
+      }
+    }
+  }
+}
+
+::ng-deep .mat-form-field-appearance-legacy .mat-form-field-infix{
+  padding: 3px 0 3px;
+}
+

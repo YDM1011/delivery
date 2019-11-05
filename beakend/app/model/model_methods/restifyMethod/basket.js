@@ -37,6 +37,7 @@ module.exports.preUpdate = async (req,res,next, backendApp) => {
 module.exports.postUpdate = async (req, res, next, backendApp) => {
 
     let basket = req.erm.result;
+    console.log('!!!!!!',req.user.role)
     if (req.user.role === 'client') {
         backendApp.mongoose.model('Basket').findById(req.params.id)
             .populate({path:'deliveryAddress', populate:{path:'city'}})
