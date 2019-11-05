@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {AuthService} from '../../auth.service';
 
 @Component({
@@ -8,10 +8,17 @@ import {AuthService} from '../../auth.service';
 })
 export class RatingServiceItemComponent implements OnInit {
   public language: string;
-
+  @Input() data;
+  public title = {
+    ru: 'Оцените сервис поставщика',
+    ua: 'Оцініть сервіс постачальника'
+  };
+  public button_t = {
+    ru: '',
+    ua: ''
+  };
   constructor(
       private auth: AuthService
-
   ) { }
 
   ngOnInit() {

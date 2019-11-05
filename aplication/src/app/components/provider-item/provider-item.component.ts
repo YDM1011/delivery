@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import {AuthService} from '../../auth.service';
 import {CrudService} from '../../crud.service';
 
@@ -23,7 +23,7 @@ interface Company {
   templateUrl: './provider-item.component.html',
   styleUrls: ['./provider-item.component.scss']
 })
-export class ProviderItemComponent implements OnInit {
+export class ProviderItemComponent implements OnInit, OnDestroy {
   @Input() data: Company;
   @Input() isTop = false;
   @Output() getIt = new EventEmitter();
@@ -47,4 +47,7 @@ export class ProviderItemComponent implements OnInit {
     });
   }
 
+  ngOnDestroy() {
+
+  }
 }

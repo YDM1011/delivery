@@ -15,7 +15,7 @@ module.exports.preUpdate = async (req,res,next, backendApp) => {
                     if (!r) return res.notFound('Not found!1');
                     if (r) {
                         console.log(r, req.body)
-                        if (req.body.status == 4) {
+                        if (req.body.status === 4) {
                             r.products.forEach(prod=>{
                                 backendApp.mongoose.model('Order')
                                     .findOneAndUpdate({_id:prod.orderOwner}, {$inc:{countBought:(prod.count)}}, {new:true})
@@ -66,6 +66,19 @@ module.exports.postUpdate = async (req, res, next, backendApp) => {
                 lastUpdate: new Date(),
                 date: new Date(),
                 dataCall: new Date(new Date().getTime() + 1000*60*60*24*7)
+            }, (e,r)=>{
+
+            });
+    }
+    if (basket.status === 4){
+        backendApp.mongoose.model('Rating')
+            .create({
+                clientOwner: basket.createdBy,
+                companyOwner: basket.companyOwner,
+                rating: 0,
+                comment: '',
+                lastUpdate: new Date(),
+                date: new Date(),
             }, (e,r)=>{
 
             });

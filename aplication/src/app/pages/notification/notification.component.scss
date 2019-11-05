@@ -8,3 +8,19 @@
     margin-bottom: 20px;
   }
 }
+.empty-block{
+  text-align: center;
+}
+.empty{
+  text-align: center;
+  padding-top: 35px;
+}
+.viewport{
+  width: 100%;
+  height: calc(100vh - 185px);
+  margin-top: 35px;
+  overflow-y: auto;
+  overflow: -moz-scrollbars-none;
+  -ms-overflow-style: none;
+  &::-webkit-scrollbar { width: 0 !important }
+}

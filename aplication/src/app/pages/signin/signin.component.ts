@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {AuthService} from "../../auth.service";
 import {Router} from "@angular/router";
 import {CrudService} from "../../crud.service";
+import {error} from "selenium-webdriver";
 
 interface SignIn {
   login: string,
@@ -21,7 +22,7 @@ export class SigninComponent implements OnInit {
     pass: string;
     role: string = 'client';
   };
-  public dataError = {login:'',name:'',pass:'',};
+  public dataError = {login:'',name:'',pass:'',invalid: ''};
   public t_enter = {
     ru: 'Войти',
     ua: 'Войти'
@@ -37,6 +38,13 @@ export class SigninComponent implements OnInit {
   public t_signup = {
     ru: 'Регистрация',
     ua: 'Регистрация'
+  };
+
+  public errors = {
+    invalid_e :{
+      ru: 'Логин или парль введены не верно',
+      ua: 'Логін або пароль ввеедені не вірно'
+    }
   };
   constructor(
       private auth: AuthService,
@@ -59,6 +67,10 @@ export class SigninComponent implements OnInit {
       this.auth.setMe(v.user);
       this.auth.setCheckBasket(true);
       this.route.navigate(['']);
+    }).catch((error) => {
+      if (error.error === "Password or login invalid!") {
+        this.dataError.invalid = "invalid_e";
+      }
     });
   }
 

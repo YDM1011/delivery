@@ -19,8 +19,8 @@ export class RemoveBasketItemComponent implements OnInit {
   }
   remove() {
     this.crud.delete('product', this.data.obj._id).then((v: any) => {
+      this.successRemove.emit(this.data.index);
+      this.closeRemove.emit(false);
     });
-    this.successRemove.emit(this.data.index);
-    this.closeRemove.emit(false);
   }
 }

@@ -94,6 +94,8 @@ import { CategoryProductUploadDirective } from './directives/category-product-up
 import { ScrollSmoothDirective } from './directives/scroll-smooth.directive';
 import { ScrollSmoothTouchDirective } from './directives/scroll-smooth-touch.directive';
 import {UpdateScrollOrdersDirective} from "./directives/update-scroll-orders.directive";
+import { ScrollUpdateActionDirective } from './directives/scroll-update-action.directive';
+import { NotificationIdComponent } from './components/notification-id/notification-id.component';
 
 @NgModule({
   declarations: [
@@ -170,7 +172,9 @@ import {UpdateScrollOrdersDirective} from "./directives/update-scroll-orders.dir
     CategoryProductUploadDirective,
     ScrollSmoothDirective,
     ScrollSmoothTouchDirective,
-    UpdateScrollOrdersDirective
+    UpdateScrollOrdersDirective,
+    ScrollUpdateActionDirective,
+    NotificationIdComponent
   ],
   imports: [
     ScrollingModule,

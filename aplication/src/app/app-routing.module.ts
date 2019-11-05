@@ -29,6 +29,7 @@ import {IsLoginGuard} from "./is-login.guard";
 import {IsLogoutGuard} from "./is-logout.guard";
 import {BrandsIDComponent} from "./pages/brands-id/brands-id.component";
 import {EditAddressComponent} from "./pages/edit-address/edit-address.component";
+import {NotificationIdComponent} from "./components/notification-id/notification-id.component";
 
 
 const routes: Routes = [
@@ -57,6 +58,7 @@ const routes: Routes = [
       {path: 'new-address', component: NewAddressComponent},
       {path: 'support', component: SupportComponent},
       {path: 'action/:id', component: ActionDetailComponent},
+      {path: 'notification/:id', component: NotificationIdComponent},
       {path: 'orders', component: OrdersComponent, canActivate: [IsLoginGuard]},
     ]},
   {path: '', redirectTo: 'ru', pathMatch: 'full'},

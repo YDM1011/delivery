@@ -24,6 +24,7 @@ export class MainComponent implements OnInit {
   ngOnInit() {
     this.notificationOrders$ = this.wsService.on(WS.ON.ON_CONFIRM_ORDER);
     this.notificationOrders$.subscribe(v => {
+      console.log(v);
       this.auth.setWsOrder(v.data);
       this.playAudio();
       if (v.data.status === 5) {
