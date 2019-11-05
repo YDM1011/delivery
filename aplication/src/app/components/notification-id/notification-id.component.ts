@@ -1,22 +1,21 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {AuthService} from '../../auth.service';
+import {AuthService} from "../../auth.service";
 import {CrudService} from "../../crud.service";
 import {MatSnackBar} from "@angular/material";
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
-  selector: 'app-raiting',
-  templateUrl: './raiting.component.html',
-  styleUrls: ['./raiting.component.scss']
+  selector: 'app-notification-id',
+  templateUrl: './notification-id.component.html',
+  styleUrls: ['./notification-id.component.scss']
 })
-export class RaitingComponent implements OnInit {
-  @Input() data;
+export class NotificationIdComponent implements OnInit {
+  public id: string;
   public language: string;
-  public comment: string = '';
-  public rating;
+  public data;
   public obj = {
     rating: null,
-    comment: '',
-    companyOwner: ''
+    comment: ''
   };
   @Output() closeRaiting = new EventEmitter();
   public snackMessage = {
@@ -28,41 +27,46 @@ export class RaitingComponent implements OnInit {
     ua: 'Вкажіть свою оцінку'
   };
   constructor(
+      private route: ActivatedRoute,
       private auth: AuthService,
       private crud: CrudService,
       private snackBar: MatSnackBar
   ) { }
 
   ngOnInit() {
+    this.route.params.subscribe(() => {
+      this.id = this.route.snapshot.paramMap.get('id');
+      this.getRating(this.id);
+    });
     this.auth.onLanguage.subscribe((v: string) => {
       this.language = v;
     });
   }
+  getRating(id) {
+    this.crud.get(`rating?query={"_id":"${this.id}"}&populate={"path":"companyOwner","select":"name"}`).then((v: any) => {
+      if (v) {
+        this.data = Object.assign({}, v[0]);
+      }
+    })
+  }
   confirm(e){
     e.preventDefault();
-    this.obj = {
-      rating: this.rating,
-      comment: this.comment,
-      companyOwner: this.data._id
-    };
     if (!this.obj.rating) {
       this.openSnackBar(this.snackMessageError[this.language],  'Ok');
       return;
     }
-    this.openSnackBar(this.snackMessage[this.language],  'Ok');
-    this.closeRaiting.emit(false);
-    // this.crud.post('api', {}).then((v: any) => {
-    //   if (v) {
-    //     this.openSnackBar(this.snackMessage[this.language],  'Ok');
-    //     this.closeRaiting.emit(false);
-    //   }
-    // })
+    this.crud.post('rating', {rating: this.obj.rating, comment: this.obj.comment}, this.id).then((v: any) => {
+      if (v) {
+        this.openSnackBar(this.snackMessage[this.language],  'Ok');
+        window.history.back();
+      }
+    })
   }
   close() {
-    this.closeRaiting.emit(false);
+    window.history.back();
   }
   updateRaiting(e) {
-    this.rating = e;
+    this.obj.rating = e;
   }
 
   openSnackBar(message: string, action: string) {

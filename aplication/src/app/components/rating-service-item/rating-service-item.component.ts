@@ -19,7 +19,6 @@ export class RatingServiceItemComponent implements OnInit {
   };
   constructor(
       private auth: AuthService
-
   ) { }
 
   ngOnInit() {

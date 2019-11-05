@@ -24,6 +24,7 @@ export class OrdersComponent implements OnInit {
   ngOnInit() {
     this.auth.onWsOrder.subscribe((ws: any) => {
       if (ws) {
+        console.log(ws)
         const index = this.crud.find('_id', ws._id, this.orders);
         if (typeof index === 'number') {
           this.orders[index] = ws;

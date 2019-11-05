@@ -14,9 +14,9 @@ export class NotificationComponent implements OnInit, OnDestroy {
   public toggleMain: boolean = true;
   public showRaiting: boolean = false;
   public loading = false;
-  public company;
+  public ratingArr = [];
+  public ratingArrHistory = [];
   public city;
-  public chooseCompany;
   public action_t = {
     ru: 'Акции',
     ua: 'Акції'
@@ -53,11 +53,19 @@ export class NotificationComponent implements OnInit, OnDestroy {
       }
      });
   }
-  getCompany() {
-    const queryCompany = `?query={"city":"${this.city._id}","verify":true}&select=_id,name`;
-    this.crud.get('company', '', queryCompany).then((v: any) => {
+  getRating() {
+    const queryCompany = `?query={"clientOwner":"${localStorage.getItem('userId')}","show":true,"rating":"0"}&populate={"path":"companyOwner","select":"name"}`;
+    this.crud.get('rating', '', queryCompany).then((v: any) => {
       if (v) {
-        this.company = Object.assign([], v);
+        this.ratingArr = Object.assign([], v);
+        this.loading = true;
+      }
+    });
+    const queryCompanyHistory = JSON.stringify({clientOwner:localStorage.getItem('userId'), show: true, rating: {$ne: 0} });
+    const populateCompanyHistory = JSON.stringify({path:"companyOwner",select: "name"});
+    this.crud.get(`rating?query=${queryCompanyHistory}&populate=${populateCompanyHistory}`).then((v: any) => {
+      if (v) {
+        this.ratingArrHistory = Object.assign([], v);
         this.loading = true;
       }
     });
@@ -68,6 +76,11 @@ export class NotificationComponent implements OnInit, OnDestroy {
   getOutput(e) {
     if (e) {
       this.action = this.action.concat(e);
+    }
+  }
+  updateHistory(e){
+    if (e) {
+      this.getRating();
     }
   }
   ngOnDestroy() {
