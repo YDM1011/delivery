@@ -36,6 +36,10 @@ import {LottieAnimationViewModule} from 'ng-lottie';
 import {CreditCardDirectivesModule} from "angular-cc-library";
 import {NumbersOnlyDirective} from "./directives/numbers-only.directive";
 import { SearchFilterComponent } from './components/search-filter/search-filter.component';
+import { ProviderDetailsComponent } from './pages/provider-details/provider-details.component';
+import { StatusDetailProviderPipe } from './pipe/status-detail-provider.pipe';
+import { SaveHtmlPipe } from './pipe/save-html.pipe';
+import { LoadingComponent } from './components/loading/loading.component';
 
 @NgModule({
   declarations: [
@@ -59,7 +63,11 @@ import { SearchFilterComponent } from './components/search-filter/search-filter.
     MainComponent,
     ListAdminsComponent,
     NumbersOnlyDirective,
-    SearchFilterComponent
+    SearchFilterComponent,
+    ProviderDetailsComponent,
+    StatusDetailProviderPipe,
+    SaveHtmlPipe,
+    LoadingComponent
   ],
   imports: [
     LottieAnimationViewModule.forRoot(),

@@ -1,12 +1,100 @@
 <ng-container *ngIf="!loading">
 	<app-loading></app-loading>
 </ng-container>
-<div class="dashboard">
-	<div class="dashboard__header">
-		<div class="dashboard__header-title">
-			Просмотр статистики
+<div class="provider-detail">
+	<div class="provider-detail__header" *ngIf="provider">
+		<h2>
+			Поставщик "{{provider.name}}"
+		</h2>
+		
+		<div class="table-info">
+			<div class="info-row">
+				<div class="info-item">
+					Имя:
+				</div>
+				<div class="info-item">
+					{{provider.createdBy.name}}
+				</div>
+			</div>
+			<div class="info-row">
+				<div class="info-item">
+					Номер телефона:
+				</div>
+				<div class="info-item">
+					{{provider.createdBy.mobile}}
+				</div>
+			</div>
+			<div class="info-row">
+				<div class="info-item">
+					Адрес:
+				</div>
+				<div class="info-item">
+					{{provider.address}}
+				</div>
+			</div>
+			<div class="info-row">
+				<div class="info-item">
+					Город:
+				</div>
+				<div class="info-item">
+					{{provider.city.name}}
+				</div>
+			</div>
 		</div>
-		<div class="dashboard__header-filter">
+	</div>
+	<div class="provider-detail__orders-status">
+		<div class="title">
+			Количество заказов
+		</div>
+		<div class="order__status-box">
+			<div class="status-item">
+				<div class="count new">
+					54
+				</div>
+				<div class="title">
+					Новые
+				</div>
+			</div>
+			<div class="status-item">
+				<div class="count confirm">
+					54
+				</div>
+				<div class="title">
+					Подтверждено
+				</div>
+			</div>
+			<div class="status-item">
+				<div class="count edit">
+					54
+				</div>
+				<div class="title">
+					Изменено
+				</div>
+			</div>
+			<div class="status-item">
+				<div class="count done">
+					54
+				</div>
+				<div class="title">
+					Готово
+				</div>
+			</div>
+			<div class="status-item">
+				<div class="count cancel">
+					54
+				</div>
+				<div class="title">
+					Отменено
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="provider-detail__all-filter">
+		<div class="head">
+			<div class="title">
+				Все заказы
+			</div>
 			<div class="date">
 				<span>
 					Дата от:
@@ -31,102 +119,96 @@
 						<input placeholder="дд.мм.гггг" class="date-input" [matDatepicker]="picker2" (focus)="picker2.open()" (click)="picker2.open()" [(ngModel)]="dateEnd">
 						<mat-datepicker #picker2></mat-datepicker>
 					</div>
-				
 				</div>
 			</div>
-			<div class="city">
-				<span>
-					Город
-				</span>
-				<mat-form-field class="select-city">
-					<mat-select [value]="cityChoose" #c (selectionChange)="cityChange(c.value)">
-						<mat-option *ngFor="let item of city" [value]="item._id">
-							{{item.name}}
-						</mat-option>
-					</mat-select>
-				</mat-form-field>
-			</div>
-			<div class="providers">
-				<span>
-					Торговая точка поставщика
-				</span>
-				<mat-form-field class="select-city">
-					<mat-select [value]="providerChoose" #p (selectionChange)="providerChange(p.value)">
-						<mat-option [value]="0">
-							Все торговые точки
-						</mat-option>
-						<ng-container *ngIf="listProvider && listProvider.length>0">
-							<mat-option *ngFor="let item of listProvider" [value]="item.companyOwner._id">
-								{{item.companyOwner.name}}
-							</mat-option>
-						</ng-container>
-					</mat-select>
-				</mat-form-field>
-			</div>
 		</div>
-	</div>
-	<div class="dashboard__box">
-		
 		<div class="table-all">
 			<div class="all-row head">
 				<div class="all-col">
-					Город
+					Период
+				</div>
+				<div class="all-col">
+					Общее кол-во заказов
 				</div>
 				<div class="all-col">
 					Общая сумма
 				</div>
 			</div>
 			<div class="all-row">
-				<div class="all-col" *ngIf="showCity">
-				Все в г. {{showCity.name}}
+				<div class="all-col date-info">
+					<div class="d-span">
+						От
+					</div>
+					<div class="date">
+						<span *ngIf="dateStart else empty">
+							{{dateStart | date: 'dd.MM.yyyy'}}
+						</span>
+					</div>
+					<div class="d-span">
+						До
+					</div>
+					<div class="date">
+						<span *ngIf="dateEnd else empty">
+							{{dateEnd | date: 'dd.MM.yyyy'}}
+						</span>
+					</div>
+				</div>
+				<div class="all-col">
+					3040 заказов
 				</div>
 				<div class="all-col">
 					40 грн.
 				</div>
 			</div>
 		</div>
-		<ng-container>
+		<ng-container *ngIf="basketList && basketList.length>0">
 			<div class="main-table">
 				<div class="main-row head">
 					<div class="main-col">
-						Поставщик
+						Дата
 					</div>
 					<div class="main-col">
-						Кол-во  заказов
+						Статус заказа
 					</div>
 					<div class="main-col">
-						Сумма заказа
+						Номер заказа
 					</div>
 					<div class="main-col">
-						Отгруженый товар
+						Сумма
 					</div>
 				</div>
-				<div class="main-row" >
-					<div class="main-col">
-						Название поставщика
+					<div class="main-row" *ngFor="let item of basketList">
+						<div class="main-col">
+							<div class="date-item">
+								<div class="top-table-date">
+									{{item.date | date: 'dd MMMM, yyyy'  : null : defLang}}
+								</div>
+								<div class="bottom-table-date">
+									{{item.date| date: 'h:mm a'  : null : defLang}}
+								</div>
+							</div>
+						</div>
+						<div class="main-col" [innerHTML]="item.status | statusDetailProvider | saveHtml">
+						</div>
+						<div class="main-col">
+							{{item.basketNumber}}
+						</div>
+						<div class="main-col">
+							{{item.totalPrice}} грн.
+						</div>
 					</div>
-					<div class="main-col">
-						234234
-					</div>
-					<div class="main-col">
-						555
-					</div>
-					<div class="main-col">
-						555
-					</div>
-				</div>
 			</div>
 		</ng-container>
+	</div>
+	
+	<div class="pagination">
 		
-		<div class="pagination">
-			
-<!--			<mat-paginator [length]="lengthPagination"-->
-<!--			               [pageSize]="pageSizePagination"-->
-<!--			               [pageSizeOptions]="pageSizeOptionsPagination"-->
-<!--			               (page)="pageEvent($event)"-->
-<!--			               *ngIf="basketList && basketList.length > 0">-->
-<!--			</mat-paginator>-->
-		</div>
+		<mat-paginator [length]="lengthPagination"
+		               [pageSize]="pageSizePagination"
+		               [pageSizeOptions]="pageSizeOptionsPagination"
+		               (page)="pageEvent($event)"
+		               *ngIf="basketList && basketList.length > 0">
+		</mat-paginator>
 	</div>
 </div>
 

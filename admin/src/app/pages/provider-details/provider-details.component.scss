@@ -1,0 +1,212 @@
+.provider-detail{
+  &__header{
+    h2{
+      color: #009688;
+      font-weight: 600;
+      font-size: 21px;
+      line-height: 26px;
+    }
+    .table-info{
+      padding: 25px 0;
+      border-top: 1px solid #EBEBEB;
+      border-bottom: 1px solid #EBEBEB;
+      .info-row{
+        display: flex;
+        align-items: center;
+        margin-bottom: 25px;
+        &:nth-of-type(4){
+          margin-bottom: 0;
+        }
+        .info-item{
+          color: #000;
+          font-weight: 500;
+          font-size: 15px;
+          line-height: 18px;
+          &:nth-of-type(1){
+            color: #748AA1;
+            margin-right: 10px;
+          }
+        }
+      }
+    }
+  }
+  &__orders-status{
+    padding: 30px 0;
+    margin-bottom: 30px;
+    border-bottom: 1px solid #EBEBEB;
+    .title{
+      color: #009688;
+      font-weight: 600;
+      font-size: 21px;
+      line-height: 26px;
+    }
+    .order__status-box{
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin: 25px 0 0;
+      .status-item{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        .count{
+          font-weight: bold;
+          font-size: 60px;
+          line-height: 73px;
+          &.new{
+            color: #009688;
+          }
+          &.confirm{
+            color: #FFC700;
+          }
+          &.edit{
+            color: #FF7A00;
+          }
+          &.done{
+            color: #000;
+          }
+          &.cancel{
+            color: #6B6B6B;
+          }
+        }
+        .title{
+          color: #748AA1;
+          font-weight: 500;
+          font-size: 15px;
+          line-height: 18px;
+        }
+      }
+    }
+  }
+  &__all-filter{
+    .head{
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 20px;
+      .title{
+        color: #009688;
+        font-weight: 600;
+        font-size: 21px;
+        line-height: 26px;
+      }
+      .date{
+        span{
+          color: #748AA1;
+          margin-right: 5px;
+          &:nth-of-type(2){
+            margin-right: 15px;
+          }
+        }
+        .date-box{
+          display: inline-flex;
+          align-items: center;
+          svg{
+            margin-right: 5px;
+          }
+          .mat-date-pick{
+            width: 90px;
+            color: #31394D;
+            margin-right: 10px;
+          }
+          .date-input{
+            border: 0;
+            border-bottom:1px solid #DADADA;
+            width: 100%;
+          }
+          &:nth-of-type(1){
+            margin-right: 10px;
+          }
+        }
+      }
+    }
+  }
+  .table-all{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+    .all-row{
+      display: flex;
+      align-items: center;
+      width: 100%;
+      background: #EFFFFE;
+      .all-col{
+        padding: 20px 30px;
+        &:nth-of-type(1){
+          width: 40%;
+          border-right: 1px solid #DADADA;
+        }
+        &:nth-of-type(2){
+          width: 30%;
+          border-right: 1px solid #DADADA;
+        }
+        &:nth-of-type(3){
+          width: 30%;
+        }
+        &.date-info{
+          display: flex;
+          align-items: center;
+          .d-span{
+            color: #009688;
+            font-weight: bold;
+            margin-right: 5px;
+          }
+          .date{
+            margin-right: 10px;
+          }
+        }
+      }
+      &.head{
+        color: #fff;
+        background: #009688;
+        border-radius: 5px 5px 0 0;
+      }
+    }
+  }
+}
+
+.main-table{
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 30px;
+  .main-row{
+    display: flex;
+    width: 100%;
+    background: #fff;
+    &:nth-last-of-type(1){
+    }
+    .main-col{
+      display: flex;
+      align-items: center;
+      padding: 10px 30px;
+      border-bottom: 1px solid #DADADA;
+      &:nth-of-type(1){
+        width: 25%;
+        border-right: 1px solid #DADADA;
+      }
+      &:nth-of-type(2){
+        width: 25%;
+        border-right: 1px solid #DADADA;
+      }
+      &:nth-of-type(3){
+        width: 25%;
+        border-right: 1px solid #DADADA;
+      }
+      &:nth-of-type(4){
+        width: 25%;
+      }
+      .date-item{
+
+      }
+    }
+    &.head{
+      color: #fff;
+      background: #009688;
+      border-radius: 5px 5px 0 0;
+      .main-col{
+        padding: 20px 30px;
+      }
+    }
+  }
+}

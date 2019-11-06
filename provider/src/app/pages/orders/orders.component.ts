@@ -26,7 +26,6 @@ export class OrdersComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this._subscription.push(this.auth.onWsOrder.subscribe((ws: any) => {
       if (ws) {
-        console.log('in components', ws);
         const index = this.crud.find('_id', ws._id, this.orders);
         if (typeof index === 'number') {
           this.orders[index] = ws;
