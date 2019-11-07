@@ -82,7 +82,6 @@
   &__all-filter{
     .head{
       display: flex;
-      align-items: center;
       justify-content: space-between;
       margin-top: 20px;
       .title{
@@ -128,10 +127,11 @@
     margin-bottom: 10px;
     .all-row{
       display: flex;
-      align-items: center;
       width: 100%;
       background: #EFFFFE;
       .all-col{
+        display: flex;
+        align-items: center;
         padding: 20px 30px;
         &:nth-of-type(1){
           width: 40%;

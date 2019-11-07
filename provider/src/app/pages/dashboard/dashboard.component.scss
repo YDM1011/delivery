@@ -1,0 +1,51 @@
+.dashboard{
+  &__orders-status{
+    padding: 20px 0 30px;
+    margin-bottom: 30px;
+    border-bottom: 1px solid #EBEBEB;
+    .title{
+      color: #009688;
+      font-weight: 600;
+      font-size: 21px;
+      line-height: 26px;
+    }
+    .order__status-box{
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin: 25px 0 0;
+      .status-item{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        .count{
+          font-weight: bold;
+          font-size: 60px;
+          line-height: 73px;
+          &.new{
+            color: #009688;
+          }
+          &.confirm{
+            color: #FFC700;
+          }
+          &.edit{
+            color: #FF7A00;
+          }
+          &.done{
+            color: #000;
+          }
+          &.cancel{
+            color: #6B6B6B;
+          }
+        }
+        .title{
+          color: #748AA1;
+          font-weight: 500;
+          font-size: 15px;
+          line-height: 18px;
+        }
+      }
+    }
+  }
+}
