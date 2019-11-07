@@ -51,4 +51,20 @@
 			</div>
 		</div>
 	</div>
+	
+	<div class="chart">
+		<div class="chart-item" style="display: block;">
+			<canvas baseChart width="500" height="200"
+			        [datasets]="lineChartData"
+			        [labels]="lineChartLabels"
+			        [options]="lineChartOptions"
+			        [colors]="lineChartColors"
+			        [legend]="lineChartLegend"
+			        [chartType]="lineChartType"
+			        [plugins]="lineChartPlugins"
+			        (chartHover)="chartHovered($event)"
+			        (chartClick)="chartClicked($event)">
+			</canvas>
+		</div>
+	</div>
 </div>
