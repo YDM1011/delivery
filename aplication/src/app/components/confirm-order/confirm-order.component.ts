@@ -43,6 +43,7 @@ export class ConfirmOrderComponent implements OnInit {
         });
       }
     });
+    this.auth.resetConfirm()
   }
   confirm() {
     if (!this.obj.address || !this.obj.payMethod) {

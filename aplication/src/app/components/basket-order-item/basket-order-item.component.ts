@@ -38,7 +38,6 @@ export class BasketOrderItemComponent implements OnInit {
     this.auth.onConfirmOrder.subscribe(v=>{
       if (!v) return;
       this.showConfirm = true;
-      this.auth.resetConfirm()
     })
   }
   closeConfirm(e) {
