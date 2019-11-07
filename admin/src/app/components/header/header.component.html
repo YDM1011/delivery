@@ -1,6 +1,6 @@
 <div class="admin-header">
-	<div class="tel">
-		Тел.: +380882345657
+	<div class="tel" *ngIf="me">
+		{{me.login}}
 	</div>
 	<div class="buttons">
 		<div class="logout" (click)="logout()">

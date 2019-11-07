@@ -35,6 +35,14 @@
     width: 81px;
     padding: 25px 0;
     z-index: 4;
+    .img{
+      display: flex;
+      justify-content: center;
+      height: 50px;
+      width: 50px;
+      border-radius: 50%;
+      overflow: hidden;
+    }
     img{
       display: block;
       border-radius: 50%;
