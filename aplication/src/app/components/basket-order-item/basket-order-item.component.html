@@ -24,10 +24,18 @@
           <div class="title">
             {{prod.orderOwner.name}}
           </div>
-          <div class="price">
+            <div class="price-element" [class.sale]="prod.orderOwner.discount">
+                <div class="price-item">
+                    {{prod.orderOwner.price}} грн.
+                </div>
+                <div class="new-price">
+                    {{prod.orderOwner.discount}} грн.
+                </div>
+            </div>
+<!--          <div class="price" [class.sale]="prod.orderOwner.discount">-->
 <!--            {{prod.orderOwner.discount ? prod.orderOwner.discount : prod.orderOwner.price}} Грн.-->
-            {{prod.orderOwner.price}} Грн.
-          </div>
+<!--&lt;!&ndash;            {{prod.orderOwner.price}} Грн.&ndash;&gt;-->
+<!--          </div>-->
           <div class="count">
             <button class="minus" (click)="minus(i)"></button>
             <div class="count-item">{{prod.count}}</div>

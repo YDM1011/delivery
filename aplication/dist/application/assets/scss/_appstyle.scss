@@ -303,10 +303,12 @@
     &.fixed{
       position: fixed;
       top: 55px;
+      left: 0;
       width: 100%;
       padding: 20px 0 7px;
       z-index: 4;
       background: #fff;
+      max-width: 738px;
     }
     button{
       width: 50%;
@@ -416,6 +418,13 @@
   .block-control{
     left: calc(50% - 384px);
     max-width: 768px;
+  }
+  .popular-section{
+    &-button {
+      &.fixed {
+        left: calc(50% - 368px);
+      }
+    }
   }
   .other-header{
     left: calc(50% - 384px);

@@ -35,6 +35,14 @@
     width: 81px;
     padding: 25px 0;
     z-index: 4;
+    .img{
+      display: flex;
+      justify-content: center;
+      height: 50px;
+      width: 50px;
+      border-radius: 50%;
+      overflow: hidden;
+    }
     img{
       display: block;
       border-radius: 50%;
@@ -49,7 +57,7 @@
     width: 81px;
     padding: 5px 15px;
     min-height: 70px;
-    margin: 0 0 15px;
+    margin: 0 0 10px;
     transition: width .2s;
     color: #fff;
     z-index: 3;

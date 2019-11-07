@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import {ActivatedRoute, NavigationEnd, Router} from "@angular/router";
-import {AuthService} from "../../auth.service";
+import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
+import {AuthService} from '../../auth.service';
 import {ConnectionService} from 'ng-connection-service';
-import {WS} from "../../websocket/websocket.events";
-import {WebsocketService} from "../../websocket";
+import {WS} from '../../websocket/websocket.events';
+import {WebsocketService} from '../../websocket';
 
 @Component({
   selector: 'app-init-layout',
@@ -19,9 +19,9 @@ export class InitLayoutComponent implements OnInit {
   constructor(
     private wsService: WebsocketService,
     private connectionService: ConnectionService,
-      private auth: AuthService,
-      private router: Router,
-      private route: ActivatedRoute
+    private auth: AuthService,
+    private router: Router,
+    private route: ActivatedRoute
   ) { }
 
   ngOnInit() {
@@ -39,10 +39,10 @@ export class InitLayoutComponent implements OnInit {
     this.connectionService.monitor().subscribe(isConnected => {
       this.isConnected = isConnected;
       if (this.isConnected) {
-        this.status = "online";
+        this.status = 'online';
       }
       else {
-        this.status = "offline";
+        this.status = 'offline';
       }
     });
 

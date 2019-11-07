@@ -86,3 +86,7 @@
 .example-full-width {
   width: 100%;
 }
+
+::ng-deep .clock-face__number[_ngcontent-aoa-c12] > span.active[_ngcontent-aoa-c12]{
+  background-color: #009688 !important;
+}

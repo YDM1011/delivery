@@ -51,6 +51,7 @@ import {CroperComponent, TouchStart} from './components/croper/croper.component'
 import { SignUpComponent } from './pages/sign-up/sign-up.component';
 import { VerificationComponent } from './components/verification/verification.component';
 import {Ng5SliderModule} from "ng5-slider";
+import {ChartsModule} from "ng2-charts";
 
 @NgModule({
   declarations: [
@@ -89,6 +90,7 @@ import {Ng5SliderModule} from "ng5-slider";
     VerificationComponent
   ],
   imports: [
+    ChartsModule,
     BrowserAnimationsModule,
     HttpClientModule,
     BrowserModule,

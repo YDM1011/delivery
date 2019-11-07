@@ -73,11 +73,11 @@
 							<div class="col">
 							</div>
 						</div>
-						<div class="row-r" *ngFor="let item of list; let index = index">
+						<div class="row-r" *ngFor="let item of list; let index = index" [routerLink]="'/provider-detail/'+item.companyOwner._id">
 							<div class="col">
 								<div class="img">
-									<img src="./assets/images/user.svg" alt="" *ngIf="!item.img || item.img == ''">
-									<app-img [fs]="item.img" *ngIf="item.img && item.img !== ''"></app-img>
+									<img src="./assets/images/user.svg" alt="" *ngIf="item.companyOwner.img == ''">
+									<app-img [fs]="item.companyOwner.img" *ngIf="item.companyOwner.img && item.companyOwner.img !== ''"></app-img>
 								</div>
 								{{item.login}}
 							</div>

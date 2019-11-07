@@ -59,8 +59,8 @@ export class OrdersComponent implements OnInit, OnDestroy {
     }
   }
   removeOrder(e, i) {
-      this.openSnackBar('Ваш заказ был отменен',  'Ok');
-      this.orders.splice(i, 1);
+    this.orders[i].status = 5;
+    this.openSnackBar('Ваш заказ был отменен',  'Ok');
   }
   getBaskets() {
     this.toggleMain = true;

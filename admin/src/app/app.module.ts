@@ -30,12 +30,16 @@ import {ApiInterceptor} from './api.interceptor';
 import { LoginComponent } from './pages/login/login.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { MainComponent } from './layout/main/main.component';
-import {MatInputModule} from '@angular/material';
+import {MatDatepickerModule, MatInputModule} from '@angular/material';
 import { ListAdminsComponent } from './pages/list-admins/list-admins.component';
 import {LottieAnimationViewModule} from 'ng-lottie';
 import {CreditCardDirectivesModule} from "angular-cc-library";
 import {NumbersOnlyDirective} from "./directives/numbers-only.directive";
 import { SearchFilterComponent } from './components/search-filter/search-filter.component';
+import { ProviderDetailsComponent } from './pages/provider-details/provider-details.component';
+import { StatusDetailProviderPipe } from './pipe/status-detail-provider.pipe';
+import { SaveHtmlPipe } from './pipe/save-html.pipe';
+import { LoadingComponent } from './components/loading/loading.component';
 
 @NgModule({
   declarations: [
@@ -59,7 +63,11 @@ import { SearchFilterComponent } from './components/search-filter/search-filter.
     MainComponent,
     ListAdminsComponent,
     NumbersOnlyDirective,
-    SearchFilterComponent
+    SearchFilterComponent,
+    ProviderDetailsComponent,
+    StatusDetailProviderPipe,
+    SaveHtmlPipe,
+    LoadingComponent
   ],
   imports: [
     LottieAnimationViewModule.forRoot(),
@@ -72,7 +80,8 @@ import { SearchFilterComponent } from './components/search-filter/search-filter.
     SweetAlert2Module.forRoot(),
     MaterialModule,
     Ng2SearchPipeModule,
-    CreditCardDirectivesModule
+    CreditCardDirectivesModule,
+    MatDatepickerModule
   ],
   exports: [MaterialModule],
   providers: [CookieService, {provide: HTTP_INTERCEPTORS, useClass: ApiInterceptor, multi: true},

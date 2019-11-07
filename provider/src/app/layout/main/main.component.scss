@@ -8,7 +8,7 @@
 .admin-container{
   display: flex;
   flex-direction: column;
-  width: calc(100% - 81px);
+  width: calc(100% - 140px);
   margin: 10px 45px 30px 110px;
   background: #fff;
   .admin-box{
@@ -47,3 +47,18 @@
 ::ng-deep .mat-checkbox-checked .mat-checkbox-background {
   background-color: #009688 !important;
 }
+
+::ng-deep .mat-calendar-body-selected{
+  background-color: #009688!important;
+}
+::ng-deep .timepicker__header{
+  background-color: #009688!important;
+}
+::ng-deep .timepicker-button{
+  color: #009688!important;
+}
+
+::ng-deep .clock-face__number{
+  color: #009688!important;
+}
+
