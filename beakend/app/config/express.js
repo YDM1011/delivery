@@ -81,7 +81,12 @@ const init = (app, config) =>{
     app.set('views', path.join(__dirname, '../../../beakend/views'));
     app.set('view engine', 'ejs');
 
-
+    // var admin = require("firebase-admin");
+    // var serviceAccount = require("./airy-gamma-253812-firebase-adminsdk-ddoko-ea2dd10539.json");
+    // admin.initializeApp({
+    //     credential: admin.credential.cert(serviceAccount),
+    //     databaseURL: "https://airy-gamma-253812.firebaseio.com"
+    // });
 
     app.get("/", (req, res, next) => {
         const host = req.hostname;
