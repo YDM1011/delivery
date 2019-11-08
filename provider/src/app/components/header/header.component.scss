@@ -25,3 +25,26 @@
     }
   }
 }
+.info-active{
+  margin: 0 10px 0 auto;
+  span{
+    color: #748AA1;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 22px;
+    &.no-active{
+      color: #E21B1B;
+    }
+  }
+}
+.active-button{
+  font-size: 18px;
+  line-height: 22px;
+  color: #009688;
+  font-weight: bold;
+  border: 0;
+  box-shadow: none;
+  background: transparent;
+  text-decoration: underline;
+  cursor: pointer;
+}

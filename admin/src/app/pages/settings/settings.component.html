@@ -91,5 +91,27 @@
 				</div>
 			</div>
 		</div>
+		<div class="contain__group pay-info" *ngIf="loading">
+			<div class="contain__group-header">
+				<div class="title">
+					Сума и период оплаты
+				</div>
+			</div>
+			<div class="main-section pay-section">
+				<div class="sum">
+					<mat-form-field class="example-full-width">
+						<input matInput type="number" placeholder="Цена" name="price" [(ngModel)]="objPayInfo.price" autocomplete="off">
+					</mat-form-field>
+				</div>
+				<div class="time">
+					<mat-form-field class="example-full-width">
+						<input matInput type="text" placeholder="Период" name="period" [(ngModel)]="objPayInfo.period" autocomplete="off">
+					</mat-form-field>
+				</div>
+				<button class="main-button-color" (click)="savePayInfo()">
+					Изменить
+				</button>
+			</div>
+		</div>
 	</div>
 </ng-container>

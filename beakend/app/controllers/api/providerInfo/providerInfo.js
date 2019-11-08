@@ -11,7 +11,7 @@ module.exports = (backendApp, router) => {
         const Basket = backendApp.mongoose.model("Basket");
         let AND = {$and:[]};
         console.log(req.params.cityId,  parseInt(req.params.status), req.params.status);
-        if (req.params.cityId != 'all' && req.params.cityId) {
+        if (req.params.cityId !== 'all' && req.params.cityId) {
             let companies = await getCompanyByCity(Company, req.params.cityId).catch(e=> res.serverError(e));
             companies.forEach((it,i)=>{
                 companies[i] = {companyOwner:it._id};

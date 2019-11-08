@@ -69,3 +69,17 @@
     margin-left: 50px;
   }
 }
+
+.pay-info{
+  margin-top: 25px;
+}
+.pay-section{
+  display: flex;
+  align-items: center;
+  .sum{
+    margin-right: 20px;
+  }
+  .time{
+    margin-right: 20px;
+  }
+}

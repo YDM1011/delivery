@@ -17,6 +17,7 @@ import {ActionComponent} from './pages/action/action.component';
 import {OrdersComponent} from './pages/orders/orders.component';
 import {OrdersDetailComponent} from './pages/orders-detail/orders-detail.component';
 import {SignUpComponent} from './pages/sign-up/sign-up.component';
+import {PayComponent} from "./pages/pay/pay.component";
 
 const routes: Routes = [
   {path: '', component: MainComponent, children: [
@@ -32,7 +33,7 @@ const routes: Routes = [
       {path: 'action', component: ActionComponent},
       {path: 'orders', component: OrdersComponent},
       {path: 'orders-detail/:id', component: OrdersDetailComponent},
-
+      {path: 'pay-info', component: PayComponent},
       ], canActivate: [AdminLoginedGuard]},
   {path: 'login', component: LoginComponent, canActivate: [AdminLogoutGuard]},
   {path: 'signup', component: SignUpComponent},

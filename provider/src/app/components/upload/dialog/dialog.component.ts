@@ -40,7 +40,7 @@ export class DialogComponent implements OnInit {
   }
   progress;
   canBeClosed = true;
-  primaryButtonText = 'Upload';
+  primaryButtonText = 'Загрузить';
   showCancelButton = true;
   uploading = false;
   uploadSuccessful = false;

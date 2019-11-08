@@ -1,8 +1,7 @@
 <div class="side-bar">
 	<div class="avatar-block" *ngIf="user">
-		<img src="./assets/images/user.svg" alt="" *ngIf="user.companies.length===0">
 		<div class="img">
-			<app-img *ngIf="user.companies.length>0" [fs]="user.companies[0] ? user.companies[0].img : ''" [anyFs]="'assets/images/user.svg'"></app-img>
+			<app-img *ngIf="user.companyOwner && user.companies.length>0" [fs]="user.companies[0].img ? user.companies[0].img : null" [anyFs]="'assets/images/user.svg'"></app-img>
 		</div>
 	</div>
 	<a [routerLink]="'/dashboard'" routerLinkActive="active" *ngIf="user && user.role === 'provider'">
