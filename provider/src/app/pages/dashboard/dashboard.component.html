@@ -11,7 +11,7 @@
 		<div class="order__status-box">
 			<div class="status-item">
 				<div class="count new">
-					54
+					{{allCounts.first ? allCounts.first : 0}}
 				</div>
 				<div class="title">
 					Новые
@@ -19,7 +19,7 @@
 			</div>
 			<div class="status-item">
 				<div class="count confirm">
-					54
+					{{allCounts.second ? allCounts.second : 0}}
 				</div>
 				<div class="title">
 					Подтверждено
@@ -27,7 +27,7 @@
 			</div>
 			<div class="status-item">
 				<div class="count edit">
-					54
+					{{allCounts.third ? allCounts.third : 0}}
 				</div>
 				<div class="title">
 					Изменено
@@ -35,7 +35,7 @@
 			</div>
 			<div class="status-item">
 				<div class="count done">
-					54
+					{{allCounts.second ? allCounts.second : 0}}
 				</div>
 				<div class="title">
 					Готово
@@ -43,7 +43,7 @@
 			</div>
 			<div class="status-item">
 				<div class="count cancel">
-					54
+					{{allCounts.second ? allCounts.second : 0}}
 				</div>
 				<div class="title">
 					Отменено

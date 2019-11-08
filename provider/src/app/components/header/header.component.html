@@ -2,6 +2,12 @@
 	<div class="tel">
 		Тел.: +380 {{user ? user.login : ''}}
 	</div>
+	<div class="info-active" *ngIf="user && user.companyOwner">
+		<span>
+			{{user.companyOwner.payInfo ? "Оплачено до" + user.companyOwner.payInfo : "Не оплачено"}}
+		</span>
+		<button class="active-button" [routerLink]="'/pay-info'">{{user.companyOwner.payInfo ? 'Продлить' : 'Оплатить'}}</button>
+	</div>
 	<div class="buttons">
 		<div class="logout" (click)="logout()">
 			<svg width="23" height="23" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg">

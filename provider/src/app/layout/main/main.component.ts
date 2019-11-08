@@ -41,7 +41,7 @@ export class MainComponent implements OnInit {
     const userId = localStorage.getItem('userId');
     const query = JSON.stringify({_id: userId});
     const populate = JSON.stringify(
-        {'path': 'companyOwner', 'populate': ['action', 'collaborators', 'debtors', 'categories']}
+        {'path': 'companyOwner companies', 'populate': ['action', 'collaborators', 'debtors', 'categories']}
     );
     this.crud.get(`client?query=${query}&populate=${populate}`)
         .then((v2: any) => {

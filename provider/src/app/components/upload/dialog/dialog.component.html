@@ -11,7 +11,7 @@
     <h1 mat-dialog-title>Upload Files</h1>
     <h3 *ngIf="data.tooltip">{{data.tooltip}}</h3>
     <button [disabled]="uploading || uploadSuccessful" mat-raised-button class="green-dialog-btn" (click)="addFiles()">
-      Add Files
+      Додать файл
     </button>
   </div>
   <!-- This is the content of the dialog, containing a list of the files to upload -->
@@ -39,8 +39,8 @@
 <ng-container *ngIf="data.cropper && step == 1">
   <!-- This are the actions of the dialog, containing the primary and the cancel button-->
   <mat-dialog-actions class="actions" style="margin-bottom: 5px">
-    <button *ngIf="showCancelButton" mat-button mat-dialog-close>Cancel</button>
-    <button class="green-dialog-btn" mat-raised-button [disabled]="disBtn" (click)="closeDialog()">next</button>
+    <button *ngIf="showCancelButton" mat-button mat-dialog-close>Отмена</button>
+    <button class="green-dialog-btn" mat-raised-button [disabled]="disBtn" (click)="closeDialog()">Дальше</button>
   </mat-dialog-actions>
 </ng-container>
 

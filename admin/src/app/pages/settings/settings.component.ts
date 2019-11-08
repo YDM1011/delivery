@@ -38,6 +38,10 @@ export class SettingsComponent implements OnInit {
     month: '',
     ccv: ''
   };
+  public objPayInfo = {
+    price: 0,
+    period: ''
+  };
 
   constructor(
       private auth: AuthService,
@@ -60,6 +64,8 @@ export class SettingsComponent implements OnInit {
     this.crud.get('setting?populate={"path":"city"}').then((s: any) => {
       if (!s) {return; }
       this.setting = Object.assign({}, s);
+      this.objPayInfo.price = this.setting.payInfo.price;
+      this.objPayInfo.period = this.setting.payInfo.period;
     });
     this.crud.get('city').then((c: any) => {
       if (!c || c.lenght === 0) {return; }
@@ -125,6 +131,9 @@ export class SettingsComponent implements OnInit {
         this.cardEmpty = true;
       }
     });
+  }
+  savePayInfo(){
+    this.crud.post('setting', {payInfo: this.objPayInfo}).then()
   }
   confirmCity() {
     if (!this.cityChoose && this.cityChoose === '') {

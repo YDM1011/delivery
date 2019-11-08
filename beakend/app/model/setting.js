@@ -10,6 +10,16 @@ const schema = new Schema({
         type: Schema.Types.ObjectId,
         ref: "City"
     },
+    payInfo: {
+        price: {
+            type: Number,
+            default: 0
+        },
+        period: {
+            type: String,
+            default: ''
+        }
+    },
     isAppBlock: Boolean,
     percentage: Number,
     name: String,
@@ -56,7 +66,7 @@ const schema = new Schema({
         delete: [{private:true}],
     },
     provider: {
-        read: [{private:true}],
+        read: [{public:true}],
         update: [{private:true}],
         create: [{private:true}],
         delete: [{private:true}],

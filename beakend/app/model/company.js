@@ -18,6 +18,10 @@ const schem = new Schema({
         type: String,
         default: null
     },
+    payInfo: {
+        type: Date,
+        default: null
+    },
     createdBy: {
         type: Schema.Types.ObjectId,
         ref: "Client"

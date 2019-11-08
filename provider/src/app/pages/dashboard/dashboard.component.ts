@@ -72,6 +72,13 @@ export class DashboardComponent implements OnInit {
   public lineChartType = 'line';
   // public lineChartPlugins = [pluginAnnotations];
   @ViewChild(BaseChartDirective, { static: true }) chart: BaseChartDirective;
+  public allCounts = {
+    first: null,
+    second: null,
+    third: null,
+    forth: null,
+    fifth: null
+  };
   constructor(
       private crud: CrudService,
       private auth: AuthService
@@ -83,6 +90,22 @@ export class DashboardComponent implements OnInit {
       if (!v) {return; }
       this.user = Object.assign({}, v);
     });
+
+    this.crud.get(`providerInfo/byName/1`).then((v: any) => {
+      this.allCounts['first'] = v[0].count;
+    });
+    this.crud.get(`providerInfo/byName/2`).then((v: any) => {
+      this.allCounts['second'] = v[0].count;
+    });
+    this.crud.get(`providerInfo/byName/3`).then((v: any) => {
+      this.allCounts['third'] = v[0].count;
+    });
+    this.crud.get(`providerInfo/byName/4`).then((v: any) => {
+      this.allCounts['forth'] = v[0].count;
+    });
+    this.crud.get(`providerInfo/byName/5`).then((v: any) => {
+      this.allCounts['fifth'] = v[0].count;
+    })
   }
   // events
   public chartClicked({ event, active }: { event: MouseEvent, active: {}[] }): void {
