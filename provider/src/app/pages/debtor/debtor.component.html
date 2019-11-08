@@ -80,12 +80,12 @@
 			</button>
 		</div>
 		<ng-container class="loading" *ngIf="!loading">
-			loading...
+			Загрузка
 		</ng-container>
 		<ng-container *ngIf="loading">
 			<div class="main-section">
 				<div class="table" *ngIf="debtors && debtors.length > 0">
-					<app-search-filter [inputApi]="'debtor'" [inputQuery]="'login'" [queryValue]="'companyOwner'" [querySearch]="user.companies[0]._id" [populate]="'clientOwner'" (output)="outputSearch($event)"></app-search-filter>
+					<app-search-filter [inputApi]="'debtor'" [inputQuery]="'login'" [queryValue]="'companyOwner'" [querySearch]="user.companyOwner._id" [populate]="'clientOwner'" (output)="outputSearch($event)"></app-search-filter>
 					<div class="table-content">
 						<div class="row-h">
 							<div class="col center-column">
@@ -103,15 +103,23 @@
             <ng-container *ngFor="let item of debtors; let index = index ">
               <div class="row-r debtor-wrap">
                 <div class="col">
-                  <div class="wrap-address-name address-name">
+                <div class="wrap-address-name address-name" *ngIf="!item.basket">
+	                <div class="img-address">
+		                <app-img [fs]="item.clientOwner.img" [dir]="'avatar'" [anyFs]="'/assets/images/user.svg'"></app-img>
+	                </div>
+	                <div class="address-title">
+		                {{item.clientOwner.name}}
+	                </div>
+                </div>
+                  <div class="wrap-address-name address-name" *ngIf="item.basket">
                     <div class="img-address">
                       <app-img [fs]="item.basket.deliveryAddress.img" [dir]="'address'" [anyFs]="'/assets/images/user.svg'"></app-img>
                     </div>
-                    <div class="address-title">
+                    <div class="address-title" *ngIf="item.basket">
                       {{item.basket.deliveryAddress.name}}
                     </div>
                   </div>
-                  <div class="wrap-address center-column">
+                  <div class="wrap-address center-column" *ngIf="item.basket">
                     <span *ngIf="item.basket.deliveryAddress.city.name">
 	                    {{item.basket.deliveryAddress.city.name}}
                     </span>
@@ -129,7 +137,7 @@
                 <div class="col">
                   <div class="col-column center-column">
                     <p class="status__title remove">Долг {{item.value}} грн</p>
-                    <p>Заказ №{{item.basket.basketNumber}}</p>
+                    <p *ngIf="item.basket">Заказ №{{item.basket.basketNumber}}</p>
                   </div>
                 </div>
                 <div class="col">
@@ -150,7 +158,7 @@
                 <div class="hover-title">
                   <div class="deptor-avatar">
                     <div class="img-avatar">
-                      <app-img [fs]="item.clientOwner.img" [dir]="'avatar'" [anyFs]="'/assets/images/user.svg'"></app-img>
+                      <app-img [fs]="item.clientOwner.img ? item.clientOwner.img : ''" [dir]="'avatar'" [anyFs]="'/assets/images/user.svg'"></app-img>
                     </div>
                   </div>
                   <div class="deptor-mobile">
@@ -162,14 +170,13 @@
                 </div>
               </div>
             </ng-container>
-					</div>
-					
-					<mat-paginator [length]="lengthPagination"
-					               [pageSize]="pageSizePagination"
-					               [pageSizeOptions]="pageSizeOptionsPagination"
-					               (page)="pageEvent($event)"
-									*ngIf="debtors && debtors.length > 0">
-					</mat-paginator>
+		</div>
+				<mat-paginator [length]="lengthPagination"
+				               [pageSize]="pageSizePagination"
+				               [pageSizeOptions]="pageSizeOptionsPagination"
+				               (page)="pageEvent($event)"
+				               *ngIf="debtors && debtors.length > 0">
+				</mat-paginator>
 				</div>
 				<div class="empty-section" *ngIf="!debtors || debtors.length === 0">
 					<p>

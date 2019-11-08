@@ -2,6 +2,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {CrudService} from '../../crud.service';
 import {AuthService} from '../../auth.service';
 import {Subscription} from "rxjs";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-orders',
@@ -20,10 +21,12 @@ export class OrdersComponent implements OnInit, OnDestroy {
   private _subscription: Subscription[] = [];
   constructor(
       private crud: CrudService,
-      private auth: AuthService
+      private auth: AuthService,
+      private router: Router
   ) { }
 
   ngOnInit() {
+    this.router.navigate(['/orders']);
     this._subscription.push(this.auth.onWsOrder.subscribe((ws: any) => {
       if (ws) {
         const index = this.crud.find('_id', ws._id, this.orders);
@@ -38,10 +41,10 @@ export class OrdersComponent implements OnInit, OnDestroy {
       if (!me) {return; }
       this.user = me;
       if (this.user && this.user.companyOwner) {
-        this.crud.get(`basket/count?query={"companyOwner":"${this.user.companyOwner}","status":1}`).then((count: any) => {
+        this.crud.get(`basket/count?query={"companyOwner":"${this.user.companyOwner._id}","status":1}`).then((count: any) => {
           if (count) {
             this.lengthPagination = count.count;
-            this.crud.get(`basket?query={"companyOwner":"${this.user.companyOwner}","status":1}&populate=[{"path":"deliveryAddress","populate":"city","select":"name build street department"},{"path":"manager","select":"name"}]&sort={"date":-1}`).then((orders: any) => {
+            this.crud.get(`basket?query={"companyOwner":"${this.user.companyOwner._id}","status":1}&populate=[{"path":"deliveryAddress","populate":"city","select":"name build street department"},{"path":"manager","select":"name"}]&sort={"date":-1}`).then((orders: any) => {
               if (!orders) {return; }
               this.orders = orders;
               this.loading = true;
@@ -97,10 +100,10 @@ export class OrdersComponent implements OnInit, OnDestroy {
     }
   }
   tab0(skip, limit) {
-    this.crud.get(`basket/count?query={"companyOwner":"${this.user.companyOwner}"}`).then((count: any) => {
+    this.crud.get(`basket/count?query={"companyOwner":"${this.user.companyOwner._id}"}`).then((count: any) => {
       if (count) {
         this.lengthPagination = count.count;
-        this.crud.get(`basket?query={"companyOwner":"${this.user.companyOwner}", "status":1}&populate=[{"path":"deliveryAddress","populate":"city","select":"name build street department"},{"path":"manager","select":"name"}]&skip=${skip}&limit=${limit}&sort={"date":-1}`).then((orders: any) => {
+        this.crud.get(`basket?query={"companyOwner":"${this.user.companyOwner._id}", "status":1}&populate=[{"path":"deliveryAddress","populate":"city","select":"name build street department"},{"path":"manager","select":"name"}]&skip=${skip}&limit=${limit}&sort={"date":-1}`).then((orders: any) => {
           if (!orders) {return; }
           this.orders = orders;
           this.loading = true;
@@ -109,10 +112,10 @@ export class OrdersComponent implements OnInit, OnDestroy {
     });
   }
   tab1(skip, limit) {
-    this.crud.get(`basket/count?query={"companyOwner":"${this.user.companyOwner}", "$or":[{"status":2},{"status":3}]}`).then((count: any) => {
+    this.crud.get(`basket/count?query={"companyOwner":"${this.user.companyOwner._id}", "$or":[{"status":2},{"status":3}]}`).then((count: any) => {
       if (count) {
         this.lengthPagination = count.count;
-        this.crud.get(`basket?query={"companyOwner":"${this.user.companyOwner}", "$or":[{"status":2},{"status":3}]}&populate=[{"path":"deliveryAddress","populate":"city","select":"name build street department"},{"path":"manager","select":"name"}]&skip=${skip}&limit=${limit}&sort={"date":-1}`).then((orders: any) => {
+        this.crud.get(`basket?query={"companyOwner":"${this.user.companyOwner._id}", "$or":[{"status":2},{"status":3}]}&populate=[{"path":"deliveryAddress","populate":"city","select":"name build street department"},{"path":"manager","select":"name"}]&skip=${skip}&limit=${limit}&sort={"date":-1}`).then((orders: any) => {
           if (!orders) {return; }
           this.orders = orders;
           this.loading = true;
@@ -121,10 +124,10 @@ export class OrdersComponent implements OnInit, OnDestroy {
     });
   }
   tab2(skip, limit) {
-    this.crud.get(`basket/count?query={"companyOwner":"${this.user.companyOwner}", "$or":[{"status":4},{"status":5}]}`).then((count: any) => {
+    this.crud.get(`basket/count?query={"companyOwner":"${this.user.companyOwner._id}", "$or":[{"status":4},{"status":5}]}`).then((count: any) => {
       if (count) {
         this.lengthPagination = count.count;
-        const query = JSON.stringify({companyOwner: this.user.companyOwner, $or: [{status: 4}, {status: 5}]});
+        const query = JSON.stringify({companyOwner: this.user.companyOwner._id, $or: [{status: 4}, {status: 5}]});
         this.crud.get(`basket?query=${query}&populate=[{"path":"deliveryAddress","populate":"city","select":"name build street department"},{"path":"manager","select":"name"}]&skip=${skip}&limit=${limit}&sort={"date":-1}`).then((orders: any) => {
           if (!orders) {return; }
           this.orders = orders;

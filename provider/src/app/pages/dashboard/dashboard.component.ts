@@ -3,7 +3,6 @@ import {CrudService} from '../../crud.service';
 import {AuthService} from '../../auth.service';
 import {BaseChartDirective, Color, Label} from "ng2-charts";
 import {ChartDataSets, ChartOptions} from "chart.js";
-import * as pluginAnnotations from 'chartjs-plugin-annotation';
 
 @Component({
   selector: 'app-dashboard',

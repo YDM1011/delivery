@@ -18,7 +18,7 @@
 					<input type="number" placeholder="Номер телефона компании" aria-label="Text" name="phone" matInput [(ngModel)]="companyCopy.companyMobile">
 				</mat-form-field>
 				<mat-form-field class="example-half" *ngIf="city && city.length > 0">
-					<mat-label>City</mat-label>
+					<mat-label>Город</mat-label>
 					<mat-select #o [(value)]="cityChoose" (selectionChange)="changeCity(o.value)">
 						<mat-option *ngFor="let item of city" [value]="item._id">
 							{{item.name}}
@@ -39,7 +39,7 @@
 					<button class="main-button-color" (click)="create()">Сохранить</button>
 				</div>
 			</div>
-			<a [routerLink]="'/work-time'" class="link">Work time</a>
+			<a [routerLink]="'/work-time'" class="link">Время работы</a>
 		</div>
 	</div>
 </div>

@@ -20,7 +20,7 @@ import {SignUpComponent} from './pages/sign-up/sign-up.component';
 
 const routes: Routes = [
   {path: '', component: MainComponent, children: [
-      {path: '', component: DashboardComponent},
+      {path: '', component: OrdersComponent},
       {path: 'dashboard', component: DashboardComponent},
       {path: 'category', component: CategoryComponent},
       {path: 'category-detail/:id', component: CategoryDetailComponent},

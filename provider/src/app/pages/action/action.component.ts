@@ -64,7 +64,7 @@ export class ActionComponent implements OnInit {
       if (!v) { return; }
       this.user = v;
       if (this.user && this.user.companyOwner) {
-        this.company = this.user.companyOwner;
+        this.company = this.user.companyOwner._id;
         this.crud.get(`order?query={"companyOwner":"${this.company}"}`).then((p: any) => {
           if (p && p.length > 0) {
             this.products = p;

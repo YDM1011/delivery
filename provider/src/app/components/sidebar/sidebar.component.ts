@@ -16,6 +16,7 @@ export class SidebarComponent implements OnInit {
     this.auth.onMe.subscribe((v: any) => {
       if (v) {
         this.user = v;
+        console.log(this.user)
       }
     })
   }

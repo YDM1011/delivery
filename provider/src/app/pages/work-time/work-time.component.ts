@@ -58,9 +58,8 @@ export class WorkTimeComponent implements OnInit {
     this.isBlok = true;
   }
   saveTime() {
-    console.log(this.time);
     this.user.companies[0].workTime = this.time;
-    this.crud.post('company', {workTime: this.time}, this.user.companyOwner).then((v: any) => {
+    this.crud.post('company', {workTime: this.time}, this.user.companyOwner._id).then((v: any) => {
       if (v) {
         this.auth.setMe(this.user);
       }

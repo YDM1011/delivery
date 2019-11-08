@@ -36,7 +36,7 @@ export class DebtorComponent implements OnInit {
   public debtor = {
     clientOwner: '',
     companyOwner: '',
-    basket: '',
+    basket: null,
     value: '',
     dataCall: '',
   };
@@ -66,10 +66,10 @@ export class DebtorComponent implements OnInit {
       if (!v) { return; }
       this.user = v;
       if (this.user && this.user.companyOwner) {
-        this.crud.get(`debtor/count?query={"companyOwner": "${this.user.companyOwner}"}`).then((count: any) => {
+        this.crud.get(`debtor/count?query={"companyOwner": "${this.user.companyOwner._id}"}`).then((count: any) => {
           if (count) {
             this.lengthPagination = count.count;
-            this.crud.get(`debtor?query={"companyOwner": "${this.user.companyOwner}"}${this.populate}&skip=0&limit=${this.pageSizePagination}&sort={"date":-1}`).then((d: any) => {
+            this.crud.get(`debtor?query={"companyOwner": "${this.user.companyOwner._id}"}${this.populate}&skip=0&limit=${this.pageSizePagination}&sort={"date":-1}`).then((d: any) => {
               if (d) {
                 this.debtors = d;
                 this.loading = true;
@@ -89,7 +89,7 @@ export class DebtorComponent implements OnInit {
   create() {
     const index = this.crud.find('login', this.inputChange, this.searchDebtors);
     this.debtor.clientOwner = this.searchDebtors[index]._id;
-    this.debtor.companyOwner = this.user.companyOwner;
+    this.debtor.companyOwner = this.user.companyOwner._id;
     this.debtor['login'] = this.searchDebtors[index].login;
     if (this.debtor.clientOwner === '') {
       Swal.fire('Error', 'Выберете должника по номеру телефона', 'error');
@@ -105,13 +105,12 @@ export class DebtorComponent implements OnInit {
     }
     this.crud.post('debtor', this.debtor).then((v: any) => {
       if (v) {
-        this.crud.get(`debtor/count?query={"companyOwner": "${this.user.companyOwner}"}`).then((count: any) => {
+        this.crud.get(`debtor/count?query={"companyOwner": "${this.user.companyOwner._id}"}`).then((count: any) => {
           if (count) {
             this.lengthPagination = count.count;
-            this.crud.get(`debtor?query={"companyOwner": "${this.user.companyOwner}"}${this.populate}&skip=0&limit=${this.pageSizePagination}&sort={"date":-1}`).then((d: any) => {
+            this.crud.get(`debtor?query={"companyOwner": "${this.user.companyOwner._id}"}${this.populate}&skip=0&limit=${this.pageSizePagination}&sort={"date":-1}`).then((d: any) => {
               if (d) {
                 this.debtors = d;
-                this.loading = true;
               }
             });
           }
@@ -133,7 +132,7 @@ export class DebtorComponent implements OnInit {
     this.crud.delete('debtor', this.debtors[i]._id).then((v: any) => {
       if (v) {
         this.debtors.splice(i, 1);
-        this.crud.get(`debtor/count?query={"companyOwner":"${this.user.companyOwner}"}`).then((count: any) => {
+        this.crud.get(`debtor/count?query={"companyOwner":"${this.user.companyOwner._id}"}`).then((count: any) => {
           if (!count) {return; }
           this.lengthPagination  = count.count;
         });
@@ -217,7 +216,7 @@ export class DebtorComponent implements OnInit {
   }
   outputSearch(e) {
     if (!e) {
-      this.crud.get(`debtor?query={"companyOwner": "${this.user.companyOwner}"}${this.populate}&skip=0&limit=${this.pageSizePagination}`).then((d: any) => {
+      this.crud.get(`debtor?query={"companyOwner": "${this.user.companyOwner._id}"}${this.populate}&skip=0&limit=${this.pageSizePagination}`).then((d: any) => {
         if (d) {
           this.debtors = d;
         }
@@ -226,8 +225,11 @@ export class DebtorComponent implements OnInit {
       this.debtors = e;
     }
   }
+  debtorChoose(input) {
+
+  }
   pageEvent(e) {
-    this.crud.get(`debtor?query={"companyOwner":"${this.user.companyOwner}"}${this.populate}&skip=${e.pageIndex  * e.pageSize}&limit=${e.pageSize}&sort={"date":-1}`).then((d: any) => {
+    this.crud.get(`debtor?query={"companyOwner":"${this.user.companyOwner._id}"}${this.populate}&skip=${e.pageIndex  * e.pageSize}&limit=${e.pageSize}&sort={"date":-1}`).then((d: any) => {
       if (!d) {return; }
       this.debtors = d;
     });

@@ -21,7 +21,7 @@
 		<app-edit-product (cancelEdit)="cancelEdit($event)" [brands]="brands" [categorys]="categorys"  (outputChanges)="outputEdit($event)" [obj]="editObj"></app-edit-product>
 	</div>
 	<ng-container class="loading" *ngIf="!loading">
-		Loading ...
+		Загрузка ...
 	</ng-container>
 	<ng-container *ngIf="loading">
 		<div class="contain__group">
