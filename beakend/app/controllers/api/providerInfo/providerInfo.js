@@ -1,10 +1,11 @@
 module.exports = (backendApp, router) => {
     /**
-     * /providerInfo/byName/ 4 / new Date(-3day)  / new Date(now)
+     * /providerInfo/5db185fb98138c04b0c2ca32/ 4 / new Date(-3day)  / new Date(now)
+     * cityId optional
      * status optional
      * from && to optional
      */
-    router.get('/providerInfo/byName/:status/:cityId*?/:from*?/:to*?', [backendApp.middlewares.isLoggedIn], async (req,res,next) => {
+    router.get('/providerInfo/:id/:status/:cityId*?/:from*?/:to*?', [backendApp.middlewares.isLoggedIn], async (req,res,next) => {
         const Company = backendApp.mongoose.model("Company");
         const Client = backendApp.mongoose.model("Client");
         const Basket = backendApp.mongoose.model("Basket");
@@ -22,8 +23,11 @@ module.exports = (backendApp, router) => {
             AND.$and.push({$lt: {lastUpdate:to}});
         }
         if (req.params.status) AND.$and.push ({ status: parseInt(req.params.status)});
-        if (req.user.role === 'sa' || req.user.role === 'admin'){
+        if ((req.user.role === 'sa' || req.user.role === 'admin') && req.params.id === 'all'){
             callDB(Basket, AND, res)
+        } else if((req.user.role === 'sa' || req.user.role === 'admin') && req.params.id !== 'all'){
+            AND.$and.push({companyOwner: backendApp.mongoose.Types.ObjectId(req.params.id)});
+            callDB(Basket, AND, res);
         } else if (req.user.role === 'provider') {
             let company = await getCompanyByClient(Client, req.user._id).catch(e=> res.serverError(e));
             AND.$and.push ({companyOwner: company.companyOwner});
