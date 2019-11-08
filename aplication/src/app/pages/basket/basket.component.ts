@@ -2,8 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {AuthService} from '../../auth.service';
 import {CrudService} from "../../crud.service";
-import {WebsocketService} from "../../websocket";
-import {WS} from "../../websocket/websocket.events";
 
 @Component({
   selector: 'app-basket',

@@ -28,7 +28,7 @@ export class SettingsComponent implements OnInit {
     this.auth.onMe.subscribe((v: any) => {
       if (!v) {return; }
       this.user = Object.assign({}, v);
-      this.companyId = this.user.companyOwner;
+      this.companyId = this.user.companyOwner._id;
       this.crud.get('city').then((v: any) => {
         if (!v) {return; }
         this.city = v;

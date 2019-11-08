@@ -24,7 +24,6 @@ export class MainComponent implements OnInit {
   ngOnInit() {
     this.notificationOrders$ = this.wsService.on(WS.ON.ON_CONFIRM_ORDER);
     this.notificationOrders$.subscribe(v => {
-      console.log(v.data);
       this.auth.setWsOrder(v.data);
       this.playAudio();
       if (v.data.status === 5) {
@@ -42,7 +41,7 @@ export class MainComponent implements OnInit {
     const userId = localStorage.getItem('userId');
     const query = JSON.stringify({_id: userId});
     const populate = JSON.stringify(
-        {'path': 'companies', 'populate': ['action', 'collaborators', 'debtors', 'categories']}
+        {'path': 'companyOwner', 'populate': ['action', 'collaborators', 'debtors', 'categories']}
     );
     this.crud.get(`client?query=${query}&populate=${populate}`)
         .then((v2: any) => {

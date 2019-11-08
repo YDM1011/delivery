@@ -12,8 +12,8 @@
 			<mat-form-field class="example-full-width">
 				<input matInput type="text" placeholder="Категория" name="name" [(ngModel)]="category.name" autocomplete="off">
 			</mat-form-field>
-			<mat-form-field ngif>
-				<mat-label>Main category</mat-label>
+			<mat-form-field>
+				<mat-label>Главная категория</mat-label>
 				<mat-select [(value)]="mainCategoryChoose">
 					<mat-option *ngFor="let item of mainCategory" [value]="item._id">
 						{{item.name}}
@@ -42,7 +42,7 @@
 				<input matInput type="text" placeholder="Категория" name="name" [(ngModel)]="editObj.name" autocomplete="off">
 			</mat-form-field>
 			<mat-form-field>
-				<mat-label>Main category</mat-label>
+				<mat-label>Главная категория</mat-label>
 				<mat-select [(value)]="mainCategoryChoose" (selectionChange)="selectValid()">
 					<mat-option *ngFor="let item of mainCategory" [value]="item._id">
 						{{item.name}}
@@ -69,9 +69,6 @@
 				<span class="content">Создать категорию</span>
 			</button>
 		</div>
-		<ng-container *ngIf="!loading" class="loading">
-			Loading...
-		</ng-container>
 		<ng-container *ngIf="loading">
 			<div class="main-section">
 				<div class="table" *ngIf="categorys && categorys.length > 0">
@@ -79,12 +76,12 @@
 					<div class="table-content">
 						<div class="row-h">
 							<div class="col">
-								Name
+								Назва
 							</div>
 							<div class="col">
 							</div>
 							<div class="col">
-								Date
+								Дата
 							</div>
 							<div class="col">
 							</div>
@@ -106,7 +103,6 @@
 								</div>
 							</div>
 							<div class="col">
-<!--								<span class="link-btn" [routerLink]="'/category-detail/' + item._id"></span>-->
 								<span class="edit-btn" (click)="edit(index)" appScrollTop></span>
 								<span class="trash-btn" (click)="delete(index)"></span>
 							</div>

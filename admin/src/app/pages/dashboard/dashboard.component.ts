@@ -31,7 +31,7 @@ export class DashboardComponent implements OnInit {
         this.showCity = this.city[0]
       }
     });
-    this.crud.get(`client?query={"role":"provider"}&populate={"path":"companyOwner","select":"img name"}&sort={"date":-1}`).then((v: any) => {
+    this.crud.get(`client?query={"role":"provider","companyOwner":{"$exists":true}}&populate={"path":"companyOwner","select":"img name"}&sort={"date":-1}`).then((v: any) => {
       if (!v) {return; }
       this.listProvider = v;
       this.loading = true;

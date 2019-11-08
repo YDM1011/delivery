@@ -45,7 +45,7 @@ export class ProductComponent implements OnInit {
       if (!v) { return; }
       this.user = v;
       if (this.user && this.user.companyOwner) {
-        this.companyId = this.user.companyOwner;
+        this.companyId = this.user.companyOwner._id;
         this.crud.get(`category?query={"companyOwner":"${this.companyId}"}&populate={"path":"mainCategory","select":"subCategory"}`).then((v: any) => {
           if (v && v.length > 0) {
             this.categorys = v;
