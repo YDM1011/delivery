@@ -11,6 +11,8 @@ import {ChartDataSets, ChartOptions} from "chart.js";
 })
 export class DashboardComponent implements OnInit {
   public user;
+  public dateStart;
+  public dateEnd;
   public loading: boolean = false;
   public lineChartData: ChartDataSets[] = [
     { data: [65, 59, 80, 81, 56, 55, 40], label: 'Выполнены' },

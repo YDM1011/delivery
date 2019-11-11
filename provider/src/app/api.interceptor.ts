@@ -38,6 +38,9 @@ export class ApiInterceptor implements HttpInterceptor {
                     // console.log(error);
                     switch (error.status) {
                         case 404: Swal.fire('Oops...', error.error, 'error');
+                        break;
+                        case 301: Swal.fire('Попробуйте еще раз', error.error, 'error');
+                        break;
                     }
                 })
             );

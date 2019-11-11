@@ -26,7 +26,7 @@ export class CrudService {
           this.http.post(`${this.api}${api}${id ? '/' + id : ''}`, obj).subscribe(data => {
            resolve(data);
            if (isAlert) {
-               Swal.fire('Success', '', 'success');
+               Swal.fire('Успешно', '', 'success');
            }
           }, error => {
             reject(error);
@@ -47,14 +47,14 @@ export class CrudService {
     delete(api, id = null) {
         return new Promise((resolve, reject) => {
             Swal.fire({
-                title: 'Do you confirm the deletion?',
+                title: 'Подтверждаете удаление?',
                 type: 'warning',
                 showCloseButton: true,
                 showCancelButton: true,
                 focusConfirm: true,
                 reverseButtons: true,
-                cancelButtonText: 'Cancel!',
-                confirmButtonText: 'Delete',
+                cancelButtonText: 'Отменить!',
+                confirmButtonText: 'Удалить',
                 confirmButtonColor: '#dd4535',
             }).then((result) => {
                 if (result.value) {
