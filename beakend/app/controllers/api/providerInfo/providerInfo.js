@@ -5,11 +5,12 @@ module.exports = (backendApp, router) => {
      * status optional
      * from && to optional
      */
-    router.get('/providerInfo/:id/:status/:cityId*?/:from*?/:to*?', [backendApp.middlewares.isLoggedIn], async (req,res,next) => {
+    router.get('/providerInfo/:id/:status*?', [backendApp.middlewares.isLoggedIn], async (req,res,next) => {
         const Company = backendApp.mongoose.model("Company");
         const Client = backendApp.mongoose.model("Client");
         const Basket = backendApp.mongoose.model("Basket");
         let AND = {$and:[]};
+        req.query = req.query.query ? JSON.parse(req.query.query) : null;
         console.log(req.params.cityId,  parseInt(req.params.status), req.params.status);
         if (req.params.cityId !== 'all' && req.params.cityId) {
             let companies = await getCompanyByCity(Company, req.params.cityId).catch(e=> res.serverError(e));
@@ -18,9 +19,9 @@ module.exports = (backendApp, router) => {
             });
             AND.$and.push ({ $or: companies});
         }
-        if (req.params.from && req.params.to) {
-            AND.$and.push({$gte: {lastUpdate: from}});
-            AND.$and.push({$lt: {lastUpdate:to}});
+        if (req.query && req.query.from && req.query.to) {
+            AND.$and.push({lastUpdate: {$gte: new Date(parseInt(req.query.from))}});
+            AND.$and.push({lastUpdate: {$lte: new Date(parseInt(req.query.to))}});
         }
         if (req.params.status) AND.$and.push ({ status: parseInt(req.params.status)});
         if ((req.user.role === 'sa' || req.user.role === 'admin') && req.params.id === 'all'){
@@ -43,15 +44,16 @@ module.exports = (backendApp, router) => {
      * status optional
      * from && to optional
      */
-    router.get('/providerInfoByCity/:cityId/:status*?/:from*?/:to*?', [backendApp.middlewares.isLoggedIn], async (req,res,next) => {
+    router.get('/providerInfoByCity/:cityId/:status*?', [backendApp.middlewares.isLoggedIn], async (req,res,next) => {
         const Company = backendApp.mongoose.model("Company");
         const Client = backendApp.mongoose.model("Client");
         const Basket = backendApp.mongoose.model("Basket");
         let AND = {$and:[]};
+        req.query = req.query ? JSON.parse(req.query.query) : null;
         if (!req.params.cityId) return res.badRequest("badRequest");
-        if (req.params.from && req.params.to) {
-            AND.$and.push({$gte: {lastUpdate: from}});
-            AND.$and.push({$lt: {lastUpdate:to}});
+        if (req.query.from && req.query.to) {
+            AND.$and.push({lastUpdate: {$gte: new Date(parseInt(req.query.from))}});
+            AND.$and.push({lastUpdate: {$lte: new Date(parseInt(req.query.to))}});
         }
         // else {
         //     AND.$and.push({lastUpdate: {$lt:new Date(new Date().getTime()-14*24*60*60*1000)}});
@@ -96,7 +98,9 @@ const getCompanyByCity = (Company, id) => {
 };
 
 const callDB = (Model, and, res) => {
-
+    console.log(and)
+    console.log(and.$and[0].lastUpdate)
+    console.log(and.$and[1].lastUpdate)
     Model.aggregate([{ $match:  and },
         { $group: {
                 _id : null,
@@ -104,7 +108,7 @@ const callDB = (Model, and, res) => {
                 count: { $sum: 1 },
             }
         }]).then(r => {
-            console.log(and)
+
             if (r.length === 0) return res.ok({
                 _id: null,
                 sum: 0,
