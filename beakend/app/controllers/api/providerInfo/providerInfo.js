@@ -43,7 +43,7 @@ module.exports = (backendApp, router) => {
      * status optional
      * from && to optional
      */
-    router.get('providerInfoByCity/:cityId/:status*?/:from*?/:to*?', [backendApp.middlewares.isLoggedIn], async (req,res,next) => {
+    router.get('/providerInfoByCity/:cityId/:status*?/:from*?/:to*?', [backendApp.middlewares.isLoggedIn], async (req,res,next) => {
         const Company = backendApp.mongoose.model("Company");
         const Client = backendApp.mongoose.model("Client");
         const Basket = backendApp.mongoose.model("Basket");
