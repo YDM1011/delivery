@@ -10,8 +10,8 @@ export class DashboardComponent implements OnInit {
   public lengthPagination = 0;
   public pageSizePagination = 10;
   public pageSizeOptionsPagination: number[] = [5, 10, 15];
-  public dateStart: Date = null;
-  public dateEnd: Date = null;
+  public dateStart = new Date();
+  public dateEnd: Date = new Date();
   public listProvider = [];
   public listProviderForOne = [];
   public city = [];
@@ -27,6 +27,7 @@ export class DashboardComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.dateStart.setDate(this.dateStart.getDate() -7);
     this.crud.get('city').then((city: any) => {
       if (city) {
         this.city = city;
@@ -52,9 +53,11 @@ export class DashboardComponent implements OnInit {
   }
   getInfoForCompanies(array) {
     this.countAndSub = [];
+    this.getInfoByCity(this.cityChoose);
+    const query = JSON.stringify({from:this.dateStart.getTime(),to:this.dateEnd.getTime()});
     if (array === 'main'){
       this.listProvider.forEach((item)=>{
-        this.crud.get(`providerInfo/${item._id}/4/${this.cityChoose}/${this.dateStart ? this.dateStart+'/' : ''}${this.dateEnd ? '/'+this.dateEnd : ''}`).then((v: any)=>{
+        this.crud.get(`providerInfo/${item._id}/4?query=${query}`).then((v: any)=>{
           if (v && v.length>0) {
             this.countAndSub.push(v[0]);
           } else {
@@ -64,7 +67,7 @@ export class DashboardComponent implements OnInit {
       })
     } else if (array === 'forOne') {
       this.listProviderForOne.forEach((item)=>{
-        this.crud.get(`providerInfo/${item._id}/4/${this.cityChoose}/${this.dateStart ? this.dateStart+'/' : ''}${this.dateEnd ? '/'+this.dateEnd : ''}`).then((v: any)=>{
+        this.crud.get(`providerInfo/${item._id}/4?query=${query}`).then((v: any)=>{
           if (v && v.length>0) {
             this.countAndSub.push(v[0]);
           } else {
@@ -75,13 +78,14 @@ export class DashboardComponent implements OnInit {
     }
   }
   getInfoByCity(idCity){
-      this.crud.get(`providerInfoByCity/${idCity}/4/${this.cityChoose}/${this.dateStart ? this.dateStart+'/' : ''}${this.dateEnd ? '/'+this.dateEnd : ''}`).then((v: any) => {
-        if (v && v.length>0) {
-          this.infoFromCity = v[0];
-        } else {
-          this.infoFromCity = v;
-        }
-      });
+    const query = JSON.stringify({from:this.dateStart.getTime(),to:this.dateEnd.getTime()});
+    this.crud.get(`providerInfoByCity/${idCity}/4?query=${query}`).then((v: any) => {
+      if (v && v.length>0) {
+        this.infoFromCity = v[0];
+      } else {
+        this.infoFromCity = v;
+      }
+    });
   }
   cityChange(v) {
     this.loading = false;

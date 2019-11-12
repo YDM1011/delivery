@@ -23,7 +23,6 @@ export class DashboardComponent implements OnInit {
   public lineChartOptions: (ChartOptions & { annotation: any }) = {
     responsive: true,
     scales: {
-      // We use this empty structure as a placeholder for dynamic theming.
       xAxes: [{}],
       yAxes: [
         {
@@ -45,7 +44,7 @@ export class DashboardComponent implements OnInit {
     annotation:{}
   };
   public lineChartColors: Color[] = [
-    { // grey
+    {
       backgroundColor: 'rgba(0,150,136,0.25)',
       borderColor: 'rgba(0,131,120,0.51)',
       pointBackgroundColor: 'rgba(148,159,177,1)',
@@ -61,7 +60,7 @@ export class DashboardComponent implements OnInit {
     //   pointHoverBackgroundColor: '#fff',
     //   pointHoverBorderColor: 'rgba(77,83,96,1)'
     // },
-    { // red
+    {
       backgroundColor: 'rgba(255,255,255,0.5)',
       borderColor: 'red',
       pointBackgroundColor: 'rgba(148,159,177,1)',
@@ -72,7 +71,6 @@ export class DashboardComponent implements OnInit {
   ];
   public lineChartLegend = true;
   public lineChartType = 'line';
-  // public lineChartPlugins = [pluginAnnotations];
   @ViewChild(BaseChartDirective, { static: true }) chart: BaseChartDirective;
   public allCounts = {
     first: null,
@@ -109,12 +107,9 @@ export class DashboardComponent implements OnInit {
       this.allCounts['fifth'] = v[0].count;
     })
   }
-  // events
   public chartClicked({ event, active }: { event: MouseEvent, active: {}[] }): void {
-    // console.log(event, active);
   }
 
   public chartHovered({ event, active }: { event: MouseEvent, active: {}[] }): void {
-    // console.log(event, active);
   }
 }
