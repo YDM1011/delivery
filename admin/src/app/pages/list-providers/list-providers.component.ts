@@ -15,7 +15,6 @@ export class ListProvidersComponent implements OnInit {
   public search;
   public defLang = 'ru-UA';
   public addShow = false;
-
   public list = [];
   public city = [];
   public client = {
@@ -34,10 +33,10 @@ export class ListProvidersComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.crud.get('client/count?query={"role": "provider"}').then((count: any) => {
+    this.crud.get('company/count').then((count: any) => {
       if (count) {
         this.lengthPagination = count.count;
-        this.crud.get(`client?query={"role":"provider"}&populate={"path":"companyOwner","select":"img verify"}&sort={"date":-1}&skip=0&limit=${this.lengthPagination}`).then((v: any) => {
+        this.crud.get(`company?query={}&skip=0&limit=${this.lengthPagination}&sort={"date":-1}`).then((v: any) => {
           if (!v) {return; }
           this.list = v;
           this.loading = true;
@@ -61,9 +60,14 @@ export class ListProvidersComponent implements OnInit {
     }
     this.crud.post('signup', {client: this.client, company: this.company}).then((v: any) => {
       if (v) {
-        this.crud.get(`client?query={"_id":"${v._id}","role":"provider"}&populate={"path":"companyOwner","select":"img verify"}&sort={"date":-1}`).then((v: any) => {
-          if (!v) {return; }
-          this.list.unshift(v[0]);
+        this.crud.get('company/count').then((count: any) => {
+          if (count) {
+            this.lengthPagination = count.count;
+            this.crud.get(`company?query={}&skip=0&limit=${this.lengthPagination}&sort={"date":-1}`).then((v: any) => {
+              if (!v) {return; }
+              this.list = v;
+            });
+          }
         });
         this.addShow = false;
         this.clearObj();
@@ -96,7 +100,7 @@ export class ListProvidersComponent implements OnInit {
   }
   outputSearch(e) {
     if (!e) {
-      this.crud.get(`client?query={"role":"provider"}&populate={"path":"companyOwner","select":"img date verify"}&skip=0&limit=${this.lengthPagination}`).then((v: any) => {
+      this.crud.get(`company?query={}&skip=0&limit=${this.lengthPagination}&sort={"date":-1}`).then((v: any) => {
         if (!v) {return; }
         this.list = v;
       });
@@ -107,13 +111,12 @@ export class ListProvidersComponent implements OnInit {
   verifyCompany(e, id, index) {
     this.crud.post(`company`, {verify: e, img: this.list[index].companyOwner.img}, id).then((v: any) => {
       if (v) {
-        console.log(v)
         this.list[index].companyOwner.verify = v.verify;
       }
     });
   }
   pageEvent(e) {
-    this.crud.get(`client?query={"role":"provider"}&populate={"path":"companyOwner","select":"img verify"}&sort={"date":-1}&skip=${e.pageIndex  * e.pageSize}&limit=${e.pageSize}`).then((l: any) => {
+    this.crud.get(`company?query={}&skip=${e.pageIndex  * e.pageSize}&limit=${e.pageSize}&sort={"date":-1}`).then((l: any) => {
       if (!l) {
         return;
       }

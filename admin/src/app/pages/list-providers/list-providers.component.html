@@ -58,7 +58,7 @@
 		<ng-container *ngIf="loading">
 			<div class="main-section">
 				<div class="table">
-					<app-search-filter [inputApi]="'client'" [inputQuery]="'login'" [role]="'provider'" (output)="outputSearch($event)"></app-search-filter>
+					<app-search-filter [inputApi]="'company'" [inputQuery]="'name'" (output)="outputSearch($event)"></app-search-filter>
 					<div class="table-content">
 						<div class="row-h">
 							<div class="col">
@@ -74,19 +74,19 @@
 							</div>
 						</div>
             <ng-container  *ngFor="let item of list; let index = index" >
-						<div class="row-r"  *ngIf="item && item.companyOwner" [routerLink]="'/provider-detail/'+item.companyOwner._id">
+						<div class="row-r"  *ngIf="item" [routerLink]="'/provider-detail/'+item._id">
 							<div class="col">
 								<div class="img">
-									<img src="./assets/images/user.svg" alt="" *ngIf="item.companyOwner.img == ''">
-									<app-img [fs]="item.companyOwner.img" *ngIf="item.companyOwner.img && item.companyOwner.img !== ''"></app-img>
+									<img src="./assets/images/user.svg" alt="" *ngIf="item.img == ''">
+									<app-img [fs]="item.img" *ngIf="item.img && item.img !== ''"></app-img>
 								</div>
-								{{item.login}}
+								{{item.name}}
 							</div>
 							<div class="col">
-								<ng-container *ngIf="item.companyOwner && item.companyOwner.verify">
+								<ng-container *ngIf="item && item.verify">
 									Активен
 								</ng-container>
-								<ng-container *ngIf="item.companyOwner && !item.companyOwner.verify">
+								<ng-container *ngIf="item && !item.verify">
 									Не активен
 								</ng-container>
 							</div>
@@ -101,8 +101,8 @@
 								</div>
 							</div>
 							<div class="col">
-								<button class="main-button-color red" (click)="verifyCompany(false, item.companyOwner._id, index)" *ngIf="item.companyOwner && item.companyOwner.verify">Выключить</button>
-								<button class="main-button-color" (click)="verifyCompany(true, item.companyOwner._id, index)" *ngIf="item.companyOwner && !item.companyOwner.verify">Включить</button>
+								<button class="main-button-color red" (click)="verifyCompany(false, item._id, index)" *ngIf="item && item.verify">Выключить</button>
+								<button class="main-button-color" (click)="verifyCompany(true, item._id, index)" *ngIf="item && !item.verify">Включить</button>
 							</div>
 						</div>
             </ng-container>
