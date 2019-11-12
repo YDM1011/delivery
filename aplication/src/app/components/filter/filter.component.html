@@ -11,11 +11,11 @@
 			<h2>Фильтры</h2>
 		</div>
 		<div class="other-pages">
-			<div class="sub-category">
+			<div class="sub-category"  *ngIf="mainCategory && mainCategory.subCategory.length>0">
 				<div class="sub-title">
 					Подкатегории
 				</div>
-				<div class="sub-container" *ngIf="mainCategory">
+				<div class="sub-container">
 					<ng-container *ngIf="mainCategory.subCategory">
 						<ng-container *ngIf="mainCategory.subCategory.length>0">
 							<mat-checkbox class="filter-check" *ngFor="let sub of mainCategory.subCategory; let index = index;" [checked]="subChack[index]"  [value]="sub" (change)="getCheckSub($event, index)">{{sub}}</mat-checkbox>
@@ -24,10 +24,10 @@
 				</div>
 			</div>
 			<div class="sub-brands">
-				<div class="sub-title">
+				<div class="sub-title" *ngIf="mainCategory && mainCategory.brands.length>0">
 					Бренд
 				</div>
-				<div class="sub-container" *ngIf="mainCategory">
+				<div class="sub-container">
 					<ng-container *ngIf="mainCategory.brands">
 						<ng-container *ngIf="mainCategory.brands.length>0">
 							<mat-checkbox class="filter-check filter-sub" *ngFor="let brand of mainCategory.brands; let index = index" [checked]="brandChack[index]" [value]="brand._id" (change)="getCheckBrand($event, index)">

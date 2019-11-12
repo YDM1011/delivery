@@ -41,9 +41,7 @@ export class ProductLeazyComponent implements OnInit {
           this.orderCount = orderCount.count;
           this.crud.orderByBrand(this.value, 0)
             .then((order) => {
-              // console.log(order)
               this.order = this.order.concat(order);
-              // console.log(this.order)
             });
         });
     }

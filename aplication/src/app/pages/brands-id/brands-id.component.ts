@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {Subscription} from "rxjs";
 import {AuthService} from "../../auth.service";
 import {CrudService} from "../../crud.service";
@@ -9,11 +9,19 @@ import {ActivatedRoute} from "@angular/router";
   templateUrl: './brands-id.component.html',
   styleUrls: ['./brands-id.component.scss']
 })
-export class BrandsIDComponent implements OnInit {
+export class BrandsIDComponent implements OnInit, OnDestroy {
   public id: string;
+  public city;
   public language: string;
+  public filter;
+  public sort;
+  public orders = [];
   public companies;
   public showFilter: boolean = false;
+  public copyfilterObj;
+  public selectedSort = 0;
+  public CityLinksArr = [];
+  private _subscription: Subscription[] = [];
   constructor(
     private route: ActivatedRoute,
     private auth: AuthService,
@@ -21,26 +29,85 @@ export class BrandsIDComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.route.params.subscribe((params: any) => {
+    this.sort = JSON.stringify({date: -1});
+    this._subscription.push(this.route.params.subscribe((params: any) => {
       this.id = this.route.snapshot.paramMap.get('id');
       this.init()
-    });
-    this.auth.onLanguage.subscribe((v: string) => {
+    }));
+    this._subscription.push(this.auth.onLanguage.subscribe((v: string) => {
       this.language = v;
-    });
+    }));
 
   }
   init(){
+    const arr = [];
     this.auth.onCity.subscribe((city:any) => {
       if (city) {
+        this.city = city;
+        if (this.city.links) {
+          this.city.links.forEach(it => {
+            if (it) {
+              arr.push({cityLink: it});
+              this.CityLinksArr.push({cityLink: it});
+            }
+          });
+        }
         this.crud.getBrandName(this.id, city._id).then((companies)=>{
           this.companies = companies;
-        }).catch(e=>console.log(e));
+          this.crud.orderByBrand(this.companies[0].brand, 0)
+              .then((order) => {
+                this.orders = this.orders.concat(order);
+              });
+        });
       }
     })
+  }
+  ngOnDestroy() {
+    this._subscription.forEach((item) => {
+      item.unsubscribe();
+    })
+  }
+  copyFilter(e) {
+    this.copyfilterObj = e;
   }
 
   closeFilter(e){
     this.showFilter = e;
+  }
+  sortChanges() {
+    switch (this.selectedSort) {
+      case 0:
+        this.sort = JSON.stringify({date: -1});
+        break;
+      case 1:
+        this.sort = JSON.stringify({price: 1});
+        break;
+      case 2:
+        this.sort = JSON.stringify({price: -1});
+        break;
+      default: return;
+    }
+    this.reinit();
+  }
+  reinit(e = this.filter) {
+    const arr = [];
+    this.filter = e;
+    if (this.city.links) {
+      this.city.links.forEach(it => {
+        if (it) {
+          arr.push({cityLink: it});
+          this.CityLinksArr.push({cityLink: it});
+        }
+      });
+    }
+
+    const query = `?query={"$and":[${arr.length > 0 ? JSON.stringify( {$or: arr} ) : {} },{"brand":"${this.companies[0].brand}"}${this.filter ? this.filter : ''}]}&skip=0&limit=5&sort=${this.sort}`;
+    this.crud.get('order', '',  query).then((orders: any) => {
+      this.orders = orders;
+    });
+  }
+
+  getOutput(e) {
+    this.orders = this.orders.concat(e);
   }
 }

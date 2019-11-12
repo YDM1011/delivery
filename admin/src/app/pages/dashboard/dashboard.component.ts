@@ -11,7 +11,7 @@ export class DashboardComponent implements OnInit {
   public pageSizePagination = 10;
   public pageSizeOptionsPagination: number[] = [5, 10, 15];
   public dateStart = new Date();
-  public dateEnd: Date = new Date();
+  public dateEnd = new Date();
   public listProvider = [];
   public listProviderForOne = [];
   public city = [];

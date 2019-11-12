@@ -11,8 +11,8 @@ import {ChartDataSets, ChartOptions} from "chart.js";
 })
 export class DashboardComponent implements OnInit {
   public user;
-  public dateStart;
-  public dateEnd;
+  public dateStart = new Date();
+  public dateEnd = new Date();
   public loading: boolean = false;
   public lineChartData: ChartDataSets[] = [
     { data: [65, 59, 80, 81, 56, 55, 40], label: 'Выполнены' },
@@ -85,6 +85,7 @@ export class DashboardComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.dateStart.setDate(this.dateStart.getDate() -7);
     this.loading = true;
     this.auth.onMe.subscribe((v: any) => {
       if (!v) {return; }
