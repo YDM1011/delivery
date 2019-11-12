@@ -13,6 +13,7 @@ export class DashboardComponent implements OnInit {
   public dateStart: Date = null;
   public dateEnd: Date = null;
   public listProvider = [];
+  public listProviderForOne = [];
   public city = [];
   public cityChoose = null;
   public showCity;
@@ -20,6 +21,7 @@ export class DashboardComponent implements OnInit {
   public defLang = 'ru-UA';
   public loading = false;
   public countAndSub = [];
+  public infoFromCity;
   constructor(
       private crud: CrudService
   ) { }
@@ -43,27 +45,41 @@ export class DashboardComponent implements OnInit {
           if (!v) {return; }
           this.listProvider = v;
           this.loading = true;
-          this.getInfoForCompanies();
+          this.getInfoForCompanies('main');
         });
       }
     })
   }
-  getInfoForCompanies() {
+  getInfoForCompanies(array) {
     this.countAndSub = [];
-    this.listProvider.forEach((item)=>{
-      this.crud.get(`providerInfo/${item._id}/4/${this.cityChoose}/${this.dateStart}/${this.dateEnd}`).then((v: any)=>{
-        if (v && v.length>0) {
-          this.countAndSub.push(v[0]);
-        } else {
-          this.countAndSub.push(v);
-        }
+    if (array === 'main'){
+      this.listProvider.forEach((item)=>{
+        this.crud.get(`providerInfo/${item._id}/4/${this.cityChoose}/${this.dateStart ? this.dateStart+'/' : ''}${this.dateEnd ? '/'+this.dateEnd : ''}`).then((v: any)=>{
+          if (v && v.length>0) {
+            this.countAndSub.push(v[0]);
+          } else {
+            this.countAndSub.push(v);
+          }
+        })
       })
-    })
+    } else if (array === 'forOne') {
+      this.listProviderForOne.forEach((item)=>{
+        this.crud.get(`providerInfo/${item._id}/4/${this.cityChoose}/${this.dateStart ? this.dateStart+'/' : ''}${this.dateEnd ? '/'+this.dateEnd : ''}`).then((v: any)=>{
+          if (v && v.length>0) {
+            this.countAndSub.push(v[0]);
+          } else {
+            this.countAndSub.push(v);
+          }
+        })
+      })
+    }
   }
   getInfoByCity(idCity){
-      this.crud.get(`providerInfoByCity/${idCity}/4`).then((v: any) => {
-        if (v) {
-          console.log(v)
+      this.crud.get(`providerInfoByCity/${idCity}/4/${this.cityChoose}/${this.dateStart ? this.dateStart+'/' : ''}${this.dateEnd ? '/'+this.dateEnd : ''}`).then((v: any) => {
+        if (v && v.length>0) {
+          this.infoFromCity = v[0];
+        } else {
+          this.infoFromCity = v;
         }
       });
   }
@@ -77,8 +93,19 @@ export class DashboardComponent implements OnInit {
 
   }
   providerChange(v){
-    console.log(v);
-    this.providerChoose = v;
+    this.loading = false;
+    if (v === 0) {
+      this.getCompany();
+      this.listProviderForOne = [];
+    } else {
+      this.providerChoose = v;
+      this.crud.get(`company?query={"_id":"${this.providerChoose}"}`).then((v: any) => {
+        if (!v) {return; }
+        this.listProviderForOne = v;
+        this.loading = true;
+        this.getInfoForCompanies('forOne');
+      });
+    }
   }
   pageEvent(e){
 
