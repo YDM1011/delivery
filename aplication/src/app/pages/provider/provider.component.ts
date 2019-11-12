@@ -46,7 +46,8 @@ export class ProviderComponent implements OnInit {
     this.crud.getDetailCompany(this.id, this.company).then((v: any) => {
       if (v) {
         this.company = v;
-
+        if(this.company.rating && this.company.ratingCount)
+          this.company.rating = Math.round(this.company.rating/this.company.ratingCount)
         let query = `?query=${JSON.stringify({$or:[{actionGlobal:true},{client:{$in:localStorage.getItem('userId')}}], companyOwner:this.company._id})}`; //
         this.crud.get('action', '', query).then((v:any)=>{
           this.actions = v

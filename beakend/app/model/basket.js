@@ -150,6 +150,55 @@ schema.post('save', (doc,next)=>{
                 });
         });
 });
+schema.post('findOneAndUpdate', (doc,next)=>{
+    if (parseInt(doc.status) != 4 && parseInt(doc.status) != 5) return next();
+    console.log("Status: ", doc.status);
+    let date = new Date(new Date().getMonth()+1+'.'+new Date().getDate()+'.'+new Date().getFullYear()).getTime();
+    mongoose.model('ChartOrder')
+        .findOne({companyOwner:doc.companyOwner, date:{$eq:date}})
+        .exec((e,r)=>{
+            if (e) return next();
+            if (!r || r.length==0){
+                createChartOrder(doc, next)
+            } else
+            if (r) {
+                updateChartOrder(doc, r, next)
+            }
+        })
+});
+const createChartOrder = (doc, next)=>{
+    mongoose.model('Company')
+        .findOne({_id: doc.companyOwner})
+        .select('createdBy')
+        .exec((e,r)=>{
+            if (r) {
+                mongoose.model('ChartOrder')
+                    .create({
+                        createdBy: r.createdBy,
+                        companyOwner: doc.companyOwner,
+                        count: 1,
+                        status: doc.status,
+                        sum: doc.totalPrice,
+                        date: new Date(new Date().getMonth()+1+'.'+new Date().getDate()+'.'+new Date().getFullYear())
+                    }, (e,r)=>{
+                        if (e) return next();
+                        next()
+                    })
+            } else {
+                next()
+            }
+        })
 
+};
+const updateChartOrder = (doc, ChartOrder, next)=>{
+    mongoose.model('ChartOrder')
+        .findOneAndUpdate({_id:ChartOrder._id}, {
+            $inc:{count: 1, sum: doc.totalPrice},
+            status: doc.status
+        }, (e,r)=>{
+            if (e) return next();
+            next()
+        })
+};
 mongoose.model('Basket', schema);
 

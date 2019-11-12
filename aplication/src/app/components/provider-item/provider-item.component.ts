@@ -6,6 +6,7 @@ interface Company {
   img: string;
   name: string;
   rating?: number;
+  ratingCount?: number;
   address?: string;
   categories?: [];
   action?: [];
@@ -38,6 +39,8 @@ export class ProviderItemComponent implements OnInit, OnDestroy {
       this.language = v;
       this.init();
     });
+    if(this.data.rating && this.data.ratingCount)
+    this.data.rating = Math.round(this.data.rating/this.data.ratingCount)
   }
 
   init() {

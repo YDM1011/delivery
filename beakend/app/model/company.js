@@ -50,6 +50,7 @@ const schem = new Schema({
     }],
     brandCount:{},
     rating: Number,
+    ratingCount: Number,
     action: [{
         type: Schema.Types.ObjectId,
         ref: "Action"

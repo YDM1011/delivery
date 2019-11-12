@@ -121,7 +121,7 @@ const createProduct = (req,backendApp) => {
             .exec((e0,r0)=>{
                 if (e0) return rj(e0);
                 if (!r0) return rj("One of product is invalid!");
-                data['price'] = r0.price;
+                data['price'] = r0.discount || r0.price;
                 data['companyOwner'] = r0.companyOwner;
                 Product.create(data,(e,r)=>{
 

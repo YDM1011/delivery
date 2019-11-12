@@ -59,50 +59,22 @@ const schem = new Schema({
         update: [{public:true}],
         create: [{public:true}],
         delete: [{public:true}],
-    },
-    // sa: {
-    //     read: [{public:true}],
-    //     update: [{public:true}],
-    //     create: [{public:true}],
-    //     delete: [{public:true}],
-    // },
-    // client: {
-    //     read: [{
-    //         model:'Client',
-    //         _id: 'clientOwner',
-    //         canBeId: [
-    //             {type:'refObj', fieldName: '_id'}
-    //         ]
-    //     }],
-    //     update: [{
-    //         model:'Client',
-    //         _id: 'clientOwner',
-    //         canBeId: [
-    //             {type:'refObj', fieldName: '_id'}
-    //         ]
-    //     }],
-    //     create: [{private:true}],
-    //     delete: [{private:true}],
-    // },
-    // provider: {
-    //     read: [{
-    //         model:'Company',
-    //         _id: 'companyOwner',
-    //         canBeId: [
-    //             {type:'refObj', fieldName: 'createdBy'},
-    //             {type:'array', fieldName: 'collaborators'}
-    //         ]
-    //     }],
-    //     update: [{private:true}],
-    //     create: [{private:true}],
-    //     delete: [{private:true}],
-    // },
-    // collaborator: {
-    //     read: [{public:true}],
-    //     update: [{private:true}],
-    //     create: [{private:true}],
-    //     delete: [{private:true}],
-    // },
+    }
+});
+
+schem.post('findOneAndUpdate', (doc,next)=>{
+    // ratingCount
+    if (doc.rating && doc.rating>0) {
+        mongoose.model('Company')
+            .findOne({_id:doc.companyOwner})
+            .exec((e,company)=>{
+                if (company){
+                    mongoose.model('Company')
+                        .findOneAndUpdate({_id:doc.companyOwner}, { $inc: {ratingCount:1, rating:doc.rating} })
+                        .exec((e,r)=>next())
+                }
+            })
+    }
 });
 
 mongoose.model('Rating', schem);
