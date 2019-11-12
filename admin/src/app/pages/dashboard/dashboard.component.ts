@@ -10,8 +10,8 @@ export class DashboardComponent implements OnInit {
   public lengthPagination = 0;
   public pageSizePagination = 10;
   public pageSizeOptionsPagination: number[] = [5, 10, 15];
-  public dateStart: Date = null;
-  public dateEnd: Date = null;
+  public dateStart = new Date();
+  public dateEnd: Date = new Date();
   public listProvider = [];
   public listProviderForOne = [];
   public city = [];
@@ -27,6 +27,7 @@ export class DashboardComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.dateStart.setDate(this.dateStart.getDate() -7);
     this.crud.get('city').then((city: any) => {
       if (city) {
         this.city = city;
@@ -41,7 +42,7 @@ export class DashboardComponent implements OnInit {
     this.crud.get(`company/count?query={"city":"${this.cityChoose}"}&sort={"date":-1}`).then((count: any) => {
       if (count) {
         this.lengthPagination = count.count;
-        this.crud.get(`company?query={"city":"${this.cityChoose}"}&sort={"date":-1}`).then((v: any) => {
+        this.crud.get(`company?query={"city":"${this.cityChoose}"}&skip=0&limit=${this.pageSizePagination}&sort={"date":-1}`).then((v: any) => {
           if (!v) {return; }
           this.listProvider = v;
           this.loading = true;
@@ -51,20 +52,24 @@ export class DashboardComponent implements OnInit {
     })
   }
   getInfoForCompanies(array) {
+    const dateStart = new Date(this.dateStart.getMonth()+1+'.'+(this.dateStart.getDate()) +'.'+new Date().getFullYear()).getTime();
+    const dateEnd = new Date(this.dateEnd.getMonth()+1+'.'+(this.dateEnd.getDate()+1) +'.'+new Date().getFullYear()).getTime()-1;
     this.countAndSub = [];
+    this.getInfoByCity(this.cityChoose);
+    const query = JSON.stringify({from: dateStart, to:dateEnd});
     if (array === 'main'){
       this.listProvider.forEach((item)=>{
-        this.crud.get(`providerInfo/${item._id}/4/${this.cityChoose}/${this.dateStart ? this.dateStart+'/' : ''}${this.dateEnd ? '/'+this.dateEnd : ''}`).then((v: any)=>{
+        this.crud.get(`providerInfo/${item._id}/4?query=${query}`).then((v: any)=>{
           if (v && v.length>0) {
             this.countAndSub.push(v[0]);
           } else {
             this.countAndSub.push(v);
           }
-        })
+        });
       })
     } else if (array === 'forOne') {
       this.listProviderForOne.forEach((item)=>{
-        this.crud.get(`providerInfo/${item._id}/4/${this.cityChoose}/${this.dateStart ? this.dateStart+'/' : ''}${this.dateEnd ? '/'+this.dateEnd : ''}`).then((v: any)=>{
+        this.crud.get(`providerInfo/${item._id}/4?query=${query}`).then((v: any)=>{
           if (v && v.length>0) {
             this.countAndSub.push(v[0]);
           } else {
@@ -75,13 +80,16 @@ export class DashboardComponent implements OnInit {
     }
   }
   getInfoByCity(idCity){
-      this.crud.get(`providerInfoByCity/${idCity}/4/${this.cityChoose}/${this.dateStart ? this.dateStart+'/' : ''}${this.dateEnd ? '/'+this.dateEnd : ''}`).then((v: any) => {
-        if (v && v.length>0) {
-          this.infoFromCity = v[0];
-        } else {
-          this.infoFromCity = v;
-        }
-      });
+    const dateStart = new Date(this.dateStart.getMonth()+1+'.'+(this.dateStart.getDate()) +'.'+new Date().getFullYear()).getTime();
+    const dateEnd = new Date(this.dateEnd.getMonth()+1+'.'+(this.dateEnd.getDate()+1) +'.'+new Date().getFullYear()).getTime() -1;
+    const query = JSON.stringify({from:dateStart,to:dateEnd});
+    this.crud.get(`providerInfoByCity/${idCity}/4?query=${query}`).then((v: any) => {
+      if (v && v.length>0) {
+        this.infoFromCity = v[0];
+      } else {
+        this.infoFromCity = v;
+      }
+    });
   }
   cityChange(v) {
     this.loading = false;
@@ -107,7 +115,13 @@ export class DashboardComponent implements OnInit {
       });
     }
   }
-  pageEvent(e){
-
+  pageEvent(e) {
+    this.loading = false;
+    this.crud.get(`company?query={"city":"${this.cityChoose}"}&skip=${e.pageIndex  * e.pageSize}&limit=${e.pageSize}&sort={"date":-1}`).then((v: any) => {
+      if (!v) {return; }
+      this.listProvider = v;
+      this.loading = true;
+      this.getInfoForCompanies('main');
+    });
   }
 }
