@@ -34,4 +34,6 @@
 ::ng-deep .mat-button-ripple.mat-ripple{
   display: none!important;
 }
-
+::ng-deep .mat-icon-button .mat-icon, .mat-icon-button i{
+  line-height: normal;
+}

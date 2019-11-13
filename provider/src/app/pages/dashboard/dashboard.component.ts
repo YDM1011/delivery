@@ -15,15 +15,29 @@ export class DashboardComponent implements OnInit {
   public dateEnd = new Date();
   public loading: boolean = false;
   public lineChartData: ChartDataSets[] = [
-    { data: [65, 59, 80, 81, 56, 55, 40], label: 'Выполнены' },
+    { data: [], label: 'Выполнены' },
     // { data: [28, 48, 40, 19, 86, 27, 90], label: 'Отменены' },
-    { data: [0, 40, 30, 40, 30, 10, 4], label: 'Отменены', hidden: true}
+    // { data: [0, 40, 30, 40, 30, 10, 4], label: 'Отменены', hidden: true}
   ];
-  public lineChartLabels: Label[] = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
+  public lineChartLabels = [];
   public lineChartOptions: (ChartOptions & { annotation: any }) = {
     responsive: true,
     scales: {
-      xAxes: [{}],
+      xAxes: [{
+        ticks: {
+          autoSkip: false,
+          maxRotation: 45,
+          minRotation: 45
+        },
+        type: 'time',
+        time: {
+          unit: 'day',
+          unitStepSize: 1,
+          displayFormats: {
+            'day': 'DD MM YY'
+          }
+        }
+      }],
       yAxes: [
         {
           id: 'y-axis-0',
@@ -60,14 +74,14 @@ export class DashboardComponent implements OnInit {
     //   pointHoverBackgroundColor: '#fff',
     //   pointHoverBorderColor: 'rgba(77,83,96,1)'
     // },
-    {
-      backgroundColor: 'rgba(255,255,255,0.5)',
-      borderColor: 'red',
-      pointBackgroundColor: 'rgba(148,159,177,1)',
-      pointBorderColor: '#fff',
-      pointHoverBackgroundColor: '#fff',
-      pointHoverBorderColor: 'rgba(148,159,177,0.8)'
-    }
+    // {
+    //   backgroundColor: 'rgba(255,255,255,0.5)',
+    //   borderColor: 'red',
+    //   pointBackgroundColor: 'rgba(148,159,177,1)',
+    //   pointBorderColor: '#fff',
+    //   pointHoverBackgroundColor: '#fff',
+    //   pointHoverBorderColor: 'rgba(148,159,177,0.8)'
+    // }
   ];
   public lineChartLegend = true;
   public lineChartType = 'line';
@@ -106,7 +120,37 @@ export class DashboardComponent implements OnInit {
     });
     this.crud.get(`providerInfo/byName/5`).then((v: any) => {
       this.allCounts['fifth'] = v[0].count;
+    });
+    this.chartFunc();
+  }
+  chartFunc(){
+    this.lineChartLabels = [];
+    this.lineChartData[0].data = [];
+    const timeStart = new Date(this.dateStart.getMonth()+1+'.'+(this.dateStart.getDate()) +'.'+new Date().getFullYear()).getTime();
+    const timeEnd = new Date(this.dateEnd.getMonth()+1+'.'+(this.dateEnd.getDate()) +'.'+new Date().getFullYear()).getTime();
+    this.crud.get(`ChartOrder?query={"$and":[{"date":{"$gte":"${timeStart}"}},{"date":{"$lte":"${timeEnd}"}}]}`).then((chart: any) => {
+      for (let i = 0; i<=500; i++) {
+        const day = new Date(this.dateStart.getMonth()+1+'.'+(this.dateStart.getDate()+i)+'.'+new Date().getFullYear());
+        // this.lineChartLabels.push(day.toLocaleString('ua-uk', {year: '2-digit', month: '2-digit', day: 'numeric'}));
+        this.lineChartLabels.push(day.toISOString());
+        chart.forEach((item) => {
+          if (this.lineChartData[0].data[i]){
+            return;
+          }
+          if (new Date(item.date).getTime() === day.getTime()){
+            this.lineChartData[0].data[i] = chart[this.crud.find('date', new Date(this.dateStart.getMonth()+1+'.'+(this.dateStart.getDate()+i)+'.'+new Date().getFullYear()).toISOString(), chart)].count;
+            return;
+          }
+          this.lineChartData[0].data[i] = 0;
+        });
+        if (day.getTime() === timeEnd) {
+          return;
+        }
+      }
     })
+  }
+  changeDate(){
+    this.chartFunc();
   }
   public chartClicked({ event, active }: { event: MouseEvent, active: {}[] }): void {
   }

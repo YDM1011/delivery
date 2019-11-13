@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import Cropper from "cropperjs";
 import {CrudService} from "../../crud.service";
 import {environment} from "../../../environments/environment";
@@ -45,7 +45,7 @@ export class ImageCropperComponent implements OnInit {
       yy:[e.y, e.height],
       xx:[e.x, e.width]
     };
-    console.log(this.imageData)
+    // console.log(this.imageData)
   }
   onCropDef(e){
     const path = this.imageSource.split('/');
@@ -65,15 +65,12 @@ export class ImageCropperComponent implements OnInit {
     let link = 'imgSlice';
     if (this.dir) link = link + '/'+this.dir;
 
-    this.crud.post(link , this.imageData, null)
+    this.crud.post(link , this.imageData, null, false)
       .then(v=>{
         this.done.emit(v)
-      }).catch(e=>console.log(e))
+      })
   }
   ngOnInit() {
 
   }
-  // ngAfterViewInit(){
-  //
-  // }
 }

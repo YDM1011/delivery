@@ -31,7 +31,7 @@
 <ng-container *ngIf="!data.cropper">
   <!-- This are the actions of the dialog, containing the primary and the cancel button-->
   <mat-dialog-actions class="actions" style="margin-bottom: 5px">
-    <button *ngIf="showCancelButton" mat-button mat-dialog-close>Cancel</button>
+    <button *ngIf="showCancelButton" mat-button mat-dialog-close>Отменить</button>
     <button class="green-dialog-btn" mat-raised-button [disabled]="disBtn" (click)="closeDialog()">{{primaryButtonText}}</button>
   </mat-dialog-actions>
 </ng-container>

@@ -38,7 +38,7 @@ export class DialogComponent implements OnInit {
   }
   progress;
   canBeClosed = true;
-  primaryButtonText = 'Upload';
+  primaryButtonText = 'Загрузить';
   showCancelButton = true;
   uploading = false;
   uploadSuccessful = false;
@@ -99,7 +99,7 @@ export class DialogComponent implements OnInit {
     // Adjust the state variables
 
     // The OK-button should have the text "Finish" now
-    this.primaryButtonText = 'Finish';
+    this.primaryButtonText = 'Сохранить';
 
     // The dialog should not be closed while uploading
     this.canBeClosed = false;

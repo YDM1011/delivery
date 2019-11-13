@@ -21,13 +21,12 @@ export class WorkTimeComponent implements OnInit {
     this.auth.onMe.subscribe((v: any) => {
       if (!v) {return; }
       this.user = v;
-      this.timeCopy = Object.assign({}, v.companies[0].workTime);
-      this.time = Object.assign({}, v.companies[0].workTime);
+      this.timeCopy = Object.assign({}, v.companyOwner.workTime);
+      this.time = Object.assign({}, v.companyOwner.workTime);
     });
   }
   setTimeAll(range, v) {
     this.isBlok = true;
-    // v = !v;
     if (v) {
       this.time[range].isWeekend = false;
       this.time[range].isTimeRange = false;
@@ -39,7 +38,6 @@ export class WorkTimeComponent implements OnInit {
   }
   setTimeWeekend(range, v) {
     this.isBlok = true;
-    // v = !v;
     if (v) {
       this.time[range].isAllTime = false;
       this.time[range].isTimeRange = false;
@@ -58,7 +56,7 @@ export class WorkTimeComponent implements OnInit {
     this.isBlok = true;
   }
   saveTime() {
-    this.user.companies[0].workTime = this.time;
+    this.user.companyOwner.workTime = this.time;
     this.crud.post('company', {workTime: this.time}, this.user.companyOwner._id).then((v: any) => {
       if (v) {
         this.auth.setMe(this.user);

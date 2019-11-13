@@ -16,9 +16,9 @@
   background: #fff!important;
 }
 
-::ng-deep .mat-ic{
+::ng-deep .raiting.mat-ic{
   height: auto!important;
-  font-size: 16px!important;
+  font-size: 16px;
 }
 ::ng-deep .mat-rating button{
   width: 16px!important;
@@ -41,7 +41,7 @@
     display: flex;
     align-items: center;
     .raiting{
-      margin-top: -4px;
+      //margin-top: -4px;
     }
     .raiting-title{
       margin-left: 15px;

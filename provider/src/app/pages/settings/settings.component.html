@@ -45,5 +45,7 @@
 </div>
 
 <ng-template #upload>
-  <app-upload (onFs)="onFs($event)"></app-upload>
+<!--  <app-upload (onFs)="onFs($event)"></app-upload>-->
+	<app-upload (onCrop)="onFs($event)" [cropper]="true"  [dir]="'avatar'"></app-upload>
+
 </ng-template>
