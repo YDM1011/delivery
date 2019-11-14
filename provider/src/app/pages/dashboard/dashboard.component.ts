@@ -132,12 +132,12 @@ export class DashboardComponent implements OnInit {
       for (let i = 0; i<=500; i++) {
         const day = new Date(this.dateStart.getMonth()+1+'.'+(this.dateStart.getDate()+i)+'.'+new Date().getFullYear());
         this.lineChartLabels.push(day);
-        chart.forEach((item) => {
+        chart.forEach((item, index) => {
           if (this.lineChartData[0].data[i]){
             return;
           }
           if (new Date(item.date).getTime() === day.getTime()){
-            this.lineChartData[0].data[i] = chart[this.crud.find('date', new Date(this.dateStart.getMonth()+1+'.'+(this.dateStart.getDate()+i)+'.'+new Date().getFullYear()).toISOString(), chart)].count;
+            this.lineChartData[0].data[i] = chart[index].count;
             return;
           }
           this.lineChartData[0].data[i] = 0;
