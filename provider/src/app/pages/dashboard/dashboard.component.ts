@@ -3,6 +3,7 @@ import {CrudService} from '../../crud.service';
 import {AuthService} from '../../auth.service';
 import {BaseChartDirective, Color, Label} from "ng2-charts";
 import {ChartDataSets, ChartOptions} from "chart.js";
+import {invalid} from "@angular/compiler/src/render3/view/util";
 
 @Component({
   selector: 'app-dashboard',
@@ -61,8 +62,8 @@ export class DashboardComponent implements OnInit {
     {
       backgroundColor: 'rgba(0,150,136,0.25)',
       borderColor: 'rgba(0,131,120,0.51)',
-      pointBackgroundColor: 'rgba(148,159,177,1)',
-      pointBorderColor: '#fff',
+      pointBackgroundColor: 'rgba(0,131,120,0.51)',
+      pointBorderColor: 'rgba(0,131,120,0.51)',
       pointHoverBackgroundColor: '#fff',
       pointHoverBorderColor: 'rgba(148,159,177,0.8)'
     },
@@ -119,6 +120,7 @@ export class DashboardComponent implements OnInit {
       this.allCounts['forth'] = v[0].count;
     });
     this.crud.get(`providerInfo/byName/5`).then((v: any) => {
+      if (!v[0]) return  this.allCounts['fifth'] = 0;
       this.allCounts['fifth'] = v[0].count;
     });
     this.chartFunc();
@@ -126,26 +128,46 @@ export class DashboardComponent implements OnInit {
   chartFunc(){
     this.lineChartLabels = [];
     this.lineChartData[0].data = [];
-    const timeStart = new Date(this.dateStart.getMonth()+1+'.'+(this.dateStart.getDate()) +'.'+new Date().getFullYear()).getTime();
-    const timeEnd = new Date(this.dateEnd.getMonth()+1+'.'+(this.dateEnd.getDate()) +'.'+new Date().getFullYear()).getTime();
+    const timeStart = new Date(this.dateStart.getMonth()+1+'.'+(this.dateStart.getDate()) +'.'+this.dateStart.getFullYear()).getTime();
+    const timeEnd = new Date(this.dateEnd.getMonth()+1+'.'+(this.dateEnd.getDate()) +'.'+this.dateEnd.getFullYear()).getTime();
     this.crud.get(`ChartOrder?query={"$and":[{"date":{"$gte":"${timeStart}"}},{"date":{"$lte":"${timeEnd}"}}]}`).then((chart: any) => {
-      for (let i = 0; i<=500; i++) {
-        const day = new Date(this.dateStart.getMonth()+1+'.'+(this.dateStart.getDate()+i)+'.'+new Date().getFullYear());
-        console.log(day);
+      // @ts-ignore
+      let days = parseInt((timeEnd-timeStart - 1000*60*60*24)/1000/60/60/24);
+      let month = 1;
+      let triger = 0;
+      let year = 0;
+      let i = 0;
+      let day = new Date(this.dateStart.getMonth()+month+'.'+(this.dateStart.getDate()+triger)+'.'+(this.dateStart.getFullYear()+year));
+      while (day.getTime() !== timeEnd && i <= 365*2) {
+        day = new Date(this.dateStart.getMonth()+month+'.'+(this.dateStart.getDate()+triger)+'.'+(this.dateStart.getFullYear()+year));
+        // const day = new Date(timeStart + i*(1000*60*60*24));
+        console.log(this.dateStart.getMonth()+month+'.'+(this.dateStart.getDate()+triger)+'.'+(this.dateStart.getFullYear()+year), i, triger, month);
+        if (isNaN(day.getTime())) {
+          if (this.dateStart.getMonth()+month >= 12) {
+            year += 1;
+            month = -this.dateStart.getMonth() + 1;
+            triger = -this.dateStart.getDate() + 1;
+          } else {
+            month += 1;
+            triger = -this.dateStart.getDate() + 1;
+          }
+          day = new Date(this.dateStart.getMonth()+month+'.'+(this.dateStart.getDate()+triger)+'.'+(this.dateStart.getFullYear()+year));
+        }
+
         this.lineChartLabels.push(day);
         chart.forEach((item, index) => {
           if (this.lineChartData[0].data[i]){
             return;
           }
+          console.log(new Date(item.date).getTime(), day.getTime());
           if (new Date(item.date).getTime() === day.getTime()){
             this.lineChartData[0].data[i] = chart[index].count;
             return;
           }
           this.lineChartData[0].data[i] = 0;
         });
-        if (day.getTime() === timeEnd) {
-          return;
-        }
+        triger++
+        i++
       }
     })
   }
