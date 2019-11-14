@@ -131,6 +131,7 @@ export class DashboardComponent implements OnInit {
     this.crud.get(`ChartOrder?query={"$and":[{"date":{"$gte":"${timeStart}"}},{"date":{"$lte":"${timeEnd}"}}]}`).then((chart: any) => {
       for (let i = 0; i<=500; i++) {
         const day = new Date(this.dateStart.getMonth()+1+'.'+(this.dateStart.getDate()+i)+'.'+new Date().getFullYear());
+        console.log(day);
         this.lineChartLabels.push(day);
         chart.forEach((item, index) => {
           if (this.lineChartData[0].data[i]){

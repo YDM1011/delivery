@@ -14,7 +14,6 @@ module.exports.preUpdate = async (req,res,next, backendApp) => {
                     if (e) return res.serverError(e);
                     if (!r) return res.notFound('Not found!1');
                     if (r) {
-                        console.log(r, req.body)
                         if (req.body.status === 4) {
                             r.products.forEach(prod=>{
                                 backendApp.mongoose.model('Order')
@@ -66,11 +65,16 @@ module.exports.postUpdate = async (req, res, next, backendApp) => {
                 lastUpdate: new Date(),
                 date: new Date(),
                 dataCall: new Date(new Date().getTime() + 1000*60*60*24*7)
-            }, (e,r)=>{
-
-            });
+            }, (e,r)=>{ });
     }
-    if (basket.status === 4){
+    if (basket.status === 3 || (basket.status === 4 && !req.body.deptor)) {
+        backendApp.mongoose.model('Debtor')
+            .findOneAndRemove ({
+                clientOwner: basket.createdBy,
+                basket: basket._id,
+            }, (e,r) => {});
+    }
+    if (basket.status === 4) {
         backendApp.mongoose.model('Rating')
             .create({
                 clientOwner: basket.createdBy,
@@ -79,8 +83,12 @@ module.exports.postUpdate = async (req, res, next, backendApp) => {
                 comment: '',
                 lastUpdate: new Date(),
                 date: new Date(),
-            }, (e,r)=>{
-
+            }, (e,r) => {
+                backendApp.events.callWS.emit('message', JSON.stringify({
+                    event:"rating-confirm",
+                    data: {data:r},
+                    to: basket.createdBy
+                }));
             });
     }
     next()
