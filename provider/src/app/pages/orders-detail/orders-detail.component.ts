@@ -64,14 +64,14 @@ export class OrdersDetailComponent implements OnInit, OnDestroy {
   done() {
     if (this.basketCopy.payMethod === 'Наличными') {
       Swal.fire({
-        title: 'Заказ был оплачен?',
+        title: 'Заказ был оплачен полностью?',
         type: 'warning',
         showCloseButton: true,
         showCancelButton: true,
         focusConfirm: true,
         reverseButtons: true,
-        cancelButtonText: 'Не оплачено',
-        confirmButtonText: 'Оплачен',
+        cancelButtonText: 'Нет',
+        confirmButtonText: 'ДА',
         confirmButtonColor: '#dd4535',
       }).then((result) => {
         if (result.value){
@@ -81,13 +81,11 @@ export class OrdersDetailComponent implements OnInit, OnDestroy {
             }
           });
         } else {
-          return;
-        }
-      });
-    } else {
-      this.crud.post('basket', {status: 4}, this.basket._id, false).then((v) => {
-        if (v) {
-          this.basketCopy.status = 4;
+          this.crud.post('basket', {status: 4, deptor:true}, this.basket._id, false).then((v) => {
+            if (v) {
+              this.basketCopy.status = 4;
+            }
+          });
         }
       });
     }

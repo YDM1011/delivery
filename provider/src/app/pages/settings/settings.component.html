@@ -7,6 +7,12 @@
 			<div class="title">
 				Информация поставщика
 			</div>
+			<div class="info-active" *ngIf="user && user.companyOwner">
+		<span>
+			{{user.companyOwner.payInfo ? "Оплачено до" + user.companyOwner.payInfo : "Не оплачено"}}
+		</span>
+				<button class="active-button" [routerLink]="'/pay-info'">{{user.companyOwner.payInfo ? 'Продлить' : 'Оплатить'}}</button>
+			</div>
 		</div>
 		
 		<div class="add-section" *ngIf="loading && company">
@@ -26,6 +32,7 @@
 					</mat-select>
 				</mat-form-field>
 			</form>
+			<a [routerLink]="'/work-time'" class="link">Время работы</a>
 			<div class="group-buttons">
 				<div class="left">
 					<ng-container *ngIf="companyCopy && companyCopy.img; else upload">
@@ -39,7 +46,6 @@
 					<button class="main-button-color" (click)="create()">Сохранить</button>
 				</div>
 			</div>
-			<a [routerLink]="'/work-time'" class="link">Время работы</a>
 		</div>
 	</div>
 </div>
