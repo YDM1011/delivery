@@ -4,7 +4,8 @@ export const WS = {
         ON_NOTIFICATION: 'on-notification',
         COUNTER: 'counter',
         UPDATE_TEXTS: 'update-texts',
-        ON_CONFIRM_ORDER: 'on-order-confirm'
+        ON_CONFIRM_ORDER: 'on-order-confirm',
+        ON_RATING_CONFIRM: 'on-order-confirm'
     },
     SEND: {
         CONNECT: 'CONNECT',

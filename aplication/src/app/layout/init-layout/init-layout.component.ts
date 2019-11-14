@@ -15,6 +15,7 @@ export class InitLayoutComponent implements OnInit {
   isConnected = true;
   public notificationOrders$: any;
   public notification$: any;
+  public ratingConfirm$: any;
 
   constructor(
     private wsService: WebsocketService,
@@ -25,6 +26,10 @@ export class InitLayoutComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.ratingConfirm$ = this.wsService.on(WS.ON.ON_RATING_CONFIRM);
+    this.ratingConfirm$.subscribe(v => {
+      console.log(v)
+    });
     this.notificationOrders$ = this.wsService.on(WS.ON.ON_CONFIRM_ORDER);
     this.notificationOrders$.subscribe(v => {
       this.auth.setUpdateOrder(v.data);
