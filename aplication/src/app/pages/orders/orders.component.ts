@@ -16,7 +16,28 @@ export class OrdersComponent implements OnInit, OnDestroy {
   public loading = false;
   public user: any;
   private _subscription: Subscription[] = [];
-
+  public translate ={
+    title: {
+      ru: 'Заказы',
+      ua: 'Замовлення'
+    },
+    wait: {
+      ru: 'В ожидании',
+      ua: 'В очікуванні'
+    },
+    done: {
+      ru: 'Доставлены',
+      ua: 'Доставлені'
+    },
+    empty: {
+      ru: 'У вас нет активных заказов',
+      ua: 'У вас немає активних заказів'
+    },
+    empty_done: {
+      ru: 'У вас нет доставленых или отменненых заказов',
+      ua: 'У вас немає доставлених або відмінених заказів'
+    }
+  };
   constructor(
       private auth: AuthService,
       private crud: CrudService,

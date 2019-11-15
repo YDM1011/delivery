@@ -14,6 +14,33 @@ export class FavoritesComponent implements OnInit {
   public favoriteCompany = [];
   public favoriteProduct = [];
   public me:Me;
+
+  public translate ={
+    title: {
+      ru: 'Избранное',
+      ua: 'Вибране'
+    },
+    provider: {
+      ru: 'Поставщики',
+      ua: 'Постачальники'
+    },
+    goods: {
+      ru: 'Товары',
+      ua: 'Товари'
+    },
+    empty: {
+      ru: 'У вас нет избранных поставщиков',
+      ua: 'У вас не має вибраних постачальників'
+    },
+    emptyProviders: {
+      ru: 'У вас нет избранных поставщиков',
+      ua: 'У вас не має вибраних постачальників'
+    },
+    emptyGoods: {
+      ru: 'У вас нет избранных товаров',
+      ua: 'У вас немає вибраних товарів'
+    }
+  };
   constructor(
       private auth: AuthService,
       private crud: CrudService,

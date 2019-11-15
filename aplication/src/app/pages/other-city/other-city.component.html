@@ -1,17 +1,23 @@
 <div class="other-header">
   <app-back-btn></app-back-btn>
-  <h2>Другой город</h2>
+  <h2>
+    {{translate.title[language]}}
+  </h2>
 </div>
 
 <div class="other-pages">
-  <p>Не нашли свой город в списке?</p>
+  <p>
+    {{translate.p1[language]}}
+  </p>
   <form>
     <input type="text" [placeholder]="cityplaceholder[language]">
     <app-phone (phone)="phoneOutput($event)"></app-phone>
     <p>
-      Мы активно работаем и разширяемся. Надеемся, что в скором времени в Вашем районе тоже будет выбор.Оставьте свой номер телефона и мы отправим Вам сообщение как будем готовы!
+      {{translate.pmain[language]}}
     </p>
-    <button class="main-button color">Подписаться</button>
+    <button class="main-button color">
+      {{translate.subscribe[language]}}
+    </button>
   </form>
   <a routerLink="/{{language}}/city" class="back-btn">Назад</a>
 </div>

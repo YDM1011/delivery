@@ -21,6 +21,20 @@ export class ProviderComponent implements OnInit {
   public showBrands = false;
   public loading = false;
   public products = {};
+  public translate ={
+    category: {
+      ru: 'Категории',
+      ua: 'Категорії'
+    },
+    all: {
+      ru: 'Все',
+      ua: 'Всі'
+    },
+    brands: {
+      ru: 'Бренды',
+      ua: 'Бренди'
+    }
+  };
   constructor(
       private auth: AuthService,
       private crud: CrudService,
@@ -52,7 +66,6 @@ export class ProviderComponent implements OnInit {
         this.crud.get('action', '', query).then((v:any)=>{
           this.actions = v
         });
-
         if (this.company && this.company.categories.length > 0) {
           this.activeCategoryId = this.company.categories[0]._id;
           this.loading = true;

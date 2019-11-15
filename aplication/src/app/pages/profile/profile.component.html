@@ -28,18 +28,9 @@
     <a routerLink="/{{language}}/my-info" *ngIf="login">
       {{data.mydata[language]}}
     </a>
-<!--    <a routerLink="/{{language}}/my-bonuses" *ngIf="login">-->
-<!--      Бонусы-->
-<!--    </a>-->
     <a routerLink="/{{language}}/my-address" *ngIf="login">
       {{data.address[language]}}
     </a>
-<!--    <a routerLink="/{{language}}/info-service">-->
-<!--      Информация о сервисе-->
-<!--    </a>-->
-<!--    <a routerLink="/{{language}}/support">-->
-<!--      Техническая поддержка-->
-<!--    </a>-->
     <button class="logout" *ngIf="login" (click)="logut()">
       {{data.exit[language]}}
     </button>

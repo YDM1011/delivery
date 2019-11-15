@@ -1,5 +1,5 @@
 <ng-container *ngIf="!loading">
-
+  <app-loading></app-loading>
 </ng-container>
 <div class="other-header">
   <app-back-btn></app-back-btn>
@@ -93,9 +93,11 @@
       <div class="category">
         <div class="category-header">
           <h3>
-            Категории
+            {{translate.category[language]}}
           </h3>
-          <a routerLink="/{{language}}/category">Все</a>
+          <a routerLink="/{{language}}/category">
+            {{translate.all[language]}}
+          </a>
         </div>
         <div class="category-box">
               <a [appScrollSmooth]="catalog" class="category-box-item" *ngFor="let category of company.categories" (click)="activeCategory(category._id)">
@@ -117,9 +119,11 @@
       <div class="brandy">
         <div class="brandy-header">
           <h3>
-            Бренды
+            {{translate.brands[language]}}
           </h3>
-          <a routerLink="/{{language}}/brands">Все</a>
+          <a routerLink="/{{language}}/brands">
+            {{translate.all[language]}}
+          </a>
         </div>
         <div class="brandy-box">
           <ng-container *ngFor="let brand of company.brands">

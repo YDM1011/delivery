@@ -20,7 +20,8 @@ export class MyInfoComponent implements OnInit {
     article: {ua: 'Вкажіть Ваше ім\'я і номер телефону', ru: 'Укажите Ваше имя и номер телефона'},
     save: {ua: 'Зберегти', ru: 'Сохранить'},
     saved: {ua: 'Збережено', ru: 'Сохранино'},
-    back: {ua: 'Назад', ru: 'Назад'}
+    back: {ua: 'Назад', ru: 'Назад'},
+    input: {ua: 'ПІП', ru: 'ФИО'}
   };
   public snackMessage = {
     ru: 'Даные сохранены',

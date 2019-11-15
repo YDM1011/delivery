@@ -1,6 +1,8 @@
 <div class="other-header">
   <app-back-btn></app-back-btn>
-  <h2>Уведомления</h2>
+  <h2>
+      {{translate.title[language]}}
+  </h2>
   <app-basket-item></app-basket-item>
 </div>
 <ng-container *ngIf="!loading">
@@ -22,7 +24,7 @@
                 <app-action-item  *cdkVirtualFor="let item of action" [obj]="item"></app-action-item>
             </cdk-virtual-scroll-viewport>
             <div class="empty" *ngIf="action && action.length === 0">
-                У вас нет персональных акций
+                {{translate.empty_action[language]}}
             </div>
         </ng-container>
     </div>
@@ -31,9 +33,11 @@
             <div class="history-raiting" *ngIf="loading">
                 <app-rating-service-item [data]="item" *ngFor="let item of ratingArr"></app-rating-service-item>
                 <ng-container>
-                    <h3>История отзывов</h3>
+                    <h3>
+                        {{translate.history[language]}}
+                    </h3>
                     <div class="empty-block" *ngIf="ratingArrHistory.length === 0">
-                        У вас нет историй оценок
+                        {{translate.empty_history[language]}}
                     </div>
                     <ng-container *ngIf="ratingArrHistory.length>0">
                         <app-rating-service-history-item *ngFor="let item of ratingArrHistory" [data]="item" (removeHistory)="updateHistory($event)"></app-rating-service-history-item>

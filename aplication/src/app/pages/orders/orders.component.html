@@ -1,7 +1,7 @@
 <div class="other-header">
   <app-back-btn></app-back-btn>
   <h2>
-    {{ "Заказы" | trans:language }}
+    {{translate.title[language]}}
   </h2>
   <app-basket-item></app-basket-item>
 </div>
@@ -13,10 +13,10 @@
     <div class="popular-section">
       <div class="popular-section-button fixed">
         <button [class.active]="toggleMain" (click)="getBaskets()">
-          В ожидании
+          {{translate.wait[language]}}
         </button>
         <button [class.active]="!toggleMain" (click)="getSuccessBasket()">
-          Доставлены
+          {{translate.done[language]}}
         </button>
       </div>
       <div class="popular-section-box" *ngIf="toggleMain">
@@ -25,7 +25,7 @@
         </cdk-virtual-scroll-viewport>
         <ng-container *ngIf="orders && orders.length === 0">
           <div class="empty-block">
-            У вас нет активных заказов
+            {{translate.empty[language]}}
           </div>
         </ng-container>
       </div>
@@ -35,7 +35,7 @@
         </cdk-virtual-scroll-viewport>
         <ng-container *ngIf="orders && orders.length === 0">
           <div class="empty-block">
-            У вас нет доставленых или отменненых заказов
+            {{translate.empty_done[language]}}
           </div>
         </ng-container>
       </div>
@@ -43,4 +43,3 @@
   </div>
 </ng-container>
 
-<!--<app-remove-orders></app-remove-orders>-->

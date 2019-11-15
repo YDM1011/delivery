@@ -1,6 +1,8 @@
 <div class="other-header" *ngIf="language">
   <app-back-btn></app-back-btn>
-  <h2>Поставщики</h2>
+  <h2>
+    {{translate.title[language]}}
+  </h2>
 </div>
 
 <div class="other-pages" *ngIf="companyArr">
