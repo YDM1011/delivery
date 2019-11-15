@@ -21,9 +21,7 @@
 							<div class="raiting">
 								<mat-star-rating class="mat-rating" [starCount]="5" [rating]="data.rating"></mat-star-rating>
 							</div>
-							<div class="raiting-title">
-								Отлично
-							</div>
+							<div class="raiting-title" [innerHTML]="data.rating | rating | safeHTML"></div>
 						</div>
 					</div>
 				</mat-panel-title>

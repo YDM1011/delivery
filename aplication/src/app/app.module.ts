@@ -93,6 +93,7 @@ import {FilterBrandComponent} from './components/filter-brand/filter-brand.compo
 import {BrandProductUploadDirective} from './directives/brand-product-upload.directive';
 import {OwlModule} from "ngx-owl-carousel";
 import {BrowserModule} from "@angular/platform-browser";
+import { RatingPipe } from './pipe/rating.pipe';
 
 @NgModule({
 	declarations: [
@@ -169,7 +170,8 @@ import {BrowserModule} from "@angular/platform-browser";
 		ScrollUpdateActionDirective,
 		NotificationIdComponent,
 		FilterBrandComponent,
-		BrandProductUploadDirective
+		BrandProductUploadDirective,
+		RatingPipe,
 	],
 	imports: [
 		OwlModule,
