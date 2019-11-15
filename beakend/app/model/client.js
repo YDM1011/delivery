@@ -53,6 +53,7 @@ const schem = new Schema({
     banned: {type: Boolean, default: false},
     verifyCode: String,
     token: String,
+    fcmToken: String,
     date: {type: Date, default: new Date()},
     lastUpdate: {type: Date, default: new Date()},
 },{

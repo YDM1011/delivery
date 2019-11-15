@@ -160,15 +160,25 @@ const messageSend = (event, WSDB) => {
         //     }
         // });
     };
+    const sendAll = (event) => {
+            wss.clients.forEach(client=>{
+                client.send(JSON.stringify({
+                    event: event,
+                    data: res.data
+                }));
+            });
+    };
     const send = (event, data) => {
-        if (res.to == 'admin'){
+        if (res.to === 'admin'){
             backendApp.mongoose.model('Admin').findOne({}).exec((e,r)=>{
                 if (r) {
                     sendTo(r._id, event, data);
                 }
             })
-        } else {
+        } else if (res.to) {
             sendTo(res.to, event, data);
+        } else {
+            sendAll(event)
         }
     };
     wsEvent[res.event](data, send);

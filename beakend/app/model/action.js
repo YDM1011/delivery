@@ -115,6 +115,7 @@ const schem = new Schema({
     },
 });
 schem.post('save', (doc, next)=>{
+
     mongoose.model('Company')
         .findOneAndUpdate({_id: doc.companyOwner}, {$push:{action:doc._id}})
         .exec((e,r)=>{

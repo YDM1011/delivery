@@ -5,13 +5,14 @@ export const WS = {
         COUNTER: 'counter',
         UPDATE_TEXTS: 'update-texts',
         ON_CONFIRM_ORDER: 'on-order-confirm',
-        ON_RATING_CONFIRM: 'on-order-confirm'
+        ON_RATING_CONFIRM: 'on-rating-confirm'
     },
     SEND: {
         CONNECT: 'CONNECT',
         SEND_TEXT: 'set-text',
         NOTIFICATION: 'form-notification',
         REMOVE_TEXT: 'remove-text',
-        CONFIRM_ORDER: 'order-confirm'
+        CONFIRM_ORDER: 'order-confirm',
+        RATING_CONFIRM: 'rating-confirm'
     }
 };

@@ -13,3 +13,46 @@ module.exports.preSave = async (req,res,next, backendApp) => {
         next()
     }
 };
+module.exports.postCreate = async (req,res,next, backendApp) => {
+    let action = req.erm.result;
+    if (action.client && action.client.length > 0) {
+
+        action.client.forEach(id=>{
+            backendApp.events.callWS.emit('message', JSON.stringify({
+                event:"action-confirm",
+                data: {data:action},
+                to: id
+            }));
+        });
+
+        backendApp.mongoose.model('Action')
+            .find({_id:action._id})
+            .populate({path: 'client', select:'fcmToken'})
+            .select('client')
+            .exec((e,r)=>{
+                if (e) return next();
+                if (!r) return next();
+
+                let fcmTokens = [];
+                r.forEach(it=>{
+                    fcmTokens.push(it.fcmToken)
+                });
+                backendApp.service.fcm.send({
+                    title : 'Акція!',
+                    body : action.name,
+                }, '', fcmTokens);
+                next();
+            });
+
+    } else {
+        backendApp.service.fcm.send({
+            title : 'Акція!',
+            body : action.name,
+        });
+        backendApp.events.callWS.emit('message', JSON.stringify({
+            event:"action-confirm",
+            data: {data:action}
+        }));
+        next();
+    }
+};
