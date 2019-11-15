@@ -1,4 +1,3 @@
-import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -98,7 +97,9 @@ import { ScrollUpdateActionDirective } from './directives/scroll-update-action.d
 import { NotificationIdComponent } from './components/notification-id/notification-id.component';
 import { FilterBrandComponent } from './components/filter-brand/filter-brand.component';
 import { BrandProductUploadDirective } from './directives/brand-product-upload.directive';
-
+import {OwlModule} from "ngx-owl-carousel";
+import {BrowserModule} from "@angular/platform-browser";
+import * as $ from "jquery";
 @NgModule({
   declarations: [
     AppComponent,
@@ -181,6 +182,7 @@ import { BrandProductUploadDirective } from './directives/brand-product-upload.d
     BrandProductUploadDirective
   ],
   imports: [
+    OwlModule,
     ScrollingModule,
     Ng5SliderModule,
     MatIconModule,

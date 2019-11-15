@@ -2,6 +2,8 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {AuthService} from '../../auth.service';
 import {CrudService} from '../../crud.service';
 import {Subscription} from 'rxjs';
+import {environment} from "../../../environments/environment";
+
 @Component({
   selector: 'app-index',
   templateUrl: './index.component.html',
@@ -17,18 +19,28 @@ export class IndexComponent implements OnInit, OnDestroy {
   public brandy = [];
   public topCompany = [];
   public topProduct = [];
+  public action = [];
   public toggleMain = true;
   public loadingCount = true;
-  public images = [`./assets/images/tmp/img-deli.png`, `./assets/images/tmp/img-product.png`, `./assets/images/tmp/img-deli.png`];
+  public mySlideOptions={
+    autoplay: true,
+    items: 1,
+    dots: false,
+    nav: false,
+    changed: this.changeCar
+  };
   public carentPhoto;
   public number = 0;
+  public domain = environment.domain;
   public loaded = {
     category: false,
     topCompany: false,
     topProduct: false,
-    brand: false
+    brand: false,
+    action: false
   };
   private _subscription: Subscription[] = [];
+
   constructor(
       private auth: AuthService,
       private crud: CrudService
@@ -59,11 +71,16 @@ export class IndexComponent implements OnInit, OnDestroy {
         });
       }
     }));
-    this.carentPhoto = `url(${this.images[0]})`;
   }
 
-
   async init() {
+    await this.crud.getAction(this.curentCity).then((v: any) => {
+      if (!v) {return; }
+      this.action = v;
+      this.loaded.action = true;
+    }).catch((e) => {
+      this.loaded.action = true;
+    });
     await this.crud.getBrands().then((v: any) => {
       if (!v) {return; }
       this.brandy = v;
@@ -85,8 +102,8 @@ export class IndexComponent implements OnInit, OnDestroy {
       this.loaded.topProduct = true;
     }).catch((e) => { this.loaded.topProduct = true; });
   }
-  changeCar(e) {
-    this.carentPhoto = `url(${e})`;
+  changeCar() {
+    console.log('tima');
   }
   ngOnDestroy() {
     this._subscription.forEach(it => it.unsubscribe());
