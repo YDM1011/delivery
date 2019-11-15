@@ -23,7 +23,25 @@ export class NotificationComponent implements OnInit, OnDestroy {
   };
   public rating_t = {
     ru: 'Оценить сервис',
-    ua: 'Оценіть сервіс'
+    ua: 'Оцініть сервіс'
+  };
+  public translate ={
+    title: {
+      ru: 'Уведомления',
+      ua: 'Повідомлення'
+    },
+    empty_action: {
+      ru: 'У вас нет персональных акций',
+      ua: 'У вас немає персональних акцій'
+    },
+    empty_history: {
+      ru: 'У вас нет историй оценок',
+      ua: 'У вас не має історій оцінок'
+    },
+    history: {
+      ru: 'История отзывов',
+      ua: 'Історія відгуків'
+    }
   };
   private _subscription: Subscription[] = [];
 

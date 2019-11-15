@@ -18,10 +18,8 @@ import {OtherCityComponent} from './pages/other-city/other-city.component';
 import {ProviderComponent} from './pages/provider/provider.component';
 import {ProviderAllComponent} from './pages/provider-all/provider-all.component';
 import {MyInfoComponent} from './pages/my-info/my-info.component';
-import {MyBonusesComponent} from './pages/my-bonuses/my-bonuses.component';
 import {MyAddressComponent} from './pages/my-address/my-address.component';
 import {NewAddressComponent} from './pages/new-address/new-address.component';
-import {SupportComponent} from './pages/support/support.component';
 import {NotFoundComponent} from './pages/not-found/not-found.component';
 import {ActionDetailComponent} from './pages/action-detail/action-detail.component';
 import {OrdersComponent} from './pages/orders/orders.component';
@@ -30,7 +28,6 @@ import {IsLogoutGuard} from "./is-logout.guard";
 import {BrandsIDComponent} from "./pages/brands-id/brands-id.component";
 import {EditAddressComponent} from "./pages/edit-address/edit-address.component";
 import {NotificationIdComponent} from "./components/notification-id/notification-id.component";
-
 
 const routes: Routes = [
   {path: ':lang', component: InitLayoutComponent, children: [
@@ -52,11 +49,9 @@ const routes: Routes = [
       {path: 'provider/:id', component: ProviderComponent},
       {path: 'provider-all', component: ProviderAllComponent},
       {path: 'my-info', component: MyInfoComponent},
-      {path: 'my-bonuses', component: MyBonusesComponent},
       {path: 'my-address', component: MyAddressComponent},
       {path: 'edit-address/:id', component: EditAddressComponent},
       {path: 'new-address', component: NewAddressComponent},
-      {path: 'support', component: SupportComponent},
       {path: 'action/:id', component: ActionDetailComponent},
       {path: 'notification/:id', component: NotificationIdComponent},
       {path: 'orders', component: OrdersComponent, canActivate: [IsLoginGuard]},

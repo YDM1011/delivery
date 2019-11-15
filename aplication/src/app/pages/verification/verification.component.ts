@@ -12,6 +12,20 @@ export class VerificationComponent implements OnInit {
   public token = null;
   public language: string;
   @Input() data;
+  public translate ={
+    title: {
+      ru: 'Подтверждение',
+      ua: 'Підтвердження'
+    },
+    input: {
+      ru: 'Введите код из смс',
+      ua: 'Введіть код з смс'
+    },
+    btn: {
+      ru: 'Подтвердить',
+      ua: 'Підтвердити'
+    }
+  };
   constructor(
       private crud: CrudService,
       private auth: AuthService,
@@ -24,7 +38,6 @@ export class VerificationComponent implements OnInit {
     });
   }
   confirm() {
-    console.log(this.data);
     if (this.data) {
       this.crud.confirmAuth(this.data).then((v: any) => {
         localStorage.setItem('userId', v.userId);

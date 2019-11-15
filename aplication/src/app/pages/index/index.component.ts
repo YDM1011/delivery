@@ -39,6 +39,41 @@ export class IndexComponent implements OnInit, OnDestroy {
     brand: false,
     action: false
   };
+
+  public translate ={
+    category: {
+      ru: 'Категории',
+      ua: 'Категорії'
+    },
+    brands: {
+      ru: 'Бренды',
+      ua: 'Бренди'
+    },
+    city: {
+      ru: 'Город',
+      ua: 'Місто'
+    },
+    city_s: {
+      ru: 'г.',
+      ua: 'м.'
+    },
+    provider: {
+      ru: 'Поставщики',
+      ua: 'Постачальники'
+    },
+    goods: {
+      ru: 'Товары',
+      ua: 'Товари'
+    },
+    allProducts: {
+      ru: 'Все товары города',
+      ua: 'Всі товари міста'
+    },
+    allProdviders: {
+      ru: 'Все поставщики города',
+      ua: 'Всі постачальники міста'
+    }
+  };
   private _subscription: Subscription[] = [];
 
   constructor(

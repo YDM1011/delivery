@@ -30,6 +30,44 @@ export class NewAddressComponent implements OnInit {
     ru: 'Адрес создан',
     ua: 'Адреса створена'
   };
+  public translate ={
+    title: {
+      ru: 'Адрес доставки',
+      ua: 'Адреса доставки'
+    },
+    empty: {
+      ru: 'Без адреса Вы не сможете оформить заказ!',
+      ua: 'Додати'
+    },
+    input: {
+      ru: 'Название торговой точки',
+      ua: 'Назва торгової точки'
+    },
+    city: {
+      ru: 'Город',
+      ua: 'Місто'
+    },
+    street: {
+      ru: 'Улица',
+      ua: 'Вулиця'
+    },
+    build: {
+      ru: 'Дом',
+      ua: 'Будинок'
+    },
+    department: {
+      ru: 'Квартира',
+      ua: 'Квартира'
+    },
+    comment: {
+      ru: 'Дополнительно',
+      ua: 'Додатково'
+    },
+    create: {
+      ru: 'Создать',
+      ua: 'Створити'
+    }
+  };
   constructor(
       private auth: AuthService,
       private crud: CrudService,

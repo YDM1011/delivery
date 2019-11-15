@@ -13,11 +13,11 @@
             <path d="M12.9533 2.05161C11.6303 0.728674 9.8713 0 8.00049 0C6.12932 0 4.37064 0.728674 3.0477 2.05161C0.599432 4.49952 0.295178 9.10532 2.38879 11.8958L8.00049 20L13.6038 11.9072C15.7058 9.10532 15.4016 4.49952 12.9533 2.05161ZM13.0114 11.4802L8.00049 18.7165L2.98159 11.4689C1.08266 8.93694 1.35477 4.77747 3.56453 2.56807C4.7494 1.3832 6.32473 0.7305 8.00049 0.7305C9.67626 0.7305 11.2516 1.3832 12.4368 2.56807C14.6466 4.77747 14.9187 8.93694 13.0114 11.4802Z" fill="white"/>
         </svg>
         <ng-container *ngIf="curentCity && curentCity.name">
-          г.
+          {{translate.city_s[language]}}
           <ng-container> {{curentCity.name | trans:language }}</ng-container>
         </ng-container>
         <ng-container *ngIf="!curentCity.name">
-          {{"Город" | trans:language}}
+          {{translate.city[language]}}
         </ng-container>
       </span>
     <span class="search">
@@ -58,7 +58,7 @@
   <div class="category" *ngIf="category.length > 0">
     <div class="category-header">
       <h3>
-        Категории
+        {{translate.category[language]}}
       </h3>
       <a routerLink="/{{language}}/category">Все</a>
     </div>
@@ -81,7 +81,7 @@
   <div class="brandy" *ngIf="brandy.length > 0">
     <div class="category-header">
       <h3>
-        Бренды
+        {{translate.brands[language]}}
       </h3>
       <a routerLink="/{{language}}/brands">Все</a>
     </div>
@@ -102,12 +102,10 @@
 <div class="popular-section">
   <div class="popular-section-button">
     <button [class.active]="toggleMain" (click)="toggleMain = true">
-      Поставщики
-<!--      <span class="top-btn done">топ</span>-->
+      {{translate.provider[language]}}
     </button>
     <button [class.active]="!toggleMain" (click)="toggleMain = false">
-      Товары
-<!--      <span class="top-btn done">топ</span>-->
+      {{translate.goods[language]}}
     </button>
   </div>
   <div class="popular-section-box" *ngIf="toggleMain">
@@ -125,10 +123,10 @@
     </ng-container>
   </div>
   <a routerLink="/{{language}}/provider-all" class="index-all" *ngIf="toggleMain">
-    Все поставщики города
+    {{translate.allProdviders[language]}}
   </a>
   <a routerLink="/{{language}}" class="index-all" *ngIf="!toggleMain">
-    Все товары города
+    {{translate.allProducts[language]}}
   </a>
 </div>
 
@@ -136,7 +134,7 @@
   <div class="category">
     <div class="category-header">
       <h3>
-        Категории
+        {{translate.category[language]}}
       </h3>
     </div>
     <div class="category-box">
@@ -151,7 +149,7 @@
   <div class="brandy">
     <div class="category-header">
       <h3>
-        Бренды
+        {{translate.brands[language]}}
       </h3>
     </div>
     <div class="category-box">

@@ -1,17 +1,21 @@
 <div class="other-header">
   <app-back-btn></app-back-btn>
-  <h2>Адрес доставки</h2>
+  <h2>
+    {{translate.title[language]}}
+  </h2>
 </div>
 
 <form (submit)="save($event)" class="other-pages">
   <p>
-    Без адреса Вы не сможете оформить заказ!
+    {{translate.empty[language]}}
   </p>
   <div class="form">
-    <input type="text" placeholder="Название торговой точки" name="name" [(ngModel)]="address.name">
+    <input type="text" [placeholder]="translate.input[language]" name="name" [(ngModel)]="address.name">
     <div class="city-block">
       <mat-form-field *ngIf="cities" >
-        <mat-label>Город</mat-label>
+        <mat-label>
+          {{translate.city[language]}}
+        </mat-label>
         <mat-select [(value)]="address.city" (selectionChange)="select($event)">
           <mat-option *ngFor="let city of cities" [value]="city._id">
             {{city.name}}
@@ -19,12 +23,12 @@
         </mat-select>
       </mat-form-field>
     </div>
-    <input type="text" placeholder="Улица" name="street" [(ngModel)]="address.street">
+    <input type="text" [placeholder]="translate.street[language]" name="street" [(ngModel)]="address.street">
     <div class="home">
-      <input type="text" placeholder="Дом" name="build" [(ngModel)]="address.build">
-      <input type="text" placeholder="Квартира" name="department" [(ngModel)]="address.department">
+      <input type="text" [placeholder]="translate.build[language]" name="build" [(ngModel)]="address.build">
+      <input type="text" [placeholder]="translate.department[language]" name="department" [(ngModel)]="address.department">
     </div>
-    <input type="text" placeholder="Дополнительно" name="comment" [(ngModel)]="address.comment">
+    <input type="text" [placeholder]="translate.comment[language]" name="comment" [(ngModel)]="address.comment">
     <div class="photo-upload">
       <div class="img" *ngIf="address.img">
         <app-img [dir]="'address'" [fs]="address.img"></app-img>
@@ -37,7 +41,7 @@
     </div>
   </div>
   <button class="main-button color" type="submit">
-    Создать
+    {{translate.create[language]}}
   </button>
   <a routerLink="/{{language}}/my-address" class="back-btn">Назад</a>
 </form>

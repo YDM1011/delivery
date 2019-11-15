@@ -1,9 +1,13 @@
 <div class="sign">
   <div class="sign-content">
-    <h3>Подтверждение</h3>
+    <h3>
+      {{translate.title[language]}}
+    </h3>
     <form (submit)="confirm()" *ngIf="data">
-      <input type="number" placeholder="Введите код из смс" name="confirm" [(ngModel)]="data['smsCode']">
-      <button type="submit" class="main-button-bold">Подтвердить</button>
+      <input type="number" [placeholder]="translate.input[language]" name="confirm" [(ngModel)]="data['smsCode']">
+      <button type="submit" class="main-button-bold">
+        {{translate.btn[language]}}
+      </button>
     </form>
   </div>
 </div>

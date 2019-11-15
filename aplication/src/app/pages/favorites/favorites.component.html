@@ -1,21 +1,23 @@
 <div class="other-header" *ngIf="language">
   <app-back-btn></app-back-btn>
-  <h2>{{ "Избранное" | trans:language }}</h2>
+  <h2>
+    {{translate.title[language]}}
+  </h2>
   <app-basket-item></app-basket-item>
 </div>
 <div class="other-pages" *ngIf="me">
   <div class="popular-section">
     <div class="popular-section-button">
       <button [class.active]="toggleMain" (click)="toggleMain = true">
-        Поставщики (<span *ngIf="me.favoriteCompany">{{ me.favoriteCompany.length || 0 }}</span>)
+        {{translate.provider[language]}} (<span *ngIf="me.favoriteCompany">{{ me.favoriteCompany.length || 0 }}</span>)
       </button>
       <button [class.active]="!toggleMain" (click)="toggleMain = false">
-        Товары (<span *ngIf="me.favoriteProduct">{{ me.favoriteProduct.length || 0 }}</span>)
+        {{translate.goods[language]}} (<span *ngIf="me.favoriteProduct">{{ me.favoriteProduct.length || 0 }}</span>)
       </button>
     </div>
     <div class="popular-section-box" *ngIf="toggleMain">
       <p class="p-not" *ngIf="me.favoriteCompany.length === 0">
-        У вас нет избранных поставщиков
+        {{translate.emptyProviders[language]}}
       </p>
       <ng-container *ngIf="favoriteCompany.length > 0">
         <div class="wrap-favorite" *ngFor="let item of favoriteCompany">
@@ -26,7 +28,7 @@
     </div>
     <div class="popular-section-box" *ngIf="!toggleMain">
       <p class="p-not" *ngIf="me.favoriteProduct.length === 0">
-        У вас нет избранных товаров
+        {{translate.emptyGoods[language]}}
       </p>
       <ng-container *ngIf="favoriteProduct.length > 0">
         <app-product-item [data]="item" *ngFor="let item of favoriteProduct"></app-product-item>

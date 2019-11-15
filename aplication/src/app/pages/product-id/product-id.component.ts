@@ -20,7 +20,32 @@ export class ProductIDComponent implements OnInit {
   public company;
   public loading = false;
   public categorys = [];
-
+  public translate ={
+    title: {
+      ru: 'Адреса доставки',
+      ua: 'Адреси доставки'
+    },
+    description: {
+      ru: 'Описание',
+      ua: 'Опис'
+    },
+    by_now: {
+      ru: 'Купить сейчас',
+      ua: 'Купити зараз'
+    },
+    withProduct: {
+      ru: 'С этим товаром покупают',
+      ua: 'З цим товаром купують'
+    },
+    basket: {
+      ru: 'В корзину',
+      ua: 'До кошика'
+    },
+    count: {
+      ru: 'Количество',
+      ua: 'Кількість'
+    }
+  };
   constructor(
       private auth: AuthService,
       private crud: CrudService,
