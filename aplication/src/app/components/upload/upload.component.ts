@@ -3,6 +3,7 @@ import {MatDialog} from '@angular/material';
 import {UploadService} from './upload.service';
 import {DialogComponent} from './dialog/dialog.component';
 import {CrudService} from '../../crud.service';
+import {AuthService} from "../../auth.service";
 
 @Component({
   selector: 'app-upload',
@@ -17,11 +18,25 @@ export class UploadComponent implements OnInit, OnDestroy, OnChanges {
   @Input() tooltip = '';
   @Input() dir = '';
   @Input() cropper = false;
-
-  constructor(public dialog: MatDialog,
-              public crud: CrudService,
-              public uploadService: UploadService) {}
+  public language;
+  public translate={
+    t1: {
+      ru: 'Добавить медиа',
+      ua: 'Додати медіа'
+    }
+  };
+  constructor(
+      public dialog: MatDialog,
+      public crud: CrudService,
+      public uploadService: UploadService,
+      public auth: AuthService
+) {}
   ngOnInit() {
+    this.auth.onLanguage.subscribe((l: any) => {
+      if (l) {
+        this.language = l;
+      }
+    });
     this.uploadService.onFs.subscribe(v => {
       if (v) {
         this.onFs.emit(v);

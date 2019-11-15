@@ -1,14 +1,14 @@
 .upload{
   display: flex;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: flex-start;
   position: relative;
   color: #748AA1;
   background: #fff;
   font-weight: normal;
   border: 0;
   cursor: pointer;
-  width: 115px;
+  width: max-content;
   &:before{
     content: '+';
     display: flex;
@@ -26,6 +26,6 @@
     line-height: initial;
   }
   .content{
-    margin-left: 10px;
+    margin-left: 15px;
   }
 }
