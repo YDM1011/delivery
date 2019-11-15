@@ -26,7 +26,7 @@ module.exports.postCreate = async (req,res,next, backendApp) => {
         });
 
         backendApp.mongoose.model('Action')
-            .find({_id:action._id})
+            .findOne({_id:action._id})
             .populate({path: 'client', select:'fcmToken'})
             .select('client')
             .exec((e,r)=>{
@@ -34,7 +34,7 @@ module.exports.postCreate = async (req,res,next, backendApp) => {
                 if (!r) return next();
 
                 let fcmTokens = [];
-                r.forEach(it=>{
+                r.client.forEach(it=>{
                     fcmTokens.push(it.fcmToken)
                 });
                 backendApp.service.fcm.send({
