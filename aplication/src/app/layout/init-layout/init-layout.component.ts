@@ -27,13 +27,18 @@ export class InitLayoutComponent implements OnInit {
 
   ngOnInit() {
     this.ratingConfirm$ = this.wsService.on(WS.ON.ON_RATING_CONFIRM);
-    this.ratingConfirm$.subscribe(v => {
-      console.log(v)
-    });
     this.notificationOrders$ = this.wsService.on(WS.ON.ON_CONFIRM_ORDER);
-    this.notificationOrders$.subscribe(v => {
-      this.auth.setUpdateOrder(v.data);
+
+    this.auth.onMe.subscribe((me: any) => {
+      if (!me) {return; }
+      this.ratingConfirm$.subscribe(v => {
+        console.log(v)
+      });
+      this.notificationOrders$.subscribe(v => {
+        this.auth.setUpdateOrder(v.data);
+      });
     });
+
     if (navigator.onLine) {
       this.status = 'online';
       this.isConnected = true;

@@ -11,8 +11,14 @@
   height: 190px;
   z-index: -1;
   background-size: cover;
-  border-bottom-left-radius: 50px;
-  border-bottom-right-radius: 50px;
+  .img{
+    width: 100%;
+    height: 100%;
+    img{
+      border-bottom-left-radius: 50px;
+      border-bottom-right-radius: 50px;
+    }
+  }
   &:before{
     content: '';
     width: 100%;
@@ -57,15 +63,6 @@
       top: 9px;
       z-index: 2;
     }
-    //input{
-    //  position: absolute;
-    //  width: 100%;
-    //  height: 100%;
-    //  z-index: 1;
-    //  border-radius: 15px;
-    //  border: none;
-    //  padding-left: 120px;
-    //}
   }
   .basket{
     width: 50px;

@@ -79,6 +79,24 @@ export class CrudService {
       return arr;
   }
 
+  getAction(city) {
+      this.city = city;
+      return new Promise((resolve, reject) => {
+        let links = [];
+        this.city.links.forEach(it => {
+          links.push({cityLink: it});
+        });
+        // const populate = '&populate='+ JSON.stringify({});
+        const query = `?query={"$or":${JSON.stringify(links)},"actionGlobal":true}&skip=0&limit=7&sort={"date":-1}`;
+        this.get('action', '', query).then((v: any) => {
+          if (v) {
+            resolve(v);
+          }
+        }).catch((error) => {
+          reject(error)
+        })
+      })
+  }
   getCompany(city) {
     this.city = city;
     return new Promise((resolve, reject) => {
