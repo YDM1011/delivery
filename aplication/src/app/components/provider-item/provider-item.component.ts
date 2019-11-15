@@ -31,6 +31,10 @@ export class ProviderItemComponent implements OnInit, OnDestroy {
   public language: string;
   public translate = {
     t1: {
+      ru: 'акции',
+      ua: 'акції'
+    },
+    t2: {
       ru: 'акций',
       ua: 'акцій'
     }

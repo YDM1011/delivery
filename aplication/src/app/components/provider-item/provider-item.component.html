@@ -15,7 +15,7 @@
         <ng-container *ngIf="data.action">
           <ng-container *ngIf="data.action.length>0">
             <div class="action">
-              {{data.actionCount}} {{translate.t1[language]}}
+              {{data.actionCount}} {{data.actionCount < 10 ?  translate.t1[language] : translate.t2[language]}}
             </div>
           </ng-container>
         </ng-container>
