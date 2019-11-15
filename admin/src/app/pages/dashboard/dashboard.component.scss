@@ -112,7 +112,6 @@
     display: flex;
     width: 100%;
     background: #fff;
-    width: max-content;
     .main-col{
       display: flex;
       align-items: center;
@@ -145,7 +144,7 @@
       color: #fff;
       background: #009688;
       border-radius: 5px 5px 0 0;
-      width: max-content;
+      width: 100%;
       .main-col{
         padding: 20px 30px;
       }
@@ -165,7 +164,6 @@
         .date, .city, .providers{
           span{
             font-size: 14px;
-
           }
         }
       }
@@ -223,6 +221,21 @@
       }
       .main-table{
         .main-row{
+          .main-col{
+            padding: 10px 20px;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 900px) {
+  .dashboard {
+    &__box{
+      .main-table{
+        .main-row{
+          width: max-content;
           .main-col{
             padding: 10px 20px;
           }

@@ -108,19 +108,38 @@ export class DashboardComponent implements OnInit {
     });
 
     this.crud.get(`providerInfo/byName/1`).then((v: any) => {
+      if(!v[0]) {
+        this.allCounts['first'] = 0;
+        return;
+      }
       this.allCounts['first'] = v[0].count;
     });
     this.crud.get(`providerInfo/byName/2`).then((v: any) => {
+      if(!v[0]) {
+        this.allCounts['second'] = 0;
+        return;
+      }
       this.allCounts['second'] = v[0].count;
     });
     this.crud.get(`providerInfo/byName/3`).then((v: any) => {
+      if(!v[0]) {
+        this.allCounts['third'] = 0;
+        return;
+      }
       this.allCounts['third'] = v[0].count;
     });
     this.crud.get(`providerInfo/byName/4`).then((v: any) => {
+      if(!v[0]) {
+        this.allCounts['forth'] = 0;
+        return;
+      }
       this.allCounts['forth'] = v[0].count;
     });
     this.crud.get(`providerInfo/byName/5`).then((v: any) => {
-      if (!v[0]) return  this.allCounts['fifth'] = 0;
+      if(!v[0]) {
+        this.allCounts['fifth'] = 0;
+        return;
+      }
       this.allCounts['fifth'] = v[0].count;
     });
     this.chartFunc();
@@ -166,7 +185,7 @@ export class DashboardComponent implements OnInit {
           }
           this.lineChartData[0].data[i] = 0;
         });
-        triger++
+        triger++;
         i++
       }
     })
