@@ -20,6 +20,12 @@ export class ProductItemComponent implements OnInit, OnDestroy {
     ru: 'Товар додан в корзину',
     ua: 'Товар доданий у кошик'
   };
+  public translate = {
+    t1: {
+      ru: 'Добавить в',
+      ua: 'Додати в'
+    }
+  };
   constructor(
       private auth: AuthService,
       private crud: CrudService,

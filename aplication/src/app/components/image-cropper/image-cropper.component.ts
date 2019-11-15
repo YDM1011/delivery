@@ -19,7 +19,7 @@ export class ImageCropperComponent implements OnInit, AfterViewInit {
   @ViewChild("image", { static: false })
   public imageElement: ElementRef;
   public domain = environment.domain;
-
+  public language;
   @Output() done = new EventEmitter();
   @Input("src") imageSource;
   @Input() dir: string;
@@ -28,12 +28,20 @@ export class ImageCropperComponent implements OnInit, AfterViewInit {
   private cropper: Cropper;
 
   public imageData: imageSlice;
-
+  public translate: {
+    btn: {
+      ru: 'Сохранить',
+      ua: 'Зберегти'
+    }
+  };
   public constructor(
     private crud: CrudService,
     private auth: AuthService
   ) {
     this.imageDestination = '';
+    this.auth.onLanguage.subscribe((l: any) => {
+      this.language = l;
+    })
   }
 
   public ngAfterViewInit() {

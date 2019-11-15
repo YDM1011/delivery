@@ -29,6 +29,12 @@ export class ProviderItemComponent implements OnInit, OnDestroy {
   @Input() isTop = false;
   @Output() getIt = new EventEmitter();
   public language: string;
+  public translate = {
+    t1: {
+      ru: 'акций',
+      ua: 'акцій'
+    }
+  };
   constructor(
       private auth: AuthService,
       private crud: CrudService

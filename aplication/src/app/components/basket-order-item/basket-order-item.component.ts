@@ -1,31 +1,54 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import {CrudService} from '../../crud.service';
 import {MatSnackBar} from '@angular/material';
 import {AuthService} from "../../auth.service";
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-basket-order-item',
   templateUrl: './basket-order-item.component.html',
   styleUrls: ['./basket-order-item.component.scss']
 })
-export class BasketOrderItemComponent implements OnInit {
+export class BasketOrderItemComponent implements OnInit, OnDestroy {
   @Input() data;
   @Output() removeBasket = new EventEmitter();
   public removeObj = {
     index: null,
     obj: null
   };
+  public language;
   public chooseAll: boolean = false;
   public showConfirm: boolean = false;
   public removeItemShow: boolean = false;
   public items = [];
+  public translate ={
+    by: {
+      ru: 'Удалить',
+      ua: 'Видалити'
+    },
+    total: {
+      ru: 'Всего к оплате:',
+      ua: 'Всього до оплати'
+    }
+  };
+  private _subscription: Subscription[] = [];
+
   constructor(
       private crud: CrudService,
       private auth: AuthService,
       private snackBar: MatSnackBar
   ) { }
-
+  ngOnDestroy() {
+    this._subscription.forEach((item)=>{
+      item.unsubscribe();
+    })
+  }
   ngOnInit() {
+    this._subscription.push(this.auth.onLanguage.subscribe((l: any) => {
+      if (l) {
+        this.language = l;
+      }
+    }));
     this.mainChack();
     this.crud.get(`product?query={"basketOwner":"${this.data._id}"}&populate={"path":"orderOwner","select":"img name price count discount"}`).then((v: any) => {
       if (v && v.length > 0) {
@@ -35,10 +58,10 @@ export class BasketOrderItemComponent implements OnInit {
         });
       }
     });
-    this.auth.onConfirmOrder.subscribe(v=>{
+    this._subscription.push(this.auth.onConfirmOrder.subscribe(v=>{
       if (!v) return;
       this.showConfirm = true;
-    })
+    }))
   }
   closeConfirm(e) {
     this.showConfirm = e.value;

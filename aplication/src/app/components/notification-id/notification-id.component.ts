@@ -26,6 +26,29 @@ export class NotificationIdComponent implements OnInit {
     ru: 'Укажите свою оценку',
     ua: 'Вкажіть свою оцінку'
   };
+
+  public translate: {
+    title: {
+      ru: 'Оценка сервиса',
+      ua: 'Оцінка сервісу'
+    },
+    description: {
+      ru: 'Оцените работу поставщика',
+      ua: 'Оцініть роботу постачальника'
+    },
+    input: {
+      ru: 'Коментарий',
+      ua: 'Коментарій'
+    },
+    btn1: {
+      ru: 'Оценить',
+      ua: 'Оцінити'
+    },
+    btn2: {
+      ru: 'Пропустить',
+      ua: 'Пізніше'
+    },
+  };
   constructor(
       private route: ActivatedRoute,
       private auth: AuthService,

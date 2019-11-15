@@ -57,6 +57,10 @@ export class IndexComponent implements OnInit, OnDestroy {
       ru: 'г.',
       ua: 'м.'
     },
+    all_s: {
+      ru: 'Все',
+      ua: 'Усі'
+    },
     provider: {
       ru: 'Поставщики',
       ua: 'Постачальники'

@@ -21,23 +21,23 @@
         {{data.city.name}}
       </div>
       <div class="home address-info">
-        Дом {{data.build}}
+        {{translate.buil[language]}}  {{data.build}}
       </div>
       <div class="street address-info">
-        ул. {{data.street}}
+        {{translate.street[language]}} {{data.street}}
       </div>
       <div class="flat address-info">
-        Квартира {{data.department ? data.department : '--'}}
+        {{translate.department[language]}} {{data.department ? data.department : '--'}}
       </div>
       <div class="comment">
         {{data.comment}}
       </div>
     </div>
     <a routerLink="/{{language}}/edit-address/{{data._id}}" class="edit-address">
-      Изменить
+      {{translate.edit[language]}}
     </a>
     <a (click)="removeAddress()" class="remove-address">
-      Удалить
+      {{translate.remove[language]}}
     </a>
   </div>
 </mat-expansion-panel>

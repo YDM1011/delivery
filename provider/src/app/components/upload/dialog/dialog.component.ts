@@ -97,7 +97,7 @@ export class DialogComponent implements OnInit {
     // Adjust the state variables
 
     // The OK-button should have the text "Finish" now
-    this.primaryButtonText = 'Finish';
+    this.primaryButtonText = 'Сохранить';
 
     // The dialog should not be closed while uploading
     this.canBeClosed = false;
