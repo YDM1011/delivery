@@ -72,3 +72,27 @@
     }
   }
 }
+
+@media (min-width: 414px) {
+  .carousel{
+    .item{
+      height: 210px;
+    }
+  }
+}
+
+@media (min-width: 525px) {
+  .carousel{
+    .item{
+      height: 250px;
+    }
+  }
+}
+
+@media (min-width: 768px) {
+  .carousel{
+    .item{
+      height: 300px;
+    }
+  }
+}
