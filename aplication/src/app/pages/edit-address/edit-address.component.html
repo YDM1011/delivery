@@ -1,23 +1,21 @@
 <div class="other-header">
     <app-back-btn></app-back-btn>
-    <h2>Адрес доставки</h2>
+    <h2>
+        {{translate.title[language]}}
+    </h2>
 </div>
 
 <form (submit)="save($event)" class="other-pages">
   <p>
-    Без адреса Вы не сможете оформить заказ!
+      {{translate.empty[language]}}
   </p>
   <div class="form">
     <input type="text" placeholder="Название торговой точки" name="name" [(ngModel)]="address.name">
-<!--    <select *ngIf="cities" name="city" [(ngModel)]="address.city" (change)="select($event)">-->
-<!--      <option *ngFor="let city of cities" [value]="city._id">-->
-<!--        <app-img [fs]="city.img" [anyFs]="'assets/images/city.svg'"></app-img>-->
-<!--        {{city.name}}-->
-<!--      </option>-->
-<!--    </select>-->
     <div class="city-block">
       <mat-form-field *ngIf="cities" >
-        <mat-label>Город</mat-label>
+        <mat-label>
+            {{translate.city[language]}}
+        </mat-label>
         <mat-select [(value)]="address.city" (selectionChange)="select($event)">
           <mat-option *ngFor="let city of cities" [value]="city._id">
 <!--            <app-img [fs]="city.img" [anyFs]="'assets/images/city.svg'"></app-img>-->
@@ -44,7 +42,9 @@
     </div>
   </div>
   <button class="main-button color " type="submit">
-    Сохранить
+    {{translate.save[language]}}
   </button>
-  <a routerLink="/{{language}}/my-address" class="back-btn">Назад</a>
+  <a routerLink="/{{language}}/my-address" class="back-btn">
+      {{translate.back[language]}}
+  </a>
 </form>

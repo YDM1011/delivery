@@ -21,6 +21,33 @@ export class EditAddressComponent implements OnInit {
     department: '',
     comment: '',
   };
+
+  public translate ={
+    title: {
+      ru: 'Адрес доставки',
+      ua: 'Адреса доставки'
+    },
+    city: {
+      ru: 'Город',
+      ua: 'Місто'
+    },
+    empty: {
+      ru: 'Без адреса Вы не сможете оформить заказ!',
+      ua: 'Без адреси Вы не зможете оформити замовлення!'
+    },
+    other: {
+      ru: 'Другой город',
+      ua: 'Інше місто'
+    },
+    save:{
+      ru: 'Сохранить',
+      ua: 'Зберегти'
+    },
+    back:{
+      ru: 'Назад',
+      ua: 'Назад'
+    }
+  };
   constructor(
     private route: ActivatedRoute,
     private auth: AuthService,

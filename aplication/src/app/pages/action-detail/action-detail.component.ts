@@ -12,6 +12,25 @@ export class ActionDetailComponent implements OnInit {
   public id: string;
   public language: string;
   public action;
+
+  public translate = {
+    title: {
+      ru: 'Акции',
+      ua: 'Акції'
+    },
+    btn_provider: {
+      ru: 'Перейти к поставщику',
+      ua: 'Перейти до поставщика'
+    },
+    btn_product: {
+      ru: 'Перейти к продукту',
+      ua: 'Перейти до продукту'
+    },
+    btn_back: {
+      ru: 'Назад',
+      ua: 'Назад'
+    }
+  };
   constructor(
       private route: ActivatedRoute,
       private auth: AuthService,

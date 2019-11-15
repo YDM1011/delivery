@@ -1,7 +1,7 @@
 <div class="other-header">
   <app-back-btn></app-back-btn>
   <h2>
-    {{"Акция" | trans:language }}
+    {{translate.title[language]}}
   </h2>
   <app-basket-item></app-basket-item>
 </div>
@@ -11,13 +11,13 @@
 
   <div class="buttons">
     <a routerLink="/{{language}}/provider/{{action.companyOwner._id}}" class="main-button color">
-      Перейти к поставщику
+      {{translate.btn_provider[language]}}
     </a>
     <a routerLink="/{{language}}/product/{{action.orderOwner}}" class="main-button color" *ngIf="action.orderOwner">
-      Перейти к продукту
+      {{translate.btn_product[language]}}
     </a>
     <a (click)="back()" class="back-btn">
-      Назад
+      {{translate.btn_back[language]}}
     </a>
   </div>
 </div>

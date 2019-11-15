@@ -15,6 +15,17 @@ export class BasketComponent implements OnInit {
   public loading: boolean = false;
   public removeItem: boolean = false;
   public showConfirm: boolean = false;
+
+  public translate ={
+    title: {
+      ru: 'Корзина',
+      ua: 'Корзина'
+    },
+    empty: {
+      ru: 'Корзина пуста',
+      ua: 'Кошик пустий'
+    }
+  };
   constructor(
       private route: ActivatedRoute,
       private auth: AuthService,

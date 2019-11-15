@@ -45,7 +45,7 @@
 </ng-container>
 <ng-container *ngIf="loaded.action; else preloadAction">
   <div class="carousel" *ngIf="action && action.length>0">
-    <owl-carousel [options]="mySlideOptions" [items]="action" [carouselClasses]="['owl-theme', 'sliding']">
+    <owl-carousel [options]="mySlideOptions" [items]="action" #owl [carouselClasses]="['owl-theme', 'sliding']">
       <div [routerLink]="'/'+language+'/action/'+image._id" class="item" *ngFor="let image of action;let i = index">
         <div>
           <app-img [fs]="image.img"></app-img>

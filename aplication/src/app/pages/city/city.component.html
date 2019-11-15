@@ -1,6 +1,8 @@
 <div class="other-header">
   <app-back-btn></app-back-btn>
-  <h2>Где Вы сейчас?</h2>
+  <h2>
+    {{translate.title[language]}}
+  </h2>
 </div>
 
 <div class="other-pages">
@@ -16,7 +18,7 @@
     </div>
     <a routerLink="/{{language}}/other-city" class="city-item">
       <ng-container *ngTemplateOutlet="cityIcon"></ng-container>
-      Другой город
+      {{translate.other[language]}}
     </a>
   </div>
 </div>

@@ -14,6 +14,12 @@ export class BrandsComponent implements OnInit, OnDestroy {
   public language: string;
   public curentCity = {};
   private _subscription: Subscription[] = [];
+  public translate ={
+    title: {
+      ru: 'Бренды',
+      ua: 'Бренди'
+    }
+  };
   constructor(
       private auth: AuthService,
       private crud: CrudService
