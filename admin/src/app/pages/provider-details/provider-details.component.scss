@@ -210,3 +210,19 @@
     }
   }
 }
+@media (max-width: 992px) {
+  .provider-detail{
+    &__orders-status{
+      .order__status-box {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
+        .status-item {
+          min-width: 200px;
+          margin-bottom: 25px;
+        }
+      }
+    }
+  }
+}

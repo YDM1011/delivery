@@ -49,6 +49,7 @@ export class SettingsComponent implements OnInit {
     });
   }
   create() {
+    this.body['img'] = this.companyCopy.img;
     this.crud.post('company', this.body, this.company._id).then((v: any) => {
       this.user.companies[0] = v;
       this.company = Object.assign({}, v);

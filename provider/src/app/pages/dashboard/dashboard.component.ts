@@ -3,7 +3,6 @@ import {CrudService} from '../../crud.service';
 import {AuthService} from '../../auth.service';
 import {BaseChartDirective, Color, Label} from "ng2-charts";
 import {ChartDataSets, ChartOptions} from "chart.js";
-import {invalid} from "@angular/compiler/src/render3/view/util";
 
 @Component({
   selector: 'app-dashboard',
@@ -66,23 +65,7 @@ export class DashboardComponent implements OnInit {
       pointBorderColor: 'rgba(0,131,120,0.51)',
       pointHoverBackgroundColor: '#fff',
       pointHoverBorderColor: 'rgba(148,159,177,0.8)'
-    },
-    // { // dark grey
-    //   backgroundColor: 'rgba(77,83,96,0.2)',
-    //   borderColor: 'rgba(77,83,96,1)',
-    //   pointBackgroundColor: 'rgba(77,83,96,1)',
-    //   pointBorderColor: '#fff',
-    //   pointHoverBackgroundColor: '#fff',
-    //   pointHoverBorderColor: 'rgba(77,83,96,1)'
-    // },
-    // {
-    //   backgroundColor: 'rgba(255,255,255,0.5)',
-    //   borderColor: 'red',
-    //   pointBackgroundColor: 'rgba(148,159,177,1)',
-    //   pointBorderColor: '#fff',
-    //   pointHoverBackgroundColor: '#fff',
-    //   pointHoverBorderColor: 'rgba(148,159,177,0.8)'
-    // }
+    }
   ];
   public lineChartLegend = true;
   public lineChartType = 'line';

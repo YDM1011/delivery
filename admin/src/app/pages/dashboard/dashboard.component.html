@@ -127,7 +127,7 @@
 					<ng-container *ngFor="let item of listProvider; let index = index;">
 						<ng-container *ngIf="item">
 							<div class="main-row" >
-								<div class="main-col">
+								<div class="main-col link" [routerLink]="'/provider-detail/'+item._id">
 									{{item.name}}
 								</div>
 								<div class="main-col">

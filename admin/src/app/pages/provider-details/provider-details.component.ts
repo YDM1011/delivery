@@ -12,23 +12,87 @@ export class ProviderDetailsComponent implements OnInit {
   public lengthPagination = 0;
   public pageSizePagination = 10;
   public pageSizeOptionsPagination: number[] = [5, 10, 15];
-  public dateStart: Date;
-  public dateEnd: Date;
+  public dateStart: Date = new Date();
+  public dateEnd: Date = new Date();
   public defLang = 'ru-UA';
   public Date = new Date();
   public basketList = [];
   public provider;
   public loading = false;
+  public countForTime;
+  public allCounts = {
+    first: null,
+    second: null,
+    third: null,
+    forth: null,
+    fifth: null
+  };
   constructor(
       private crud: CrudService,
       private route: ActivatedRoute,
   ) { }
 
   ngOnInit() {
+    this.dateStart.setDate(this.dateStart.getDate() -7);
     this.route.params.subscribe(() => {
       this.id = this.route.snapshot.paramMap.get('id');
       this.getBaskets(this.id);
       this.getProvider(this.id);
+      this.getCounts(this.id);
+      this.getfortime(this.id);
+    });
+  }
+  getfortime(id){
+    const dateStart = new Date(this.dateStart.getMonth()+1+'.'+(this.dateStart.getDate()) +'.'+new Date().getFullYear()).getTime();
+    const dateEnd = new Date(this.dateEnd.getMonth()+1+'.'+(this.dateEnd.getDate()+1) +'.'+new Date().getFullYear()).getTime()-1;
+    const query = JSON.stringify({from: dateStart, to:dateEnd});
+
+    this.crud.get(`providerInfo/${id}/4?query=${query}`).then((v: any)=>{
+      if (v && v.length>0) {
+        this.countForTime =v[0];
+      } else {
+        this.countForTime =v;
+      }
+    });
+  }
+  changeCountForTime(){
+    this.getfortime(this.id)
+  }
+  getCounts(id) {
+    this.crud.get(`providerInfo/${id}/1`).then((v: any) => {
+      if(!v[0]) {
+        this.allCounts['first'] = 0;
+        return;
+      }
+      this.allCounts['first'] = v[0].count;
+    });
+    this.crud.get(`providerInfo/${id}/2`).then((v: any) => {
+      if(!v[0]) {
+        this.allCounts['second'] = 0;
+        return;
+      }
+      this.allCounts['second'] = v[0].count;
+    });
+    this.crud.get(`providerInfo/${id}/3`).then((v: any) => {
+      if(!v[0]) {
+        this.allCounts['third'] = 0;
+        return;
+      }
+      this.allCounts['third'] = v[0].count;
+    });
+    this.crud.get(`providerInfo/${id}/4`).then((v: any) => {
+      if(!v[0]) {
+        this.allCounts['forth'] = 0;
+        return;
+      }
+      this.allCounts['forth'] = v[0].count;
+    });
+    this.crud.get(`providerInfo/${id}/5`).then((v: any) => {
+      if(!v[0]) {
+        this.allCounts['fifth'] = 0;
+        return;
+      }
+      this.allCounts['fifth'] = v[0].count;
     });
   }
 
