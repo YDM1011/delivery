@@ -13,6 +13,16 @@ export class CityComponent implements OnInit, OnDestroy {
   public language: string;
   public city;
   private _subscription: Subscription;
+  public translate ={
+    title: {
+      ru: 'Где Вы сейчас?',
+      ua: 'Де ви зараз?'
+    },
+    other: {
+      ru: 'Другой город',
+      ua: 'Інше місто'
+    }
+  };
   constructor(
       private auth: AuthService,
       private crud: CrudService,
@@ -26,7 +36,6 @@ export class CityComponent implements OnInit, OnDestroy {
     });
     this.init();
   }
-
 
   async init() {
     await this.crud.getCity().then((v: any) => {

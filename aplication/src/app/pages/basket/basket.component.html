@@ -1,7 +1,7 @@
 <div class="other-header basket-header">
   <app-back-btn></app-back-btn>
   <h2>
-    {{"Корзина" | trans:language }}
+    {{translate.title[language]}}
   </h2>
   <app-basket-item></app-basket-item>
 </div>
@@ -9,7 +9,7 @@
   <ng-container *ngIf="baskets && baskets.length === 0">
     <div class="other-pages">
       <p class="empty-basket">
-        {{'Корзина пуста' | trans:language}}
+        {{translate.empty[language]}}
       </p>
     </div>
   </ng-container>

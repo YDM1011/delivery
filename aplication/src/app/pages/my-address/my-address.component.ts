@@ -14,6 +14,16 @@ export class MyAddressComponent implements OnInit {
   public data = {
     address: {ua: 'Список адрес магазинів порожній!', ru: 'Cписок адресов магазинов пуст!'}
   };
+  public translate ={
+    title: {
+      ru: 'Адреса доставки',
+      ua: 'Адреси доставки'
+    },
+    btn: {
+      ru: 'Добавить',
+      ua: 'Додати'
+    }
+  };
   constructor(
       private auth: AuthService,
       private crud: CrudService

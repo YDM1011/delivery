@@ -22,6 +22,24 @@ export class BrandsIDComponent implements OnInit, OnDestroy {
   public selectedSort = 0;
   public CityLinksArr = [];
   private _subscription: Subscription[] = [];
+  public translate ={
+    sort1: {
+      ru: 'Новинки',
+      ua: 'Бренди'
+    },
+    sort2: {
+      ru: 'От дешевых к дорогим',
+      ua: 'Від дешевих до дорогих'
+    },
+    sort3: {
+      ru: 'От дорогих к дешевым',
+      ua: 'Від дорогих до дешевих'
+    },
+    filter:{
+      ru: 'Фильтр',
+      ua: 'Фільтр'
+    }
+  };
   constructor(
     private route: ActivatedRoute,
     private auth: AuthService,
