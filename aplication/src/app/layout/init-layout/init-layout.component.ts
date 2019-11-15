@@ -4,6 +4,7 @@ import {AuthService} from '../../auth.service';
 import {ConnectionService} from 'ng-connection-service';
 import {WS} from '../../websocket/websocket.events';
 import {WebsocketService} from '../../websocket';
+import {CrudService} from "../../crud.service";
 
 @Component({
   selector: 'app-init-layout',
@@ -21,6 +22,7 @@ export class InitLayoutComponent implements OnInit {
     private wsService: WebsocketService,
     private connectionService: ConnectionService,
     private auth: AuthService,
+    private crud: CrudService,
     private router: Router,
     private route: ActivatedRoute
   ) { }
@@ -37,6 +39,8 @@ export class InitLayoutComponent implements OnInit {
       this.notificationOrders$.subscribe(v => {
         this.auth.setUpdateOrder(v.data);
       });
+      console.log("fcm save");
+      this.crud.saveToken('fcmToken:test')
     });
 
     if (navigator.onLine) {

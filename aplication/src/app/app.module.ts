@@ -99,7 +99,6 @@ import { FilterBrandComponent } from './components/filter-brand/filter-brand.com
 import { BrandProductUploadDirective } from './directives/brand-product-upload.directive';
 import {OwlModule} from "ngx-owl-carousel";
 import {BrowserModule} from "@angular/platform-browser";
-import * as $ from "jquery";
 @NgModule({
   declarations: [
     AppComponent,

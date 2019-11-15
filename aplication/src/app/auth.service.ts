@@ -45,8 +45,7 @@ export class AuthService {
   public onConfirmOrder = this.ConfirmOrder.asObservable();
 
   constructor(
-      private cookieService: CookieService,
-      private crud: CrudService
+      private cookieService: CookieService
   ) { }
 
   callDefCrop(){
@@ -73,8 +72,6 @@ export class AuthService {
       this.settings.next(data);
   }
   setMe(data) {
-    console.log("fcm save")
-    this.crud.saveToken('fcmToken:test')
     this.me.next(data);
   }
   setBasketCount(data) {
