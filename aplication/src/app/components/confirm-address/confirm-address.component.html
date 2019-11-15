@@ -5,15 +5,19 @@
         <path d="M0.646446 3.64645C0.451185 3.84171 0.451185 4.15829 0.646446 4.35355L3.82843 7.53553C4.02369 7.73079 4.34027 7.73079 4.53553 7.53553C4.7308 7.34027 4.7308 7.02369 4.53553 6.82843L1.70711 4L4.53553 1.17157C4.7308 0.97631 4.7308 0.659727 4.53553 0.464465C4.34027 0.269203 4.02369 0.269203 3.82843 0.464465L0.646446 3.64645ZM18 3.5L1 3.5L1 4.5L18 4.5L18 3.5Z" fill="white"/>
       </svg>
     </a>
-    <h2>Выберите адрес доставки</h2>
+    <h2>
+      {{translate.choose[language]}}
+    </h2>
     <app-basket-item></app-basket-item>
   </div>
   <div class="other-pages" *ngIf="loading">
     <ng-container *ngIf="address && address.length === 0">
       <p class="empty-address">
-        У вас нет адресов
+        {{translate.empty[language]}}
       </p>
-      <button routerLink="/{{language}}/new-address" class="main-button color">Создать адрес</button>
+      <button routerLink="/{{language}}/new-address" class="main-button color">
+        {{translate.create[language]}}
+      </button>
     </ng-container>
     <mat-radio-group [(ngModel)]="addressChoose">
       <mat-accordion>
@@ -41,13 +45,13 @@
                 {{item.city.name}}
               </div>
               <div class="home address-info">
-                Дом {{item.build}}
+                {{translate.buil[language]}} {{item.build}}
               </div>
               <div class="street address-info">
-                ул. {{item.street}}
+                {{translate.street[language]}} {{item.street}}
               </div>
               <div class="flat address-info">
-                Квартира {{item.department}}
+                {{translate.department[language]}} {{item.department}}
               </div>
               <div class="comment">
                 {{item.comment}}
@@ -58,8 +62,12 @@
       </mat-accordion>
     </mat-radio-group>
     <div class="buttons">
-      <button class="main-button color" (click)="outputConfirmAddress.emit(addressChoose)" *ngIf="addressChoose">Выбрать</button>
-      <button class="back-btn" (click)="cancelConfirmAddress.emit(false)">Отмена</button>
+      <button class="main-button color" (click)="outputConfirmAddress.emit(addressChoose)" *ngIf="addressChoose">
+        {{translate.btn1[language]}}
+      </button>
+      <button class="back-btn" (click)="cancelConfirmAddress.emit(false)">
+        {{translate.btn2[language]}}
+      </button>
     </div>
   </div>
 </div>

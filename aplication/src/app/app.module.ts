@@ -45,7 +45,6 @@ import {RaitingComponent} from './components/raiting/raiting.component';
 import {RemoveBasketItemComponent} from './components/remove-basket-item/remove-basket-item.component';
 import {BasketOrderItemComponent} from './components/basket-order-item/basket-order-item.component';
 import {ConfirmOrderComponent} from './components/confirm-order/confirm-order.component';
-import {ChangeAddressComponent} from './components/change-address/change-address.component';
 import {ConfirmAddressComponent} from './components/confirm-address/confirm-address.component';
 import {OrdersComponent} from './pages/orders/orders.component';
 import {OrdersItemComponent} from './components/orders-item/orders-item.component';
@@ -137,7 +136,6 @@ import {BrowserModule} from "@angular/platform-browser";
 		RemoveBasketItemComponent,
 		BasketOrderItemComponent,
 		ConfirmOrderComponent,
-		ChangeAddressComponent,
 		ConfirmAddressComponent,
 		OrdersComponent,
 		OrdersItemComponent,

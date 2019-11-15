@@ -14,6 +14,41 @@ export class OrdersItemComponent implements OnInit {
   @Output() removeOrder = new EventEmitter();
   @Output() confirmOrder = new EventEmitter();
   public getProducts = [];
+
+  public translate: {
+    t1: {
+      ru: 'Номер заказа:',
+      ua: 'Номер замовелння'
+    },
+    t2: {
+      ru: 'Время заказа:',
+      ua: 'Час замовлення'
+    },
+    t3: {
+      ru: 'Ваш заказ был изменен менеджером, подтвердите изменения',
+      ua: 'Ваше замовелння було зміненно менеджером, підтвердіть зміни'
+    },
+    t4: {
+      ru: 'Адрес не доступен',
+      ua: 'Адреса не доступна'
+    },
+    t5: {
+      ru: 'Способ оплаты:',
+      ua: 'Спосіб оплати:'
+    },
+    t6: {
+      ru: 'Всего к оплате:',
+      ua: 'Всього до оплати:'
+    },
+    t7: {
+      ru: 'Отменить заказ',
+      ua: 'Відмінити замовлення'
+    },
+    t8: {
+      ru: 'Отменить заказ',
+      ua: 'Відмінити замовлення'
+    },
+  };
   constructor(
       private crud: CrudService,
       private auth: AuthService

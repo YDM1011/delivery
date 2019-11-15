@@ -11,6 +11,29 @@ export class AddressItemComponent implements OnInit {
   public language: string;
   @Input() data;
   @Output() chackAddress = new EventEmitter();
+
+  public translate ={
+    remove: {
+      ru: 'Удалить',
+      ua: 'Видалити'
+    },
+    edit: {
+      ru: 'Изменить',
+      ua: 'Змінити'
+    },
+    buil: {
+      ru: 'Дом',
+      ua: 'Буд'
+    },
+    street: {
+      ru: 'ул.',
+      ua: 'вул.'
+    },
+    department: {
+      ru: 'Квартира',
+      ua: 'Квартира'
+    },
+  };
   constructor(
       private auth: AuthService,
       private crud: CrudService

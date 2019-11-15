@@ -5,7 +5,9 @@
         <path d="M0.646446 3.64645C0.451185 3.84171 0.451185 4.15829 0.646446 4.35355L3.82843 7.53553C4.02369 7.73079 4.34027 7.73079 4.53553 7.53553C4.7308 7.34027 4.7308 7.02369 4.53553 6.82843L1.70711 4L4.53553 1.17157C4.7308 0.97631 4.7308 0.659727 4.53553 0.464465C4.34027 0.269203 4.02369 0.269203 3.82843 0.464465L0.646446 3.64645ZM18 3.5L1 3.5L1 4.5L18 4.5L18 3.5Z" fill="white"/>
       </svg>
     </a>
-    <h2>Оформление заказа</h2>
+    <h2>
+      {{translate.oform[language]}}
+    </h2>
     <app-basket-item></app-basket-item>
   </div>
   <div class="other-pages">
@@ -13,7 +15,7 @@
       <div class="header-confirm">
         <div class="number">1.</div>
         <div class="title">
-          Адресс доставки
+          {{translate.title1[language]}}
         </div>
       </div>
       <div class="confirm-address" *ngIf="obj.address">
@@ -34,13 +36,13 @@
               {{obj.address.city.name}}
             </div>
             <div class="address-item">
-              Дом {{obj.address.build}}
+              {{translate.buil[language]}} {{obj.address.build}}
             </div>
             <div class="address-item">
-              ул. {{obj.address.street}}
+              {{translate.street[language]}} {{obj.address.street}}
             </div>
             <div class="address-item">
-              Квартира {{obj.address.department ? obj.address.department : '--'}}
+              {{translate.department[language]}} {{obj.address.department ? obj.address.department : '--'}}
             </div>
           </div>
           <div class="comment">
@@ -57,18 +59,24 @@
           2.
         </div>
         <div class="title">
-          Способ оплати
+          {{translate.title2[language]}}
         </div>
       </div>
       <div class="second-box">
         <mat-radio-group aria-label="Select an option" [(ngModel)]="obj.payMethod">
-          <mat-radio-button [value]="1">наличными</mat-radio-button>
-          <mat-radio-button [value]="2">отсрочка</mat-radio-button>
+          <mat-radio-button [value]="1">
+            {{translate.method1[language]}}
+          </mat-radio-button>
+          <mat-radio-button [value]="2">
+            {{translate.method2[language]}}
+          </mat-radio-button>
         </mat-radio-group>
       </div>
     </div>
     <div class="buttons">
-      <button class="main-button color" (click)="confirm()" [disabled]="blockBTN">Оформить</button>
+      <button class="main-button color" (click)="confirm()" [disabled]="blockBTN">
+        {{translate.confirm[language]}}
+      </button>
       <button class="back-btn" (click)="closeConfirm.emit(false)">Назад</button>
     </div>
   </div>

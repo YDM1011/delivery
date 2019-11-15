@@ -60,7 +60,9 @@
       <h3>
         {{translate.category[language]}}
       </h3>
-      <a routerLink="/{{language}}/category">Все</a>
+      <a routerLink="/{{language}}/category">
+        {{translate.all_s[language]}}
+      </a>
     </div>
     <div class="category-box">
       <a routerLink="/{{language}}/category/{{item.name}}" class="category-box-item" *ngFor="let item of category">
@@ -83,7 +85,9 @@
       <h3>
         {{translate.brands[language]}}
       </h3>
-      <a routerLink="/{{language}}/brands">Все</a>
+      <a routerLink="/{{language}}/brands">
+        {{translate.all_s[language]}}
+      </a>
     </div>
     <div class="category-box">
       <a routerLink="/{{language}}/brand/{{item.name}}" class="category-box-item" *ngFor="let item of brandy">

@@ -1,4 +1,4 @@
- <ng-container *ngIf="data; else order">
+<ng-container *ngIf="data">
 	 <div class="product-item">
 		 <a routerLink="/{{language}}/provider/{{company._id}}" class="product-item-title-shop" *ngIf="company">
 			 <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -29,20 +29,16 @@
 						 </div>
 					 </div>
 					 <div class="count">
-						 <button class="minus" *ngIf="count>0" (click)="decrement()">
-							
-						 </button>
+						 <button class="minus" *ngIf="count>0" (click)="decrement()"></button>
 						 <div class="count-count" *ngIf="count>0">
 							 {{count}}
 						 </div>
-						 <button class="plus" (click)="increment()">
-							
-						 </button>
+						 <button class="plus" (click)="increment()"></button>
 					 </div>
 				 </div>
 				 <div class="price">
 					 <button class="basket-buy" [class.active]="count>0" (click)="addProduct(data)">
-						 {{'Добавить в' |trans:language}}
+						 {{translate.t1[language]}}
 						 <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
 							 <path class="basket-svg" d="M13.3785 16.3125C12.4814 16.3125 11.7841 17.0469 11.7841 17.9414C11.7841 18.8359 12.5206 19.5703 13.3785 19.5703C14.2365 19.5703 14.973 18.8359 14.973 17.9414C14.973 17.0469 14.2365 16.3125 13.3785 16.3125ZM13.3785 18.7539C12.928 18.7539 12.6028 18.3867 12.6028 17.9375C12.6028 17.4883 12.9711 17.1211 13.3785 17.1211C13.786 17.1211 14.1542 17.4883 14.1542 17.9375C14.1542 18.3867 13.786 18.7539 13.3785 18.7539Z" fill="#09C2C2"/>
 							 <path class="basket-svg" d="M4.6776 16.3125C3.78046 16.3125 3.08313 17.0469 3.08313 17.9414C3.08313 18.8359 3.81964 19.5703 4.6776 19.5703C5.57473 19.5703 6.27206 18.8359 6.27206 17.9414C6.27206 17.0469 5.53555 16.3125 4.6776 16.3125ZM4.6776 18.7539C4.22707 18.7539 3.90191 18.3867 3.90191 17.9375C3.90191 17.4883 4.27016 17.1211 4.6776 17.1211C5.12812 17.1211 5.45328 17.4883 5.45328 17.9375C5.45328 18.3906 5.08894 18.7539 4.6776 18.7539Z" fill="#09C2C2"/>
@@ -57,51 +53,4 @@
 		
 		 </div>
 	 </div>
-  </ng-container>
-
-  <ng-template #order>
-    <div class="product-item-box">
-    <a routerLink="/{{language}}/product/1" class="img">
-      <img src="./assets/images/tmp/img-product.png" alt="">
-    </a>
-    <div class="block-info">
-      <div class="title">
-        Свежее мясо  свинины
-      </div>
-      <div class="count-package">
-        <div class="price-element sale">
-          <div class="price-item">
-            560.90 грн.
-          </div>
-          <div class="new-price">
-            500 грн.
-          </div>
-        </div>
-        <div class="count">
-          <button class="minus" *ngIf="count>0" (click)="decrement()">
-          
-          </button>
-          <div class="count-count" *ngIf="count>0">
-            {{count}}
-          </div>
-          <button class="plus" (click)="increment()">
-          
-          </button>
-        </div>
-      </div>
-      <div class="price">
-        <button class="basket-buy" [class.active]="count>0">
-          Добавить в
-          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path class="basket-svg" d="M13.3785 16.3125C12.4814 16.3125 11.7841 17.0469 11.7841 17.9414C11.7841 18.8359 12.5206 19.5703 13.3785 19.5703C14.2365 19.5703 14.973 18.8359 14.973 17.9414C14.973 17.0469 14.2365 16.3125 13.3785 16.3125ZM13.3785 18.7539C12.928 18.7539 12.6028 18.3867 12.6028 17.9375C12.6028 17.4883 12.9711 17.1211 13.3785 17.1211C13.786 17.1211 14.1542 17.4883 14.1542 17.9375C14.1542 18.3867 13.786 18.7539 13.3785 18.7539Z" fill="#09C2C2"/>
-            <path class="basket-svg" d="M4.6776 16.3125C3.78046 16.3125 3.08313 17.0469 3.08313 17.9414C3.08313 18.8359 3.81964 19.5703 4.6776 19.5703C5.57473 19.5703 6.27206 18.8359 6.27206 17.9414C6.27206 17.0469 5.53555 16.3125 4.6776 16.3125ZM4.6776 18.7539C4.22707 18.7539 3.90191 18.3867 3.90191 17.9375C3.90191 17.4883 4.27016 17.1211 4.6776 17.1211C5.12812 17.1211 5.45328 17.4883 5.45328 17.9375C5.45328 18.3906 5.08894 18.7539 4.6776 18.7539Z" fill="#09C2C2"/>
-            <path class="basket-svg" d="M17.2179 0.429688L16.5832 2.91406H0.552368L3.51016 11.6523C2.51901 11.7969 1.77858 12.6328 1.77858 13.707C1.77858 14.8867 2.67571 15.8242 3.81965 15.8242H14.93V15.0508H3.81965C3.12623 15.0508 2.59344 14.4805 2.59344 13.7461C2.59344 13.0117 3.16541 12.4414 3.81965 12.4414H14.93H14.9692L17.8682 1.24219H19.5018V0.429688H17.2179ZM14.358 11.6289H4.35245L1.69631 3.72656H16.3599L14.358 11.6289Z" fill="#09C2C2"/>
-            <path class="basket-svg" d="M6.55804 5.64062H5.73926V10.2422H6.55804V5.64062Z" fill="#09C2C2"/>
-            <path class="basket-svg" d="M9.46099 5.64062H8.64221V10.2422H9.46099V5.64062Z" fill="#09C2C2"/>
-            <path class="basket-svg" d="M12.36 5.64062H11.5413V10.2422H12.36V5.64062Z" fill="#09C2C2"/>
-          </svg>
-        </button>
-      </div>
-    </div>
-    </div>
-  </ng-template>
+</ng-container>

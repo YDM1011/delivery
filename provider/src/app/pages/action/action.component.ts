@@ -178,10 +178,6 @@ export class ActionComponent implements OnInit {
       Swal.fire('Error', 'Додайте картинку', 'error');
       return;
     }
-    if (!this.editObj.orderOwner) {
-      Swal.fire('Error', 'Выберете к каком продукту относится акция', 'error');
-      return;
-    }
     this.editObj.orderOwner = this.productChoose;
     this.crud.post('action', this.editObj, this.editObj['_id']).then((v: any) => {
       if (v) {

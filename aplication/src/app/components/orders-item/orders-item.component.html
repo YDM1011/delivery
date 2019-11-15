@@ -5,13 +5,13 @@
         <mat-panel-title>
           <div class="title-panel">
             <div class="title">
-              {{'Номер заказа:' | trans:language}}
+              {{translate.t1[language]}}
               <div class="title-number">
                 {{order.basketNumber}}
               </div>
             </div>
             <div class="title">
-              {{'Время заказа:' | trans:language}}
+              {{translate.t2[language]}}
               <div class="title-number">
                 {{order.date | date: 'HH:mm  dd/MM/yy'}}
               </div>
@@ -58,7 +58,7 @@
         <path d="M6.92174 6.10449C6.68395 6.10449 6.49097 6.29748 6.49097 6.53526V10.1968C6.49097 10.4346 6.68395 10.6276 6.92174 10.6276C7.15952 10.6276 7.3525 10.4346 7.3525 10.1968V6.53526C7.3525 6.29726 7.15952 6.10449 6.92174 6.10449Z" fill="white"/>
       </svg>
       <div class="no-pay-title">
-        {{order.description ? order.description : 'Ваш заказ был изменен менеджером'}}
+        {{order.description ? order.description : translate.t3[language]}}
       </div>
   <!--    <div class="no-pay-title">-->
   <!--      {{'Не оплачено! Требуется оплата.' | trans:language}}-->
@@ -71,7 +71,7 @@
           <app-img *ngIf="order.deliveryAddress" [fs]="order.deliveryAddress ? order.deliveryAddress.img : ''" [anyFs]="'assets/images/provider.svg'"></app-img>
         </div>
         <div class="title">
-          {{order.deliveryAddress ? order.deliveryAddress.name : "Адрес не доступен"}}
+            {{order.deliveryAddress ? order.deliveryAddress.name : translate.t4[language]}}
         </div>
         <div class="location">
           <svg width="11" height="15" viewBox="0 0 11 15" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -81,14 +81,14 @@
         </div>
       </div>
       <div class="pay-method">
-        {{'Способ оплаты:' | trans:language}}
+        {{translate.t5[language]}}
         <span class="pay-method-title">
         {{order.payMethod}}
       </span>
       </div>
       <div class="left">
         <div class="left-title">
-          {{'Всего к оплате:' | trans:language}}
+          {{translate.t6[language]}}
         </div>
         <div class="left-price">
           {{order.totalPrice}} грн.
@@ -99,18 +99,13 @@
       </span>
       </button>
       <div class="cancel-order">
-      <span *ngIf="order.status === 1" (click)="cancelOrder()">
-        {{'Отменить заказ' | trans:language}}
-      </span>
-      <span *ngIf="order.status === 3" (click)="confirmChanges(order._id)">
-        {{'Подтвердить изменения' | trans:language}}
-      </span>
-              </div>
-          </div>
-          <!--  <div class="remove" (click)="removeOrders = true">-->
-          <!--    <svg width="11" height="11" viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg">-->
-          <!--      <path d="M10.8695 10.2387L6.13077 5.49996L10.8695 0.761266C11.0436 0.587135 11.0436 0.304766 10.8695 0.130614C10.6953 -0.043538 10.413 -0.043538 10.2388 0.130614L5.50012 4.86931L0.761387 0.130614C0.587257 -0.043538 0.304888 -0.043538 0.130736 0.130614C-0.0434159 0.304745 -0.0434159 0.587114 0.130736 0.761266L4.86945 5.49996L0.130736 10.2387C-0.0434159 10.4129 -0.0434159 10.6952 0.130736 10.8694C0.304867 11.0435 0.587235 11.0435 0.761387 10.8694L5.50012 6.13061L10.2389 10.8694C10.413 11.0435 10.6954 11.0435 10.8695 10.8694C11.0437 10.6952 11.0437 10.4129 10.8695 10.2387Z" fill="black"/>-->
-          <!--    </svg>-->
-          <!--  </div>-->
+          <span *ngIf="order.status === 1" (click)="cancelOrder()">
+            {{translate.t7[language]}}
+          </span>
+          <span *ngIf="order.status === 3" (click)="confirmChanges(order._id)">
+             {{translate.t8[language]}}
+          </span>
+      </div>
+    </div>
   </div>
 </mat-accordion>

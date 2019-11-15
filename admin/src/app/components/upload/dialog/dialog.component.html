@@ -8,10 +8,10 @@
 
 <div class="container" fxLayout="column" fxLayoutAlign="space-evenly stretch">
   <div>
-    <h1 mat-dialog-title>Upload Files</h1>
+    <h1 mat-dialog-title>Загрузить файл</h1>
     <h3 *ngIf="data.tooltip">{{data.tooltip}}</h3>
     <button [disabled]="uploading || uploadSuccessful" mat-raised-button color="primary" class="green-dialog-btn" (click)="addFiles()">
-      Додать файл
+      Добавить файл
     </button>
   </div>
   <!-- This is the content of the dialog, containing a list of the files to upload -->

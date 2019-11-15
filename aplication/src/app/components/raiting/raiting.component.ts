@@ -27,6 +27,29 @@ export class RaitingComponent implements OnInit {
     ru: 'Укажите свою оценку',
     ua: 'Вкажіть свою оцінку'
   };
+
+  public translate = {
+    t1: {
+      ru: 'Оценка сервиса',
+      ua: 'Оцінка сервісу'
+    },
+    t2: {
+      ru: 'Оцените работу поставщика',
+      ua: 'Оцініть роботу постачальника'
+    },
+    t3: {
+      ru: 'Оценить',
+      ua: 'Оцінити'
+    },
+    t4: {
+      ru: 'Пропустить',
+      ua: 'Пізніше'
+    },
+    t5: {
+      ru: 'Коментарий',
+      ua: 'Коментар'
+    }
+  };
   constructor(
       private auth: AuthService,
       private crud: CrudService,

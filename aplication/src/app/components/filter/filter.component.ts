@@ -29,6 +29,33 @@ export class FilterComponent implements OnInit {
     floor: this.priceFilter,
     ceil: this.priceMax,
   };
+
+  public translate ={
+    filters: {
+      ru: 'Фильтры',
+      ua: 'Фільтри'
+    },
+    sub_cat: {
+      ru: 'Подкатегории',
+      ua: 'Підкатегорії'
+    },
+    brands: {
+      ru: 'Бренд',
+      ua: 'Бренд'
+    },
+    price: {
+      ru: 'Диапазон цен',
+      ua: 'Диапазон цін'
+    },
+    btn1: {
+      ru: 'Применить',
+      ua: 'Застосувати'
+    },
+    btn2: {
+      ru: 'Сбросить',
+      ua: 'Скинути'
+    }
+  };
   constructor(
       private route: ActivatedRoute,
       private auth: AuthService,
