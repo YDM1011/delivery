@@ -46,7 +46,7 @@ module.exports = {
             let messages = [];
             if (typeof topic === 'string' && !token) message['topic'] = topic;
             if (typeof token === 'string' && token) message['token'] = token;
-            if (typeof token === 'object' && token.length > 0) {
+            if (token && typeof token === 'object' && token.length > 0) {
                 token.forEach(it=>{
                     message['token'] = it;
                     messages.push(message)
@@ -61,7 +61,7 @@ module.exports = {
                         rs(response)
                     }
                 })
-            } else if (token.length > 0) {
+            } else if (token && token.length > 0) {
                 let promises = [];
                 messages.forEach(it=>{
                     promises.push(new Promise((rs,rj)=>{
