@@ -52,6 +52,7 @@ module.exports = {
                     messages.push(message)
                 })
             }
+            console.log(typeof token === 'string' || typeof topic === 'string', message)
             if (typeof token === 'string' || typeof topic === 'string') {
                 FCM.send(message, function(err, response) {
                     if(err){
