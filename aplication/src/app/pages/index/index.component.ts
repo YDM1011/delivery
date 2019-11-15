@@ -3,7 +3,6 @@ import {AuthService} from '../../auth.service';
 import {CrudService} from '../../crud.service';
 import {Subscription} from 'rxjs';
 import {environment} from "../../../environments/environment";
-
 @Component({
   selector: 'app-index',
   templateUrl: './index.component.html',
@@ -26,10 +25,8 @@ export class IndexComponent implements OnInit, OnDestroy {
     autoplay: true,
     items: 1,
     dots: false,
-    nav: false,
-    changed: this.changeCar
+    nav: false
   };
-  public carentPhoto;
   public number = 0;
   public domain = environment.domain;
   public loaded = {
@@ -84,7 +81,6 @@ export class IndexComponent implements OnInit, OnDestroy {
       private auth: AuthService,
       private crud: CrudService
   ) { }
-
   ngOnInit() {
     this.auth.onMe.subscribe((v: any) => {
       if (!v) {return; }
