@@ -79,6 +79,12 @@ export class CrudService {
       return arr;
   }
 
+  saveToken (token) {
+      this.post('saveToken', {token:token}).then(v=>{
+
+      }).catch(e=>{console.log(e)})
+  }
+
   getCompany(city) {
     this.city = city;
     return new Promise((resolve, reject) => {

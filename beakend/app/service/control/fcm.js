@@ -12,6 +12,8 @@ module.exports = {
                         if (!r) return rj("Client for save tokent not found");
                         rs(r)
                     })
+            } else {
+                rj("no user or token")
             }
         })
     },

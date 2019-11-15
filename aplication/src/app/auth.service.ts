@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {BehaviorSubject} from 'rxjs';
 import {CookieService} from "ngx-cookie-service";
+import {CrudService} from "./crud.service";
 
 @Injectable({
   providedIn: 'root'
@@ -44,7 +45,8 @@ export class AuthService {
   public onConfirmOrder = this.ConfirmOrder.asObservable();
 
   constructor(
-      private cookieService: CookieService
+      private cookieService: CookieService,
+      private crud: CrudService
   ) { }
 
   callDefCrop(){
@@ -71,7 +73,9 @@ export class AuthService {
       this.settings.next(data);
   }
   setMe(data) {
-      this.me.next(data);
+    console.log("fcm save")
+    this.crud.saveToken('fcmToken:test')
+    this.me.next(data);
   }
   setBasketCount(data) {
     this.basketCount.next(data);
