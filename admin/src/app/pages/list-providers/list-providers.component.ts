@@ -108,12 +108,15 @@ export class ListProvidersComponent implements OnInit {
       this.list = e;
     }
   }
-  verifyCompany(e, id, index) {
-    this.crud.post(`company`, {verify: e, img: this.list[index].companyOwner.img}, id).then((v: any) => {
+  verifyCompany($event, e, id, index) {
+    $event.preventDefault();
+    console.log($event)
+    this.crud.post(`company`, {verify: e, img: this.list[index].img}, id).then((v: any) => {
       if (v) {
-        this.list[index].companyOwner.verify = v.verify;
+        this.list[index].verify = v.verify;
       }
     });
+    return false
   }
   pageEvent(e) {
     this.crud.get(`company?query={}&skip=${e.pageIndex  * e.pageSize}&limit=${e.pageSize}&sort={"date":-1}`).then((l: any) => {

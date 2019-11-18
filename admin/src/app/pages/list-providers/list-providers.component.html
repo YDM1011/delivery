@@ -74,8 +74,8 @@
 							</div>
 						</div>
             <ng-container  *ngFor="let item of list; let index = index" >
-						<div class="row-r"  *ngIf="item" [routerLink]="'/provider-detail/'+item._id">
-							<div class="col">
+						<div class="row-r"  *ngIf="item">
+							<div class="col" [routerLink]="'/provider-detail/'+item._id">
 								<div class="img">
 									<img src="./assets/images/user.svg" alt="" *ngIf="item.img == ''">
 									<app-img [fs]="item.img" *ngIf="item.img && item.img !== ''"></app-img>
@@ -101,8 +101,8 @@
 								</div>
 							</div>
 							<div class="col">
-								<button class="main-button-color red" (click)="verifyCompany(false, item._id, index)" *ngIf="item && item.verify">Выключить</button>
-								<button class="main-button-color" (click)="verifyCompany(true, item._id, index)" *ngIf="item && !item.verify">Включить</button>
+								<button class="main-button-color red" (click)="verifyCompany($event, false, item._id, index)" *ngIf="item && item.verify">Выключить</button>
+								<button class="main-button-color" (click)="verifyCompany($event, true, item._id, index)" *ngIf="item && !item.verify">Включить</button>
 							</div>
 						</div>
             </ng-container>

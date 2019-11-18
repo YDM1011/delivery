@@ -72,4 +72,12 @@ schem.post('save', (doc, next)=>{
         }
     });
 });
+schem.post('findOneAndRemove', (doc, next)=>{
+    const key = doc.name;
+    const translator = mongoose.model('Translator');
+    translator.findOneAndRemove({value: key}).exec((e,r)=>{
+        if (e) return next(e);
+            next()
+    });
+});
 mongoose.model('MainCategory', schem);
