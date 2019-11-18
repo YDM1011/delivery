@@ -59,7 +59,7 @@ export class AddProductComponent implements OnInit, AfterViewChecked {
   }
   selectSubCategory(id) {
     const index = this.crud.find('_id', id, this.categorys);
-    this.subCategoryArray = this.categorys[index].mainCategory.subCategory;
+    this.subCategoryArray = this.categorys[index].mainCategory ? this.categorys[index].mainCategory.subCategory : null;
   }
   removeImg() {
     delete this.product.img;
@@ -68,7 +68,7 @@ export class AddProductComponent implements OnInit, AfterViewChecked {
   create() {
     if (this.validation('product')) {
       this.product.categoryOwner = this.mainCategoryChoose;
-      this.product.subCategory = this.subCategoryChoose;
+      if (this.subCategoryChoose) this.product.subCategory = this.subCategoryChoose;
       this.product.brand = this.mainChooseBrand;
       this.product.companyOwner = this.companyId;
       this.crud.post('order', this.product).then((v: any) => {
