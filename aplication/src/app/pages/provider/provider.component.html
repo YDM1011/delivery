@@ -125,7 +125,6 @@
       <div class="brandy-box">
         <ng-container *ngFor="let brand of company.brands">
             <ng-container *ngIf="brand">
-              console.log(brand)
               <a [appScrollSmooth]="catalog" class="brandy-box-item"  (click)="activeBrands(brand._id)">
                 <div class="svg">
                   <div class="img">

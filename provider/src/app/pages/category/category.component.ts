@@ -74,6 +74,8 @@ export class CategoryComponent implements OnInit {
       Swal.fire('Error', 'Выберете к какой категории относится ваша категория', 'error');
       return;
     }
+    this.category.name.trim();
+    this.category.name = this.category.name.trim();
     this.category.mainCategory = this.mainCategoryChoose;
     this.category.companyOwner = this.user.companyOwner._id;
     this.crud.post('category', this.category).then((v: any) => {
@@ -125,6 +127,7 @@ export class CategoryComponent implements OnInit {
       Swal.fire('Error', 'Выберете к какой категории относится ваша категория', 'error');
       return;
     }
+    this.editObj.name = this.editObj.name.trim();
     this.editObj.mainCategory = this.mainCategoryChoose;
     this.crud.post('category', this.editObj, this.editObj['_id']).then((v: any) => {
       if (v) {

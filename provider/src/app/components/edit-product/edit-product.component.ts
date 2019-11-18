@@ -71,6 +71,7 @@ export class EditProductComponent implements OnInit, OnChanges {
   confirmEditCategoryCrud(e) {
     e.preventDefault();
     if (this.validation('editObj')) {
+      this.editObj.name = this.editObj.name.trim();
       if (!this.showSale) {
         this.editObj.discount = null;
       } else {

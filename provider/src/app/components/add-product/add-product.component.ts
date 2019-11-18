@@ -67,6 +67,7 @@ export class AddProductComponent implements OnInit, AfterViewChecked {
   }
   create() {
     if (this.validation('product')) {
+      this.product.name = this.product.name.trim();
       this.product.categoryOwner = this.mainCategoryChoose;
       if (this.subCategoryChoose) this.product.subCategory = this.subCategoryChoose;
       this.product.brand = this.mainChooseBrand;
@@ -76,12 +77,6 @@ export class AddProductComponent implements OnInit, AfterViewChecked {
           this.outputNew.emit(v);
           this.clearMainObj();
         }
-      }).catch((error) => {
-        // if (error && error.errors.price && error.errors.price.name === 'CastError') {
-        //   Swal.fire('Error', 'Цена должна вводится через "." - точку', 'error').then();
-        // } else if (error && error.errors.categoryOwner.message === 'Check category') {
-        //   Swal.fire('Error', 'У вас нет созданых категорий', 'error').then();
-        // }
       });
     }
   }
