@@ -1,0 +1,95 @@
+.cropper-wrap * {
+  max-width: 100%;
+}
+.cropper-wrap{
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  max-height: 225px;
+  display: flex;
+}
+img.img-croper{
+  user-select: none;
+  position: relative;
+  display: flex;
+  max-height: 225px;
+}
+//.cropper-img .slider{
+//  display: inline-flex;
+//}
+.cropper-img{
+  display: inline-flex;
+  position: relative;
+  margin: 0 auto;
+  overflow: hidden;
+}
+.mask{
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(255, 255, 255, 0.01);
+  z-index: 2;
+}
+.mask-glass .t{
+  position: absolute;
+  //width: 100px;
+  height: calc(50% - 50px);
+  top: 0;
+  right: calc(50% - 50px);
+  left: calc(50% - 50px);
+}
+.mask-glass .b{
+  position: absolute;
+  height: calc(50% - 50px);
+  bottom: 0;
+  right: calc(50% - 50px);
+  left: calc(50% - 50px);
+  //width: 100px;
+}
+.mask-glass .l{
+  position: absolute;
+  width: calc(50% - 50px);
+  left: 0;
+  bottom: 0;
+  height: 100%;
+}
+.mask-glass .r{
+  position: absolute;
+  width: calc(50% - 50px);
+  right: 0;
+  top: 0;
+  height: 100%;
+}
+.mask-glass *{
+  background-color: rgba(3, 0, 2, 0.4);
+}
+.mask-glass{
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(255, 255, 255, 0.01);
+  z-index: 1;
+}
+::ng-deep .mat-checkbox-checked.mat-accent .mat-checkbox-background{
+  background: #09C2C2;
+}
+
+::ng-deep .ng5-slider .ng5-slider-bubble{
+  display: none!important;
+}
+::ng-deep .ng5-slider .ng5-slider-selection{
+  background: #42CFCF!important;
+}
+::ng-deep .ng5-slider .ng5-slider-pointer{
+  background: #42CFCF!important;
+  height: 20px!important;
+  width: 20px!important;
+  top: -8px!important;
+  &:after{
+    display: none;
+  }
+}

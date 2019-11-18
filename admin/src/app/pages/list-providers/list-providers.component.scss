@@ -19,3 +19,12 @@ table{
     border: 1px solid #E21B1B;
   }
 }
+.row-r{
+  z-index: 9;
+  .col{
+    z-index: 10;
+  }
+}
+.z-btn{
+  z-index: 10;
+}

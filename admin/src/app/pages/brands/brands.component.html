@@ -11,7 +11,10 @@
 			</label>
 			<div class="group-buttons">
 				<div class="left">
-					<app-upload (onFs)="onFs($event)" *ngIf="brand && brand.img === ''"></app-upload>
+					<div class="img" *ngIf="brand && brand.img">
+						<app-img [fs]="brand.img" [dir]="'product'"></app-img>
+					</div>
+					<app-upload (onCrop)="onFs($event)" [dir]="'product'" [cropper]="true" *ngIf="brand && brand.img === ''"></app-upload>
 					<div class="mat-chip-file" *ngIf="brand && brand.img !== ''">
 						<div class="content">{{brand.img}}</div>
 						<div class="remove-mat-chip" (click)="brand.img = ''"></div>
@@ -37,10 +40,13 @@
 			</label>
 			<div class="group-buttons">
 				<div class="left">
-					<app-upload *ngIf="editObjCopy.img == ''" (onFs)="onFsEdit($event)"></app-upload>
+					<div class="img" *ngIf="editObj.img">
+						<app-img [fs]="editObj.img" [dir]="'product'"></app-img>
+					</div>
+					<app-upload *ngIf="editObjCopy.img === ''" (onCrop)="onFsEdit($event)" [dir]="'product'" [cropper]="true"></app-upload>
 					<div class="mat-chip-file" *ngIf="editObjCopy && editObjCopy.img !== ''">
 						<div class="content">{{editObjCopy.img}}</div>
-						<div class="remove-mat-chip" (click)="editObjCopy.img = ''; formCheck()"></div>
+						<div class="remove-mat-chip" (click)="editObjCopy.img = ''; editObj.img = ''; formCheck()"></div>
 					</div>
 				</div>
 				<div class="right">
@@ -83,7 +89,7 @@
 						<div class="row-r" *ngFor="let item of brands; let index = index">
 							<div class="col">
 								<div class="img">
-									<app-img [fs]="item.img"></app-img>
+									<app-img [fs]="item.img" [dir]="'product'"></app-img>
 								</div>
 								{{item.name}}
 							</div>

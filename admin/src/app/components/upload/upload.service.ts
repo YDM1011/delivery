@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import {BehaviorSubject, Observable, Subject} from "rxjs";
 import {HttpClient, HttpEventType, HttpRequest, HttpResponse} from "@angular/common/http";
+import {BehaviorSubject, Observable, Subject} from "rxjs";
 import {environment} from "../../../environments/environment";
 
 const url = environment.host + 'upload';
@@ -14,17 +14,32 @@ export class UploadService {
   public onFs = this.fs.asObservable();
   private multiple = new BehaviorSubject<any>(null);
   public onMultiple = this.multiple.asObservable();
+  private file = new BehaviorSubject<any>(null);
+  public onFile = this.file.asObservable();
+  private crop = new BehaviorSubject<any>(null);
+  public onCrop = this.crop.asObservable();
   constructor(private http: HttpClient) {}
   setNull(){
     this.fs = new BehaviorSubject<any>(null);
     this.onFs = this.fs.asObservable();
+    this.file = new BehaviorSubject<any>(null);
+    this.onFile = this.file.asObservable();
+    this.crop = new BehaviorSubject<any>(null);
+    this.onCrop = this.crop.asObservable();
   }
   setMultiple(is){
     this.multiple.next(is ? true : false);
   }
 
+  setFile(d){
+    this.file.next(d);
+  }
+  setCropper(d){
+    this.crop.next(d);
+  }
+
   public upload(
-    files: Set<File>
+      files: Set<File>
   ): { [key: string]: { progress: Observable<number> } } {
     // this will be the our resulting map
     const status: { [key: string]: { progress: Observable<number> } } = {};

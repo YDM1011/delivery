@@ -20,4 +20,7 @@
 .green-dialog-btn{
   background: #009688;
   color: #fff;
+  &.mat-button-wrapper{
+    color: #fff!important;
+  }
 }

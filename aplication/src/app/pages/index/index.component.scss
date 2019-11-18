@@ -66,6 +66,10 @@
     border-radius: 15px;
     overflow: hidden;
     height: 180px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
     img{
       width: 100%;
       height: 100%;

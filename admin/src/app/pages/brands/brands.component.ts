@@ -34,7 +34,7 @@ export class BrandsComponent implements OnInit {
     this.crud.get('brand/count').then((count: any) => {
       if (count) {
         this.lengthPagination = count.count;
-        this.crud.get(`brand?skip=0&limit=${this.pageSizePagination}`).then((v: any) => {
+        this.crud.get(`brand?skip=0&limit=${this.pageSizePagination}&sort={"date":-1}`).then((v: any) => {
           if (!v) {return; }
           this.brands = v;
           this.loading = true;
@@ -62,11 +62,6 @@ export class BrandsComponent implements OnInit {
         this.addShow = false;
       }
     });
-    // this.crud.post('upload2', {body: this.uploadObj}).then((v: any) => {
-    //   if (!v) return;
-    //   this.brand['img'] = v.file;
-    //
-    // }).catch( e => console.log(e));
   }
 
   delete(i) {
@@ -82,12 +77,11 @@ export class BrandsComponent implements OnInit {
     });
   }
   onFs(e) {
-    // this.uploadObj = e;
     this.brand.img = e.file;
   }
   onFsEdit(e) {
-    // this.uploadObj = e;
     this.editObj.img = e.file;
+    this.isBlok=true;
   }
   edit(i) {
     this.editObj = Object.assign({}, this.brands[i]);
