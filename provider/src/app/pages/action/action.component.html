@@ -81,7 +81,7 @@
 					<div class="img" *ngIf="action.img">
 						<app-img [fs]="action.img" [dir]="'product'"></app-img>
 					</div>
-					<app-upload (onCrop)="onFs($event)" [dir]="'product'" [cropper]="true" *ngIf="action && action.img === ''"></app-upload>
+					<app-upload (onCrop)="onFs($event)" [dir]="'product'" [cropper]="true" [rate]="[3,2]" *ngIf="action && action.img === ''"></app-upload>
 					<div class="mat-chip-file" *ngIf="action && action.img !== ''">
 						<div class="content">{{action.img}}</div>
 						<div class="remove-mat-chip" (click)="action.img = ''"></div>

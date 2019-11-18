@@ -23,6 +23,7 @@ export class ImageCropperComponent implements OnInit {
   @Output() done = new EventEmitter();
   @Input("src") imageSource;
   @Input() dir:string;
+  @Input() rate;
 
   public imageDestination: string;
   private cropper: Cropper;

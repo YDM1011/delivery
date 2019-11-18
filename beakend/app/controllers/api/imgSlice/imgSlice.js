@@ -19,7 +19,7 @@ module.exports = (backendApp, router) => {
 
             const transformer =  sharp()
                 .extract({ left: left, top: top, width: width, height: height })
-                .resize(200);
+                .resize(400);
 
             readableStream
                 .pipe(transformer)
