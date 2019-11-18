@@ -99,7 +99,6 @@ export class CrudService {
   }
   saveToken (token) {
       this.post('saveToken', {token:token}).then(v=>{
-
       }).catch(e=>{console.log(e)})
   }
 
@@ -373,7 +372,7 @@ export class CrudService {
   favoriteCompany(data) {
       return new Promise((rs, rj) => {
         this.post('favoriteCompany', data).then(v => {
-          console.log(v)
+          // console.log(v)
           if (v) {
             rs(v);
           } else {
