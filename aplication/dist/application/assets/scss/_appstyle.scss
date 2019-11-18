@@ -32,6 +32,7 @@
   align-items: center;
   justify-content: space-between;
   position: relative;
+  margin-bottom: 10px;
   .city{
     position: relative;
     height: 40px;
@@ -165,10 +166,12 @@
         background: #fff;
         border: 1px solid #F3F3F3;
         box-shadow: 0 2px 3px rgba(9, 194, 194, 0.1);
-        padding: 5px;
+        //padding: 5px;
+        overflow: hidden;
         .img{
-          width: 35px;
-          height: 35px;
+          position: relative;
+          min-width: 60px;
+          height: 60px;
           img{
             width: 100%;
             height: 100%;

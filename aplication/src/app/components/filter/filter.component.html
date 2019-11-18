@@ -35,7 +35,7 @@
 							<mat-checkbox class="filter-check filter-sub" *ngFor="let brand of mainCategory.brands; let index = index" [checked]="brandChack[index]" [value]="brand._id" (change)="getCheckBrand($event, index)">
 								<div class="sub-brand-item">
 									<div class="img">
-										<app-img [fs]="brand.img"></app-img>
+										<app-img [dir]="'product'" [fs]="brand.img"></app-img>
 									</div>
 									<div class="title">
 										{{brand.name}}

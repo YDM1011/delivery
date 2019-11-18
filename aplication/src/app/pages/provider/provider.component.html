@@ -37,7 +37,7 @@
       </a>
     </ng-container>
     <div class="img">
-      <app-img [dir]="'avatar'" [fs]="company && company.img ? company.img : ''" [anyFs]="'assets/images/provider.svg'"></app-img>
+      <app-img [dir]="'avatar'" [fs]="company.img ? company.img : ''" [anyFs]="'assets/images/provider.svg'"></app-img>
     </div>
     <div class="block-info">
       <div class="block-title">
@@ -80,7 +80,7 @@
         <div class="action-box">
           <ng-container *ngFor="let slide of actions; let i = index">
             <div [routerLink]="'/' + language +'/action/' + slide._id" class="action-item">
-              <app-img [fs]="slide.img"></app-img>
+              <app-img [dir]="'product'" [fs]="slide.img ? slide.img : ''" [anyFs]="'assets/images/provider.svg'"></app-img>
             </div>
           </ng-container>
         </div>

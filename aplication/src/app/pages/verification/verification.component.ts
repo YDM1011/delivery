@@ -40,10 +40,12 @@ export class VerificationComponent implements OnInit {
   confirm() {
     if (this.data) {
       this.crud.confirmAuth(this.data).then((v: any) => {
-        localStorage.setItem('userId', v.userId);
-        localStorage.setItem('token', v.token);
-        this.auth.setMe(v.user);
-        this.route.navigate(['']);
+        if (v) {
+          localStorage.setItem('userId', v.userId);
+          localStorage.setItem('token', v.token);
+          this.auth.setMe(v.user);
+          this.route.navigate(['']);
+        }
       });
     }
   }

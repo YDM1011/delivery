@@ -5,12 +5,12 @@
 <ng-container *ngIf="!multiple">
   <input type="file" #file style="display: none" (change)="onFilesAdded()" />
 </ng-container>
-
-<div class="container" fxLayout="column" fxLayoutAlign="space-evenly stretch">
+<!--<img src="{{this.img.file}}" alt="" *ngIf="this.img">-->
+<div class="container" fxLayout="column" fxLayoutAlign="space-evenly stretch" *ngIf="!(data.cropper && step == 2)">
   <div>
     <h1 mat-dialog-title>Загрузить файл</h1>
     <h3 *ngIf="data.tooltip">{{data.tooltip}}</h3>
-    <button [disabled]="uploading || uploadSuccessful" mat-raised-button color="primary" class="green-dialog-btn" (click)="addFiles()">
+    <button [disabled]="uploading || uploadSuccessful" mat-raised-button class="green-dialog-btn" (click)="addFiles()">
       Добавить файл
     </button>
   </div>
@@ -18,18 +18,33 @@
   <mat-dialog-content fxFlex>
     <mat-list>
       <mat-list-item *ngFor="let file of files">
-
+        
         <h4 mat-line>{{file.name}}</h4>
-
+        
         <mat-progress-bar *ngIf="progress" mode="determinate" [value]="progress[file.name].progress | async"></mat-progress-bar>
+      
       </mat-list-item>
     </mat-list>
   </mat-dialog-content>
 </div>
 
+<ng-container *ngIf="!data.cropper">
+  <!-- This are the actions of the dialog, containing the primary and the cancel button-->
+  <mat-dialog-actions class="actions" style="margin-bottom: 5px">
+    <button *ngIf="showCancelButton" mat-button mat-dialog-close>Отмена</button>
+    <button class="green-dialog-btn" mat-raised-button [disabled]="disBtn" (click)="closeDialog()">{{primaryButtonText}}</button>
+  </mat-dialog-actions>
+</ng-container>
 
-<!-- This are the actions of the dialog, containing the primary and the cancel button-->
-<mat-dialog-actions class="actions" style="margin-bottom: 5px">
-  <button *ngIf="showCancelButton" mat-button mat-dialog-close>Отменить</button>
-  <button class="green-dialog-btn" mat-raised-button [disabled]="disBtn" (click)="closeDialog()">{{primaryButtonText}}</button>
-</mat-dialog-actions>
+<ng-container *ngIf="data.cropper && step == 1">
+  <!-- This are the actions of the dialog, containing the primary and the cancel button-->
+  <mat-dialog-actions class="actions" style="margin-bottom: 5px">
+    <button *ngIf="showCancelButton" mat-button mat-dialog-close>Отмена</button>
+    <button class="green-dialog-btn" mat-raised-button [disabled]="disBtn" (click)="closeDialog()">Дальше</button>
+  </mat-dialog-actions>
+</ng-container>
+
+<ng-container *ngIf="data.cropper && step == 2 && img">
+  <app-image-cropper *ngIf="img.file" [src]="img.file" [dir]="data.dir" (done)="send($event)"></app-image-cropper>
+</ng-container>
+

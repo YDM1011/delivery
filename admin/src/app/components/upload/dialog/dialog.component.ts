@@ -1,9 +1,8 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, Inject, OnInit, ViewChild} from '@angular/core';
+import {forkJoin} from 'rxjs';
+import {MAT_DIALOG_DATA} from '@angular/material';
+import {MatDialogRef} from '@angular/material';
 import {UploadService} from "../upload.service";
-import {MatDialogRef} from "@angular/material";
-import {forkJoin} from "rxjs";
-import { Inject } from '@angular/core';
-import {MAT_DIALOG_DATA} from '@angular/material'
 
 @Component({
   selector: 'app-dialog',
@@ -15,23 +14,28 @@ export class DialogComponent implements OnInit {
   @ViewChild('file') file;
   public disBtn = true;
   public multiple;
+  public step = 1;
+  public img;
   public files: Set<File> = new Set();
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) public data: any,
-    public dialogRef: MatDialogRef<DialogComponent>,
-    public uploadService: UploadService) {
+      @Inject(MAT_DIALOG_DATA) public data: any,
+      public dialogRef: MatDialogRef<DialogComponent>,
+      public uploadService: UploadService) {
   }
 
   ngOnInit() {
     this.uploadService.onMultiple.subscribe(v => {
       this.multiple = v;
     });
+    this.uploadService.onFile.subscribe(v => {
+      // console.log(v);
+      if (v) {
+        this.img = v;
+        this.step = 2;
+      }
+    });
   }
-  ngOnChanges() {
-    // this.multiple = this.uploadService.multiple
-  }
-
   progress;
   canBeClosed = true;
   primaryButtonText = 'Загрузить';
@@ -61,7 +65,15 @@ export class DialogComponent implements OnInit {
   addFiles() {
     this.file.nativeElement.click();
   }
-
+  next() {}
+  send(v) {
+    this.uploadService.setCropper(v);
+    this.file.nativeElement.value = '';
+    this.img = '';
+    this.files = new Set();
+    // console.log(this.file.nativeElement);
+    this.dialogRef.close();
+  }
   closeDialog() {
     // if everything was uploaded already, just close the dialog
     if (this.uploadSuccessful) {
@@ -75,7 +87,7 @@ export class DialogComponent implements OnInit {
 
     this.progress = this.uploadService.upload(this.files);
     for (const key in this.progress) {
-      this.progress[key].progress.subscribe(val => console.log(key, val));
+      this.progress[key].progress.subscribe();
     }
 
     // convert the progress map into an array
@@ -87,7 +99,7 @@ export class DialogComponent implements OnInit {
     // Adjust the state variables
 
     // The OK-button should have the text "Finish" now
-    this.primaryButtonText = 'Закончить';
+    this.primaryButtonText = 'Сохранить';
 
     // The dialog should not be closed while uploading
     this.canBeClosed = false;

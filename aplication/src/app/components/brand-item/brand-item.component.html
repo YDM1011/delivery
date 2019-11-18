@@ -1,7 +1,7 @@
 <a routerLink="/{{language}}/brand/{{obj.name}}" class="category-item">
 	<div class="img">
-		<img *ngIf="obj.img" src="{{obj.img}}" alt="">
-	    <app-img *ngIf="!obj.img" [anyFs]="'assets/images/brand.svg'"></app-img>
+<!--		<img *ngIf="obj.img" src="{{obj.img}}" alt="">-->
+	    <app-img *ngIf="obj.img" [fs]="obj.img ? obj.img : ''" [dir]="'product'" [anyFs]="'assets/images/brand.svg'"></app-img>
 	</div>
 	<div class="name">
 		{{obj.name}}

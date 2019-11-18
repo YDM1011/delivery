@@ -40,7 +40,10 @@ import { ProviderDetailsComponent } from './pages/provider-details/provider-deta
 import { StatusDetailProviderPipe } from './pipe/status-detail-provider.pipe';
 import { SaveHtmlPipe } from './pipe/save-html.pipe';
 import { LoadingComponent } from './components/loading/loading.component';
-
+import {ImageCropperComponent} from "./components/image-cropper/image-cropper.component";
+import {CroperComponent, TouchStart} from "./components/croper/croper.component";
+import {ImageCropperModule} from "ngx-image-cropper";
+import {Ng5SliderModule} from "ng5-slider";
 @NgModule({
   declarations: [
     AppComponent,
@@ -67,7 +70,10 @@ import { LoadingComponent } from './components/loading/loading.component';
     ProviderDetailsComponent,
     StatusDetailProviderPipe,
     SaveHtmlPipe,
-    LoadingComponent
+    LoadingComponent,
+    ImageCropperComponent,
+    CroperComponent,
+    TouchStart
   ],
   imports: [
     LottieAnimationViewModule.forRoot(),
@@ -81,7 +87,9 @@ import { LoadingComponent } from './components/loading/loading.component';
     MaterialModule,
     Ng2SearchPipeModule,
     CreditCardDirectivesModule,
-    MatDatepickerModule
+    MatDatepickerModule,
+    ImageCropperModule,
+    Ng5SliderModule
   ],
   exports: [MaterialModule],
   providers: [CookieService, {provide: HTTP_INTERCEPTORS, useClass: ApiInterceptor, multi: true},
