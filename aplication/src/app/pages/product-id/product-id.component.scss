@@ -199,3 +199,11 @@
     margin-bottom: 10px;
   }
 }
+
+.img{
+  app-img{
+    img{
+      object-fit: contain!important;
+    }
+  }
+}

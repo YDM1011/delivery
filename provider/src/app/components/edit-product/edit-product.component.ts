@@ -88,14 +88,15 @@ export class EditProductComponent implements OnInit, OnChanges {
         if (v) {
           this.outputChanges.emit(v);
           this.cancelEdit.emit(false);
+          this.isBlok = false;
         }
       }).catch((error) => {
         if (error && error.errors && error.errors.price.name === 'CastError') {
           Swal.fire('Error', 'Цена должна вводится через "." - точку', 'error').then();
           return;
         }
+        this.isBlok = true;
       });
-      this.isBlok = false;
     }
   }
 
