@@ -74,22 +74,19 @@
       </div>
     </div>
   </div>
-  <ng-container *ngIf="company && actions">
-    <ng-container *ngIf="actions.length > 0">
-      <div class="action">
-        <div class="action-box">
-          <ng-container *ngFor="let slide of actions; let i = index">
-            <div [routerLink]="'/' + language +'/action/' + slide._id" class="action-item">
-              <app-img [dir]="'product'" [fs]="slide.img ? slide.img : ''" [anyFs]="'assets/images/provider.svg'"></app-img>
-            </div>
-          </ng-container>
-        </div>
+  <ng-container *ngIf="company && actions && actions.length > 0">
+    <div class="action">
+      <div class="action-box">
+        <ng-container *ngFor="let slide of actions; let i = index">
+          <div [routerLink]="'/' + language +'/action/' + slide._id" class="action-item">
+            <app-img [dir]="'product'" [fs]="slide.img ? slide.img : ''" [anyFs]="'assets/images/provider.svg'"></app-img>
+          </div>
+        </ng-container>
       </div>
-    </ng-container>
+    </div>
   </ng-container>
   
-  <ng-container *ngIf="company && company.categories">
-    <ng-container *ngIf="company.categories.length > 0">
+  <ng-container *ngIf="company && company.categories && company.categories.length > 0">
       <div class="category">
         <div class="category-header">
           <h3>
@@ -112,37 +109,35 @@
               </a>
         </div>
       </div>
-    </ng-container>
   </ng-container>
-  <ng-container *ngIf="company && company.brands">
-    <ng-container *ngIf="company.brands.length > 0">
-      <div class="brandy">
-        <div class="brandy-header">
-          <h3>
-            {{translate.brands[language]}}
-          </h3>
-          <a routerLink="/{{language}}/brands">
-            {{translate.all[language]}}
-          </a>
-        </div>
-        <div class="brandy-box">
-          <ng-container *ngFor="let brand of company.brands">
-              <ng-container *ngIf="brand">
-                <a [appScrollSmooth]="catalog" class="brandy-box-item"  (click)="activeBrands(brand._id)">
-                  <div class="svg">
-                    <div class="img">
-                      <app-img [dir]="'product'" [fs]="brand && brand.img ? brand.img : ''" [anyFs]="'assets/images/brand.svg'"></app-img>
-                    </div>
-                  </div>
-                  <div class="title">
-                    {{brand.name}}
-                  </div>
-                </a>
-              </ng-container>
-          </ng-container>
-        </div>
+  <ng-container *ngIf="company && company.brands && company.brands.length > 0">
+    <div class="brandy">
+      <div class="brandy-header">
+        <h3>
+          {{translate.brands[language]}}
+        </h3>
+        <a routerLink="/{{language}}/brands">
+          {{translate.all[language]}}
+        </a>
       </div>
-    </ng-container>
+      <div class="brandy-box">
+        <ng-container *ngFor="let brand of company.brands">
+            <ng-container *ngIf="brand">
+              console.log(brand)
+              <a [appScrollSmooth]="catalog" class="brandy-box-item"  (click)="activeBrands(brand._id)">
+                <div class="svg">
+                  <div class="img">
+                    <app-img [dir]="'product'" [fs]="brand.img ? brand.img : ''" [anyFs]="'assets/images/brand.svg'"></app-img>
+                  </div>
+                </div>
+                <div class="title">
+                  {{brand.name}}
+                </div>
+              </a>
+            </ng-container>
+        </ng-container>
+      </div>
+    </div>
   </ng-container>
   <div class="catalog" [appScrollSmoothTouch]="catalog" #catalog>
     <ng-container *ngIf="company.categories.length > 0">
