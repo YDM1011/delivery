@@ -16,12 +16,14 @@ export class UploadComponent implements OnInit, OnDestroy, OnChanges {
   @Input() defType = {'image/png': true, 'image/jpg': true, 'image/jpeg': true};
   @Input() tooltip = '';
   @Input() dir = '';
+  @Input() rate = '';
   @Input() cropper = false;
 
   constructor(public dialog: MatDialog,
               public crud: CrudService,
               public uploadService: UploadService) {}
   ngOnInit() {
+
     this.uploadService.onFs.subscribe(v => {
       if (v) {
         this.onFs.emit(v);
@@ -45,7 +47,7 @@ export class UploadComponent implements OnInit, OnDestroy, OnChanges {
   }
   openUploadDialog() {
     const dialogRef = this.dialog.open(DialogComponent, { width: '360px', height: '360px',
-      data: {type: this.defType, tooltip: this.tooltip, cropper: this.cropper, dir: this.dir} });
+      data: {type: this.defType, tooltip: this.tooltip, cropper: this.cropper, dir: this.dir, rate: this.rate} });
   }
   ngOnDestroy() {
     this.uploadService.setNull();

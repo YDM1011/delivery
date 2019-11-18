@@ -7,7 +7,7 @@
   <div class="img-container">
     <!--<img #image [src]="domain+'/upload/'+imageSource">-->
     <!--<img #image src="https://client.piligrim-test.pp.ua/assets/images/tmp/img-deli.png">-->
-    <app-croper [srcImg]="domain+'/upload/'+imageSource" (dataDef)="onCropDef($event)" (data)="onCrop($event)"></app-croper>
+    <app-croper [srcImg]="domain+'/upload/'+imageSource" (dataDef)="onCropDef($event)" [rate]="rate" (data)="onCrop($event)"></app-croper>
   </div>
   <!--<img [src]="imageDestination" class="img-preview">-->
   <div class="btn-wrap">
