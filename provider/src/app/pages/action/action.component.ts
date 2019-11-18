@@ -122,6 +122,7 @@ export class ActionComponent implements OnInit {
       this.action.actionGlobal = false;
       this.action.client = this.userChoose;
     }
+    this.action.name =this.action.name.trim();
     this.crud.post('action', this.action).then((v: any) => {
       if (v) {
         this.actions.unshift(v);
@@ -152,6 +153,14 @@ export class ActionComponent implements OnInit {
     this.crud.delete('action', this.actions[i]._id).then((v: any) => {
       if (v) {
         this.actions.splice(i, 1);
+        if (this.actions.length === 0) {
+          this.crud.get(`action?query={"companyOwner":"${this.company}"}&populate={"path":"client"}&skip=0&limit=${this.pageSizePagination}&sort={"date":-1}`).then((a: any) => {
+            if (a) {
+              this.actions = a;
+              this.loading = true;
+            }
+          });
+        }
         this.crud.get(`action/count?query={"companyOwner":"${this.company}"}`).then((c: any) => {
           if (c.count > 0) {
             this.lengthPagination = c.count;
@@ -178,6 +187,7 @@ export class ActionComponent implements OnInit {
       Swal.fire('Error', 'Додайте картинку', 'error');
       return;
     }
+    this.editObj.name =this.editObj.name.trim();
     this.editObj.orderOwner = this.productChoose;
     this.crud.post('action', this.editObj, this.editObj['_id']).then((v: any) => {
       if (v) {

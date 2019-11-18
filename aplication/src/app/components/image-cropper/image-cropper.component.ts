@@ -1,8 +1,8 @@
 import {AfterViewInit, Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {CrudService} from '../../crud.service';
 import Cropper from 'cropperjs';
-import {environment} from '../../../environments/environment';
 import {AuthService} from '../../auth.service';
+import {environment} from "../../../environments/environment";
 
 interface imageSlice {
   fileName: string;
@@ -19,33 +19,26 @@ export class ImageCropperComponent implements OnInit, AfterViewInit {
   @ViewChild("image", { static: false })
   public imageElement: ElementRef;
   public domain = environment.domain;
-  public language;
   @Output() done = new EventEmitter();
   @Input("src") imageSource;
   @Input() dir: string;
-
   public imageDestination: string;
   private cropper: Cropper;
 
   public imageData: imageSlice;
   public translate: {
-    btn: {
       ru: 'Сохранить',
       ua: 'Зберегти'
-    }
   };
   public constructor(
     private crud: CrudService,
     private auth: AuthService
   ) {
     this.imageDestination = '';
-    this.auth.onLanguage.subscribe((l: any) => {
-      this.language = l;
-    })
   }
-
+  ngOnInit() {
+  }
   public ngAfterViewInit() {
-
   }
 
   rotete() {
@@ -99,9 +92,6 @@ export class ImageCropperComponent implements OnInit, AfterViewInit {
       .then(v => {
         this.done.emit(v);
       }).catch(e => console.log(e));
-  }
-  public ngOnInit() {
-
   }
 }
 

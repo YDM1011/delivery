@@ -52,6 +52,7 @@ export class BrandsComponent implements OnInit {
       Swal.fire('Error', 'Картинка бренда не может быть пуста', 'error');
       return;
     }
+    this.brand.name = this.brand.name.trim();
     this.crud.post('brand', this.brand).then((v: any) => {
       if (v) {
         this.brands.unshift(v);

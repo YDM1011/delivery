@@ -3,6 +3,7 @@ import {forkJoin} from 'rxjs';
 import {UploadService} from '../upload.service';
 import {MAT_DIALOG_DATA} from '@angular/material';
 import {MatDialogRef} from '@angular/material';
+import {AuthService} from "../../../auth.service";
 
 @Component({
   selector: 'app-dialog',
@@ -17,14 +18,21 @@ export class DialogComponent implements OnInit {
   public step = 1;
   public img;
   public files: Set<File> = new Set();
+  public language;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialogRef: MatDialogRef<DialogComponent>,
-    public uploadService: UploadService) {
+    public uploadService: UploadService,
+    private auth: AuthService) {
   }
 
   ngOnInit() {
+    this.auth.onLanguage.subscribe((l: any) => {
+      if (l) {
+        this.language = l;
+      }
+    });
     this.uploadService.onMultiple.subscribe(v => {
       this.multiple = v;
     });

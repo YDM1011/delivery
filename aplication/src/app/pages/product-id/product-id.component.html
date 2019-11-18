@@ -59,7 +59,6 @@
     </div>
     <div class="buttons">
       <button class="baton-basket" (click)="addProduct(id)" [disabled]="count===0" [class.active]="count>0">
-        {{'В корзину' | trans:language }}
         {{translate.basket[language]}}
         <svg width="20" height="20" viewBox="0 0 26 25" fill="none" xmlns="http://www.w3.org/2000/svg">
           <g clip-path="url(#clip0)">

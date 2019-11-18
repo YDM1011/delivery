@@ -62,6 +62,7 @@ export class CategoryIDComponent implements OnInit {
         this.city = city;
         this.crud.getCategoryName(this.id).then((mainCategory) => {
           this.mainCategory = mainCategory;
+          console.log(this.mainCategory)
           const arr = [];
           if (this.city.links) {
             this.city.links.forEach(it => {
