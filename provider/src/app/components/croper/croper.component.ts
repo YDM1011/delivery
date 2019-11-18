@@ -106,15 +106,46 @@ export class CroperComponent implements OnInit{
   ) { }
 
   ngOnInit() {
+
     this.auth.onDefCrop.subscribe(v=>{
       if (v) {
-        let img = document.getElementById('cropper-img') as HTMLImageElement;
+      let img = document.getElementById('cropper-img') as HTMLImageElement;
+      let top = document.getElementsByClassName('t')[0] as HTMLImageElement;
+      let left = document.getElementsByClassName('l')[0] as HTMLImageElement;
+      let right = document.getElementsByClassName('r')[0] as HTMLImageElement;
+      let bottom = document.getElementsByClassName('b')[0] as HTMLImageElement;
+
+      img.style.left = '0px';
+      img.style.top = '0px';
+
+      if (img.clientHeight*this.rate[0] < img.clientWidth*this.rate[1]){
+        this.width = ((this.max/100) * img.clientHeight/2) /this.rate[1];
+      } else if (img.clientHeight*this.rate[0] > img.clientWidth*this.rate[1]){
+        this.width = ((this.max/100) * img.clientWidth/2) /this.rate[0];
+      } else {
+        this.width = ((this.max/100) * img.clientHeight/2);
+      }
+
+      top.style.height = (img.clientHeight/2) -  this.width*this.rate[1] + "px";
+      top.style.left = img.clientWidth/2 - this.width*this.rate[0] + "px";
+
+      left.style.width = (img.clientWidth/2) - this.width*this.rate[0] + 'px';
+
+      bottom.style.height = (img.clientHeight/2) -  this.width*this.rate[1] + "px";
+      bottom.style.right = img.clientWidth/2 - this.width*this.rate[0] + "px";
+
+      right.style.width = (img.clientWidth/2) -  this.width*this.rate[0] + "px";
+
+      top.style.right = parseFloat(right.style.width) + 'px';
+      bottom.style.left = parseFloat(left.style.width) + 'px';
+
+        // let img = document.getElementById('cropper-img') as HTMLImageElement;
         let rateX =  img.naturalWidth / img.clientWidth;
         let rateY = img.naturalHeight / img.clientHeight;
         console.log(this.def);
         this.def = {
-          x: rateX * (img.clientWidth/2 - (this.width)*this.rate[0]),
-          y: rateY * (img.clientHeight/2 - (this.width)*this.rate[1]),
+          x: rateX * (img.clientWidth/2 - this.width*this.rate[0]),
+          y: rateY * (img.clientHeight/2 - this.width*this.rate[1]),
           width: rateX*this.width*2*this.rate[0],
           height: rateX*this.width*2*this.rate[1],
         };
