@@ -49,7 +49,7 @@ export class AddProductComponent implements OnInit, AfterViewChecked {
       if (!v) { return; }
       this.user = v;
       if (this.user.companyOwner) {
-        this.companyId = this.user.companyOwner;
+        this.companyId = this.user.companyOwner._id;
       }
     });
     if (this.categorys && this.categorys.length > 0) {
