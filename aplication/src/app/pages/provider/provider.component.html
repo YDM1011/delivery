@@ -98,14 +98,16 @@
         </div>
         <div class="category-box">
               <a [appScrollSmooth]="catalog" class="category-box-item" *ngFor="let category of company.categories" (click)="activeCategory(category._id)">
-                <div class="svg">
-                  <div class="img">
-                    <app-img [fs]="category && category.mainCategory.img ? category.mainCategory.img : ''" [anyFs]="'assets/images/brand.svg'"></app-img>
+                <ng-container *ngIf="category.mainCategory">
+                  <div class="svg">
+                    <div class="img">
+                      <app-img [fs]="category.mainCategory && category.mainCategory.img ? category.mainCategory.img : ''" [anyFs]="'assets/images/brand.svg'"></app-img>
+                    </div>
                   </div>
-                </div>
-                <div class="title">
-                  {{category.name}}
-                </div>
+                  <div class="title">
+                    {{category.name}}
+                  </div>
+                </ng-container>
               </a>
         </div>
       </div>
