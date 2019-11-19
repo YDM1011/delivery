@@ -226,3 +226,25 @@
     }
   }
 }
+.pass{
+  margin-top: 8px;
+  display: flex;
+  position: relative;
+  align-items: center;
+  .example-full-width{
+    width: 100%;
+    max-width: 400px;
+    min-width: 250px;
+  }
+  button{
+    margin-left: 20px;
+  }
+}
+
+.status.error{
+  position: absolute;
+  bottom: -6px;
+  z-index: 222;
+  font-size: 11px;
+  color: #f33;
+}

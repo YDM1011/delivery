@@ -18,6 +18,8 @@ export class ProviderDetailsComponent implements OnInit {
   public Date = new Date();
   public basketList = [];
   public provider;
+  public newPass = '';
+  public passErr = '';
   public loading = false;
   public countForTime;
   public allCounts = {
@@ -119,5 +121,16 @@ export class ProviderDetailsComponent implements OnInit {
       if (!l) {return;}
       this.basketList = l;
     });
+  }
+  setNewPass() {
+    if (this.newPass.length < 6) {
+      this.passErr = "Пароль менее 6 символов!";
+      return
+    }
+    this.crud.post('changePass', {pass:this.newPass}).then(v=>{
+      if (v) {
+        this.newPass = '';
+      }
+    }).catch(e=>{console.log(e)})
   }
 }

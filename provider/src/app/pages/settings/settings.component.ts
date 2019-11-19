@@ -19,6 +19,7 @@ export class SettingsComponent implements OnInit {
   public loading = false;
   public body = {};
   public newPass = '';
+  public passErr = '';
   constructor(
       private crud: CrudService,
       private auth: AuthService
@@ -47,6 +48,17 @@ export class SettingsComponent implements OnInit {
         }
       });
     });
+  }
+  setNewPass() {
+    if (this.newPass.length < 6) {
+      this.passErr = "Пароль менее 6 символов!";
+      return
+    }
+    this.crud.post('changePass', {pass:this.newPass}).then(v=>{
+      if (v) {
+        this.newPass = '';
+      }
+    }).catch(e=>{console.log(e)})
   }
   create() {
     this.body['img'] = this.companyCopy.img;

@@ -189,7 +189,7 @@ export class CroperComponent implements OnInit{
     bottom.style.left = parseFloat(left.style.width) + 'px';
 
   }
-  priceFilterFuncEnd(){
+  priceFilterFuncEnd() {
     let img = document.getElementById('cropper-img') as HTMLImageElement;
     let rateX =  img.naturalWidth / img.clientWidth;
     let rateY = img.naturalHeight / img.clientHeight;
