@@ -1,8 +1,19 @@
-import {AfterViewInit, Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+  ViewChild
+} from '@angular/core';
 import {CrudService} from '../../crud.service';
 import Cropper from 'cropperjs';
 import {environment} from '../../../environments/environment';
 import {AuthService} from '../../auth.service';
+import {UploadService} from "../upload/upload.service";
 
 interface imageSlice {
   fileName: string;
@@ -15,7 +26,7 @@ interface imageSlice {
   templateUrl: './image-cropper.component.html',
   styleUrls: ['./image-cropper.component.scss']
 })
-export class ImageCropperComponent implements OnInit, AfterViewInit {
+export class ImageCropperComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild("image", { static: false })
   public imageElement: ElementRef;
   public domain = environment.domain;
@@ -29,6 +40,7 @@ export class ImageCropperComponent implements OnInit, AfterViewInit {
 
   public imageData: imageSlice;
   public constructor(
+    public uploadService: UploadService,
     private crud: CrudService,
     private auth: AuthService
   ) {
@@ -96,6 +108,9 @@ export class ImageCropperComponent implements OnInit, AfterViewInit {
   }
   public ngOnInit() {
 
+  }
+  ngOnDestroy() {
+    this.uploadService.setNull();
   }
 }
 

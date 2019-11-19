@@ -1,16 +1,17 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {UploadService} from "../upload.service";
 import {MatDialogRef} from "@angular/material";
 import {forkJoin} from "rxjs";
 import { Inject } from '@angular/core';
 import {MAT_DIALOG_DATA} from '@angular/material';
+import {CrudService} from "../../../crud.service";
 
 @Component({
   selector: 'app-dialog',
   templateUrl: './dialog.component.html',
   styleUrls: ['./dialog.component.scss']
 })
-export class DialogComponent implements OnInit {
+export class DialogComponent implements OnInit, OnDestroy {
   // @ts-ignore
   @ViewChild('file') file;
   public disBtn = true;
@@ -20,6 +21,7 @@ export class DialogComponent implements OnInit {
   public files: Set<File> = new Set();
 
   constructor(
+    private crud: CrudService,
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialogRef: MatDialogRef<DialogComponent>,
     public uploadService: UploadService) {
@@ -30,12 +32,10 @@ export class DialogComponent implements OnInit {
       this.multiple = v;
     });
     this.uploadService.onFile.subscribe(v => {
-      // console.log(v);
       if (v) {
         this.img = v;
         this.step = 2;
       }
-
     });
   }
   progress;
@@ -45,9 +45,9 @@ export class DialogComponent implements OnInit {
   uploading = false;
   uploadSuccessful = false;
 
+  ngOnDestroy(){}
   onFilesAdded() {
     const files: { [key: string]: File } = this.file.nativeElement.files;
-    // console.log(this.data.type);
     for (const key in files) {
       if (this.data.type[files[key].type]) {
         if (!isNaN(parseInt(key))) {
@@ -60,7 +60,6 @@ export class DialogComponent implements OnInit {
         this.disBtn = false;
         return;
       }
-
     }
   }
 
@@ -73,15 +72,11 @@ export class DialogComponent implements OnInit {
     this.dialogRef.close();
   }
   closeDialog() {
-    // if everything was uploaded already, just close the dialog
     if (this.uploadSuccessful) {
       return this.dialogRef.close();
     }
 
-    // set the component state to "uploading"
     this.uploading = true;
-
-    // start the upload and save the progress map
 
     this.progress = this.uploadService.upload(this.files);
     for (const key in this.progress) {

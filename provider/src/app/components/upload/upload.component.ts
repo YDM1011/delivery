@@ -9,14 +9,14 @@ import {CrudService} from "../../crud.service";
   templateUrl: './upload.component.html',
   styleUrls: ['./upload.component.scss']
 })
-export class UploadComponent implements OnInit, OnDestroy, OnChanges {
+export class UploadComponent implements OnInit, OnDestroy {
   @Output() onFs = new EventEmitter();
   @Output() onCrop = new EventEmitter();
   @Input() multiple = true;
   @Input() defType = {'image/png': true, 'image/jpg': true, 'image/jpeg': true};
   @Input() tooltip = '';
   @Input() dir = '';
-  @Input() rate = '';
+  @Input() rate;
   @Input() cropper = false;
 
   constructor(public dialog: MatDialog,
@@ -28,10 +28,7 @@ export class UploadComponent implements OnInit, OnDestroy, OnChanges {
       if (v) {
         this.onFs.emit(v);
         if (this.cropper) {
-          // this.crud.post('upload2', {body: v}).then((v: any) => {
-          //   if (!v) return;
-            this.uploadService.setFile(v);
-          // }).catch(e => console.log(e));
+          this.uploadService.setFile(v);
         }
       }
     });
@@ -42,9 +39,6 @@ export class UploadComponent implements OnInit, OnDestroy, OnChanges {
     });
   }
 
-  ngOnChanges() {
-    // this.uploadService.setMultiple(this.multiple);
-  }
   openUploadDialog() {
     const dialogRef = this.dialog.open(DialogComponent, { width: '360px', height: '360px',
       data: {type: this.defType, tooltip: this.tooltip, cropper: this.cropper, dir: this.dir, rate: this.rate} });
@@ -52,5 +46,4 @@ export class UploadComponent implements OnInit, OnDestroy, OnChanges {
   ngOnDestroy() {
     this.uploadService.setNull();
   }
-
 }

@@ -1,4 +1,4 @@
-import {Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild} from '@angular/core';
 import Cropper from "cropperjs";
 import {CrudService} from "../../crud.service";
 import {environment} from "../../../environments/environment";
@@ -15,11 +15,11 @@ interface imageSlice {
   templateUrl: './image-cropper.component.html',
   styleUrls: ['./image-cropper.component.scss']
 })
-export class ImageCropperComponent implements OnInit {
+export class ImageCropperComponent implements OnInit, OnDestroy {
   @ViewChild("image", { static: false })
   public imageElement: ElementRef;
   public domain = environment.domain;
-
+  public ok = false;
   @Output() done = new EventEmitter();
   @Input("src") imageSource;
   @Input() dir:string;
@@ -37,7 +37,6 @@ export class ImageCropperComponent implements OnInit {
     this.imageDestination = '';
   }
 
-
   onCrop(e){
     const path = this.imageSource.split('/');
     let file = path[path.length-1];
@@ -46,7 +45,6 @@ export class ImageCropperComponent implements OnInit {
       yy:[e.y, e.height],
       xx:[e.x, e.width]
     };
-    // console.log(this.imageData)
   }
   onCropDef(e){
     const path = this.imageSource.split('/');
@@ -60,7 +58,7 @@ export class ImageCropperComponent implements OnInit {
     this.getData();
   }
   getData() {
-    if (!this.imageData || this.imageData.xx[0] == NaN || this.imageData.yy[0] == NaN) {
+    if (!this.imageData || this.imageData.xx[0] === NaN || this.imageData.yy[0] === NaN) {
       this.auth.callDefCrop();
     }
     let link = 'imgSlice';
@@ -68,10 +66,18 @@ export class ImageCropperComponent implements OnInit {
 
     this.crud.post(link , this.imageData, null, false)
       .then(v=>{
+        console.log(v);
+        this.ok = true;
         this.done.emit(v)
       })
   }
   ngOnInit() {
 
+  }
+  ngOnDestroy() {
+    if (!this.ok) {
+      this.crud.post('deleteFile', {file: this.imageSource}, null, false).then()
+      this.imageSource = null;
+    }
   }
 }
