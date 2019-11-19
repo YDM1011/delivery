@@ -21,8 +21,8 @@
         </ng-container>
       </div>
       <div class="block-raiting">
-        <div class="raiting" *ngIf="data.rating">
-          <mat-star-rating class="mat-rating"  [starCount]="5" [rating]="data.rating"></mat-star-rating>
+        <div class="raiting">
+          <mat-star-rating class="mat-rating"  [starCount]="5" [rating]="data.rating ? data.rating : 0"></mat-star-rating>
         </div>
       </div>
     </div>
