@@ -91,6 +91,7 @@ export class CategoryComponent implements OnInit {
       Swal.fire('Error', 'Все поля должны быть заполнены', 'error').then();
       return;
     }
+    this.category.name = this.category.name.trim();
     this.crud.post('mainCategory', this.category).then((v: any) => {
       if (v) {
         this.categorys.unshift(v);
@@ -103,6 +104,10 @@ export class CategoryComponent implements OnInit {
           name: '',
           img: ''
         };
+      }
+    }).catch((error) => {
+      if (error.error.code === 11000) {
+        Swal.fire('Error', 'Категория с таким названием уже создана!', 'error');
       }
     });
   }

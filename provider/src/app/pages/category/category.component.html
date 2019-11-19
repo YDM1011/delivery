@@ -9,25 +9,27 @@
 			</div>
 		</div>
 		<form class="add-section" (submit)="create($event)">
-			<mat-form-field class="example-full-width">
-				<input matInput type="text" placeholder="Категория" name="name" [(ngModel)]="category.name" autocomplete="off">
-			</mat-form-field>
-			<mat-form-field>
-				<mat-label>Главная категория</mat-label>
-				<mat-select [(value)]="mainCategoryChoose">
-					<mat-option *ngFor="let item of mainCategory" [value]="item._id">
-						{{item.name}}
-					</mat-option>
-				</mat-select>
-			</mat-form-field>
-			<div class="group-buttons">
-				<div class="left">
+			<ng-container *ngIf="mainCategoryChoose; else emptyGlobal">
+				<mat-form-field class="example-full-width">
+					<input matInput type="text" placeholder="Категория" name="name" [(ngModel)]="category.name" autocomplete="off">
+				</mat-form-field>
+				<mat-form-field>
+					<mat-label>Главная категория</mat-label>
+					<mat-select [(value)]="mainCategoryChoose">
+						<mat-option *ngFor="let item of mainCategory" [value]="item._id">
+							{{item.name}}
+						</mat-option>
+					</mat-select>
+				</mat-form-field>
+				<div class="group-buttons">
+					<div class="left">
+					</div>
+					<div class="right">
+						<button class="main-button" type="reset" (click)="cancelAdd()">Отмена</button>
+						<button class="main-button-color" type="submit">Сохранить</button>
+					</div>
 				</div>
-				<div class="right">
-					<button class="main-button" type="reset" (click)="cancelAdd()">Отмена</button>
-					<button class="main-button-color" type="submit">Сохранить</button>
-				</div>
-			</div>
+			</ng-container>
 		</form>
 	</div>
 	
@@ -124,3 +126,7 @@
 		</ng-container>
 	</div>
 </div>
+
+<ng-template #emptyGlobal>
+	На сервисе нет глобальных категорий. Вы не можете создать категорию. Свяжитесь с администратором сервиса.
+</ng-template>
