@@ -8,7 +8,7 @@ import {CrudService} from "../../crud.service";
   styleUrls: ['./my-address.component.scss']
 })
 export class MyAddressComponent implements OnInit {
-  public language: string;
+  public language;
   public localStorage = localStorage ;
   public addressWorks;
   public data = {

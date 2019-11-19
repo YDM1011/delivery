@@ -10,7 +10,7 @@ import {CrudService} from "../../crud.service";
 })
 export class ActionDetailComponent implements OnInit {
   public id: string;
-  public language: string;
+  public language;
   public action;
 
   public translate = {

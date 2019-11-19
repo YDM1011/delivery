@@ -10,7 +10,7 @@ import {Subscription} from "rxjs";
   styleUrls: ['./city.component.scss']
 })
 export class CityComponent implements OnInit, OnDestroy {
-  public language: string;
+  public language;
   public city;
   private _subscription: Subscription;
   public translate ={

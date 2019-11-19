@@ -11,7 +11,7 @@ import {Subscription} from "rxjs";
 export class BrandsComponent implements OnInit, OnDestroy {
   public brands = [];
   public companyArr: any;
-  public language: string;
+  public language;
   public curentCity = {};
   private _subscription: Subscription[] = [];
   public translate ={

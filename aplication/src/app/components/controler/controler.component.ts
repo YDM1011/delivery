@@ -7,7 +7,7 @@ import {AuthService} from "../../auth.service";
   styleUrls: ['./controler.component.scss']
 })
 export class ControlerComponent implements OnInit {
-  public language: string;
+  public language;
   constructor(
       private auth: AuthService
   ) { }

@@ -9,7 +9,7 @@ import {Subscription} from "rxjs";
 })
 export class CategoryItemComponent implements OnInit, OnDestroy {
   @Input() obj;
-  public language: string;
+  public language;
   public _subscription: Subscription[] = [];
   constructor(
       private auth: AuthService

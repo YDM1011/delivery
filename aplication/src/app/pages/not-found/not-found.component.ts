@@ -7,7 +7,7 @@ import {AuthService} from "../../auth.service";
   styleUrls: ['./not-found.component.scss']
 })
 export class NotFoundComponent implements OnInit {
-  public language: string;
+  public language;
   public lottieConfig;
   private anim: any;
 

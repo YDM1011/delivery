@@ -9,7 +9,7 @@ import {Subscription} from 'rxjs';
   styleUrls: ['./notification.component.scss']
 })
 export class NotificationComponent implements OnInit, OnDestroy {
-  public language: string;
+  public language;
   public action = [];
   public toggleMain: boolean = true;
   public showRaiting: boolean = false;
@@ -25,7 +25,7 @@ export class NotificationComponent implements OnInit, OnDestroy {
     ru: 'Оценить сервис',
     ua: 'Оцініть сервіс'
   };
-  public translate ={
+  public translate = {
     title: {
       ru: 'Уведомления',
       ua: 'Повідомлення'

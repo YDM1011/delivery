@@ -9,7 +9,7 @@ import {Subscription} from "rxjs";
 })
 export class BrandItemComponent implements OnInit, OnDestroy {
   @Input() obj;
-  public language: string;
+  public language;
   private _subscription: Subscription[] = [];
   constructor(
       private auth: AuthService

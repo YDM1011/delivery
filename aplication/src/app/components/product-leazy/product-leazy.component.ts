@@ -10,7 +10,7 @@ import {CrudService} from "../../crud.service";
 export class ProductLeazyComponent implements OnInit {
   public count: number = 0;
   public orderCount: number = 0;
-  public language: string;
+  public language;
   public order = [];
   @Input() company;
   @Input() value;

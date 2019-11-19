@@ -11,7 +11,7 @@ import {ActivatedRoute} from "@angular/router";
 })
 export class NotificationIdComponent implements OnInit {
   public id: string;
-  public language: string;
+  public language;
   public data;
   public obj = {
     rating: null,

@@ -10,7 +10,7 @@ import {CrudService} from '../../crud.service';
 })
 export class CategoryIDComponent implements OnInit {
   public id: string;
-  public language: string;
+  public language;
   public orders;
   public city;
   public sort;

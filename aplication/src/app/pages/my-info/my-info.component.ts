@@ -9,7 +9,7 @@ import {MatSnackBar} from '@angular/material';
   styleUrls: ['./my-info.component.scss']
 })
 export class MyInfoComponent implements OnInit {
-  public language: string;
+  public language;
   public pass = 'password';
   public img;
   public me: Me;

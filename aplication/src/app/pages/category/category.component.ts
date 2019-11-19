@@ -8,7 +8,7 @@ import {CrudService} from '../../crud.service';
   styleUrls: ['./category.component.scss']
 })
 export class CategoryComponent implements OnInit {
-  public language: string;
+  public language;
   public category = [];
 
   public translate ={

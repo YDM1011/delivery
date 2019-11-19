@@ -9,7 +9,7 @@ import {ActivatedRoute} from '@angular/router';
   styleUrls: ['./provider.component.scss']
 })
 export class ProviderComponent implements OnInit {
-  public language: string;
+  public language;
   public favoriteShow;
   public id;
   public me;

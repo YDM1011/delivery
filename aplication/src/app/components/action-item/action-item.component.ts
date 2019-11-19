@@ -8,7 +8,7 @@ import {AuthService} from '../../auth.service';
 })
 export class ActionItemComponent implements OnInit {
   @Input() obj;
-  public language: string;
+  public language;
 
   constructor(
       private auth: AuthService

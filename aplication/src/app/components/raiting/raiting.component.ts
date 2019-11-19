@@ -10,7 +10,7 @@ import {MatSnackBar} from "@angular/material";
 })
 export class RaitingComponent implements OnInit {
   @Input() data;
-  public language: string;
+  public language;
   public comment: string = '';
   public rating;
   public obj = {

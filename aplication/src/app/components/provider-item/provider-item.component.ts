@@ -28,7 +28,7 @@ export class ProviderItemComponent implements OnInit, OnDestroy {
   @Input() data: Company;
   @Input() isTop = false;
   @Output() getIt = new EventEmitter();
-  public language: string;
+  public language;
   public translate = {
     t1: {
       ru: 'акции',
