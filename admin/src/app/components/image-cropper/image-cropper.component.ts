@@ -34,7 +34,7 @@ export class ImageCropperComponent implements OnInit, AfterViewInit, OnDestroy {
   @Output() done = new EventEmitter();
   @Input("src") imageSource;
   @Input() dir: string;
-
+  public ok = false;
   public imageDestination: string;
   private cropper: Cropper;
 
@@ -110,7 +110,13 @@ export class ImageCropperComponent implements OnInit, AfterViewInit, OnDestroy {
 
   }
   ngOnDestroy() {
-    this.uploadService.setNull();
+    if (!this.ok) {
+      this.crud.post('deleteFile', {file: this.imageSource}, null).then((v:any) => {
+        if (v) {
+          this.uploadService.setFile(null);
+        }
+      })
+    }
   }
 }
 

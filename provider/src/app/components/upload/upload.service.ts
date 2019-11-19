@@ -90,7 +90,5 @@ export class UploadService {
 
     // return the map of progress.observables
     return status;
-
-
   }
 }

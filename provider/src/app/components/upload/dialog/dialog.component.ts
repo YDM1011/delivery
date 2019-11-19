@@ -1,10 +1,11 @@
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {UploadService} from "../upload.service";
 import {MatDialogRef} from "@angular/material";
-import {forkJoin} from "rxjs";
+import {forkJoin, Subscription} from "rxjs";
 import { Inject } from '@angular/core';
 import {MAT_DIALOG_DATA} from '@angular/material';
 import {CrudService} from "../../../crud.service";
+import {AuthService} from "../../../auth.service";
 
 @Component({
   selector: 'app-dialog',
@@ -19,24 +20,23 @@ export class DialogComponent implements OnInit, OnDestroy {
   public step = 1;
   public img;
   public files: Set<File> = new Set();
-
+  private _subscription: Subscription[] = [];
   constructor(
-    private crud: CrudService,
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialogRef: MatDialogRef<DialogComponent>,
     public uploadService: UploadService) {
   }
 
   ngOnInit() {
-    this.uploadService.onMultiple.subscribe(v => {
+    this._subscription.push(this.uploadService.onMultiple.subscribe(v => {
       this.multiple = v;
-    });
-    this.uploadService.onFile.subscribe(v => {
+    }));
+    this._subscription.push(this.uploadService.onFile.subscribe(v => {
       if (v) {
         this.img = v;
         this.step = 2;
       }
-    });
+    }));
   }
   progress;
   canBeClosed = true;
@@ -45,7 +45,11 @@ export class DialogComponent implements OnInit, OnDestroy {
   uploading = false;
   uploadSuccessful = false;
 
-  ngOnDestroy(){}
+  ngOnDestroy(){
+    this._subscription.forEach((item) => {
+      item.unsubscribe();
+    })
+  }
   onFilesAdded() {
     const files: { [key: string]: File } = this.file.nativeElement.files;
     for (const key in files) {

@@ -3,6 +3,7 @@ import Cropper from "cropperjs";
 import {CrudService} from "../../crud.service";
 import {environment} from "../../../environments/environment";
 import {AuthService} from "../../auth.service";
+import {UploadService} from "../upload/upload.service";
 
 interface imageSlice {
   fileName: string,
@@ -31,6 +32,7 @@ export class ImageCropperComponent implements OnInit, OnDestroy {
   public imageData: imageSlice;
 
   public constructor(
+    private uploadService: UploadService,
     private crud: CrudService,
     private auth: AuthService
   ) {
@@ -66,7 +68,6 @@ export class ImageCropperComponent implements OnInit, OnDestroy {
 
     this.crud.post(link , this.imageData, null, false)
       .then(v=>{
-        console.log(v);
         this.ok = true;
         this.done.emit(v)
       })
@@ -76,8 +77,11 @@ export class ImageCropperComponent implements OnInit, OnDestroy {
   }
   ngOnDestroy() {
     if (!this.ok) {
-      this.crud.post('deleteFile', {file: this.imageSource}, null, false).then()
-      this.imageSource = null;
+      this.crud.post('deleteFile', {file: this.imageSource}, null, false).then((v:any) => {
+        if (v) {
+          this.uploadService.setFile(null);
+        }
+      })
     }
   }
 }
