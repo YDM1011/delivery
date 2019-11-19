@@ -24,6 +24,7 @@
       width: 100%;
       padding: 8px 15px;
       background: rgba(255, 255, 255, 0.85);
+      z-index: 3;
       svg{
         margin-right: 10px;
       }
@@ -55,5 +56,18 @@
     .img {
       max-height: 250px;
     }
+  }
+}
+@media (min-width: 545px) {
+  .action-item {
+    .img {
+      max-height: 300px;
+    }
+  }
+}
+
+::ng-deep .img-s{
+  img {
+    object-fit: cover;
   }
 }

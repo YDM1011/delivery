@@ -31,6 +31,13 @@
 						</mat-option>
 					</mat-select>
 				</mat-form-field>
+				
+				<div class="pass">
+					<mat-form-field class="example-full-width">
+						<input type="tel" placeholder="Новый пароль" name="password" matInput [(ngModel)]="newPass">
+					</mat-form-field>
+					<button *ngIf="newPass.length>0" class="main-button-color">Изменить</button>
+				</div>
 			</form>
 			<a [routerLink]="'/work-time'" class="link">Время работы</a>
 			<div class="group-buttons">
