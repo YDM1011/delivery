@@ -1,8 +1,9 @@
-import {Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild} from '@angular/core';
 import Cropper from "cropperjs";
 import {CrudService} from "../../crud.service";
 import {environment} from "../../../environments/environment";
 import {AuthService} from "../../auth.service";
+import {UploadService} from "../upload/upload.service";
 
 interface imageSlice {
   fileName: string,
@@ -15,11 +16,11 @@ interface imageSlice {
   templateUrl: './image-cropper.component.html',
   styleUrls: ['./image-cropper.component.scss']
 })
-export class ImageCropperComponent implements OnInit {
+export class ImageCropperComponent implements OnInit, OnDestroy {
   @ViewChild("image", { static: false })
   public imageElement: ElementRef;
   public domain = environment.domain;
-
+  public ok = false;
   @Output() done = new EventEmitter();
   @Input("src") imageSource;
   @Input() dir:string;
@@ -31,12 +32,12 @@ export class ImageCropperComponent implements OnInit {
   public imageData: imageSlice;
 
   public constructor(
+    private uploadService: UploadService,
     private crud: CrudService,
     private auth: AuthService
   ) {
     this.imageDestination = '';
   }
-
 
   onCrop(e){
     const path = this.imageSource.split('/');
@@ -46,7 +47,6 @@ export class ImageCropperComponent implements OnInit {
       yy:[e.y, e.height],
       xx:[e.x, e.width]
     };
-    // console.log(this.imageData)
   }
   onCropDef(e){
     const path = this.imageSource.split('/');
@@ -60,7 +60,7 @@ export class ImageCropperComponent implements OnInit {
     this.getData();
   }
   getData() {
-    if (!this.imageData || this.imageData.xx[0] == NaN || this.imageData.yy[0] == NaN) {
+    if (!this.imageData || this.imageData.xx[0] === NaN || this.imageData.yy[0] === NaN) {
       this.auth.callDefCrop();
     }
     let link = 'imgSlice';
@@ -68,10 +68,20 @@ export class ImageCropperComponent implements OnInit {
 
     this.crud.post(link , this.imageData, null, false)
       .then(v=>{
+        this.ok = true;
         this.done.emit(v)
       })
   }
   ngOnInit() {
 
+  }
+  ngOnDestroy() {
+    if (!this.ok) {
+      this.crud.post('deleteFile', {file: this.imageSource}, null, false).then((v:any) => {
+        if (v) {
+          this.uploadService.setFile(null);
+        }
+      })
+    }
   }
 }

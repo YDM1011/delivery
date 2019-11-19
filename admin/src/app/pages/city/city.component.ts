@@ -53,17 +53,11 @@ export class CityComponent implements OnInit {
         Swal.fire('Error', 'Картинка города не может быть пуста', 'error').then();
         return;
     }
-    // this.crud.post('upload2', {body: this.uploadObj}, null, false).then((v: any) => {
-    //   if (!v) {return; }
-    //
-    //   this.city['img'] = v.file;
-    //
-    // });
+    this.city.name = this.city.name.trim();
     this.crud.post('city', this.city).then((v: any) => {
       if (v) {
         this.addShow = false;
         this.citys.unshift(v);
-        // this.uploadObj = {};
         this.city = {
           img: '',
           name: ''
@@ -88,12 +82,10 @@ export class CityComponent implements OnInit {
     });
   }
   onFs(e) {
-    // this.uploadObj = e;
     this.city.img = e.file;
   }
 
   onFsEdit(e) {
-    // this.uploadObj = e;
     this.editObjCopy.img = e.file;
     this.formCheck();
   }

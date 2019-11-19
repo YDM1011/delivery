@@ -104,7 +104,7 @@ export class CrudService {
     this.city = city;
     return new Promise((resolve, reject) => {
       const populate = '&populate=' + JSON.stringify({path: 'brands'});
-      const query = `?query={"city":"${this.city._id}"}${populate}&select=_id,brands`;
+      const query = `?query={"city":"${this.city._id}","verify":true}${populate}&select=_id,brands`;
       this.get('company', '', query).then((v: any) => {
         if (v) {
           const arr = [];

@@ -1,8 +1,19 @@
-import {AfterViewInit, Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+  ViewChild
+} from '@angular/core';
 import {CrudService} from '../../crud.service';
 import Cropper from 'cropperjs';
 import {AuthService} from '../../auth.service';
 import {environment} from "../../../environments/environment";
+import {UploadService} from "../upload/upload.service";
 
 interface imageSlice {
   fileName: string;
@@ -15,7 +26,7 @@ interface imageSlice {
   templateUrl: './image-cropper.component.html',
   styleUrls: ['./image-cropper.component.scss']
 })
-export class ImageCropperComponent implements OnInit, AfterViewInit {
+export class ImageCropperComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild("image", { static: false })
   public imageElement: ElementRef;
   public domain = environment.domain;
@@ -24,13 +35,14 @@ export class ImageCropperComponent implements OnInit, AfterViewInit {
   @Input() dir: string;
   public imageDestination: string;
   private cropper: Cropper;
-
+  public ok = false;
   public imageData: imageSlice;
   public translate = {
       ru: 'Сохранить',
       ua: 'Зберегти'
   };
   public constructor(
+    private uploadService: UploadService,
     private crud: CrudService,
     private auth: AuthService
   ) {
@@ -91,7 +103,17 @@ export class ImageCropperComponent implements OnInit, AfterViewInit {
     this.crud.post(link , this.imageData, null)
       .then(v => {
         this.done.emit(v);
-      }).catch(e => console.log(e));
+        this.ok = true;
+      })
+  }
+  ngOnDestroy() {
+    if (!this.ok) {
+      this.crud.post('deleteFile', {file: this.imageSource}, null).then((v:any) => {
+        if (v) {
+          this.uploadService.setFile(null);
+        }
+      })
+    }
   }
 }
 

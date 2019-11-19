@@ -12,7 +12,7 @@ export class CategoryComponent implements OnInit {
   public lengthPagination = 0;
   public pageSizePagination = 10;
   public pageSizeOptionsPagination: number[] = [5, 10, 15];
-  public mainCategoryChoose: string;
+  public mainCategoryChoose = null;
   public mainCategory;
   public user;
   public defLang = 'ru-UA';
@@ -43,7 +43,9 @@ export class CategoryComponent implements OnInit {
     this.crud.get('mainCategory').then((v: any) => {
       if (!v)  { return; }
       this.mainCategory = v;
-      this.mainCategoryChoose = this.mainCategory[0]._id;
+      if (this.mainCategory.length > 0) {
+        this.mainCategoryChoose = this.mainCategory[0]._id;
+      }
     });
     this.auth.onMe.subscribe((v: any) => {
       if (!v) { return; }
@@ -94,6 +96,10 @@ export class CategoryComponent implements OnInit {
             this.lengthPagination = count.count;
           }
         });
+      }
+    }).catch((error) => {
+      if (error.error.code === 11000) {
+        Swal.fire('Error', 'Категория с таким названием уже создана!', 'error');
       }
     });
   }
@@ -147,7 +153,6 @@ export class CategoryComponent implements OnInit {
       return this.btnBlok(true);
     }
     return this.btnBlok(false);
-
   }
   validate() {
     let isTrue = false;
@@ -167,6 +172,9 @@ export class CategoryComponent implements OnInit {
   openAdd() {
     this.addShow = true;
     this.editShow = false;
+    if (this.mainCategory.length>0) {
+      this.mainCategoryChoose = this.mainCategory[0]._id;
+    }
   }
   cancelAdd() {
     this.addShow = false;

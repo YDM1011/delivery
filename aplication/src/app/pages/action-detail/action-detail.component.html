@@ -7,7 +7,7 @@
 </div>
 
 <div class="other-pages" *ngIf="action">
-  <app-action-item [dir]="'product'" [obj]="action"></app-action-item>
+  <app-action-item [obj]="action"></app-action-item>
 
   <div class="buttons">
     <a routerLink="/{{language}}/provider/{{action.companyOwner._id}}" class="main-button color">

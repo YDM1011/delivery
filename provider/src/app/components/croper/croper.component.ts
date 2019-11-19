@@ -77,10 +77,8 @@ export class TouchStart {
     } else {
       this.data.emit(null);
     }
-
   }
 }
-
 
 @Component({
   selector: 'app-croper',
@@ -106,7 +104,7 @@ export class CroperComponent implements OnInit{
   ) { }
 
   ngOnInit() {
-
+    this.rate = this.rate || [1,1];
     this.auth.onDefCrop.subscribe(v=>{
       if (v) {
       let img = document.getElementById('cropper-img') as HTMLImageElement;
