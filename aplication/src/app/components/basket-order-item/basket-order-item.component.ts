@@ -23,8 +23,8 @@ export class BasketOrderItemComponent implements OnInit, OnDestroy {
   public items = [];
   public translate ={
     by: {
-      ru: 'Удалить',
-      ua: 'Видалити'
+      ru: 'Купить',
+      ua: 'Купити'
     },
     total: {
       ru: 'Всего к оплате:',

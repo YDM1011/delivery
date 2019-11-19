@@ -100,3 +100,10 @@
     }
   }
 }
+.action-img{
+  app-img{
+    img{
+      object-fit: contain;
+    }
+  }
+}

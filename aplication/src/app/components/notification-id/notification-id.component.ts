@@ -11,7 +11,7 @@ import {ActivatedRoute} from "@angular/router";
 })
 export class NotificationIdComponent implements OnInit {
   public id: string;
-  public language: string;
+  public language;
   public data;
   public obj = {
     rating: null,
@@ -27,7 +27,7 @@ export class NotificationIdComponent implements OnInit {
     ua: 'Вкажіть свою оцінку'
   };
 
-  public translate: {
+  public translate = {
     title: {
       ru: 'Оценка сервиса',
       ua: 'Оцінка сервісу'
@@ -47,7 +47,7 @@ export class NotificationIdComponent implements OnInit {
     btn2: {
       ru: 'Пропустить',
       ua: 'Пізніше'
-    },
+    }
   };
   constructor(
       private route: ActivatedRoute,

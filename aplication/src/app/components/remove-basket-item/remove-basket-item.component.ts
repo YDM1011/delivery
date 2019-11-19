@@ -12,7 +12,7 @@ export class RemoveBasketItemComponent implements OnInit {
   @Input() data;
   @Output() closeRemove = new EventEmitter();
   @Output() successRemove = new EventEmitter();
-  public translate: {
+  public translate = {
     t1: {
       ru: 'Вы уверены, что хотите удалить товар?',
       ua: 'Ви впевнені що бажаєте видалити товар?'

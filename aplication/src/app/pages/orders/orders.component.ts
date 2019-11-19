@@ -10,7 +10,7 @@ import {Subscription} from "rxjs";
   styleUrls: ['./orders.component.scss']
 })
 export class OrdersComponent implements OnInit, OnDestroy {
-  public language: string;
+  public language;
   public toggleMain = true;
   public orders = [];
   public loading = false;

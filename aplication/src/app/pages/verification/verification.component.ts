@@ -10,7 +10,7 @@ import {CrudService} from '../../crud.service';
 })
 export class VerificationComponent implements OnInit {
   public token = null;
-  public language: string;
+  public language;
   @Input() data;
   public translate ={
     title: {

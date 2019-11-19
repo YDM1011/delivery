@@ -10,7 +10,7 @@ import {MatSnackBar} from "@angular/material";
   styleUrls: ['./new-address.component.scss']
 })
 export class NewAddressComponent implements OnInit {
-  public language: string;
+  public language;
   public cities;
   public address = {
     city: '',

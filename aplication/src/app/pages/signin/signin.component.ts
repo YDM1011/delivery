@@ -16,7 +16,7 @@ interface SignIn {
   styleUrls: ['./signin.component.scss']
 })
 export class SigninComponent implements OnInit {
-  public language: string;
+  public language;
   public data:SignIn = new class implements SignIn {
     login: string;
     pass: string;

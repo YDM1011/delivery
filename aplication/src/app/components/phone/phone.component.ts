@@ -6,6 +6,7 @@ import {Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} f
   styleUrls: ['./phone.component.scss']
 })
 export class PhoneComponent implements OnInit {
+  @Input() other: boolean;
   @Input() number: string;
   @Output() phone = new EventEmitter();
   @ViewChild('firstInput', {static: false}) firstInput: ElementRef;

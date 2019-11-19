@@ -12,7 +12,7 @@ export class IndexComponent implements OnInit, OnDestroy {
   public count = null;
   public user;
   public companyArr: any;
-  public language: string;
+  public language;
   public curentCity: any = {};
   public category = [];
   public brandy = [];

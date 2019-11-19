@@ -17,7 +17,7 @@ interface SignUp {
 })
 export class SignupComponent implements OnInit {
   public verification = false;
-  public language: string;
+  public language;
   public phone;
   public data: SignUp = new class implements SignUp {
     smsCode: string;

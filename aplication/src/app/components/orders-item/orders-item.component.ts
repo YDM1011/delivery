@@ -10,12 +10,12 @@ import {AuthService} from '../../auth.service';
 export class OrdersItemComponent implements OnInit {
   @Input() order;
   public removeOrders = true;
-  public language: string;
+  public language;
   @Output() removeOrder = new EventEmitter();
   @Output() confirmOrder = new EventEmitter();
   public getProducts = [];
 
-  public translate: {
+  public translate = {
     t1: {
       ru: 'Номер заказа:',
       ua: 'Номер замовелння'
@@ -47,7 +47,7 @@ export class OrdersItemComponent implements OnInit {
     t8: {
       ru: 'Отменить заказ',
       ua: 'Відмінити замовлення'
-    },
+    }
   };
   constructor(
       private crud: CrudService,

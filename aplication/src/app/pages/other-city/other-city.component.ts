@@ -7,7 +7,7 @@ import {AuthService} from "../../auth.service";
   styleUrls: ['./other-city.component.scss']
 })
 export class OtherCityComponent implements OnInit {
-  public language: string;
+  public language;
   public phone;
   public cityplaceholder = {
     ru: 'Город',

@@ -8,7 +8,7 @@ import {CrudService} from "../../crud.service";
   styleUrls: ['./provider-all.component.scss']
 })
 export class ProviderAllComponent implements OnInit {
-  public language: string;
+  public language;
   public curentCity: string;
   public companyArr;
   public data ={

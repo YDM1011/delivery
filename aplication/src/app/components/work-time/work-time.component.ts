@@ -9,7 +9,7 @@ import {AuthService} from "../../auth.service";
 export class WorkTimeComponent implements OnInit {
   @Input() data;
   public detail = false;
-  public language: string;
+  public language;
   constructor(
     private auth: AuthService
   ) { }

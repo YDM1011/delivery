@@ -12,7 +12,7 @@ import {ActivatedRoute} from "@angular/router";
 export class BrandsIDComponent implements OnInit, OnDestroy {
   public id: string;
   public city;
-  public language: string;
+  public language;
   public filter;
   public sort;
   public orders = [];

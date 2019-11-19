@@ -5,9 +5,7 @@
   top: 0;
   left: 0;
   background: #F5F6FA;
-  height: 100%;
-  min-height: 100vh;
-  max-height: 100vh;
+  height: calc(100vh - 100px);
   width: 110px;
   margin-top: 100px;
   padding: 0 0 30px;

@@ -12,7 +12,7 @@ import {Subscription} from "rxjs";
 export class ConfirmOrderComponent implements OnInit, OnDestroy {
   @Input() basket;
   @Output() closeConfirm = new EventEmitter();
-  public language: string;
+  public language;
   public user: any;
   public blockBTN = false;
   public changeCity = false;

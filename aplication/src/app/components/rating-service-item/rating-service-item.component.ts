@@ -7,7 +7,7 @@ import {AuthService} from '../../auth.service';
   styleUrls: ['./rating-service-item.component.scss']
 })
 export class RatingServiceItemComponent implements OnInit {
-  public language: string;
+  public language;
   @Input() data;
   public title = {
     ru: 'Оцените сервис поставщика',

@@ -9,7 +9,7 @@ import {CrudService} from "../../crud.service";
   styleUrls: ['./favorites.component.scss']
 })
 export class FavoritesComponent implements OnInit {
-  public language: string;
+  public language;
   public toggleMain: boolean = true;
   public favoriteCompany = [];
   public favoriteProduct = [];

@@ -18,7 +18,7 @@ export class SettingsComponent implements OnInit {
   public isBlok = false;
   public loading = false;
   public body = {};
-
+  public newPass = '';
   constructor(
       private crud: CrudService,
       private auth: AuthService

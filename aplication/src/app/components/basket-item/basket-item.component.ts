@@ -12,7 +12,7 @@ export class BasketItemComponent implements OnInit, OnDestroy {
   public user;
   public count = null;
   public loadingCount = false;
-  public language: string;
+  public language;
   private _subscription: Subscription[] = [];
   constructor(
       private auth: AuthService,

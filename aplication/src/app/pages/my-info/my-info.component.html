@@ -13,7 +13,7 @@
     <p>{{data.article[language]}}</p>
     <form class="form" (submit)="save($event)" (keyup)="formCheck()">
       <input type="text" [placeholder]="data.input[language]" [(ngModel)]="me.name" name="name">
-      <app-phone [number]="me.mobile" (phone)="me.mobile" (change)="formCheck()"></app-phone>
+      <app-phone [other]="true" [number]="me.mobile" (phone)="me.mobile" (change)="formCheck()"></app-phone>
       <button type="submit" class="main-button color" *ngIf="isBlok">{{data.save[language]}}</button>
       <a routerLink="/{{language}}/profile" class="back-btn">{{data.back[language]}}</a>
     </form>

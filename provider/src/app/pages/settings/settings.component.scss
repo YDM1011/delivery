@@ -49,3 +49,19 @@
   text-decoration: underline;
   cursor: pointer;
 }
+.link{
+  display: inline-block;
+  margin-top: 15px;
+}
+.pass{
+  display: flex;
+  align-items: center;
+  .example-full-width{
+    width: 100%;
+    max-width: 400px;
+    min-width: 250px;
+  }
+  button{
+    margin-left: 20px;
+  }
+}

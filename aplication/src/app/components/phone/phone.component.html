@@ -1,4 +1,4 @@
-<div class="phone">
+<div class="phone" [class.phone-other]="other">
   <div class="block">
     <input type="text" class="mainPhone" [(ngModel)]="mainPhone" (keyup)="splitPhone()" [maxLength]="10" pattern="[0-9]{10}" autocomplete="off" numbersOnly numericType="number" >
   </div>

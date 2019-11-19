@@ -13,7 +13,7 @@ export class FilterComponent implements OnInit {
   @Output() closeFilter = new EventEmitter();
   @Output() onFilter = new EventEmitter();
   @Output() onCopyFilter = new EventEmitter();
-  public language: string;
+  public language;
   public priceFilter = 0;
   public priceMax = 0;
   public isInit = false;

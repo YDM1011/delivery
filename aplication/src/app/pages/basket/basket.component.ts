@@ -11,7 +11,7 @@ import {CrudService} from "../../crud.service";
 export class BasketComponent implements OnInit {
   public id: string;
   public baskets = [];
-  public language: string;
+  public language;
   public loading: boolean = false;
   public removeItem: boolean = false;
   public showConfirm: boolean = false;

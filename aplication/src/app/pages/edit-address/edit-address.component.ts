@@ -9,7 +9,7 @@ import {ActivatedRoute, Router} from "@angular/router";
   styleUrls: ['./edit-address.component.scss']
 })
 export class EditAddressComponent implements OnInit {
-  public language: string;
+  public language;
   public cities;
   public id;
   public address = {

@@ -10,7 +10,7 @@ import {AuthService} from '../../auth.service';
 })
 export class VerificationComponent implements OnInit {
   public token = null;
-  public language: string;
+  public language;
   @Input() data;
   constructor(
       private crud: CrudService,

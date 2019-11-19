@@ -11,7 +11,7 @@ import {Subscription} from 'rxjs';
 })
 export class ProductItemComponent implements OnInit, OnDestroy {
   public count = 0;
-  public language: string;
+  public language;
   public user;
   @Input() data;
   @Input() company;

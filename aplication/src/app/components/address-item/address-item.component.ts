@@ -8,7 +8,7 @@ import {CrudService} from '../../crud.service';
   styleUrls: ['./address-item.component.scss']
 })
 export class AddressItemComponent implements OnInit {
-  public language: string;
+  public language;
   @Input() data;
   @Output() chackAddress = new EventEmitter();
 

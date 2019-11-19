@@ -10,7 +10,7 @@ import {Me} from '../../interfaces/me';
   styleUrls: ['./profile.component.scss']
 })
 export class ProfileComponent implements OnInit {
-  public language: string;
+  public language;
   public url;
   public me: Me;
   public data = {

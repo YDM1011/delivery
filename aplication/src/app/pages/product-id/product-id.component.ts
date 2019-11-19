@@ -11,7 +11,7 @@ import {MatSnackBar} from '@angular/material';
   styleUrls: ['./product-id.component.scss']
 })
 export class ProductIDComponent implements OnInit {
-  public language: string;
+  public language;
   public count = 0;
   public favoriteShow;
   public id;
