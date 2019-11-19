@@ -26,7 +26,7 @@ export class ImageCropperComponent implements OnInit, AfterViewInit {
   private cropper: Cropper;
 
   public imageData: imageSlice;
-  public translate: {
+  public translate = {
       ru: 'Сохранить',
       ua: 'Зберегти'
   };
