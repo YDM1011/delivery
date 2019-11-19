@@ -1,0 +1,34 @@
+<div class="login">
+	<div class="login-box">
+		<form class="form" (submit)="forgot($event)" *ngIf="!showCode && !showSuccess">
+			<h2>Забыли пароль?</h2>
+			<p class="p-center">
+				Введите номер телефона
+			</p>
+			<label for="login" class="login-label">
+				<span class="absolute">+38</span>
+				<input type="tel" [maxLength]="10" placeholder="0хх ххх хх хх" name="login" id="login" [(ngModel)]="obj.login" autocomplete="off">
+			</label>
+			<div class="error" *ngIf="error && error.text !== ''">
+				{{error.text}}
+			</div>
+			<button class="main-button-color" type="submit">Продолжить</button>
+		</form>
+		<form class="form" (submit)="code($event)" *ngIf="showCode && !showSuccess">
+			<h2>Забыли пароль?</h2>
+			<p class="p-center">
+				Введите код из смс
+			</p>
+			<input type="text" placeholder="Смс код" name="code" [(ngModel)]="codeObj.smsCode" autocomplete="off">
+			<input type="password" placeholder="Новый пароль" class="forgot-pass" name="password" [(ngModel)]="codeObj.pass" autocomplete="off">
+			<div class="error" *ngIf="error && error.text !== ''">
+				{{error.text}}
+			</div>
+			<button class="main-button-color" type="submit">Изменить</button>
+		</form>
+		<form class="form" *ngIf="showSuccess">
+			<h2>Вы успешно изменили пароль!</h2>
+			<button class="main-button-color" [routerLink]="'/login'" type="submit">Логин</button>
+		</form>
+	</div>
+</div>

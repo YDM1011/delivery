@@ -1,0 +1,35 @@
+<div class="sign">
+	<div class="sign-content">
+		<ng-container *ngIf="!showConfirm && !showSuccess">
+			<h3>
+				{{translate.title[language]}}
+			</h3>
+			<form (submit)="phone($event)">
+				<app-phone (phone)="objLogin['login'] = $event"></app-phone>
+				<button type="submit" class="main-button-bold">
+					{{translate.btn[language]}}
+				</button>
+			</form>
+		</ng-container>
+		<ng-container *ngIf="showConfirm && !showSuccess">
+			<h3>
+				{{translate.title[language]}}
+			</h3>
+			<form (submit)="confirm($event)">
+				<input type="text" [placeholder]="translate.input[language]" name="confirm" [(ngModel)]="objConfirm.smsCode">
+				<input type="password" [placeholder]="translate.pass[language]" name="confirm" [(ngModel)]="objConfirm.pass">
+				<button type="submit" class="main-button-bold">
+					{{translate.confirm[language]}}
+				</button>
+			</form>
+		</ng-container>
+		<ng-container *ngIf="showSuccess">
+			<h3>
+				{{translate.titleSuc[language]}}
+			</h3>
+			<button class="main-button-bold" [routerLink]="'/'+language+'/login'">
+				{{translate.btnSuc[language]}}
+			</button>
+		</ng-container>
+	</div>
+</div>

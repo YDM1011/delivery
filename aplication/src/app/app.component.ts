@@ -27,13 +27,13 @@ export class AppComponent {
       private route: Router
   ) {
     this.url = decodeURI(this.route.url.substring(4));
-    if (localStorage.getItem('language')) {
-      this.language = localStorage.getItem('language');
-      this.route.navigate(['/' + this.language + '/' + this.url]);
-    } else {
-      this.language = 'ru';
-      localStorage.setItem('language', this.language);
-    }
+    // if (localStorage.getItem('language')) {
+    //   this.language = localStorage.getItem('language');
+    //   this.route.navigate(['/' + this.language + '/' + this.url]);
+    // } else {
+    //   this.language = 'ru';
+    //   localStorage.setItem('language', this.language);
+    // }
     this.crud.get('translator').then((v: any) => {
       if (v) {
         this.auth.setTranslate(v);
