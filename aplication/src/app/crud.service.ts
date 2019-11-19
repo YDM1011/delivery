@@ -13,7 +13,6 @@ export class CrudService {
     private city;
     private CompanyArr = [];
 
-
     constructor( private http: HttpClient, private auth: AuthService) { }
 
   get(api, id = null, any = null) {
@@ -86,7 +85,6 @@ export class CrudService {
         this.city.links.forEach(it => {
           links.push({cityLink: it});
         });
-        // const populate = '&populate='+ JSON.stringify({});
         const query = `?query={"$or":${JSON.stringify(links)},"actionGlobal":true}&skip=0&limit=7&sort={"date":-1}`;
         this.get('action', '', query).then((v: any) => {
           if (v) {
@@ -114,13 +112,9 @@ export class CrudService {
           v.map(it => arr.push({companyOwner: it._id}));
           this.CompanyArr = arr;
           this.auth.setCompanyCity(arr);
-          // console.log(this.CompanyArr);
           resolve(arr);
-        } else {
-          reject();
         }
       });
-      // resolve(Category);
     });
   }
   getDetailCompany(id, company = null) {
@@ -132,8 +126,6 @@ export class CrudService {
       this.get('company', id, populate).then((v: any) => {
         if (v) {
           resolve(v);
-        } else {
-          reject();
         }
       });
     });
@@ -144,8 +136,6 @@ export class CrudService {
       this.get('order', id, populate).then((v: any) => {
         if (v) {
           resolve(v);
-        } else {
-          reject();
         }
       });
     });
@@ -180,8 +170,6 @@ export class CrudService {
         this.get('orderByCategory', params, ).then((v: any) => {
           if (v) {
             resolve(v);
-          } else {
-            reject();
           }
         });
     });
@@ -226,7 +214,6 @@ export class CrudService {
         const populate = '&populate=' + JSON.stringify({path: 'mainCategory'});
         const select = '&select=name,mainCategory';
         const query = `?query={"$or":${JSON.stringify(this.CompanyArr)}}`;
-        // console.log(this.CompanyArr)
         if (this.CompanyArr && this.CompanyArr.length > 0) {
           this.get('category', '', query + select + populate).then((v: any) => {
             if (v) {
@@ -241,11 +228,8 @@ export class CrudService {
                   arr.push(it);
                   triger[it.mainCategory._id] = true;
                 }
-
               });
               resolve(arr);
-            } else {
-              reject();
             }
           });
         } else {
@@ -287,10 +271,7 @@ export class CrudService {
               v.forEach(it => {
                 it["img"] = it.img ? `${this.domain}/upload/${it.img}` || defIcon : defIcon;
               });
-              // console.log(v)
               resolve(v);
-            } else {
-              reject();
             }
           });
         } else {
@@ -306,8 +287,6 @@ export class CrudService {
           const defIcon = './assets/angular.png';
             v["img"] = v.img ? `${this.domain}/upload/${v.img}` || defIcon : defIcon;
           resolve(v);
-        } else {
-          reject();
         }
       });
     });
@@ -320,8 +299,6 @@ export class CrudService {
       this.get('company', '', query).then((v: any) => {
         if (v) {
           resolve(v);
-        } else {
-          reject();
         }
       });
     });
@@ -340,8 +317,6 @@ export class CrudService {
       this.get('order', '', query).then((v:any) => {
         if (v) {
           resolve(v);
-        } else {
-          reject();
         }
       });
     });
