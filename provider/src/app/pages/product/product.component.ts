@@ -83,9 +83,7 @@ export class ProductComponent implements OnInit {
 
   }
   isTop(obj){
-    console.log(obj.isTop)
-
-    this.crud.post(`orderTop/${obj._id}`,{isTop: obj.isTop ? false : true}).then((v: any) => {
+    this.crud.post(`orderTop/${obj._id}`,{isTop: obj.isTop ? false : true}, null, false).then((v: any) => {
       if (v) {
         obj.isTop = v.isTop
       }

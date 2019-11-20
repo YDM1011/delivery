@@ -43,7 +43,7 @@
 
       <div class="pass">
         <mat-form-field class="example-full-width">
-          <input type="tel" placeholder="Новый пароль" name="password" (keyup)="passErr = ''" matInput [(ngModel)]="newPass">
+          <input type="text" placeholder="Новый пароль" name="password" (keyup)="passErr = ''" matInput [(ngModel)]="newPass">
         </mat-form-field>
         <p class="status error" *ngIf="passErr">{{passErr}}</p>
         <button *ngIf="newPass.length>0" class="main-button-color" (click)="setNewPass()">Изменить</button>

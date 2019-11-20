@@ -58,7 +58,7 @@
         <path d="M6.92174 6.10449C6.68395 6.10449 6.49097 6.29748 6.49097 6.53526V10.1968C6.49097 10.4346 6.68395 10.6276 6.92174 10.6276C7.15952 10.6276 7.3525 10.4346 7.3525 10.1968V6.53526C7.3525 6.29726 7.15952 6.10449 6.92174 6.10449Z" fill="white"/>
       </svg>
       <div class="no-pay-title">
-        {{order.description ? order.description : translate.t3[language]}}
+        {{translate.t3[language]}}
       </div>
   <!--    <div class="no-pay-title">-->
   <!--      {{'Не оплачено! Требуется оплата.' | trans:language}}-->
@@ -99,11 +99,11 @@
       </span>
       </button>
       <div class="cancel-order">
-          <span *ngIf="order.status === 1" (click)="cancelOrder()">
+        <span *ngIf="order.status === 3" (click)="confirmChanges(order._id)">
+           {{translate.t8[language]}}
+        </span>
+        <span *ngIf="order.status === 1 || order.status === 3" (click)="cancelOrder(order._id)">
             {{translate.t7[language]}}
-          </span>
-          <span *ngIf="order.status === 3" (click)="confirmChanges(order._id)">
-             {{translate.t8[language]}}
           </span>
       </div>
     </div>

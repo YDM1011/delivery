@@ -3,8 +3,8 @@
 		<form class="form" (submit)="signIn($event)">
 			<h2>Вход в админ панель поставщика</h2>
 			<label for="login" class="login-label">
-				<span class="absolute">+38</span>
-				<input type="tel" [maxLength]="10" placeholder="0хх ххх хх хх" name="login" id="login" [(ngModel)]="obj.login" autocomplete="on">
+				<span class="absolute">+380</span>
+				<input type="tel" [maxLength]="9" placeholder="" name="login" id="login" [(ngModel)]="obj.login" autocomplete="on">
 			</label>
 			<input type="password" placeholder="Пароль" name="password" [(ngModel)]="obj.pass" autocomplete="on">
 			<div class="error" *ngIf="error && error.text !== ''">

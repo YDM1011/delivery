@@ -104,6 +104,7 @@ export class ImageCropperComponent implements OnInit, AfterViewInit, OnDestroy {
     this.crud.post(link , this.imageData, null)
       .then(v => {
         this.done.emit(v);
+        this.ok = true;
       }).catch(e => console.log(e));
   }
   public ngOnInit() {

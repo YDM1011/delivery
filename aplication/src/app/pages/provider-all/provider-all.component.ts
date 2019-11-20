@@ -31,18 +31,12 @@ export class ProviderAllComponent implements OnInit {
     });
     this.auth.onCity.subscribe((v:any) => {
       if (v) {
-        const query = `?query={"city":"${v._id}","verify":true}`;
+        const query = `?query={"city":"${v._id}","verify":true}&sort={"rating":-1}`;
         this.crud.get('company', '', query).then((arr)=>{
           this.curentCity = v;
           this.companyArr = arr;
-          this.init();
         });
-
       }
     })
-  }
-
-  async init() {
-    console.log(this.companyArr)
   }
 }

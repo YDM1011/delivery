@@ -78,8 +78,12 @@ export class FilterComponent implements OnInit {
 
     const query = `?query={"$and":[${arr.length > 0 ? JSON.stringify( {$or: arr} ) : {} },{"mainCategory":"${this.mainCategory._id}"}]}
     &sort={"price":-1}&limit=1&skip=0`;
-    this.crud.get('order', '',  query).then((max) => {
-      this.priceMax = max[0].price;
+    this.crud.get('order', '',  query).then((max: any) => {
+      if (max.length>0) {
+        this.priceMax = max[0].price;
+      } else {
+        this.priceMax = 0;
+      }
       this.options = {
         floor: this.priceFilter,
         ceil: this.priceMax,

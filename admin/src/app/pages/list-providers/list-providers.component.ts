@@ -58,7 +58,7 @@ export class ListProvidersComponent implements OnInit {
       Swal.fire('Error', 'Все поля обязательны', 'error').then();
       return;
     }
-    this.crud.post('signup', {client: this.client, company: this.company}).then((v: any) => {
+    this.crud.post('signup', {client: {name: this.client.name, login:'0'+this.client.login, pass: this.client.pass, role: this.client.role}, company: this.company}).then((v: any) => {
       if (v) {
         this.crud.get('company/count').then((count: any) => {
           if (count) {

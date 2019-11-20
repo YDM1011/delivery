@@ -4,5 +4,8 @@
     font-size: 14px;
     line-height: 21px;
     padding: 0 10px;
+    &:nth-of-type(1) {
+      margin-bottom: 10px;
+    }
   }
 }

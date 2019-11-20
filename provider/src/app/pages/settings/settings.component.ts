@@ -54,7 +54,7 @@ export class SettingsComponent implements OnInit {
       this.passErr = "Пароль менее 6 символов!";
       return
     }
-    this.crud.post('changePass', {pass:this.newPass}).then(v=>{
+    this.crud.post('changePass', {pass:this.newPass,_id:this.user._id}).then(v=>{
       if (v) {
         this.newPass = '';
       }

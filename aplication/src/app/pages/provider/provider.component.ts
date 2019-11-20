@@ -68,8 +68,8 @@ export class ProviderComponent implements OnInit {
         });
         if (this.company && this.company.categories.length > 0) {
           this.activeCategoryId = this.company.categories[0]._id;
-          this.loading = true;
         }
+        this.loading = true;
       }
     });
 

@@ -74,14 +74,14 @@ export class OrdersComponent implements OnInit, OnDestroy {
   confirmOrder(e) {
     if (e) {
       this.openSnackBar('Ваш заказ был подтвержден',  'Ok');
-      this.crud.get(`basket?query={"_id":"${e}","$or":[{"status":1},{"status":2},{"status":3}]}&populate=[{"path":"deliveryAddress","select":"name img"},{"path":"companyOwner","select":"name"}]&skip=0&limit=5&sort={"date":-1}`).then((v: any) => {
-        this.orders[this.crud.find('_id', e, this.orders)] = v[0];
-      });
+      this.orders[this.crud.find('_id', e, this.orders)].status = 2;
     }
   }
-  removeOrder(e, i) {
-    this.orders[i].status = 5;
-    this.openSnackBar('Ваш заказ был отменен',  'Ok');
+  removeOrder(e) {
+    if (e) {
+      this.orders[this.crud.find('_id', e, this.orders)].status = 5;
+      this.openSnackBar('Ваш заказ был отменен',  'Ok');
+    }
   }
   getBaskets() {
     this.toggleMain = true;

@@ -15,7 +15,14 @@
       <input type="text" [placeholder]="data.input[language]" [(ngModel)]="me.name" name="name">
       <app-phone [other]="true" [number]="me.mobile" (phone)="me.mobile" (change)="formCheck()"></app-phone>
       <button type="submit" class="main-button color" *ngIf="isBlok">{{data.save[language]}}</button>
-      <a routerLink="/{{language}}/profile" class="back-btn">{{data.back[language]}}</a>
+      <div class="pass">
+        <input class="pass-input" type="text" [placeholder]="data.inputPass[language]" name="password" (keyup)="passErr = ''" [(ngModel)]="newPass">
+        <p class="status error" *ngIf="passErr">{{passErr}}</p>
+        <span *ngIf="newPass.length>0" class="main-button color pass-btn" (click)="setNewPass()">
+          {{data.passBtn[language]}}
+        </span>
+      </div>
     </form>
+    <a routerLink="/{{language}}/profile" class="back-btn">{{data.back[language]}}</a>
   </div>
 </div>

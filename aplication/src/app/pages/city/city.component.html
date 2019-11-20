@@ -9,17 +9,16 @@
   <div class="city-box">
     <div class="city-item" *ngFor="let item of city; let index = index;" (click)="changeCity(index)">
       <ng-container *ngIf="item.img; else cityIcon">
-        <img src="{{item.img}}" alt="{{item.name | trans:language}}">
+        <img src="{{item.img}}" alt="{{item.name}}">
       </ng-container>
-
       <div class="title">
         {{item.name | trans:language}}
       </div>
     </div>
-    <a routerLink="/{{language}}/other-city" class="city-item">
-      <ng-container *ngTemplateOutlet="cityIcon"></ng-container>
-      {{translate.other[language]}}
-    </a>
+<!--    <a routerLink="/{{language}}/other-city" class="city-item">-->
+<!--      <ng-container *ngTemplateOutlet="cityIcon"></ng-container>-->
+<!--      {{translate.other[language]}}-->
+<!--    </a>-->
   </div>
 </div>
 <ng-template #cityIcon>

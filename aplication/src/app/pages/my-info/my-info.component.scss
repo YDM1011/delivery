@@ -86,3 +86,24 @@ app-image-cropper{
   max-width: calc(100% - 30px);
   margin: 0 15px;
 }
+
+.pass{
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  button{
+    margin: 0 auto;
+  }
+  p{
+    &.error{
+      color: #E21B1B;
+      margin-top: -10px;
+    }
+  }
+}
+.pass-input{
+  margin-bottom: 5px;
+}
+.pass-btn{
+  padding: 0 20px;
+}

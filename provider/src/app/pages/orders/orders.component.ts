@@ -44,7 +44,7 @@ export class OrdersComponent implements OnInit, OnDestroy {
         this.crud.get(`basket/count?query={"companyOwner":"${this.user.companyOwner._id}","status":1}`).then((count: any) => {
           if (count) {
             this.lengthPagination = count.count;
-            this.crud.get(`basket?query={"companyOwner":"${this.user.companyOwner._id}","status":1}&populate=[{"path":"deliveryAddress","populate":"city","select":"name build street department"},{"path":"manager","select":"name"}]&sort={"date":-1}`).then((orders: any) => {
+            this.crud.get(`basket?query={"companyOwner":"${this.user.companyOwner._id}","status":1}&populate=[{"path":"deliveryAddress","populate":"city","select":"name build street department img"},{"path":"manager","select":"name"},{"path":"createdBy","select":"mobile name"}]&sort={"date":-1}`).then((orders: any) => {
               if (!orders) {return; }
               this.orders = orders;
               this.loading = true;
@@ -103,7 +103,7 @@ export class OrdersComponent implements OnInit, OnDestroy {
     this.crud.get(`basket/count?query={"companyOwner":"${this.user.companyOwner._id}"}`).then((count: any) => {
       if (count) {
         this.lengthPagination = count.count;
-        this.crud.get(`basket?query={"companyOwner":"${this.user.companyOwner._id}", "status":1}&populate=[{"path":"deliveryAddress","populate":"city","select":"name build street department"},{"path":"manager","select":"name"}]&skip=${skip}&limit=${limit}&sort={"date":-1}`).then((orders: any) => {
+        this.crud.get(`basket?query={"companyOwner":"${this.user.companyOwner._id}", "status":1}&populate=[{"path":"deliveryAddress","populate":"city","select":"name build street department img"},{"path":"manager","select":"name"},{"path":"createdBy","select":"mobile name"}]&skip=${skip}&limit=${limit}&sort={"date":-1}`).then((orders: any) => {
           if (!orders) {return; }
           this.orders = orders;
           this.loading = true;
@@ -115,7 +115,7 @@ export class OrdersComponent implements OnInit, OnDestroy {
     this.crud.get(`basket/count?query={"companyOwner":"${this.user.companyOwner._id}", "$or":[{"status":2},{"status":3}]}`).then((count: any) => {
       if (count) {
         this.lengthPagination = count.count;
-        this.crud.get(`basket?query={"companyOwner":"${this.user.companyOwner._id}", "$or":[{"status":2},{"status":3}]}&populate=[{"path":"deliveryAddress","populate":"city","select":"name build street department"},{"path":"manager","select":"name"}]&skip=${skip}&limit=${limit}&sort={"date":-1}`).then((orders: any) => {
+        this.crud.get(`basket?query={"companyOwner":"${this.user.companyOwner._id}", "$or":[{"status":2},{"status":3}]}&populate=[{"path":"deliveryAddress","populate":"city","select":"name build street department img"},{"path":"manager","select":"name"},{"path":"createdBy","select":"mobile name"}]&skip=${skip}&limit=${limit}&sort={"date":-1}`).then((orders: any) => {
           if (!orders) {return; }
           this.orders = orders;
           this.loading = true;
@@ -128,7 +128,7 @@ export class OrdersComponent implements OnInit, OnDestroy {
       if (count) {
         this.lengthPagination = count.count;
         const query = JSON.stringify({companyOwner: this.user.companyOwner._id, $or: [{status: 4}, {status: 5}]});
-        this.crud.get(`basket?query=${query}&populate=[{"path":"deliveryAddress","populate":"city","select":"name build street department"},{"path":"manager","select":"name"}]&skip=${skip}&limit=${limit}&sort={"date":-1}`).then((orders: any) => {
+        this.crud.get(`basket?query=${query}&populate=[{"path":"deliveryAddress","populate":"city","select":"name build street department img"},{"path":"manager","select":"name"},{"path":"createdBy","select":"mobile name"}]&skip=${skip}&limit=${limit}&sort={"date":-1}`).then((orders: any) => {
           if (!orders) {return; }
           this.orders = orders;
           this.loading = true;
@@ -142,7 +142,7 @@ export class OrdersComponent implements OnInit, OnDestroy {
       if (count) {
         this.lengthPagination = count.count;
         const query = JSON.stringify({manager: this.user._id, $or: [{status: 2}, {status: 3}]});
-        this.crud.get(`basket?query=${query}&populate=[{"path":"deliveryAddress","populate":"city","select":"name build street department"},{"path":"manager","select":"name"}]&skip=${skip}&limit=${limit}&sort={"date":-1}`).then((orders: any) => {
+        this.crud.get(`basket?query=${query}&populate=[{"path":"deliveryAddress","populate":"city","select":"name build street department img"},{"path":"manager","select":"name"},{"path":"createdBy","select":"mobile name"}]&skip=${skip}&limit=${limit}&sort={"date":-1}`).then((orders: any) => {
           if (!orders) {return; }
           this.orders = orders;
           this.loading = true;
@@ -154,7 +154,7 @@ export class OrdersComponent implements OnInit, OnDestroy {
     e.stopPropagation();
     this.crud.post('basket', {status: 2, manager: this.user._id}, this.orders[i]._id, false).then((v: any) => {
       if (v) {
-        const populate = JSON.stringify([{path: 'orderOwner', select: 'name'}, {path: 'createdBy', select: 'name address'}, {path: 'deliveryAddress', populate: {path: 'city'}, select: 'name street build department' }, {path: 'manager', select: 'name'}]);
+        const populate = JSON.stringify([{path: 'orderOwner', select: 'name'}, {path: 'createdBy', select: 'name address'}, {path: 'deliveryAddress', populate: {path: 'city'}, select: 'name street build department img' }, {path: 'manager', select: 'name'}, {path: 'createdBy', select: 'mobile name'}]);
         this.crud.get(`basket?query={"_id":"${v._id}"}&populate=${populate}`).then((b: any) => {
           if (b && b.length > 0) {
             this.orders[i] = b[0];

@@ -29,6 +29,7 @@ import {BrandsIDComponent} from "./pages/brands-id/brands-id.component";
 import {EditAddressComponent} from "./pages/edit-address/edit-address.component";
 import {NotificationIdComponent} from "./components/notification-id/notification-id.component";
 import {ForgotComponent} from "./pages/forgot/forgot.component";
+import {ProductAllComponent} from "./pages/product-all/product-all.component";
 
 const routes: Routes = [
   {path: ':lang', component: InitLayoutComponent, children: [
@@ -50,6 +51,7 @@ const routes: Routes = [
       {path: 'other-city', component: OtherCityComponent},
       {path: 'provider/:id', component: ProviderComponent},
       {path: 'provider-all', component: ProviderAllComponent},
+      {path: 'product-all', component: ProductAllComponent},
       {path: 'my-info', component: MyInfoComponent},
       {path: 'my-address', component: MyAddressComponent},
       {path: 'edit-address/:id', component: EditAddressComponent},

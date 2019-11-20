@@ -34,7 +34,7 @@ module.exports = function (backendApp, router) {
                     }
                 })
         } else
-        if ( req.user.role == 'provider' ) {
+        if ( req.user.role == 'provider' || req.user.role == 'client') {
             let obj = {
                 token: getToken(req.user.login),
                 pass: md5(req.body.pass)
@@ -48,6 +48,7 @@ module.exports = function (backendApp, router) {
         } else {
             res.forbidden('pass not change')
         }
+
     });
 
 };
