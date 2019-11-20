@@ -8,6 +8,7 @@
         {{errors[dataError.invalid][language]}}
       </div>
       <div class="buttons">
+        <a [routerLink]="'/'+ language + '/forgot'" class="link-forgot">{{t_forgot[language]}}</a>
         <button class="main-button-bold continue" type="submit">{{t_enter[language]}}</button>
         <a routerLink="/{{language}}" class="main-button-bold no-color">{{t_cancel[language]}}</a>
         <span class="text-buttons">

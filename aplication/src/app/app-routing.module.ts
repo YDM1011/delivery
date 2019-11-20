@@ -28,6 +28,7 @@ import {IsLogoutGuard} from "./is-logout.guard";
 import {BrandsIDComponent} from "./pages/brands-id/brands-id.component";
 import {EditAddressComponent} from "./pages/edit-address/edit-address.component";
 import {NotificationIdComponent} from "./components/notification-id/notification-id.component";
+import {ForgotComponent} from "./pages/forgot/forgot.component";
 
 const routes: Routes = [
   {path: ':lang', component: InitLayoutComponent, children: [
@@ -43,6 +44,7 @@ const routes: Routes = [
       {path: 'brand/:id', component: BrandsIDComponent},
       {path: 'city', component: CityComponent},
       {path: 'verification', component: VerificationComponent},
+      {path: 'forgot', component: ForgotComponent},
       {path: 'login', component: SigninComponent, canActivate: [IsLogoutGuard]},
       {path: 'signup', component: SignupComponent, canActivate: [IsLogoutGuard]},
       {path: 'other-city', component: OtherCityComponent},

@@ -53,6 +53,7 @@ import { VerificationComponent } from './components/verification/verification.co
 import {Ng5SliderModule} from "ng5-slider";
 import {ChartsModule} from "ng2-charts";
 import { PayComponent } from './pages/pay/pay.component';
+import { ForgotComponent } from './pages/forgot/forgot.component';
 
 @NgModule({
   declarations: [
@@ -89,7 +90,8 @@ import { PayComponent } from './pages/pay/pay.component';
     TouchStart,
     SignUpComponent,
     VerificationComponent,
-    PayComponent
+    PayComponent,
+    ForgotComponent
   ],
   imports: [
     ChartsModule,

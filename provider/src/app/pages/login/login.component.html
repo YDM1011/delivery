@@ -10,7 +10,10 @@
 			<div class="error" *ngIf="error && error.text !== ''">
 				{{error.text}}
 			</div>
-			<span class="signup" [routerLink]="'/signup'">Зарегистрироваться</span>
+			<div class="buttons">
+				<span class="signup" [routerLink]="'/signup'">Зарегистрироваться</span>
+				<span class="signup" [routerLink]="'/forgot'">Забыли пароль?</span>
+			</div>
 			<button class="main-button-color" type="submit">Войти</button>
 		</form>
 	</div>

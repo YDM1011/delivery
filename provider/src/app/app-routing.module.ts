@@ -18,6 +18,7 @@ import {OrdersComponent} from './pages/orders/orders.component';
 import {OrdersDetailComponent} from './pages/orders-detail/orders-detail.component';
 import {SignUpComponent} from './pages/sign-up/sign-up.component';
 import {PayComponent} from "./pages/pay/pay.component";
+import {ForgotComponent} from "./pages/forgot/forgot.component";
 
 const routes: Routes = [
   {path: '', component: MainComponent, children: [
@@ -37,6 +38,7 @@ const routes: Routes = [
       ], canActivate: [AdminLoginedGuard]},
   {path: 'login', component: LoginComponent, canActivate: [AdminLogoutGuard]},
   {path: 'signup', component: SignUpComponent},
+  {path: 'forgot', component: ForgotComponent},
   {path: '**', component: NotFoundComponent},
 ];
 

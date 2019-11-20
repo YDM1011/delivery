@@ -25,19 +25,23 @@ export class SigninComponent implements OnInit {
   public dataError = {login:'',name:'',pass:'',invalid: ''};
   public t_enter = {
     ru: 'Войти',
-    ua: 'Войти'
+    ua: 'Війти'
   };
   public t_cancel = {
     ru: 'Отмена',
-    ua: 'Отмена'
+    ua: 'Відміна'
   };
   public t_or = {
     ru: 'или',
-    ua: 'или'
+    ua: 'або'
   };
   public t_signup = {
     ru: 'Регистрация',
-    ua: 'Регистрация'
+    ua: 'Реєстрація'
+  };
+  public t_forgot = {
+    ru: 'Забыли пароль?',
+    ua: 'Забули пароль?'
   };
 
   public errors = {
