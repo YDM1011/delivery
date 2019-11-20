@@ -93,3 +93,15 @@ img.img-croper{
     display: none;
   }
 }
+.navigate-wrap{
+  display: flex;
+}
+.btn-rotate svg{
+  width:20px;
+}
+.btn-rotate{
+  padding: 20px;
+  background: transparent;
+  border: none;
+  margin-top: 5px;
+}

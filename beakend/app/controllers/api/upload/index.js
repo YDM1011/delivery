@@ -8,6 +8,7 @@ module.exports = (backendApp, router) => {
         let form = new IncomingForm();
         let readStream, createStream, fileName;
         const transformer =  sharp()
+            .rotate()
             .resize(500);
         form.on('file', (field, file) => {
             try{
@@ -27,7 +28,28 @@ module.exports = (backendApp, router) => {
         });
         form.parse(req);
     });
+    
+    router.post('/rotateImg', [], function (req,res,next) {
+        const fileName = req.body.fileName;
+        console.log(req.body);
+        let readableStream = fs.createReadStream('upload/'+fileName);
+        let writableStream = fs.createWriteStream('upload/time-'+ fileName);
 
+        const transformer =  sharp()
+            .rotate(req.body.rotate)
+            .resize(500);
+
+        readableStream
+            .pipe(transformer)
+            .pipe(writableStream).on('finish', ()=>{
+            fs.unlink("upload/"+ fileName, fsCallbeack=>{
+                fs.rename('upload/time-'+ fileName, 'upload/'+ fileName, function(err) {
+                    res.ok({file:fileName})
+                });
+            });
+
+        });
+    });
 
     router.post('/deleteFile', [], function (req, res, next) {
         const mainName = req.body.file;

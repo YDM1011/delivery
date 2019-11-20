@@ -24,6 +24,7 @@ module.exports = (backendApp, router) => {
         if (!req.body.login) return res.badRequest('no login');
         if (!req.body.smsCode) return res.badRequest('no confirm');
         if (!req.body.pass || req.body.pass.length < 6) return res.badRequest('no pass or less 6 symbol');
+        console.log(dbPassConfirm)
         if (dbPassConfirm[req.body.login] !== req.body.smsCode) {
             delete dbPassConfirm[req.body.login];
             return res.badRequest('no confirm');

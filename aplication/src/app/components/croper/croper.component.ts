@@ -11,11 +11,13 @@ import {
 } from '@angular/core';
 import {AuthService} from "../../auth.service";
 import {Options} from "ng5-slider";
+import {CrudService} from "../../crud.service";
 
 @Directive({selector: '[crop]'})
 export class TouchStart {
 
   @Input('crop') width = 50;
+  @Input() deg = 0;
   @Output() data = new EventEmitter();
   public trigerStart = false;
   public startX;
@@ -71,7 +73,7 @@ export class TouchStart {
         x: rateX * (event.target.clientWidth/2 - this.width - parseInt(img.style.left)),
         y: rateY * (event.target.clientHeight/2 - this.width - parseInt(img.style.top)),
         width: rateX*this.width*2,
-        height: rateX*this.width*2,
+        height: rateX*this.width*2
       });
     } else {
       this.data.emit(null);
@@ -94,13 +96,16 @@ export class CroperComponent implements OnInit{
   @Input() srcImg;
   public def;
   public max = 50;
+  public deg = 0;
   public width = 50;
+  public reinit = true;
   options: Options = {
     floor: 20,
     ceil: 100
   };
   constructor(
-    private auth: AuthService
+    private auth: AuthService,
+    private crud: CrudService
   ) { }
 
   ngOnInit() {
@@ -114,7 +119,7 @@ export class CroperComponent implements OnInit{
           x: rateX * (img.clientWidth/2 - this.width),
           y: rateY * (img.clientHeight/2 - this.width),
           width: rateX*this.width*2,
-          height: rateX*this.width*2,
+          height: rateX*this.width*2
         };
 
         this.dataDef.emit(this.def);
@@ -163,8 +168,14 @@ export class CroperComponent implements OnInit{
       x: rateX * (img.clientWidth/2 - this.width),
       y: rateY * (img.clientHeight/2 - this.width),
       width: rateX*this.width*2,
-      height: rateX*this.width*2,
+      height: rateX*this.width*2
     })
     // this.dataDef.emit(this.def);
+  }
+  rotate(){
+    this.reinit = false;
+    this.crud.post('rotateImg', {fileName:this.srcImg.split("upload/")[1],rotate:90}).then(v=>{
+      this.reinit = true;
+    })
   }
 }
