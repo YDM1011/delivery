@@ -8,7 +8,7 @@
 	</h2>
 </div>
 <div class="other-pages">
-	<cdk-virtual-scroll-viewport *ngIf="orders && orders.length>0" itemSize="185" class="viewport">
+	<cdk-virtual-scroll-viewport *ngIf="orders && orders.length>0" itemSize="185" class="viewport" appAllProduct (output)="output($event)">
 		<app-product-item *cdkVirtualFor="let order of orders" [data]="order" [company]="order.companyOwner"></app-product-item>
 	</cdk-virtual-scroll-viewport>
 </div>

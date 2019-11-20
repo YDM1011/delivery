@@ -30,12 +30,17 @@ export class ProductAllComponent implements OnInit, OnDestroy {
         this.language = l;
       }
     }));
-    this.crud.getTopProduct().then((v: any) => {
+    this.crud.getTopProduct(0, 5).then((v: any) => {
       if (v) {
         this.orders = v;
         this.loading = true;
       }
-    })
+    });
+  }
+  output(e) {
+    if (e) {
+      this.orders.concat(e);
+    }
   }
 
   ngOnDestroy() {

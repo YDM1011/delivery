@@ -4,7 +4,7 @@
 <div class="provider-detail">
 	<div class="provider-detail__header" *ngIf="provider">
 		<h2>
-			Поставщик "{{provider.name}}"
+			Поставщик "{{provider.name ? provider.name : 'Неизветно'}}"
 		</h2>
 		
 		<div class="table-info">
@@ -13,7 +13,7 @@
 					Имя:
 				</div>
 				<div class="info-item">
-					{{provider.createdBy.name}}
+					{{provider.createdBy && provider.createdBy.name ? provider.createdBy.name : 'Недоступно'}}
 				</div>
 			</div>
 			<div class="info-row">
@@ -21,7 +21,7 @@
 					Номер телефона:
 				</div>
 				<div class="info-item">
-					{{provider.createdBy.mobile}}
+					{{provider.createdBy && provider.createdBy.mobile ? provider.createdBy.mobile : 'Недоступно'}}
 				</div>
 			</div>
 			<div class="info-row">
@@ -29,7 +29,7 @@
 					Адрес:
 				</div>
 				<div class="info-item">
-					{{provider.address}}
+					{{provider.address && provider.address ? provider.address : 'Недоступно'}}
 				</div>
 			</div>
 			<div class="info-row">
@@ -37,7 +37,7 @@
 					Город:
 				</div>
 				<div class="info-item">
-					{{provider.city.name}}
+					{{provider.city && provider.city.name ? provider.city.name : 'Недоступно'}}
 				</div>
 			</div>
 

@@ -9,7 +9,7 @@ import {CrudService} from "../../crud.service";
 })
 export class ProviderAllComponent implements OnInit {
   public language;
-  public curentCity: string;
+  public curentCity;
   public companyArr;
   public data ={
     company: {ua:'Список постачалькиків пустий для міста!', ru:'Cписок поставщиков пуст для города!'}
@@ -31,12 +31,18 @@ export class ProviderAllComponent implements OnInit {
     });
     this.auth.onCity.subscribe((v:any) => {
       if (v) {
-        const query = `?query={"city":"${v._id}","verify":true}&sort={"rating":-1}`;
-        this.crud.get('company', '', query).then((arr)=>{
-          this.curentCity = v;
+        this.curentCity = v;
+        const query = `?query={"city":"${this.curentCity._id}","verify":true}&skip=0&limit=8&sort={"rating":-1}`;
+        this.crud.get('company', '', query).then((arr: any) => {
           this.companyArr = arr;
+          console.log(this.companyArr);
         });
       }
     })
+  }
+  output(e){
+    if (e) {
+      this.companyArr.concat(e);
+    }
   }
 }

@@ -304,9 +304,9 @@ export class CrudService {
       });
     });
   }
-  getTopProduct() {
-    const page = 0;
-    const limit = 7;
+  getTopProduct(p, l) {
+    const page = p;
+    const limit = l;
     return new Promise((resolve, reject) => {
       let links = [];
       this.city.links.forEach(it => {
@@ -314,8 +314,23 @@ export class CrudService {
       });
       const query = `?query={"$or":${JSON.stringify(links)},"isTop":true}
       &populate={"path":"companyOwner"}
-      &sort={"rating":-1}&limit=${page}&skip=${limit * page}`;
+      &sort={"countBought":-1}&limit=${page}&skip=${limit * page}`;
       this.get('order', '', query).then((v:any) => {
+        if (v) {
+          resolve(v);
+        }
+      });
+    });
+  }
+  getCountTopProduct() {
+    return new Promise((resolve, reject) => {
+      let links = [];
+      this.city.links.forEach(it => {
+        links.push({cityLink: it});
+      });
+      const query = `?query={"$or":${JSON.stringify(links)},"isTop":true}
+      &populate={"path":"companyOwner"}`;
+      this.get('order/count', '', query).then((v:any) => {
         if (v) {
           resolve(v);
         }

@@ -96,6 +96,8 @@ import {BrowserModule} from "@angular/platform-browser";
 import { RatingPipe } from './pipe/rating.pipe';
 import { ForgotComponent } from './pages/forgot/forgot.component';
 import { ProductAllComponent } from './pages/product-all/product-all.component';
+import { AllProvidersDirective } from './directives/all-providers.directive';
+import { AllProductDirective } from './directives/all-product.directive';
 
 @NgModule({
 	declarations: [
@@ -176,6 +178,8 @@ import { ProductAllComponent } from './pages/product-all/product-all.component';
 		RatingPipe,
 		ForgotComponent,
 		ProductAllComponent,
+		AllProvidersDirective,
+		AllProductDirective,
 	],
 	imports: [
 		OwlModule,
