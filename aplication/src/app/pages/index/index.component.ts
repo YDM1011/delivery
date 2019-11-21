@@ -37,7 +37,6 @@ export class IndexComponent implements OnInit, OnDestroy {
     brand: false,
     action: false
   };
-  slideConfig = {"slidesToShow": 4, "slidesToScroll": 4};
   public translate ={
     category: {
       ru: 'Категории',
@@ -86,22 +85,6 @@ export class IndexComponent implements OnInit, OnDestroy {
       private auth: AuthService,
       private crud: CrudService
   ) { }
-
-  slickInit(e) {
-    console.log('slick initialized');
-  }
-
-  breakpoint(e) {
-    console.log('breakpoint');
-  }
-
-  afterChange(e) {
-    console.log('afterChange');
-  }
-
-  beforeChange(e) {
-    console.log('beforeChange');
-  }
 
 
   ngOnInit() {

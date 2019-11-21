@@ -44,21 +44,17 @@
   <app-loading></app-loading>
 </ng-container>
 <ng-container *ngIf="loaded.action; else preloadAction">
-<!--  <ng-container *ngIf="action && action.length>0">-->
-<!--    <ngx-slick-carousel class="carousel"-->
-<!--                        #slickModal="slick-carousel"-->
-<!--                        [config]="slideConfig"-->
-<!--                        (init)="slickInit($event)"-->
-<!--                        (breakpoint)="breakpoint($event)"-->
-<!--                        (afterChange)="afterChange($event)"-->
-<!--                        (beforeChange)="beforeChange($event)">-->
-<!--      <div ngxSlickItem *ngFor="let slide of [1,2,3,4]" class="slide">-->
-<!--        {{slide}}-->
-<!--&lt;!&ndash;        <img src="{{ slide.img }}" alt="" width="100%">&ndash;&gt;-->
-<!--&lt;!&ndash;        <app-img [fs]="slide.img"></app-img>&ndash;&gt;-->
-<!--      </div>-->
-<!--    </ngx-slick-carousel>-->
-<!--  </ng-container>-->
+  <div class="carousel">
+    <mat-carousel>
+      <mat-carousel-slide *ngFor="let item of action">
+        <div class="item">
+          <div class="action-img">
+            <app-img [dir]="'product'" [fs]="item.img"></app-img>
+          </div>
+        </div>
+      </mat-carousel-slide>
+    </mat-carousel>
+  </div>
 
 <!--  <div class="carousel" *ngIf="action && action.length>0">-->
 <!--    <owl-carousel [options]="mySlideOptions" [items]="action" [carouselClasses]="['owl-theme', 'sliding']">-->
@@ -70,15 +66,6 @@
 <!--    </owl-carousel>-->
 <!--  </div>-->
 </ng-container>
-<owl-carousel class="carousel" [options]="mySlideOptions" *ngIf="action && action.length>0">
-  <div [routerLink]="'/'+language+'/action/'+image._id" class="item" *ngFor="let image of action;let i = index">
-    <div class="action-img">
-      <app-img [dir]="'product'" [fs]="image.img"></app-img>
-    </div>
-    {{i}}
-  </div>
-</owl-carousel>
-<div class="noname"> </div>
 <ng-container *ngIf="loaded.category; else preloadCat">
   <div class="category" *ngIf="category.length > 0">
     <div class="category-header">
