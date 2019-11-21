@@ -44,12 +44,35 @@ export class CrudService {
         });
     }
 
+    // delete(api, id = null) {
+    //     return new Promise((resolve, reject) => {
+    //         this.http.delete(`${this.api}${api}/${id ? id : ''}`).subscribe(data => {
+    //             resolve(data || true);
+    //         }, error => {
+    //             reject(error);
+    //         });
+    //     });
+    // }
     delete(api, id = null) {
         return new Promise((resolve, reject) => {
-            this.http.delete(`${this.api}${api}/${id ? id : ''}`).subscribe(data => {
-                resolve(data || true);
-            }, error => {
-                reject(error);
+            Swal.fire({
+                title: 'Вы действительно хотите удалить?',
+                type: 'warning',
+                showCloseButton: true,
+                showCancelButton: true,
+                focusConfirm: true,
+                reverseButtons: true,
+                cancelButtonText: 'Отменить!',
+                confirmButtonText: 'Удалить',
+                confirmButtonColor: '#dd4535',
+            }).then((result) => {
+                if (result.value) {
+                    this.http.delete(`${this.api}${api}/${id ? id : ''}`).subscribe(data => {
+                        resolve(data || true);
+                    }, error => {
+                        reject(error);
+                    });
+                }
             });
         });
     }

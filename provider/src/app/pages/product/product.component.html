@@ -31,18 +31,16 @@
 			</button>
 		</div>
 		<div class="main-section">
-			<div class="loading" *ngIf="!loading">
-				Загрузка...
-			</div>
 			<ng-container *ngIf="loading">
-				<div class="table" *ngIf="products && products.length > 0">
+				<div class="table-p" *ngIf="products && products.length > 0">
 					<app-search-filter [inputApi]="'order'" [inputQuery]="'name'" [queryValue]="'companyOwner'" [querySearch]="user.companyOwner" (output)="outputSearch($event)"></app-search-filter>
 					<div class="table-content">
 						<div class="row-h">
-							<div class="col">
+							<div class="col col-h1">
 								Назва
 							</div>
 							<div class="col">
+								Цена
 							</div>
 							<div class="col">
 								Дата
@@ -51,13 +49,27 @@
 							</div>
 						</div>
 						<div class="row-r"  *ngFor="let item of products; let index = index">
-							<div class="col">
+							<div class="col descr">
 								<div class="img">
 									<app-img [dir]="'product'" [fs]="item.img"></app-img>
 								</div>
-								{{item.name}}
+								<div class="name">
+									{{item.name}}
+								</div>
+								<div class="des">
+									{{item.des}}
+								</div>
 							</div>
-							<div class="col"></div>
+							<div class="col">
+								<div class="pr">
+									<div class="old" [class.active]="item.discount">
+										{{item.price}} Грн
+									</div>
+									<div class="new" *ngIf="item.discount">
+										{{item.discount ? item.discount : ''}} Грн
+									</div>
+								</div>
+							</div>
 							<div class="col">
 								<div class="date">
 									<div class="top-table-date">

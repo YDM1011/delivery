@@ -62,24 +62,24 @@ export class BrandsIDComponent implements OnInit, OnDestroy {
 
   }
   init(){
-    const arr = [];
     this.auth.onCity.subscribe((city:any) => {
       if (city) {
         this.city = city;
-        if (this.city.links) {
-          this.city.links.forEach(it => {
-            if (it) {
-              arr.push({cityLink: it});
-              this.CityLinksArr.push({cityLink: it});
-            }
-          });
-        }
         this.crud.getBrandName(this.id, city._id).then((companies)=>{
           this.companies = companies;
-          this.crud.orderByBrand(this.companies[0].brand, 0)
-              .then((order) => {
-                this.orders = this.orders.concat(order);
-              });
+          const arr = [];
+          if (this.city.links) {
+            this.city.links.forEach(it => {
+              if (it) {
+                arr.push({cityLink: it});
+                this.CityLinksArr.push({cityLink: it});
+              }
+            });
+          }
+          const query = `?query={"$and":[${arr.length > 0 ? JSON.stringify( {$or: arr} ) : {} },{"brand":"${this.companies[0].brand}"}]}&populate={"path":"companyOwner"}&skip=0&limit=5&sort=${this.sort}`;
+          this.crud.get('order', '',  query).then((orders: any) => {
+            this.orders = orders;
+          });
         });
       }
     })

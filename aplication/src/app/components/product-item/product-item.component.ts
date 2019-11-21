@@ -20,6 +20,14 @@ export class ProductItemComponent implements OnInit, OnDestroy {
     ru: 'Товар додан в корзину',
     ua: 'Товар доданий у кошик'
   };
+  public snackMessageLogin = {
+    ru: 'Войдите или зарегестрируйтесь',
+    ua: 'Ввійдіть або зареєструйтеся'
+  };
+  public snackMessageCount = {
+    ru: 'Укажите кол-во товара',
+    ua: 'Вкажіть кількість товару'
+  };
   public translate = {
     t1: {
       ru: 'Добавить в',
@@ -33,6 +41,7 @@ export class ProductItemComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
+    console.log(this.company)
     this._subscription.push(
         this.auth.onMe.subscribe((u: any) => {
           if (u) {
@@ -59,17 +68,22 @@ export class ProductItemComponent implements OnInit, OnDestroy {
 
   addProduct(order) {
     if (!this.user) {
-      this.openSnackBar('Войдите или зарегестрируйтеся',  'Ok');
+      this.openSnackBar(this.snackMessageLogin[this.language],  'Ok');
       return;
     }
     if (this.user) {
-      this.crud.post('product', {orderOwner: order._id, count: this.count}).then((v: any) => {
-        if (v) {
-          this.count = 0;
-          this.auth.setCheckBasket(true);
-          this.openSnackBar(this.snackMessage[this.language],  'Ok');
-        }
-      });
+      if (this.count>0){
+        this.crud.post('product', {orderOwner: order._id, count: this.count}).then((v: any) => {
+          if (v) {
+            this.count = 0;
+            this.auth.setCheckBasket(true);
+            this.openSnackBar(this.snackMessage[this.language],  'Ok');
+          }
+        });
+      }
+      if (this.count === 0) {
+        this.openSnackBar(this.snackMessageCount[this.language],  'Ok');
+      }
     }
   }
   openSnackBar(message: string, action: string) {

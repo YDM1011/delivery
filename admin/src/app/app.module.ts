@@ -44,6 +44,7 @@ import {ImageCropperComponent} from "./components/image-cropper/image-cropper.co
 import {CroperComponent, TouchStart} from "./components/croper/croper.component";
 import {ImageCropperModule} from "ngx-image-cropper";
 import {Ng5SliderModule} from "ng5-slider";
+import { ScrollTopDirective } from './directives/scroll-top.directive';
 @NgModule({
   declarations: [
     AppComponent,
@@ -73,7 +74,8 @@ import {Ng5SliderModule} from "ng5-slider";
     LoadingComponent,
     ImageCropperComponent,
     CroperComponent,
-    TouchStart
+    TouchStart,
+    ScrollTopDirective,
   ],
   imports: [
     LottieAnimationViewModule.forRoot(),

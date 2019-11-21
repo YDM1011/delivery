@@ -133,7 +133,6 @@
           font-size: 14px;
           width: 150px;
           margin-left: auto;
-          pointer-events: none;
           color: #09C2C2;
           .basket-svg{
             fill: #09C2C2;
@@ -173,4 +172,11 @@
       }
     }
   }
+}
+.img-company{
+  border-radius: 50%;
+  overflow: hidden;
+  width: 20px;
+  height: 20px;
+  margin-right: 5px;
 }
