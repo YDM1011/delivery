@@ -1,0 +1,14 @@
+<ng-container *ngIf="!loading">
+	<app-loading></app-loading>
+</ng-container>
+<div class="other-header" *ngIf="language">
+	<app-back-btn></app-back-btn>
+	<h2>
+		{{translate.title[language]}}
+	</h2>
+</div>
+<div class="other-pages">
+	<cdk-virtual-scroll-viewport *ngIf="orders && orders.length>0" itemSize="185" class="viewport" appAllProduct (output)="output($event)">
+		<app-product-item *cdkVirtualFor="let order of orders" [data]="order" [company]="order.companyOwner"></app-product-item>
+	</cdk-virtual-scroll-viewport>
+</div>

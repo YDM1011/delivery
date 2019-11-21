@@ -37,6 +37,10 @@ export class CategoryIDComponent implements OnInit {
     filter:{
       ru: 'Фильтр',
       ua: 'Фільтр'
+    },
+    empty:{
+      ru: 'Продукты отсутствуют',
+      ua: 'Продукти відсутні'
     }
   };
   constructor(
@@ -62,7 +66,6 @@ export class CategoryIDComponent implements OnInit {
         this.city = city;
         this.crud.getCategoryName(this.id).then((mainCategory) => {
           this.mainCategory = mainCategory;
-          console.log(this.mainCategory)
           const arr = [];
           if (this.city.links) {
             this.city.links.forEach(it => {
@@ -95,6 +98,7 @@ export class CategoryIDComponent implements OnInit {
     const query = `?query={"$and":[${arr.length > 0 ? JSON.stringify( {$or: arr} ) : {} },{"mainCategory":"${this.mainCategory._id}"}${this.filter ? this.filter : ''}]}&skip=0&limit=5&sort=${this.sort}`;
     this.crud.get('order', '',  query).then((orders) => {
       this.orders = orders;
+      console.log(this.orders)
     });
   }
   closeFilter(e) {

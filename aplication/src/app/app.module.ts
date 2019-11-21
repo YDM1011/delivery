@@ -95,6 +95,10 @@ import {OwlModule} from "ngx-owl-carousel";
 import {BrowserModule} from "@angular/platform-browser";
 import { RatingPipe } from './pipe/rating.pipe';
 import { ForgotComponent } from './pages/forgot/forgot.component';
+import { ProductAllComponent } from './pages/product-all/product-all.component';
+import { AllProvidersDirective } from './directives/all-providers.directive';
+import { AllProductDirective } from './directives/all-product.directive';
+import { CancelOrderComponent } from './components/cancel-order/cancel-order.component';
 
 @NgModule({
 	declarations: [
@@ -174,6 +178,10 @@ import { ForgotComponent } from './pages/forgot/forgot.component';
 		BrandProductUploadDirective,
 		RatingPipe,
 		ForgotComponent,
+		ProductAllComponent,
+		AllProvidersDirective,
+		AllProductDirective,
+		CancelOrderComponent,
 	],
 	imports: [
 		OwlModule,

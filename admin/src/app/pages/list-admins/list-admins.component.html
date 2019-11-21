@@ -7,13 +7,14 @@
 		</div>
 		<form (submit)="create($event)" class="add-section">
 			<mat-form-field class="example-full-width">
-				<input matInput type="text" placeholder="Name" name="name"  [(ngModel)]="client.name" autocomplete="off">
+				<input matInput type="text" placeholder="Имя" name="name"  [(ngModel)]="client.name" autocomplete="off">
 			</mat-form-field>
 			<mat-form-field class="example-full-width">
-				<input matInput type="text" placeholder="Phone" name="login" [(ngModel)]="client.login" autocomplete="off">
+				<span matPrefix>+380 &nbsp;</span>
+				<input matInput type="text" [maxLength]="9" placeholder="Телефон" name="login" [(ngModel)]="client.login" autocomplete="off">
 			</mat-form-field>
 			<mat-form-field class="example-full-width">
-				<input matInput type="text" placeholder="Password" name="pass" [(ngModel)]="client.pass" autocomplete="off">
+				<input matInput type="text" placeholder="Пароль" name="pass" [(ngModel)]="client.pass" autocomplete="off">
 			</mat-form-field>
 			
 			<div class="group-buttons">

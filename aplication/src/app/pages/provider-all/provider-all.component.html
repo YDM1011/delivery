@@ -6,8 +6,11 @@
 </div>
 
 <div class="other-pages" *ngIf="companyArr">
-  <ng-container *ngIf="companyArr.length>0; else empty"></ng-container>
-  <app-provider-item [data]="company" *ngFor="let company of companyArr"></app-provider-item>
+  <ng-container *ngIf="companyArr.length>0; else empty">
+    <cdk-virtual-scroll-viewport itemSize="65" class="viewport" appAllProviders [cityId]="curentCity._id" (output)="output($event)">
+      <app-provider-item [data]="company" *cdkVirtualFor="let company of companyArr"></app-provider-item>
+    </cdk-virtual-scroll-viewport>
+  </ng-container>
 </div>
 <ng-template #empty>
   <div class="empty">

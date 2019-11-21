@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {CrudService} from '../../crud.service';
 import {AuthService} from '../../auth.service';
 import {animate, state, style, transition, trigger} from "@angular/animations";
+import Swal from "sweetalert2";
 
 @Component({
   selector: 'app-product',
@@ -83,11 +84,13 @@ export class ProductComponent implements OnInit {
 
   }
   isTop(obj){
-    console.log(obj.isTop)
-
-    this.crud.post(`orderTop/${obj._id}`,{isTop: obj.isTop ? false : true}).then((v: any) => {
+    this.crud.post(`orderTop/${obj._id}`,{isTop: obj.isTop ? false : true}, null, false).then((v: any) => {
       if (v) {
         obj.isTop = v.isTop
+      }
+    }).catch((error)=>{
+      if(error.error === 'no more 3 tops') {
+        Swal.fire('Oops...', 'Не больше трех топ продуктов', 'error');
       }
     });
   }

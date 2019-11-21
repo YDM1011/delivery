@@ -14,6 +14,8 @@ export class OrdersComponent implements OnInit, OnDestroy {
   public toggleMain = true;
   public orders = [];
   public loading = false;
+  public showCloseModal = false;
+  public cancelOrderId = null;
   public user: any;
   private _subscription: Subscription[] = [];
   public translate ={
@@ -74,14 +76,14 @@ export class OrdersComponent implements OnInit, OnDestroy {
   confirmOrder(e) {
     if (e) {
       this.openSnackBar('Ваш заказ был подтвержден',  'Ok');
-      this.crud.get(`basket?query={"_id":"${e}","$or":[{"status":1},{"status":2},{"status":3}]}&populate=[{"path":"deliveryAddress","select":"name img"},{"path":"companyOwner","select":"name"}]&skip=0&limit=5&sort={"date":-1}`).then((v: any) => {
-        this.orders[this.crud.find('_id', e, this.orders)] = v[0];
-      });
+      this.orders[this.crud.find('_id', e, this.orders)].status = 2;
     }
   }
-  removeOrder(e, i) {
-    this.orders[i].status = 5;
-    this.openSnackBar('Ваш заказ был отменен',  'Ok');
+  removeOrder(e) {
+    if (e) {
+      this.cancelOrderId = e;
+      this.showCloseModal = true;
+    }
   }
   getBaskets() {
     this.toggleMain = true;
@@ -104,5 +106,17 @@ export class OrdersComponent implements OnInit, OnDestroy {
     if (e) {
       this.orders = this.orders.concat(e);
     }
+  }
+  closeOrder(e) {
+    this.showCloseModal = e;
+  }
+  successRemove(){
+    this.showCloseModal = false;
+    this.crud.post('basket', {status: 5}, this.cancelOrderId).then((v: any) => {
+      if (v) {
+        this.orders[this.crud.find('_id', this.cancelOrderId, this.orders)].status = 5;
+        this.openSnackBar('Ваш заказ был отменен',  'Ok');
+      }
+    });
   }
 }

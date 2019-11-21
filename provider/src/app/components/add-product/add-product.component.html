@@ -39,7 +39,9 @@
 	</div>
 	<div class="group-buttons">
 		<div class="left">
-			<app-img *ngIf="product && product.img" [dir]="'product'" [fs]="product.img"></app-img>
+			<div class="img" *ngIf="product.img !== ''">
+				<app-img *ngIf="product && product.img" [dir]="'product'" [fs]="product.img"></app-img>
+			</div>
             <app-upload (onCrop)="onFs($event)" *ngIf="product && !product.img" [cropper]="true" [dir]="'product'"></app-upload>
 			<div class="mat-chip-file" *ngIf="product && product.img">
 				<div class="content">{{product.img}}</div>

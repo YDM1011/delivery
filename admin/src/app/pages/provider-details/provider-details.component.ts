@@ -127,7 +127,7 @@ export class ProviderDetailsComponent implements OnInit {
       this.passErr = "Пароль менее 6 символов!";
       return
     }
-    this.crud.post('changePass', {pass:this.newPass}).then(v=>{
+    this.crud.post('changePass', {pass:this.newPass,_id:this.provider.createdBy._id}).then(v=>{
       if (v) {
         this.newPass = '';
       }

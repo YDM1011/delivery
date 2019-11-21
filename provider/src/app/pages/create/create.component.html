@@ -9,16 +9,17 @@
 					Создать сотрудника
 				</div>
 			</div>
-			<div class="client-form" >
+			<div class="client-form">
 				<form (submit)="create($event)" class="form">
 					<mat-form-field class="example-full-width">
-						<input matInput type="text" placeholder="Name" [(ngModel)]="client.name" name="name" autocomplete="off">
+						<input matInput type="text" placeholder="Имя" [(ngModel)]="client.name" name="name" autocomplete="off">
 					</mat-form-field>
 					<mat-form-field class="example-full-width">
-						<input matInput type="text" placeholder="Phone" [(ngModel)]="client.login" name="name" autocomplete="off">
+						<span matPrefix>+380 &nbsp;</span>
+						<input matInput type="text" [maxLength]="9" placeholder="Телефон" [(ngModel)]="client.login" name="name" autocomplete="off">
 					</mat-form-field>
 					<mat-form-field class="example-full-width">
-						<input matInput type="text" placeholder="Password" [(ngModel)]="client.pass" name="name" autocomplete="off">
+						<input matInput type="text" placeholder="Пароль" [(ngModel)]="client.pass" name="name" autocomplete="off">
 					</mat-form-field>
 					
 					<div class="group-buttons">
@@ -86,7 +87,7 @@
 						</div>
 						<div class="row-r" *ngFor="let item of clients; let index = index">
 							<div class="col">
-								{{item.login}}
+								{{item.name}} - {{item.login}}
 							</div>
 							<div class="col"></div>
 							<div class="col">

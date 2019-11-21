@@ -9,7 +9,7 @@
 			</div>
 			<div class="status-info">
 				<div class="name" *ngIf="basketCopy.manager && basketCopy.manager.name">
-				{{basketCopy.manager.name}}
+				{{basketCopy.manager.name ? basketCopy.manager.name : 'Отсутствует'}}
 				</div>
 				<div class="status" [innerHTML]="basketCopy.status | status | safeHTML">
 				</div>
@@ -33,7 +33,7 @@
 						Имя:
 					</div>
 					<div class="content">
-						{{basketCopy.createdBy.name}}
+						{{basketCopy.createdBy && basketCopy.createdBy.name ? basketCopy.createdBy.name : 'Неизвестно'}}
 					</div>
 				</div>
 				<div class="info-item info-address">
@@ -83,14 +83,14 @@
 				</div>
 				<div class="product-item" *ngFor="let item of basketCopy.products; let i = index">
 					<div class="name">
-						{{item.orderOwner ? item.orderOwner.name : ''}}
+						{{item.orderOwner ? item.orderOwner.name : 'Неизвестно'}}
 					</div>
 					<div class="count">
 						<svg class="decrement" *ngIf="editBasket" (click)="decrement(i)" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
 							<path d="M19.6429 10C19.6429 15.3256 15.3256 19.6429 10 19.6429C4.6744 19.6429 0.357144 15.3256 0.357144 10C0.357144 4.6744 4.6744 0.357144 10 0.357144C15.3256 0.357144 19.6429 4.6744 19.6429 10Z" stroke="#009688" stroke-width="0.714287"/>
 							<path d="M5.71387 9.28564H14.2853V10.7142H5.71387V9.28564Z" fill="#748AA1"/>
 						</svg>
-						<span class="count-item">{{item.count }} шт.</span>
+						<span class="count-item">{{item.count ? item.count : 'Неизвестно'}} шт.</span>
 						
 						<svg class="increment" *ngIf="editBasket" (click)="increment(i)" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
 							<path d="M19.6429 10C19.6429 15.3256 15.3256 19.6429 10 19.6429C4.6744 19.6429 0.357144 15.3256 0.357144 10C0.357144 4.6744 4.6744 0.357144 10 0.357144C15.3256 0.357144 19.6429 4.6744 19.6429 10Z" stroke="#009688" stroke-width="0.714287"/>
@@ -98,7 +98,7 @@
 						</svg>
 					</div>
 					<div class="price">
-						{{item.price}} Грн.
+						{{item.price ? item.price : 'Неизвестно'}} Грн.
 					</div>
 					<button class="main-button remove" *ngIf="editBasket" (click)="removeProduct(i)">Удалить</button>
 				</div>

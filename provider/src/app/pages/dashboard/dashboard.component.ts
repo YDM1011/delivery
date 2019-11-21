@@ -143,7 +143,7 @@ export class DashboardComponent implements OnInit {
       while (day.getTime() !== timeEnd && i <= 365*2) {
         day = new Date(this.dateStart.getMonth()+month+'.'+(this.dateStart.getDate()+triger)+'.'+(this.dateStart.getFullYear()+year));
         // const day = new Date(timeStart + i*(1000*60*60*24));
-        console.log(this.dateStart.getMonth()+month+'.'+(this.dateStart.getDate()+triger)+'.'+(this.dateStart.getFullYear()+year), i, triger, month);
+        // console.log(this.dateStart.getMonth()+month+'.'+(this.dateStart.getDate()+triger)+'.'+(this.dateStart.getFullYear()+year), i, triger, month);
         if (isNaN(day.getTime())) {
           if (this.dateStart.getMonth()+month >= 12) {
             year += 1;
@@ -161,7 +161,7 @@ export class DashboardComponent implements OnInit {
           if (this.lineChartData[0].data[i]){
             return;
           }
-          console.log(new Date(item.date).getTime(), day.getTime());
+          // console.log(new Date(item.date).getTime(), day.getTime());
           if (new Date(item.date).getTime() === day.getTime()){
             this.lineChartData[0].data[i] = chart[index].count;
             return;

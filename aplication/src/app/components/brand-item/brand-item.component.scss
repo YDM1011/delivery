@@ -28,3 +28,9 @@
     top: 24px;
   }
 }
+
+::ng-deep .brand-img{
+  img{
+    object-fit: cover;
+  }
+}

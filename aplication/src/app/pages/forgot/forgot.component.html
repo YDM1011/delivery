@@ -4,11 +4,16 @@
 			<h3>
 				{{translate.title[language]}}
 			</h3>
-			<form (submit)="phone($event)">
+			<form (submit)="phone($event)" class="form">
 				<app-phone (phone)="objLogin['login'] = $event"></app-phone>
 				<button type="submit" class="main-button-bold">
 					{{translate.btn[language]}}
 				</button>
+				<div class="buttons">
+					<a [routerLink]="'/'+language+'/login'" class="main-button-bold no-color">
+						Назад
+					</a>
+				</div>
 			</form>
 		</ng-container>
 		<ng-container *ngIf="showConfirm && !showSuccess">

@@ -32,7 +32,15 @@
 								<div class="row-f" [routerLink]="'/orders-detail/' + item._id" *ngFor="let item of orders; let i = index">
 									<div class="name col-f" [matTooltip]="item.deliveryAddress ? item.deliveryAddress.name : 'Название не извесно'">
 										<div class="img">
-											<img src="./assets/images/user.svg" alt="">
+											<app-img [fs]="item && item.deliveryAddress ? item.deliveryAddress.img : ''" [anyFs]="'./assets/images/user.svg'"></app-img>
+										</div>
+										<div class="block-name" *ngIf="item && item.createdBy">
+											<div class="n">
+												{{item.createdBy.name}}
+											</div>
+											<div class="mobile">
+												<a class="mobile-href" href="tel:{{item.createdBy.mobile}}">{{item.createdBy.mobile}}</a>
+											</div>
 										</div>
 									</div>
 									<div class="address col-f" *ngIf="item.deliveryAddress">
@@ -104,7 +112,15 @@
 								<div class="row-f" [routerLink]="'/orders-detail/' + item._id" *ngFor="let item of orders; let i = index">
 									<div class="name col-f" [matTooltip]="item.deliveryAddress ? item.deliveryAddress.name : 'Название не извесно'">
 										<div class="img">
-											<img src="./assets/images/user.svg" alt="">
+											<app-img [fs]="item && item.deliveryAddress ? item.deliveryAddress.img : ''" [anyFs]="'./assets/images/user.svg'"></app-img>
+										</div>
+										<div class="block-name" *ngIf="item && item.createdBy">
+											<div class="n">
+												{{item.createdBy.name}}
+											</div>
+											<div class="mobile">
+												<a class="mobile-href" href="tel:{{item.createdBy.mobile}}">{{item.createdBy.mobile}}</a>
+											</div>
 										</div>
 									</div>
 									<div class="address col-f" *ngIf="item.deliveryAddress">
@@ -132,8 +148,8 @@
 									<div class="buttons col-f">
 										<div class="who-doing">
 											<div class="status" [innerHTML]="item.status | status | safeHTML"></div>
-											<div class="name" *ngIf="item.manager && item.manager.name">
-												{{item.manager.name}}
+											<div class="name" *ngIf="item && item.manager && item.manager.name">
+												{{item.manager.name ? item.manager.name : 'Отсутствует'}}
 											</div>
 										</div>
 									</div>
@@ -171,7 +187,15 @@
 								<div class="row-f" [routerLink]="'/orders-detail/' + item._id" *ngFor="let item of orders; let i = index">
 									<div class="name col-f" [matTooltip]="item.deliveryAddress ? item.deliveryAddress.name : 'Название не извесно'">
 										<div class="img">
-											<img src="./assets/images/user.svg" alt="">
+											<app-img [fs]="item && item.deliveryAddress ? item.deliveryAddress.img : ''" [anyFs]="'./assets/images/user.svg'"></app-img>
+										</div>
+										<div class="block-name">
+											<div class="n">
+												{{item.createdBy.name}}
+											</div>
+											<div class="mobile">
+												<a class="mobile-href" href="tel:{{item.createdBy.mobile}}">{{item.createdBy.mobile}}</a>
+											</div>
 										</div>
 									</div>
 									<div class="address col-f" *ngIf="item.deliveryAddress">
@@ -238,7 +262,15 @@
 								<div class="row-f" [routerLink]="'/orders-detail/' + item._id" *ngFor="let item of orders; let i = index">
 									<div class="name col-f" [matTooltip]="item.deliveryAddress ? item.deliveryAddress.name : 'Название не извесно'">
 										<div class="img">
-											<img src="./assets/images/user.svg" alt="">
+											<app-img [fs]="item && item.deliveryAddress ? item.deliveryAddress.img : ''" [anyFs]="'./assets/images/user.svg'"></app-img>
+										</div>
+										<div class="block-name" *ngIf="item && item.createdBy">
+											<div class="n">
+												{{item.createdBy.name}}
+											</div>
+											<div class="mobile">
+												<a class="mobile-href" href="tel:{{item.createdBy.mobile}}">{{item.createdBy.mobile}}</a>
+											</div>
 										</div>
 									</div>
 									<div class="address col-f" *ngIf="item.deliveryAddress">
@@ -266,8 +298,8 @@
 									<div class="buttons col-f">
 										<div class="who-doing">
 											<div class="status" [innerHTML]="item.status | status | safeHTML"></div>
-											<div class="name" *ngIf="item.manager && item.manager.name">
-												{{item.manager.name}}
+											<div class="name" *ngIf="item && item.manager">
+												{{item.manager.name ? item.manager.name : 'Отсутствует'}}
 											</div>
 										</div>
 									</div>

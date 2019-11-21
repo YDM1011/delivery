@@ -73,6 +73,10 @@ export class IndexComponent implements OnInit, OnDestroy {
     allProdviders: {
       ru: 'Все поставщики города',
       ua: 'Всі постачальники міста'
+    },
+    emptyTop: {
+      ru: 'Нет популярных продуктов',
+      ua: 'Немає популярних продуктів'
     }
   };
   private _subscription: Subscription[] = [];
@@ -131,14 +135,11 @@ export class IndexComponent implements OnInit, OnDestroy {
       this.topCompany = v;
       this.loaded.topCompany = true;
     }).catch((e) => { this.loaded.topCompany = true; });
-    await this.crud.getTopProduct().then((v: any) => {
+    await this.crud.getTopProduct(0, 5).then((v: any) => {
       if (!v) {return; }
       this.topProduct = v;
       this.loaded.topProduct = true;
     }).catch((e) => { this.loaded.topProduct = true; });
-  }
-  changeCar() {
-    console.log('tima');
   }
   ngOnDestroy() {
     this._subscription.forEach(it => it.unsubscribe());

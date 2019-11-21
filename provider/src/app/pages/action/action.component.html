@@ -14,85 +14,92 @@
 			</p>
 			<button class="main-button" type="reset" (click)="cancelAdd()">Отмена</button>
 		</div>
-		<form class="add-section" (submit)="create($event)" *ngIf="products && products.length > 0">
-			<mat-form-field class="example-full-width">
-				<input matInput type="text" placeholder="Название акции" name="name" [(ngModel)]="action.name" autocomplete="off">
-			</mat-form-field>
-			<mat-form-field class="example-full-width">
-				<input matInput type="text" placeholder="Описание акции" name="description" [(ngModel)]="action.description" autocomplete="off">
-			</mat-form-field>
-			<div class="product-check">
-				<mat-checkbox class="check-item" [(ngModel)]="actionForProduct" name="actionForProduct">Додать продукт до акции</mat-checkbox>
-				<mat-form-field *ngIf="actionForProduct">
-					<mat-label>Продукты</mat-label>
-					<mat-select [(value)]="productChoose">
-						<mat-option *ngFor="let item of products" [value]="item._id">
-							{{item.name}}
-						</mat-option>
-					</mat-select>
+		<ng-container *ngIf="access">
+			<form class="add-section" (submit)="create($event)" *ngIf="products && products.length > 0">
+				<mat-form-field class="example-full-width">
+					<input matInput type="text" placeholder="Название акции" name="name" [(ngModel)]="action.name" autocomplete="off">
 				</mat-form-field>
-			</div>
-			<div class="block-check">
-				<mat-checkbox class="check-item" [(ngModel)]="globalAction" name="global" (change)="changeTypeActionGlobal()">Глобальная акция</mat-checkbox>
-				<mat-checkbox class="check-item" [(ngModel)]="userAction" name="user" (change)="changeTypeActionUser()">Для клиента</mat-checkbox>
-			</div>
-			<div class="chips-box" *ngIf="userChoose && userChoose.length > 0">
-				<mat-chip-list aria-label="Fish selection">
-					<mat-chip class="chip-item" *ngFor="let item of userChoose; let index = index">
-						{{item.login}}
-						<div class="remove" (click)="removeUserChip(index)">
-							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="15" height="15" fill="#c1c1c1">
-								<path d="M 6.496094 1 C 5.675781 1 5 1.675781 5 2.496094 L 5 3 L 2 3 L 2 4 L 3 4 L 3 12.5 C 3 13.328125 3.671875 14 4.5 14 L 10.5 14 C 11.328125 14 12 13.328125 12 12.5 L 12 4 L 13 4 L 13 3 L 10 3 L 10 2.496094 C 10 1.675781 9.324219 1 8.503906 1 Z M 6.496094 2 L 8.503906 2 C 8.785156 2 9 2.214844 9 2.496094 L 9 3 L 6 3 L 6 2.496094 C 6 2.214844 6.214844 2 6.496094 2 Z M 5 5 L 6 5 L 6 12 L 5 12 Z M 7 5 L 8 5 L 8 12 L 7 12 Z M 9 5 L 10 5 L 10 12 L 9 12 Z"/>
-							</svg>
-						</div>
-					</mat-chip>
-				</mat-chip-list>
-			</div>
-			<mat-form-field class="example-full-width" *ngIf="userAction">
-				<input type="text" placeholder="Tel" aria-label="Number" name="inputSearch" matInput [(ngModel)]="inputChange" [matAutocomplete]="auto" (keyup)="change()">
-				<mat-autocomplete #auto="matAutocomplete">
-					<mat-option *ngFor="let item of searchUser" [value]="item.login" (click)="pushUser(item)">
-						<div class="option">
-							<div class="img">
-								<app-img [fs]="item.img" [dir]="'product'" *ngIf="item.img !== ''; else usersvg"></app-img>
-								<ng-template #usersvg>
-									<img src="./assets/images/user.svg" alt="user-svg">
-								</ng-template>
-							</div>
+				<mat-form-field class="example-full-width">
+					<input matInput type="text" placeholder="Описание акции" name="description" [(ngModel)]="action.description" autocomplete="off">
+				</mat-form-field>
+				<div class="product-check">
+					<mat-checkbox class="check-item" [(ngModel)]="actionForProduct" name="actionForProduct">Додать продукт до акции</mat-checkbox>
+					<mat-form-field *ngIf="actionForProduct">
+						<mat-label>Продукты</mat-label>
+						<mat-select [(value)]="productChoose">
+							<mat-option *ngFor="let item of products" [value]="item._id">
+								{{item.name}}
+							</mat-option>
+						</mat-select>
+					</mat-form-field>
+				</div>
+				<div class="block-check">
+					<mat-checkbox class="check-item" [(ngModel)]="globalAction" name="global" (change)="changeTypeActionGlobal()">Глобальная акция</mat-checkbox>
+					<mat-checkbox class="check-item" [(ngModel)]="userAction" name="user" (change)="changeTypeActionUser()">Для клиента</mat-checkbox>
+				</div>
+				<div class="chips-box" *ngIf="userChoose && userChoose.length > 0">
+					<mat-chip-list aria-label="Fish selection">
+						<mat-chip class="chip-item" *ngFor="let item of userChoose; let index = index">
 							{{item.login}}
+							<div class="remove" (click)="removeUserChip(index)">
+								<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="15" height="15" fill="#c1c1c1">
+									<path d="M 6.496094 1 C 5.675781 1 5 1.675781 5 2.496094 L 5 3 L 2 3 L 2 4 L 3 4 L 3 12.5 C 3 13.328125 3.671875 14 4.5 14 L 10.5 14 C 11.328125 14 12 13.328125 12 12.5 L 12 4 L 13 4 L 13 3 L 10 3 L 10 2.496094 C 10 1.675781 9.324219 1 8.503906 1 Z M 6.496094 2 L 8.503906 2 C 8.785156 2 9 2.214844 9 2.496094 L 9 3 L 6 3 L 6 2.496094 C 6 2.214844 6.214844 2 6.496094 2 Z M 5 5 L 6 5 L 6 12 L 5 12 Z M 7 5 L 8 5 L 8 12 L 7 12 Z M 9 5 L 10 5 L 10 12 L 9 12 Z"/>
+								</svg>
+							</div>
+						</mat-chip>
+					</mat-chip-list>
+				</div>
+				<mat-form-field class="example-full-width" *ngIf="userAction">
+					<input type="text" placeholder="Tel" aria-label="Number" name="inputSearch" matInput [(ngModel)]="inputChange" [matAutocomplete]="auto" (keyup)="change()">
+					<mat-autocomplete #auto="matAutocomplete">
+						<mat-option *ngFor="let item of searchUser" [value]="item.login" (click)="pushUser(item)">
+							<div class="option">
+								<div class="img">
+									<app-img [fs]="item.img" [dir]="'product'" *ngIf="item.img !== ''; else usersvg"></app-img>
+									<ng-template #usersvg>
+										<img src="./assets/images/user.svg" alt="user-svg">
+									</ng-template>
+								</div>
+								{{item.login}}
+							</div>
+						</mat-option>
+					</mat-autocomplete>
+				</mat-form-field>
+				<div class="datepikers">
+					<mat-form-field class="pik">
+						<input matInput [matDatepicker]="picker" name="date1" [min]="date" [(ngModel)]="action.dateStart" (focus)="picker.open()" placeholder="Дата начала акции" (dateChange)="formCheck()">
+						<mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+						<mat-datepicker #picker></mat-datepicker>
+					</mat-form-field>
+					<mat-form-field class="pik">
+						<input matInput [matDatepicker]="picker2" name="date2" [min]="action.dateStart" [(ngModel)]="action.dateEnd" (focus)="picker2.open()" placeholder="Дата окончания акции" (dateChange)="formCheck()">
+						<mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+						<mat-datepicker #picker2></mat-datepicker>
+					</mat-form-field>
+				</div>
+				<div class="group-buttons">
+					<div class="left">
+						<div class="img" *ngIf="action.img">
+							<app-img [fs]="action.img" [dir]="'product'"></app-img>
 						</div>
-					</mat-option>
-				</mat-autocomplete>
-			</mat-form-field>
-			<div class="datepikers">
-				<mat-form-field class="pik">
-					<input matInput [matDatepicker]="picker" name="date1" [min]="date" [(ngModel)]="action.dateStart" (focus)="picker.open()" placeholder="Дата начала акции" (dateChange)="formCheck()">
-					<mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-					<mat-datepicker #picker></mat-datepicker>
-				</mat-form-field>
-				<mat-form-field class="pik">
-					<input matInput [matDatepicker]="picker2" name="date2" [min]="action.dateStart" [(ngModel)]="action.dateEnd" (focus)="picker2.open()" placeholder="Дата окончания акции" (dateChange)="formCheck()">
-					<mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
-					<mat-datepicker #picker2></mat-datepicker>
-				</mat-form-field>
-			</div>
-			<div class="group-buttons">
-				<div class="left">
-					<div class="img" *ngIf="action.img">
-						<app-img [fs]="action.img" [dir]="'product'"></app-img>
+						<app-upload (onCrop)="onFs($event)" [dir]="'product'" [cropper]="true" [rate]="[3,2]" *ngIf="action && action.img === ''"></app-upload>
+						<div class="mat-chip-file" *ngIf="action && action.img !== ''">
+							<div class="content">{{action.img}}</div>
+							<div class="remove-mat-chip" (click)="action.img = ''"></div>
+						</div>
 					</div>
-					<app-upload (onCrop)="onFs($event)" [dir]="'product'" [cropper]="true" [rate]="[3,2]" *ngIf="action && action.img === ''"></app-upload>
-					<div class="mat-chip-file" *ngIf="action && action.img !== ''">
-						<div class="content">{{action.img}}</div>
-						<div class="remove-mat-chip" (click)="action.img = ''"></div>
+					<div class="right">
+						<button class="main-button" type="reset" (click)="cancelAdd()">Отмена</button>
+						<button class="main-button-color" type="submit">Сохранить</button>
 					</div>
 				</div>
-				<div class="right">
-					<button class="main-button" type="reset" (click)="cancelAdd()">Отмена</button>
-					<button class="main-button-color" type="submit">Сохранить</button>
-				</div>
-			</div>
-		</form>
+			</form>
+		</ng-container>
+		<ng-container *ngIf="!access">
+			<p>
+				Можно создавать только одну акцию на день
+			</p>
+		</ng-container>
 	</div>
 	
 	<div class="contain__group"  *ngIf="editShow">
@@ -166,59 +173,120 @@
 		<ng-container class="loading" *ngIf="!loading">
 			<app-loading></app-loading>
 		</ng-container>
-		<ng-container *ngIf="loading">
-			<div class="main-section">
-				<div class="table" *ngIf="actions && actions.length > 0">
-					<app-search-filter [inputApi]="'action'" [inputQuery]="'description'" [populate]="'client'" (output)="outputSearch($event)"></app-search-filter>
-					<div class="table-content">
-						<div class="row-h">
-							<div class="col">
-								Name
-							</div>
-							<div class="col">
-							</div>
-							<div class="col">
-								Date
-							</div>
-							<div class="col">
-							</div>
-						</div>
-						<div class="row-r" *ngFor="let item of actions; let index = index">
-							<div class="col">
-								{{item.name}}
-							</div>
-							<div class="col">
-							</div>
-							<div class="col">
-								<div class="date">
-									<div class="top-table-date">
-										{{item.date | date: 'dd MMMM, yyyy'  : null : defLang}}
+		<div class="main-section">
+			<mat-tab-group (selectedIndexChange)="tabChange($event)" [animationDuration]="0">
+				<mat-tab label="Текущие акции">
+					<ng-template matTabContent class="mat-template">
+						<ng-container>
+							<div class="table filter-top" *ngIf="actions && actions.length > 0">
+								<app-search-filter class="filter-top" [inputApi]="'action'" [inputQuery]="'description'" [populate]="'client'" (output)="outputSearch($event)"></app-search-filter>
+								<div class="table-content">
+									<div class="row-h">
+										<div class="col">
+											Название
+										</div>
+										<div class="col">
+										</div>
+										<div class="col">
+											Дата
+										</div>
+										<div class="col">
+										</div>
 									</div>
-									<div class="bottom-table-date">
-										{{item.date | date: 'h:mm a'  : null : defLang}}
+									<div class="row-r" *ngFor="let item of actions; let index = index">
+										<div class="col">
+											{{item.name}}
+										</div>
+										<div class="col">
+										</div>
+										<div class="col">
+											<div class="date">
+												<div class="top-table-date">
+													{{item.date | date: 'dd MMMM, yyyy'  : null : defLang}}
+												</div>
+												<div class="bottom-table-date">
+													{{item.date | date: 'h:mm a'  : null : defLang}}
+												</div>
+											</div>
+										</div>
+										<div class="col">
+											<span class="edit-btn" (click)="edit(index)" appScrollTop></span>
+											<span class="trash-btn" (click)="delete(index)"></span>
+										</div>
 									</div>
 								</div>
+								<mat-paginator [length]="lengthPagination"
+								               [pageSize]="pageSizePagination"
+								               [pageSizeOptions]="pageSizeOptionsPagination"
+								               (page)="pageEvent($event)"
+								               *ngIf="actions && actions.length > 0">
+								</mat-paginator>
 							</div>
-							<div class="col">
-								<span class="edit-btn" (click)="edit(index)" appScrollTop></span>
-								<span class="trash-btn" (click)="delete(index)"></span>
+							<div class="empty-section" *ngIf="!actions || actions.length === 0">
+								<p>
+									У вас нет созданых акций
+								</p>
 							</div>
-						</div>
-					</div>
-					<mat-paginator [length]="lengthPagination"
-					               [pageSize]="pageSizePagination"
-					               [pageSizeOptions]="pageSizeOptionsPagination"
-					               (page)="pageEvent($event)"
-									*ngIf="actions && actions.length > 0">
-					</mat-paginator>
-				</div>
-				<div class="empty-section" *ngIf="!actions || actions.length === 0">
-					<p>
-						У вас нет созданых акций
-					</p>
-				</div>
-			</div>
-		</ng-container>
+						</ng-container>
+					</ng-template>
+				</mat-tab>
+				<mat-tab label="История акций">
+					<ng-template matTabContent>
+						<ng-container *ngIf="loading">
+							<div class="table filter-top" *ngIf="actions && actions.length > 0">
+								<app-search-filter [inputApi]="'action'" [inputQuery]="'description'" [populate]="'client'" (output)="outputSearch($event)"></app-search-filter>
+								<div class="table-content">
+									<div class="row-h">
+										<div class="col">
+											Название
+										</div>
+										<div class="col">
+										</div>
+										<div class="col">
+											Дата
+										</div>
+										<div class="col">
+										</div>
+									</div>
+									<div class="row-r" *ngFor="let item of actions; let index = index">
+										<div class="col">
+											{{item.name}}
+										</div>
+										<div class="col">
+										</div>
+										<div class="col">
+											<div class="date">
+												<div class="top-table-date">
+													{{item.date | date: 'dd MMMM, yyyy'  : null : defLang}}
+												</div>
+												<div class="bottom-table-date">
+													{{item.date | date: 'h:mm a'  : null : defLang}}
+												</div>
+											</div>
+										</div>
+										<div class="col">
+											<span class="edit-btn" (click)="edit(index)" appScrollTop></span>
+											<span class="trash-btn" (click)="delete(index)"></span>
+										</div>
+									</div>
+								</div>
+								<mat-paginator [length]="lengthPagination"
+								               [pageSize]="pageSizePagination"
+								               [pageSizeOptions]="pageSizeOptionsPagination"
+								               (page)="pageEvent($event)"
+								               *ngIf="actions && actions.length > 0">
+								</mat-paginator>
+							</div>
+							<div class="empty-section" *ngIf="!actions || actions.length === 0">
+								<p>
+									История акций пуста
+								</p>
+							</div>
+						</ng-container>
+					</ng-template>
+				</mat-tab>
+			</mat-tab-group>
+		</div>
 	</div>
 
 </div>

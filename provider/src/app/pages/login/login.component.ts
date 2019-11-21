@@ -34,7 +34,7 @@ export class LoginComponent implements OnInit {
       this.error['text'] = 'Пароль введен не верно';
       return;
     }
-    this.crud.post('signIn', this.obj, null, false).then((v: any) => {
+    this.crud.post('signIn', {login: '0'+this.obj.login, pass: this.obj.pass}, null, false).then((v: any) => {
       if (!v) {return; }
       if (v.user.role === 'client') {
         this.error['text'] = 'Поставщик не найден';

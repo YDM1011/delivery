@@ -45,8 +45,8 @@ export class OrdersItemComponent implements OnInit {
       ua: 'Відмінити замовлення'
     },
     t8: {
-      ru: 'Отменить заказ',
-      ua: 'Відмінити замовлення'
+      ru: 'Подтвердить изменения',
+      ua: 'Підтвердити зміни'
     }
   };
   constructor(
@@ -78,11 +78,7 @@ export class OrdersItemComponent implements OnInit {
       this.confirmOrder.emit(id);
     });
   }
-  cancelOrder() {
-    this.crud.post('basket', {status: 5}, this.order._id).then((v: any) => {
-      if (v) {
-        this.removeOrder.emit(true);
-      }
-    });
+  cancelOrder(id) {
+    this.removeOrder.emit(id);
   }
 }

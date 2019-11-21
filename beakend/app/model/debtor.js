@@ -28,6 +28,7 @@ const schem = new Schema({
     value: Number,
     dataCall: Date,
     lastUpdate: {type: Date},
+    isHidden: {type: Boolean, default: false},
     date: {type: Date, default: new Date()}
 },{
     toJSON: {

@@ -126,10 +126,13 @@
       </ng-container>
     </ng-container>
   </div>
-  <a routerLink="/{{language}}/provider-all" class="index-all" *ngIf="toggleMain">
+  <a routerLink="/{{language}}/provider-all" class="index-all" *ngIf="toggleMain && topCompany && topCompany.length>0">
     {{translate.allProdviders[language]}}
   </a>
-  <a routerLink="/{{language}}" class="index-all" *ngIf="!toggleMain">
+  <div class="empty" *ngIf="topProduct && !toggleMain && topProduct.length === 0">
+    {{translate.emptyTop[language]}}
+  </div>
+  <a routerLink="/{{language}}/product-all" class="index-all" *ngIf="!toggleMain">
     {{translate.allProducts[language]}}
   </a>
 </div>

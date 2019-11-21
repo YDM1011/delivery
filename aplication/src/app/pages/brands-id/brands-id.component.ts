@@ -38,6 +38,10 @@ export class BrandsIDComponent implements OnInit, OnDestroy {
     filter:{
       ru: 'Фильтр',
       ua: 'Фільтр'
+    },
+    empty:{
+      ru: 'Продукты отсутствуют',
+      ua: 'Продукти відсутні'
     }
   };
   constructor(

@@ -24,6 +24,7 @@ export class ActionComponent implements OnInit {
   public userAction = false;
   public addShow = false;
   public editShow = false;
+  public access = true;
   public userChoose = [];
   public actions = [];
   public products = [];
@@ -31,6 +32,7 @@ export class ActionComponent implements OnInit {
   public editObjCopy;
   public inputChange;
   public uploadObj;
+  public indexTab:number;
   public editObj = {
     name: '',
     description: '',
@@ -71,19 +73,29 @@ export class ActionComponent implements OnInit {
             this.productChoose = this.products[0]._id;
           }
         });
-        this.crud.get(`action/count?query={"companyOwner":"${this.company}"}`).then((c: any) => {
+        const date = new Date(new Date(new Date().getMonth()+1+'.'+(new Date().getDate()) +'.'+new Date().getFullYear()).getTime());
+        this.crud.get(`action/count?query={"companyOwner":"${this.company}","dateEnd":{"$gte":"${date.toISOString()}"}}`).then((c: any) => {
           if (c) {
             this.lengthPagination = c.count;
-            this.crud.get(`action?query={"companyOwner":"${this.company}"}&populate={"path":"client"}&skip=0&limit=${this.pageSizePagination}&sort={"date":-1}`).then((a: any) => {
+            this.crud.get(`action?query={"companyOwner":"${this.company}","dateEnd":{"$gte":"${date.toISOString()}"}}&populate={"path":"client"}&skip=0&limit=${this.pageSizePagination}&sort={"date":-1}`).then((a: any) => {
               if (a) {
                 this.actions = a;
                 this.loading = true;
+                this.checkAccess();
               }
             });
           }
         });
       }
     });
+  }
+  checkAccess(){
+    const date = new Date();
+    if (new Date(this.actions[0].date).getDate() === date.getDate()) {
+      this.access = false;
+      return;
+    }
+    this.access = true;
   }
   removeUserChip(i) {
     this.userChoose.splice(i, 1);
@@ -244,8 +256,9 @@ export class ActionComponent implements OnInit {
     }
   }
   openAdd() {
-    this.addShow = true;
+    this.addShow = !this.addShow;
     this.editShow = false;
+    this.checkAccess();
   }
   cancelAdd() {
     this.addShow = false;
@@ -297,21 +310,86 @@ export class ActionComponent implements OnInit {
   }
   outputSearch(e) {
     if (!e) {
-      this.crud.get(`action?query={"companyOwner":"${this.company}"}&populate={"path":"client"}&skip=0&limit=${this.pageSizePagination}`).then((a: any) => {
-        if (a && a.length > 0) {
-          this.actions = a;
-        }
-      });
+      const date = new Date(new Date(new Date().getMonth()+1+'.'+(new Date().getDate()) +'.'+new Date().getFullYear()).getTime());
+      if (this.indexTab === 0) {
+        this.crud.get(`action/count?query={"companyOwner":"${this.company}","dateEnd":{"$gte":"${date.toISOString()}"}}`).then((c: any) => {
+          if (c) {
+            this.lengthPagination = c.count;
+            this.crud.get(`action?query={"companyOwner":"${this.company}","dateEnd":{"$gte":"${date.toISOString()}"}}&populate={"path":"client"}&skip=0&limit=${this.pageSizePagination}&sort={"date":-1}`).then((a: any) => {
+              if (a) {
+                this.actions = a;
+                this.checkAccess();
+              }
+            });
+          }
+        });
+      }
+      if (this.indexTab === 1) {
+        const query = `?query={"companyOwner":"${this.company}","dateEnd":{"$lte":"${date.toISOString()}"}}&populate={"path":"client"}&skip=0&limit=${this.pageSizePagination}&sort={"date":-1}`;
+        this.crud.get(`action/count${query}`).then((count: any) => {
+          if (count) {
+            this.lengthPagination = count.count;
+            this.crud.get(`action${query}`).then((v: any) => {
+              if (v) {
+                this.actions = v;
+              }
+            })
+          }
+        })
+      }
     } else {
       this.actions = e;
     }
   }
+  tabChange(e) {
+    this.loading = false;
+    this.indexTab = e;
+    const date = new Date(new Date(new Date().getMonth()+1+'.'+(new Date().getDate()) +'.'+new Date().getFullYear()).getTime());
+    if (e === 0) {
+      this.crud.get(`action/count?query={"companyOwner":"${this.company}","dateEnd":{"$gte":"${date.toISOString()}"}}`).then((c: any) => {
+        if (c) {
+          this.lengthPagination = c.count;
+          this.crud.get(`action?query={"companyOwner":"${this.company}","dateEnd":{"$gte":"${date.toISOString()}"}}&populate={"path":"client"}&skip=0&limit=${this.pageSizePagination}&sort={"date":-1}`).then((a: any) => {
+            if (a) {
+              this.actions = a;
+              this.loading = true;
+              this.checkAccess();
+            }
+          });
+        }
+      });
+    }
+    if (e === 1) {
+      const query = `?query={"companyOwner":"${this.company}","dateEnd":{"$lte":"${date.toISOString()}"}}&populate={"path":"client"}&skip=0&limit=${this.pageSizePagination}&sort={"date":-1}`;
+      this.crud.get(`action/count${query}`).then((count: any) => {
+        if (count) {
+          this.lengthPagination = count.count;
+          this.crud.get(`action${query}`).then((v: any) => {
+            if (v) {
+              this.actions = v;
+              this.loading = true;
+            }
+          })
+        }
+      })
+    }
+  }
   pageEvent(e) {
-    this.crud.get(`action?query={"companyOwner":"${this.company}"}&populate={"path":"client"}&skip=${e.pageIndex  * e.pageSize}&limit=${e.pageSize}&sort={"date":-1}`).then((c: any) => {
-      if (!c) {
-        return;
-      }
-      this.actions = c;
-    });
+    const date = new Date(new Date(new Date().getMonth()+1+'.'+(new Date().getDate()) +'.'+new Date().getFullYear()).getTime());
+    if (this.indexTab === 0) {
+      this.crud.get(`action?query={"companyOwner":"${this.company}","dateEnd":{"$gte":"${date.toISOString()}"}}&populate={"path":"client"}&skip=${e.pageIndex  * e.pageSize}&limit=${e.pageSize}&sort={"date":-1}`).then((c: any) => {
+        if (c) {
+          this.actions = c;
+        }
+      });
+    }
+    if (this.indexTab === 1) {
+      const query = `?query={"companyOwner":"${this.company}","dateEnd":{"$lte":"${date.toISOString()}"}}&populate={"path":"client"}&skip=0&limit=${this.pageSizePagination}&sort={"date":-1}`;
+      this.crud.get(`action${query}`).then((v: any) => {
+        if (v) {
+          this.actions = v;
+        }
+      })
+    }
   }
 }

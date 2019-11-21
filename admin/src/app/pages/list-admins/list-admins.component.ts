@@ -46,7 +46,7 @@ export class ListAdminsComponent implements OnInit {
       Swal.fire('Error', 'Все поля обязательны', 'error').then();
       return;
     }
-    this.crud.post('signup', this.client).then((v: any) => {
+    this.crud.post('signup',{name: this.client.name, login: '0'+this.client.login, pass: this.client.pass, role: this.client.role}).then((v: any) => {
       this.list.push(v);
       this.clearObj();
       this.addShow = false;

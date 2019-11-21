@@ -66,7 +66,7 @@ export class CreateComponent implements OnInit {
       return;
     }
     this.client.companyOwner = this.user.companyOwner._id;
-    this.crud.post('signup', this.client).then((v: any) => {
+    this.crud.post('signup', {name: this.client.name, login: '0' + this.client.login, pass: this.client.pass}).then((v: any) => {
       if (!v) {return; }
       this.clients.push(v);
       this.clearObj();

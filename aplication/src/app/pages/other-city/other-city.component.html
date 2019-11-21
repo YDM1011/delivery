@@ -9,9 +9,9 @@
   <p>
     {{translate.p1[language]}}
   </p>
-  <form>
+  <form class="form-city">
     <input type="text" [placeholder]="cityplaceholder[language]">
-    <app-phone (phone)="phoneOutput($event)"></app-phone>
+    <app-phone [other]="true" (phone)="phoneOutput($event)"></app-phone>
     <p>
       {{translate.pmain[language]}}
     </p>

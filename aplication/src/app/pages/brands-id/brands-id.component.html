@@ -32,6 +32,9 @@
     <cdk-virtual-scroll-viewport *ngIf="orders && orders.length>0" itemSize="120" class="viewport" appBrandProductUpload [sortFilter]="sort" [cityLinkArr]="CityLinksArr" [filter]="filter" [brand]="companies[0].brand" (output)="getOutput($event)">
       <app-product-item *cdkVirtualFor="let order of orders" [data]="order" [company]="order.company"></app-product-item>
     </cdk-virtual-scroll-viewport>
+    <div class="empty" *ngIf="orders && orders.length===0">
+      {{translate.empty[language]}}
+    </div>
   </div>
 </div>
 <app-filter-brand *ngIf="showFilter" [brand]="companies[0].brand" (onFilter)="reinit($event)" (onCopyFilter)="copyFilter($event)" [filterInput]="copyfilterObj" [city]="city" (closeFilter)="closeFilter($event)"></app-filter-brand>

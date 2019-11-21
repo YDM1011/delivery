@@ -1,0 +1,38 @@
+.remove-item-basket{
+  position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  top: 0;
+  left: 0;
+  min-height: 100vh;
+  height: 100%;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 12345;
+  .remove{
+    min-width: 310px;
+    position: relative;
+    padding: 10px;
+    background: #fff;
+    margin: 0 15px;
+    border: 1px solid #E4E4E4;
+    border-radius: 30px;
+    .cancel{
+      position: absolute;
+      top: 0;
+      right: 0;
+      padding: 15px;
+    }
+    .remove-header{
+      font-weight: bold;
+      font-size: 22px;
+      text-align: center;
+      margin: 40px auto 45px;
+      max-width: 210px;
+    }
+    .buttons{
+      margin-bottom: 30px;
+    }
+  }
+}

@@ -15,18 +15,26 @@ export class MyInfoComponent implements OnInit {
   public me: Me;
   public copyMe;
   public isBlok = false;
+  public newPass = '';
+  public passErr = '';
   public data = {
     mydata: {ua: 'Мої дані', ru: 'Мои даные'},
     article: {ua: 'Вкажіть Ваше ім\'я і номер телефону', ru: 'Укажите Ваше имя и номер телефона'},
     save: {ua: 'Зберегти', ru: 'Сохранить'},
     saved: {ua: 'Збережено', ru: 'Сохранино'},
     back: {ua: 'Назад', ru: 'Назад'},
-    input: {ua: 'ПІП', ru: 'ФИО'}
+    input: {ua: 'ПІП', ru: 'ФИО'},
+    inputPass: {ua: 'Новий пароль', ru: 'Новый пароль'},
+    passBtn: {ua: 'Змінити пароль', ru: 'Изменить пароль'}
   };
   public snackMessage = {
     ru: 'Даные сохранены',
     ua: 'Дані збережено'
-};
+  };
+  public snackMessagePass = {
+    ru: 'Пароль успешно изменен',
+    ua: 'Пароль успішно змінено'
+  };
   constructor(
       private auth: AuthService,
       private crud: CrudService,
@@ -93,7 +101,22 @@ export class MyInfoComponent implements OnInit {
   formCheck() {
     this.btnBlok(this.validate());
   }
-
+  setNewPass() {
+    if (this.newPass.length < 6) {
+      if (this.language === 'ru') {
+        this.passErr = "Пароль должен быть более 6 символов!";
+      } else {
+        this.passErr = "Пароль повинен бути більше 6 символів!";
+      }
+      return
+    }
+    this.crud.post('changePass', {pass:this.newPass,_id:this.me._id}).then(v=>{
+      if (v) {
+        this.newPass = '';
+        this.openSnackBar(this.snackMessagePass[this.language],  'Ok');
+      }
+    }).catch(e=>{console.log(e)})
+  }
   openSnackBar(message: string, action: string) {
     this.snackBar.open(message, action, {
       duration: 2000,

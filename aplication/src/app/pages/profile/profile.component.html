@@ -12,12 +12,12 @@
       </div>
     </div>
     <div class="info-right">
-      <div class="language" routerLink="/{{language === 'ua' ? 'ru' : 'ua'}}/{{url}}" (click)="setLang(language === 'ua' ? 'ru' : 'ua')" >
+      <div class="language" routerLink="/{{language === 'ru' ? 'ua' : 'ru'}}/{{url}}" (click)="setLang(language === 'ru' ? 'ua' : 'ru')" >
         <div class="title">
-          {{language === 'ua' ? 'ru' : 'ua'}}
+          {{language === 'ua' ? 'ua' : 'ru'}}
         </div>
-        <img *ngIf="language === 'ru'" src="./assets/images/ua.svg" alt="ua">
-        <img *ngIf="language === 'ua'" src="./assets/images/ru.svg" alt="ru">
+        <img *ngIf="language === 'ua'" src="./assets/images/ua.svg" alt="ua">
+        <img *ngIf="language === 'ru'" src="./assets/images/ru.svg" alt="ru">
       </div>
     </div>
   </div>
