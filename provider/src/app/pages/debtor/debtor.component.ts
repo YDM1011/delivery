@@ -27,6 +27,10 @@ export class DebtorComponent implements OnInit {
   public editObjCopy;
   public tabIndex = 0;
   public searchDebtor = null;
+  public dateStart = new Date();
+  public dateEnd = new Date();
+  public newStart;
+  public newEnd;
   public searchArr = [];
   public editObj = {
     clientOwner: '',
@@ -60,6 +64,7 @@ export class DebtorComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.dateStart.setDate(this.dateStart.getDate() -1);
     this.crud.get('mainCategory').then((v: any) => {
       if (!v)  { return; }
       this.mainCategory = v;
@@ -68,19 +73,39 @@ export class DebtorComponent implements OnInit {
       if (!v) { return; }
       this.user = v;
       if (this.user && this.user.companyOwner) {
-        this.crud.get(`debtor/count?query={"companyOwner": "${this.user.companyOwner._id}","value":{"$gt":0}}`).then((count: any) => {
-          if (count) {
-            this.lengthPagination = count.count;
-            this.crud.get(`debtor?query={"companyOwner": "${this.user.companyOwner._id}","value":{"$gt":0}}${this.populate}&skip=0&limit=${this.pageSizePagination}&sort={"dataCall":-1}`).then((d: any) => {
-              if (d) {
-                this.debtors = d;
-                this.loading = true;
-              }
-            });
-          }
-        });
+        this.getDebtors()
       }
     });
+  }
+  getDebtors() {
+    this.newStart = new Date(this.dateStart.getMonth()+1+'.'+(this.dateStart.getDate()) +'.'+new Date().getFullYear()).getTime();
+    this.newEnd = new Date(this.dateEnd.getMonth()+1+'.'+(this.dateEnd.getDate()+1) +'.'+new Date().getFullYear()).getTime()-1;
+    if (this.tabIndex === 0) {
+      this.crud.get(`debtor/count?query={"companyOwner": "${this.user.companyOwner._id}","value":{"$gt":0},"date":{"$gte":"${new Date(this.newStart).toISOString()}","$lte":"${new Date(this.newEnd).toISOString()}"}}`).then((count: any) => {
+        if (count) {
+          this.lengthPagination = count.count;
+          this.crud.get(`debtor?query={"companyOwner": "${this.user.companyOwner._id}","value":{"$gt":0},"date":{"$gte":"${new Date(this.newStart).toISOString()}","$lte":"${new Date(this.newEnd).toISOString()}"}}${this.populate}&skip=0&limit=${this.pageSizePagination}&sort={"dataCall":-1}`).then((d: any) => {
+            if (d) {
+              this.debtors = d;
+              this.loading = true;
+            }
+          });
+        }
+      });
+    }
+    if (this.tabIndex === 1) {
+      this.crud.get(`debtor/count?query={"companyOwner": "${this.user.companyOwner._id}","value":0,"date":{"$gte":"${new Date(this.newStart).toISOString()}","$lte":"${new Date(this.newEnd).toISOString()}"}}`).then((count: any) => {
+        if (count) {
+          this.lengthPagination = count.count;
+          this.crud.get(`debtor?query={"companyOwner": "${this.user.companyOwner._id}","value":0,"date":{"$gte":"${new Date(this.newStart).toISOString()}","$lte":"${new Date(this.newEnd).toISOString()}"}}${this.populate}&skip=0&limit=${this.pageSizePagination}&sort={"dataCall":-1}`).then((d: any) => {
+            if (d) {
+              this.debtors = d;
+              this.loading = true;
+            }
+          });
+        }
+      });
+    }
   }
   searchDeb () {
     if (this.searchDebtor) {
@@ -195,8 +220,6 @@ export class DebtorComponent implements OnInit {
     }
     this.crud.post('debtor', {value: this.editObj.value, dataCall: this.editObj.dataCall}, this.editObj['_id']).then((v: any) => {
       if (v) {
-        // const newObj = v;
-        // newObj.client = this.user;
         this.debtors[this.crud.find('_id', this.editObj['_id'], this.debtors)].value = this.editObj.value;
         this.debtors[this.crud.find('_id', this.editObj['_id'], this.debtors)].dataCall = this.editObj.dataCall;
         this.editShow = false;
@@ -281,10 +304,10 @@ export class DebtorComponent implements OnInit {
     this.loading = false;
     this.tabIndex = e;
     if (e === 0) {
-      this.crud.get(`debtor/count?query={"companyOwner": "${this.user.companyOwner._id}","value":{"$gt":0}}`).then((count: any) => {
+      this.crud.get(`debtor/count?query={"companyOwner": "${this.user.companyOwner._id}","value":{"$gt":0},"date":{"$gte":"${new Date(this.newStart).toISOString()}","$lte":"${new Date(this.newEnd).toISOString()}"}}`).then((count: any) => {
         if (count) {
           this.lengthPagination = count.count;
-          this.crud.get(`debtor?query={"companyOwner": "${this.user.companyOwner._id}","value":{"$gt":0}}${this.populate}&skip=0&limit=${this.pageSizePagination}&sort={"dataCall":-1}`).then((d: any) => {
+          this.crud.get(`debtor?query={"companyOwner": "${this.user.companyOwner._id}","value":{"$gt":0},"date":{"$gte":"${new Date(this.newStart).toISOString()}","$lte":"${new Date(this.newEnd).toISOString()}"}}${this.populate}&skip=0&limit=${this.pageSizePagination}&sort={"dataCall":-1}`).then((d: any) => {
             if (d) {
               this.debtors = d;
               this.loading = true;
@@ -294,10 +317,10 @@ export class DebtorComponent implements OnInit {
       });
     }
     if (e === 1) {
-      this.crud.get(`debtor/count?query={"companyOwner": "${this.user.companyOwner._id}","value":0}`).then((count: any) => {
+      this.crud.get(`debtor/count?query={"companyOwner": "${this.user.companyOwner._id}","value":0,"date":{"$gte":"${new Date(this.newStart).toISOString()}","$lte":"${new Date(this.newEnd).toISOString()}"}}`).then((count: any) => {
         if (count) {
           this.lengthPagination = count.count;
-          this.crud.get(`debtor?query={"companyOwner": "${this.user.companyOwner._id}","value":0}${this.populate}&skip=0&limit=${this.pageSizePagination}&sort={"dataCall":-1}`).then((d: any) => {
+          this.crud.get(`debtor?query={"companyOwner": "${this.user.companyOwner._id}","value":0,"date":{"$gte":"${new Date(this.newStart).toISOString()}","$lte":"${new Date(this.newEnd).toISOString()}"}}${this.populate}&skip=0&limit=${this.pageSizePagination}&sort={"dataCall":-1}`).then((d: any) => {
             if (d) {
               this.debtors = d;
               this.loading = true;
