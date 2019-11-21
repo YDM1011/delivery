@@ -47,7 +47,6 @@ export class AppComponent {
         });
         if (this.localStorage.getItem('token')) {
           this.crud.get('me').then((v: any) => {
-            console.log(v)
             this.me = Object.assign({}, v);
             this.auth.setMe(this.me);
             if (this.me && this.me._id) {

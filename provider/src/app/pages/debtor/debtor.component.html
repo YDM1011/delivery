@@ -64,7 +64,8 @@
 				</div>
 				<div class="right">
 					<button class="main-button" type="reset" (click)="cancelEdit()">Отмена</button>
-					<button class="main-button-color" type="submit" *ngIf="isBlok">Сохранить</button>
+					<span class="main-button-color" (click)="paydFull()" *ngIf="editObjCopy.value > 0">Оплачен</span>
+					<button class="main-button-color" type="submit" *ngIf="isBlok && editObj.value > 0">Сохранить</button>
 				</div>
 			</div>
 		</form>

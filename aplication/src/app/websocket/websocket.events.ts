@@ -5,7 +5,8 @@ export const WS = {
         COUNTER: 'counter',
         UPDATE_TEXTS: 'update-texts',
         ON_CONFIRM_ORDER: 'on-order-confirm',
-        ON_RATING_CONFIRM: 'on-rating-confirm'
+        ON_RATING_CONFIRM: 'on-rating-confirm',
+        ON_DEBTOR_CONFIRM: 'on-debtor-confirm'
     },
     SEND: {
         CONNECT: 'CONNECT',
@@ -13,6 +14,7 @@ export const WS = {
         NOTIFICATION: 'form-notification',
         REMOVE_TEXT: 'remove-text',
         CONFIRM_ORDER: 'order-confirm',
-        RATING_CONFIRM: 'rating-confirm'
+        RATING_CONFIRM: 'rating-confirm',
+        DEBTOR_CONFIRM: 'on-debtor-confirm'
     }
 };

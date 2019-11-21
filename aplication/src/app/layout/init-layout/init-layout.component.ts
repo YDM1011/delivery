@@ -17,6 +17,7 @@ export class InitLayoutComponent implements OnInit {
   public notificationOrders$: any;
   public notification$: any;
   public ratingConfirm$: any;
+  public notificationDebtor$: any;
 
   constructor(
     private wsService: WebsocketService,
@@ -30,6 +31,7 @@ export class InitLayoutComponent implements OnInit {
   ngOnInit() {
     this.ratingConfirm$ = this.wsService.on(WS.ON.ON_RATING_CONFIRM);
     this.notificationOrders$ = this.wsService.on(WS.ON.ON_CONFIRM_ORDER);
+    this.notificationDebtor$ = this.wsService.on(WS.ON.ON_DEBTOR_CONFIRM);
 
     this.auth.onMe.subscribe((me: any) => {
       if (!me) {return; }
@@ -38,6 +40,10 @@ export class InitLayoutComponent implements OnInit {
       });
       this.notificationOrders$.subscribe(v => {
         this.auth.setUpdateOrder(v.data);
+      });
+      this.notificationDebtor$.subscribe(v => {
+        console.log(v)
+        // this.auth.setUpdateOrder(v.data);
       });
       console.log("fcm save");
       this.crud.saveToken('fcmToken:test')

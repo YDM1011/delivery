@@ -44,6 +44,9 @@ export class AuthService {
   private ConfirmOrder = new BehaviorSubject<any>(null);
   public onConfirmOrder = this.ConfirmOrder.asObservable();
 
+  private UpdateDebtor = new BehaviorSubject<any>(null);
+  public onUpdateDebtor = this.UpdateDebtor.asObservable();
+
   constructor(
       private cookieService: CookieService
   ) { }
@@ -54,6 +57,9 @@ export class AuthService {
     this.onDefCrop = this.defCrop.asObservable();
   }
 
+  setUpdateDebtor(data) {
+    this.UpdateDebtor.next(data);
+  }
   setConfirmOrder(data) {
     this.ConfirmOrder.next(data);
   }
