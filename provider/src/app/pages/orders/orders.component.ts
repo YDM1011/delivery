@@ -18,6 +18,10 @@ export class OrdersComponent implements OnInit, OnDestroy {
   public orders = [];
   public defLang = 'ru-UA';
   public user = null;
+  public dateStart = new Date();
+  public dateEnd = new Date();
+  public newStart;
+  public newEnd;
   private _subscription: Subscription[] = [];
   constructor(
       private crud: CrudService,
@@ -26,6 +30,7 @@ export class OrdersComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
+    this.dateStart.setDate(this.dateStart.getDate() -1);
     this.router.navigate(['/orders']);
     this._subscription.push(this.auth.onWsOrder.subscribe((ws: any) => {
       if (ws) {
@@ -60,24 +65,28 @@ export class OrdersComponent implements OnInit, OnDestroy {
     })
   }
   selectChange(e) {
-    this.loading = false;
-    this.activePage = e;
+    this.newStart = new Date(this.dateStart.getMonth()+1+'.'+(this.dateStart.getDate()) +'.'+new Date().getFullYear()).getTime();
+    this.newEnd = new Date(this.dateEnd.getMonth()+1+'.'+(this.dateEnd.getDate()+1) +'.'+new Date().getFullYear()).getTime()-1;
+    this.activePage = e ? e : 0;
     if (e === 0) {
       if (this.user && this.user.companyOwner) {
         this.tab0(0, this.pageSizePagination);
       }
     }
     if (e === 1) {
+      this.loading = false;
       if (this.user && this.user.companyOwner) {
         this.tab1(0, this.pageSizePagination);
       }
     }
     if (e === 2) {
+      this.loading = false;
       if (this.user && this.user.companyOwner) {
         this.tab2(0, this.pageSizePagination);
       }
     }
     if (e === 3) {
+      this.loading = false;
       if (this.user && this.user.companyOwner) {
         this.tab3(0, this.pageSizePagination);
       }
@@ -112,10 +121,10 @@ export class OrdersComponent implements OnInit, OnDestroy {
     });
   }
   tab1(skip, limit) {
-    this.crud.get(`basket/count?query={"companyOwner":"${this.user.companyOwner._id}", "$or":[{"status":2},{"status":3}]}`).then((count: any) => {
+    this.crud.get(`basket/count?query={"companyOwner":"${this.user.companyOwner._id}","date":{"$gte":"${new Date(this.newStart).toISOString()}","$lte":"${new Date(this.newEnd).toISOString()}"},"$or":[{"status":2},{"status":3}]}`).then((count: any) => {
       if (count) {
         this.lengthPagination = count.count;
-        this.crud.get(`basket?query={"companyOwner":"${this.user.companyOwner._id}", "$or":[{"status":2},{"status":3}]}&populate=[{"path":"deliveryAddress","populate":"city","select":"name build street department img"},{"path":"manager","select":"name"},{"path":"createdBy","select":"mobile name"}]&skip=${skip}&limit=${limit}&sort={"date":-1}`).then((orders: any) => {
+        this.crud.get(`basket?query={"companyOwner":"${this.user.companyOwner._id}","date":{"$gte":"${new Date(this.newStart).toISOString()}","$lte":"${new Date(this.newEnd).toISOString()}"},"$or":[{"status":2},{"status":3}]}&populate=[{"path":"deliveryAddress","populate":"city","select":"name build street department img"},{"path":"manager","select":"name"},{"path":"createdBy","select":"mobile name"}]&skip=${skip}&limit=${limit}&sort={"date":-1}`).then((orders: any) => {
           if (!orders) {return; }
           this.orders = orders;
           this.loading = true;
@@ -124,10 +133,10 @@ export class OrdersComponent implements OnInit, OnDestroy {
     });
   }
   tab2(skip, limit) {
-    this.crud.get(`basket/count?query={"companyOwner":"${this.user.companyOwner._id}", "$or":[{"status":4},{"status":5}]}`).then((count: any) => {
+    this.crud.get(`basket/count?query={"companyOwner":"${this.user.companyOwner._id}","date":{"$gte":"${new Date(this.newStart).toISOString()}","$lte":"${new Date(this.newEnd).toISOString()}"},"$or":[{"status":4},{"status":5}]}`).then((count: any) => {
       if (count) {
         this.lengthPagination = count.count;
-        const query = JSON.stringify({companyOwner: this.user.companyOwner._id, $or: [{status: 4}, {status: 5}]});
+        const query = JSON.stringify({companyOwner: this.user.companyOwner._id, date: {$gte:new Date(this.newStart).toISOString(),$lte:new Date(this.newEnd).toISOString()}, $or: [{status: 4}, {status: 5}]});
         this.crud.get(`basket?query=${query}&populate=[{"path":"deliveryAddress","populate":"city","select":"name build street department img"},{"path":"manager","select":"name"},{"path":"createdBy","select":"mobile name"}]&skip=${skip}&limit=${limit}&sort={"date":-1}`).then((orders: any) => {
           if (!orders) {return; }
           this.orders = orders;
@@ -137,11 +146,11 @@ export class OrdersComponent implements OnInit, OnDestroy {
     });
   }
   tab3(skip, limit) {
-    const queryCount = JSON.stringify({manager: this.user._id, $or: [{status: 2}, {status: 3}]});
+    const queryCount = JSON.stringify({manager: this.user._id,date: {$gte:new Date(this.newStart).toISOString(),$lte:new Date(this.newEnd).toISOString()}, $or: [{status: 2}, {status: 3}]});
     this.crud.get(`basket/count?query=${queryCount}`).then((count: any) => {
       if (count) {
         this.lengthPagination = count.count;
-        const query = JSON.stringify({manager: this.user._id, $or: [{status: 2}, {status: 3}]});
+        const query = JSON.stringify({manager: this.user._id,date: {$gte:new Date(this.newStart).toISOString(),$lte:new Date(this.newEnd).toISOString()}, $or: [{status: 2}, {status: 3}]});
         this.crud.get(`basket?query=${query}&populate=[{"path":"deliveryAddress","populate":"city","select":"name build street department img"},{"path":"manager","select":"name"},{"path":"createdBy","select":"mobile name"}]&skip=${skip}&limit=${limit}&sort={"date":-1}`).then((orders: any) => {
           if (!orders) {return; }
           this.orders = orders;
