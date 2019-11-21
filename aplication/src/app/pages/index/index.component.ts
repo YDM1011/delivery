@@ -3,6 +3,7 @@ import {AuthService} from '../../auth.service';
 import {CrudService} from '../../crud.service';
 import {Subscription} from 'rxjs';
 import {environment} from "../../../environments/environment";
+
 @Component({
   selector: 'app-index',
   templateUrl: './index.component.html',
@@ -36,7 +37,7 @@ export class IndexComponent implements OnInit, OnDestroy {
     brand: false,
     action: false
   };
-
+  slideConfig = {"slidesToShow": 4, "slidesToScroll": 4};
   public translate ={
     category: {
       ru: 'Категории',
@@ -85,6 +86,24 @@ export class IndexComponent implements OnInit, OnDestroy {
       private auth: AuthService,
       private crud: CrudService
   ) { }
+
+  slickInit(e) {
+    console.log('slick initialized');
+  }
+
+  breakpoint(e) {
+    console.log('breakpoint');
+  }
+
+  afterChange(e) {
+    console.log('afterChange');
+  }
+
+  beforeChange(e) {
+    console.log('beforeChange');
+  }
+
+
   ngOnInit() {
     this.auth.onMe.subscribe((v: any) => {
       if (!v) {return; }

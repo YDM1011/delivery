@@ -99,6 +99,7 @@ import { ProductAllComponent } from './pages/product-all/product-all.component';
 import { AllProvidersDirective } from './directives/all-providers.directive';
 import { AllProductDirective } from './directives/all-product.directive';
 import { CancelOrderComponent } from './components/cancel-order/cancel-order.component';
+import {SlickCarouselModule} from "ngx-slick-carousel";
 
 @NgModule({
 	declarations: [
@@ -204,6 +205,7 @@ import { CancelOrderComponent } from './components/cancel-order/cancel-order.com
 		WebsocketModule.config({
 			url: environment.ws
 		}),
+		SlickCarouselModule
 	],
 	entryComponents: [
 		DialogComponent,
