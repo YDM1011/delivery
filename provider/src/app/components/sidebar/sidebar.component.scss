@@ -79,6 +79,20 @@
         display: block;
       }
     }
+    &.animate{
+      background: linear-gradient(180deg, #29CB97 -25.71%, #009688 125.71%);
+      box-shadow: 0 5px 15px #ACB2C1;
+      border-radius: 0 5px 5px 0;
+      width: 96px;
+      animation: new .9s ease-out 0s infinite;
+      animation-iteration-count: 100;
+      .svg{
+        fill: #fff;
+      }
+      .title{
+        display: block;
+      }
+    }
     &:hover{
       background: linear-gradient(180deg, #29CB97 -25.71%, #009688 125.71%);
       box-shadow: 0 5px 15px #ACB2C1;
@@ -92,5 +106,17 @@
         display: block;
       }
     }
+  }
+}
+
+@keyframes new {
+  0%{
+    width: 81px;
+  }
+  50%{
+    width: 100px;
+  }
+  100%{
+    width: 81px;
   }
 }

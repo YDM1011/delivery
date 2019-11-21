@@ -22,7 +22,6 @@ export class OrdersComponent implements OnInit, OnDestroy {
   public dateEnd = new Date();
   public newStart;
   public newEnd;
-  public showAnimate = false;
   private _subscription: Subscription[] = [];
   constructor(
       private crud: CrudService,
@@ -41,7 +40,9 @@ export class OrdersComponent implements OnInit, OnDestroy {
         } else {
           ws['new'] = true;
           this.orders.unshift(ws);
-          console.log(this.orders[0]);
+          setTimeout(()=> {
+            this.orders[0]['new'] = false;
+          },10000)
         }
       }
     }));

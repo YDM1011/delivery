@@ -159,3 +159,22 @@
     }
   }
 }
+.row-f{
+  &.animate{
+    box-shadow: 0 3px 15px rgba(0, 150, 136, 0.77);
+    animation: new 10s ease-in-out 0s infinite;
+    animation-iteration-count: 20;
+  }
+}
+
+@keyframes new {
+  0%{
+    border: 1px solid #009688;
+  }
+  50%{
+    border: 1px solid rgba(0, 150, 136, 0.36);
+  }
+  100%{
+    border: 1px solid #009688;
+  }
+}

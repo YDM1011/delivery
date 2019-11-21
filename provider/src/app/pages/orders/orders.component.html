@@ -53,7 +53,7 @@
 									
 									</div>
 								</div>
-								<div class="row-f" [routerLink]="'/orders-detail/' + item._id" *ngFor="let item of orders; let i = index">
+								<div class="row-f" [class.animate]="item.new" [routerLink]="'/orders-detail/' + item._id" *ngFor="let item of orders; let i = index">
 									<div class="name col-f" [matTooltip]="item.deliveryAddress ? item.deliveryAddress.name : 'Название не извесно'">
 										<div class="img">
 											<app-img [fs]="item && item.deliveryAddress ? item.deliveryAddress.img : ''" [anyFs]="'./assets/images/user.svg'"></app-img>
@@ -130,7 +130,7 @@
 									
 									</div>
 								</div>
-								<div class="row-f" [routerLink]="'/orders-detail/' + item._id" *ngFor="let item of orders; let i = index">
+								<div class="row-f" [class.animate]="item.new" [routerLink]="'/orders-detail/' + item._id" *ngFor="let item of orders; let i = index">
 									<div class="name col-f" [matTooltip]="item.deliveryAddress ? item.deliveryAddress.name : 'Название не извесно'">
 										<div class="img">
 											<app-img [fs]="item && item.deliveryAddress ? item.deliveryAddress.img : ''" [anyFs]="'./assets/images/user.svg'"></app-img>
