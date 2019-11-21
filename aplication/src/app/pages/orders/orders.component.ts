@@ -55,9 +55,7 @@ export class OrdersComponent implements OnInit, OnDestroy {
     this._subscription.push(this.auth.onUpdateDebtor.subscribe((v: any) => {
       if (v) {
         let index = this.crud.find('_id', v.basket, this.orders);
-        if (!v.value === this.orders[index]['newDebtor']) {
-          this.orders[index]['newDebtor'] = v.value;
-        }
+        this.orders[index]['newDebtor'] = v.value;
       }
     }));
     this._subscription.push(this.auth.onLanguage.subscribe((v: string) => {
@@ -100,9 +98,11 @@ export class OrdersComponent implements OnInit, OnDestroy {
     }
   }
   getBaskets() {
+    this.loading = false;
     this.toggleMain = true;
     this.crud.get(`basket?query={"createdBy":"${this.user._id}","$or":[{"status":1},{"status":2},{"status":3}]}&populate=[{"path":"deliveryAddress","select":"name img"},{"path":"companyOwner","select":"name"}]&skip=0&limit=5&sort={"date":-1}`).then((v: any) => {
       this.orders = v;
+      this.loading = true;
     });
   }
   getSuccessBasket() {
