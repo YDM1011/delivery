@@ -41,7 +41,6 @@ export class ProductItemComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    console.log(this.company)
     this._subscription.push(
         this.auth.onMe.subscribe((u: any) => {
           if (u) {

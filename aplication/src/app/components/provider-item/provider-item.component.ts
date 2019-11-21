@@ -37,6 +37,10 @@ export class ProviderItemComponent implements OnInit, OnDestroy {
     t2: {
       ru: 'акций',
       ua: 'акцій'
+    },
+    t3: {
+      ru: 'акция',
+      ua: 'акція'
     }
   };
   constructor(
@@ -54,8 +58,10 @@ export class ProviderItemComponent implements OnInit, OnDestroy {
   }
 
   init() {
-    const query = `/count?query=${JSON.stringify({$or: [{actionGlobal: true}, {client: {$in: localStorage.getItem('userId')}}], companyOwner: this.data._id})}`; //
-    this.crud.get('action', '', query).then((v: any) => {
+    const date = new Date(new Date(new Date().getMonth()+1+'.'+(new Date().getDate()) +'.'+new Date().getFullYear()).getTime());
+
+    let query = `?query=${JSON.stringify({$or:[{actionGlobal:true},{client:{$in:localStorage.getItem('userId')}}], companyOwner:this.data._id, dateEnd: {$gte:date.toISOString()}})}`; //
+    this.crud.get('action/count', '', query).then((v:any)=>{
       this.data.actionCount = v.count;
     });
   }
