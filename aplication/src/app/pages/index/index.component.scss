@@ -91,13 +91,13 @@
 }
 
 @media (min-width: 768px) {
-  .carousel{
+  .car{
     .item{
       height: 300px;
     }
   }
 }
-.action-img{
+.car-item{
   app-img{
     img{
       object-fit: contain;

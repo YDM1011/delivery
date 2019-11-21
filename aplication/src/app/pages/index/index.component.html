@@ -44,11 +44,11 @@
   <app-loading></app-loading>
 </ng-container>
 <ng-container *ngIf="loaded.action; else preloadAction">
-  <div class="carousel">
+  <div class="car">
     <mat-carousel>
       <mat-carousel-slide *ngFor="let item of action">
         <div class="item">
-          <div class="action-img">
+          <div class="car">
             <app-img [dir]="'product'" [fs]="item.img"></app-img>
           </div>
         </div>
