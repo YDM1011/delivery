@@ -6,6 +6,7 @@
   width: 100%;
   height: calc(100vh - 185px);
   overflow-y: auto;
+  margin-top: 35px;
   overflow: -moz-scrollbars-none;
   -ms-overflow-style: none;
   &::-webkit-scrollbar { width: 0 !important }
