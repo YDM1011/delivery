@@ -87,7 +87,7 @@ export class CrudService {
           links.push({cityLink: it});
         });
         const query = `?query={"$or":${JSON.stringify(links)},"actionGlobal":true,"dateEnd":{"$gte":"${date.toISOString()}"}}&skip=0&limit=7&sort={"date":-1}`;
-        this.get('action', '', query).then((v: any) => {
+        this.get('test', '', query).then((v: any) => {
           if (v) {
             resolve(v);
           }

@@ -118,6 +118,7 @@ export class IndexComponent implements OnInit, OnDestroy {
     await this.crud.getAction(this.curentCity).then((v: any) => {
       if (!v) {return; }
       this.action = v;
+      console.log('ACTION',this.action);
       this.loaded.action = true;
     }).catch((e) => {
       this.loaded.action = true;
