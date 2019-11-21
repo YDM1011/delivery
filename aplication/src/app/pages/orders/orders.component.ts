@@ -46,6 +46,11 @@ export class OrdersComponent implements OnInit, OnDestroy {
       private snackBar: MatSnackBar
   ) { }
   ngOnInit() {
+    this._subscription.push(this.auth.onUpdateDebtor.subscribe((v: any) => {
+      if (v) {
+        console.log(v);
+      }
+    }));
     this._subscription.push(this.auth.onLanguage.subscribe((v: string) => {
       this.language = v;
     }));

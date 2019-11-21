@@ -42,8 +42,7 @@ export class InitLayoutComponent implements OnInit {
         this.auth.setUpdateOrder(v.data);
       });
       this.notificationDebtor$.subscribe(v => {
-        console.log(v)
-        // this.auth.setUpdateOrder(v.data);
+        this.auth.setUpdateDebtor(v.data);
       });
       console.log("fcm save");
       this.crud.saveToken('fcmToken:test')

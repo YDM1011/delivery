@@ -80,111 +80,317 @@
 				<span class="content">Создать должника</span>
 			</button>
 		</div>
-		<ng-container class="loading" *ngIf="!loading">
-			Загрузка
-		</ng-container>
-		<ng-container *ngIf="loading">
-			<div class="main-section">
-				<div class="table" *ngIf="debtors && debtors.length > 0">
-					<app-search-filter [inputApi]="'debtor'" [inputQuery]="'login'" [queryValue]="'companyOwner'" [querySearch]="user.companyOwner._id" [populate]="'clientOwner'" (output)="outputSearch($event)"></app-search-filter>
-					<div class="table-content">
-						<div class="row-h">
-							<div class="col center-column">
-								Адрес
-							</div>
-							<div class="col center-column">
-                                Долг и номер заказа
-							</div>
-							<div class="col">
-								Дата
-							</div>
-							<div class="col">
+		<div class="main-section">
+			<form (submit)="searchDeb()" class="search">
+				<mat-form-field class="example-full-width">
+					<input type="number" placeholder="Поиск по номеру заказа" aria-label="Number" name="search" matInput [(ngModel)]="searchDebtor">
+				</mat-form-field>
+				<button type="submit" class="main-button-color">Искать</button>
+			</form>
+			<ng-container *ngIf="searchArr.length>0">
+					<span *ngFor="let item of searchArr">
+						<div class="table">
+							<div class="table-content">
+								<div class="row-h">
+									<div class="col center-column">
+										Адрес
+									</div>
+									<div class="col center-column">
+										Долг и номер заказа
+									</div>
+									<div class="col">
+										Дата
+									</div>
+									<div class="col">
+									</div>
+								</div>
+								<ng-container>
+									<div class="row-r debtor-wrap">
+										<div class="col">
+											<div class="wrap-address-name address-name" *ngIf="!item.basket">
+												<div class="img-address">
+													<app-img [fs]="item.debtor.clientOwner.img" [dir]="'avatar'" [anyFs]="'/assets/images/user.svg'"></app-img>
+												</div>
+												<div class="address-title">
+													{{item.debtor.clientOwner.name}}
+												</div>
+											</div>
+											<div class="wrap-address-name address-name" *ngIf="item.basket">
+												<div class="img-address">
+													<app-img [fs]="item.basket.deliveryAddress.img" [dir]="'address'" [anyFs]="'/assets/images/user.svg'"></app-img>
+												</div>
+												<div class="address-title" *ngIf="item.basket">
+													{{item.basket.deliveryAddress.name}}
+												</div>
+											</div>
+											<div class="wrap-address center-column" *ngIf="item.basket">
+						                    <span *ngIf="item.basket.deliveryAddress.city.name">
+							                    {{item.basket.deliveryAddress.city.name}}
+						                    </span>
+												<span *ngIf="item.basket.deliveryAddress.street">
+						                      {{item.basket.deliveryAddress.street}}
+						                    </span>
+												<span *ngIf="item.basket.deliveryAddress.build">
+						                      дом {{item.basket.deliveryAddress.build}}
+						                    </span>
+												<span *ngIf="item.basket.deliveryAddress.department">
+						                      кв. {{item.basket.deliveryAddress.department}}
+						                    </span>
+											</div>
+										</div>
+										<div class="col">
+											<div class="col-column center-column">
+												<p class="status__title remove">Долг {{item.debtor.value}} грн</p>
+												<p *ngIf="item.basket">Заказ №{{item.basket.basketNumber}}</p>
+											</div>
+										</div>
+										<div class="col">
+											<div class="date">
+												<div class="top-table-date">
+													{{item.debtor.dataCall | date: 'dd MMMM, yyyy'  : null : defLang}}
+												</div>
+												<div class="bottom-table-date">
+													{{item.debtor.dataCall | date: 'h:mm a'  : null : defLang}}
+												</div>
+											</div>
+										</div>
+										<div class="col">
+											<span class="edit-btn" (click)="edit(item.debtor)" appScrollTop></span>
+											<span class="trash-btn" (click)="delete(item.debtor)"></span>
+										</div>
+										
+										<div class="hover-title">
+											<div class="deptor-avatar">
+												<div class="img-avatar">
+													<app-img [fs]="item.debtor.clientOwner.img ? item.debtor.clientOwner.img : ''" [dir]="'avatar'" [anyFs]="'/assets/images/user.svg'"></app-img>
+												</div>
+											</div>
+											<div class="deptor-mobile">
+												<a class="tel" href="tel:{{item.debtor.clientOwner.login}}">
+													<svg _ngcontent-hmf-c4="" fill="none" height="15" viewBox="0 0 15 15" width="15" xmlns="http://www.w3.org/2000/svg"><path _ngcontent-hmf-c4="" d="M11.8547 9.29201C11.5476 8.97226 11.1772 8.8013 10.7846 8.8013C10.3952 8.8013 10.0217 8.96909 9.70193 9.28884L8.70152 10.2861C8.6192 10.2418 8.53689 10.2006 8.45775 10.1595C8.34377 10.1025 8.23614 10.0486 8.14433 9.99166C7.20723 9.39648 6.35562 8.62085 5.53883 7.61727C5.1431 7.11707 4.87717 6.69601 4.68405 6.26862C4.94365 6.03118 5.18425 5.78424 5.41853 5.54681C5.50717 5.45816 5.59581 5.36635 5.68446 5.27771C6.34929 4.61288 6.34929 3.75177 5.68446 3.08694L4.82018 2.22266C4.72204 2.12452 4.62073 2.02321 4.52576 1.9219C4.33581 1.72562 4.13636 1.52301 3.93058 1.33306C3.62349 1.02913 3.25625 0.867676 2.87002 0.867676C2.48378 0.867676 2.11021 1.02913 1.79363 1.33306C1.79046 1.33622 1.79046 1.33622 1.78729 1.33939L0.710904 2.42528C0.305675 2.8305 0.0745678 3.32438 0.0239142 3.8974C-0.0520663 4.82183 0.220197 5.68294 0.429143 6.24646C0.942011 7.62994 1.70815 8.91211 2.85102 10.2861C4.23766 11.9418 5.90607 13.2493 7.81191 14.1706C8.54006 14.5157 9.51198 14.9241 10.5979 14.9937C10.6643 14.9969 10.734 15 10.7973 15C11.5286 15 12.1428 14.7373 12.624 14.2149C12.6272 14.2086 12.6335 14.2054 12.6367 14.1991C12.8013 13.9996 12.9912 13.8192 13.1907 13.6261C13.3268 13.4963 13.4661 13.3601 13.6023 13.2177C13.9157 12.8916 14.0803 12.5117 14.0803 12.1223C14.0803 11.7297 13.9125 11.353 13.5928 11.0364L11.8547 9.29201ZM12.9881 12.6257C12.9849 12.6257 12.9849 12.6288 12.9881 12.6257C12.8646 12.7586 12.738 12.8789 12.6018 13.0119C12.3961 13.2082 12.1871 13.4139 11.9908 13.6451C11.6711 13.987 11.2943 14.1484 10.8005 14.1484C10.753 14.1484 10.7023 14.1484 10.6548 14.1453C9.71459 14.0851 8.84081 13.7179 8.18548 13.4045C6.39361 12.537 4.82018 11.3055 3.51268 9.74473C2.43313 8.44356 1.71131 7.24054 1.23327 5.94887C0.938846 5.16057 0.831207 4.5464 0.878694 3.96705C0.910353 3.59664 1.05282 3.28955 1.31558 3.02679L2.39514 1.94723C2.55026 1.8016 2.71489 1.72246 2.87635 1.72246C3.0758 1.72246 3.23725 1.84276 3.33856 1.94407C3.34173 1.94723 3.34489 1.9504 3.34806 1.95356C3.54118 2.13402 3.7248 2.3208 3.91791 2.52025C4.01605 2.62156 4.11736 2.72287 4.21867 2.82734L5.08295 3.69162C5.41853 4.0272 5.41853 4.33745 5.08295 4.67303C4.99114 4.76484 4.90249 4.85665 4.81068 4.94529C4.54475 5.21756 4.29148 5.47083 4.01605 5.71776C4.00972 5.72409 4.00339 5.72726 4.00023 5.73359C3.72796 6.00585 3.77862 6.27179 3.8356 6.45224C3.83877 6.46174 3.84193 6.47123 3.8451 6.48073C4.06987 7.02526 4.38646 7.53813 4.86767 8.14914L4.87083 8.1523C5.74461 9.22869 6.66587 10.0676 7.68211 10.7103C7.81191 10.7926 7.94488 10.8591 8.07151 10.9224C8.18548 10.9794 8.29312 11.0332 8.38493 11.0902C8.39759 11.0965 8.41026 11.106 8.42292 11.1124C8.53056 11.1662 8.63187 11.1915 8.73634 11.1915C8.99911 11.1915 9.16373 11.0269 9.21755 10.9731L10.3003 9.89036C10.4079 9.78272 10.5789 9.65292 10.7783 9.65292C10.9746 9.65292 11.1361 9.77638 11.2342 9.88402C11.2374 9.88719 11.2374 9.88719 11.2405 9.89036L12.9849 11.6347C13.311 11.9577 13.311 12.2901 12.9881 12.6257Z" fill="#1C1C1C"></path><path _ngcontent-hmf-c4="" d="M8.1063 3.56805C8.93575 3.70735 9.68922 4.09992 10.2907 4.70143C10.8922 5.30294 11.2816 6.05641 11.4241 6.88587C11.4589 7.09481 11.6394 7.24044 11.8452 7.24044C11.8705 7.24044 11.8926 7.23728 11.918 7.23411C12.1522 7.19612 12.3074 6.97451 12.2694 6.74024C12.0984 5.73666 11.6236 4.82173 10.8986 4.09675C10.1736 3.37177 9.25866 2.89689 8.25509 2.72594C8.02082 2.68795 7.80238 2.84307 7.76122 3.07418C7.72006 3.30529 7.87202 3.53006 8.1063 3.56805Z" fill="#09C2C2"></path><path _ngcontent-hmf-c4="" d="M14.9826 6.61682C14.7008 4.96424 13.922 3.46046 12.7253 2.26377C11.5286 1.06708 10.0249 0.288277 8.37228 0.00651579C8.14117 -0.0346403 7.92273 0.123652 7.88157 0.35476C7.84358 0.589033 7.99871 0.807477 8.23298 0.848633C9.70827 1.09873 11.0538 1.79839 12.1238 2.86528C13.1939 3.93534 13.8904 5.28083 14.1405 6.75611C14.1753 6.96506 14.3557 7.11069 14.5615 7.11069C14.5868 7.11069 14.609 7.10752 14.6343 7.10436C14.8654 7.06953 15.0237 6.84792 14.9826 6.61682Z" fill="#09C2C2"></path></svg>
+													{{item.debtor.clientOwner.login}}
+												</a>
+											</div>
+										</div>
+									</div>
+								</ng-container>
 							</div>
 						</div>
-            <ng-container *ngFor="let item of debtors; let index = index ">
-              <div class="row-r debtor-wrap">
-                <div class="col">
-                <div class="wrap-address-name address-name" *ngIf="!item.basket">
-	                <div class="img-address">
-		                <app-img [fs]="item.clientOwner.img" [dir]="'avatar'" [anyFs]="'/assets/images/user.svg'"></app-img>
-	                </div>
-	                <div class="address-title">
-		                {{item.clientOwner.name}}
-	                </div>
-                </div>
-                  <div class="wrap-address-name address-name" *ngIf="item.basket">
-                    <div class="img-address">
-                      <app-img [fs]="item.basket.deliveryAddress.img" [dir]="'address'" [anyFs]="'/assets/images/user.svg'"></app-img>
-                    </div>
-                    <div class="address-title" *ngIf="item.basket">
-                      {{item.basket.deliveryAddress.name}}
-                    </div>
-                  </div>
-                  <div class="wrap-address center-column" *ngIf="item.basket">
-                    <span *ngIf="item.basket.deliveryAddress.city.name">
-	                    {{item.basket.deliveryAddress.city.name}}
-                    </span>
-                    <span *ngIf="item.basket.deliveryAddress.street">
-                      {{item.basket.deliveryAddress.street}}
-                    </span>
-                    <span *ngIf="item.basket.deliveryAddress.build">
-                      дом {{item.basket.deliveryAddress.build}}
-                    </span>
-                    <span *ngIf="item.basket.deliveryAddress.department">
-                      кв. {{item.basket.deliveryAddress.department}}
-                    </span>
-                  </div>
-                </div>
-                <div class="col">
-                  <div class="col-column center-column">
-                    <p class="status__title remove">Долг {{item.value}} грн</p>
-                    <p *ngIf="item.basket">Заказ №{{item.basket.basketNumber}}</p>
-                  </div>
-                </div>
-                <div class="col">
-                  <div class="date">
-                    <div class="top-table-date">
-                      {{item.dataCall | date: 'dd MMMM, yyyy'  : null : defLang}}
-                    </div>
-                    <div class="bottom-table-date">
-                      {{item.dataCall | date: 'h:mm a'  : null : defLang}}
-                    </div>
-                  </div>
-                </div>
-                <div class="col">
-                  <span class="edit-btn" (click)="edit(index)" appScrollTop></span>
-                  <span class="trash-btn" (click)="delete(index)"></span>
-                </div>
-
-                <div class="hover-title">
-                  <div class="deptor-avatar">
-                    <div class="img-avatar">
-                      <app-img [fs]="item.clientOwner.img ? item.clientOwner.img : ''" [dir]="'avatar'" [anyFs]="'/assets/images/user.svg'"></app-img>
-                    </div>
-                  </div>
-                  <div class="deptor-mobile">
-                    <a class="tel" href="tel:{{item.clientOwner.login}}">
-                      <svg _ngcontent-hmf-c4="" fill="none" height="15" viewBox="0 0 15 15" width="15" xmlns="http://www.w3.org/2000/svg"><path _ngcontent-hmf-c4="" d="M11.8547 9.29201C11.5476 8.97226 11.1772 8.8013 10.7846 8.8013C10.3952 8.8013 10.0217 8.96909 9.70193 9.28884L8.70152 10.2861C8.6192 10.2418 8.53689 10.2006 8.45775 10.1595C8.34377 10.1025 8.23614 10.0486 8.14433 9.99166C7.20723 9.39648 6.35562 8.62085 5.53883 7.61727C5.1431 7.11707 4.87717 6.69601 4.68405 6.26862C4.94365 6.03118 5.18425 5.78424 5.41853 5.54681C5.50717 5.45816 5.59581 5.36635 5.68446 5.27771C6.34929 4.61288 6.34929 3.75177 5.68446 3.08694L4.82018 2.22266C4.72204 2.12452 4.62073 2.02321 4.52576 1.9219C4.33581 1.72562 4.13636 1.52301 3.93058 1.33306C3.62349 1.02913 3.25625 0.867676 2.87002 0.867676C2.48378 0.867676 2.11021 1.02913 1.79363 1.33306C1.79046 1.33622 1.79046 1.33622 1.78729 1.33939L0.710904 2.42528C0.305675 2.8305 0.0745678 3.32438 0.0239142 3.8974C-0.0520663 4.82183 0.220197 5.68294 0.429143 6.24646C0.942011 7.62994 1.70815 8.91211 2.85102 10.2861C4.23766 11.9418 5.90607 13.2493 7.81191 14.1706C8.54006 14.5157 9.51198 14.9241 10.5979 14.9937C10.6643 14.9969 10.734 15 10.7973 15C11.5286 15 12.1428 14.7373 12.624 14.2149C12.6272 14.2086 12.6335 14.2054 12.6367 14.1991C12.8013 13.9996 12.9912 13.8192 13.1907 13.6261C13.3268 13.4963 13.4661 13.3601 13.6023 13.2177C13.9157 12.8916 14.0803 12.5117 14.0803 12.1223C14.0803 11.7297 13.9125 11.353 13.5928 11.0364L11.8547 9.29201ZM12.9881 12.6257C12.9849 12.6257 12.9849 12.6288 12.9881 12.6257C12.8646 12.7586 12.738 12.8789 12.6018 13.0119C12.3961 13.2082 12.1871 13.4139 11.9908 13.6451C11.6711 13.987 11.2943 14.1484 10.8005 14.1484C10.753 14.1484 10.7023 14.1484 10.6548 14.1453C9.71459 14.0851 8.84081 13.7179 8.18548 13.4045C6.39361 12.537 4.82018 11.3055 3.51268 9.74473C2.43313 8.44356 1.71131 7.24054 1.23327 5.94887C0.938846 5.16057 0.831207 4.5464 0.878694 3.96705C0.910353 3.59664 1.05282 3.28955 1.31558 3.02679L2.39514 1.94723C2.55026 1.8016 2.71489 1.72246 2.87635 1.72246C3.0758 1.72246 3.23725 1.84276 3.33856 1.94407C3.34173 1.94723 3.34489 1.9504 3.34806 1.95356C3.54118 2.13402 3.7248 2.3208 3.91791 2.52025C4.01605 2.62156 4.11736 2.72287 4.21867 2.82734L5.08295 3.69162C5.41853 4.0272 5.41853 4.33745 5.08295 4.67303C4.99114 4.76484 4.90249 4.85665 4.81068 4.94529C4.54475 5.21756 4.29148 5.47083 4.01605 5.71776C4.00972 5.72409 4.00339 5.72726 4.00023 5.73359C3.72796 6.00585 3.77862 6.27179 3.8356 6.45224C3.83877 6.46174 3.84193 6.47123 3.8451 6.48073C4.06987 7.02526 4.38646 7.53813 4.86767 8.14914L4.87083 8.1523C5.74461 9.22869 6.66587 10.0676 7.68211 10.7103C7.81191 10.7926 7.94488 10.8591 8.07151 10.9224C8.18548 10.9794 8.29312 11.0332 8.38493 11.0902C8.39759 11.0965 8.41026 11.106 8.42292 11.1124C8.53056 11.1662 8.63187 11.1915 8.73634 11.1915C8.99911 11.1915 9.16373 11.0269 9.21755 10.9731L10.3003 9.89036C10.4079 9.78272 10.5789 9.65292 10.7783 9.65292C10.9746 9.65292 11.1361 9.77638 11.2342 9.88402C11.2374 9.88719 11.2374 9.88719 11.2405 9.89036L12.9849 11.6347C13.311 11.9577 13.311 12.2901 12.9881 12.6257Z" fill="#1C1C1C"></path><path _ngcontent-hmf-c4="" d="M8.1063 3.56805C8.93575 3.70735 9.68922 4.09992 10.2907 4.70143C10.8922 5.30294 11.2816 6.05641 11.4241 6.88587C11.4589 7.09481 11.6394 7.24044 11.8452 7.24044C11.8705 7.24044 11.8926 7.23728 11.918 7.23411C12.1522 7.19612 12.3074 6.97451 12.2694 6.74024C12.0984 5.73666 11.6236 4.82173 10.8986 4.09675C10.1736 3.37177 9.25866 2.89689 8.25509 2.72594C8.02082 2.68795 7.80238 2.84307 7.76122 3.07418C7.72006 3.30529 7.87202 3.53006 8.1063 3.56805Z" fill="#09C2C2"></path><path _ngcontent-hmf-c4="" d="M14.9826 6.61682C14.7008 4.96424 13.922 3.46046 12.7253 2.26377C11.5286 1.06708 10.0249 0.288277 8.37228 0.00651579C8.14117 -0.0346403 7.92273 0.123652 7.88157 0.35476C7.84358 0.589033 7.99871 0.807477 8.23298 0.848633C9.70827 1.09873 11.0538 1.79839 12.1238 2.86528C13.1939 3.93534 13.8904 5.28083 14.1405 6.75611C14.1753 6.96506 14.3557 7.11069 14.5615 7.11069C14.5868 7.11069 14.609 7.10752 14.6343 7.10436C14.8654 7.06953 15.0237 6.84792 14.9826 6.61682Z" fill="#09C2C2"></path></svg>
-                      {{item.clientOwner.login}}
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </ng-container>
+					</span>
+			</ng-container>
+			
+			<mat-tab-group (selectedIndexChange)="tabChange($event)" [animationDuration]="0" *ngIf="searchArr.length===0">
+				<ng-container>
+					<mat-tab label="Должники">
+						<ng-template matTabContent class="mat-template">
+							<ng-container *ngIf="loading">
+								<div class="table" *ngIf="debtors && debtors.length > 0">
+									<div class="table-content">
+										<div class="row-h">
+											<div class="col center-column">
+												Адрес
+											</div>
+											<div class="col center-column">
+												Долг и номер заказа
+											</div>
+											<div class="col">
+												Дата
+											</div>
+											<div class="col">
+											</div>
+										</div>
+										<ng-container *ngFor="let item of debtors; let index = index ">
+											<div class="row-r debtor-wrap">
+												<div class="col">
+													<div class="wrap-address-name address-name" *ngIf="!item.basket">
+														<div class="img-address">
+															<app-img [fs]="item.clientOwner.img" [dir]="'avatar'" [anyFs]="'/assets/images/user.svg'"></app-img>
+														</div>
+														<div class="address-title">
+															{{item.clientOwner.name}}
+														</div>
+													</div>
+													<div class="wrap-address-name address-name" *ngIf="item.basket">
+														<div class="img-address">
+															<app-img [fs]="item.basket.deliveryAddress.img" [dir]="'address'" [anyFs]="'/assets/images/user.svg'"></app-img>
+														</div>
+														<div class="address-title" *ngIf="item.basket">
+															{{item.basket.deliveryAddress.name}}
+														</div>
+													</div>
+													<div class="wrap-address center-column" *ngIf="item.basket">
+								                    <span *ngIf="item.basket.deliveryAddress.city.name">
+									                    {{item.basket.deliveryAddress.city.name}}
+								                    </span>
+														<span *ngIf="item.basket.deliveryAddress.street">
+								                      {{item.basket.deliveryAddress.street}}
+								                    </span>
+														<span *ngIf="item.basket.deliveryAddress.build">
+								                      дом {{item.basket.deliveryAddress.build}}
+								                    </span>
+														<span *ngIf="item.basket.deliveryAddress.department">
+								                      кв. {{item.basket.deliveryAddress.department}}
+								                    </span>
+													</div>
+												</div>
+												<div class="col">
+													<div class="col-column center-column">
+														<p class="status__title remove">Долг {{item.value}} грн</p>
+														<p *ngIf="item.basket">Заказ №{{item.basket.basketNumber}}</p>
+													</div>
+												</div>
+												<div class="col">
+													<div class="date">
+														<div class="top-table-date">
+															{{item.dataCall | date: 'dd MMMM, yyyy'  : null : defLang}}
+														</div>
+														<div class="bottom-table-date">
+															{{item.dataCall | date: 'h:mm a'  : null : defLang}}
+														</div>
+													</div>
+												</div>
+												<div class="col">
+													<span class="edit-btn" (click)="edit(index)" appScrollTop></span>
+													<span class="trash-btn" (click)="delete(index)"></span>
+												</div>
+												
+												<div class="hover-title">
+													<div class="deptor-avatar">
+														<div class="img-avatar">
+															<app-img [fs]="item.clientOwner.img ? item.clientOwner.img : ''" [dir]="'avatar'" [anyFs]="'/assets/images/user.svg'"></app-img>
+														</div>
+													</div>
+													<div class="deptor-mobile">
+														<a class="tel" href="tel:{{item.clientOwner.login}}">
+															<svg _ngcontent-hmf-c4="" fill="none" height="15" viewBox="0 0 15 15" width="15" xmlns="http://www.w3.org/2000/svg"><path _ngcontent-hmf-c4="" d="M11.8547 9.29201C11.5476 8.97226 11.1772 8.8013 10.7846 8.8013C10.3952 8.8013 10.0217 8.96909 9.70193 9.28884L8.70152 10.2861C8.6192 10.2418 8.53689 10.2006 8.45775 10.1595C8.34377 10.1025 8.23614 10.0486 8.14433 9.99166C7.20723 9.39648 6.35562 8.62085 5.53883 7.61727C5.1431 7.11707 4.87717 6.69601 4.68405 6.26862C4.94365 6.03118 5.18425 5.78424 5.41853 5.54681C5.50717 5.45816 5.59581 5.36635 5.68446 5.27771C6.34929 4.61288 6.34929 3.75177 5.68446 3.08694L4.82018 2.22266C4.72204 2.12452 4.62073 2.02321 4.52576 1.9219C4.33581 1.72562 4.13636 1.52301 3.93058 1.33306C3.62349 1.02913 3.25625 0.867676 2.87002 0.867676C2.48378 0.867676 2.11021 1.02913 1.79363 1.33306C1.79046 1.33622 1.79046 1.33622 1.78729 1.33939L0.710904 2.42528C0.305675 2.8305 0.0745678 3.32438 0.0239142 3.8974C-0.0520663 4.82183 0.220197 5.68294 0.429143 6.24646C0.942011 7.62994 1.70815 8.91211 2.85102 10.2861C4.23766 11.9418 5.90607 13.2493 7.81191 14.1706C8.54006 14.5157 9.51198 14.9241 10.5979 14.9937C10.6643 14.9969 10.734 15 10.7973 15C11.5286 15 12.1428 14.7373 12.624 14.2149C12.6272 14.2086 12.6335 14.2054 12.6367 14.1991C12.8013 13.9996 12.9912 13.8192 13.1907 13.6261C13.3268 13.4963 13.4661 13.3601 13.6023 13.2177C13.9157 12.8916 14.0803 12.5117 14.0803 12.1223C14.0803 11.7297 13.9125 11.353 13.5928 11.0364L11.8547 9.29201ZM12.9881 12.6257C12.9849 12.6257 12.9849 12.6288 12.9881 12.6257C12.8646 12.7586 12.738 12.8789 12.6018 13.0119C12.3961 13.2082 12.1871 13.4139 11.9908 13.6451C11.6711 13.987 11.2943 14.1484 10.8005 14.1484C10.753 14.1484 10.7023 14.1484 10.6548 14.1453C9.71459 14.0851 8.84081 13.7179 8.18548 13.4045C6.39361 12.537 4.82018 11.3055 3.51268 9.74473C2.43313 8.44356 1.71131 7.24054 1.23327 5.94887C0.938846 5.16057 0.831207 4.5464 0.878694 3.96705C0.910353 3.59664 1.05282 3.28955 1.31558 3.02679L2.39514 1.94723C2.55026 1.8016 2.71489 1.72246 2.87635 1.72246C3.0758 1.72246 3.23725 1.84276 3.33856 1.94407C3.34173 1.94723 3.34489 1.9504 3.34806 1.95356C3.54118 2.13402 3.7248 2.3208 3.91791 2.52025C4.01605 2.62156 4.11736 2.72287 4.21867 2.82734L5.08295 3.69162C5.41853 4.0272 5.41853 4.33745 5.08295 4.67303C4.99114 4.76484 4.90249 4.85665 4.81068 4.94529C4.54475 5.21756 4.29148 5.47083 4.01605 5.71776C4.00972 5.72409 4.00339 5.72726 4.00023 5.73359C3.72796 6.00585 3.77862 6.27179 3.8356 6.45224C3.83877 6.46174 3.84193 6.47123 3.8451 6.48073C4.06987 7.02526 4.38646 7.53813 4.86767 8.14914L4.87083 8.1523C5.74461 9.22869 6.66587 10.0676 7.68211 10.7103C7.81191 10.7926 7.94488 10.8591 8.07151 10.9224C8.18548 10.9794 8.29312 11.0332 8.38493 11.0902C8.39759 11.0965 8.41026 11.106 8.42292 11.1124C8.53056 11.1662 8.63187 11.1915 8.73634 11.1915C8.99911 11.1915 9.16373 11.0269 9.21755 10.9731L10.3003 9.89036C10.4079 9.78272 10.5789 9.65292 10.7783 9.65292C10.9746 9.65292 11.1361 9.77638 11.2342 9.88402C11.2374 9.88719 11.2374 9.88719 11.2405 9.89036L12.9849 11.6347C13.311 11.9577 13.311 12.2901 12.9881 12.6257Z" fill="#1C1C1C"></path><path _ngcontent-hmf-c4="" d="M8.1063 3.56805C8.93575 3.70735 9.68922 4.09992 10.2907 4.70143C10.8922 5.30294 11.2816 6.05641 11.4241 6.88587C11.4589 7.09481 11.6394 7.24044 11.8452 7.24044C11.8705 7.24044 11.8926 7.23728 11.918 7.23411C12.1522 7.19612 12.3074 6.97451 12.2694 6.74024C12.0984 5.73666 11.6236 4.82173 10.8986 4.09675C10.1736 3.37177 9.25866 2.89689 8.25509 2.72594C8.02082 2.68795 7.80238 2.84307 7.76122 3.07418C7.72006 3.30529 7.87202 3.53006 8.1063 3.56805Z" fill="#09C2C2"></path><path _ngcontent-hmf-c4="" d="M14.9826 6.61682C14.7008 4.96424 13.922 3.46046 12.7253 2.26377C11.5286 1.06708 10.0249 0.288277 8.37228 0.00651579C8.14117 -0.0346403 7.92273 0.123652 7.88157 0.35476C7.84358 0.589033 7.99871 0.807477 8.23298 0.848633C9.70827 1.09873 11.0538 1.79839 12.1238 2.86528C13.1939 3.93534 13.8904 5.28083 14.1405 6.75611C14.1753 6.96506 14.3557 7.11069 14.5615 7.11069C14.5868 7.11069 14.609 7.10752 14.6343 7.10436C14.8654 7.06953 15.0237 6.84792 14.9826 6.61682Z" fill="#09C2C2"></path></svg>
+															{{item.clientOwner.login}}
+														</a>
+													</div>
+												</div>
+											</div>
+										</ng-container>
+									</div>
+									<mat-paginator [length]="lengthPagination"
+									               [pageSize]="pageSizePagination"
+									               [pageSizeOptions]="pageSizeOptionsPagination"
+									               (page)="pageEvent($event)"
+									               *ngIf="debtors && debtors.length > 0">
+									</mat-paginator>
+								</div>
+								<div class="empty-section" *ngIf="!debtors || debtors.length === 0">
+									<p>
+										У вас нет должников
+									</p>
+								</div>
+							</ng-container>
+						</ng-template>
+					</mat-tab>
+					<mat-tab label="История должников">
+						<ng-template matTabContent>
+							<ng-container *ngIf="loading">
+								<div class="table" *ngIf="debtors && debtors.length > 0">
+									<div class="table-content">
+										<div class="row-h">
+											<div class="col center-column">
+												Адрес
+											</div>
+											<div class="col center-column">
+												Долг и номер заказа
+											</div>
+											<div class="col">
+												Дата
+											</div>
+											<div class="col">
+											</div>
+										</div>
+										<ng-container *ngFor="let item of debtors; let index = index ">
+											<div class="row-r debtor-wrap">
+												<div class="col">
+													<div class="wrap-address-name address-name" *ngIf="!item.basket">
+														<div class="img-address">
+															<app-img [fs]="item.clientOwner.img" [dir]="'avatar'" [anyFs]="'/assets/images/user.svg'"></app-img>
+														</div>
+														<div class="address-title">
+															{{item.clientOwner.name}}
+														</div>
+													</div>
+													<div class="wrap-address-name address-name" *ngIf="item.basket">
+														<div class="img-address">
+															<app-img [fs]="item.basket.deliveryAddress.img" [dir]="'address'" [anyFs]="'/assets/images/user.svg'"></app-img>
+														</div>
+														<div class="address-title" *ngIf="item.basket">
+															{{item.basket.deliveryAddress.name}}
+														</div>
+													</div>
+													<div class="wrap-address center-column" *ngIf="item.basket">
+								                    <span *ngIf="item.basket.deliveryAddress.city.name">
+									                    {{item.basket.deliveryAddress.city.name}}
+								                    </span>
+														<span *ngIf="item.basket.deliveryAddress.street">
+								                      {{item.basket.deliveryAddress.street}}
+								                    </span>
+														<span *ngIf="item.basket.deliveryAddress.build">
+								                      дом {{item.basket.deliveryAddress.build}}
+								                    </span>
+														<span *ngIf="item.basket.deliveryAddress.department">
+								                      кв. {{item.basket.deliveryAddress.department}}
+								                    </span>
+													</div>
+												</div>
+												<div class="col">
+													<div class="col-column center-column">
+														<p class="status__title remove">Долг {{item.value}} грн</p>
+														<p *ngIf="item.basket">Заказ №{{item.basket.basketNumber}}</p>
+													</div>
+												</div>
+												<div class="col">
+													<div class="date">
+														<div class="top-table-date">
+															{{item.dataCall | date: 'dd MMMM, yyyy'  : null : defLang}}
+														</div>
+														<div class="bottom-table-date">
+															{{item.dataCall | date: 'h:mm a'  : null : defLang}}
+														</div>
+													</div>
+												</div>
+												<div class="col">
+													<span class="edit-btn" (click)="edit(index)" appScrollTop></span>
+													<span class="trash-btn" (click)="delete(index)"></span>
+												</div>
+												
+												<div class="hover-title">
+													<div class="deptor-avatar">
+														<div class="img-avatar">
+															<app-img [fs]="item.clientOwner.img ? item.clientOwner.img : ''" [dir]="'avatar'" [anyFs]="'/assets/images/user.svg'"></app-img>
+														</div>
+													</div>
+													<div class="deptor-mobile">
+														<a class="tel" href="tel:{{item.clientOwner.login}}">
+															<svg _ngcontent-hmf-c4="" fill="none" height="15" viewBox="0 0 15 15" width="15" xmlns="http://www.w3.org/2000/svg"><path _ngcontent-hmf-c4="" d="M11.8547 9.29201C11.5476 8.97226 11.1772 8.8013 10.7846 8.8013C10.3952 8.8013 10.0217 8.96909 9.70193 9.28884L8.70152 10.2861C8.6192 10.2418 8.53689 10.2006 8.45775 10.1595C8.34377 10.1025 8.23614 10.0486 8.14433 9.99166C7.20723 9.39648 6.35562 8.62085 5.53883 7.61727C5.1431 7.11707 4.87717 6.69601 4.68405 6.26862C4.94365 6.03118 5.18425 5.78424 5.41853 5.54681C5.50717 5.45816 5.59581 5.36635 5.68446 5.27771C6.34929 4.61288 6.34929 3.75177 5.68446 3.08694L4.82018 2.22266C4.72204 2.12452 4.62073 2.02321 4.52576 1.9219C4.33581 1.72562 4.13636 1.52301 3.93058 1.33306C3.62349 1.02913 3.25625 0.867676 2.87002 0.867676C2.48378 0.867676 2.11021 1.02913 1.79363 1.33306C1.79046 1.33622 1.79046 1.33622 1.78729 1.33939L0.710904 2.42528C0.305675 2.8305 0.0745678 3.32438 0.0239142 3.8974C-0.0520663 4.82183 0.220197 5.68294 0.429143 6.24646C0.942011 7.62994 1.70815 8.91211 2.85102 10.2861C4.23766 11.9418 5.90607 13.2493 7.81191 14.1706C8.54006 14.5157 9.51198 14.9241 10.5979 14.9937C10.6643 14.9969 10.734 15 10.7973 15C11.5286 15 12.1428 14.7373 12.624 14.2149C12.6272 14.2086 12.6335 14.2054 12.6367 14.1991C12.8013 13.9996 12.9912 13.8192 13.1907 13.6261C13.3268 13.4963 13.4661 13.3601 13.6023 13.2177C13.9157 12.8916 14.0803 12.5117 14.0803 12.1223C14.0803 11.7297 13.9125 11.353 13.5928 11.0364L11.8547 9.29201ZM12.9881 12.6257C12.9849 12.6257 12.9849 12.6288 12.9881 12.6257C12.8646 12.7586 12.738 12.8789 12.6018 13.0119C12.3961 13.2082 12.1871 13.4139 11.9908 13.6451C11.6711 13.987 11.2943 14.1484 10.8005 14.1484C10.753 14.1484 10.7023 14.1484 10.6548 14.1453C9.71459 14.0851 8.84081 13.7179 8.18548 13.4045C6.39361 12.537 4.82018 11.3055 3.51268 9.74473C2.43313 8.44356 1.71131 7.24054 1.23327 5.94887C0.938846 5.16057 0.831207 4.5464 0.878694 3.96705C0.910353 3.59664 1.05282 3.28955 1.31558 3.02679L2.39514 1.94723C2.55026 1.8016 2.71489 1.72246 2.87635 1.72246C3.0758 1.72246 3.23725 1.84276 3.33856 1.94407C3.34173 1.94723 3.34489 1.9504 3.34806 1.95356C3.54118 2.13402 3.7248 2.3208 3.91791 2.52025C4.01605 2.62156 4.11736 2.72287 4.21867 2.82734L5.08295 3.69162C5.41853 4.0272 5.41853 4.33745 5.08295 4.67303C4.99114 4.76484 4.90249 4.85665 4.81068 4.94529C4.54475 5.21756 4.29148 5.47083 4.01605 5.71776C4.00972 5.72409 4.00339 5.72726 4.00023 5.73359C3.72796 6.00585 3.77862 6.27179 3.8356 6.45224C3.83877 6.46174 3.84193 6.47123 3.8451 6.48073C4.06987 7.02526 4.38646 7.53813 4.86767 8.14914L4.87083 8.1523C5.74461 9.22869 6.66587 10.0676 7.68211 10.7103C7.81191 10.7926 7.94488 10.8591 8.07151 10.9224C8.18548 10.9794 8.29312 11.0332 8.38493 11.0902C8.39759 11.0965 8.41026 11.106 8.42292 11.1124C8.53056 11.1662 8.63187 11.1915 8.73634 11.1915C8.99911 11.1915 9.16373 11.0269 9.21755 10.9731L10.3003 9.89036C10.4079 9.78272 10.5789 9.65292 10.7783 9.65292C10.9746 9.65292 11.1361 9.77638 11.2342 9.88402C11.2374 9.88719 11.2374 9.88719 11.2405 9.89036L12.9849 11.6347C13.311 11.9577 13.311 12.2901 12.9881 12.6257Z" fill="#1C1C1C"></path><path _ngcontent-hmf-c4="" d="M8.1063 3.56805C8.93575 3.70735 9.68922 4.09992 10.2907 4.70143C10.8922 5.30294 11.2816 6.05641 11.4241 6.88587C11.4589 7.09481 11.6394 7.24044 11.8452 7.24044C11.8705 7.24044 11.8926 7.23728 11.918 7.23411C12.1522 7.19612 12.3074 6.97451 12.2694 6.74024C12.0984 5.73666 11.6236 4.82173 10.8986 4.09675C10.1736 3.37177 9.25866 2.89689 8.25509 2.72594C8.02082 2.68795 7.80238 2.84307 7.76122 3.07418C7.72006 3.30529 7.87202 3.53006 8.1063 3.56805Z" fill="#09C2C2"></path><path _ngcontent-hmf-c4="" d="M14.9826 6.61682C14.7008 4.96424 13.922 3.46046 12.7253 2.26377C11.5286 1.06708 10.0249 0.288277 8.37228 0.00651579C8.14117 -0.0346403 7.92273 0.123652 7.88157 0.35476C7.84358 0.589033 7.99871 0.807477 8.23298 0.848633C9.70827 1.09873 11.0538 1.79839 12.1238 2.86528C13.1939 3.93534 13.8904 5.28083 14.1405 6.75611C14.1753 6.96506 14.3557 7.11069 14.5615 7.11069C14.5868 7.11069 14.609 7.10752 14.6343 7.10436C14.8654 7.06953 15.0237 6.84792 14.9826 6.61682Z" fill="#09C2C2"></path></svg>
+															{{item.clientOwner.login}}
+														</a>
+													</div>
+												</div>
+											</div>
+										</ng-container>
+									</div>
+									<mat-paginator [length]="lengthPagination"
+									               [pageSize]="pageSizePagination"
+									               [pageSizeOptions]="pageSizeOptionsPagination"
+									               (page)="pageEvent($event)"
+									               *ngIf="debtors && debtors.length > 0">
+									</mat-paginator>
+								</div>
+								<div class="empty-section" *ngIf="!debtors || debtors.length === 0">
+									<p>
+										У вас нет должников
+									</p>
+								</div>
+							</ng-container>
+						</ng-template>
+					</mat-tab>
+				</ng-container>
+			</mat-tab-group>
 		</div>
-				<mat-paginator [length]="lengthPagination"
-				               [pageSize]="pageSizePagination"
-				               [pageSizeOptions]="pageSizeOptionsPagination"
-				               (page)="pageEvent($event)"
-				               *ngIf="debtors && debtors.length > 0">
-				</mat-paginator>
-				</div>
-				<div class="empty-section" *ngIf="!debtors || debtors.length === 0">
-					<p>
-						У вас нет должников
-					</p>
-				</div>
-			</div>
-		</ng-container>
 	</div>
 </div>
