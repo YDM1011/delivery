@@ -48,9 +48,7 @@
     <mat-carousel>
       <mat-carousel-slide *ngFor="let item of action">
         <div class="item" [routerLink]="'/'+language+'/action/'+item._id">
-          <div class="action-img">
-            <app-img [dir]="'product'" [fs]="item.img"></app-img>
-          </div>
+          <app-img class="action-img" [fs]="item.img"></app-img>
         </div>
       </mat-carousel-slide>
     </mat-carousel>

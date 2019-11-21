@@ -64,7 +64,7 @@
     border-radius: 15px;
     overflow: hidden;
     height: 180px;
-
+width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -78,32 +78,43 @@
 @media (min-width: 414px) {
   .carousel{
     .item{
+      width: 100%;
       height: 210px;
     }
+  }
+  ::ng-deep .carousel-slide{
+    height: 210px!important;
   }
 }
 
 @media (min-width: 525px) {
   .carousel{
     .item{
+      width: 100%;
       height: 250px;
     }
+  }
+  ::ng-deep .carousel-slide{
+    height: 250px!important;
   }
 }
 
 @media (min-width: 768px) {
   .carousel{
     .item{
+      width: 100%;
       height: 300px;
     }
   }
-}
-.action-img{
-  app-img{
-    img{
-      object-fit: contain;
-    }
+  ::ng-deep .carousel-slide{
+    height: 300px!important;
   }
+}
+::ng-deep .action-img{
+  width: 100%!important;
+    img{
+      object-fit: cover!important;
+    }
 }
 
 .empty{
