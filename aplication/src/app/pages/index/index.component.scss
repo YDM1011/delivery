@@ -111,3 +111,11 @@
 .empty{
   text-align: center;
 }
+::ng-deep .owl-carousel .owl-wrapper-outer{
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+  -webkit-transform-style:preserve-3d;
+  -moz-transform-style:preserve-3d;
+  transform-style:preserve-3d;
+}
