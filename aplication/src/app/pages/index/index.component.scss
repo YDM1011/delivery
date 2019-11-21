@@ -12,7 +12,7 @@
   cursor: pointer;
 }
 ::ng-deep .carousel-slide{
-  height: 180px!important;
+  height: 180px;
 }
 .title-preload {
   background: #e3ecec;
@@ -64,6 +64,7 @@
     border-radius: 15px;
     overflow: hidden;
     height: 180px;
+
     display: flex;
     align-items: center;
     justify-content: center;
@@ -91,13 +92,13 @@
 }
 
 @media (min-width: 768px) {
-  .car{
+  .carousel{
     .item{
       height: 300px;
     }
   }
 }
-.car-item{
+.action-img{
   app-img{
     img{
       object-fit: contain;
