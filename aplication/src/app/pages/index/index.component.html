@@ -55,7 +55,15 @@
       </mat-carousel-slide>
     </mat-carousel>
   </div>
-
+  <ng-container *ngIf="action && action.length>0">
+    <div class="div" *ngFor="let item of action">
+      <div class="item">
+        <div class="car">
+          <app-img [dir]="'product'" [fs]="item.img"></app-img>
+        </div>
+      </div>
+    </div>
+  </ng-container>
 <!--  <div class="carousel" *ngIf="action && action.length>0">-->
 <!--    <owl-carousel [options]="mySlideOptions" [items]="action" [carouselClasses]="['owl-theme', 'sliding']">-->
 <!--      <div [routerLink]="'/'+language+'/action/'+image._id" class="item" *ngFor="let image of action;let i = index">-->
