@@ -56,7 +56,6 @@ export class AuthService {
 
   setConfirmOrder(data) {
     this.ConfirmOrder.next(data);
-
   }
   resetConfirm(){
     this.ConfirmOrder = new BehaviorSubject<any>(null);

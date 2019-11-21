@@ -79,10 +79,6 @@ export class OrdersItemComponent implements OnInit {
     });
   }
   cancelOrder(id) {
-    this.crud.post('basket', {status: 5}, this.order._id).then((v: any) => {
-      if (v) {
-        this.removeOrder.emit(id);
-      }
-    });
+    this.removeOrder.emit(id);
   }
 }

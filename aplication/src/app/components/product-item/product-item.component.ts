@@ -62,13 +62,15 @@ export class ProductItemComponent implements OnInit, OnDestroy {
       this.openSnackBar('Войдите или зарегестрируйтеся',  'Ok');
       return;
     }
-    this.crud.post('product', {orderOwner: order._id, count: this.count}).then((v: any) => {
-      if (v) {
-        this.count = 0;
-        this.auth.setCheckBasket(true);
-        this.openSnackBar(this.snackMessage[this.language],  'Ok');
-      }
-    });
+    if (this.user) {
+      this.crud.post('product', {orderOwner: order._id, count: this.count}).then((v: any) => {
+        if (v) {
+          this.count = 0;
+          this.auth.setCheckBasket(true);
+          this.openSnackBar(this.snackMessage[this.language],  'Ok');
+        }
+      });
+    }
   }
   openSnackBar(message: string, action: string) {
     this.snackBar.open(message, action, {

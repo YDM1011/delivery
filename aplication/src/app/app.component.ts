@@ -13,7 +13,7 @@ export class AppComponent {
   title = 'delivery';
   public localStorage = localStorage ;
   public setting: any;
-  public me: any;
+  public me;
   public loaded = false;
   public count;
   public language;
@@ -47,6 +47,7 @@ export class AppComponent {
         });
         if (this.localStorage.getItem('token')) {
           this.crud.get('me').then((v: any) => {
+            console.log(v)
             this.me = Object.assign({}, v);
             this.auth.setMe(this.me);
             if (this.me && this.me._id) {
@@ -54,23 +55,28 @@ export class AppComponent {
                 this.count = count.count;
                 this.auth.setBasketCount(this.count);
               });
+            }else {
+              this.auth.setBasketCount(0);
             }
           });
         }
       }
     });
+    this.auth.onMe.subscribe((me: any) => {
+      if (me) {
+        this.me = Object.assign({}, me);
+        this.auth.setCheckBasket(true)
+      }
+    });
     this.auth.onCheckBasket.subscribe((v: any) => {
       if (v) {
-        if (this.me && this.me._id) {
+        if (this.me) {
           this.crud.get(`basket/count?query={"createdBy":"${this.me._id}","status":0}`).then((count: any) => {
             if (count) {
               this.count = count.count;
               this.auth.setBasketCount(this.count);
-              return;
             }
           });
-        } else {
-          this.auth.setBasketCount(0);
         }
       }
     });

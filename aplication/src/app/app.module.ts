@@ -98,6 +98,7 @@ import { ForgotComponent } from './pages/forgot/forgot.component';
 import { ProductAllComponent } from './pages/product-all/product-all.component';
 import { AllProvidersDirective } from './directives/all-providers.directive';
 import { AllProductDirective } from './directives/all-product.directive';
+import { CancelOrderComponent } from './components/cancel-order/cancel-order.component';
 
 @NgModule({
 	declarations: [
@@ -180,6 +181,7 @@ import { AllProductDirective } from './directives/all-product.directive';
 		ProductAllComponent,
 		AllProvidersDirective,
 		AllProductDirective,
+		CancelOrderComponent,
 	],
 	imports: [
 		OwlModule,

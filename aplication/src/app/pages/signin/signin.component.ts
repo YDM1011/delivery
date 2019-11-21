@@ -70,7 +70,7 @@ export class SigninComponent implements OnInit {
       localStorage.setItem('token', v.token);
       this.auth.setMe(v.user);
       this.auth.setCheckBasket(true);
-      this.route.navigate(['']);
+      this.route.navigate(['/'+this.language]);
     }).catch((error) => {
       if (error.error === "Password or login invalid!") {
         this.dataError.invalid = "invalid_e";
