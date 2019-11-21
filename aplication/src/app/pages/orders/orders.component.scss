@@ -4,10 +4,51 @@
 }
 .viewport{
   width: 100%;
-  height: calc(100vh - 185px);
-  margin-top: 35px;
+  height: calc(100vh - 215px);
   overflow-y: auto;
   overflow: -moz-scrollbars-none;
   -ms-overflow-style: none;
   &::-webkit-scrollbar { width: 0 !important }
+}
+.div{
+  width: 100%;
+  height: calc(100vh - 215px);
+  overflow-y: auto;
+  overflow: -moz-scrollbars-none;
+  -ms-overflow-style: none;
+  &::-webkit-scrollbar { width: 0 !important }
+}
+.date{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 40px;
+  margin-bottom: 15px;
+  span{
+    &:nth-of-type(1){
+      margin-right: 10px;
+    }
+    &:nth-of-type(2){
+      margin-right: 10px;
+    }
+  }
+  .date-box{
+    display: inline-flex;
+    align-items: center;
+    svg{
+      margin-right: 5px;
+    }
+    .mat-date-pick{
+      width: 90px;
+      color: #31394D;
+    }
+    .date-input{
+      border: 0;
+      border-bottom:1px solid #DADADA;
+      width: 100%;
+    }
+    &:nth-of-type(1){
+      margin-right: 10px;
+    }
+  }
 }

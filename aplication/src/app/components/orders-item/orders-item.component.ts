@@ -71,7 +71,7 @@ export class OrdersItemComponent implements OnInit {
         this.debtorShow = true;
         this.debtor = d[0].value;
       } else {
-        this.debtor = null;
+        this.debtor = 0;
         this.debtorShow = false;
       }
     });

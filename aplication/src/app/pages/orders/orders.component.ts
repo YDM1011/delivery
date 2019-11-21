@@ -17,6 +17,11 @@ export class OrdersComponent implements OnInit, OnDestroy {
   public showCloseModal = false;
   public cancelOrderId = null;
   public user: any;
+
+  public dateStart = new Date();
+  public dateEnd = new Date();
+  public newStart;
+  public newEnd;
   private _subscription: Subscription[] = [];
   public translate ={
     title: {
@@ -46,9 +51,13 @@ export class OrdersComponent implements OnInit, OnDestroy {
       private snackBar: MatSnackBar
   ) { }
   ngOnInit() {
+    this.dateStart.setDate(this.dateStart.getDate() -1);
     this._subscription.push(this.auth.onUpdateDebtor.subscribe((v: any) => {
       if (v) {
-        this.orders[this.crud.find('_id', v.basket, this.orders)]['newDebtor'] = v.value;
+        let index = this.crud.find('_id', v.basket, this.orders);
+        if (!v.value === this.orders[index]['newDebtor']) {
+          this.orders[index]['newDebtor'] = v.value;
+        }
       }
     }));
     this._subscription.push(this.auth.onLanguage.subscribe((v: string) => {
@@ -98,8 +107,12 @@ export class OrdersComponent implements OnInit, OnDestroy {
   }
   getSuccessBasket() {
     this.toggleMain = false;
-    this.crud.get(`basket?query={"createdBy":"${this.user._id}","$or":[{"status":4},{"status":5}]}&populate=[{"path":"deliveryAddress","select":"name img"},{"path":"companyOwner","select":"name"}]&skip=0&limit=5&sort={"date":-1}`).then((v: any) => {
+    this.loading = false;
+    this.newStart = new Date(this.dateStart.getMonth()+1+'.'+(this.dateStart.getDate()) +'.'+new Date().getFullYear()).getTime();
+    this.newEnd = new Date(this.dateEnd.getMonth()+1+'.'+(this.dateEnd.getDate()+1) +'.'+new Date().getFullYear()).getTime()-1;
+    this.crud.get(`basket?query={"createdBy":"${this.user._id}","date":{"$gte":"${new Date(this.newStart).toISOString()}","$lte":"${new Date(this.newEnd).toISOString()}"},"$or":[{"status":4},{"status":5}]}&populate=[{"path":"deliveryAddress","select":"name img"},{"path":"companyOwner","select":"name"}]&skip=0&limit=5&sort={"date":-1}`).then((v: any) => {
       this.orders = v;
+      this.loading = true;
     });
   }
   openSnackBar(message: string, action: string) {

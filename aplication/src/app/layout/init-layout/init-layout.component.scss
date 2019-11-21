@@ -37,3 +37,6 @@
 ::ng-deep .mat-icon-button .mat-icon, .mat-icon-button i{
   line-height: normal;
 }
+::ng-deep .mat-calendar-body-selected{
+  background-color: #009688!important;
+}
