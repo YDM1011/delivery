@@ -48,7 +48,7 @@ export class OrdersComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this._subscription.push(this.auth.onUpdateDebtor.subscribe((v: any) => {
       if (v) {
-        console.log(v);
+        this.orders[this.crud.find('_id', v.basket, this.orders)]['newDebtor'] = v.value;
       }
     }));
     this._subscription.push(this.auth.onLanguage.subscribe((v: string) => {

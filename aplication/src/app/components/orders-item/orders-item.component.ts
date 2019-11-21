@@ -10,6 +10,8 @@ import {AuthService} from '../../auth.service';
 export class OrdersItemComponent implements OnInit {
   @Input() order;
   public removeOrders = true;
+  public debtor = null;
+  public debtorShow = false;
   public language;
   @Output() removeOrder = new EventEmitter();
   @Output() confirmOrder = new EventEmitter();
@@ -47,6 +49,10 @@ export class OrdersItemComponent implements OnInit {
     t8: {
       ru: 'Подтвердить изменения',
       ua: 'Підтвердити зміни'
+    },
+    t9: {
+      ru: 'Ваш долг по заказу',
+      ua: 'Ваш борг по замовленню'
     }
   };
   constructor(
@@ -58,6 +64,15 @@ export class OrdersItemComponent implements OnInit {
     this.auth.onLanguage.subscribe((v: any) => {
       if (v) {
         this.language = v;
+      }
+    });
+    this.crud.get(`debtor?query={"basket":"${this.order._id}"}`).then((d: any) => {
+      if (d && d.length>0) {
+        this.debtorShow = true;
+        this.debtor = d[0].value;
+      } else {
+        this.debtor = null;
+        this.debtorShow = false;
       }
     });
   }
