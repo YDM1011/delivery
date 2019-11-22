@@ -122,7 +122,6 @@ const sendToProvider = (backendApp, basket, req) => {
     backendApp.mongoose.model('Company')
         .findById(basket.companyOwner.id)
         .exec((e,r)=>{
-            console.log(e,r)
             if (r) {
                 backendApp.events.callWS.emit('message', JSON.stringify({
                     event:"order-confirm",
@@ -145,7 +144,7 @@ const sendToClient = (backendApp, basket, req) => {
     backendApp.events.callWS.emit('message', JSON.stringify({
         event:"order-confirm",
         data: {data:basket},
-        to: basket.createdBy
+        to: basket.createdBy._id
     }));
 };
 

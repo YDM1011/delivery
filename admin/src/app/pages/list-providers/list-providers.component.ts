@@ -36,7 +36,7 @@ export class ListProvidersComponent implements OnInit {
     this.crud.get('company/count').then((count: any) => {
       if (count) {
         this.lengthPagination = count.count;
-        this.crud.get(`company?query={}&skip=0&limit=${this.lengthPagination}&sort={"date":-1}`).then((v: any) => {
+        this.crud.get(`company?query={}&skip=0&limit=${this.lengthPagination}&sort={"payedAt":-1}`).then((v: any) => {
           if (!v) {return; }
           this.list = v;
           this.loading = true;

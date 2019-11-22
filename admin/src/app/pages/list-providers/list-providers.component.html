@@ -69,7 +69,7 @@
 								Статус
 							</div>
 							<div class="col">
-								Дата
+								Подписка
 							</div>
 							<div class="col">
 							</div>
@@ -93,12 +93,17 @@
 							</div>
 							<div class="col">
 								<div class="date">
-									<div class="top-table-date">
-										{{item.date | date: 'dd MMMM, yyyy'  : null : defLang}}
-									</div>
-									<div class="bottom-table-date">
-										{{item.date | date: 'h:mm a'  : null : defLang}}
-									</div>
+                  <ng-container *ngIf="item.payedAt; else noPay">
+                    <div class="top-table-date">
+                      {{item.payedAt | date: 'dd MMMM, yyyy'  : null : defLang}}
+                    </div>
+                    <div class="bottom-table-date">
+                      {{item.payedAt | date: 'h:mm a'  : null : defLang}}
+                    </div>
+                  </ng-container>
+                  <ng-template #noPay>
+                    <span class="status error">Неоплачено</span>
+                  </ng-template>
 								</div>
 							</div>
 							<div class="col">
