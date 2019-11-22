@@ -90,9 +90,14 @@
 										</div>
 									</div>
 									<div class="buttons col-f">
-										<button class="main-button-color" (click)="takeOrder($event, i)" *ngIf="item.status === 1">
-											Взять заказ
-										</button>
+										<div class="buttons-g">
+											<button class="main-button-color" (click)="takeOrder($event, i)" *ngIf="item.status === 1">
+												Взять заказ
+											</button>
+											<button class="main-button remove buttons-g-s" (click)="cancelOrder($event, i)" *ngIf="item.status === 1">
+												Отменить
+											</button>
+										</div>
 										<div class="who-doing" *ngIf="item.status !== 1">
 											<div class="status" [innerHTML]="item.status | status | safeHTML">
 											</div>
@@ -100,6 +105,9 @@
 												{{item.manager.name}}
 											</div>
 										</div>
+										<button class="main-button-color buttons-g-s" (click)="doneOrder($event, i)" *ngIf="item.status > 1 && item.status < 3">
+											Готово
+										</button>
 									</div>
 								</div>
 							</div>
@@ -166,13 +174,17 @@
 											</div>
 										</div>
 									</div>
-									<div class="buttons col-f">
+									<div class="buttons col-f buttons-g">
 										<div class="who-doing">
 											<div class="status" [innerHTML]="item.status | status | safeHTML"></div>
 											<div class="name" *ngIf="item && item.manager && item.manager.name">
 												{{item.manager.name ? item.manager.name : 'Отсутствует'}}
 											</div>
 										</div>
+										
+										<button class="main-button-color buttons-g-s" (click)="doneOrder($event, i)" *ngIf="item.status > 1 && item.status < 3">
+											Готово
+										</button>
 									</div>
 								</div>
 							</div>
