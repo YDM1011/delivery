@@ -79,7 +79,7 @@ export class CrudService {
   }
 
   getAction(city) {
-        const date = new Date(new Date().getMonth()+1+'.'+(new Date().getDate()) +'.'+new Date().getFullYear()).getTime();
+        const date = new Date(new Date().getTime() - new Date().getHours()*60*60*1000 - new Date().getMinutes()*60*1000  - new Date().getSeconds()*1000).getTime();
         this.city = city;
         return new Promise((resolve, reject) => {
         let links = [];

@@ -57,7 +57,7 @@ export class ProviderComponent implements OnInit {
     });
   }
   init() {
-    const date = new Date(new Date().getMonth()+1+'.'+(new Date().getDate()) +'.'+new Date().getFullYear()).getTime();
+    const date = new Date(new Date().getTime() - new Date().getHours()*60*60*1000 - new Date().getMinutes()*60*1000  - new Date().getSeconds()*1000).getTime();
     this.crud.getDetailCompany(this.id, this.company).then((v: any) => {
       if (v) {
         this.company = v;
