@@ -39,6 +39,7 @@ module.exports.postUpdate = async (req, res, next, backendApp) => {
     if (req.user.role === 'client') {
         backendApp.mongoose.model('Basket').findById(req.params.id)
             .populate({path:'deliveryAddress', populate:{path:'city'}})
+            .populate({path:'createdBy'})
             .populate({path:'manager', select:'name'})
             .populate({path:'companyOwner', select:'name'})
             .exec((e,r)=>{

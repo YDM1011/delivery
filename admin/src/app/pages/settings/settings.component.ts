@@ -105,7 +105,7 @@ export class SettingsComponent implements OnInit {
     };
   }
   removeCard() {
-    this.crud.post('admin', {card: {number: '', month: '', year: '', ccv: ''}}, this.user._id).then((v: any) => {
+    this.crud.post('admin',  {privateKey: '', publikKey: '', amount: '', payDate: ''}, this.user._id).then((v: any) => {
       if (v) {
         this.auth.setMe(v);
         this.cardEmpty = false;
@@ -114,17 +114,13 @@ export class SettingsComponent implements OnInit {
   }
   createCard(e) {
     e.preventDefault();
-    const c = this.card;
-    if (c.number === '' || c.year === '' || c.month === '' || c.ccv === '') {
+    const c = this.user;
+    if (c.privateKey === '' || c.publikKey === '' || c.amount === '' || c.payDate === '') {
       Swal.fire('Error', 'Все поля должны быть заполтены', 'error');
       return;
     }
-    if (!this.cardError.number) {
-      Swal.fire('Error', 'Номер карты ввееден не коректно', 'error');
-      return;
-    }
-    this.card.number = this.card.number.replace(/\s/g, '');
-    this.crud.post('admin', {card: this.card}, this.user._id).then((v: any) => {
+    this.crud.post('setting', {payInfo:{price:c.amount,period:c.payDate}}).then()
+    this.crud.post('admin', this.user, this.user._id).then((v: any) => {
       if (v) {
         this.auth.setMe(v);
         this.showAddCard = false;

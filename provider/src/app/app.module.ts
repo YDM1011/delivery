@@ -54,6 +54,7 @@ import {Ng5SliderModule} from "ng5-slider";
 import {ChartsModule} from "ng2-charts";
 import { PayComponent } from './pages/pay/pay.component';
 import { ForgotComponent } from './pages/forgot/forgot.component';
+import {SafeHTMLPipe} from "./safe-html.pipe";
 
 @NgModule({
   declarations: [
@@ -91,7 +92,8 @@ import { ForgotComponent } from './pages/forgot/forgot.component';
     SignUpComponent,
     VerificationComponent,
     PayComponent,
-    ForgotComponent
+    ForgotComponent,
+    SafeHTMLPipe
   ],
   imports: [
     ChartsModule,

@@ -8,6 +8,7 @@ import {CrudService} from "../../crud.service";
 })
 export class PayComponent implements OnInit {
   public settings;
+  public liqpay;
   constructor(
       private crud: CrudService
   ) { }
@@ -17,6 +18,9 @@ export class PayComponent implements OnInit {
       if (v) {
         this.settings = Object.assign({}, v)
       }
+    });
+    this.crud.get('liqpay').then(v=>{
+      this.liqpay = v
     })
   }
 

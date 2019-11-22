@@ -54,6 +54,7 @@ const schem = new Schema({
     verifyCode: String,
     token: String,
     fcmToken: String,
+    payedAt: Date,
     date: {type: Date, default: new Date()},
     lastUpdate: {type: Date, default: new Date()},
 },{

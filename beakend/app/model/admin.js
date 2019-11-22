@@ -12,6 +12,10 @@ const schem = new Schema({
         ccv: {type: String, default: ''}
     },
     token: String,
+    privateKey: String,
+    publikKey: String,
+    amount: String,
+    payDate: Number,
     verify: {type: Boolean, default: false},
     date: {type: Date, default: new Date()},
     lastUpdate: {type: Date, default: new Date()},

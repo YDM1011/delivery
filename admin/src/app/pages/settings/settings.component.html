@@ -47,38 +47,29 @@
 				</button>
 			</div>
 			<div class="main-section">
-				<ng-container *ngIf="!cardEmpty">
-					У вас не додана банковская карта
-				</ng-container>
-				<div class="card-block" *ngIf="user && user.card && user.card.number !== ''">
-					Карта: {{user.card.number}}
+
+				<div class="card-block" *ngIf="user && user.publikKey
+				&& user.privateKey && user.amount && user.payDate; else cardEmpty">
+					Карта подключена
 					<button class="main-button-color" (click)="removeCard()">remove</button>
 				</div>
 				<div class="add-card" *ngIf="showAddCard">
 					<form (submit)="createCard($event)">
-						<div class="card-item number">
-							<mat-form-field class="date-item">
-								<input matInput type="text" placeholder="Номер карты" name="cardName" [(ngModel)]="card.number" #n (keyup)="checkSupported(n.value)" autocomplete="off" maxlength="19">
-							</mat-form-field>
-							<div class="error" *ngIf="!cardError.number">
-								Номер карты ввееден не верно
-							</div>
-						</div>
-						<div class="card-item date">
-							<mat-form-field class="date-item">
-								<input matInput type="text" placeholder="month" name="cardMonth" maxlength="2" pattern="[\d]{2}" numbersOnly numericType="number" [(ngModel)]="card.month" autocomplete="off">
-							</mat-form-field>
-							/
-							<mat-form-field class="date-item">
-								<input matInput type="text" placeholder="year" name="cardYear" maxlength="2" pattern="[\d]{2}" numbersOnly numericType="number" [(ngModel)]="card.year" autocomplete="off">
-							</mat-form-field>
-						</div>
-						<div class="card-item ccv">
-							<mat-form-field class="date-item">
-								<input matInput type="text" placeholder="ccv" name="cardCcv"  maxlength="3" pattern="[\d]{3}" numbersOnly numericType="number" [(ngModel)]="card.ccv" autocomplete="off">
-							</mat-form-field>
-						</div>
-						
+              <mat-form-field class="example-full-width width-auto">
+                <input matInput type="text" placeholder="privateKey" name="cardName" [(ngModel)]="user.privateKey" >
+              </mat-form-field>
+              <br>
+              <mat-form-field class="example-full-width width-auto">
+                <input matInput type="text" placeholder="publikKey" name="publikKey" [(ngModel)]="user.publikKey" >
+              </mat-form-field>
+              <br>
+              <mat-form-field class="example-full-width width-auto">
+                <input matInput type="number" placeholder="500 грн" name="amount" [(ngModel)]="user.amount" >
+              </mat-form-field>
+              <br>
+              <mat-form-field class="example-full-width width-auto">
+                <input matInput type="number" placeholder="1 месец" name="payDate" [(ngModel)]="user.payDate" >
+              </mat-form-field>
 						<div class="group-buttons">
 							<div class="left">
 							</div>
@@ -91,27 +82,30 @@
 				</div>
 			</div>
 		</div>
-		<div class="contain__group pay-info" *ngIf="loading">
-			<div class="contain__group-header">
-				<div class="title">
-					Сума и период оплаты
-				</div>
-			</div>
-			<div class="main-section pay-section">
-				<div class="sum">
-					<mat-form-field class="example-full-width">
-						<input matInput type="number" placeholder="Цена" name="price" [(ngModel)]="objPayInfo.price" autocomplete="off">
-					</mat-form-field>
-				</div>
-				<div class="time">
-					<mat-form-field class="example-full-width">
-						<input matInput type="text" placeholder="Период" name="period" [(ngModel)]="objPayInfo.period" autocomplete="off">
-					</mat-form-field>
-				</div>
-				<button class="main-button-color" (click)="savePayInfo()">
-					Изменить
-				</button>
-			</div>
-		</div>
+		<!--<div class="contain__group pay-info" *ngIf="loading">-->
+			<!--<div class="contain__group-header">-->
+				<!--<div class="title">-->
+					<!--Сума и период оплаты-->
+				<!--</div>-->
+			<!--</div>-->
+			<!--<div class="main-section pay-section">-->
+				<!--<div class="sum">-->
+					<!--<mat-form-field class="example-full-width">-->
+						<!--<input matInput type="number" placeholder="Цена" name="price" [(ngModel)]="objPayInfo.price" autocomplete="off">-->
+					<!--</mat-form-field>-->
+				<!--</div>-->
+				<!--<div class="time">-->
+					<!--<mat-form-field class="example-full-width">-->
+						<!--<input matInput type="text" placeholder="Период" name="period" [(ngModel)]="objPayInfo.period" autocomplete="off">-->
+					<!--</mat-form-field>-->
+				<!--</div>-->
+				<!--<button class="main-button-color" (click)="savePayInfo()">-->
+					<!--Изменить-->
+				<!--</button>-->
+			<!--</div>-->
+		<!--</div>-->
 	</div>
 </ng-container>
+<ng-template #cardEmpty>
+  У вас не додана банковская карта
+</ng-template>

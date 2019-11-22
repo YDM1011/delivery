@@ -4,15 +4,18 @@
 			Оплата
 		</div>
 		<div class="info-description">
-			Наши услуги стоят {{settings.payInfo.price}}грн/{{settings.payInfo.period}}
+			Наши услуги стоят {{settings.payInfo.price}} грн за {{settings.payInfo.period}} месец(а)
 		</div>
 		<div class="info-detail-description">
 			Давно выяснено, что при оценке дизайна и композиции читаемый текст мешает сосредоточиться. Lorem Ipsum используют потому
 		</div>
-		
-		<a class="liqpay">
-		
-		</a>
+
+    <ng-container *ngIf="liqpay">
+      <div [innerHTML]="liqpay.btn | safeHTML">
+        <!--{{basket.html}}-->
+      </div>
+    </ng-container>
+
 		
 	</div>
 </div>
