@@ -45,6 +45,7 @@ export class CityComponent implements OnInit, OnDestroy {
 
   changeCity(index){
     this.auth.setCity(this.city[index]);
+    localStorage.setItem('city', JSON.stringify(this.city[index]));
     this.router.navigate(['/' + this.language])
   }
   ngOnDestroy() {

@@ -5,6 +5,7 @@ import {ConnectionService} from 'ng-connection-service';
 import {WS} from '../../websocket/websocket.events';
 import {WebsocketService} from '../../websocket';
 import {CrudService} from "../../crud.service";
+import {MatSnackBar} from "@angular/material";
 
 @Component({
   selector: 'app-init-layout',
@@ -14,18 +15,31 @@ import {CrudService} from "../../crud.service";
 export class InitLayoutComponent implements OnInit {
   status = 'online';
   isConnected = true;
+  public language;
   public notificationOrders$: any;
   public notification$: any;
   public ratingConfirm$: any;
   public notificationDebtor$: any;
-
+  public snackDebtorMessage = {
+    ru: 'Ваш долг обновленн по заказу №',
+    ua: 'Ваш борг обновлений по замовленню №'
+  };
+  public snackDebtorMessageAll = {
+    ru: 'Ваш долг закрыт по заказу',
+    ua: 'Ваш борг закритий по замовленню'
+  };
+  public snackOrderMessage = {
+    ru: 'Статус вашего заказа обновлен',
+    ua: 'Статус вашого замовлення обновленний'
+  };
   constructor(
     private wsService: WebsocketService,
     private connectionService: ConnectionService,
     private auth: AuthService,
     private crud: CrudService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private snackBar: MatSnackBar
   ) { }
 
   ngOnInit() {
@@ -40,14 +54,25 @@ export class InitLayoutComponent implements OnInit {
       });
       this.notificationOrders$.subscribe(v => {
         this.auth.setUpdateOrder(v.data);
+        this.openSnackBar(this.snackOrderMessage[this.language],  'Ok');
       });
       this.notificationDebtor$.subscribe(v => {
         this.auth.setUpdateDebtor(v.data);
+        if (v.data.value === 0) {
+          this.openSnackBar(this.snackDebtorMessageAll[this.language] + v.data.basket.basketNumber ? +' №'+v.data.basket.basketNumber: '',  'Ok');
+        }
+        if (v.data.value > 0) {
+          this.openSnackBar(this.snackDebtorMessage[this.language] + v.data.basket.basketNumber ? +' №'+v.data.basket.basketNumber: '',  'Ok');
+        }
       });
       console.log("fcm save");
       this.crud.saveToken('fcmToken:test')
     });
-
+    this.auth.onLanguage.subscribe((l: any) => {
+      if (l) {
+        this.language = l;
+      }
+    });
     if (navigator.onLine) {
       this.status = 'online';
       this.isConnected = true;
@@ -94,4 +119,9 @@ export class InitLayoutComponent implements OnInit {
   }
 
 
+  openSnackBar(message: string, action: string) {
+    this.snackBar.open(message, action, {
+      duration: 2000,
+    });
+  }
 }

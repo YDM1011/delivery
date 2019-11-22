@@ -218,13 +218,11 @@ export class CrudService {
         if (this.CompanyArr && this.CompanyArr.length > 0) {
           this.get('category', '', query + select + populate).then((v: any) => {
             if (v) {
-              const defIcon = './assets/angular.png';
               let triger = {};
               let arr = [];
               v.forEach(it => {
                 if (it.mainCategory) {
                   if (triger[it.mainCategory._id]) return;
-                  it["img"] =  `${this.domain}/upload/${it.mainCategory.img}` || defIcon;
                   it["name"] = `${it.mainCategory.name}`;
                   arr.push(it);
                   triger[it.mainCategory._id] = true;
@@ -268,10 +266,6 @@ export class CrudService {
         if (Array.from(arr).length > 0) {
           this.get('brand', '', query).then((v: any) => {
             if (v) {
-              const defIcon = './assets/angular.png';
-              v.forEach(it => {
-                it["img"] = it.img ? `${this.domain}/upload/${it.img}` || defIcon : defIcon;
-              });
               resolve(v);
             }
           });
@@ -284,9 +278,6 @@ export class CrudService {
     return new Promise((resolve, reject) => {
       this.get('brand', '', `?query={"name":"${id}"}&populate={"path":"orders"}`).then((v: any) => {
         if (v) {
-          v = v[0];
-          const defIcon = './assets/angular.png';
-            v["img"] = v.img ? `${this.domain}/upload/${v.img}` || defIcon : defIcon;
           resolve(v);
         }
       });

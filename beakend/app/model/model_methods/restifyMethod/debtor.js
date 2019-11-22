@@ -1,6 +1,5 @@
 
 module.exports.postUpdate = async (req, res, next, backendApp) => {
-
     let debtor = req.erm.result;
     backendApp.mongoose.model('Debtor')
         .findOne({_id: debtor._id})

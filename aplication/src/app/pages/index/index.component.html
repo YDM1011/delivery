@@ -48,21 +48,11 @@
     <mat-carousel>
       <mat-carousel-slide *ngFor="let item of action">
         <div class="item" [routerLink]="'/'+language+'/action/'+item._id">
-          <app-img class="action-img" [fs]="item.img"></app-img>
+          <app-img class="action-img" [fs]="item.img" [dir]="'product'"></app-img>
         </div>
       </mat-carousel-slide>
     </mat-carousel>
   </div>
-
-<!--  <div class="carousel" *ngIf="action && action.length>0">-->
-<!--    <owl-carousel [options]="mySlideOptions" [items]="action" [carouselClasses]="['owl-theme', 'sliding']">-->
-<!--      <div [routerLink]="'/'+language+'/action/'+image._id" class="item" *ngFor="let image of action;let i = index">-->
-<!--        <div class="action-img">-->
-<!--          <app-img [dir]="'product'" [fs]="image.img"></app-img>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--    </owl-carousel>-->
-<!--  </div>-->
 </ng-container>
 <ng-container *ngIf="loaded.category; else preloadCat">
   <div class="category" *ngIf="category.length > 0">
@@ -78,7 +68,7 @@
       <a routerLink="/{{language}}/category/{{item.name}}" class="category-box-item" *ngFor="let item of category">
         <div class="svg">
           <div class="img">
-            <img src="{{item.img}}" alt="">
+            <app-img [fs]="item.mainCategory.img ? item.mainCategory.img : ''" [anyFs]="'assets/images/brand.svg'"></app-img>
           </div>
         </div>
         <div class="title">
@@ -103,7 +93,7 @@
       <a routerLink="/{{language}}/brand/{{item.name}}" class="category-box-item" *ngFor="let item of brandy">
         <div class="brandy-svg">
           <div class="img">
-            <img src="{{item.img}}" alt="">
+            <app-img [fs]="item.img ? item.img : ''" [dir]="'product'" [anyFs]="'assets/images/brand.svg'"></app-img>
           </div>
         </div>
         <div class="title">

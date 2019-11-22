@@ -55,7 +55,9 @@ export class OrdersComponent implements OnInit, OnDestroy {
     this._subscription.push(this.auth.onUpdateDebtor.subscribe((v: any) => {
       if (v) {
         let index = this.crud.find('_id', v.basket, this.orders);
-        this.orders[index]['newDebtor'] = v.value;
+        if (this.orders[index]) {
+          this.orders[index]['newDebtor'] = v.value;
+        }
       }
     }));
     this._subscription.push(this.auth.onLanguage.subscribe((v: string) => {

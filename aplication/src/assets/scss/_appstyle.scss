@@ -140,6 +140,7 @@
     display: flex;
     flex-wrap: nowrap;
     align-items: flex-start;
+    overflow-y: hidden;
     overflow-x: auto;
     overflow: -moz-scrollbars-none;
     -ms-overflow-style: none;
@@ -222,6 +223,7 @@
       display: flex;
       flex-wrap: nowrap;
       align-items: flex-start;
+      overflow-y: hidden;
       overflow-x: auto;
       overflow: -moz-scrollbars-none;
       -ms-overflow-style: none;
@@ -354,32 +356,6 @@
   }
 }
 
-.block-control{
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  height: 55px;
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  z-index: 5;
-  max-width: 100%;
-  background: #FFFFFF;
-  box-shadow: 0px -5px 5px rgba(9, 194, 194, 0.08);
-  .control-item{
-    display: inline-flex;
-  }
-  .center{
-    padding: 20px;
-    background: $main-color;
-    border-radius: 50%;
-    box-shadow: 0px -4px 5px rgba(9, 194, 194, 0.15);
-    position: absolute;
-    left: calc(50% - 35px);
-    bottom: 0;
-  }
-}
 
 //other header
 
