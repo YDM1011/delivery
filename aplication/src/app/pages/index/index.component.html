@@ -93,7 +93,7 @@
       <a routerLink="/{{language}}/brand/{{item.name}}" class="category-box-item" *ngFor="let item of brandy">
         <div class="brandy-svg">
           <div class="img">
-            <app-img [fs]="item.img ? item.img : ''" [dir]="'product'" [anyFs]="'assets/images/brand.svg'"></app-img>
+            <app-img class="brand-ind" [fs]="item.img ? item.img : ''" [dir]="'product'" [anyFs]="'assets/images/brand.svg'"></app-img>
           </div>
         </div>
         <div class="title">

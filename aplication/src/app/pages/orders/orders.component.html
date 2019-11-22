@@ -56,10 +56,6 @@
             </div>
           </div>
         </div>
-<!--  -->
-<!--        <cdk-virtual-scroll-viewport itemSize="205" class="viewport" appUpdateScrollOrders (output)="getOutput($event)" [dateStart]="newStart" [dateEnd]="newEnd" [userId]="this.user._id" [type]="'old'" *ngIf="orders && orders.length > 0">-->
-<!--          <app-orders-item [order]="item" *cdkVirtualFor="let item of orders"></app-orders-item>-->
-<!--        </cdk-virtual-scroll-viewport>-->
         <div class="div" appUpdateScrollOrders (output)="getOutput($event)" [dateStart]="newStart" [dateEnd]="newEnd" [userId]="this.user._id" [type]="'old'" *ngIf="loading && orders && orders.length > 0">
           <app-orders-item [order]="item" (removeOrder)="removeOrder($event)"  (confirmOrder)="confirmOrder($event)" *ngFor="let item of orders; let index = index"></app-orders-item>
         </div>

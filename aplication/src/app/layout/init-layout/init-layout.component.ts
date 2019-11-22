@@ -58,11 +58,12 @@ export class InitLayoutComponent implements OnInit {
       });
       this.notificationDebtor$.subscribe(v => {
         this.auth.setUpdateDebtor(v.data);
+        console.log(v.data)
         if (v.data.value === 0) {
-          this.openSnackBar(this.snackDebtorMessageAll[this.language] + v.data.basket.basketNumber ? +' №'+v.data.basket.basketNumber: '',  'Ok');
+          this.openSnackBar(this.snackDebtorMessageAll[this.language] + ' №'+v.data.basket.basketNumber,  'Ok');
         }
         if (v.data.value > 0) {
-          this.openSnackBar(this.snackDebtorMessage[this.language] + v.data.basket.basketNumber ? +' №'+v.data.basket.basketNumber: '',  'Ok');
+          this.openSnackBar(this.snackDebtorMessage[this.language] + ' №'+v.data.basket.basketNumber,  'Ok');
         }
       });
       console.log("fcm save");

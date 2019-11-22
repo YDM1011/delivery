@@ -120,3 +120,8 @@ width: 100%;
 .empty{
   text-align: center;
 }
+::ng-deep .brand-ind{
+  img{
+    object-fit: cover!important;
+  }
+}

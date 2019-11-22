@@ -73,7 +73,7 @@ export class NotificationComponent implements OnInit, OnDestroy {
      });
   }
   getRating() {
-    const queryCompany = `?query={"clientOwner":"${localStorage.getItem('userId')}","show":true,"rating":"0"}&populate={"path":"companyOwner","select":"name"}`;
+    const queryCompany = `?query={"clientOwner":"${localStorage.getItem('userId')}","show":true,"rating":"0"}&populate={"path":"companyOwner","select":"name img"}`;
     this.crud.get('rating', '', queryCompany).then((v: any) => {
       if (v) {
         this.ratingArr = Object.assign([], v);
@@ -81,7 +81,7 @@ export class NotificationComponent implements OnInit, OnDestroy {
       }
     });
     const queryCompanyHistory = JSON.stringify({clientOwner:localStorage.getItem('userId'), show: true, rating: {$ne: 0} });
-    const populateCompanyHistory = JSON.stringify({path:"companyOwner",select: "name"});
+    const populateCompanyHistory = JSON.stringify({path:"companyOwner",select: "name img"});
     this.crud.get(`rating?query=${queryCompanyHistory}&populate=${populateCompanyHistory}`).then((v: any) => {
       if (v) {
         this.ratingArrHistory = Object.assign([], v);

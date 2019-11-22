@@ -190,7 +190,7 @@ export class OrdersDetailComponent implements OnInit, OnDestroy {
             const populate = JSON.stringify([{path: 'products', select: 'price count', populate: {path: 'orderOwner', select: 'name'}}, {path: 'createdBy', select: 'name address'}, {path: 'deliveryAddress', populate: {path: 'city'}, select: 'name street build department' }, {path: 'manager', select: 'name'}]);
             this.crud.get(`basket?query={"_id":"${this.id}"}&populate=${populate}`).then((b: any) => {
               if (b && b.length > 0) {
-                this.basket = b[0];
+                this.basketCopy = b[0];
               }
             });
           }

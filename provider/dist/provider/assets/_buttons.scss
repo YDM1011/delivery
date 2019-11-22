@@ -1,4 +1,4 @@
-.main-button, .main-button-color{
+.main-button, .main-button-color, .main-button-color-red{
   display: flex;
   align-items: center;
   justify-content: center;
@@ -18,7 +18,11 @@
   color: #FFFFFF;
   border: 1px solid #009688;
 }
-
+.main-button-color-red{
+  background: #E21B1B;
+  color: #FFFFFF;
+  border: 1px solid #E21B1B;
+}
 .button-add{
   display: flex;
   align-items: center;
