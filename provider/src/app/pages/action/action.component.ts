@@ -91,7 +91,7 @@ export class ActionComponent implements OnInit {
   }
   checkAccess(){
     const date = new Date();
-    if (new Date(this.actions[0].date).getDate() === date.getDate()) {
+    if (this.actions[0] && new Date(this.actions[0].date).getDate() === date.getDate()) {
       this.access = false;
       return;
     }

@@ -4,6 +4,35 @@ module.exports.preRead = async (req,res,next, backendApp) => {
 
 module.exports.preUpdate = async (req,res,next, backendApp) => {
     const Basket = backendApp.mongoose.model('Basket');
+    const createChartOrder = (doc, next)=>{
+        backendApp.mongoose.model('Company')
+            .findOne({_id: doc.companyOwner})
+            .select('createdBy')
+            .exec((e,r)=>{
+                if (r) {
+                    backendApp.mongoose.model('ChartOrder')
+                        .create({
+                            createdBy: r.createdBy,
+                            companyOwner: doc.companyOwner,
+                            count: 1,
+                            status: doc.status,
+                            sum: doc.totalPrice,
+                            date: new Date(new Date().getMonth()+1+'.'+new Date().getDate()+'.'+new Date().getFullYear())
+                        }, (e,r)=>{
+
+                        })
+                }
+            })
+
+    };
+    const updateChartOrder = (doc, ChartOrder, next)=>{
+        backendApp.mongoose.model('ChartOrder')
+            .findOneAndUpdate({_id:ChartOrder._id}, {
+                $inc:{count: 1, sum: doc.totalPrice},
+                status: doc.status
+            }, (e,r)=>{
+            })
+    };
     try {
 
         if (req.user.role === 'provider' || req.user.role === 'collaborator') {
@@ -14,7 +43,19 @@ module.exports.preUpdate = async (req,res,next, backendApp) => {
                     if (e) return res.serverError(e);
                     if (!r) return res.notFound('Not found!1');
                     if (r) {
-                        if (req.body.status === 4) {
+                        if (req.body.status === 4 && r.status !== 4) {
+                            let date = new Date(new Date().getMonth()+1+'.'+new Date().getDate()+'.'+new Date().getFullYear()).getTime();
+                            backendApp.mongoose.model('ChartOrder')
+                                .findOne({companyOwner:r.companyOwner, date:{$eq:date}})
+                                .exec((e,chart)=>{
+                                    if (e) return next();
+                                    if (!chart || chart.length==0){
+                                        createChartOrder(r)
+                                    } else
+                                    if (chart) {
+                                        updateChartOrder(r, chart)
+                                    }
+                                })
                             r.products.forEach(prod=>{
                                 backendApp.mongoose.model('Order')
                                     .findOneAndUpdate({_id:prod.orderOwner}, {$inc:{countBought:(prod.count)}}, {new:true})
@@ -31,6 +72,7 @@ module.exports.preUpdate = async (req,res,next, backendApp) => {
     } catch(e) {
         res.notFound("Can't be update")
     }
+
 };
 
 module.exports.postUpdate = async (req, res, next, backendApp) => {

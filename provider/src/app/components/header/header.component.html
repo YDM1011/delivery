@@ -4,7 +4,7 @@
 	</div>
 	<div class="info-active" *ngIf="user && user.companyOwner">
 		<span>
-			{{user.companyOwner.payInfo ? "Оплачено до" + user.companyOwner.payInfo : "Не оплачено"}}
+			{{date && date > 0  ? "Оплачено до" + user.payedAt : "Не оплачено"}}
 		</span>
 		<button class="active-button" [routerLink]="'/pay-info'">{{user.companyOwner.payInfo ? 'Продлить' : 'Оплатить'}}</button>
 	</div>

@@ -147,6 +147,7 @@ const canRead = (options) => {
         const objPromise = checkOwner(req,res,next,options);
         Promise.all(objPromise).then(query => {
             let opt;
+            console.log(req.erm.query)
             query.some(it => {
                 if (it) {
                     opt = it;
@@ -354,12 +355,15 @@ const checkOwner = (req,res,next,options) => {
     let query = {$or: [{'createdBy.itemId': req.user._id},
             {createdBy: req.user._id},
             {_id: req.user._id}]};
+    console.log("options[role].read[0]",options[role].read[0])
     if (!options[role] || !options[role].read) {
         objPromise.push( new Promise((rs,rj)=> {rj("Not access!")}))
         return objPromise
     } else
     if ((options[role].read[0].public || role === 'sa') || options[role].read[0].private){
+
         objPromise.push( new Promise((rs,rj)=> {
+
             if (options[role].read[0].public){
                 req.error.success = true;
                 // if(role === 'sa'){
@@ -383,7 +387,7 @@ const checkOwner = (req,res,next,options) => {
                     req.erm.query['query'] = query;
                 }
                 req.error.success = true;
-
+                console.log("Private", query)
                 rs(query);
                 // return objPromise
             }
