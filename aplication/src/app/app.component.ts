@@ -41,7 +41,11 @@ export class AppComponent {
           this.setting = Object.assign({}, v);
           this.auth.setSettings(this.setting);
           if (this.setting.city) {
-            this.auth.setCity(this.setting.city);
+            if (localStorage.getItem('city')){
+              this.auth.setCity(JSON.parse(localStorage.getItem('city')))
+            } else {
+              this.auth.setCity(this.setting.city);
+            }
           }
           this.loaded = true;
         });

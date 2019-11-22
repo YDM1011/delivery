@@ -38,7 +38,8 @@ export class ScrollUpdateActionDirective  implements AfterViewInit {
   }
   upload() {
     if (this.count <= this.skip * 3) {return; }
-    const query = `?query=${JSON.stringify({client: {$in: localStorage.getItem('userId')}})}&sort={"date":-1}&skip=${this.skip * 3}&limit=3`;
+    const date = new Date(new Date().getTime() - new Date().getHours()*60*60*1000 - new Date().getMinutes()*60*1000  - new Date().getSeconds()*1000).getTime();
+    const query = `?query=${JSON.stringify({client: {$in: localStorage.getItem('userId')},dateEnd:{$gte:date}})}&sort={"date":-1}&skip=${this.skip * 3}&limit=3`;
     this.crud.get('action', '', query).then((v: any) => {
       if (v) {
         this.skip++;

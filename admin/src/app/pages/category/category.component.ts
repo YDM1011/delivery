@@ -150,6 +150,7 @@ export class CategoryComponent implements OnInit {
   }
   confirmEditCategoryCrud() {
     this.editObjCopy.img = this.editObj.img;
+    this.editObjCopy.name = this.editObjCopy.name.trim();
     this.crud.post('mainCategory', this.editObjCopy, this.editObj['_id']).then((v: any) => {
       if (v) {
         this.categorys[this.crud.find('_id', this.editObj['_id'], this.categorys)] = v;

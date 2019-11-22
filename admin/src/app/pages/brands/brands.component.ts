@@ -102,6 +102,7 @@ export class BrandsComponent implements OnInit {
       Swal.fire('Error', 'Картинка в бренда не может быть пуста', 'error').then();
       return;
     }
+    this.editObjCopy.name = this.editObjCopy.name.trim();
     this.crud.post('brand', this.editObjCopy, this.editObj['_id']).then((v: any) => {
       if (v) {
         this.editShow = false;

@@ -1,6 +1,5 @@
 
 module.exports.postUpdate = async (req, res, next, backendApp) => {
-
     let debtor = req.erm.result;
      if (req.user.role === 'provider' || req.user.role === 'collaborator') {
          sendToClient(backendApp, debtor, req);

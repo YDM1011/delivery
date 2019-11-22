@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1574413987326,
+  "timestamp": 1574424488963,
   "index": "/index.html",
   "assetGroups": [
     {
@@ -11,12 +11,12 @@
         "/5.a9961713082d23e44894.js",
         "/favicon.ico",
         "/index.html",
-        "/main.eeaf0b804e764332eecd.js",
+        "/main.f88b1b2f8c8a1eebafba.js",
         "/polyfills-es5.7716d8dd642a0d9864f9.js",
         "/polyfills.ffc476ee7df9c02b7945.js",
         "/runtime.3b253adfe687de943dca.js",
         "/scripts.859e64cef1ef944f8beb.js",
-        "/styles.c00f19f88159eecf304b.css"
+        "/styles.ade552e53251731cc234.css"
       ],
       "patterns": []
     },
@@ -171,15 +171,15 @@
     "/assets/loading.json": "1a0d267dc23ff71f9ee4f1a89f2636aba33f3902",
     "/assets/not-connection.json": "b4ebc54474ec1ba3661d275a2682286cb9e25cfa",
     "/assets/not-found.json": "384f957d4d39e9b31c1fd388e26e432d9e7cfa64",
-    "/assets/scss/_appstyle.scss": "6c533b8b3b07dc68a26beffafd0e67aa5e1a9564",
+    "/assets/scss/_appstyle.scss": "49cb005012fcddf653710da9de8d1b973a624015",
     "/assets/scss/_fonts.scss": "21b7a6e3560bdb61585b63e61dd76a55dc9865d9",
     "/assets/scss/_menu.scss": "8114e02e74b7615a4e82eb068148761bf1269356",
     "/assets/scss/_normalize.scss": "7e400ee6c695526f4c0055bd5f4d96141ce129c1",
     "/assets/scss/_variable.scss": "85b063eae7503c006911523d21513222df295900",
     "/assets/scss/styles.scss": "6f725e615a04dae0ceb81357a1d556deb9c3e489",
     "/favicon.ico": "84161b857f5c547e3699ddfbffc6d8d737542e01",
-    "/index.html": "865488f192347f96e420bc1fef76422fd79b106b",
-    "/main.eeaf0b804e764332eecd.js": "1e1d1f07b4f4b83570593da1d433ef48a7e8e51b",
+    "/index.html": "39eccfeb2baf91fca3ba44ef2167621f94494b1c",
+    "/main.f88b1b2f8c8a1eebafba.js": "0698004ec22d96d9bdf65918fef4c1c6c2aafaa5",
     "/minus.11f6825b95fcd9991883.svg": "7784355a2e005d1a36797298ce656fe87f0ddb42",
     "/plus.d4b9efd9a41268074962.svg": "730c3cf8c5803e092b885ec96b9e560c4626e3b4",
     "/polyfills-es5.7716d8dd642a0d9864f9.js": "9d8470a6053852e77ee43b505664317f721b13ae",
@@ -187,7 +187,7 @@
     "/remove-chip.0ed8ec9656735a3161a0.svg": "54da8f4a484e41aea900238c8b3323b6a310f85a",
     "/runtime.3b253adfe687de943dca.js": "f91f1e2c79f6fc74ef538fdfd36c15cda438f5ca",
     "/scripts.859e64cef1ef944f8beb.js": "6837f38e34bfcb01b853b3bf65a49bf8e5eee72e",
-    "/styles.c00f19f88159eecf304b.css": "1a766c0bea4d6849a316d7ab314fe6b9f6886b85"
+    "/styles.ade552e53251731cc234.css": "ce12b20b3db57f0dd04b875da1fbbb4f9b401110"
   },
   "navigationUrls": [
     {

@@ -120,6 +120,7 @@ export class CityComponent implements OnInit {
       return;
     }
     this.editObj.img = this.editObjCopy.img;
+    this.editObj.name = this.editObj.name.trim();
     this.crud.post('city', this.editObj, this.editObj['_id']).then((v: any) => {
       if (v) {
         this.editShow = false;

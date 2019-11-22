@@ -61,7 +61,7 @@ export class UpdateScrollOrdersDirective implements AfterViewInit {
     }
     if (this.count <= this.skip * 5) {return; }
     if (this.type === 'new') {
-      this.crud.get(`basket?query={"createdBy":"${this.userId}","$or":[{"status":1},{"status":2},{"status":3}]}&populate=[{"path":"deliveryAddress","select":"name img"},{"path":"companyOwner","select":"name"}]&skip={${this.skip * 5}&limit=5&sort={"date":-1}`).then((v: any) => {
+      this.crud.get(`basket?query={"createdBy":"${this.userId}","$or":[{"status":1},{"status":2},{"status":3}]}&populate=[{"path":"deliveryAddress","select":"name img"},{"path":"companyOwner","select":"name"}]&skip=${this.skip * 5}&limit=5&sort={"date":-1}`).then((v: any) => {
         if (v) {
           this.skip++;
           this.triger = true;

@@ -47,7 +47,7 @@ export class ActionDetailComponent implements OnInit {
     });
   }
   getAction(id) {
-    this.crud.get(`action?query={"_id":"${id}"}&populate={"path":"companyOwner","select":"name"}`).then((v: any) => {
+    this.crud.get(`action?query={"_id":"${id}"}&populate={"path":"companyOwner","select":"name img"}`).then((v: any) => {
       if (v) {
         this.action = v[0];
       }
