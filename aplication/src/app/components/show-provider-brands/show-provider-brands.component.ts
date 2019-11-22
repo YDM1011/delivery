@@ -23,7 +23,7 @@ export class ShowProviderBrandsComponent implements OnInit, OnChanges {
     this.products = [];
     this.route.params.subscribe((params: any) => {
       this.id = this.route.snapshot.paramMap.get('id');
-      const query = `?query={"companyOwner":"${this.id}","brand":"${this.brandId}"}&limit=1&skip=0`;
+      const query = `?query={"companyOwner":"${this.id}","brand":"${this.brandId}"}&limit=5&skip=0`;
       this.crud.get('order', '', query).then(v => {
         if (v) {
           this.products = this.products.concat(v);

@@ -75,7 +75,7 @@ export class CategoryIDComponent implements OnInit {
               }
             });
           }
-          const query = `?query={"$and":[${arr.length > 0 ? JSON.stringify( {$or: arr} ) : {} },{"mainCategory":"${this.mainCategory._id}"}]}&skip=0&limit=5&sort=${this.sort}`;
+          const query = `?query={"$and":[${arr.length > 0 ? JSON.stringify( {$or: arr} ) : {} },{"mainCategory":"${this.mainCategory._id}"}]}&populate={"path":"companyOwner"}&skip=0&limit=5&sort=${this.sort}`;
           this.crud.get('order', '',  query).then((orders) => {
             this.orders = orders;
           });
@@ -95,7 +95,7 @@ export class CategoryIDComponent implements OnInit {
       });
     }
 
-    const query = `?query={"$and":[${arr.length > 0 ? JSON.stringify( {$or: arr} ) : {} },{"mainCategory":"${this.mainCategory._id}"}${this.filter ? this.filter : ''}]}&skip=0&limit=5&sort=${this.sort}`;
+    const query = `?query={"$and":[${arr.length > 0 ? JSON.stringify( {$or: arr} ) : {} },{"mainCategory":"${this.mainCategory._id}"}${this.filter ? this.filter : ''}]}&populate={"path":"companyOwner"}&skip=0&limit=5&sort=${this.sort}`;
     this.crud.get('order', '',  query).then((orders) => {
       this.orders = orders;
       console.log(this.orders)

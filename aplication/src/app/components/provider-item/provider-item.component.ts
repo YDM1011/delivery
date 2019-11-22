@@ -58,9 +58,8 @@ export class ProviderItemComponent implements OnInit, OnDestroy {
   }
 
   init() {
-    const date = new Date(new Date(new Date().getMonth()+1+'.'+(new Date().getDate()) +'.'+new Date().getFullYear()).getTime());
-
-    let query = `?query=${JSON.stringify({$or:[{actionGlobal:true},{client:{$in:localStorage.getItem('userId')}}], companyOwner:this.data._id, dateEnd: {$gte:date.toISOString()}})}`; //
+    let date = new Date(new Date().getTime() - new Date().getHours()*60*60*1000 - new Date().getMinutes()*60*1000  - new Date().getSeconds()*1000).getTime();
+    let query = `?query=${JSON.stringify({$or:[{actionGlobal:true},{client:{$in:localStorage.getItem('userId')}}],companyOwner:this.data._id,dateEnd:{$gte:date}})}`;
     this.crud.get('action/count', '', query).then((v:any)=>{
       this.data.actionCount = v.count;
     });
