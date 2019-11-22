@@ -3,6 +3,7 @@ import {CrudService} from '../../crud.service';
 import {AuthService} from '../../auth.service';
 import {Subscription} from "rxjs";
 import {Router} from "@angular/router";
+import Swal from "sweetalert2";
 
 @Component({
   selector: 'app-orders',
@@ -140,7 +141,7 @@ export class OrdersComponent implements OnInit, OnDestroy {
     this.crud.get(`basket/count?query={"companyOwner":"${this.user.companyOwner._id}","date":{"$gte":"${new Date(this.newStart).toISOString()}","$lte":"${new Date(this.newEnd).toISOString()}"},"$or":[{"status":4},{"status":5}]}`).then((count: any) => {
       if (count) {
         this.lengthPagination = count.count;
-        const query = JSON.stringify({companyOwner: this.user.companyOwner._id, date: {$gte:new Date(this.newStart).toISOString(),$lte:new Date(this.newEnd).toISOString()}, $or: [{status: 4}, {status: 5}]});
+        const query = JSON.stringify({isHidden:false,companyOwner: this.user.companyOwner._id, date: {$gte:new Date(this.newStart).toISOString(),$lte:new Date(this.newEnd).toISOString()}, $or: [{status: 4}, {status: 5}]});
         this.crud.get(`basket?query=${query}&populate=[{"path":"deliveryAddress","populate":"city","select":"name build street department img"},{"path":"manager","select":"name"},{"path":"createdBy","select":"mobile name"}]&skip=${skip}&limit=${limit}&sort={"date":-1}`).then((orders: any) => {
           if (!orders) {return; }
           this.orders = orders;
@@ -175,5 +176,28 @@ export class OrdersComponent implements OnInit, OnDestroy {
         });
       }
     });
+  }
+
+  hiddenBasket(e,i){
+    e.stopPropagation();
+    Swal.fire({
+      title: 'Вы действительно хотите удалить заказ?',
+      type: 'warning',
+      showCloseButton: true,
+      showCancelButton: true,
+      focusConfirm: true,
+      reverseButtons: true,
+      cancelButtonText: 'Отменить!',
+      confirmButtonText: 'Удалить',
+      confirmButtonColor: '#dd4535',
+    }).then((result) => {
+      if (result.value) {
+        this.crud.post('basket',{isHidden: true}, this.orders[i]._id).then((v: any) => {
+          if (v) {
+            this.orders.splice(i, 1);
+          }
+        })
+      }
+    })
   }
 }

@@ -66,7 +66,7 @@ export class OrdersComponent implements OnInit, OnDestroy {
     this._subscription.push(this.auth.onMe.subscribe((me: any) => {
       if (!me) {return; }
       this.user = me;
-      this.crud.get(`basket?query={"createdBy":"${this.user._id}","$or":[{"status":1},{"status":2},{"status":3}]}&populate=[{"path":"deliveryAddress","select":"name img"},{"path":"companyOwner","select":"name"}]&skip=0&limit=5&sort={"date":-1}`).then((v: any) => {
+      this.crud.get(`basket?query={"createdBy":"${this.user._id}","$or":[{"status":1},{"status":2},{"status":3}]}&populate=[{"path":"deliveryAddress","select":"name img"},{"path":"companyOwner","select":"name img"}]&skip=0&limit=5&sort={"date":-1}`).then((v: any) => {
         this.orders = v;
         this.loading = true;
       });
@@ -102,7 +102,7 @@ export class OrdersComponent implements OnInit, OnDestroy {
   getBaskets() {
     this.loading = false;
     this.toggleMain = true;
-    this.crud.get(`basket?query={"createdBy":"${this.user._id}","$or":[{"status":1},{"status":2},{"status":3}]}&populate=[{"path":"deliveryAddress","select":"name img"},{"path":"companyOwner","select":"name"}]&skip=0&limit=5&sort={"date":-1}`).then((v: any) => {
+    this.crud.get(`basket?query={"createdBy":"${this.user._id}","$or":[{"status":1},{"status":2},{"status":3}]}&populate=[{"path":"deliveryAddress","select":"name img"},{"path":"companyOwner","select":"name img"}]&skip=0&limit=5&sort={"date":-1}`).then((v: any) => {
       this.orders = v;
       this.loading = true;
     });
@@ -112,7 +112,7 @@ export class OrdersComponent implements OnInit, OnDestroy {
     this.loading = false;
     this.newStart = new Date(this.dateStart.getMonth()+1+'.'+(this.dateStart.getDate()) +'.'+new Date().getFullYear()).getTime();
     this.newEnd = new Date(this.dateEnd.getMonth()+1+'.'+(this.dateEnd.getDate()+1) +'.'+new Date().getFullYear()).getTime()-1;
-    this.crud.get(`basket?query={"createdBy":"${this.user._id}","date":{"$gte":"${new Date(this.newStart).toISOString()}","$lte":"${new Date(this.newEnd).toISOString()}"},"$or":[{"status":4},{"status":5}]}&populate=[{"path":"deliveryAddress","select":"name img"},{"path":"companyOwner","select":"name"}]&skip=0&limit=5&sort={"date":-1}`).then((v: any) => {
+    this.crud.get(`basket?query={"createdBy":"${this.user._id}","date":{"$gte":"${new Date(this.newStart).toISOString()}","$lte":"${new Date(this.newEnd).toISOString()}"},"$or":[{"status":4},{"status":5}]}&populate=[{"path":"deliveryAddress","select":"name img"},{"path":"companyOwner","select":"name img"}]&skip=0&limit=5&sort={"date":-1}`).then((v: any) => {
       this.orders = v;
       this.loading = true;
     });
