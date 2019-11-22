@@ -18,7 +18,10 @@ const schema = new Schema({
         type: Number,
         default: 0
     },
-    isHidden: Boolean,
+    isHidden:{
+        type: Boolean,
+        default: false
+    },
     manager: {
         type: Schema.Types.ObjectId,
         ref: "Client"

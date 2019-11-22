@@ -39,11 +39,13 @@ export class OrdersComponent implements OnInit, OnDestroy {
         if (typeof index === 'number') {
           this.orders[index] = ws;
         } else {
-          ws['new'] = true;
-          this.orders.unshift(ws);
-          setTimeout(()=> {
-            this.orders[0]['new'] = false;
-          },10000)
+          if (this.activePage === 0) {
+            ws['new'] = true;
+            this.orders.unshift(ws);
+            setTimeout(()=> {
+              this.orders[0]['new'] = false;
+            },10000)
+          }
         }
       }
     }));
@@ -138,7 +140,7 @@ export class OrdersComponent implements OnInit, OnDestroy {
     });
   }
   tab2(skip, limit) {
-    this.crud.get(`basket/count?query={"companyOwner":"${this.user.companyOwner._id}","date":{"$gte":"${new Date(this.newStart).toISOString()}","$lte":"${new Date(this.newEnd).toISOString()}"},"$or":[{"status":4},{"status":5}]}`).then((count: any) => {
+    this.crud.get(`basket/count?query={"isHidden":false,"companyOwner":"${this.user.companyOwner._id}","date":{"$gte":"${new Date(this.newStart).toISOString()}","$lte":"${new Date(this.newEnd).toISOString()}"},"$or":[{"status":4},{"status":5}]}`).then((count: any) => {
       if (count) {
         this.lengthPagination = count.count;
         const query = JSON.stringify({isHidden:false,companyOwner: this.user.companyOwner._id, date: {$gte:new Date(this.newStart).toISOString(),$lte:new Date(this.newEnd).toISOString()}, $or: [{status: 4}, {status: 5}]});
