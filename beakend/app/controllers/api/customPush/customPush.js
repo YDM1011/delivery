@@ -9,9 +9,9 @@ module.exports = (backendApp, router) => {
             res.ok("sended")
         } else {
             const Client = backendApp.mongoose.model('Client');
-
+            if (!req.body.client) return res.notFound("Не указан клиент!");
             let query = {$or: []};
-            req.body.client.client.forEach(it=>{
+            req.body.client.forEach(it=>{
                 query.$or.push({_id: it})
             });
             Client
@@ -20,6 +20,8 @@ module.exports = (backendApp, router) => {
                 .exec((e,r)=>{
                     if (e) return res.serverError(e);
                     if (!r) return res.notFound("not found");
+                    if (!r.client) return res.notFound("not found");
+                    if (r.client == 0) return res.notFound("not found");
 
                     let fcmTokens = [];
                     r.client.forEach(it=>{
