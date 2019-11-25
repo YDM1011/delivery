@@ -31,10 +31,6 @@ export class NotificationComponent implements OnInit {
       Swal.fire('Error', 'Укажите заголовок сообщения', 'error');
       return;
     }
-    if (!this.notification.description) {
-      Swal.fire('Error', 'Укажите описание сообщения', 'error');
-      return;
-    }
     if (!this.globalAction) {
       if(this.userChoose.length === 0) {
         Swal.fire('Error', 'Выберите клиентов для уведомления', 'error');
@@ -45,7 +41,7 @@ export class NotificationComponent implements OnInit {
 
     this.notification.title =this.notification.title.trim();
     this.notification.description =this.notification.description.trim();
-    this.crud.post('nameApi', this.notification).then((v: any) => {
+    this.crud.post('customPush', this.notification).then((v: any) => {
       if (v) {
         Swal.fire('Success', 'Ваше уведомление отправленно', 'success');
       }

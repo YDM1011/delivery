@@ -187,20 +187,26 @@ const sendToClient = (backendApp, basket, req) => {
         switch (basket.status) {
             case 2:
                 backendApp.service.fcm.send({
-                    title : 'Заказ №'+basket.basketId+' принят!',
+                    title : 'Заказ №'+basket.basketId+' "'+basket.companyOwner.name+'" принят!',
                     body : 'заказ №'+basket.basketId+' "'+basket.companyOwner.name+'" на суму '+basket.totalPrice+' был принят!' ,
                 }, '', basket.createdBy.fcmToken);
                 break;
             case 3:
                 backendApp.service.fcm.send({
-                    title : 'Заказ №'+basket.basketId+' отредактирован!',
-                    body : 'заказ №'+basket.basketId+' "'+basket.companyOwner.name+'" был отредактирован,  подтвердите заказ для обработки!' ,
+                    title : 'Заказ №'+basket.basketId+' "'+basket.companyOwner.name+'" отредактирован!',
+                    body : '' ,
                 }, '', basket.createdBy.fcmToken);
                 break;
             case 4:
                 backendApp.service.fcm.send({
-                    title : 'Заказ №'+basket.basketId+' выполнен!',
-                    body : 'заказ №'+basket.basketId+' "'+basket.companyOwner.name+'" был выполнен,  подтвердите заказ для обработки!' ,
+                    title : 'Заказ №'+basket.basketId+' "'+basket.companyOwner.name+'" выполнен!',
+                    body : '' ,
+                }, '', basket.createdBy.fcmToken);
+                break;
+            case 5:
+                backendApp.service.fcm.send({
+                    title : 'Заказ №'+basket.basketId+' отменьон!',
+                    body : '' ,
                 }, '', basket.createdBy.fcmToken);
                 break;
         }

@@ -39,7 +39,7 @@ module.exports.postCreate = async (req,res,next, backendApp) => {
                 });
                 backendApp.service.fcm.send({
                     title : action.name,
-                    body : '', //action.description
+                    body : action.description
                 }, '', fcmTokens);
                 next();
             });
