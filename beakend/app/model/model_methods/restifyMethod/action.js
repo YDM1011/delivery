@@ -47,8 +47,8 @@ module.exports.postCreate = async (req,res,next, backendApp) => {
 
     } else {
         backendApp.service.fcm.send({
-            title : action.name,
-            body : action.description,
+            title : 'Акция в '+action.companyOwner.name,
+            body : action.name
         });
         backendApp.events.callWS.emit('message', JSON.stringify({
             event:"action-confirm",
