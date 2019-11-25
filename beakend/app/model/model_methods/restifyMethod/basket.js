@@ -183,6 +183,30 @@ const sendToProvider = (backendApp, basket, req) => {
         });
 };
 const sendToClient = (backendApp, basket, req) => {
+    if (basket.createdBy.fcmToken) {
+        switch (basket.status) {
+            case 2:
+                backendApp.service.fcm.send({
+                    title : 'Заказ №'+basket.basketId+' принят!',
+                    body : 'заказ №'+basket.basketId+' "'+basket.companyOwner.name+'" на суму '+basket.totalPrice+' был принят!' ,
+                }, '', basket.createdBy.fcmToken);
+                break;
+            case 3:
+                backendApp.service.fcm.send({
+                    title : 'Заказ №'+basket.basketId+' отредактирован!',
+                    body : 'заказ №'+basket.basketId+' "'+basket.companyOwner.name+'" был отредактирован,  подтвердите заказ для обработки!' ,
+                }, '', basket.createdBy.fcmToken);
+                break;
+            case 4:
+                backendApp.service.fcm.send({
+                    title : 'Заказ №'+basket.basketId+' выполнен!',
+                    body : 'заказ №'+basket.basketId+' "'+basket.companyOwner.name+'" был выполнен,  подтвердите заказ для обработки!' ,
+                }, '', basket.createdBy.fcmToken);
+                break;
+        }
+
+    }
+
     backendApp.events.callWS.emit('message', JSON.stringify({
         event:"order-confirm",
         data: {data:basket},

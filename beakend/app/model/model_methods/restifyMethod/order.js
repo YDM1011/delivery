@@ -57,14 +57,23 @@ const updateBrand = (req, res, next, backendApp) =>{
             if (e) return res.serverError(e);
             if (!order) return res.notFound("Not Found!");
             if (!order.brand) return next();
-            Company.findOneAndUpdate({_id: order.companyOwner}, {
-                $pull:{brands:order.brand},
-            })
+            Company.findOne({_id: order.companyOwner})
             .exec((e,r)=>{
                 let obj = r && r.brandCount ? r.brandCount : {};
                 if (r && r.brandCount  && r.brandCount[order.brand]) {
                     obj = r.brandCount;
                     obj[order.brand] -= 1;
+
+                    if(obj[order.brand] == 0) {
+                        Company.findOneAndUpdate({_id: order.companyOwner}, {
+                            $pull:{brands:order.brand},
+                        }).exec((e,r)=>{})
+                    } else if (obj[order.brand] > 0 && !order.brands.find(element => element == order.brand)){
+                        console.log("test",order.brands.find(element => element == order.brand))
+                        Company.findOneAndUpdate({_id: order.companyOwner}, {
+                            $push:{brands:order.brand},
+                        }).exec((e,r)=>{})
+                    }
                 }
                 Company.findOneAndUpdate({_id: order.companyOwner}, {
                         brandCount: obj
