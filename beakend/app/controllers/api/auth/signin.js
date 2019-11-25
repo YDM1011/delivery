@@ -29,6 +29,7 @@ module.exports = (backendApp, router) => {
             }
             if (user.role != 'Client' && user.role){
                 if (user.pass != md5(req.body.pass) && req.body.role === 'client') return res.notFound("Password or login invalid!");
+                if (user.pass != md5(req.body.pass)) return res.notFound("Password or login invalid!");
             }
             user.signin(req,res,backendApp)
         });

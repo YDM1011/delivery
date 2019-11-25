@@ -18,8 +18,7 @@ module.exports = (backendApp, router) => {
         Admin.findOne({
             $and:[{
                 $or:[
-                    {login: req.body.login.toLowerCase()},
-                    {mobile: req.body.login.toLowerCase()}
+                    {login: req.body.login.toLowerCase()}
                 ]
             },{pass:md5(req.body.pass)}],
         }).exec(function (err, user) {
