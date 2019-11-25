@@ -6,22 +6,22 @@ module.exports = (backendApp, router) => {
                 title : req.body.title,
                 body : req.body.description || '',
             });
-            res.ok("sended")
+            res.ok({mes:"sended"})
         } else {
             const Client = backendApp.mongoose.model('Client');
-            if (!req.body.client) return res.notFound("Не указан клиент!");
+            if (!req.body.client) return res.notFound({mes:"Не указан клиент!"});
             let query = {$or: []};
             req.body.client.forEach(it=>{
-                query.$or.push({_id: it})
+                query.$or.push({_id: backendApp.mongoose.Types.ObjectId(it)})
             });
             Client
                 .findOne(query)
                 .select('fcmToken')
                 .exec((e,r)=>{
                     if (e) return res.serverError(e);
-                    if (!r) return res.notFound("not found");
-                    if (!r.client) return res.notFound("not found");
-                    if (r.client == 0) return res.notFound("not found");
+                    if (!r) return res.notFound({mes:"not found"});
+                    if (!r.client) return res.notFound({mes:"not found"});
+                    if (r.client == 0) return res.notFound({mes:"not found"});
 
                     let fcmTokens = [];
                     r.client.forEach(it=>{
@@ -31,7 +31,7 @@ module.exports = (backendApp, router) => {
                         title : req.body.title,
                         body : req.body.description || '', //action.description
                     }, '', fcmTokens);
-                    res.ok("sended")
+                    res.ok({mes:"sended"})
                 });
         }
 
