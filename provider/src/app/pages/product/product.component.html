@@ -36,8 +36,15 @@
 					<app-search-filter [inputApi]="'order'" [inputQuery]="'name'" [queryValue]="'companyOwner'" [querySearch]="user.companyOwner" (output)="outputSearch($event)"></app-search-filter>
 					<div class="table-content">
 						<div class="row-h">
-							<div class="col col-h1">
-								Назва
+							<div class="col name-c">
+								<div class="name-t">
+									Назва
+								</div>
+							</div>
+							<div class="col descr">
+								<div class="desc-t">
+									Описание
+								</div>
 							</div>
 							<div class="col">
 								Цена
@@ -45,17 +52,17 @@
 							<div class="col">
 								Дата
 							</div>
-							<div class="col">
-							</div>
 						</div>
 						<div class="row-r"  *ngFor="let item of products; let index = index">
-							<div class="col descr">
+							<div class="col name-c">
 								<div class="img">
 									<app-img [dir]="'product'" [fs]="item.img"></app-img>
 								</div>
 								<div class="name">
 									{{item.name}}
 								</div>
+							</div>
+							<div class="col descr">
 								<div class="des">
 									{{item.des}}
 								</div>
@@ -79,11 +86,12 @@
 										{{item.date | date: 'h:mm a'  : null : defLang}}
 									</div>
 								</div>
-							</div>
-							<div class="col">
-								<span class="top-btn" (click)="isTop(item)" [class.done]="item.isTop" >top</span>
-								<span class="edit-btn" (click)="edit(index)" appScrollTop></span>
-								<span class="trash-btn" (click)="delete(index)"></span>
+								<div class="buttons">
+									<span class="top-btn" (click)="isTop(item)" [class.done]="item.isTop">top</span>
+									<span class="edit-btn" (click)="edit(index)" appScrollTop></span>
+									<span class="trash-btn" (click)="delete(index)"></span>
+								</div>
+								
 							</div>
 						</div>
 					</div>

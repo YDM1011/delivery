@@ -41,27 +41,40 @@
     color: #FF5C00;
   }
 }
-
-.descr{
+.name-c{
   display: flex;
   align-items: center;
+  max-width: 230px;
   .img{
     min-width: 40px;
   }
   .name{
-    margin:  0 10px 0 0px;
+    margin:  0 10px 0 0;
     text-align: center;
     min-width: 130px;
     max-width: 220px;
   }
+}
+.descr{
+  display: flex;
+  align-items: center;
+  width: 100%;
+  min-width: 200px;
+  max-width: 500px;
+  margin-left: 20px;
   .des{
     display: inline-flex;
     justify-content: center;
     text-align: center;
-    width: 100%;
-    min-width: 200px;
-    max-width: 400px;
   }
+}
+
+.name-t{
+  text-align: center;
+  margin: 0 auto;
+}
+.desc-t{
+  margin: 0 auto;
 }
 
 .table-p{
@@ -73,8 +86,24 @@
     .row-h{
       width: 100%;
       .col{
+        .descr{
+          display: flex;
+          align-items: center;
+          width: 100%;
+          min-width: 200px;
+          max-width: 500px;
+          .des{
+            display: inline-flex;
+            justify-content: center;
+            text-align: center;
+          }
+        }
+        &.name{
+          text-align: center;
+        }
+        text-align: center;
         &:nth-of-type(1){
-          max-width: 644px;
+          max-width: 230px;
           display: inline-flex;
           width: 100%;
         }
@@ -109,21 +138,28 @@
           }
         }
         &:nth-of-type(2){
-          justify-content: center;
-          width: max-content;
-          min-width: 70px;
-          margin-left: auto;
+          display: flex;
+          align-items: center;
+          width: 100%;
+          min-width: 200px;
+          max-width: 500px;
+          margin-right: auto;
+          margin-left: 20px;
         }
         &:nth-of-type(3){
           justify-content: center;
           width: max-content;
           min-width: 150px;
-          margin-left: auto;
+          margin-left: 0;
         }
         &:nth-of-type(4){
-          justify-content: flex-end;
-          min-width: 100px;
-          margin-left: auto;
+          justify-content: flex-start;
+          min-width: 230px;
+          margin-left: 0;
+          text-align: left;
+          .buttons{
+            margin-left: 15px;
+          }
           .link-btn{
             margin-right: 15px;
           }
@@ -143,8 +179,10 @@
       }
     }
   }
+}
 
-  .col-h1{
-    min-width: 395px;
-  }
+.buttons{
+  display: flex;
+  align-items: center;
+  margin-left: 10px;
 }
