@@ -38,16 +38,16 @@ module.exports.postCreate = async (req,res,next, backendApp) => {
                     fcmTokens.push(it.fcmToken)
                 });
                 backendApp.service.fcm.send({
-                    title : 'Акція!',
-                    body : action.name,
+                    title : action.name,
+                    body : '', //action.description
                 }, '', fcmTokens);
                 next();
             });
 
     } else {
         backendApp.service.fcm.send({
-            title : 'Акція!',
-            body : action.name,
+            title : action.name,
+            body : action.description,
         });
         backendApp.events.callWS.emit('message', JSON.stringify({
             event:"action-confirm",
