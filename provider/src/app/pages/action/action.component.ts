@@ -139,7 +139,8 @@ export class ActionComponent implements OnInit {
       if (v) {
         this.actions.unshift(v);
         this.user.companies[0].categories = this.actions;
-        this.crud.get(`action/count?query={"companyOwner":"${this.company}"}`).then((c: any) => {
+        const date = new Date(new Date(new Date().getMonth()+1+'.'+(new Date().getDate()) +'.'+new Date().getFullYear()).getTime());
+        this.crud.get(`action/count?query={"companyOwner":"${this.company}","dateEnd":{"$gte":"${date.toISOString()}"}}&populate={"path":"client"}&skip=0&limit=${this.pageSizePagination}&sort={"date":-1}`).then((c: any) => {
           if (c.count > 0) {
             this.lengthPagination = c.count;
           }
@@ -165,15 +166,16 @@ export class ActionComponent implements OnInit {
     this.crud.delete('action', this.actions[i]._id).then((v: any) => {
       if (v) {
         this.actions.splice(i, 1);
+        const date = new Date(new Date(new Date().getMonth()+1+'.'+(new Date().getDate()) +'.'+new Date().getFullYear()).getTime());
         if (this.actions.length === 0) {
-          this.crud.get(`action?query={"companyOwner":"${this.company}"}&populate={"path":"client"}&skip=0&limit=${this.pageSizePagination}&sort={"date":-1}`).then((a: any) => {
+          this.crud.get(`action?query={"companyOwner":"${this.company}","dateEnd":{"$gte":"${date.toISOString()}"}}&populate={"path":"client"}&skip=0&limit=${this.pageSizePagination}&sort={"date":-1}`).then((a: any) => {
             if (a) {
               this.actions = a;
               this.loading = true;
             }
           });
         }
-        this.crud.get(`action/count?query={"companyOwner":"${this.company}"}`).then((c: any) => {
+        this.crud.get(`action/count?query={"companyOwner":"${this.company}","dateEnd":{"$gte":"${date.toISOString()}"}}`).then((c: any) => {
           if (c.count > 0) {
             this.lengthPagination = c.count;
           }
