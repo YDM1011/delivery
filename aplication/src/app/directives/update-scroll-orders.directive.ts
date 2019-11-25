@@ -28,8 +28,8 @@ export class UpdateScrollOrdersDirective implements AfterViewInit {
     let dateS = null;
     let dateE = null;
     if (this.dateStart && this.dateEnd){
-      dateS = new Date(this.dateStart).toISOString();
-      dateE = new Date(this.dateEnd).toISOString();
+      dateS = new Date(this.dateStart.getTime() - this.dateStart.getHours()*60*60*1000 - this.dateStart.getMinutes()*60*1000  - this.dateStart.getSeconds()*1000).getTime();
+      dateE = new Date(this.dateEnd.getTime() - this.dateEnd.getHours()*60*60*1000 - this.dateEnd.getMinutes()*60*1000  - this.dateEnd.getSeconds()*1000).getTime();
     }
     if (this.type === 'new') {
       this.crud.get(`basket/count?query={"createdBy":"${this.userId}","$or":[{"status":1},{"status":2},{"status":3}]}`).then((count: any) => {

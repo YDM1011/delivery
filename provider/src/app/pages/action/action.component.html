@@ -55,7 +55,7 @@
 						<mat-option *ngFor="let item of searchUser" [value]="item.login" (click)="pushUser(item)">
 							<div class="option">
 								<div class="img">
-									<app-img [fs]="item.img" [dir]="'product'" *ngIf="item.img !== ''; else usersvg"></app-img>
+									<app-img [fs]="item.img" [dir]="'avatar'" *ngIf="item.img !== ''; else usersvg"></app-img>
 									<ng-template #usersvg>
 										<img src="./assets/images/user.svg" alt="user-svg">
 									</ng-template>

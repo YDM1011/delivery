@@ -130,9 +130,13 @@ export class DashboardComponent implements OnInit {
   chartFunc(){
     this.lineChartLabels = [];
     this.lineChartData[0].data = [];
+    // const timeStart = new Date(this.dateStart.getTime() - this.dateStart.getHours()*60*60*1000 - this.dateStart.getMinutes()*60*1000  - this.dateStart.getSeconds()*1000).getTime();
+    // const timeEnd = new Date(this.dateEnd.getTime() - this.dateEnd.getHours()*60*60*1000 - this.dateEnd.getMinutes()*60*1000  - this.dateEnd.getSeconds()*999).getTime();
+
     const timeStart = new Date(this.dateStart.getMonth()+1+'.'+(this.dateStart.getDate()) +'.'+this.dateStart.getFullYear()).getTime();
     const timeEnd = new Date(this.dateEnd.getMonth()+1+'.'+(this.dateEnd.getDate()) +'.'+this.dateEnd.getFullYear()).getTime();
-    this.crud.get(`ChartOrder?query={"$and":[{"date":{"$gte":"${timeStart}"}},{"date":{"$lte":"${timeEnd}"}}]}`).then((chart: any) => {
+
+    this.crud.get(`ChartOrder?query={"$and":[{"date":{"$gte":"${timeStart}","$lte":"${timeEnd}"}}]}`).then((chart: any) => {
       // @ts-ignore
       let days = parseInt((timeEnd-timeStart - 1000*60*60*24)/1000/60/60/24);
       let month = 1;

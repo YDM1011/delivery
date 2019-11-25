@@ -73,11 +73,12 @@ export class ActionComponent implements OnInit {
             this.productChoose = this.products[0]._id;
           }
         });
-        const date = new Date(new Date(new Date().getMonth()+1+'.'+(new Date().getDate()) +'.'+new Date().getFullYear()).getTime());
-        this.crud.get(`action/count?query={"companyOwner":"${this.company}","dateEnd":{"$gte":"${date.toISOString()}"}}`).then((c: any) => {
+        const date = new Date(new Date().getTime() - new Date().getHours()*60*60*1000 - new Date().getMinutes()*60*1000  - new Date().getSeconds()*1000).getTime();
+
+        this.crud.get(`action/count?query={"companyOwner":"${this.company}","dateEnd":{"$gte":"${date}"}}`).then((c: any) => {
           if (c) {
             this.lengthPagination = c.count;
-            this.crud.get(`action?query={"companyOwner":"${this.company}","dateEnd":{"$gte":"${date.toISOString()}"}}&populate={"path":"client"}&skip=0&limit=${this.pageSizePagination}&sort={"date":-1}`).then((a: any) => {
+            this.crud.get(`action?query={"companyOwner":"${this.company}","dateEnd":{"$gte":"${date}"}}&populate={"path":"client"}&skip=0&limit=${this.pageSizePagination}&sort={"date":-1}`).then((a: any) => {
               if (a) {
                 this.actions = a;
                 this.loading = true;
@@ -139,8 +140,7 @@ export class ActionComponent implements OnInit {
       if (v) {
         this.actions.unshift(v);
         this.user.companies[0].categories = this.actions;
-        const date = new Date(new Date(new Date().getMonth()+1+'.'+(new Date().getDate()) +'.'+new Date().getFullYear()).getTime());
-        this.crud.get(`action/count?query={"companyOwner":"${this.company}","dateEnd":{"$gte":"${date.toISOString()}"}}&populate={"path":"client"}&skip=0&limit=${this.pageSizePagination}&sort={"date":-1}`).then((c: any) => {
+        this.crud.get(`action/count?query={"companyOwner":"${this.company}"}`).then((c: any) => {
           if (c.count > 0) {
             this.lengthPagination = c.count;
           }
@@ -166,16 +166,7 @@ export class ActionComponent implements OnInit {
     this.crud.delete('action', this.actions[i]._id).then((v: any) => {
       if (v) {
         this.actions.splice(i, 1);
-        const date = new Date(new Date(new Date().getMonth()+1+'.'+(new Date().getDate()) +'.'+new Date().getFullYear()).getTime());
-        if (this.actions.length === 0) {
-          this.crud.get(`action?query={"companyOwner":"${this.company}","dateEnd":{"$gte":"${date.toISOString()}"}}&populate={"path":"client"}&skip=0&limit=${this.pageSizePagination}&sort={"date":-1}`).then((a: any) => {
-            if (a) {
-              this.actions = a;
-              this.loading = true;
-            }
-          });
-        }
-        this.crud.get(`action/count?query={"companyOwner":"${this.company}","dateEnd":{"$gte":"${date.toISOString()}"}}`).then((c: any) => {
+        this.crud.get(`action/count?query={"companyOwner":"${this.company}"}`).then((c: any) => {
           if (c.count > 0) {
             this.lengthPagination = c.count;
           }
@@ -312,12 +303,14 @@ export class ActionComponent implements OnInit {
   }
   outputSearch(e) {
     if (!e) {
-      const date = new Date(new Date(new Date().getMonth()+1+'.'+(new Date().getDate()) +'.'+new Date().getFullYear()).getTime());
+      const date = new Date(new Date().getTime() - new Date().getHours()*60*60*1000 - new Date().getMinutes()*60*1000  - new Date().getSeconds()*1000).getTime();
+
+      // const date = new Date(new Date(new Date().getMonth()+1+'.'+(new Date().getDate()) +'.'+new Date().getFullYear()).getTime());
       if (this.indexTab === 0) {
-        this.crud.get(`action/count?query={"companyOwner":"${this.company}","dateEnd":{"$gte":"${date.toISOString()}"}}`).then((c: any) => {
+        this.crud.get(`action/count?query={"companyOwner":"${this.company}","dateEnd":{"$gte":"${date}"}}`).then((c: any) => {
           if (c) {
             this.lengthPagination = c.count;
-            this.crud.get(`action?query={"companyOwner":"${this.company}","dateEnd":{"$gte":"${date.toISOString()}"}}&populate={"path":"client"}&skip=0&limit=${this.pageSizePagination}&sort={"date":-1}`).then((a: any) => {
+            this.crud.get(`action?query={"companyOwner":"${this.company}","dateEnd":{"$gte":"${date}"}}&populate={"path":"client"}&skip=0&limit=${this.pageSizePagination}&sort={"date":-1}`).then((a: any) => {
               if (a) {
                 this.actions = a;
                 this.checkAccess();
@@ -327,7 +320,7 @@ export class ActionComponent implements OnInit {
         });
       }
       if (this.indexTab === 1) {
-        const query = `?query={"companyOwner":"${this.company}","dateEnd":{"$lte":"${date.toISOString()}"}}&populate={"path":"client"}&skip=0&limit=${this.pageSizePagination}&sort={"date":-1}`;
+        const query = `?query={"companyOwner":"${this.company}","dateEnd":{"$lte":"${date}"}}&populate={"path":"client"}&skip=0&limit=${this.pageSizePagination}&sort={"date":-1}`;
         this.crud.get(`action/count${query}`).then((count: any) => {
           if (count) {
             this.lengthPagination = count.count;
@@ -346,12 +339,14 @@ export class ActionComponent implements OnInit {
   tabChange(e) {
     this.loading = false;
     this.indexTab = e;
-    const date = new Date(new Date(new Date().getMonth()+1+'.'+(new Date().getDate()) +'.'+new Date().getFullYear()).getTime());
+    // const date = new Date(new Date(new Date().getMonth()+1+'.'+(new Date().getDate()) +'.'+new Date().getFullYear()).getTime());
+    const date = new Date(new Date().getTime() - new Date().getHours()*60*60*1000 - new Date().getMinutes()*60*1000  - new Date().getSeconds()*1000).getTime();
+
     if (e === 0) {
-      this.crud.get(`action/count?query={"companyOwner":"${this.company}","dateEnd":{"$gte":"${date.toISOString()}"}}`).then((c: any) => {
+      this.crud.get(`action/count?query={"companyOwner":"${this.company}","dateEnd":{"$gte":"${date}"}}`).then((c: any) => {
         if (c) {
           this.lengthPagination = c.count;
-          this.crud.get(`action?query={"companyOwner":"${this.company}","dateEnd":{"$gte":"${date.toISOString()}"}}&populate={"path":"client"}&skip=0&limit=${this.pageSizePagination}&sort={"date":-1}`).then((a: any) => {
+          this.crud.get(`action?query={"companyOwner":"${this.company}","dateEnd":{"$gte":"${date}"}}&populate={"path":"client"}&skip=0&limit=${this.pageSizePagination}&sort={"date":-1}`).then((a: any) => {
             if (a) {
               this.actions = a;
               this.loading = true;
@@ -362,7 +357,7 @@ export class ActionComponent implements OnInit {
       });
     }
     if (e === 1) {
-      const query = `?query={"companyOwner":"${this.company}","dateEnd":{"$lte":"${date.toISOString()}"}}&populate={"path":"client"}&skip=0&limit=${this.pageSizePagination}&sort={"date":-1}`;
+      const query = `?query={"companyOwner":"${this.company}","dateEnd":{"$lte":"${date}"}}&populate={"path":"client"}&skip=0&limit=${this.pageSizePagination}&sort={"date":-1}`;
       this.crud.get(`action/count${query}`).then((count: any) => {
         if (count) {
           this.lengthPagination = count.count;

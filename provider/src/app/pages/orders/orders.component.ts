@@ -72,8 +72,8 @@ export class OrdersComponent implements OnInit, OnDestroy {
     })
   }
   selectChange(e) {
-    this.newStart = new Date(this.dateStart.getMonth()+1+'.'+(this.dateStart.getDate()) +'.'+new Date().getFullYear()).getTime();
-    this.newEnd = new Date(this.dateEnd.getMonth()+1+'.'+(this.dateEnd.getDate()+1) +'.'+new Date().getFullYear()).getTime()-1;
+    this.newStart = new Date(this.dateStart.getTime() - this.dateStart.getHours()*60*60*1000 - this.dateStart.getMinutes()*60*1000  - this.dateStart.getSeconds()*1000).getTime();
+    this.newEnd = new Date(this.dateEnd.getTime() - this.dateEnd.getHours()*60*60*1000 - this.dateEnd.getMinutes()*60*1000  - this.dateEnd.getSeconds()*999).getTime();
     this.activePage = e ? e : 0;
     if (e === 0) {
       this.loading = false;
@@ -129,10 +129,10 @@ export class OrdersComponent implements OnInit, OnDestroy {
     });
   }
   tab1(skip, limit) {
-    this.crud.get(`basket/count?query={"companyOwner":"${this.user.companyOwner._id}","lastUpdate":{"$gte":"${new Date(this.newStart).toISOString()}","$lte":"${new Date(this.newEnd).toISOString()}"},"$or":[{"status":2},{"status":3}]}`).then((count: any) => {
+    this.crud.get(`basket/count?query={"companyOwner":"${this.user.companyOwner._id}","lastUpdate":{"$gte":"${this.newStart}","$lte":"${this.newEnd}"},"$or":[{"status":2},{"status":3}]}`).then((count: any) => {
       if (count) {
         this.lengthPagination = count.count;
-        this.crud.get(`basket?query={"companyOwner":"${this.user.companyOwner._id}","lastUpdate":{"$gte":"${new Date(this.newStart).toISOString()}","$lte":"${new Date(this.newEnd).toISOString()}"},"$or":[{"status":2},{"status":3}]}&populate=[{"path":"deliveryAddress","populate":"city","select":"name build street department img"},{"path":"manager","select":"name"},{"path":"createdBy","select":"mobile name"}]&skip=${skip}&limit=${limit}&sort={"date":-1}`).then((orders: any) => {
+        this.crud.get(`basket?query={"companyOwner":"${this.user.companyOwner._id}","lastUpdate":{"$gte":"${this.newStart}","$lte":"${this.newEnd}"},"$or":[{"status":2},{"status":3}]}&populate=[{"path":"deliveryAddress","populate":"city","select":"name build street department img"},{"path":"manager","select":"name"},{"path":"createdBy","select":"mobile name"}]&skip=${skip}&limit=${limit}&sort={"date":-1}`).then((orders: any) => {
           if (!orders) {return; }
           this.orders = orders;
           this.loading = true;
@@ -141,10 +141,10 @@ export class OrdersComponent implements OnInit, OnDestroy {
     });
   }
   tab2(skip, limit) {
-    this.crud.get(`basket/count?query={"isHidden":false,"companyOwner":"${this.user.companyOwner._id}","lastUpdate":{"$gte":"${new Date(this.newStart).toISOString()}","$lte":"${new Date(this.newEnd).toISOString()}"},"$or":[{"status":4},{"status":5}]}`).then((count: any) => {
+    this.crud.get(`basket/count?query={"isHidden":false,"companyOwner":"${this.user.companyOwner._id}","lastUpdate":{"$gte":"${this.newStart}","$lte":"${this.newEnd}"},"$or":[{"status":4},{"status":5}]}`).then((count: any) => {
       if (count) {
         this.lengthPagination = count.count;
-        const query = JSON.stringify({isHidden:false,companyOwner: this.user.companyOwner._id, lastUpdate: {$gte:new Date(this.newStart).toISOString(),$lte:new Date(this.newEnd).toISOString()}, $or: [{status: 4}, {status: 5}]});
+        const query = JSON.stringify({isHidden:false,companyOwner: this.user.companyOwner._id, lastUpdate: {$gte:this.newStart,$lte:this.newEnd}, $or: [{status: 4}, {status: 5}]});
         this.crud.get(`basket?query=${query}&populate=[{"path":"deliveryAddress","populate":"city","select":"name build street department img"},{"path":"manager","select":"name"},{"path":"createdBy","select":"mobile name"}]&skip=${skip}&limit=${limit}&sort={"date":-1}`).then((orders: any) => {
           if (!orders) {return; }
           this.orders = orders;
@@ -154,11 +154,11 @@ export class OrdersComponent implements OnInit, OnDestroy {
     });
   }
   tab3(skip, limit) {
-    const queryCount = JSON.stringify({manager: this.user._id,lastUpdate: {$gte:new Date(this.newStart).toISOString(),$lte:new Date(this.newEnd).toISOString()}, $or: [{status: 2}, {status: 3}]});
+    const queryCount = JSON.stringify({manager: this.user._id,lastUpdate: {$gte:this.newStart,$lte:this.newEnd}, $or: [{status: 2}, {status: 3}]});
     this.crud.get(`basket/count?query=${queryCount}`).then((count: any) => {
       if (count) {
         this.lengthPagination = count.count;
-        const query = JSON.stringify({manager: this.user._id,lastUpdate: {$gte:new Date(this.newStart).toISOString(),$lte:new Date(this.newEnd).toISOString()}, $or: [{status: 2}, {status: 3}]});
+        const query = JSON.stringify({manager: this.user._id,lastUpdate: {$gte:this.newStart,$lte:this.newEnd}, $or: [{status: 2}, {status: 3}]});
         this.crud.get(`basket?query=${query}&populate=[{"path":"deliveryAddress","populate":"city","select":"name build street department img"},{"path":"manager","select":"name"},{"path":"createdBy","select":"mobile name"}]&skip=${skip}&limit=${limit}&sort={"date":-1}`).then((orders: any) => {
           if (!orders) {return; }
           this.orders = orders;

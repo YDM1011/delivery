@@ -11,6 +11,16 @@
   z-index: 99999;
   background: #FFFFFF;
   box-shadow: 0px -5px 5px rgba(9, 194, 194, 0.08);
+  &:before{
+    content: '';
+    display: block;
+    position: absolute;
+    height: 50px;
+    bottom: -50px;
+    left: 0;
+    width: 100%;
+    background: red;
+  }
   .control-item{
     display: inline-flex;
   }
