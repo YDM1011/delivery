@@ -19,9 +19,9 @@ module.exports = (backendApp, router) => {
                 .select('fcmToken')
                 .exec((e,r)=>{
                     if (e) return res.serverError(e);
-                    if (!r) return res.notFound({mes:"not found"});
-                    if (!r.client) return res.notFound({mes:"not found"});
-                    if (r.client == 0) return res.notFound({mes:"not found"});
+                    if (!r) return res.notFound({mes:"not found1"});
+                    if (!r.client) return res.notFound({mes:"not found2"});
+                    if (r.client == 0) return res.notFound({mes:"not found3"});
 
                     let fcmTokens = [];
                     r.client.forEach(it=>{
