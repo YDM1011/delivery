@@ -35,21 +35,31 @@ module.exports.postCreate = async (req,res,next, backendApp) => {
                 if (!r) return next();
 
                 let fcmTokens = [];
+                console.log(r);
                 r.client.forEach(it=>{
                     fcmTokens.push(it.fcmToken)
                 });
                 backendApp.service.fcm.send({
-                    title : 'Акция в '+action.companyOwner.name,
+                    title : 'Акция в '+r.companyOwner.name,
                     body : action.name
                 }, '', fcmTokens);
                 next();
             });
 
     } else {
-        backendApp.service.fcm.send({
-            title : 'Акция в '+action.companyOwner.name,
-            body : action.name
-        });
+        backendApp.mongoose.model('Action')
+            .findOne({_id:action._id})
+            .populate({path: 'companyOwner', select:'name'})
+            .select('companyOwner')
+            .exec((e,r)=>{
+                if (e) return next();
+                if (!r) return next();
+                backendApp.service.fcm.send({
+                    title : 'Акция в '+r.companyOwner.name,
+                    body : action.name
+                });
+            });
+
         backendApp.events.callWS.emit('message', JSON.stringify({
             event:"action-confirm",
             data: {data:action}
