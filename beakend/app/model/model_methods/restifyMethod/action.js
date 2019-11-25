@@ -28,7 +28,8 @@ module.exports.postCreate = async (req,res,next, backendApp) => {
         backendApp.mongoose.model('Action')
             .findOne({_id:action._id})
             .populate({path: 'client', select:'fcmToken'})
-            .select('client')
+            .populate({path: 'companyOwner', select:'name'})
+            .select('client companyOwner')
             .exec((e,r)=>{
                 if (e) return next();
                 if (!r) return next();
@@ -38,8 +39,8 @@ module.exports.postCreate = async (req,res,next, backendApp) => {
                     fcmTokens.push(it.fcmToken)
                 });
                 backendApp.service.fcm.send({
-                    title : action.name,
-                    body : action.description
+                    title : 'Акция в '+action.companyOwner.name,
+                    body : action.name
                 }, '', fcmTokens);
                 next();
             });
