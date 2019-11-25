@@ -24,10 +24,10 @@ export class PopupDirective {
     let node3 = this.el.nativeElement.getElementsByClassName('cansel-popup-btn')[0];
     this.node.appendChild(node2);
     this.node.appendChild(this.defBlock);
-    if (!document.getElementById('wrapper')) return console.error("Create id wrapper in dom!")
+    if (!document.getElementById('wrapper')) return console.error("Create id wrapper in dom!");
     document.getElementsByTagName('body')[0].appendChild(this.node);
     document.getElementById('wrapper').classList.add('active');
-    document.getElementsByClassName('popup-directive')[0].addEventListener('touchmove', this.preventDef)
+    document.getElementsByClassName('popup-directive')[0].addEventListener('touchmove', this.preventDef);
     node2.onclick = ()=>{
       this.close();
     };
@@ -39,7 +39,6 @@ export class PopupDirective {
 
     let element = this.el.nativeElement.getElementsByClassName('ibox-tools');
     for(let i=0; i<element.length; i++){
-
       element[i].onclick = ()=>{
         this.close();
       };

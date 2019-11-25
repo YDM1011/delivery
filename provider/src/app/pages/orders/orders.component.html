@@ -90,15 +90,24 @@
 										</div>
 									</div>
 									<div class="buttons col-f">
-										<button class="main-button-color" (click)="takeOrder($event, i)" *ngIf="item.status === 1">
-											Взять заказ
-										</button>
-										<div class="who-doing" *ngIf="item.status !== 1">
-											<div class="status" [innerHTML]="item.status | status | safeHTML">
+										<div class="buttons-g">
+											<button class="main-button-color" (click)="takeOrder($event, i)" *ngIf="item.status === 1">
+												Взять заказ
+											</button>
+											<button class="main-button remove buttons-g-s" (click)="cancelOrder($event, i)" *ngIf="item.status === 1">
+												Отменить
+											</button>
+											
+											<div class="who-doing" *ngIf="item.status !== 1">
+												<div class="status" [innerHTML]="item.status | status | safeHTML">
+												</div>
+												<div class="name" *ngIf="item.manager && item.manager.name">
+													{{item.manager.name}}
+												</div>
 											</div>
-											<div class="name" *ngIf="item.manager && item.manager.name">
-												{{item.manager.name}}
-											</div>
+											<button class="main-button-color buttons-g-s" (click)="doneOrder($event, i)" *ngIf="item.status > 1 && item.status < 3">
+												Готово
+											</button>
 										</div>
 									</div>
 								</div>
@@ -167,17 +176,22 @@
 										</div>
 									</div>
 									<div class="buttons col-f">
-										<div class="who-doing">
-											<div class="status" [innerHTML]="item.status | status | safeHTML"></div>
-											<div class="name" *ngIf="item && item.manager && item.manager.name">
-												{{item.manager.name ? item.manager.name : 'Отсутствует'}}
+										<div class="buttons-g">
+											<div class="who-doing">
+												<div class="status" [innerHTML]="item.status | status | safeHTML"></div>
+												<div class="name" *ngIf="item && item.manager && item.manager.name">
+													{{item.manager.name ? item.manager.name : 'Отсутствует'}}
+												</div>
 											</div>
+											<button class="main-button-color buttons-g-s" (click)="doneOrder($event, i)" *ngIf="item.status > 1 && item.status < 3">
+												Готово
+											</button>
 										</div>
 									</div>
 								</div>
 							</div>
 							<div class="no-content" *ngIf="orders && orders.length === 0">
-								У вас нет активных заказов
+								У вас нет активных заказов за период от {{dateStart | date:'dd.MM.yyyy'}} до {{dateEnd | date:'dd.MM.yyyy'}}
 							</div>
 						</div>
 					</ng-template>
@@ -239,19 +253,21 @@
 										</div>
 									</div>
 									<div class="buttons col-f">
-										<div class="who-doing">
-											<div class="status" [innerHTML]="item.status | status | safeHTML"></div>
-											<div class="name" *ngIf="item.manager && item.manager.name">
-												{{item.manager.name}}
+										<div class="buttons-g">
+											<div class="who-doing">
+												<div class="status" [innerHTML]="item.status | status | safeHTML"></div>
+												<div class="name" *ngIf="item.manager && item.manager.name">
+													{{item.manager.name}}
+												</div>
+												<button class="main-button-color-red" (click)="hiddenBasket($event, i)">Удалить</button>
 											</div>
-											<button class="main-button-color-red" (click)="hiddenBasket($event, i)">Удалить</button>
 										</div>
 									</div>
 								</div>
 							</div>
 						</div>
 						<div class="no-content" *ngIf="orders && orders.length === 0">
-							У вас нет истории заказов
+							У вас нет истории заказов за период от {{dateStart | date:'dd.MM.yyyy'}} до {{dateEnd | date:'dd.MM.yyyy'}}
 						</div>
 					</ng-template>
 				</mat-tab>
@@ -312,18 +328,23 @@
 										</div>
 									</div>
 									<div class="buttons col-f">
-										<div class="who-doing">
-											<div class="status" [innerHTML]="item.status | status | safeHTML"></div>
-											<div class="name" *ngIf="item && item.manager">
-												{{item.manager.name ? item.manager.name : 'Отсутствует'}}
+										<div class="buttons-g">
+											<div class="who-doing">
+												<div class="status" [innerHTML]="item.status | status | safeHTML"></div>
+												<div class="name" *ngIf="item && item.manager && item.manager.name">
+													{{item.manager.name ? item.manager.name : 'Отсутствует'}}
+												</div>
 											</div>
+											<button class="main-button-color buttons-g-s" (click)="doneOrder($event, i)" *ngIf="item.status > 1 && item.status < 3">
+												Готово
+											</button>
 										</div>
 									</div>
 								</div>
 							</div>
 						</div>
 						<div class="no-content" *ngIf="orders && orders.length === 0">
-							У вас нет активных заказов
+							У вас нет активных заказов за период от {{dateStart | date:'dd.MM.yyyy'}} до {{dateEnd | date:'dd.MM.yyyy'}}
 						</div>
 					</ng-template>
 				</mat-tab>

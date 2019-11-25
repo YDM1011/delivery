@@ -62,7 +62,8 @@
     }
     .address{
       text-align: center;
-      max-width: 400px;
+      max-width: 280px;
+      width: 100%;
       min-width: 250px;
     }
     .price{
@@ -179,5 +180,21 @@
   }
 }
 .main-button-color-red{
+  margin-top: 10px;
+}
+
+.remove{
+  margin-left: 25px;
+  color: #E21B1B;
+  border: 1px solid #E21B1B;
+}
+
+.buttons-g{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: center;
+}
+.buttons-g-s{
   margin-top: 10px;
 }

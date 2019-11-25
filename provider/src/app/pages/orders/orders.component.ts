@@ -76,6 +76,7 @@ export class OrdersComponent implements OnInit, OnDestroy {
     this.newEnd = new Date(this.dateEnd.getMonth()+1+'.'+(this.dateEnd.getDate()+1) +'.'+new Date().getFullYear()).getTime()-1;
     this.activePage = e ? e : 0;
     if (e === 0) {
+      this.loading = false;
       if (this.user && this.user.companyOwner) {
         this.tab0(0, this.pageSizePagination);
       }
@@ -116,7 +117,7 @@ export class OrdersComponent implements OnInit, OnDestroy {
     }
   }
   tab0(skip, limit) {
-    this.crud.get(`basket/count?query={"companyOwner":"${this.user.companyOwner._id}"}`).then((count: any) => {
+    this.crud.get(`basket/count?query={"companyOwner":"${this.user.companyOwner._id}", "status":1}`).then((count: any) => {
       if (count) {
         this.lengthPagination = count.count;
         this.crud.get(`basket?query={"companyOwner":"${this.user.companyOwner._id}", "status":1}&populate=[{"path":"deliveryAddress","populate":"city","select":"name build street department img"},{"path":"manager","select":"name"},{"path":"createdBy","select":"mobile name"}]&skip=${skip}&limit=${limit}&sort={"date":-1}`).then((orders: any) => {
@@ -128,10 +129,10 @@ export class OrdersComponent implements OnInit, OnDestroy {
     });
   }
   tab1(skip, limit) {
-    this.crud.get(`basket/count?query={"companyOwner":"${this.user.companyOwner._id}","date":{"$gte":"${new Date(this.newStart).toISOString()}","$lte":"${new Date(this.newEnd).toISOString()}"},"$or":[{"status":2},{"status":3}]}`).then((count: any) => {
+    this.crud.get(`basket/count?query={"companyOwner":"${this.user.companyOwner._id}","lastUpdate":{"$gte":"${new Date(this.newStart).toISOString()}","$lte":"${new Date(this.newEnd).toISOString()}"},"$or":[{"status":2},{"status":3}]}`).then((count: any) => {
       if (count) {
         this.lengthPagination = count.count;
-        this.crud.get(`basket?query={"companyOwner":"${this.user.companyOwner._id}","date":{"$gte":"${new Date(this.newStart).toISOString()}","$lte":"${new Date(this.newEnd).toISOString()}"},"$or":[{"status":2},{"status":3}]}&populate=[{"path":"deliveryAddress","populate":"city","select":"name build street department img"},{"path":"manager","select":"name"},{"path":"createdBy","select":"mobile name"}]&skip=${skip}&limit=${limit}&sort={"date":-1}`).then((orders: any) => {
+        this.crud.get(`basket?query={"companyOwner":"${this.user.companyOwner._id}","lastUpdate":{"$gte":"${new Date(this.newStart).toISOString()}","$lte":"${new Date(this.newEnd).toISOString()}"},"$or":[{"status":2},{"status":3}]}&populate=[{"path":"deliveryAddress","populate":"city","select":"name build street department img"},{"path":"manager","select":"name"},{"path":"createdBy","select":"mobile name"}]&skip=${skip}&limit=${limit}&sort={"date":-1}`).then((orders: any) => {
           if (!orders) {return; }
           this.orders = orders;
           this.loading = true;
@@ -140,10 +141,10 @@ export class OrdersComponent implements OnInit, OnDestroy {
     });
   }
   tab2(skip, limit) {
-    this.crud.get(`basket/count?query={"isHidden":false,"companyOwner":"${this.user.companyOwner._id}","date":{"$gte":"${new Date(this.newStart).toISOString()}","$lte":"${new Date(this.newEnd).toISOString()}"},"$or":[{"status":4},{"status":5}]}`).then((count: any) => {
+    this.crud.get(`basket/count?query={"isHidden":false,"companyOwner":"${this.user.companyOwner._id}","lastUpdate":{"$gte":"${new Date(this.newStart).toISOString()}","$lte":"${new Date(this.newEnd).toISOString()}"},"$or":[{"status":4},{"status":5}]}`).then((count: any) => {
       if (count) {
         this.lengthPagination = count.count;
-        const query = JSON.stringify({isHidden:false,companyOwner: this.user.companyOwner._id, date: {$gte:new Date(this.newStart).toISOString(),$lte:new Date(this.newEnd).toISOString()}, $or: [{status: 4}, {status: 5}]});
+        const query = JSON.stringify({isHidden:false,companyOwner: this.user.companyOwner._id, lastUpdate: {$gte:new Date(this.newStart).toISOString(),$lte:new Date(this.newEnd).toISOString()}, $or: [{status: 4}, {status: 5}]});
         this.crud.get(`basket?query=${query}&populate=[{"path":"deliveryAddress","populate":"city","select":"name build street department img"},{"path":"manager","select":"name"},{"path":"createdBy","select":"mobile name"}]&skip=${skip}&limit=${limit}&sort={"date":-1}`).then((orders: any) => {
           if (!orders) {return; }
           this.orders = orders;
@@ -153,11 +154,11 @@ export class OrdersComponent implements OnInit, OnDestroy {
     });
   }
   tab3(skip, limit) {
-    const queryCount = JSON.stringify({manager: this.user._id,date: {$gte:new Date(this.newStart).toISOString(),$lte:new Date(this.newEnd).toISOString()}, $or: [{status: 2}, {status: 3}]});
+    const queryCount = JSON.stringify({manager: this.user._id,lastUpdate: {$gte:new Date(this.newStart).toISOString(),$lte:new Date(this.newEnd).toISOString()}, $or: [{status: 2}, {status: 3}]});
     this.crud.get(`basket/count?query=${queryCount}`).then((count: any) => {
       if (count) {
         this.lengthPagination = count.count;
-        const query = JSON.stringify({manager: this.user._id,date: {$gte:new Date(this.newStart).toISOString(),$lte:new Date(this.newEnd).toISOString()}, $or: [{status: 2}, {status: 3}]});
+        const query = JSON.stringify({manager: this.user._id,lastUpdate: {$gte:new Date(this.newStart).toISOString(),$lte:new Date(this.newEnd).toISOString()}, $or: [{status: 2}, {status: 3}]});
         this.crud.get(`basket?query=${query}&populate=[{"path":"deliveryAddress","populate":"city","select":"name build street department img"},{"path":"manager","select":"name"},{"path":"createdBy","select":"mobile name"}]&skip=${skip}&limit=${limit}&sort={"date":-1}`).then((orders: any) => {
           if (!orders) {return; }
           this.orders = orders;
@@ -201,5 +202,57 @@ export class OrdersComponent implements OnInit, OnDestroy {
         })
       }
     })
+  }
+  cancelOrder(e, i) {
+    e.stopPropagation();
+    Swal.fire({
+      title: 'Вы уверены что хотите удалить заказ?',
+      type: 'warning',
+      showCloseButton: true,
+      showCancelButton: true,
+      focusConfirm: true,
+      reverseButtons: true,
+      cancelButtonText: 'Назад',
+      confirmButtonText: 'Отменить заказ',
+      confirmButtonColor: '#dd4535',
+    }).then((result) => {
+      if (result.value) {
+        this.crud.post('basket', {status: 5}, this.orders[i]._id, false).then((v) => {
+          if (v) {
+           this.orders[i].status = 5;
+          }
+        });
+      }
+    });
+  }
+  doneOrder(e, i) {
+    e.stopPropagation();
+    if (this.orders[i].payMethod === 'Наличными') {
+      Swal.fire({
+        title: 'Заказ был оплачен полностью?',
+        type: 'warning',
+        showCloseButton: true,
+        showCancelButton: true,
+        focusConfirm: true,
+        reverseButtons: true,
+        cancelButtonText: 'Нет',
+        confirmButtonText: 'ДА',
+        confirmButtonColor: '#dd4535',
+      }).then((result) => {
+        if (result.value){
+          this.crud.post('basket', {status: 4}, this.orders[i]._id, false).then((v) => {
+            if (v) {
+              this.orders[i].status = 4;
+            }
+          });
+        } else {
+          this.crud.post('basket', {status: 4, deptor:true}, this.orders[i]._id, false).then((v) => {
+            if (v) {
+              this.orders[i].status = 4;
+            }
+          });
+        }
+      });
+    }
   }
 }
