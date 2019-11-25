@@ -22,4 +22,7 @@ export class WorkTimeComponent implements OnInit {
   show(){
     this.detail = !this.detail
   }
+  close() {
+    this.detail = !this.detail;
+  }
 }
