@@ -15,7 +15,7 @@ module.exports = (backendApp, router) => {
                 query.$or.push({_id: backendApp.mongoose.Types.ObjectId(it)})
             });
             Client
-                .findOne(query)
+                .find(query)
                 .select('fcmToken')
                 .exec((e,r)=>{
                     if (e) return res.serverError(e);
