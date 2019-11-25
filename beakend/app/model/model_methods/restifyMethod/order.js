@@ -68,7 +68,7 @@ const updateBrand = (req, res, next, backendApp) =>{
                         Company.findOneAndUpdate({_id: order.companyOwner}, {
                             $pull:{brands:order.brand},
                         }).exec((e,r)=>{})
-                    } else if (obj[order.brand] > 0 && !order.brands.find(element => element == order.brand)){
+                    } else if (obj[order.brand] > 0 && (!order.brands || !order.brands.find(element => element == order.brand))){
                         console.log("test",order.brands.find(element => element == order.brand))
                         Company.findOneAndUpdate({_id: order.companyOwner}, {
                             $push:{brands:order.brand},
