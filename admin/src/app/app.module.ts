@@ -45,6 +45,7 @@ import {CroperComponent, TouchStart} from "./components/croper/croper.component"
 import {ImageCropperModule} from "ngx-image-cropper";
 import {Ng5SliderModule} from "ng5-slider";
 import { ScrollTopDirective } from './directives/scroll-top.directive';
+import { NotificationComponent } from './pages/notification/notification.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -76,6 +77,7 @@ import { ScrollTopDirective } from './directives/scroll-top.directive';
     CroperComponent,
     TouchStart,
     ScrollTopDirective,
+    NotificationComponent,
   ],
   imports: [
     LottieAnimationViewModule.forRoot(),

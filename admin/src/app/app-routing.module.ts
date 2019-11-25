@@ -15,6 +15,7 @@ import {MainComponent} from './layout/main/main.component';
 import {AdminLoginedGuard} from './admin-logined.guard';
 import {ListAdminsComponent} from './pages/list-admins/list-admins.component';
 import {ProviderDetailsComponent} from "./pages/provider-details/provider-details.component";
+import {NotificationComponent} from "./pages/notification/notification.component";
 
 const routes: Routes = [
   {path: '', component: MainComponent, canActivate: [AdminLoginedGuard], children: [
@@ -29,6 +30,7 @@ const routes: Routes = [
       {path: 'list-clients', component: ListClientsComponent},
       {path: 'list-admins', component: ListAdminsComponent},
       {path: 'provider-detail/:id', component: ProviderDetailsComponent},
+      {path: 'notification', component: NotificationComponent},
     ]},
     {path: 'login', component: LoginComponent, canActivate: [AdminLogoutGuard]},
     {path: '**', component: NotFoundComponent}

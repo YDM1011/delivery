@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>OptSmart</title>
+	<base href="./">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="icon" type="image/x-icon" href="favicon.ico">
+	<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500&display=swap" rel="stylesheet">
+	<style>
+		.loading{
+			position: fixed;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			height: 100vh;
+			width: 100%;
+			top: 0;
+			left: 0;
+			background: rgba(26, 26, 26, 0.13);
+			z-index: 100;
+		}
+		#loadingItem{
+			width: 280px;
+			height: 280px;
+		}
+	</style>
+	<link rel="stylesheet" href="styles.ade552e53251731cc234.css"></head>
+<body>
+<app-root>
+	<div class="loading">
+		<div id="loadingItem"></div>
+	</div>
+</app-root>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.5.9/lottie.js" integrity="sha256-RVQVF5NKgGRQ+0CFMav1cnEcS1hxh9BqMUbQW8B+Cqo=" crossorigin="anonymous"></script>
+<script>
+    lottie.loadAnimation({
+        container: loadingItem, // the dom element that will contain the animation
+        renderer: 'canvas',
+        width: 280,
+        height: 280,
+        loop: true,
+        autoplay: true,
+        path: './assets/loading.json' // the path to the animation json
+    });
+</script>
+<script src="cordova.js"></script>
+<script src="runtime.3b253adfe687de943dca.js" defer></script><script src="polyfills-es5.7716d8dd642a0d9864f9.js" nomodule defer></script><script src="polyfills.ffc476ee7df9c02b7945.js" defer></script><script src="scripts.859e64cef1ef944f8beb.js" defer></script><script src="main.03d6c761a9504058b3af.js" defer></script></body>
+</html>
