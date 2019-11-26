@@ -44,12 +44,12 @@ module.exports = (backendApp, router) => {
                     if (req.user.role === 'provider') {
                         req.body.verify = true;
                         req.body.role = 'collaborator';
-                        req.user.companies.forEach((it, i)=>{
-                            req.user.companies[i] = it.toString();
-                        });
-                        if(!(req.user.companies.indexOf(req.user.companyOwner) > -1)) {
-                            return res.badRequest('Company errors' + req.user._id + req.user.role);
-                        }
+                        // req.user.companies.forEach((it, i)=>{
+                        //     req.user.companies[i] = it.toString();
+                        // });
+                        // if(!(req.user.companies.indexOf(req.user.companyOwner) > -1)) {
+                        //     return res.badRequest('Company errors' + req.user._id + req.user.role);
+                        // }
                     }
                 }
 
