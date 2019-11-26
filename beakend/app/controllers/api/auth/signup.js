@@ -44,6 +44,7 @@ module.exports = (backendApp, router) => {
                     if (req.user.role === 'provider') {
                         req.body.verify = true;
                         req.body.role = 'collaborator';
+                        req.body.companyOwner = req.user.companyOwner;
                         // req.user.companies.forEach((it, i)=>{
                         //     req.user.companies[i] = it.toString();
                         // });
