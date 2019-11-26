@@ -110,9 +110,9 @@ export class OrdersComponent implements OnInit, OnDestroy {
   getSuccessBasket() {
     this.toggleMain = false;
     this.loading = false;
-    this.newStart = new Date(this.dateStart.getMonth()+1+'.'+(this.dateStart.getDate()) +'.'+new Date().getFullYear()).getTime();
-    this.newEnd = new Date(this.dateEnd.getMonth()+1+'.'+(this.dateEnd.getDate()+1) +'.'+new Date().getFullYear()).getTime()-1;
-    this.crud.get(`basket?query={"createdBy":"${this.user._id}","date":{"$gte":"${new Date(this.newStart).toISOString()}","$lte":"${new Date(this.newEnd).toISOString()}"},"$or":[{"status":4},{"status":5}]}&populate=[{"path":"deliveryAddress","select":"name img"},{"path":"companyOwner","select":"name img"}]&skip=0&limit=5&sort={"date":-1}`).then((v: any) => {
+    const timeStart = new Date(this.dateStart.getTime() - this.dateStart.getHours()*60*60*1000 - this.dateStart.getMinutes()*60*1000  - this.dateStart.getSeconds()*1000).getTime();
+    const timeEnd = new Date(this.dateEnd.getTime() - this.dateEnd.getHours()*60*60*1000 - this.dateEnd.getMinutes()*60*1000  - this.dateEnd.getSeconds()*1000).getTime();
+    this.crud.get(`basket?query={"createdBy":"${this.user._id}","date":{"$gte":"${timeStart}","$lte":"${timeEnd}"},"$or":[{"status":4},{"status":5}]}&populate=[{"path":"deliveryAddress","select":"name img"},{"path":"companyOwner","select":"name img"}]&skip=0&limit=5&sort={"date":-1}`).then((v: any) => {
       this.orders = v;
       this.loading = true;
     });

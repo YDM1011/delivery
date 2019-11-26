@@ -37,13 +37,22 @@ export class NotificationComponent implements OnInit {
         return;
       }
       this.notification.notificationGlobal = false;
+    } else {
+      this.notification.notificationGlobal = true;
+      delete this.notification.client;
     }
 
-    this.notification.title =this.notification.title.trim();
+    this.notification.title = this.notification.title.trim();
     this.notification.description =this.notification.description.trim();
     this.crud.post('customPush', this.notification).then((v: any) => {
       if (v) {
         Swal.fire('Success', 'Ваше уведомление отправленно', 'success');
+        this.notification = {
+          title: '',
+          description: '',
+          notificationGlobal: true,
+          client: []
+        }
       }
     })
   }
@@ -72,6 +81,8 @@ export class NotificationComponent implements OnInit {
   changeTypeActionGlobal() {
     if (this.globalAction) {
       this.userAction = false;
+      this.notification.client = [];
+      this.userChoose = [];
     } else if (!this.userAction) {
       this.userAction = true;
     }
@@ -81,6 +92,8 @@ export class NotificationComponent implements OnInit {
       this.globalAction = false;
     } else if (!this.userAction) {
       this.globalAction = true;
+      this.notification.client = [];
+      this.userChoose = [];
     }
   }
 }

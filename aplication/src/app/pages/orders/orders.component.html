@@ -60,7 +60,7 @@
           <app-orders-item [order]="item" (removeOrder)="removeOrder($event)"  (confirmOrder)="confirmOrder($event)" *ngFor="let item of orders; let index = index"></app-orders-item>
         </div>
         <ng-container *ngIf="orders && orders.length === 0">
-          <div class="empty-block">
+          <div class="empty-block" [class.notToggle]="!toggleMain">
             {{translate.empty_done[language]}}
           </div>
         </ng-container>

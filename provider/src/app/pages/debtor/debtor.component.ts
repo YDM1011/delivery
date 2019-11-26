@@ -64,7 +64,7 @@ export class DebtorComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.dateStart.setDate(this.dateStart.getDate() -1);
+    this.dateStart.setDate(this.dateStart.getDate());
     this.crud.get('mainCategory').then((v: any) => {
       if (!v)  { return; }
       this.mainCategory = v;
@@ -80,11 +80,14 @@ export class DebtorComponent implements OnInit {
   getDebtors() {
     this.newStart = new Date(this.dateStart.getMonth()+1+'.'+(this.dateStart.getDate()) +'.'+new Date().getFullYear()).getTime();
     this.newEnd = new Date(this.dateEnd.getMonth()+1+'.'+(this.dateEnd.getDate()+1) +'.'+new Date().getFullYear()).getTime()-1;
+    // this.newStart = new Date(this.dateStart.getTime() - this.dateStart.getHours()*60*60*1000 - this.dateStart.getMinutes()*60*1000  - this.dateStart.getSeconds()*1000).getTime();
+    // this.newEnd = new Date(this.dateEnd.getTime() - this.dateEnd.getHours()*60*60*1000 - this.dateEnd.getMinutes()*60*1000  - this.dateEnd.getSeconds()*1000).getTime();
+
     if (this.tabIndex === 0) {
-      this.crud.get(`debtor/count?query={"companyOwner": "${this.user.companyOwner._id}","value":{"$gt":0},"date":{"$gte":"${new Date(this.newStart).toISOString()}","$lte":"${new Date(this.newEnd).toISOString()}"}}`).then((count: any) => {
+      this.crud.get(`debtor/count?query={"companyOwner": "${this.user.companyOwner._id}","value":{"$gt":0},"date":{"$gte":"${this.newStart}","$lte":"${this.newEnd}"}}`).then((count: any) => {
         if (count) {
           this.lengthPagination = count.count;
-          this.crud.get(`debtor?query={"companyOwner": "${this.user.companyOwner._id}","value":{"$gt":0},"date":{"$gte":"${new Date(this.newStart).toISOString()}","$lte":"${new Date(this.newEnd).toISOString()}"}}${this.populate}&skip=0&limit=${this.pageSizePagination}&sort={"dataCall":-1}`).then((d: any) => {
+          this.crud.get(`debtor?query={"companyOwner": "${this.user.companyOwner._id}","value":{"$gt":0},"date":{"$gte":"${this.newStart}","$lte":"${this.newEnd}"}}${this.populate}&skip=0&limit=${this.pageSizePagination}&sort={"dataCall":-1}`).then((d: any) => {
             if (d) {
               this.debtors = d;
               this.loading = true;
@@ -94,10 +97,10 @@ export class DebtorComponent implements OnInit {
       });
     }
     if (this.tabIndex === 1) {
-      this.crud.get(`debtor/count?query={"companyOwner": "${this.user.companyOwner._id}","value":0,"date":{"$gte":"${new Date(this.newStart).toISOString()}","$lte":"${new Date(this.newEnd).toISOString()}"}}`).then((count: any) => {
+      this.crud.get(`debtor/count?query={"companyOwner": "${this.user.companyOwner._id}","value":0,"date":{"$gte":"${this.newStart}","$lte":"${this.newEnd}"}}`).then((count: any) => {
         if (count) {
           this.lengthPagination = count.count;
-          this.crud.get(`debtor?query={"companyOwner": "${this.user.companyOwner._id}","value":0,"date":{"$gte":"${new Date(this.newStart).toISOString()}","$lte":"${new Date(this.newEnd).toISOString()}"}}${this.populate}&skip=0&limit=${this.pageSizePagination}&sort={"dataCall":-1}`).then((d: any) => {
+          this.crud.get(`debtor?query={"companyOwner": "${this.user.companyOwner._id}","value":0,"date":{"$gte":"${this.newStart}","$lte":"${this.newEnd}"}}${this.populate}&skip=0&limit=${this.pageSizePagination}&sort={"dataCall":-1}`).then((d: any) => {
             if (d) {
               this.debtors = d;
               this.loading = true;
@@ -163,10 +166,10 @@ export class DebtorComponent implements OnInit {
     }
     this.crud.post('debtor', this.debtor).then((v: any) => {
       if (v) {
-        this.crud.get(`debtor/count?query={"companyOwner": "${this.user.companyOwner._id}"}`).then((count: any) => {
+        this.crud.get(`debtor/count?query={"companyOwner":"${this.user.companyOwner._id}"}`).then((count: any) => {
           if (count) {
             this.lengthPagination = count.count;
-            this.crud.get(`debtor?query={"companyOwner": "${this.user.companyOwner._id}"}${this.populate}&skip=0&limit=${this.pageSizePagination}&sort={"dataCall":-1}`).then((d: any) => {
+            this.crud.get(`debtor?query={"companyOwner":"${this.user.companyOwner._id}"}${this.populate}&skip=0&limit=${this.pageSizePagination}&sort={"dataCall":-1}`).then((d: any) => {
               if (d) {
                 this.debtors = d;
               }
@@ -304,10 +307,10 @@ export class DebtorComponent implements OnInit {
     this.loading = false;
     this.tabIndex = e;
     if (e === 0) {
-      this.crud.get(`debtor/count?query={"companyOwner": "${this.user.companyOwner._id}","value":{"$gt":0},"date":{"$gte":"${new Date(this.newStart).toISOString()}","$lte":"${new Date(this.newEnd).toISOString()}"}}`).then((count: any) => {
+      this.crud.get(`debtor/count?query={"companyOwner": "${this.user.companyOwner._id}","value":{"$gt":0},"date":{"$gte":"${this.newStart}","$lte":"${this.newEnd}"}}`).then((count: any) => {
         if (count) {
           this.lengthPagination = count.count;
-          this.crud.get(`debtor?query={"companyOwner": "${this.user.companyOwner._id}","value":{"$gt":0},"date":{"$gte":"${new Date(this.newStart).toISOString()}","$lte":"${new Date(this.newEnd).toISOString()}"}}${this.populate}&skip=0&limit=${this.pageSizePagination}&sort={"dataCall":-1}`).then((d: any) => {
+          this.crud.get(`debtor?query={"companyOwner": "${this.user.companyOwner._id}","value":{"$gt":0},"date":{"$gte":"${this.newStart}","$lte":"${this.newEnd}"}}${this.populate}&skip=0&limit=${this.pageSizePagination}&sort={"dataCall":-1}`).then((d: any) => {
             if (d) {
               this.debtors = d;
               this.loading = true;
@@ -317,10 +320,10 @@ export class DebtorComponent implements OnInit {
       });
     }
     if (e === 1) {
-      this.crud.get(`debtor/count?query={"companyOwner": "${this.user.companyOwner._id}","value":0,"date":{"$gte":"${new Date(this.newStart).toISOString()}","$lte":"${new Date(this.newEnd).toISOString()}"}}`).then((count: any) => {
+      this.crud.get(`debtor/count?query={"companyOwner": "${this.user.companyOwner._id}","value":0,"date":{"$gte":"${this.newStart}","$lte":"${this.newEnd}"}}`).then((count: any) => {
         if (count) {
           this.lengthPagination = count.count;
-          this.crud.get(`debtor?query={"companyOwner": "${this.user.companyOwner._id}","value":0,"date":{"$gte":"${new Date(this.newStart).toISOString()}","$lte":"${new Date(this.newEnd).toISOString()}"}}${this.populate}&skip=0&limit=${this.pageSizePagination}&sort={"dataCall":-1}`).then((d: any) => {
+          this.crud.get(`debtor?query={"companyOwner": "${this.user.companyOwner._id}","value":0,"date":{"$gte":"${this.newStart}","$lte":"${this.newEnd}"}}${this.populate}&skip=0&limit=${this.pageSizePagination}&sort={"dataCall":-1}`).then((d: any) => {
             if (d) {
               this.debtors = d;
               this.loading = true;
