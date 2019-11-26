@@ -73,7 +73,8 @@ export class ActionComponent implements OnInit {
             this.productChoose = this.products[0]._id;
           }
         });
-        const date = new Date(new Date().getTime() - new Date().getHours()*60*60*1000 - new Date().getMinutes()*60*1000  - new Date().getSeconds()*1000).getTime();
+        // const date = new Date(new Date().getTime() - new Date().getHours()*60*60*1000 - new Date().getMinutes()*60*1000  - new Date().getSeconds()*1000).getTime();
+        const date = new Date(new Date(new Date().getMonth()+1+'.'+(new Date().getDate()) +'.'+new Date().getFullYear()).getTime());
 
         this.crud.get(`action/count?query={"companyOwner":"${this.company}","dateEnd":{"$gte":"${date}"}}`).then((c: any) => {
           if (c) {
