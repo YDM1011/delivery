@@ -47,7 +47,7 @@ module.exports = (backendApp, router) => {
                         req.user.companies.forEach((it, i)=>{
                             req.user.companies[i] = it.toString();
                         });
-                        if(!(req.user.companies.indexOf(req.body.companyOwner) > -1)) {
+                        if(!(req.user.companies.indexOf(req.user.companyOwner) > -1)) {
                             return res.badRequest('Company errors' + req.user._id + req.user.role);
                         }
                     }
@@ -62,7 +62,7 @@ module.exports = (backendApp, router) => {
                             return postSignup(req, res, r);
                         }
                         if (req.user.role === 'provider') {
-                            Company.findOneAndUpdate({_id: req.body.companyOwner}, {$push: {collaborators: r._id}}, {new:true})
+                            Company.findOneAndUpdate({_id: req.user.companyOwner}, {$push: {collaborators: r._id}}, {new:true})
                                 .exec((e1,r1)=>{
                                     if (e1) return res.serverError(e1);
                                     if (!r1) return res.badRequest();
