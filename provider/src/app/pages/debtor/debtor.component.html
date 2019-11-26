@@ -88,7 +88,7 @@
 				<button type="submit" class="main-button-color">Искать</button>
 			</form>
 			<ng-container *ngIf="searchArr.length>0">
-					<span *ngFor="let item of searchArr">
+					<div *ngFor="let item of searchArr">
 						<div class="table">
 							<div class="table-content">
 								<div class="row-h">
@@ -175,10 +175,10 @@
 								</ng-container>
 							</div>
 						</div>
-					</span>
+					</div>
 			</ng-container>
 			
-			<div class="date">
+			<div class="date" *ngIf="searchArr.length===0">
 				<span>
 					Дата от:
 				</span>
@@ -204,7 +204,7 @@
 					</div>
 				</div>
 			</div>
-			<mat-tab-group (selectedIndexChange)="tabChange($event)" [animationDuration]="0" *ngIf="searchArr.length===0">
+			<mat-tab-group (selectedIndexChange)="tabChange($event)" [(selectedIndex)]="tabIndex" [animationDuration]="0" *ngIf="searchArr.length===0">
 				<ng-container>
 					<mat-tab label="Должники">
 						<ng-template matTabContent class="mat-template">

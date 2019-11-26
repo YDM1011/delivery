@@ -129,29 +129,58 @@ export class OrdersComponent implements OnInit, OnDestroy {
     });
   }
   tab1(skip, limit) {
-    this.crud.get(`basket/count?query={"companyOwner":"${this.user.companyOwner._id}","lastUpdate":{"$gte":"${this.newStart}","$lte":"${this.newEnd}"},"$or":[{"status":2},{"status":3}]}`).then((count: any) => {
-      if (count) {
-        this.lengthPagination = count.count;
-        this.crud.get(`basket?query={"companyOwner":"${this.user.companyOwner._id}","lastUpdate":{"$gte":"${this.newStart}","$lte":"${this.newEnd}"},"$or":[{"status":2},{"status":3}]}&populate=[{"path":"deliveryAddress","populate":"city","select":"name build street department img"},{"path":"manager","select":"name"},{"path":"createdBy","select":"mobile name"}]&skip=${skip}&limit=${limit}&sort={"date":-1}`).then((orders: any) => {
-          if (!orders) {return; }
-          this.orders = orders;
-          this.loading = true;
-        });
-      }
-    });
+    if (this.user.role === 'provider') {
+      this.crud.get(`basket/count?query={"companyOwner":"${this.user.companyOwner._id}","lastUpdate":{"$gte":"${this.newStart}","$lte":"${this.newEnd}"},"$or":[{"status":2},{"status":3}]}`).then((count: any) => {
+        if (count) {
+          this.lengthPagination = count.count;
+          this.crud.get(`basket?query={"companyOwner":"${this.user.companyOwner._id}","lastUpdate":{"$gte":"${this.newStart}","$lte":"${this.newEnd}"},"$or":[{"status":2},{"status":3}]}&populate=[{"path":"deliveryAddress","populate":"city","select":"name build street department img"},{"path":"manager","select":"name"},{"path":"createdBy","select":"mobile name"}]&skip=${skip}&limit=${limit}&sort={"date":-1}`).then((orders: any) => {
+            if (!orders) {return; }
+            this.orders = orders;
+            this.loading = true;
+          });
+        }
+      });
+    }
+    if (this.user.role === 'collaborator') {
+      this.crud.get(`basket/count?query={"companyOwner":"${this.user.companyOwner._id}","manager":"${this.user._id}","lastUpdate":{"$gte":"${this.newStart}","$lte":"${this.newEnd}"},"$or":[{"status":2},{"status":3}]}`).then((count: any) => {
+        if (count) {
+          this.lengthPagination = count.count;
+          this.crud.get(`basket?query={"companyOwner":"${this.user.companyOwner._id}","manager":"${this.user._id}","lastUpdate":{"$gte":"${this.newStart}","$lte":"${this.newEnd}"},"$or":[{"status":2},{"status":3}]}&populate=[{"path":"deliveryAddress","populate":"city","select":"name build street department img"},{"path":"manager","select":"name"},{"path":"createdBy","select":"mobile name"}]&skip=${skip}&limit=${limit}&sort={"date":-1}`).then((orders: any) => {
+            if (!orders) {return; }
+            this.orders = orders;
+            this.loading = true;
+          });
+        }
+      });
+    }
   }
   tab2(skip, limit) {
-    this.crud.get(`basket/count?query={"isHidden":false,"companyOwner":"${this.user.companyOwner._id}","lastUpdate":{"$gte":"${this.newStart}","$lte":"${this.newEnd}"},"$or":[{"status":4},{"status":5}]}`).then((count: any) => {
-      if (count) {
-        this.lengthPagination = count.count;
-        const query = JSON.stringify({isHidden:false,companyOwner: this.user.companyOwner._id, lastUpdate: {$gte:this.newStart,$lte:this.newEnd}, $or: [{status: 4}, {status: 5}]});
-        this.crud.get(`basket?query=${query}&populate=[{"path":"deliveryAddress","populate":"city","select":"name build street department img"},{"path":"manager","select":"name"},{"path":"createdBy","select":"mobile name"}]&skip=${skip}&limit=${limit}&sort={"date":-1}`).then((orders: any) => {
-          if (!orders) {return; }
-          this.orders = orders;
-          this.loading = true;
-        });
-      }
-    });
+    if (this.user.role === 'provider') {
+      this.crud.get(`basket/count?query={"isHidden":false,"companyOwner":"${this.user.companyOwner._id}","lastUpdate":{"$gte":"${this.newStart}","$lte":"${this.newEnd}"},"$or":[{"status":4},{"status":5}]}`).then((count: any) => {
+        if (count) {
+          this.lengthPagination = count.count;
+          const query = JSON.stringify({isHidden:false,companyOwner: this.user.companyOwner._id,lastUpdate: {$gte:this.newStart,$lte:this.newEnd}, $or: [{status: 4}, {status: 5}]});
+          this.crud.get(`basket?query=${query}&populate=[{"path":"deliveryAddress","populate":"city","select":"name build street department img"},{"path":"manager","select":"name"},{"path":"createdBy","select":"mobile name"}]&skip=${skip}&limit=${limit}&sort={"date":-1}`).then((orders: any) => {
+            if (!orders) {return; }
+            this.orders = orders;
+            this.loading = true;
+          });
+        }
+      });
+    }
+    if (this.user.role === 'collaborator') {
+      this.crud.get(`basket/count?query={"isHidden":false,"companyOwner":"${this.user.companyOwner._id}","manager":"${this.user._id}","lastUpdate":{"$gte":"${this.newStart}","$lte":"${this.newEnd}"},"$or":[{"status":4},{"status":5}]}`).then((count: any) => {
+        if (count) {
+          this.lengthPagination = count.count;
+          const query = JSON.stringify({isHidden:false,companyOwner: this.user.companyOwner._id,manager:this.user._id,lastUpdate: {$gte:this.newStart,$lte:this.newEnd}, $or: [{status: 4}, {status: 5}]});
+          this.crud.get(`basket?query=${query}&populate=[{"path":"deliveryAddress","populate":"city","select":"name build street department img"},{"path":"manager","select":"name"},{"path":"createdBy","select":"mobile name"}]&skip=${skip}&limit=${limit}&sort={"date":-1}`).then((orders: any) => {
+            if (!orders) {return; }
+            this.orders = orders;
+            this.loading = true;
+          });
+        }
+      });
+    }
   }
   tab3(skip, limit) {
     const queryCount = JSON.stringify({manager: this.user._id,lastUpdate: {$gte:this.newStart,$lte:this.newEnd}, $or: [{status: 2}, {status: 3}]});
@@ -169,6 +198,7 @@ export class OrdersComponent implements OnInit, OnDestroy {
   }
   takeOrder(e, i) {
     e.stopPropagation();
+    console.log(e, i)
     this.crud.post('basket', {status: 2, manager: this.user._id}, this.orders[i]._id, false).then((v: any) => {
       if (v) {
         const populate = JSON.stringify([{path: 'orderOwner', select: 'name'}, {path: 'createdBy', select: 'name address'}, {path: 'deliveryAddress', populate: {path: 'city'}, select: 'name street build department img' }, {path: 'manager', select: 'name'}, {path: 'createdBy', select: 'mobile name'}]);
@@ -251,6 +281,12 @@ export class OrdersComponent implements OnInit, OnDestroy {
               this.orders[i].status = 4;
             }
           });
+        }
+      });
+    } else {
+      this.crud.post('basket', {status: 4, deptor:true}, this.orders[i]._id, false).then((v) => {
+        if (v) {
+          this.orders[i].status = 4;
         }
       });
     }
