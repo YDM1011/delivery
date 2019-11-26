@@ -22,6 +22,8 @@ export class FilterComponent implements OnInit {
   public subChack = [];
   public brand = [];
   public brandChack = [];
+  public showMoreCat = false;
+  public showMoreBrend = false;
   @Input() mainCategory;
   @Input() city;
   @Input() filterInput;
@@ -31,6 +33,10 @@ export class FilterComponent implements OnInit {
   };
 
   public translate ={
+    showMore: {
+      ru: 'показать больше',
+      ua: 'показати більше'
+    },
     filters: {
       ru: 'Фильтры',
       ua: 'Фільтри'

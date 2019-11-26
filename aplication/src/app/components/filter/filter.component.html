@@ -13,52 +13,60 @@
 			</h2>
 		</div>
 		<div class="other-pages">
-			<div class="sub-category"  *ngIf="mainCategory && mainCategory.subCategory.length>0">
-				<div class="sub-title">
-					{{translate.sub_cat[language]}}
-				</div>
-				<div class="sub-container">
-					<ng-container *ngIf="mainCategory.subCategory">
-						<ng-container *ngIf="mainCategory.subCategory.length>0">
-							<mat-checkbox class="filter-check" *ngFor="let sub of mainCategory.subCategory; let index = index;" [checked]="subChack[index]"  [value]="sub" (change)="getCheckSub($event, index)">{{sub}}</mat-checkbox>
-						</ng-container>
-					</ng-container>
-				</div>
-			</div>
-			<div class="sub-brands">
-				<div class="sub-title" *ngIf="mainCategory && mainCategory.brands.length>0">
-					{{translate.brands[language]}}
-				</div>
-				<div class="sub-container">
-					<ng-container *ngIf="mainCategory.brands">
-						<ng-container *ngIf="mainCategory.brands.length>0">
-							<mat-checkbox class="filter-check filter-sub" *ngFor="let brand of mainCategory.brands; let index = index" [checked]="brandChack[index]" [value]="brand._id" (change)="getCheckBrand($event, index)">
-								<div class="sub-brand-item">
-									<div class="img">
-										<app-img [dir]="'product'" [fs]="brand.img"></app-img>
-									</div>
-									<div class="title">
-										{{brand.name}}
-									</div>
-								</div>
-							</mat-checkbox>
-						</ng-container>
-					</ng-container>
-				</div>
-			</div>
-			<div class="sub-price">
-				<div class="sub-title">
-					{{translate.price[language]}}
-				</div>
-				<div class="sub-container">
-					<div class="price-filter">
-						<input type="text" [(ngModel)]="priceMin">
-						<span class="from">до</span>
-						<input type="text" [(ngModel)]="priceMax">
+			<div class="scroll-block">
+				<div class="sub-category"  *ngIf="mainCategory && mainCategory.subCategory.length>0">
+					<div class="sub-title">
+						{{translate.sub_cat[language]}}
 					</div>
-					<ng-container>
-            <ng5-slider  [(value)]="priceMin" [(highValue)]="priceMax" [options]="options" (userChangeEnd)="priceFilterFunc()"></ng5-slider>
-					</ng-container>
+					<div class="sub-container sub-container-cat" [class.active]="showMoreCat">
+						<ng-container *ngIf="mainCategory.subCategory">
+							<ng-container *ngIf="mainCategory.subCategory.length>0">
+								<mat-checkbox class="filter-check" *ngFor="let sub of mainCategory.subCategory; let index = index;" [checked]="subChack[index]"  [value]="sub" (change)="getCheckSub($event, index)">{{sub}}</mat-checkbox>
+							</ng-container>
+						</ng-container>
+					</div>
+					<div class="show-more-cat" (click)="showMoreCat = true" *ngIf="!showMoreCat && mainCategory && mainCategory.subCategory.length>4">
+						{{translate.showMore[language]}}
+					</div>
+				</div>
+				<div class="sub-brands">
+					<div class="sub-title" *ngIf="mainCategory && mainCategory.brands.length>0">
+						{{translate.brands[language]}}
+					</div>
+					<div class="sub-container sub-container-brand" [class.active]="showMoreBrend">
+						<ng-container *ngIf="mainCategory.brands">
+							<ng-container *ngIf="mainCategory.brands.length>0">
+								<mat-checkbox class="filter-check filter-sub" *ngFor="let brand of mainCategory.brands; let index = index" [checked]="brandChack[index]" [value]="brand._id" (change)="getCheckBrand($event, index)">
+									<div class="sub-brand-item">
+										<div class="img">
+											<app-img [dir]="'product'" [fs]="brand.img"></app-img>
+										</div>
+										<div class="title">
+											{{brand.name}}
+										</div>
+									</div>
+								</mat-checkbox>
+							</ng-container>
+						</ng-container>
+					</div>
+					<div class="show-more-cat" (click)="showMoreBrend = true" *ngIf="!showMoreBrend && mainCategory && mainCategory.brands.length>4">
+						{{translate.showMore[language]}}
+					</div>
+				</div>
+				<div class="sub-price">
+					<div class="sub-title">
+						{{translate.price[language]}}
+					</div>
+					<div class="sub-container">
+						<div class="price-filter">
+							<input type="text" [(ngModel)]="priceMin">
+							<span class="from">до</span>
+							<input type="text" [(ngModel)]="priceMax">
+						</div>
+						<ng-container>
+							<ng5-slider  [(value)]="priceMin" [(highValue)]="priceMax" [options]="options" (userChangeEnd)="priceFilterFunc()"></ng5-slider>
+						</ng-container>
+					</div>
 				</div>
 			</div>
 			<div class="buttons">
