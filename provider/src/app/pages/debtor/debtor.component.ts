@@ -64,7 +64,7 @@ export class DebtorComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.dateStart.setDate(this.dateStart.getDate() -1);
+    this.dateStart.setDate(this.dateStart.getDate());
     this.crud.get('mainCategory').then((v: any) => {
       if (!v)  { return; }
       this.mainCategory = v;

@@ -31,7 +31,7 @@ export class OrdersComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    this.dateStart.setDate(this.dateStart.getDate() -1);
+    this.dateStart.setDate(this.dateStart.getDate());
     this.router.navigate(['/orders']);
     this._subscription.push(this.auth.onWsOrder.subscribe((ws: any) => {
       if (ws) {
