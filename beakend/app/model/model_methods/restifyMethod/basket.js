@@ -121,6 +121,7 @@ module.exports.postUpdate = async (req, res, next, backendApp) => {
     if (basket.status === 4) {
         backendApp.mongoose.model('Rating')
             .create({
+                basketOwner: basket._id,
                 clientOwner: basket.createdBy,
                 companyOwner: basket.companyOwner,
                 rating: 0,

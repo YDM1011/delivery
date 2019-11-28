@@ -55,6 +55,7 @@ import {ChartsModule} from "ng2-charts";
 import { PayComponent } from './pages/pay/pay.component';
 import { ForgotComponent } from './pages/forgot/forgot.component';
 import {SafeHTMLPipe} from "./safe-html.pipe";
+import { InfoByComponent } from './components/info-by/info-by.component';
 
 @NgModule({
   declarations: [
@@ -93,7 +94,8 @@ import {SafeHTMLPipe} from "./safe-html.pipe";
     VerificationComponent,
     PayComponent,
     ForgotComponent,
-    SafeHTMLPipe
+    SafeHTMLPipe,
+    InfoByComponent
   ],
   imports: [
     ChartsModule,

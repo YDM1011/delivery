@@ -14,6 +14,10 @@ const schema = new Schema({
         type: Schema.Types.ObjectId,
         ref: "Product"
     }],
+    rating: {
+        type: Schema.Types.ObjectId,
+        ref: "Rating"
+    },
     basketNumber: {
         type: Number,
         default: 0

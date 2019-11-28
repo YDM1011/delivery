@@ -73,6 +73,7 @@
 										Дом {{item.deliveryAddress.build}}
 										Квартира {{item.deliveryAddress.department}}
 									</div>
+
 									<div class="address col-f" *ngIf="!item.deliveryAddress">
 										Адресс не доступен
 									</div>
@@ -207,6 +208,9 @@
 									<div class="address col-f">
 										Адрес доставки
 									</div>
+                  <div class="address col-f">
+                    Отзив
+                  </div>
 									<div class="price col-f">
 										Цена
 									</div>
@@ -239,6 +243,10 @@
 									<div class="address col-f" *ngIf="!item.deliveryAddress">
 										Адресс не доступен
 									</div>
+                  <div class="address col-f" *ngIf="item.rating">
+                    {{item.rating.rating}} <br>
+                    {{item.rating.comment}}
+                  </div>
 									<div class="price col-f">
 										{{item.totalPrice}} Грн.
 									</div>

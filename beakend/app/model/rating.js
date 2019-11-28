@@ -10,6 +10,10 @@ const schem = new Schema({
         type: Schema.Types.ObjectId,
         ref: "Client"
     },
+    basketOwner: {
+        type: Schema.Types.ObjectId,
+        ref: "Basket"
+    },
     companyOwner: {
         type: Schema.Types.ObjectId,
         ref: "Company"
@@ -65,15 +69,20 @@ const schem = new Schema({
 schem.post('findOneAndUpdate', (doc,next)=>{
     // ratingCount
     if (doc.rating && doc.rating>0) {
-        mongoose.model('Company')
-            .findOne({_id:doc.companyOwner})
-            .exec((e,company)=>{
-                if (company){
-                    mongoose.model('Company')
-                        .findOneAndUpdate({_id:doc.companyOwner}, { $inc: {ratingCount:1, rating:doc.rating} })
-                        .exec((e,r)=>next())
-                }
-            })
+        mongoose.model('Basket')
+            .findOneAndUpdate({_id:doc.basketOwner},{rating:doc._id}).exec((e,r)=>{
+                console.log(doc)
+            mongoose.model('Company')
+                .findOne({_id:doc.companyOwner})
+                .exec((e,company)=>{
+                    if (company){
+                        mongoose.model('Company')
+                            .findOneAndUpdate({_id:doc.companyOwner}, { $inc: {ratingCount:1, rating:doc.rating} })
+                            .exec((e,r)=>next())
+                    }
+                })
+        });
+
     }
 });
 
