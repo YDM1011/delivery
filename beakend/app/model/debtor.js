@@ -115,9 +115,8 @@ schem.post('findOneAndRemove', (doc,next) => {
                                     (e,r) => {
                                         mongoose.model('Client')
                                             .findOneAndUpdate(
-                                                { "debtors": null },
+                                                { "_id": doc.clientOwner },
                                                 { "$pull": { "debtors": null } },
-                                                { "multi": true },
                                                 (e,r) => {
                                                     next()
                                                 }

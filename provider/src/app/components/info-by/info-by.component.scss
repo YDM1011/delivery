@@ -1,0 +1,50 @@
+.client-cart {
+  display: flex;
+  align-items: center;
+}
+.client-cart app-img {
+  max-width: 50px;
+  border-radius: 50%;
+  margin-right: 10px;
+  overflow: hidden;
+  display: flex;
+}
+.infoBy {
+  width: 100%;
+}
+.infoBy tr{
+  //border-bottom: 2px solid #ececec;
+  box-shadow: 0px 2px 0px 0px #c3c1c1;
+}
+.infoBy td{
+  padding: 5px 8px;
+  align-items: center;
+  //border-bottom: 2px solid #ececec;
+}
+.address{
+  display: flex;
+}
+.address-cart *{
+  font-size: 12px;
+}
+.address-cart .basketNumber{
+  font-size: 10px;
+  color: #999;
+}
+.address-cart{
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  padding: 5px 12px;
+  margin: 5px;
+  border-radius: 5px;
+}
+.detail-data .glass{
+  background-color: rgba(0, 0, 0, 0.25);
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+

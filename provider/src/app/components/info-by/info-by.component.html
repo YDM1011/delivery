@@ -1,1 +1,108 @@
-<p>info-by works!</p>
+
+
+<table *ngIf="loaded; else loader" class="infoBy">
+  <ng-container *ngIf="dataPayed.length > 0; else empty">
+    <tr>
+      <td>Клиент</td>
+      <td>Адрес Торговой точки</td>
+      <td>Сумма заказа</td>
+      <td></td>
+    </tr>
+
+    <tr *ngFor="let data of dataPayed">
+      <td>
+        <ng-container *ngIf="data._id.createdBy">
+          <div class="client-cart">
+            <app-img [fs]="data._id.createdBy.img" [dir]="'avatar'"></app-img>
+            <span>
+              {{data._id.createdBy.name}}
+              <ng-container *ngIf="data._id.createdBy.mobile">
+                <br> {{data._id.createdBy.mobile}}
+              </ng-container>
+              <ng-container *ngIf="!data._id.createdBy.mobile">
+                <br> {{data._id.createdBy.login}}
+              </ng-container>
+            </span>
+          </div>
+        </ng-container>
+      </td>
+      <td>
+        <ng-container *ngIf="data.baskets">
+          <div class="address">
+            <div *ngFor="let basket of data.baskets" class="address-cart">
+              <div *ngIf="basket.basketNumber" class="basketNumber">Заказ №{{basket.basketNumber}}</div>
+              <div *ngIf="basket.deliveryAddress">
+                Торговая точка: {{basket.deliveryAddress.name}}
+              </div>
+              <div *ngIf="basket.deliveryAddress">
+                <ng-container *ngIf="basket.deliveryAddress.street">
+                  {{basket.deliveryAddress.street}}
+                </ng-container>
+                <ng-container *ngIf="basket.deliveryAddress.build">
+                  {{basket.deliveryAddress.build}}
+                </ng-container>
+                <ng-container *ngIf="basket.deliveryAddress.department">
+                  {{basket.deliveryAddress.department}}
+                </ng-container>
+
+              </div>
+            </div>
+          </div>
+        </ng-container>
+      </td>
+      <td>{{data.sum}} грн</td>
+      <td>
+        <button (click)="details(data)">i</button>
+      </td>
+    </tr>
+  </ng-container>
+</table>
+
+<div class="detail-data" *ngIf="data">
+  <div class="popup"  appPopup (onClose)="close()">
+    <div class="content">
+
+      <div class="basket" *ngFor="let basket of data.baskets">
+        <div class="title">
+          <span>
+            Заказ №{{basket.basketNumber}}
+          </span>
+          <span class="date">
+            {{basket.lastUpdate | date: "HH:mm" }}
+            {{basket.lastUpdate | date: "dd.MM.yy"}}
+          </span>
+        </div>
+        <div class="des">
+          <div class="manager">
+            С заказом работал(а): {{basket.manager.name}}
+          </div>
+          <div class="price">
+            Всего по заказу: {{basket.totalPrice}}
+          </div>
+          <div class="products">
+            <div class="product" *ngFor="let product of basket.products">
+              <ng-container *ngIf="product.orderOwner">
+                <div class="p-img" *ngIf="product.orderOwner.img">
+                  <app-img [dir]="'product'" [fs]="product.orderOwner.img"></app-img>
+                </div>
+                <div class="p-info" >
+                  <div class="p-name">{{product.orderOwner.name}}</div>
+                  <div class="p-des">{{product.orderOwner.des}}</div>
+                  <div class="p-price">
+                    <span>{{product.count}}</span>
+                    <span>{{product.orderOwner.price}}</span>
+                  </div>
+                </div>
+              </ng-container>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<ng-template #loader> Loading...</ng-template>
+<ng-template #empty > Сегодня покупок не была</ng-template>

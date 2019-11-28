@@ -3,11 +3,15 @@ module.exports = function (backendApp, router) {
 
     router.get('/test', [], async function (req, res, next) {
         backendApp.mongoose.model('Client')
-            .findOne({})
-            .sort({date:-1})
-            .exec((e,r)=>{
-                res.ok(r)
-            });
+            .findOneAndUpdate(
+                { "debtors": null },
+                { "$pull": { "debtors": null } },
+                { "multi": true },
+                (e,r) => {
+                    console.log(r)
+                    res.ok(r)
+                }
+            )
     });
     router.get('/test2', [], async function (req, res, next) {
         backendApp.service.authlink.parseHash(

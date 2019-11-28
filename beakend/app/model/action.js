@@ -29,7 +29,7 @@ const schem = new Schema({
         required: [true, "City is required"]
     },
     actionGlobal: {type: Boolean, default: true},
-    updatedAt: {type: Date},
+    lastUpdate: {type: Date},
     date: {type: Date, default: new Date()}
 },{
     toJSON: {
@@ -136,9 +136,8 @@ schem.post('findOneAndRemove', (doc,next) => {
             (e,r) => {
                 mongoose.model('Company')
                     .findOneAndUpdate(
-                        { "action": null },
+                        { "_id": doc.companyOwner },
                         { "$pull": { "action": null } },
-                        { "multi": true },
                         (e,r) => {
                             mongoose.model('Order')
                                 .findOneAndUpdate({_id: doc.orderOwner}, {action:null})

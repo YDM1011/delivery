@@ -56,6 +56,7 @@ import { PayComponent } from './pages/pay/pay.component';
 import { ForgotComponent } from './pages/forgot/forgot.component';
 import {SafeHTMLPipe} from "./safe-html.pipe";
 import { InfoByComponent } from './components/info-by/info-by.component';
+import {PopupDirective} from "./directives/app-popup.directive";
 
 @NgModule({
   declarations: [
@@ -95,7 +96,8 @@ import { InfoByComponent } from './components/info-by/info-by.component';
     PayComponent,
     ForgotComponent,
     SafeHTMLPipe,
-    InfoByComponent
+    InfoByComponent,
+    PopupDirective
   ],
   imports: [
     ChartsModule,

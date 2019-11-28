@@ -50,7 +50,7 @@
 					</mat-chip-list>
 				</div>
 				<mat-form-field class="example-full-width" *ngIf="userAction">
-					<input type="text" placeholder="Tel" aria-label="Number" name="inputSearch" matInput [(ngModel)]="inputChange" [matAutocomplete]="auto" (keyup)="change()">
+					<input type="text" placeholder="Имя или телефон" aria-label="Number" name="inputSearch" matInput [(ngModel)]="inputChange" [matAutocomplete]="auto" (keyup)="change()">
 					<mat-autocomplete #auto="matAutocomplete">
 						<mat-option *ngFor="let item of searchUser" [value]="item.login" (click)="pushUser(item)">
 							<div class="option">
@@ -60,6 +60,7 @@
 										<img src="./assets/images/user.svg" alt="user-svg">
 									</ng-template>
 								</div>
+								{{item.name}}
 								{{item.login}}
 							</div>
 						</mat-option>
