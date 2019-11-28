@@ -47,7 +47,7 @@
 						<tr>
 							<td style="min-width: 200px">Имя</td>
 							<td style="min-width: 200px">Адрес доставки</td>
-							<td style="min-width: 70px">Отзыв</td>
+							<td style="min-width: 70px" *ngIf="activePage === 2">Отзыв</td>
 							<td style="min-width: 100px">Цена</td>
 							<td style="min-width: 180px">Дата создания</td>
 							<td style="min-width: 200px"></td>
@@ -87,7 +87,7 @@
 									Адресс не доступен
 								</ng-container>
 							</td>
-							<td>
+							<td *ngIf="activePage === 2">
 								<ng-container *ngIf="item.rating">
 									{{item.rating.rating}} <br>
 									{{item.rating.comment}}
