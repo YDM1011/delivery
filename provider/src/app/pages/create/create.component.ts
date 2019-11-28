@@ -128,6 +128,9 @@ export class CreateComponent implements OnInit {
       companyOwner: ''
     };
   }
+  cancelEdit() {
+    this.editShow = false;
+  }
   cancelAdd() {
     this.showCollaborator = false;
     this.client = {

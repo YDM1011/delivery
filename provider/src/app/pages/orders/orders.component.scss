@@ -96,6 +96,9 @@
         align-items: center;
         z-index: 4;
         width: 100%;
+        .name{
+          text-align: center;
+        }
         .status{
           margin-bottom: 10px;
           font-weight: 600;
@@ -186,7 +189,6 @@
 }
 
 .remove{
-  margin-left: 25px;
   color: #E21B1B;
   border: 1px solid #E21B1B;
 }
@@ -194,7 +196,7 @@
 .buttons-g{
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
+  align-items: center;
   justify-content: center;
   width: 100%;
 }

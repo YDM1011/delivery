@@ -31,43 +31,32 @@
 			</button>
 		</div>
 		<div class="main-section">
-			<ng-container *ngIf="loading">
-				<div class="table-p" *ngIf="products && products.length > 0">
-					<app-search-filter [inputApi]="'order'" [inputQuery]="'name'" [queryValue]="'companyOwner'" [querySearch]="user.companyOwner" (output)="outputSearch($event)"></app-search-filter>
-					<div class="table-content">
-						<div class="row-h">
-							<div class="col name-c">
-								<div class="name-t">
-									Назва
+			<app-search-filter [inputApi]="'order'" [inputQuery]="'name'" [queryValue]="'companyOwner'" [querySearch]="user.companyOwner._id" (output)="outputSearch($event)" *ngIf="user && loading"></app-search-filter>
+			<div class="table-content" *ngIf="loading" >
+				<div class="content" *ngIf="products && products.length > 0">
+					<table class="table">
+						<tr>
+							<td style="min-width: 300px">Назва</td>
+							<td style="min-width: 400px">Описание</td>
+							<td style="min-width: 100px">Цена</td>
+							<td style="min-width: 180px">Дата</td>
+							<td style="min-width: 200px"></td>
+						</tr>
+						<tr *ngFor="let item of products; let i = index">
+							<td>
+								<div class="name-c">
+									<div class="img">
+										<app-img [dir]="'product'" [fs]="item.img"></app-img>
+									</div>
+									<div class="name">
+										{{item.name}}
+									</div>
 								</div>
-							</div>
-							<div class="col descr">
-								<div class="desc-t">
-									Описание
-								</div>
-							</div>
-							<div class="col">
-								Цена
-							</div>
-							<div class="col">
-								Дата
-							</div>
-						</div>
-						<div class="row-r"  *ngFor="let item of products; let index = index">
-							<div class="col name-c">
-								<div class="img">
-									<app-img [dir]="'product'" [fs]="item.img"></app-img>
-								</div>
-								<div class="name">
-									{{item.name}}
-								</div>
-							</div>
-							<div class="col descr">
-								<div class="des">
-									{{item.des}}
-								</div>
-							</div>
-							<div class="col">
+							</td>
+							<td>
+								{{item.des}}
+							</td>
+							<td>
 								<div class="pr">
 									<div class="old" [class.active]="item.discount">
 										{{item.price}} Грн
@@ -76,38 +65,118 @@
 										{{item.discount ? item.discount : ''}} Грн
 									</div>
 								</div>
-							</div>
-							<div class="col">
+							</td>
+							<td>
 								<div class="date">
 									<div class="top-table-date">
-										{{item.date | date: 'dd MMMM, yyyy'  : null : defLang}}
+										{{item.date | date: 'dd MMMM, yyyy' : null : defLang}}
 									</div>
 									<div class="bottom-table-date">
-										{{item.date | date: 'h:mm a'  : null : defLang}}
+										{{item.date | date: 'HH:mm' : null : defLang}}
 									</div>
 								</div>
-								<div class="buttons">
+							</td>
+							<td>
+								<div class="buttons-edit">
 									<span class="top-btn" (click)="isTop(item)" [class.done]="item.isTop">top</span>
-									<span class="edit-btn" (click)="edit(index)" appScrollTop></span>
-									<span class="trash-btn" (click)="delete(index)"></span>
+									<span class="edit-btn" (click)="edit(i)" appScrollTop></span>
+									<span class="trash-btn" (click)="delete(i)"></span>
 								</div>
-								
-							</div>
-						</div>
-					</div>
-					<mat-paginator [length]="lengthPagination"
-					               [pageSize]="pageSizePagination"
-					               [pageSizeOptions]="pageSizeOptionsPagination"
-					               (page)="pageEvent($event)"
-					               *ngIf="products && products.length > 0">
-					</mat-paginator>
+							</td>
+						</tr>
+					</table>
 				</div>
-				<div class="empty-section" *ngIf="!products || products.length === 0">
-					<p>
-						У вас нет созданых продуктов
-					</p>
-				</div>
-			</ng-container>
+			</div>
+			
+			<mat-paginator [length]="lengthPagination"
+			               [pageSize]="pageSizePagination"
+			               [pageSizeOptions]="pageSizeOptionsPagination"
+			               (page)="pageEvent($event)"
+			               *ngIf="products && products.length > 0">
+			</mat-paginator>
+			
+			<div class="empty-section" *ngIf="loading && !products || products.length === 0">
+				<p>
+					У вас нет созданых продуктов
+				</p>
+			</div>
+<!--			<ng-container *ngIf="loading">-->
+<!--				<div class="table-p" *ngIf="products && products.length > 0">-->
+<!--					<app-search-filter [inputApi]="'order'" [inputQuery]="'name'" [queryValue]="'companyOwner'" [querySearch]="user.companyOwner" (output)="outputSearch($event)"></app-search-filter>-->
+<!--					<div class="table-content">-->
+<!--						<div class="row-h">-->
+<!--							<div class="col name-c">-->
+<!--								<div class="name-t">-->
+<!--									Назва-->
+<!--								</div>-->
+<!--							</div>-->
+<!--							<div class="col descr">-->
+<!--								<div class="desc-t">-->
+<!--									Описание-->
+<!--								</div>-->
+<!--							</div>-->
+<!--							<div class="col">-->
+<!--								Цена-->
+<!--							</div>-->
+<!--							<div class="col">-->
+<!--								Дата-->
+<!--							</div>-->
+<!--						</div>-->
+<!--						<div class="row-r"  *ngFor="let item of products; let index = index">-->
+<!--							<div class="col name-c">-->
+<!--								<div class="img">-->
+<!--									<app-img [dir]="'product'" [fs]="item.img"></app-img>-->
+<!--								</div>-->
+<!--								<div class="name">-->
+<!--									{{item.name}}-->
+<!--								</div>-->
+<!--							</div>-->
+<!--							<div class="col descr">-->
+<!--								<div class="des">-->
+<!--									{{item.des}}-->
+<!--								</div>-->
+<!--							</div>-->
+<!--							<div class="col">-->
+<!--								<div class="pr">-->
+<!--									<div class="old" [class.active]="item.discount">-->
+<!--										{{item.price}} Грн-->
+<!--									</div>-->
+<!--									<div class="new" *ngIf="item.discount">-->
+<!--										{{item.discount ? item.discount : ''}} Грн-->
+<!--									</div>-->
+<!--								</div>-->
+<!--							</div>-->
+<!--							<div class="col">-->
+<!--								<div class="date">-->
+<!--									<div class="top-table-date">-->
+<!--										{{item.date | date: 'dd MMMM, yyyy'  : null : defLang}}-->
+<!--									</div>-->
+<!--									<div class="bottom-table-date">-->
+<!--										{{item.date | date: 'h:mm a'  : null : defLang}}-->
+<!--									</div>-->
+<!--								</div>-->
+<!--								<div class="buttons">-->
+<!--									<span class="top-btn" (click)="isTop(item)" [class.done]="item.isTop">top</span>-->
+<!--									<span class="edit-btn" (click)="edit(index)" appScrollTop></span>-->
+<!--									<span class="trash-btn" (click)="delete(index)"></span>-->
+<!--								</div>-->
+<!--								-->
+<!--							</div>-->
+<!--						</div>-->
+<!--					</div>-->
+<!--					<mat-paginator [length]="lengthPagination"-->
+<!--					               [pageSize]="pageSizePagination"-->
+<!--					               [pageSizeOptions]="pageSizeOptionsPagination"-->
+<!--					               (page)="pageEvent($event)"-->
+<!--					               *ngIf="products && products.length > 0">-->
+<!--					</mat-paginator>-->
+<!--				</div>-->
+<!--				<div class="empty-section" *ngIf="!products || products.length === 0">-->
+<!--					<p>-->
+<!--						У вас нет созданых продуктов-->
+<!--					</p>-->
+<!--				</div>-->
+<!--			</ng-container>-->
 		</div>
 	</div>
 </div>

@@ -118,69 +118,83 @@
   color: #C5C7CD;
 }
 
-
-//table
-
+.table-container{
+  width: 100%;
+  overflow-y: hidden;
+  overflow-x: auto;
+}
 .table{
-  .table-content{
-    display: flex;
-    flex-direction: column;
+  width: 100%;
+  margin-top: 20px;
+  border-collapse: collapse;
+  tr{
+    border-bottom: 1px solid #DFE0EB;
     width: 100%;
-    .row-h{
-      &:hover{
-        background: #fff;
-      }
-    }
-    .row-r{
-      &:hover{
-        background: rgba(55, 81, 255, 0.04);
-      }
-    }
-    .row-h, .row-r{
-      display: flex;
-      align-items: center;
-      padding: 20px 15px;
-      width: 100%;
-      border-bottom: 1px solid #DFE0EB;
-      .col{
+    td{
+      text-align: center;
+      padding: 15px 15px;
+      .name{
         display: flex;
         align-items: center;
-        .date{
+        text-align: center;
+        .img{
+          display: inline-flex;
+          justify-content: center;
+          width: 40px;
+          min-width: 40px;
+          height: 40px;
+          overflow: hidden;
+          border-radius: 50%;
+          margin-right: 15px;
+        }
+        .block-name{
+
+        }
+      }
+      .date{
+        display: flex;
+        flex-direction: column;
+      }
+
+      .manager-name{
+        text-align: center;
+      }
+      .buttons-g{
+        .who-doing{
           display: flex;
           flex-direction: column;
-        }
-        &:nth-of-type(1){
-          justify-content: flex-start;
-          width: 35%;
-          .img{
-            display: inline-flex;
-            justify-content: center;
-            width: 40px;
-            height: 40px;
-            overflow: hidden;
-            border-radius: 50%;
-            margin-right: 15px;
-          }
-        }
-        &:nth-of-type(2){
           justify-content: center;
-          width: 20%;
-        }
-        &:nth-of-type(3){
-          justify-content: center;
-          width: 20%;
-          min-width: 150px;
-        }
-        &:nth-of-type(4){
-          justify-content: flex-end;
-          width: 25%;
-          margin-left: auto;
-          .link-btn{
-            margin-right: 15px;
+          align-items: center;
+          z-index: 4;
+          width: 100%;
+          .status{
+            margin-bottom: 10px;
+            font-weight: 600;
+            font-size: 16px;
+            line-height: 24px;
+            &.waiting{
+              color: #F4A100;
+            }
+            &.success{
+              color: #009688;
+            }
+            &.cancel{
+              color: #E21B1B;
+            }
           }
-          .edit-btn{
-            margin-right: 15px;
+          .name{
+            color: #252733;
+            text-align: center;
+            width: 100%;
           }
+        }
+      }
+      .buttons-edit{
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        span{
+          margin-left: 15px;
         }
       }
     }

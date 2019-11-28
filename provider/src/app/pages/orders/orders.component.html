@@ -33,330 +33,115 @@
 			
 			<mat-tab-group (selectedIndexChange)="selectChange($event)" [animationDuration]="0">
 				<mat-tab label="Новые заказы">
-					<ng-template matTabContent class="mat-template">
-						<div class="content" *ngIf="loading">
-							<div class="table-f" *ngIf="orders && orders.length > 0">
-								<div class="row-f">
-									<div class="name col-f">
-										Имя
-									</div>
-									<div class="address col-f">
-										Адрес доставки
-									</div>
-									<div class="price col-f">
-										Цена
-									</div>
-									<div class="date col-f">
-										Дата создания
-									</div>
-									<div class="buttons col-f">
-									
-									</div>
-								</div>
-								<div class="row-f" [class.animate]="item.new" [routerLink]="'/orders-detail/' + item._id" *ngFor="let item of orders; let i = index">
-									<div class="name col-f" [matTooltip]="item.deliveryAddress ? item.deliveryAddress.name : 'Название не извесно'">
-										<div class="img">
-											<app-img [fs]="item && item.deliveryAddress ? item.deliveryAddress.img : ''" [anyFs]="'./assets/images/user.svg'"></app-img>
-										</div>
-										<div class="block-name" *ngIf="item && item.createdBy">
-											<div class="n">
-												{{item.createdBy.name}}
-											</div>
-											<div class="mobile">
-												<a class="mobile-href" href="tel:{{item.createdBy.mobile}}">{{item.createdBy.mobile}}</a>
-											</div>
-										</div>
-									</div>
-									<div class="address col-f" *ngIf="item.deliveryAddress">
-										{{item.deliveryAddress.city.name}},
-										ул. {{item.deliveryAddress.street}}
-										Дом {{item.deliveryAddress.build}}
-										Квартира {{item.deliveryAddress.department}}
-									</div>
-
-									<div class="address col-f" *ngIf="!item.deliveryAddress">
-										Адресс не доступен
-									</div>
-									<div class="price col-f">
-										{{item.totalPrice}} Грн.
-									</div>
-									<div class="date col-f">
-										<div class="date">
-											<div class="top-table-date">
-												{{item.date | date: 'dd MMMM, yyyy'  : null : defLang}}
-											</div>
-											<div class="bottom-table-date">
-												{{item.date | date: 'h:mm a'  : null : defLang}}
-											</div>
-										</div>
-									</div>
-									<div class="buttons col-f">
-										<div class="buttons-g">
-											<button class="main-button-color" (click)="takeOrder($event, i)" *ngIf="item.status === 1">
-												Взять заказ
-											</button>
-											<button class="main-button remove buttons-g-s" (click)="cancelOrder($event, i)" *ngIf="item.status === 1">
-												Отменить
-											</button>
-											
-											<div class="who-doing" *ngIf="item.status !== 1">
-												<div class="status" [innerHTML]="item.status | status | safeHTML">
-												</div>
-												<div class="name" *ngIf="item.manager && item.manager.name">
-													{{item.manager.name}}
-												</div>
-											</div>
-											<button class="main-button-color buttons-g-s" (click)="doneOrder($event, i)" *ngIf="item.status > 1 && item.status < 3">
-												Готово
-											</button>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="no-content" *ngIf="orders && orders.length === 0">
-								У вас нет новых заказов
-							</div>
-						</div>
-					</ng-template>
 				</mat-tab>
 				<mat-tab label="В процесе">
-					<ng-template matTabContent>
-						<div class="content" *ngIf="loading">
-							<div class="table-f" *ngIf="orders && orders.length > 0">
-								<div class="row-f">
-									<div class="name col-f">
-										Имя
-									</div>
-									<div class="address col-f">
-										Адрес доставки
-									</div>
-									<div class="price col-f">
-										Цена
-									</div>
-									<div class="date col-f">
-										Дата создания
-									</div>
-									<div class="buttons col-f">
-									
-									</div>
-								</div>
-								<div class="row-f" [class.animate]="item.new" [routerLink]="'/orders-detail/' + item._id" *ngFor="let item of orders; let i = index">
-									<div class="name col-f" [matTooltip]="item.deliveryAddress ? item.deliveryAddress.name : 'Название не извесно'">
-										<div class="img">
-											<app-img [fs]="item && item.deliveryAddress ? item.deliveryAddress.img : ''" [anyFs]="'./assets/images/user.svg'"></app-img>
-										</div>
-										<div class="block-name" *ngIf="item && item.createdBy">
-											<div class="n">
-												{{item.createdBy.name}}
-											</div>
-											<div class="mobile">
-												<a class="mobile-href" href="tel:{{item.createdBy.mobile}}">{{item.createdBy.mobile}}</a>
-											</div>
-										</div>
-									</div>
-									<div class="address col-f" *ngIf="item.deliveryAddress">
-										{{item.deliveryAddress.city.name}},
-										ул. {{item.deliveryAddress.street}}
-										Дом {{item.deliveryAddress.build}}
-										Квартира {{item.deliveryAddress.department}}
-									</div>
-									<div class="address col-f" *ngIf="!item.deliveryAddress">
-										Адресс не доступен
-									</div>
-									<div class="price col-f">
-										{{item.totalPrice}} Грн.
-									</div>
-									<div class="date col-f">
-										<div class="date">
-											<div class="top-table-date">
-												{{item.date | date: 'dd MMMM, yyyy' : null : defLang}}
-											</div>
-											<div class="bottom-table-date">
-												{{item.date | date: 'h:mm aa' : null : defLang}}
-											</div>
-										</div>
-									</div>
-									<div class="buttons col-f">
-										<div class="buttons-g">
-											<div class="who-doing">
-												<div class="status" [innerHTML]="item.status | status | safeHTML"></div>
-												<div class="name" *ngIf="item && item.manager && item.manager.name">
-													{{item.manager.name ? item.manager.name : 'Отсутствует'}}
-												</div>
-											</div>
-											<button class="main-button-color buttons-g-s" (click)="doneOrder($event, i)" *ngIf="item.status > 1 && item.status < 3">
-												Готово
-											</button>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="no-content" *ngIf="orders && orders.length === 0">
-								У вас нет активных заказов за период от {{dateStart | date:'dd.MM.yyyy'}} до {{dateEnd | date:'dd.MM.yyyy'}}
-							</div>
-						</div>
-					</ng-template>
 				</mat-tab>
 				<mat-tab label="История">
-					<ng-template matTabContent>
-						<div class="content" *ngIf="loading">
-							<div class="table-f" *ngIf="orders && orders.length > 0">
-								<div class="row-f">
-									<div class="name col-f">
-										Имя
-									</div>
-									<div class="address col-f">
-										Адрес доставки
-									</div>
-                  <div class="address col-f">
-                    Отзив
-                  </div>
-									<div class="price col-f">
-										Цена
-									</div>
-									<div class="date col-f">
-										Дата создания
-									</div>
-									<div class="buttons col-f">
-									</div>
-								</div>
-								<div class="row-f" [routerLink]="'/orders-detail/' + item._id" *ngFor="let item of orders; let i = index">
-									<div class="name col-f" [matTooltip]="item.deliveryAddress ? item.deliveryAddress.name : 'Название не извесно'">
-										<div class="img">
-											<app-img [fs]="item && item.deliveryAddress ? item.deliveryAddress.img : ''" [anyFs]="'./assets/images/user.svg'"></app-img>
-										</div>
-										<div class="block-name">
-											<div class="n">
-												{{item.createdBy.name}}
-											</div>
-											<div class="mobile">
-												<a class="mobile-href" href="tel:{{item.createdBy.mobile}}">{{item.createdBy.mobile}}</a>
-											</div>
-										</div>
-									</div>
-									<div class="address col-f" *ngIf="item.deliveryAddress">
-										{{item.deliveryAddress.city.name}},
-										ул. {{item.deliveryAddress.street}}
-										Дом {{item.deliveryAddress.build}}
-										Квартира {{item.deliveryAddress.department}}
-									</div>
-									<div class="address col-f" *ngIf="!item.deliveryAddress">
-										Адресс не доступен
-									</div>
-                  <div class="address col-f" *ngIf="item.rating">
-                    {{item.rating.rating}} <br>
-                    {{item.rating.comment}}
-                  </div>
-									<div class="price col-f">
-										{{item.totalPrice}} Грн.
-									</div>
-									<div class="date col-f">
-										<div class="date">
-											<div class="top-table-date">
-												{{item.date | date: 'dd MMMM, yyyy' : null : defLang}}
-											</div>
-											<div class="bottom-table-date">
-												{{item.date | date: 'h:mm a' : null : defLang}}
-											</div>
-										</div>
-									</div>
-									<div class="buttons col-f">
-										<div class="buttons-g">
-											<div class="who-doing">
-												<div class="status" [innerHTML]="item.status | status | safeHTML"></div>
-												<div class="name" *ngIf="item.manager && item.manager.name">
-													{{item.manager.name}}
-												</div>
-												<button class="main-button-color-red" (click)="hiddenBasket($event, i)">Удалить</button>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="no-content" *ngIf="orders && orders.length === 0">
-							У вас нет истории заказов за период от {{dateStart | date:'dd.MM.yyyy'}} до {{dateEnd | date:'dd.MM.yyyy'}}
-						</div>
-					</ng-template>
 				</mat-tab>
 				<mat-tab label="Мои заказы" *ngIf="user && user.role === 'provider'">
-					<ng-template matTabContent>
-						<div class="content" *ngIf="loading">
-							<div class="table-f" *ngIf="orders && orders.length > 0">
-								<div class="row-f">
-									<div class="name col-f">
-										Имя
-									</div>
-									<div class="address col-f">
-										Адрес доставки
-									</div>
-									<div class="price col-f">
-										Цена
-									</div>
-									<div class="date col-f">
-										Дата создания
-									</div>
-									<div class="buttons col-f">
-									</div>
-								</div>
-								<div class="row-f" [routerLink]="'/orders-detail/' + item._id" *ngFor="let item of orders; let i = index">
-									<div class="name col-f" [matTooltip]="item.deliveryAddress ? item.deliveryAddress.name : 'Название не извесно'">
-										<div class="img">
-											<app-img [fs]="item && item.deliveryAddress ? item.deliveryAddress.img : ''" [anyFs]="'./assets/images/user.svg'"></app-img>
-										</div>
-										<div class="block-name" *ngIf="item && item.createdBy">
-											<div class="n">
-												{{item.createdBy.name}}
-											</div>
-											<div class="mobile">
-												<a class="mobile-href" href="tel:{{item.createdBy.mobile}}">{{item.createdBy.mobile}}</a>
-											</div>
-										</div>
-									</div>
-									<div class="address col-f" *ngIf="item.deliveryAddress">
-										{{item.deliveryAddress.city.name}},
-										ул. {{item.deliveryAddress.street}}
-										Дом {{item.deliveryAddress.build}}
-										Квартира {{item.deliveryAddress.department}}
-									</div>
-									<div class="address col-f" *ngIf="!item.deliveryAddress">
-										Адресс не доступен
-									</div>
-									<div class="price col-f">
-										{{item.totalPrice}} Грн.
-									</div>
-									<div class="date col-f">
-										<div class="date">
-											<div class="top-table-date">
-												{{item.date | date: 'dd MMMM, yyyy' : null : defLang}}
-											</div>
-											<div class="bottom-table-date">
-												{{item.date | date: 'h:mm a' : null : defLang}}
-											</div>
-										</div>
-									</div>
-									<div class="buttons col-f">
-										<div class="buttons-g">
-											<div class="who-doing">
-												<div class="status" [innerHTML]="item.status | status | safeHTML"></div>
-												<div class="name" *ngIf="item && item.manager && item.manager.name">
-													{{item.manager.name ? item.manager.name : 'Отсутствует'}}
-												</div>
-											</div>
-											<button class="main-button-color buttons-g-s" (click)="doneOrder($event, i)" *ngIf="item.status > 1 && item.status < 3">
-												Готово
-											</button>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="no-content" *ngIf="orders && orders.length === 0">
-							У вас нет активных заказов за период от {{dateStart | date:'dd.MM.yyyy'}} до {{dateEnd | date:'dd.MM.yyyy'}}
-						</div>
-					</ng-template>
 				</mat-tab>
 			</mat-tab-group>
+			<div class="table-container">
+				<div class="content" *ngIf="loading">
+					<table *ngIf="orders && orders.length > 0" class="table">
+						<tr>
+							<td style="min-width: 200px">Имя</td>
+							<td style="min-width: 200px">Адрес доставки</td>
+							<td style="min-width: 70px" *ngIf="activePage === 2">Отзыв</td>
+							<td style="min-width: 100px">Цена</td>
+							<td style="min-width: 180px">Дата создания</td>
+							<td style="min-width: 200px"></td>
+						</tr>
+						<tr [routerLink]="'/orders-detail/' + item._id" *ngFor="let item of orders; let i = index">
+							<td [matTooltip]="item.deliveryAddress ? item.deliveryAddress.name : 'Название не извесно'">
+								<div class="name">
+									<div class="img">
+										<app-img [fs]="item && item.deliveryAddress ? item.deliveryAddress.img : ''" [anyFs]="'./assets/images/user.svg'"></app-img>
+									</div>
+									<div class="block-name">
+										<div class="n">
+											{{item.createdBy.name}}
+										</div>
+										<div class="mobile">
+											<a class="mobile-href" href="tel:{{item.createdBy.mobile}}">{{item.createdBy.mobile}}</a>
+										</div>
+									</div>
+								</div>
+							</td>
+							<td *ngIf="item.deliveryAddress">
+								<ng-container *ngIf="item.deliveryAddress">
+									<div class="address">
+										{{item.deliveryAddress.city.name}},
+										ул. {{item.deliveryAddress.street}}
+										<br>
+										<span *ngIf="item.deliveryAddress.build">
+										Дом {{item.deliveryAddress.build}}
+									</span>
+										<br>
+										<span *ngIf="item.deliveryAddress.department">
+										Квартира {{item.deliveryAddress.department}}
+									</span>
+									</div>
+								</ng-container>
+								<ng-container *ngIf="!item.deliveryAddress">
+									Адресс не доступен
+								</ng-container>
+							</td>
+							<td *ngIf="activePage === 2">
+								<ng-container *ngIf="item.rating">
+									{{item.rating.rating}} <br>
+									{{item.rating.comment}}
+								</ng-container>
+								<ng-container *ngIf="!item.rating">
+									-
+								</ng-container>
+							</td>
+							<td>
+								{{item.totalPrice}} Грн.
+							</td>
+							<td>
+								<div class="date">
+									<div class="top-table-date">
+										{{item.date | date: 'dd MMMM, yyyy' : null : defLang}}
+									</div>
+									<div class="bottom-table-date">
+										{{item.date | date: 'HH:mm' : null : defLang}}
+									</div>
+								</div>
+							</td>
+							<td>
+								<div class="buttons-g">
+									<ng-container *ngIf="activePage === 0">
+										<button class="main-button-color" (click)="takeOrder($event, i)" *ngIf="item.status === 1">
+											Взять заказ
+										</button>
+										<button class="main-button remove buttons-g-s" (click)="cancelOrder($event, i)" *ngIf="item.status === 1">
+											Отменить
+										</button>
+									</ng-container>
+									<div class="who-doing">
+										<div class="status" [innerHTML]="item.status | status | safeHTML"></div>
+										<div class="manager-name" *ngIf="item.manager && item.manager.name">
+											{{item.manager.name}}
+										</div>
+										<ng-container *ngIf="item.status === 4 || item.status === 5 && activePage === 2">
+											<button class="main-button-color-red" (click)="hiddenBasket($event, i)">Удалить</button>
+										</ng-container>
+										<ng-container *ngIf="item.status > 1 && item.status < 3">
+											<button class="main-button-color buttons-g-s" (click)="doneOrder($event, i)">
+												Готово
+											</button>
+										</ng-container>
+									</div>
+								</div>
+							</td>
+						</tr>
+					</table>
+				</div>
+				<div class="no-content" *ngIf="orders && orders.length === 0">
+					У вас нет заказов за период от {{dateStart | date:'dd.MM.yyyy'}} до {{dateEnd | date:'dd.MM.yyyy'}}
+				</div>
+			</div>
 			<mat-paginator [length]="lengthPagination"
 			               [pageSize]="pageSizePagination"
 			               [pageSizeOptions]="pageSizeOptionsPagination"

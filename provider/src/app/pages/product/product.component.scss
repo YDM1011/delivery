@@ -8,6 +8,10 @@
 .nocategory{
   margin-bottom: 50px;
 }
+.table-content{
+  overflow-x: auto;
+  overflow-y:hidden;
+}
 
 .example-full-width {
   width: 100%;
@@ -46,138 +50,19 @@
   align-items: center;
   max-width: 230px;
   .img{
+    display: block;
+    border-radius: 50%;
+    overflow: hidden;
     min-width: 40px;
+    width: 40px;
+    height: 40px;
+    margin-right: 15px;
   }
   .name{
     margin:  0 10px 0 0;
     text-align: center;
     min-width: 130px;
     max-width: 220px;
-  }
-}
-.descr{
-  display: flex;
-  align-items: center;
-  width: 100%;
-  min-width: 200px;
-  max-width: 500px;
-  margin-left: 20px;
-  .des{
-    display: inline-flex;
-    justify-content: center;
-    text-align: center;
-  }
-}
-
-.name-t{
-  text-align: center;
-  margin: 0 auto;
-}
-.desc-t{
-  margin: 0 auto;
-}
-
-.table-p{
-  .table-content{
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    overflow-x: auto;
-    .row-h{
-      width: 100%;
-      .col{
-        .descr{
-          display: flex;
-          align-items: center;
-          width: 100%;
-          min-width: 200px;
-          max-width: 500px;
-          .des{
-            display: inline-flex;
-            justify-content: center;
-            text-align: center;
-          }
-        }
-        &.name{
-          text-align: center;
-        }
-        text-align: center;
-        &:nth-of-type(1){
-          max-width: 230px;
-          display: inline-flex;
-          width: 100%;
-        }
-      }
-    }
-    .row-r{
-    }
-    .row-h, .row-r{
-      display: flex;
-      align-items: center;
-      padding: 20px 15px;
-      width: 100%;
-      border-bottom: 1px solid #DFE0EB;
-      .col{
-        display: flex;
-        align-items: center;
-        .date{
-          display: flex;
-          flex-direction: column;
-        }
-        &:nth-of-type(1){
-          justify-content: flex-start;
-          width: 100%;
-          .img{
-            display: inline-flex;
-            justify-content: center;
-            width: 40px;
-            height: 40px;
-            overflow: hidden;
-            border-radius: 50%;
-            margin-right: 15px;
-          }
-        }
-        &:nth-of-type(2){
-          display: flex;
-          align-items: center;
-          width: 100%;
-          min-width: 200px;
-          max-width: 500px;
-          margin-right: auto;
-          margin-left: 20px;
-        }
-        &:nth-of-type(3){
-          justify-content: center;
-          width: max-content;
-          min-width: 150px;
-          margin-left: 0;
-        }
-        &:nth-of-type(4){
-          justify-content: flex-start;
-          min-width: 230px;
-          margin-left: 0;
-          text-align: left;
-          .buttons{
-            margin-left: 15px;
-          }
-          .link-btn{
-            margin-right: 15px;
-          }
-          .edit-btn{
-            margin-right: 15px;
-          }
-        }
-      }
-    }
-  }
-}
-@media (max-width: 940px) {
-  .table-p{
-    .table-content{
-      .row-h{
-        width: max-content;
-      }
-    }
   }
 }
 

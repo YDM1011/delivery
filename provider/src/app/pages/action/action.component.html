@@ -175,118 +175,59 @@
 			<app-loading></app-loading>
 		</ng-container>
 		<div class="main-section">
+			<app-search-filter class="filter-top" [inputApi]="'action'" [inputQuery]="'description'" [populate]="'client'" (output)="outputSearch($event)"></app-search-filter>
 			<mat-tab-group (selectedIndexChange)="tabChange($event)" [animationDuration]="0">
 				<mat-tab label="Текущие акции">
-					<ng-template matTabContent class="mat-template">
-						<ng-container>
-							<div class="table filter-top" *ngIf="actions && actions.length > 0">
-								<app-search-filter class="filter-top" [inputApi]="'action'" [inputQuery]="'description'" [populate]="'client'" (output)="outputSearch($event)"></app-search-filter>
-								<div class="table-content">
-									<div class="row-h">
-										<div class="col">
-											Название
-										</div>
-										<div class="col">
-										</div>
-										<div class="col">
-											Дата
-										</div>
-										<div class="col">
-										</div>
-									</div>
-									<div class="row-r" *ngFor="let item of actions; let index = index">
-										<div class="col">
-											{{item.name}}
-										</div>
-										<div class="col">
-										</div>
-										<div class="col">
-											<div class="date">
-												<div class="top-table-date">
-													{{item.date | date: 'dd MMMM, yyyy'  : null : defLang}}
-												</div>
-												<div class="bottom-table-date">
-													{{item.date | date: 'h:mm a'  : null : defLang}}
-												</div>
-											</div>
-										</div>
-										<div class="col">
-											<span class="edit-btn" (click)="edit(index)" appScrollTop></span>
-											<span class="trash-btn" (click)="delete(index)"></span>
-										</div>
-									</div>
-								</div>
-								<mat-paginator [length]="lengthPagination"
-								               [pageSize]="pageSizePagination"
-								               [pageSizeOptions]="pageSizeOptionsPagination"
-								               (page)="pageEvent($event)"
-								               *ngIf="actions && actions.length > 0">
-								</mat-paginator>
-							</div>
-							<div class="empty-section" *ngIf="!actions || actions.length === 0">
-								<p>
-									У вас нет созданых акций
-								</p>
-							</div>
-						</ng-container>
-					</ng-template>
 				</mat-tab>
 				<mat-tab label="История акций">
-					<ng-template matTabContent>
-						<ng-container *ngIf="loading">
-							<div class="table filter-top" *ngIf="actions && actions.length > 0">
-								<app-search-filter [inputApi]="'action'" [inputQuery]="'description'" [populate]="'client'" (output)="outputSearch($event)"></app-search-filter>
-								<div class="table-content">
-									<div class="row-h">
-										<div class="col">
-											Название
-										</div>
-										<div class="col">
-										</div>
-										<div class="col">
-											Дата
-										</div>
-										<div class="col">
-										</div>
-									</div>
-									<div class="row-r" *ngFor="let item of actions; let index = index">
-										<div class="col">
-											{{item.name}}
-										</div>
-										<div class="col">
-										</div>
-										<div class="col">
-											<div class="date">
-												<div class="top-table-date">
-													{{item.date | date: 'dd MMMM, yyyy'  : null : defLang}}
-												</div>
-												<div class="bottom-table-date">
-													{{item.date | date: 'h:mm a'  : null : defLang}}
-												</div>
-											</div>
-										</div>
-										<div class="col">
-											<span class="edit-btn" (click)="edit(index)" appScrollTop></span>
-											<span class="trash-btn" (click)="delete(index)"></span>
-										</div>
-									</div>
-								</div>
-								<mat-paginator [length]="lengthPagination"
-								               [pageSize]="pageSizePagination"
-								               [pageSizeOptions]="pageSizeOptionsPagination"
-								               (page)="pageEvent($event)"
-								               *ngIf="actions && actions.length > 0">
-								</mat-paginator>
-							</div>
-							<div class="empty-section" *ngIf="!actions || actions.length === 0">
-								<p>
-									История акций пуста
-								</p>
-							</div>
-						</ng-container>
-					</ng-template>
 				</mat-tab>
 			</mat-tab-group>
+			<div class="table-content" *ngIf="actions && actions.length > 0">
+				<div class="content" *ngIf="loading">
+					<table *ngIf="actions && actions.length > 0" class="table">
+						<tr>
+							<td style="min-width: 200px">Назва</td>
+							<td style="min-width: 200px"></td>
+							<td style="min-width: 180px">Дата</td>
+							<td style="min-width: 200px"></td>
+						</tr>
+						<tr *ngFor="let item of actions; let i = index">
+							<td>
+								{{item.name}}
+							</td>
+							<td>
+							</td>
+							<td>
+								<div class="date">
+									<div class="top-table-date">
+										{{item.date | date: 'dd MMMM, yyyy' : null : defLang}}
+									</div>
+									<div class="bottom-table-date">
+										{{item.date | date: 'HH:mm' : null : defLang}}
+									</div>
+								</div>
+							</td>
+							<td>
+								<div class="buttons-edit">
+									<span class="edit-btn" (click)="edit(i)" appScrollTop></span>
+									<span class="trash-btn" (click)="delete(i)"></span>
+								</div>
+							</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+			<mat-paginator [length]="lengthPagination"
+			               [pageSize]="pageSizePagination"
+			               [pageSizeOptions]="pageSizeOptionsPagination"
+			               (page)="pageEvent($event)"
+			               *ngIf="actions && actions.length > 0">
+			</mat-paginator>
+			<div class="empty-section" *ngIf="!actions || actions.length === 0">
+				<p>
+					Акции отсутствуют
+				</p>
+			</div>
 		</div>
 	</div>
 
