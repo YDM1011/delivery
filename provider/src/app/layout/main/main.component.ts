@@ -4,6 +4,7 @@ import {CrudService} from '../../crud.service';
 import {WebsocketService} from '../../websocket';
 import {WS} from '../../websocket/websocket.events';
 import {MatSnackBar} from "@angular/material";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-main',
@@ -19,6 +20,7 @@ export class MainComponent implements OnInit {
       private crud: CrudService,
       private wsService: WebsocketService,
       private snackBar: MatSnackBar,
+      private router: Router
   ) {}
 
   ngOnInit() {
@@ -46,6 +48,11 @@ export class MainComponent implements OnInit {
     this.crud.get(`client?query=${query}&populate=${populate}`)
         .then((v2: any) => {
           if (!v2) {return; }
+          if (v2[0].role === 'client') {
+            localStorage.removeItem('userId');
+            localStorage.removeItem('token');
+            this.router.navigate([''])
+          }
           this.auth.setMe(v2[0]);
         });
     this.auth.onMe.subscribe((v: any) => {

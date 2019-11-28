@@ -73,7 +73,7 @@ export class NotificationComponent implements OnInit, OnDestroy {
      });
   }
   getRating() {
-    const queryCompany = `?query={"clientOwner":"${localStorage.getItem('userId')}","show":true,"rating":"0"}&populate={"path":"companyOwner","select":"name img"}`;
+    const queryCompany = `?query={"clientOwner":"${localStorage.getItem('userId')}","show":true,"rating":"0"}&populate={"path":"companyOwner","select":"name img"}&sort={"date":-1}`;
     this.crud.get('rating', '', queryCompany).then((v: any) => {
       if (v) {
         this.ratingArr = Object.assign([], v);

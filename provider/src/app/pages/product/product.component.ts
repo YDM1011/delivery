@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {CrudService} from '../../crud.service';
 import {AuthService} from '../../auth.service';
-import {animate, state, style, transition, trigger} from "@angular/animations";
+import {animate, style, transition, trigger} from "@angular/animations";
 import Swal from "sweetalert2";
 
 @Component({
