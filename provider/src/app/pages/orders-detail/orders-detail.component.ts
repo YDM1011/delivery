@@ -88,13 +88,18 @@ export class OrdersDetailComponent implements OnInit, OnDestroy {
           });
         }
       });
+    } else {
+      this.crud.post('basket', {status: 4, deptor:true}, this.basket._id, false).then((v) => {
+        if (v) {
+          this.basketCopy.status = 4;
+        }
+      });
     }
   }
   cancelEdit() {
     this.editBasket = false;
   }
   decrement(i) {
-    // this.showDescription();
     let count = this.basket.products[i].count;
     count--;
     if (count < 1) {
@@ -105,7 +110,6 @@ export class OrdersDetailComponent implements OnInit, OnDestroy {
     this.refresh();
   }
   increment(i) {
-    // this.showDescription();
     let count = this.basket.products[i].count;
     count++;
     if (count > this.basketCopy.products[i].count) {

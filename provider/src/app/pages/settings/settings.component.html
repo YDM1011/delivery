@@ -35,7 +35,7 @@
 					</mat-select>
 				</mat-form-field>
 				
-				<div class="pass">
+				<div class="pass" *ngIf="user.role === 'provider'">
 					<mat-form-field class="example-full-width">
 						<input type="text" placeholder="Новый пароль" name="password" (keyup)="passErr = ''" matInput [(ngModel)]="newPass">
 					</mat-form-field>

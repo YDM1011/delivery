@@ -31,6 +31,7 @@ export class DebtorComponent implements OnInit {
   public dateEnd = new Date();
   public newStart;
   public newEnd;
+  public indexEdit;
   public searchArr = [];
   public editObj = {
     clientOwner: '',
@@ -84,30 +85,78 @@ export class DebtorComponent implements OnInit {
     // this.newEnd = new Date(this.dateEnd.getTime() - this.dateEnd.getHours()*60*60*1000 - this.dateEnd.getMinutes()*60*1000  - this.dateEnd.getSeconds()*1000).getTime();
 
     if (this.tabIndex === 0) {
-      this.crud.get(`debtor/count?query={"companyOwner": "${this.user.companyOwner._id}","value":{"$gt":0},"date":{"$gte":"${this.newStart}","$lte":"${this.newEnd}"}}`).then((count: any) => {
-        if (count) {
-          this.lengthPagination = count.count;
-          this.crud.get(`debtor?query={"companyOwner": "${this.user.companyOwner._id}","value":{"$gt":0},"date":{"$gte":"${this.newStart}","$lte":"${this.newEnd}"}}${this.populate}&skip=0&limit=${this.pageSizePagination}&sort={"dataCall":-1}`).then((d: any) => {
-            if (d) {
-              this.debtors = d;
-              this.loading = true;
-            }
-          });
-        }
-      });
+      if (this.user.role === 'provider') {
+        this.crud.get(`debtor/count?query={"companyOwner": "${this.user.companyOwner._id}","value":{"$gt":0},"date":{"$gte":"${this.newStart}","$lte":"${this.newEnd}"}}`).then((count: any) => {
+          if (count) {
+            this.lengthPagination = count.count;
+            this.crud.get(`debtor?query={"companyOwner": "${this.user.companyOwner._id}","value":{"$gt":0},"date":{"$gte":"${this.newStart}","$lte":"${this.newEnd}"}}${this.populate}&skip=0&limit=${this.pageSizePagination}&sort={"dataCall":-1}`).then((d: any) => {
+              if (d) {
+                this.debtors = d;
+                this.loading = true;
+              }
+            });
+          }
+        });
+      }
+      if (this.user.role === 'collaborator') {
+        this.crud.get(`basket?query={"companyOwner": "${this.user.companyOwner._id}","manager":"${this.user._id}","date":{"$gte":"${this.newStart}","$lte":"${this.newEnd}"}}`).then((d: any) => {
+          if (d) {
+            const arrDebs = [];
+            d.forEach((item) => {
+              arrDebs.push({basket: item._id});
+            });
+            const query = JSON.stringify({$and:[{$or:arrDebs,value:{$gt:0}}],date:{$gte:this.newStart,$lte:this.newEnd}});
+            this.crud.get(`debtor/count?query=${query}`).then((count: any) => {
+              if(count) {
+                this.lengthPagination = count.count;
+                this.crud.get(`debtor?query=${query}${this.populate}&skip=0&limit=${this.pageSizePagination}&sort={"dataCall":-1}`).then((d: any) => {
+                  if(d) {
+                    this.debtors = d;
+                    this.loading = true;
+                  }
+                })
+              }
+            })
+          }
+        });
+      }
     }
     if (this.tabIndex === 1) {
-      this.crud.get(`debtor/count?query={"companyOwner": "${this.user.companyOwner._id}","value":0,"date":{"$gte":"${this.newStart}","$lte":"${this.newEnd}"}}`).then((count: any) => {
-        if (count) {
-          this.lengthPagination = count.count;
-          this.crud.get(`debtor?query={"companyOwner": "${this.user.companyOwner._id}","value":0,"date":{"$gte":"${this.newStart}","$lte":"${this.newEnd}"}}${this.populate}&skip=0&limit=${this.pageSizePagination}&sort={"dataCall":-1}`).then((d: any) => {
-            if (d) {
-              this.debtors = d;
-              this.loading = true;
-            }
-          });
-        }
-      });
+      if (this.user.role === 'provider') {
+        this.crud.get(`debtor/count?query={"companyOwner": "${this.user.companyOwner._id}","value":0,"date":{"$gte":"${this.newStart}","$lte":"${this.newEnd}"}}`).then((count: any) => {
+          if (count) {
+            this.lengthPagination = count.count;
+            this.crud.get(`debtor?query={"companyOwner": "${this.user.companyOwner._id}","value":0,"date":{"$gte":"${this.newStart}","$lte":"${this.newEnd}"}}${this.populate}&skip=0&limit=${this.pageSizePagination}&sort={"dataCall":-1}`).then((d: any) => {
+              if (d) {
+                this.debtors = d;
+                this.loading = true;
+              }
+            });
+          }
+        });
+      }
+      if (this.user.role === 'collaborator') {
+        this.crud.get(`basket?query={"companyOwner": "${this.user.companyOwner._id}","manager":"${this.user._id}","date":{"$gte":"${this.newStart}","$lte":"${this.newEnd}"}}`).then((d: any) => {
+          if (d) {
+            const arrDebs = [];
+            d.forEach((item) => {
+              arrDebs.push({basket: item._id});
+            });
+            const query = JSON.stringify({$and:[{$or:arrDebs,value:0}],date:{$gte:this.newStart,$lte:this.newEnd}});
+            this.crud.get(`debtor/count?query=${query}`).then((count: any) => {
+              if(count) {
+                this.lengthPagination = count.count;
+                this.crud.get(`debtor?query=${query}${this.populate}&skip=0&limit=${this.pageSizePagination}&sort={"dataCall":-1}`).then((d: any) => {
+                  if(d) {
+                    this.debtors = d;
+                    this.loading = true;
+                  }
+                })
+              }
+            })
+          }
+        });
+      }
     }
   }
   searchDeb () {
@@ -120,17 +169,7 @@ export class DebtorComponent implements OnInit {
       })
     } else {
       this.searchArr = [];
-      this.crud.get(`debtor/count?query={"companyOwner": "${this.user.companyOwner._id}","value":{"$gt":0}}`).then((count: any) => {
-        if (count) {
-          this.lengthPagination = count.count;
-          this.crud.get(`debtor?query={"companyOwner": "${this.user.companyOwner._id}","value":{"$gt":0}}${this.populate}&skip=0&limit=${this.pageSizePagination}&sort={"dataCall":-1}`).then((d: any) => {
-            if (d) {
-              this.debtors = d;
-              this.loading = true;
-            }
-          });
-        }
-      });
+      this.getDebtors();
     }
   }
   paydFull() {
@@ -138,6 +177,7 @@ export class DebtorComponent implements OnInit {
       if (v) {
         this.editObj.value = 0;
         this.editObjCopy = v;
+        this.debtors[this.indexEdit].value = 0;
       }
     })
   }
@@ -188,7 +228,6 @@ export class DebtorComponent implements OnInit {
       }
     });
   }
-
   delete(i) {
     this.crud.delete('debtor', this.debtors[i]._id).then((v: any) => {
       if (v) {
@@ -201,6 +240,7 @@ export class DebtorComponent implements OnInit {
     });
   }
   edit(i: any) {
+    this.indexEdit = i;
     if (this.searchArr.length>0){
       this.editObj = Object.assign({}, i);
       this.editObjCopy = Object.assign({}, i);
@@ -270,11 +310,9 @@ export class DebtorComponent implements OnInit {
     }
     return isTrue;
   }
-
   btnBlok(is) {
     this.isBlok = is;
   }
-
   formCheck() {
     this.btnBlok(this.validate());
   }
@@ -291,47 +329,69 @@ export class DebtorComponent implements OnInit {
   }
   pageEvent(e) {
     if (this.tabIndex === 0) {
-      this.crud.get(`debtor?query={"companyOwner":"${this.user.companyOwner._id}","value":{"$gt":0}}${this.populate}&skip=${e.pageIndex  * e.pageSize}&limit=${e.pageSize}&sort={"dataCall":-1}`).then((d: any) => {
-        if (!d) {return; }
-        this.debtors = d;
-      });
+      if(this.user.role === 'provider'){
+        this.crud.get(`debtor?query={"companyOwner":"${this.user.companyOwner._id}","value":{"$gt":0}}${this.populate}&skip=${e.pageIndex  * e.pageSize}&limit=${e.pageSize}&sort={"dataCall":-1}`).then((d: any) => {
+          if (!d) {return; }
+          this.debtors = d;
+        });
+      }
+      if (this.user.role === 'collaborator') {
+        this.crud.get(`basket?query={"companyOwner": "${this.user.companyOwner._id}","manager":"${this.user._id}","date":{"$gte":"${this.newStart}","$lte":"${this.newEnd}"}}`).then((d: any) => {
+          if (d) {
+            const arrDebs = [];
+            d.forEach((item) => {
+              arrDebs.push({basket: item._id});
+            });
+            const query = JSON.stringify({$and:[{$or:arrDebs,value:{$gt:0}}],date:{$gte:this.newStart,$lte:this.newEnd}});
+            this.crud.get(`debtor/count?query=${query}`).then((count: any) => {
+              if(count) {
+                this.lengthPagination = count.count;
+                this.crud.get(`debtor?query=${query}${this.populate}&skip=${e.pageIndex  * e.pageSize}&limit=${e.pageSize}&sort={"dataCall":-1}`).then((d: any) => {
+                  if(d) {
+                    this.debtors = d;
+                    this.loading = true;
+                  }
+                })
+              }
+            })
+          }
+        });
+      }
     }
     if (this.tabIndex === 1) {
-      this.crud.get(`debtor?query={"companyOwner":"${this.user.companyOwner._id}","value":0}${this.populate}&skip=${e.pageIndex  * e.pageSize}&limit=${e.pageSize}&sort={"dataCall":-1}`).then((d: any) => {
-        if (!d) {return; }
-        this.debtors = d;
-      });
+      if(this.user.role === 'provider'){
+        this.crud.get(`debtor?query={"companyOwner":"${this.user.companyOwner._id}","value":0}${this.populate}&skip=${e.pageIndex  * e.pageSize}&limit=${e.pageSize}&sort={"dataCall":-1}`).then((d: any) => {
+          if (!d) {return; }
+          this.debtors = d;
+        });
+      }
+      if (this.user.role === 'collaborator') {
+        this.crud.get(`basket?query={"companyOwner": "${this.user.companyOwner._id}","manager":"${this.user._id}","date":{"$gte":"${this.newStart}","$lte":"${this.newEnd}"}}`).then((d: any) => {
+          if (d) {
+            const arrDebs = [];
+            d.forEach((item) => {
+              arrDebs.push({basket: item._id});
+            });
+            const query = JSON.stringify({$and:[{$or:arrDebs,value:0}],date:{$gte:this.newStart,$lte:this.newEnd}});
+            this.crud.get(`debtor/count?query=${query}`).then((count: any) => {
+              if(count) {
+                this.lengthPagination = count.count;
+                this.crud.get(`debtor?query=${query}${this.populate}&skip=${e.pageIndex  * e.pageSize}&limit=${e.pageSize}&sort={"dataCall":-1}`).then((d: any) => {
+                  if(d) {
+                    this.debtors = d;
+                    this.loading = true;
+                  }
+                })
+              }
+            })
+          }
+        });
+      }
     }
   }
   tabChange(e) {
     this.loading = false;
     this.tabIndex = e;
-    if (e === 0) {
-      this.crud.get(`debtor/count?query={"companyOwner": "${this.user.companyOwner._id}","value":{"$gt":0},"date":{"$gte":"${this.newStart}","$lte":"${this.newEnd}"}}`).then((count: any) => {
-        if (count) {
-          this.lengthPagination = count.count;
-          this.crud.get(`debtor?query={"companyOwner": "${this.user.companyOwner._id}","value":{"$gt":0},"date":{"$gte":"${this.newStart}","$lte":"${this.newEnd}"}}${this.populate}&skip=0&limit=${this.pageSizePagination}&sort={"dataCall":-1}`).then((d: any) => {
-            if (d) {
-              this.debtors = d;
-              this.loading = true;
-            }
-          });
-        }
-      });
-    }
-    if (e === 1) {
-      this.crud.get(`debtor/count?query={"companyOwner": "${this.user.companyOwner._id}","value":0,"date":{"$gte":"${this.newStart}","$lte":"${this.newEnd}"}}`).then((count: any) => {
-        if (count) {
-          this.lengthPagination = count.count;
-          this.crud.get(`debtor?query={"companyOwner": "${this.user.companyOwner._id}","value":0,"date":{"$gte":"${this.newStart}","$lte":"${this.newEnd}"}}${this.populate}&skip=0&limit=${this.pageSizePagination}&sort={"dataCall":-1}`).then((d: any) => {
-            if (d) {
-              this.debtors = d;
-              this.loading = true;
-            }
-          });
-        }
-      });
-    }
-
+    this.getDebtors();
   }
 }

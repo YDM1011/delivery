@@ -279,7 +279,7 @@
 						</div>
 					</ng-template>
 				</mat-tab>
-				<mat-tab label="Мои заказы">
+				<mat-tab label="Мои заказы" *ngIf="user && user.role === 'provider'">
 					<ng-template matTabContent>
 						<div class="content" *ngIf="loading">
 							<div class="table-f" *ngIf="orders && orders.length > 0">
