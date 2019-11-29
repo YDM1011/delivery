@@ -41,6 +41,8 @@ export class EditProductComponent implements OnInit, OnChanges {
     }
   }
   ngOnInit() {
+    console.log(this.obj)
+
     this.auth.onMe.subscribe((v: any) => {
       if (!v) { return; }
       if (v && v.companies.length > 0) {
@@ -52,10 +54,16 @@ export class EditProductComponent implements OnInit, OnChanges {
     this.editObj = Object.assign({}, this.obj);
     this.editObj.img = this.obj.img.split('--')[1];
     this.editObjCopy = Object.assign({}, this.obj);
-    this.mainChooseBrand = this.obj.brand;
-    this.mainCategoryChoose = this.obj.categoryOwner._id;
-    this.selectSubCategory(this.mainCategoryChoose);
-    this.subCategoryChoose = this.obj.subCategory;
+    if (this.obj.brand) {
+      this.mainChooseBrand = this.obj.brand;
+    }
+    if(this.obj.categoryOwner) {
+      this.mainCategoryChoose = this.obj.categoryOwner._id;
+      this.selectSubCategory(this.mainCategoryChoose);
+    }
+    if (this.obj.subCategory) {
+      this.subCategoryChoose = this.obj.subCategory;
+    }
     if (this.editObj.discount) {
       this.showSale = true;
       return;
@@ -66,7 +74,9 @@ export class EditProductComponent implements OnInit, OnChanges {
 
   selectSubCategory(id) {
     const index = this.crud.find('_id', id, this.categorys);
-    this.subCategoryArray = this.categorys[index].mainCategory.subCategory;
+    if (this.categorys[index].mainCategory){
+      this.subCategoryArray = this.categorys[index].mainCategory.subCategory;
+    }
   }
   confirmEditCategoryCrud(e) {
     e.preventDefault();
