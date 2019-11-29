@@ -342,7 +342,7 @@ export class DebtorComponent implements OnInit {
             d.forEach((item) => {
               arrDebs.push({basket: item._id});
             });
-            const query = JSON.stringify({$and:[{$or:arrDebs,value:{$gt:0}}],date:{$gte:this.newStart,$lte:this.newEnd}});
+            const query = JSON.stringify({$and:[{$or:arrDebs,value:{$gt:0}}],lastUpdate:{$gte:this.newStart,$lte:this.newEnd}});
             this.crud.get(`debtor/count?query=${query}`).then((count: any) => {
               if(count) {
                 this.lengthPagination = count.count;
@@ -372,7 +372,7 @@ export class DebtorComponent implements OnInit {
             d.forEach((item) => {
               arrDebs.push({basket: item._id});
             });
-            const query = JSON.stringify({$and:[{$or:arrDebs,value:0}],date:{$gte:this.newStart,$lte:this.newEnd}});
+            const query = JSON.stringify({$and:[{$or:arrDebs,value:0}],lastUpdate:{$gte:this.newStart,$lte:this.newEnd}});
             this.crud.get(`debtor/count?query=${query}`).then((count: any) => {
               if(count) {
                 this.lengthPagination = count.count;
