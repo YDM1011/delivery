@@ -58,7 +58,7 @@ module.exports = (backendApp, router) => {
                             obj._id.companyOwner = r;
 
                             Basket.find({$or:obj.baskets})
-                                .populate({path:'deliveryAddress'})
+                                .populate({path:'deliveryAddress', populate:{path:'city'}})
                                 .populate({path:'manager', select:"name"})
                                 .populate({path:'products', populate:{path:'orderOwner'}})
                                 .exec((e,r)=>{
