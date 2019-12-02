@@ -20,6 +20,7 @@ export class CityComponent implements OnInit {
   public citys = [];
   public defLang = 'ru-UA';
   public editObjCopy;
+  public editPhoto = false;
   public editObj = {
     img: '',
     name: '',
@@ -33,6 +34,7 @@ export class CityComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.editPhoto = false;
     this.crud.get('city/count').then((count: any) => {
       if (!count) {return; }
       this.lengthPagination = count.count;
@@ -88,6 +90,7 @@ export class CityComponent implements OnInit {
   onFsEdit(e) {
     this.editObjCopy.img = e.file;
     this.formCheck();
+    this.editPhoto = true;
   }
   edit(i) {
     this.editObj = Object.assign({}, this.citys[i]);
@@ -98,17 +101,7 @@ export class CityComponent implements OnInit {
     this.editShow = true;
   }
   confirmEdit() {
-    if (this.uploadObj && this.uploadObj['name']) {
-      this.crud.post('upload2', {body: this.uploadObj}, null, false).then((v: any) => {
-        if (!v) {return; }
-        this.editObj.img = v.file;
-        this.editObjCopy.img = v.file;
-        this.confirmEditCityCrud();
-        this.editShow = false;
-      });
-    } else {
       this.confirmEditCityCrud();
-    }
   }
   confirmEditCityCrud() {
     if (this.editObj.name === '') {
@@ -119,13 +112,16 @@ export class CityComponent implements OnInit {
       Swal.fire('Error', 'Картинка города не может быть пуста', 'error').then();
       return;
     }
-    this.editObj.img = this.editObjCopy.img;
+    if (this.editPhoto){
+      this.editObj.img = this.editObjCopy.img;
+    }
     this.editObj.name = this.editObj.name.trim();
     this.crud.post('city', this.editObj, this.editObj['_id']).then((v: any) => {
       if (v) {
         this.editShow = false;
         this.citys[this.crud.find('_id', this.editObj['_id'], this.citys)] = v;
         this.uploadObj = {};
+        this.editPhoto = false;
         this.editObj = {
           img: '',
           name: ''
