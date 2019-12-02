@@ -1,1 +1,106 @@
-<p>visitor works!</p>
+<table *ngIf="loaded; else loader" class="infoBy">
+  <ng-container *ngIf="visitors.length > 0; else empty">
+    <tr>
+      <td>Клиент</td>
+      <td>Пoсещений</td>
+      <td>Просмотрено продуктов</td>
+      <td>Дата</td>
+      <td></td>
+    </tr>
+
+    <tr *ngFor="let data of visitors">
+      <td>
+        <ng-container *ngIf="data.visitedBy">
+          <div class="client-cart">
+            <app-img [fs]="data.visitedBy.img" [dir]="'avatar'"></app-img>
+            <span>
+              {{data.visitedBy.name}}
+              <ng-container *ngIf="data.visitedBy.mobile">
+                <br> {{data.visitedBy.mobile}}
+              </ng-container>
+              <ng-container *ngIf="!data.visitedBy.mobile">
+                <br> {{data.visitedBy.login}}
+              </ng-container>
+            </span>
+          </div>
+        </ng-container>
+      </td>
+      <td>
+        {{data.count}}
+      </td>
+      <td>
+        <ng-container *ngIf="data.visit && data.visit.length > 0">
+          {{data.visit.length}}
+        </ng-container>
+        <ng-container *ngIf="!data.visit || data.visit.length == 0">0</ng-container>
+      </td>
+      <td>
+        {{data.date | date: 'dd.MM.yy'}}
+      </td>
+      <td>
+        <button (click)="details(data)" *ngIf="data.visit && data.visit.length > 0">
+          <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="info-circle" class="svg-inline--fa fa-info-circle fa-w-16" role="img" viewBox="0 0 512 512"><path fill="#009688" d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"/></svg>        </button>
+      </td>
+    </tr>
+  </ng-container>
+</table>
+<div class="w-more" *ngIf="this.visitors >= 10">
+  <button class="more" (click)="more()">Ещё</button>
+</div>
+
+<div class="detail-data" *ngIf="data">
+  <div class="popup"  appPopup (onClose)="close()">
+    <div class="content">
+      <div class="cancel cansel-popup-btn">
+        <svg _ngcontent-ltd-c12="" fill="none" height="15" viewBox="0 0 15 15" width="15" xmlns="http://www.w3.org/2000/svg"><path _ngcontent-ltd-c12="" d="M14.8221 13.9619L8.36014 7.49995L14.822 1.03809C15.0595 0.800639 15.0595 0.41559 14.822 0.17811C14.5845 -0.0593701 14.1995 -0.0593701 13.962 0.17811L7.50016 6.63997L1.03825 0.17811C0.800798 -0.0593701 0.41575 -0.0593701 0.17827 0.17811C-0.0592098 0.415561 -0.0592098 0.80061 0.17827 1.03809L6.64015 7.49995L0.17827 13.9619C-0.0592098 14.1993 -0.0592098 14.5844 0.17827 14.8218C0.415721 15.0593 0.800769 15.0593 1.03825 14.8218L7.50016 8.35993L13.9621 14.8218C14.1995 15.0593 14.5846 15.0593 14.8221 14.8218C15.0595 14.5844 15.0595 14.1993 14.8221 13.9619Z" fill="black"></path></svg>
+      </div>
+        <div class="basket">
+          <div class="des">
+
+            <div class="products">
+              <div class="product" >
+                <h2>Список просмотреных продуктов</h2>
+                <table>
+                  <tr class="t-title">
+                    <td>Имя</td>
+                    <td>Описание</td>
+                    <td>Просмотров</td>
+                    <td>Стоимость</td>
+                    <td>Скидка</td>
+                    <td>Продано</td>
+                  </tr>
+                  <tr *ngFor="let product of data.visit">
+                    <ng-container *ngIf="product.product">
+                      <td>
+                        <div class="name-wrap">
+                          <div class="p-img" *ngIf="product.product.img">
+                            <app-img [dir]="'product'" [fs]="product.product.img"></app-img>
+                          </div>
+                          <div class="p-name">{{product.product.name}}</div>
+                        </div>
+                      </td>
+                      <td>{{product.product.des}}</td>
+                      <td>{{product.count}}</td>
+                      <td>{{product.product.price}} грн</td>
+                      <td>
+                        <ng-container *ngIf="!product.product.discount">-</ng-container>
+                        <ng-container *ngIf="product.product.discount">
+                          {{((product.product.price - product.product.discount) / product.product.price) | percent}}
+                        </ng-container>
+                      </td>
+                      <td>{{product.product.countBought}}</td>
+                    </ng-container>
+                  </tr>
+                </table>
+
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+  </div>
+
+</div>
+
+<ng-template #loader> Loading...</ng-template>
+<ng-template #empty > Сегодня посещений не была</ng-template>

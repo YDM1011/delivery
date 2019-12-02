@@ -73,7 +73,7 @@ module.exports = backendApp => {
                     // model.schema.options.needBeAdminR ? backendApp.middlewares.isAdmin :  nextS,
                     modelOpt.needLogined ? backendApp.middlewares.isLoggedIn : backendApp.middlewares.checkLoggedIn,
                     modelOpt.needLogined ? isVerify(backendApp) : backendApp.middlewares.checkLoggedIn,
-                    // modelOpt.needLogined || modelOpt.client ? canRead(modelOpt) : nextS,
+                    modelOpt.needLogined || modelOpt.client ? canRead(modelOpt) : nextS,
                     modelOpt.needLogined ? canRead(modelOpt) : nextS,
                     // model.schema.options.needAccessControl && !model.schema.options.needLogined && !model.schema.options.needBeAdmin ? backendApp.middlewares.isLoggedIn :  nextS,
                     // model.schema.options.needAccessControl && !model.schema.options.needBeAdmin ? backendApp.middlewares.checkAccessRights(modelName + '.canRead') :  nextS,
@@ -147,7 +147,8 @@ const canRead = (options) => {
         const objPromise = checkOwner(req,res,next,options);
         Promise.all(objPromise).then(query => {
             let opt;
-            console.log(req.erm.query)
+            console.log(req.erm.model.modelName, req.erm.query)
+            console.log(Object.entries(req.erm.query).length > 0)
             query.some(it => {
                 if (it) {
                     opt = it;
@@ -155,9 +156,9 @@ const canRead = (options) => {
                 }
             });
             if (!opt) return res.forbidden('403');
-            if (Object.entries(req.erm.query).length > 0) {
+            if (Object.entries(req.erm.query).length > 0 && !req.params.id) {
                 req.erm.query['query'] =  {};
-                if (typeof opt == 'object' && opt){
+                if (typeof opt == 'object' && opt ){
                     if (req.query.query){
                         req.erm.query['query'] =  {$and: [opt, JSON.parse(req.query.query)]};
                     }else {
@@ -166,7 +167,7 @@ const canRead = (options) => {
                 } else {
                     if (req.query.query){
                         req.erm.query['query'] =  {$and: [JSON.parse(req.query.query)]};
-                    }else {
+                    } else {
                         req.erm.query['query'] =  {$and: [{}]};
                     }
                 }
@@ -177,6 +178,7 @@ const canRead = (options) => {
             }
             if (req.error.success) {
                 if (req.erm.query['query'] === true) req.erm.query['query'] = {};
+                console.log(req.erm.model.modelName, req.erm.query)
                 return next()
             } else {
                 res.notFound("No one document")
@@ -352,10 +354,15 @@ const checkOwner = (req,res,next,options) => {
     const role = req.user ? req.user.role || 'client' : 'client';
     let objPromise = [];
     req.error = {success: false};
-    let query = {$or: [{'createdBy.itemId': req.user._id},
-            {createdBy: req.user._id},
-            {_id: req.user._id}]};
-    console.log("options[role].read[0]",options[role].read[0])
+    let query = {};
+    if (req.user) {
+        query = {$or: [{'createdBy.itemId': req.user._id},
+                {createdBy: req.user._id},
+                {_id: req.user._id}]};
+    } else if (!options[role].read[0].public) {
+        objPromise.push( new Promise((rs,rj)=> {rj("Not access!")}))
+        return objPromise
+    }
     if (!options[role] || !options[role].read) {
         objPromise.push( new Promise((rs,rj)=> {rj("Not access!")}))
         return objPromise

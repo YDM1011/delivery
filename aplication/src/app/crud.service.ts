@@ -30,7 +30,8 @@ export class CrudService {
         this.http.post(`${this.api}${api}${id ? '/' + id : ''}`, obj).subscribe(data => {
          resolve(data);
         }, error => {
-          reject(error);
+          console.log("error")
+          // reject(error);
         });
       });
   }

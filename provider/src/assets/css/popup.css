@@ -36,8 +36,88 @@
   left: 50%;
   overflow: hidden;
   display: flex;
+  width: 100%;
 }
 .popup .content{
   padding: 10px 15px;
   overflow: auto;
+  width: 100%;
+}
+.popup .cancel {
+  position: absolute;
+  right: 0;
+  top: 0;
+  font-size: 28px;
+  padding: 15px;
+  cursor: pointer;
+}
+.name-wrap .p-img{
+  display: flex;
+  width: 50px;
+  border-radius: 50%;
+  overflow: hidden;
+  height: 50px;
+  align-items: center;
+  margin-right: 15px;
+}
+.name-wrap{
+  display: flex;
+  align-items: center;
+}
+.product h2{
+  color: #009688;
+  margin-top: 35px;
+  font-size: 18px;
+}
+.product .t-title{
+  height: 45px;
+  left: 125px;
+  top: 682px;
+  color: #fff;
+  background: #009688;
+  border-radius: 5px 5px 0px 0px;
+}
+.product tr+tr{
+  border-top: 1px solid #dedede;
+}
+.product td+td{
+  border-left: 1px solid #dedede;
+}
+.product td{
+  padding: 5px 8px;
+}
+.product table{
+  width: 100%;
+  border-collapse: collapse;
+}
+.field span{
+  color: #000;
+}
+.field {
+  color: #748AA1;
+  margin: 15px auto;
+}
+.basket.disable .title .arrow{
+  transform: rotate(0deg);
+}
+.basket.disable .des{
+  display: none;
+}
+.basket .des {
+  padding: 10px 15px;
+}
+.basket.disable .title {
+  border-radius: 5px;
+}
+.basket .title .arrow{
+  margin-left: auto;
+  transform: rotate(90deg);
+  transition: 0.5s;
+}
+.basket .title {
+  padding: 10px 15px;
+  background: #009688;
+  color: #fff;
+  border-radius: 5px 5px 0 0;
+  display: flex;
 }

@@ -38,6 +38,7 @@ export class ApiInterceptor implements HttpInterceptor {
                     // console.log(error);
                     switch (error.status) {
                         // case 404: Swal.fire('Oops...', error.error, 'error');
+                        case 403: console.log("forbidden");
                     }
                 })
             );
