@@ -120,7 +120,7 @@
 										</button>
 									</ng-container>
 									<div class="who-doing">
-										<div class="status" [innerHTML]="item.status | status | safeHTML"></div>
+										<div class="status" [innerHTML]="item.status | status | safeHTML" *ngIf="activePage != 0"></div>
 										<div class="manager-name" *ngIf="item.manager && item.manager.name">
 											{{item.manager.name}}
 										</div>
