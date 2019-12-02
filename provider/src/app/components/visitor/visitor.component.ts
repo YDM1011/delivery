@@ -15,7 +15,8 @@ export class VisitorComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.crud.get('analytic?populate=[{"path":"visitedBy"},{"path":"visit.product"}]&sort={"date":-1}&limit=10&skip=0', '').then((v:any)=>{
+    let date = new Date(new Date().getTime() - new Date().getHours()*60*60*1000 - new Date().getMinutes()*60*1000  - new Date().getSeconds()*1000).getTime() + new Date().getTimezoneOffset()*1000;
+    this.crud.get('analytic?query={"date":{"$gt":'+date+'}}&populate=[{"path":"visitedBy"},{"path":"visit.product"}]&sort={"date":-1}&limit=10&skip=0', '').then((v:any)=>{
       if (v && v[0] && v[0]._id) {
         this.visitors = v;
       }
