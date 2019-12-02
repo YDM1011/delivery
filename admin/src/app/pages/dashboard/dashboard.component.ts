@@ -61,7 +61,8 @@ export class DashboardComponent implements OnInit {
       this.listProvider.forEach((item)=>{
         this.crud.get(`providerInfo/${item._id}/4?query=${query}`).then((v: any)=>{
           if (v && v.length>0) {
-            this.countAndSub.push(v[0]);
+            this.countAndSub[this.crud.find('id', item._id, this.listProvider)] = v[0]
+            // this.countAndSub.push(v[0]);
           } else {
             this.countAndSub.push(v);
           }
@@ -71,7 +72,8 @@ export class DashboardComponent implements OnInit {
       this.listProviderForOne.forEach((item)=>{
         this.crud.get(`providerInfo/${item._id}/4?query=${query}`).then((v: any)=>{
           if (v && v.length>0) {
-            this.countAndSub.push(v[0]);
+            this.countAndSub[this.crud.find('id', item._id, this.listProvider)] = v[0]
+            // this.countAndSub.push(v[0]);
           } else {
             this.countAndSub.push(v);
           }
