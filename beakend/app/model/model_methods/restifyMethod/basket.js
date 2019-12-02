@@ -117,6 +117,12 @@ module.exports.postUpdate = async (req, res, next, backendApp) => {
                 clientOwner: basket.createdBy,
                 basket: basket._id,
             }, (e,r) => {});
+    } else if (req.body.deptor) {
+        backendApp.mongoose.model('Debtor')
+            .findOneAndUpdate ({
+                clientOwner: basket.createdBy,
+                basket: basket._id,
+            }, {lastUpdate: new Date()}, (e,r) => {});
     }
     if (basket.status === 4) {
         backendApp.mongoose.model('Rating')

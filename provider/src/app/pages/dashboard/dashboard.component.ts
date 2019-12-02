@@ -11,6 +11,7 @@ import {ChartDataSets, ChartOptions} from "chart.js";
 })
 export class DashboardComponent implements OnInit {
   public user;
+  public tab = 0;
   public dateStart = new Date();
   public dateEnd = new Date();
   public loading: boolean = false;
@@ -184,5 +185,9 @@ export class DashboardComponent implements OnInit {
   }
 
   public chartHovered({ event, active }: { event: MouseEvent, active: {}[] }): void {
+  }
+
+  selectChange(e){
+    this.tab = e
   }
 }

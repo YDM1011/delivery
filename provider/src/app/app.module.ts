@@ -57,6 +57,7 @@ import { ForgotComponent } from './pages/forgot/forgot.component';
 import {SafeHTMLPipe} from "./safe-html.pipe";
 import { InfoByComponent } from './components/info-by/info-by.component';
 import {PopupDirective} from "./directives/app-popup.directive";
+import { VisitorComponent } from './components/visitor/visitor.component';
 
 @NgModule({
   declarations: [
@@ -97,7 +98,8 @@ import {PopupDirective} from "./directives/app-popup.directive";
     ForgotComponent,
     SafeHTMLPipe,
     InfoByComponent,
-    PopupDirective
+    PopupDirective,
+    VisitorComponent
   ],
   imports: [
     ChartsModule,

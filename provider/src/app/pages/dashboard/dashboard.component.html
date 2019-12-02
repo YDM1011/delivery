@@ -96,6 +96,13 @@
 	</div>
 
   <div>
-    <app-info-by></app-info-by>
+    <mat-tab-group (selectedIndexChange)="selectChange($event)" [animationDuration]="0">
+      <mat-tab label="Заказы">
+      </mat-tab>
+      <mat-tab label="Посещения">
+      </mat-tab>
+    </mat-tab-group>
+    <app-info-by *ngIf="tab === 0"></app-info-by>
+    <app-visitor *ngIf="tab === 1"></app-visitor>
   </div>
 </div>

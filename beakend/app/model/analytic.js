@@ -21,7 +21,7 @@ const schem = new Schema({
     count: Number,
     visit: [{
         date: Date,
-        products: {
+        product: {
             type: Schema.Types.ObjectId,
             ref: "Order"
         },

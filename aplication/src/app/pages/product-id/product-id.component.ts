@@ -70,9 +70,11 @@ export class ProductIDComponent implements OnInit {
     });
   }
   init() {
+
     this.crud.getDetailProduct(this.id).then((v: any) => {
       if (v) {
         this.product = v;
+        this.crud.post('companyVisit', {product:this.id,company:this.product.companyOwner});
         this.crud.getDetailCompany(this.product.companyOwner).then((v: any) => {
           if (v) {
             this.company = v;
