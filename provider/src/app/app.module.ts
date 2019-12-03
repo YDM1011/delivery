@@ -58,6 +58,7 @@ import {SafeHTMLPipe} from "./safe-html.pipe";
 import { InfoByComponent } from './components/info-by/info-by.component';
 import {PopupDirective} from "./directives/app-popup.directive";
 import { VisitorComponent } from './components/visitor/visitor.component';
+import { StarRatingComponent } from './components/star-rating/star-rating.component';
 
 @NgModule({
   declarations: [
@@ -99,7 +100,8 @@ import { VisitorComponent } from './components/visitor/visitor.component';
     SafeHTMLPipe,
     InfoByComponent,
     PopupDirective,
-    VisitorComponent
+    VisitorComponent,
+    StarRatingComponent
   ],
   imports: [
     ChartsModule,

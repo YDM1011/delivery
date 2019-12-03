@@ -89,7 +89,7 @@
 							</td>
 							<td *ngIf="activePage === 2">
 								<ng-container *ngIf="item.rating">
-									{{item.rating.rating}} <br>
+                  <app-star-rating class="mat-rating"  [starCount]="5" [rating]="item.rating.rating ? item.rating.rating : 0"></app-star-rating><br>
 									{{item.rating.comment}}
 								</ng-container>
 								<ng-container *ngIf="!item.rating">
