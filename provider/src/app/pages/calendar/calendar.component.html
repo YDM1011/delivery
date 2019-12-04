@@ -58,8 +58,7 @@
 <mat-paginator [length]="lengthPagination"
                [pageSize]="pageSizePagination"
                [pageSizeOptions]="pageSizeOptionsPagination"
-               (page)="pageEvent($event)"
-               *ngIf="categorys && categorys.length > 0">
+               (page)="pageEvent($event)">
 </mat-paginator>
 
 <div class="detail-data" *ngIf="data">

@@ -44,7 +44,7 @@
     </tr>
   </ng-container>
 </table>
-<div class="w-more" *ngIf="this.visitors >= 10">
+<div class="w-more" *ngIf="visitors.length >= 10">
   <button class="more" (click)="more()">Ещё</button>
 </div>
 
@@ -103,4 +103,4 @@
 </div>
 
 <ng-template #loader> Loading...</ng-template>
-<ng-template #empty > Сегодня посещений не была</ng-template>
+<ng-template #empty > Сегодня посещений не было</ng-template>
