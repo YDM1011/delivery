@@ -147,8 +147,6 @@ const canRead = (options) => {
         const objPromise = checkOwner(req,res,next,options);
         Promise.all(objPromise).then(query => {
             let opt;
-            console.log(req.erm.model.modelName, req.erm.query)
-            console.log(Object.entries(req.erm.query).length > 0)
             query.some(it => {
                 if (it) {
                     opt = it;
@@ -178,7 +176,6 @@ const canRead = (options) => {
             }
             if (req.error.success) {
                 if (req.erm.query['query'] === true) req.erm.query['query'] = {};
-                console.log(req.erm.model.modelName, req.erm.query)
                 return next()
             } else {
                 res.notFound("No one document")
@@ -394,7 +391,6 @@ const checkOwner = (req,res,next,options) => {
                     req.erm.query['query'] = query;
                 }
                 req.error.success = true;
-                console.log("Private", query)
                 rs(query);
                 // return objPromise
             }

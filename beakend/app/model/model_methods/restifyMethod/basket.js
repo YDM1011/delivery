@@ -142,6 +142,31 @@ module.exports.postUpdate = async (req, res, next, backendApp) => {
                 }));
             });
 
+        backendApp.mongoose.model('companyClient')
+            .findOne({
+                clientOwner: basket.createdBy,
+                companyOwner: basket.companyOwner
+            })
+            .exec((e,r)=>{
+                if (!e){
+                    if (r) {
+                        backendApp.mongoose.model('companyClient')
+                            .findOneAndUpdate({
+                                clientOwner: basket.createdBy,
+                                companyOwner: basket.companyOwner,
+                            }, {$inc:{basketCount:1}, lastUpdate: new Date(),}, (e,r) => { });
+                    } else {
+                        backendApp.mongoose.model('companyClient')
+                            .create({
+                                basketCount: 1,
+                                clientOwner: basket.createdBy,
+                                companyOwner: basket.companyOwner,
+                                lastUpdate: new Date(),
+                                date: new Date(),
+                            }, (e,r) => { });
+                    }
+                }
+            });
     }
     next()
     // if (basket.status === 1 || basket.status === 2) {
@@ -196,25 +221,25 @@ const sendToClient = (backendApp, basket, req) => {
             case 2:
                 backendApp.service.fcm.send({
                     title : 'SMART',
-                    body : 'заказ №'+basket.basketId+' "'+basket.companyOwner.name+'" на суму '+basket.totalPrice+' был принят!' ,
+                    body : 'заказ №'+basket.basketNumber+' "'+basket.companyOwner.name+'" на суму '+basket.totalPrice+' был принят!' ,
                 }, '', basket.createdBy.fcmToken);
                 break;
             case 3:
                 backendApp.service.fcm.send({
                     title : 'SMART',
-                    body : 'Заказ №'+basket.basketId+' "'+basket.companyOwner.name+'" отредактирован!',
+                    body : 'Заказ №'+basket.basketNumber+' "'+basket.companyOwner.name+'" отредактирован!',
                 }, '', basket.createdBy.fcmToken);
                 break;
             case 4:
                 backendApp.service.fcm.send({
                     title : 'SMART',
-                    body : 'Заказ №'+basket.basketId+' "'+basket.companyOwner.name+'" выполнен!',
+                    body : 'Заказ №'+basket.basketNumber+' "'+basket.companyOwner.name+'" выполнен!',
                 }, '', basket.createdBy.fcmToken);
                 break;
             case 5:
                 backendApp.service.fcm.send({
                     title : 'SMART',
-                    body : 'Заказ №'+basket.basketId+' отменьон!',
+                    body : 'Заказ №'+basket.basketNumber+' отменьон!',
                 }, '', basket.createdBy.fcmToken);
                 break;
         }

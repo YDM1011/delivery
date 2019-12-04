@@ -4,8 +4,8 @@ const express = require('express');
 const config = require('./app/config/config');
 const glob = require('glob');
 const mongoose = require('mongoose');
-
 mongoose.Promise = global.Promise;
+
 if (config.dbConnect) {
     mongoose.connect(config.db); //{ useNewUrlParser: true }
 } else {
@@ -26,12 +26,13 @@ models.forEach(function (model) {
         return;
     require(model);
 });
+
+
+// startCron();
 /*********************/
 let app = express();
 
 module.exports = require('./app/config/express')(app, config);
 
 /********************************/
-// view engine setup
 
-// module.exports = app;

@@ -19,6 +19,7 @@ import {OrdersDetailComponent} from './pages/orders-detail/orders-detail.compone
 import {SignUpComponent} from './pages/sign-up/sign-up.component';
 import {PayComponent} from "./pages/pay/pay.component";
 import {ForgotComponent} from "./pages/forgot/forgot.component";
+import {CalendarComponent} from "./pages/calendar/calendar.component";
 
 const routes: Routes = [
   {path: '', component: MainComponent, children: [
@@ -26,6 +27,7 @@ const routes: Routes = [
       {path: 'dashboard', component: DashboardComponent},
       {path: 'category', component: CategoryComponent},
       {path: 'category-detail/:id', component: CategoryDetailComponent},
+      {path: 'calendar', component: CalendarComponent},
       {path: 'product', component: ProductComponent},
       {path: 'create', component: CreateComponent},
       {path: 'debtor', component: DebtorComponent},

@@ -59,6 +59,7 @@ import { InfoByComponent } from './components/info-by/info-by.component';
 import {PopupDirective} from "./directives/app-popup.directive";
 import { VisitorComponent } from './components/visitor/visitor.component';
 import { StarRatingComponent } from './components/star-rating/star-rating.component';
+import { CalendarComponent } from './pages/calendar/calendar.component';
 
 @NgModule({
   declarations: [
@@ -101,7 +102,8 @@ import { StarRatingComponent } from './components/star-rating/star-rating.compon
     InfoByComponent,
     PopupDirective,
     VisitorComponent,
-    StarRatingComponent
+    StarRatingComponent,
+    CalendarComponent
   ],
   imports: [
     ChartsModule,

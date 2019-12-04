@@ -76,7 +76,7 @@ const init = (app, config) =>{
     require('../controllers')(backendApp);
     require('../service')(backendApp);
     require('./mongooseRestApi')(backendApp);
-
+    // require('../cron/task');
 
     app.set('views', path.join(__dirname, '../../../beakend/views'));
     app.set('view engine', 'ejs');
@@ -157,7 +157,17 @@ const init = (app, config) =>{
 
 
     });
-
+    let fork = require('child_process').fork;
+    let cronRunner;
+    const startCron = () => {
+        require('../cron/task');
+        // cronRunner = fork('./app/cron/task');
+        // cronRunner.on('exit', function () {
+        //     console.log('cron restart');
+        //     startCron();
+        // });
+    };
+    startCron()
     return app;
 };
 
