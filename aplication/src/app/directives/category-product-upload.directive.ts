@@ -58,7 +58,7 @@ export class CategoryProductUploadDirective implements AfterViewInit, OnChanges{
   }
   upload() {
     if (this.count <= this.skip * 5) {return; }
-    const query = `?query={"$and":[${this.cityLinkArr.length > 0 ? JSON.stringify( {$or: this.cityLinkArr} ) : {} },{"mainCategory":"${this.mainCategory._id}"}${this.filter ? this.filter : ''}]}&skip=${this.skip * 5}&limit=5&sort=${this.sortFilter}`;
+    const query = `?query={"$and":[${this.cityLinkArr.length > 0 ? JSON.stringify( {$or: this.cityLinkArr} ) : {} },{"mainCategory":"${this.mainCategory._id}"}${this.filter ? this.filter : ''}],"companyOwner":${JSON.stringify( {$in:this.companyIdArr})}}&skip=${this.skip * 5}&limit=5&sort=${this.sortFilter}`;
     this.crud.get('order', '',  query).then((v: any) => {
         if (v) {
           this.skip++;
