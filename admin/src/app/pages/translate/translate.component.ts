@@ -22,16 +22,17 @@ export class TranslateComponent implements OnInit {
     this.crud.get('translator').then((v: any) => {
       if (v) {
         this.words = v;
+        console.log(this.words);
         this.loaded = true;
       }
     }).catch( e => console.log(e));
   }
   remove(i) {
-    this.crud.delete('translator', this.words[i]._id).then((v: any) => {
+    this.crud.delete('translator', this.words[i].id).then((v: any) => {
       if (v) {
-        this.words.splice(i, 1);
+        delete this.words[i]
       }
-    }).catch( e => console.log(e));
+    });
   }
   addTranslate(data) {
     this.activeWord = data;
