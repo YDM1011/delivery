@@ -60,8 +60,15 @@ export class VisitorComponent implements OnInit {
       if (this.tab == 1){
         this.query = `query={"date":{"$gte":"${timeStart}","$lte":"${timeEnd}"}}&`
       } else {
-        this.query = `query={"byin":{"$in":["'+this.companyOwner+'"]},"date":{"$gte":"${timeStart}","$lte":"${timeEnd}"}}&`
+        this.query = `query={"byin":{"$in":["${this.companyOwner}"]},"date":{"$gte":"${timeStart}","$lte":"${timeEnd}"}}&`
       }
+      // if (this.tab == 1) {
+      //   let date = new Date(new Date().getTime() - new Date().getHours()*60*60*1000 - new Date().getMinutes()*60*1000  - new Date().getSeconds()*1000).getTime() + new Date().getTimezoneOffset()*1000;
+      //   this.query = 'query={"date":{"$gt":'+date+'}}&'
+      // } else {
+      //   let date = new Date(new Date().getTime() - new Date().getHours()*60*60*1000 - new Date().getMinutes()*60*1000  - new Date().getSeconds()*1000).getTime() + new Date().getTimezoneOffset()*1000;
+      //   this.query = 'query={"byin":{"$in":["'+this.companyOwner+'"]},"date":{"$gt":'+date+'}}&'
+      // }
       this.initData()
     }
   }
