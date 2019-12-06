@@ -50,9 +50,12 @@
 				</div>
 			</div>
 		</div>
+		<div class="show-chart">
+			<button class="main-button-color" (click)="chartTrigger()">{{showChart ? 'Спрятать график' : 'Показать график'}}</button>
+		</div>
 	</div>
 	
-	<div class="chart">
+	<div class="chart" *ngIf="showChart">
 		<div class="chart-date">
 			<div class="date">
 				<span>

@@ -11,6 +11,7 @@ import {ChartDataSets, ChartOptions} from "chart.js";
 })
 export class DashboardComponent implements OnInit {
   public user;
+  public showChart = false;
   public tab = 0;
   public dateStart = new Date();
   public dateEnd = new Date();
@@ -127,6 +128,9 @@ export class DashboardComponent implements OnInit {
       this.allCounts['fifth'] = v[0].count;
     });
     this.chartFunc();
+  }
+  chartTrigger(){
+    this.showChart = !this.showChart
   }
   chartFunc(){
     this.lineChartLabels = [];

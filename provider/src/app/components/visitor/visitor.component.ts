@@ -14,6 +14,8 @@ export class VisitorComponent implements OnInit {
   public query = '';
   public tab;
   public companyOwner;
+  public dateStart = new Date();
+  public dateEnd = new Date();
   constructor(
     private crud: CrudService,
     private auth: AuthService
@@ -53,12 +55,12 @@ export class VisitorComponent implements OnInit {
   selectChange(e){
     if (e != this.tab){
       this.tab = e;
+      const timeStart = new Date(this.dateStart.getTime() - this.dateStart.getHours()*60*60*1000 - this.dateStart.getMinutes()*60*1000  - this.dateStart.getSeconds()*1000).getTime();
+      const timeEnd = new Date(this.dateEnd.getTime() - this.dateEnd.getHours()*60*60*1000 - this.dateEnd.getMinutes()*59*1000  - this.dateEnd.getSeconds()*1000).getTime()+86380000;
       if (this.tab == 1){
-        let date = new Date(new Date().getTime() - new Date().getHours()*60*60*1000 - new Date().getMinutes()*60*1000  - new Date().getSeconds()*1000).getTime() + new Date().getTimezoneOffset()*1000;
-        this.query = 'query={"date":{"$gt":'+date+'}}&'
+        this.query = `query={"date":{"$gte":"${timeStart}","$lte":"${timeEnd}"}}&`
       } else {
-        let date = new Date(new Date().getTime() - new Date().getHours()*60*60*1000 - new Date().getMinutes()*60*1000  - new Date().getSeconds()*1000).getTime() + new Date().getTimezoneOffset()*1000;
-        this.query = 'query={"byin":{"$in":["'+this.companyOwner+'"]},"date":{"$gt":'+date+'}}&'
+        this.query = `query={"byin":{"$in":["'+this.companyOwner+'"]},"date":{"$gte":"${timeStart}","$lte":"${timeEnd}"}}&`
       }
       this.initData()
     }
