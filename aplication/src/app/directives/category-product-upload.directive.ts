@@ -8,6 +8,7 @@ export class CategoryProductUploadDirective implements AfterViewInit, OnChanges{
   @Input() cityLinkArr;
   @Input() mainCategory;
   @Input() filter;
+  @Input() companyIdArr;
   @Input() sortFilter;
   @Output() output = new EventEmitter();
   public skip = 1;
@@ -26,7 +27,7 @@ export class CategoryProductUploadDirective implements AfterViewInit, OnChanges{
     this.triger = true;
     const block = this.elem.nativeElement;
     this.skip = 1;
-    const query = `/count?query={"$and":[${this.cityLinkArr.length > 0 ? JSON.stringify( {$or: this.cityLinkArr} ) : {} },{"mainCategory":"${this.mainCategory._id}"}${this.filter ? this.filter : ''}]}`;
+    const query = `/count?query={"$and":[${this.cityLinkArr.length > 0 ? JSON.stringify( {$or: this.cityLinkArr} ) : {} },{"mainCategory":"${this.mainCategory._id}"}${this.filter ? this.filter : ''}],"companyOwner":${JSON.stringify( {$in:this.companyIdArr})}}`;
     this.crud.get('order', '',  query).then((count: any) => {
       if (count) {
         this.count = count.count;
@@ -41,7 +42,7 @@ export class CategoryProductUploadDirective implements AfterViewInit, OnChanges{
   }
   ngAfterViewInit() {
     const block = this.elem.nativeElement;
-    const query = `/count?query={"$and":[${this.cityLinkArr.length > 0 ? JSON.stringify( {$or: this.cityLinkArr} ) : {} },{"mainCategory":"${this.mainCategory._id}"}${this.filter ? this.filter : ''}]}`;
+    const query = `/count?query={"$and":[${this.cityLinkArr.length > 0 ? JSON.stringify( {$or: this.cityLinkArr} ) : {} },{"mainCategory":"${this.mainCategory._id}"}${this.filter ? this.filter : ''}],"companyOwner":${JSON.stringify( {$in:this.companyIdArr})}}`;
     this.crud.get('order', '',  query).then((count: any) => {
       this.count = count.count;
       if (count) {

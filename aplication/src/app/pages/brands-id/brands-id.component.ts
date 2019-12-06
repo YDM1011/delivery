@@ -16,6 +16,7 @@ export class BrandsIDComponent implements OnInit, OnDestroy {
   public filter;
   public sort;
   public orders = [];
+  public companyIdArr = [];
   public companies;
   public showFilter: boolean = false;
   public copyfilterObj;
@@ -65,6 +66,13 @@ export class BrandsIDComponent implements OnInit, OnDestroy {
     this.auth.onCity.subscribe((city:any) => {
       if (city) {
         this.city = city;
+        this.crud.getCompany(city).then((companyByCity:any) => {
+          if (companyByCity && companyByCity.length>0) {
+            companyByCity.forEach((item)=> {
+              this.companyIdArr.push(`${item.companyOwner}`);
+            })
+          }
+        });
         this.crud.getBrandName(this.id, city._id).then((companies)=>{
           this.companies = companies;
           const arr = [];
@@ -76,7 +84,7 @@ export class BrandsIDComponent implements OnInit, OnDestroy {
               }
             });
           }
-          const query = `?query={"$and":[${arr.length > 0 ? JSON.stringify( {$or: arr} ) : {} },{"brand":"${this.companies[0].brand}"}]}&populate={"path":"companyOwner"}&skip=0&limit=5&sort=${this.sort}`;
+          const query = `?query={"$and":[${arr.length > 0 ? JSON.stringify( {$or: arr} ) : {} },{"brand":"${this.companies[0].brand}"}],"companyOwner":${JSON.stringify( {$in:this.companyIdArr})}}&populate={"path":"companyOwner"}&skip=0&limit=5&sort=${this.sort}`;
           this.crud.get('order', '',  query).then((orders: any) => {
             this.orders = orders;
           });
