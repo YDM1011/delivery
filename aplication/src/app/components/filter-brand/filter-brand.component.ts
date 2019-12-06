@@ -18,6 +18,7 @@ export class FilterBrandComponent implements OnInit {
   public priceMax = 0;
   public isInit = false;
   public priceMin = 0;
+  @Input() companyIdArr;
   @Input() brand;
   @Input() city;
   @Input() filterInput;
@@ -62,7 +63,7 @@ export class FilterBrandComponent implements OnInit {
         }
       });
     }
-    const query = `?query={"$and":[${arr.length > 0 ? JSON.stringify( {$or: arr} ) : {} },{"brand":"${this.brand}"}]}
+    const query = `?query={"$and":[${arr.length > 0 ? JSON.stringify( {$or: arr} ) : {} },{"brand":"${this.brand}"}],"companyOwner":${JSON.stringify( {$in:this.companyIdArr})}}
     &sort={"price":-1}&limit=1&skip=0`;
     this.crud.get('order', '',  query).then((max: any) => {
       if (max.length>0) {

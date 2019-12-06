@@ -37,5 +37,5 @@
     </div>
   </div>
 </div>
-<app-filter-brand *ngIf="showFilter" [brand]="companies[0].brand" (onFilter)="reinit($event)" (onCopyFilter)="copyFilter($event)" [filterInput]="copyfilterObj" [city]="city" (closeFilter)="closeFilter($event)"></app-filter-brand>
+<app-filter-brand *ngIf="showFilter" [brand]="companies[0].brand" (onFilter)="reinit($event)" (onCopyFilter)="copyFilter($event)" [filterInput]="copyfilterObj" [companyIdArr]="companyIdArr" [city]="city" (closeFilter)="closeFilter($event)"></app-filter-brand>
 

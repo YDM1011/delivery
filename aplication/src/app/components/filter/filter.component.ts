@@ -24,6 +24,7 @@ export class FilterComponent implements OnInit {
   public brandChack = [];
   public showMoreCat = false;
   public showMoreBrend = false;
+  @Input() companyIdArr;
   @Input() mainCategory;
   @Input() city;
   @Input() filterInput;
@@ -82,7 +83,7 @@ export class FilterComponent implements OnInit {
       });
     }
 
-    const query = `?query={"$and":[${arr.length > 0 ? JSON.stringify( {$or: arr} ) : {} },{"mainCategory":"${this.mainCategory._id}"}]}
+    const query = `?query={"$and":[${arr.length > 0 ? JSON.stringify( {$or: arr} ) : {} },{"mainCategory":"${this.mainCategory._id}"}],"companyOwner":${JSON.stringify( {$in:this.companyIdArr})}}
     &sort={"price":-1}&limit=1&skip=0`;
     this.crud.get('order', '',  query).then((max: any) => {
       if (max.length>0) {
