@@ -9,8 +9,18 @@ module.exports = (backendApp, router) => {
 
 
         try {
-            let date = new Date(new Date().getTime() - new Date().getHours()*60*60*1000 - new Date().getMinutes()*60*1000  - new Date().getSeconds()*1000);
-            let query = {$and:[{status:4},{lastUpdate:{$gte:date}}]};
+            let query;
+            if (req.query){
+                let qry = JSON.parse(req.query.query)
+                console.log(req.query)
+                console.log(qry)
+                query = {$and:[{status:4},{lastUpdate:{$lte:new Date(parseInt(qry.date.$lte)),$gte:new Date(parseInt(qry.date.$gte))}}]}
+            } else {
+                let date = new Date(new Date().getTime() - new Date().getHours()*60*60*1000 - new Date().getMinutes()*60*1000  - new Date().getSeconds()*1000);
+                query = {$and:[{status:4},{lastUpdate:{$gte:date}}]}
+            }
+            console.log(query.$and[1].lastUpdate)
+
             if(req.user.role === 'admin' || req.user.role === 'sa') {
                 callInfo(req,res,query)
             } else if (req.user.role === 'provider') {
