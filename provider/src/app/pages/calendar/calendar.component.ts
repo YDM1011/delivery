@@ -79,8 +79,18 @@ export class CalendarComponent implements OnInit {
   openSet(d){
     this.dataSet = d
   }
-  pushSave(n,d){
-    this.crud.post('companyClient', {pushDay:n}, d._id).then((v:any)=>{
+  pushSave(n) {
+    if (!this.dataSet['pushDay'] || (this.dataSet['pushDay'].length == 0) || (typeof this.dataSet['pushDay'] != 'object')){
+      this.dataSet['pushDay'] = [];
+    }
+    if (this.dataSet['pushDay'].indexOf(n) > -1) {
+      this.dataSet['pushDay'].splice(this.dataSet['pushDay'].indexOf(n), 1);
+    } else {
+      this.dataSet['pushDay'].push(n)
+    }
+  }
+  pushSaveSend(d){
+    this.crud.post('companyClient', {pushDay:d['pushDay']}, d._id).then((v:any)=>{
       d['pushDay'] = v.pushDay;
     });
     this.dataSet = ''

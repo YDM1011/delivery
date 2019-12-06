@@ -95,3 +95,20 @@ button svg{
   border: 1px solid #009688;
   color: #fff;
 }
+.btn{
+  display: flex;
+}
+.btn button{
+  background: #009688;
+  border: 1px solid #009688;
+  color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 4px 15px rgba(0,0,0,.3);
+  margin-left: auto;
+  padding: 5px 10px;
+  transition: .5s;
+  cursor: pointer;
+}
+.btn button:hover{
+  box-shadow: 0 0px 15px rgba(0,0,0,.1);
+}
