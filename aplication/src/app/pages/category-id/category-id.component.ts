@@ -103,7 +103,7 @@ export class CategoryIDComponent implements OnInit {
       });
     }
 
-    const query = `?query={"$and":[${arr.length > 0 ? JSON.stringify( {$or: arr} ) : {} },{"mainCategory":"${this.mainCategory._id}"}${this.filter ? this.filter : ''},"companyOwner":${JSON.stringify( {$in:this.companyIdArr})}]}&populate={"path":"companyOwner"}&skip=0&limit=5&sort=${this.sort}`;
+    const query = `?query={"$and":[${arr.length > 0 ? JSON.stringify( {$or: arr} ) : {} },{"mainCategory":"${this.mainCategory._id}"}${this.filter ? this.filter : ''}],"companyOwner":${JSON.stringify( {$in:this.companyIdArr})}}&populate={"path":"companyOwner"}&skip=0&limit=5&sort=${this.sort}`;
     this.crud.get('order', '',  query).then((orders) => {
       this.orders = orders;
     });
