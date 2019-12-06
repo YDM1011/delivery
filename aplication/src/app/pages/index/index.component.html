@@ -103,7 +103,7 @@
     </div>
   </div>
 </ng-container>
-<div class="popular-section">
+<div class="popular-section" *ngIf="topCompany && topCompany.length>0; else emptyCompany">
   <div class="popular-section-button">
     <button [class.active]="toggleMain" (click)="toggleMain = true">
       {{translate.provider[language]}}
@@ -181,5 +181,11 @@
     <div class="img">
       <img src="./assets/images/product.svg" alt="">
     </div>
+  </div>
+</ng-template>
+
+<ng-template #emptyCompany>
+  <div class="empty-company">
+    {{translate.emptyCountry[language]}}
   </div>
 </ng-template>

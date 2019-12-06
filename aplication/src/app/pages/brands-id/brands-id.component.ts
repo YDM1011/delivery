@@ -131,7 +131,7 @@ export class BrandsIDComponent implements OnInit, OnDestroy {
       });
     }
 
-    const query = `?query={"$and":[${arr.length > 0 ? JSON.stringify( {$or: arr} ) : {} },{"brand":"${this.companies[0].brand}"}${this.filter ? this.filter : ''}]}&skip=0&limit=5&sort=${this.sort}`;
+    const query = `?query={"$and":[${arr.length > 0 ? JSON.stringify( {$or: arr} ) : {} },{"brand":"${this.companies[0].brand}"}${this.filter ? this.filter : ''}],"companyOwner":${JSON.stringify( {$in:this.companyIdArr})}}&skip=0&limit=5&sort=${this.sort}`;
     this.crud.get('order', '',  query).then((orders: any) => {
       this.orders = orders;
     });

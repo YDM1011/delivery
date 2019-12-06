@@ -77,6 +77,10 @@ export class IndexComponent implements OnInit, OnDestroy {
     emptyTop: {
       ru: 'Нет популярных продуктов',
       ua: 'Немає популярних продуктів'
+    },
+    emptyCountry: {
+      ru: 'В выбранном городе нет поставщиков!',
+      ua: 'У вибраному місті немає постачальників!'
     }
   };
   private _subscription: Subscription[] = [];
