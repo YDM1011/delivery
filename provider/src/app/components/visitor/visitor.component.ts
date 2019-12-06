@@ -53,24 +53,16 @@ export class VisitorComponent implements OnInit {
     })
   }
   selectChange(e){
+    const timeStart = new Date(this.dateStart.getTime() - this.dateStart.getHours()*60*60*1000 - this.dateStart.getMinutes()*60*1000  - this.dateStart.getSeconds()*1000).getTime() + new Date().getTimezoneOffset()*1000;
+    const timeEnd = new Date(this.dateEnd.getTime() - this.dateEnd.getHours()*60*60*1000 - this.dateEnd.getMinutes()*60*1000  - this.dateEnd.getSeconds()*1000).getTime()+86380000 + new Date().getTimezoneOffset()*1000;
     if (e != this.tab){
       this.tab = e;
-      const timeStart = new Date(this.dateStart.getTime() - this.dateStart.getHours()*60*60*1000 - this.dateStart.getMinutes()*60*1000  - this.dateStart.getSeconds()*1000).getTime();
-      const timeEnd = new Date(this.dateEnd.getTime() - this.dateEnd.getHours()*60*60*1000 - this.dateEnd.getMinutes()*60*1000  - this.dateEnd.getSeconds()*1000).getTime()+86380000;
       if (this.tab === 0){
         this.query = `query={"date":{"$gte":"${timeStart}","$lte":"${timeEnd}"}}&`
       } else {
         this.query = `query={"byin":{"$in":["${this.companyOwner}"]},"date":{"$gte":"${timeStart}","$lte":"${timeEnd}"}}&`;
       }
       this.initData();
-
-      // if (this.tab == 1) {
-      //   let date = new Date(new Date().getTime() - new Date().getHours()*60*60*1000 - new Date().getMinutes()*60*1000  - new Date().getSeconds()*1000).getTime() + new Date().getTimezoneOffset()*1000;
-      //   this.query = 'query={"date":{"$gt":'+date+'}}&'
-      // } else {
-      //   let date = new Date(new Date().getTime() - new Date().getHours()*60*60*1000 - new Date().getMinutes()*60*1000  - new Date().getSeconds()*1000).getTime() + new Date().getTimezoneOffset()*1000;
-      //   this.query = 'query={"byin":{"$in":["'+this.companyOwner+'"]},"date":{"$gt":'+date+'}}&'
-      // }
     }
   }
 }
