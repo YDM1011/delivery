@@ -185,7 +185,7 @@
 </ng-template>
 
 <ng-template #emptyCompany>
-  <div class="empty-company" *ngIf="loaded">
+  <div class="empty-company" *ngIf="loaded.brand || loaded.category || loaded.topCompany || loaded.topCompany">
     {{translate.emptyCountry[language]}}
   </div>
 </ng-template>

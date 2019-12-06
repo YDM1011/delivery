@@ -12,6 +12,7 @@ export class CrudService {
     private company;
     private city;
     private CompanyArr = [];
+    private companyIdArr = [];
 
     constructor( private http: HttpClient, private auth: AuthService) { }
 
@@ -79,7 +80,7 @@ export class CrudService {
       return arr;
   }
 
-  getAction(city) {
+  getAction(city, company) {
         const date = new Date(new Date().getTime() - new Date().getHours()*60*60*1000 - new Date().getMinutes()*60*1000  - new Date().getSeconds()*1000).getTime();
         this.city = city;
         return new Promise((resolve, reject) => {
@@ -87,7 +88,7 @@ export class CrudService {
         this.city.links.forEach(it => {
           links.push({cityLink: it});
         });
-        const query = `?query={"$or":${JSON.stringify(links)},"actionGlobal":true,"dateEnd":{"$gte":"${date}"}}&skip=0&limit=7&sort={"date":-1}`;
+        const query = `?query={"$or":${JSON.stringify(links)},"actionGlobal":true,"dateEnd":{"$gte":"${date}"},"companyOwner":${JSON.stringify( {$in:company})}}&skip=0&limit=7&sort={"date":-1}`;
         this.get('action', '', query).then((v: any) => {
           if (v) {
             resolve(v);

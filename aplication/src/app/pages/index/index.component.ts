@@ -19,6 +19,7 @@ export class IndexComponent implements OnInit, OnDestroy {
   public brandy = [];
   public topCompany = [];
   public topProduct = [];
+  public companyIdArr = [];
   public action = [];
   public toggleMain = true;
   public loadingCount = true;
@@ -109,17 +110,21 @@ export class IndexComponent implements OnInit, OnDestroy {
     }));
     this._subscription.push(this.auth.onCity.subscribe((v: any) => {
       if (v) {
-        this.crud.getCompany(v).then((arr) => {
+        this.crud.getCompany(v).then((arr: any) => {
           this.curentCity = v;
           this.companyArr = arr;
+          arr.forEach((item)=> {
+            this.companyIdArr.push(`${item.companyOwner}`);
+          });
           this.init();
         });
       }
     }));
+
   }
 
   async init() {
-    await this.crud.getAction(this.curentCity).then((v: any) => {
+    await this.crud.getAction(this.curentCity, this.companyIdArr).then((v: any) => {
       if (!v) {return; }
       this.action = v;
       this.loaded.action = true;

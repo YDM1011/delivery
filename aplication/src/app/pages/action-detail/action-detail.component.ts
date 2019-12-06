@@ -40,13 +40,13 @@ export class ActionDetailComponent implements OnInit {
   ngOnInit() {
     this.route.params.subscribe(() => {
       this.id = this.route.snapshot.paramMap.get('id');
-      this.getAction(this.id);
+      this.getAction(this.id, []);
     });
     this.auth.onLanguage.subscribe((v: string) => {
       this.language = v;
     });
   }
-  getAction(id) {
+  getAction(id, []) {
     this.crud.get(`action?query={"_id":"${id}"}&populate={"path":"companyOwner","select":"name img"}`).then((v: any) => {
       if (v) {
         this.action = v[0];
