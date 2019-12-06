@@ -71,21 +71,21 @@ export class CategoryIDComponent implements OnInit {
               this.companyIdArr.push(`${item.companyOwner}`);
             })
           }
-        });
-        this.crud.getCategoryName(this.id).then((mainCategory) => {
-          this.mainCategory = mainCategory;
-          const arr = [];
-          if (this.city.links) {
-            this.city.links.forEach(it => {
-              if (it) {
-                arr.push({cityLink: it});
-                this.CityLinksArr.push({cityLink: it});
-              }
+          this.crud.getCategoryName(this.id).then((mainCategory) => {
+            this.mainCategory = mainCategory;
+            const arr = [];
+            if (this.city.links) {
+              this.city.links.forEach(it => {
+                if (it) {
+                  arr.push({cityLink: it});
+                  this.CityLinksArr.push({cityLink: it});
+                }
+              });
+            }
+            const query = `?query={"$and":[${arr.length > 0 ? JSON.stringify( {$or: arr} ) : {} },{"mainCategory":"${this.mainCategory._id}"}],"companyOwner":${JSON.stringify( {$in:this.companyIdArr})}}&populate={"path":"companyOwner"}&skip=0&limit=5&sort=${this.sort}`;
+            this.crud.get('order', '',  query).then((orders) => {
+              this.orders = orders;
             });
-          }
-          const query = `?query={"$and":[${arr.length > 0 ? JSON.stringify( {$or: arr} ) : {} },{"mainCategory":"${this.mainCategory._id}"}],"companyOwner":${JSON.stringify( {$in:this.companyIdArr})}}&populate={"path":"companyOwner"}&skip=0&limit=5&sort=${this.sort}`;
-          this.crud.get('order', '',  query).then((orders) => {
-            this.orders = orders;
           });
         });
       }
