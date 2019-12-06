@@ -53,10 +53,12 @@ export class VisitorComponent implements OnInit {
     })
   }
   selectChange(e){
+    const timeStart = new Date(this.dateStart.getTime() - this.dateStart.getHours()*60*60*1000 - this.dateStart.getMinutes()*60*1000  - this.dateStart.getSeconds()*1000).getTime() + new Date().getTimezoneOffset()*1000;
+    const timeEnd =   new Date(this.dateEnd.getTime() - this.dateEnd.getHours()*60*60*1000 - this.dateEnd.getMinutes()*60*1000  - this.dateEnd.getSeconds()*1000).getTime()+86380000 + new Date().getTimezoneOffset()*1000;
+
     if (e != this.tab){
+      this.loaded = false;
       this.tab = e;
-      const timeStart = new Date(this.dateStart.getTime() - this.dateStart.getHours()*60*60*1000 - this.dateStart.getMinutes()*60*1000  - this.dateStart.getSeconds()*1000).getTime();
-      const timeEnd = new Date(this.dateEnd.getTime() - this.dateEnd.getHours()*60*60*1000 - this.dateEnd.getMinutes()*60*1000  - this.dateEnd.getSeconds()*1000).getTime()+86380000;
       if (this.tab == 1){
         this.query = `query={"date":{"$gte":"${timeStart}","$lte":"${timeEnd}"}}&`
       } else {
