@@ -56,7 +56,7 @@ export class VisitorComponent implements OnInit {
     if (e != this.tab){
       this.tab = e;
       const timeStart = new Date(this.dateStart.getTime() - this.dateStart.getHours()*60*60*1000 - this.dateStart.getMinutes()*60*1000  - this.dateStart.getSeconds()*1000).getTime();
-      const timeEnd = new Date(this.dateEnd.getTime() - this.dateEnd.getHours()*60*60*1000 - this.dateEnd.getMinutes()*59*1000  - this.dateEnd.getSeconds()*1000).getTime()+86380000;
+      const timeEnd = new Date(this.dateEnd.getTime() - this.dateEnd.getHours()*60*60*1000 - this.dateEnd.getMinutes()*60*1000  - this.dateEnd.getSeconds()*1000).getTime()+86380000;
       if (this.tab == 1){
         this.query = `query={"date":{"$gte":"${timeStart}","$lte":"${timeEnd}"}}&`
       } else {
