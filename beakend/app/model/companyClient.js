@@ -18,7 +18,7 @@ const schem = new Schema({
         type: Schema.Types.ObjectId,
         ref: "Company"
     },
-    pushDay: Number,
+    pushDay: [Number],
     lastUpdate: {type: Date},
     date: {type: Date, default: new Date()}
 },{

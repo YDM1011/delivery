@@ -8,7 +8,7 @@ cron.schedule("0 30 9 * * *", ()=>{
         console.log({pushDay: new Date().getDay()})
     const companyClient = mongoose.model("Client");
     companyClient
-        .find({pushDay: new Date().getDay()})
+        .find({pushDay: {$in: new Date().getDay()} })
         .populate({path: 'clientOwner', select:'fcmToken'})
         .populate({path: 'companyOwner', select:'name'})
         .exec((e,r)=>{

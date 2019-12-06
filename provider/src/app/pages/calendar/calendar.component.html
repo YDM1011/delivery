@@ -42,8 +42,12 @@
         </div>
       </td>
       <td>
-        <ng-container *ngIf="data.pushDay > -1">
-          в {{days[data.pushDay]}} <br>
+        <ng-container *ngIf="data.pushDay && data.pushDay.length > 0">
+
+          в
+          <ng-container *ngFor="let day of data.pushDay">
+            {{days[day]}}
+          </ng-container> <br>
         </ng-container>
         <span class="link" (click)="openSet(data)">настроить</span>
       </td>
@@ -141,15 +145,27 @@
       </div>
       <div class="days">
         <p>Сообщение будет отправлено в 9:30</p>
+        <p>
+          <ng-container *ngIf="dataSet.pushDay && dataSet.pushDay.length > 0">
+
+            в
+            <ng-container *ngFor="let day of dataSet.pushDay">
+              {{days[day]}}
+            </ng-container> <br>
+          </ng-container>
+        </p>
         <ul class="w-day">
-          <li class="day ibox-tools" (click)="pushSave(1, dataSet)">Понедельник</li>
-          <li class="day ibox-tools" (click)="pushSave(2, dataSet)">Вторник</li>
-          <li class="day ibox-tools" (click)="pushSave(3, dataSet)">Среда</li>
-          <li class="day ibox-tools" (click)="pushSave(4, dataSet)">Четверг</li>
-          <li class="day ibox-tools" (click)="pushSave(5, dataSet)">Пятница</li>
-          <li class="day ibox-tools" (click)="pushSave(6, dataSet)">Суббота</li>
-          <li class="day ibox-tools" (click)="pushSave(0, dataSet)">Воскресенье</li>
+          <li class="day" (click)="pushSave(1)">Понедельник</li>
+          <li class="day" (click)="pushSave(2)">Вторник</li>
+          <li class="day" (click)="pushSave(3)">Среда</li>
+          <li class="day" (click)="pushSave(4)">Четверг</li>
+          <li class="day" (click)="pushSave(5)">Пятница</li>
+          <li class="day" (click)="pushSave(6)">Суббота</li>
+          <li class="day" (click)="pushSave(0)">Воскресенье</li>
         </ul>
+        <div class="btn">
+          <button class="ibox-tools" (click)="pushSaveSend(dataSet)">Сохранить</button>
+        </div>
       </div>
     </div>
   </div>
