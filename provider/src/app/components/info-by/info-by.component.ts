@@ -16,7 +16,6 @@ export class InfoByComponent implements OnInit {
 
   ngOnInit() {
     this.crud.get('infoByers').then((v:any)=>{
-      console.log(v)
       if (v && v[0] && v[0]._id) {
         this.dataPayed = v;
       }
