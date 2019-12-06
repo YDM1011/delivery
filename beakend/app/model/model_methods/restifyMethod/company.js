@@ -1,4 +1,5 @@
 module.exports.preUpdate = (req, res, next, backendApp) => {
+    delete req.body.createdBy;
     if (req.body.city) {
         backendApp.mongoose.model('Company')
             .findOne({_id: req.params.id})

@@ -26,6 +26,10 @@ const schem = new Schema({
         type: Schema.Types.ObjectId,
         ref: "Company"
     }],
+    byin:[{
+        type: Schema.Types.ObjectId,
+        ref: "Company"
+    }],
     companyOwner:{
         type: Schema.Types.ObjectId,
         ref: "Company"

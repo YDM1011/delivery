@@ -142,6 +142,20 @@ module.exports.postUpdate = async (req, res, next, backendApp) => {
                 }));
             });
 
+        backendApp.mongoose.model('Client')
+            .findOne({_id:basket.createdBy, byin: {$in: basket.companyOwner}})
+            .exec((e,r)=>{
+                console.log("CLient");
+                console.log(e,r);
+                if (!e && !r){
+                    backendApp.mongoose.model('Client')
+                        .findOneAndUpdate({_id:basket.createdBy}, {$push: {byin: basket.companyOwner}})
+                        .exec((e,r)=>{
+                            console.log("CLient");
+                            console.log(e,r);
+                        })
+                }
+            });
         backendApp.mongoose.model('companyClient')
             .findOne({
                 clientOwner: basket.createdBy,
