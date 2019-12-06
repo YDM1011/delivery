@@ -16,7 +16,9 @@ cron.schedule("0 30 9 * * *", ()=>{
                 if (r && r.length > 0) {
                     let fcmTokens = [];
                     r.forEach(it=>{
-                        fcmTokens.push(it.clientOwner.fcmToken)
+                        if (it.clientOwner.fcmToken) {
+                            fcmTokens.push(it.clientOwner.fcmToken)
+                        }
                     });
                     global.backendApp.service.fcm.send({
                         title : 'Сегодня день заявки у "'+r.name+'"',
