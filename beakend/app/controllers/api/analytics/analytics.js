@@ -29,7 +29,16 @@ module.exports = (backendApp, router) => {
                     }).exec((err,isR)=>{
                     if (err) return res.serverError(err);
                     if (isR) {
+                        let isByin = false;
+                        let arr = [];
+                        req.user.byin.forEach(it=>{
+                            arr.push(String(it))
+                        });
+                        if (arr.indexOf(String(r._id)) > - 1) {
+                            isByin = true;
+                        }
                         if (req.body.product){
+
                             Analytic
                                 .findOne({
                                     "visit.product": req.body.product,
@@ -46,7 +55,7 @@ module.exports = (backendApp, router) => {
                                                 companyOwner: r._id,
                                                 visitedBy: req.user._id,
                                                 date: new Date(new Date().getMonth()+1+'.'+new Date().getDate()+'.'+new Date().getFullYear())
-                                            }, { $inc: { "visit.$.count" : 1 }})
+                                            }, {isByin: isByin, $inc: { "visit.$.count" : 1 }})
                                             .exec((e,r)=>{
                                                 console.log(e,r)
                                                 if (e) return res.serverError(e);
@@ -56,9 +65,10 @@ module.exports = (backendApp, router) => {
                                         Analytic
                                             .findOneAndUpdate({
                                                 companyOwner: r._id,
+
                                                 visitedBy: req.user._id,
                                                 date: new Date(new Date().getMonth()+1+'.'+new Date().getDate()+'.'+new Date().getFullYear())
-                                            }, { $push: { visit : {
+                                            }, {isByin: isByin, $push: { visit : {
                                                     count: 1,
                                                     product: req.body.product,
                                                     date: new Date()
@@ -78,7 +88,7 @@ module.exports = (backendApp, router) => {
                                     companyOwner: r._id,
                                     visitedBy: req.user._id,
                                     date: new Date(new Date().getMonth()+1+'.'+new Date().getDate()+'.'+new Date().getFullYear())
-                                }, {$inc:{count:1}})
+                                }, {$inc:{count:1},isByin: isByin,})
                                 .exec((e,r)=>{
                                     if (e) return res.serverError(e);
                                     res.ok({})
@@ -100,6 +110,9 @@ module.exports = (backendApp, router) => {
                                 product: req.body.product,
                                 count: 1
                             })
+                        }
+                        if (req.user.byin.indexOf(r._id) > - 1) {
+                            obj['isByin'] = true;
                         }
                         Analytic
                             .create(obj, (e,r)=>{

@@ -52,6 +52,18 @@ export class VisitorComponent implements OnInit {
       }
     })
   }
+  selectChangeDate(){
+    const timeStart = new Date(this.dateStart.getTime() - this.dateStart.getHours()*60*60*1000 - this.dateStart.getMinutes()*60*1000  - this.dateStart.getSeconds()*1000).getTime() + new Date().getTimezoneOffset()*1000;
+    const timeEnd =   new Date(this.dateEnd.getTime() - this.dateEnd.getHours()*60*60*1000 - this.dateEnd.getMinutes()*60*1000  - this.dateEnd.getSeconds()*1000).getTime()+86380000 + new Date().getTimezoneOffset()*1000;
+
+    this.loaded = false;
+    if (this.tab === 0){
+      this.query = `query={"isByin":{"$ne":true},"date":{"$gte":"${timeStart}","$lte":"${timeEnd}"}}&`
+    } else {
+      this.query = `query={"isByin":true,"date":{"$gte":"${timeStart}","$lte":"${timeEnd}"}}&`
+    }
+    this.initData()
+  }
   selectChange(e){
     const timeStart = new Date(this.dateStart.getTime() - this.dateStart.getHours()*60*60*1000 - this.dateStart.getMinutes()*60*1000  - this.dateStart.getSeconds()*1000).getTime() + new Date().getTimezoneOffset()*1000;
     const timeEnd =   new Date(this.dateEnd.getTime() - this.dateEnd.getHours()*60*60*1000 - this.dateEnd.getMinutes()*60*1000  - this.dateEnd.getSeconds()*1000).getTime()+86380000 + new Date().getTimezoneOffset()*1000;
@@ -60,9 +72,9 @@ export class VisitorComponent implements OnInit {
       this.loaded = false;
       this.tab = e;
       if (this.tab === 0){
-        this.query = `query={"date":{"$gte":"${timeStart}","$lte":"${timeEnd}"}}&`
+        this.query = `query={"isByin":{"$ne":true},"date":{"$gte":"${timeStart}","$lte":"${timeEnd}"}}&`
       } else {
-        this.query = `query={"byin":{"$in":["${this.companyOwner}"]},"date":{"$gte":"${timeStart}","$lte":"${timeEnd}"}}&`
+        this.query = `query={"isByin":true,"date":{"$gte":"${timeStart}","$lte":"${timeEnd}"}}&`
       }
       // if (this.tab == 1) {
       //   let date = new Date(new Date().getTime() - new Date().getHours()*60*60*1000 - new Date().getMinutes()*60*1000  - new Date().getSeconds()*1000).getTime() + new Date().getTimezoneOffset()*1000;

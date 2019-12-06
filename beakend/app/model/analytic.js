@@ -14,6 +14,7 @@ const schem = new Schema({
         type: Schema.Types.ObjectId,
         ref: "Client"
     },
+    isByin: Boolean,
     visitedBy: {
         type: Schema.Types.ObjectId,
         ref: "Client"
