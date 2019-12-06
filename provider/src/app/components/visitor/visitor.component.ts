@@ -59,7 +59,7 @@ export class VisitorComponent implements OnInit {
     if (e != this.tab){
       this.loaded = false;
       this.tab = e;
-      if (this.tab == 1){
+      if (this.tab === 0){
         this.query = `query={"date":{"$gte":"${timeStart}","$lte":"${timeEnd}"}}&`
       } else {
         this.query = `query={"byin":{"$in":["${this.companyOwner}"]},"date":{"$gte":"${timeStart}","$lte":"${timeEnd}"}}&`
