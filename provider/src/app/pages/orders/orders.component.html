@@ -56,7 +56,9 @@
 							<td [matTooltip]="item.deliveryAddress ? item.deliveryAddress.name : 'Название не извесно'">
 								<div class="name">
 									<div class="img">
-										<app-img [fs]="item && item.deliveryAddress ? item.deliveryAddress.img : ''" [anyFs]="'./assets/images/user.svg'"></app-img>
+										<app-img [fs]="item && item.deliveryAddress ? item.deliveryAddress.img : ''"
+                             [dir]="'address'"
+                             [anyFs]="'./assets/images/user.svg'"></app-img>
 									</div>
 									<div class="block-name">
 										<div class="n">

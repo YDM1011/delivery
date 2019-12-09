@@ -72,7 +72,9 @@
       <div class="address">
         <div class="img">
           <app-img *ngIf="!order.deliveryAddress" [anyFs]="'assets/images/provider.svg'"></app-img>
-          <app-img *ngIf="order.deliveryAddress" [fs]="order.deliveryAddress ? order.deliveryAddress.img : ''" [anyFs]="'assets/images/provider.svg'"></app-img>
+          <app-img *ngIf="order.deliveryAddress" [fs]="order.deliveryAddress ? order.deliveryAddress.img : ''"
+                   [dir]="'address'"
+                   [anyFs]="'assets/images/provider.svg'"></app-img>
         </div>
         <div class="title">
             {{order.deliveryAddress ? order.deliveryAddress.name : translate.t4[language]}}
