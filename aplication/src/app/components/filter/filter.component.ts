@@ -159,6 +159,7 @@ export class FilterComponent implements OnInit {
     const sum = JSON.stringify( {$and: [{price: {$lte: this.priceMax} }, {price: {$gte: this.priceMin}}]});
     const sub = this.sub.length > 0 ? JSON.stringify( {$or: this.sub}) : '';
     const brand = this.brand.length > 0 ? JSON.stringify( {$or: this.brand}) : '';
+    console.log(this.brand);
     this.onFilter.emit((sub ? ',' + sub : '') + (brand ? ',' + brand : '') + (sum ? ',' + sum : '') );
     this.onCopyFilter.emit(
         {
@@ -180,8 +181,14 @@ export class FilterComponent implements OnInit {
   }
   getCheckBrand(e, i) {
     if (!e.checked) {
+      console.log("1",this.brand);
+
       this.brand.splice(i, 1);
-      return; }
-    this.brand.push({brand: e.source.value});
+      console.log("1.1",this.brand);
+
+    } else {
+      console.log("0",this.brand);
+      this.brand.push({brand: e.source.value});
+    }
   }
 }
