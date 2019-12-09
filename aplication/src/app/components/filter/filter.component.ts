@@ -173,16 +173,17 @@ export class FilterComponent implements OnInit {
   priceFilterFunc() {
     // console.log(this.priceMax, this.priceMin);
   }
-  getCheckSub(e, i) {
+  getCheckSub(e, sub) {
     if (!e.checked) {
+      const i = this.crud.find('_id', sub, this.sub );
       this.sub.splice(i, 1);
       return; }
     this.sub.push({subCategory: e.source.value});
   }
-  getCheckBrand(e, i) {
+  getCheckBrand(e, brand) {
     if (!e.checked) {
       console.log("1",this.brand);
-
+      const i = this.crud.find('_id', brand, this.brand );
       this.brand.splice(i, 1);
       console.log("1.1",this.brand);
 
