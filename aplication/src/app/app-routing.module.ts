@@ -52,6 +52,7 @@ const routes: Routes = [
       {path: 'provider/:id', component: ProviderComponent},
       {path: 'provider-all', component: ProviderAllComponent},
       {path: 'product-all', component: ProductAllComponent},
+      {path: 'product-all/:id', component: ProductAllComponent},
       {path: 'my-info', component: MyInfoComponent},
       {path: 'my-address', component: MyAddressComponent},
       {path: 'edit-address/:id', component: EditAddressComponent},

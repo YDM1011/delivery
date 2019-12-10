@@ -154,9 +154,14 @@
       max-width: 90px;
       .title{
         text-align: center;
-        margin-top: 5px;
-        padding: 0;
-        max-width: 60px;
+        padding: 0 4px;
+        padding-top: 34px;
+        padding-bottom: 5px;
+        width: 60px;
+        display: block;
+        border-top: none!important;
+        margin-top: -30px;
+        border-radius: 0 0 23px 23px;
       }
       .svg{
         display: inline-flex;
@@ -174,6 +179,8 @@
           position: relative;
           min-width: 60px;
           height: 60px;
+          z-index: 2;
+          background: #fff;
           img{
             width: 100%;
             height: 100%;
@@ -237,8 +244,14 @@
         max-width: 90px;
         .title{
           text-align: center;
-          margin-top: 5px;
-          padding: 0;
+          padding: 0 4px;
+          padding-top: 34px;
+          padding-bottom: 7px;
+          width: 60px;
+          display: block;
+          border-top: none!important;
+          margin-top: -30px;
+          border-radius: 0 0 23px 23px;
         }
         .svg{
           display: inline-flex;
@@ -256,6 +269,8 @@
             position: relative;
             min-width: 60px;
             height: 60px;
+            z-index: 2;
+            background: #fff;
             img{
               width: 100%;
               height: 100%;
@@ -680,4 +695,20 @@ button:active{
       background-size: cover;
     }
   }
+}
+.brandy-box-item.active .title{
+  background: #3fc7c9;
+  color: #fff;
+  border: 1px solid #F3F3F3;
+  overflow: hidden;
+  word-break: break-all;
+  font-size: 11px;
+}
+.category-box-item.active .title{
+  background: #40cacb;
+  border: 1px solid #F3F3F3;
+  color: #fff;
+  overflow: hidden;
+  word-break: break-all;
+  font-size: 11px;
 }

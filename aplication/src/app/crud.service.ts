@@ -243,9 +243,9 @@ export class CrudService {
     return new Promise((resolve, reject) => {
       this.get('city', '', '').then((v: any) => {
         if (v) {
-          v.map(it => {
-            it["img"] = it.img ? `${this.domain}/upload/${it.img}` : null;
-          });
+          // v.map(it => {
+          //   it["img"] = it.img ? `${this.domain}/upload/${it.img}` : null;
+          // });
           this.city = v;
           resolve(v);
         } else {
@@ -297,7 +297,7 @@ export class CrudService {
       });
     });
   }
-  getTopProduct(p, l) {
+  getTopProduct(p, l, top) {
     const page = p;
     const limit = l;
     return new Promise((resolve, reject) => {
@@ -305,7 +305,7 @@ export class CrudService {
       this.city.links.forEach(it => {
         links.push({cityLink: it});
       });
-      const query = `?query={"$or":${JSON.stringify(links)},"isTop":true}
+      const query = `?query={"$or":${JSON.stringify(links)}${top ? ','+'"isTop"'+':true' : ''}}
       &populate={"path":"companyOwner"}
       &sort={"countBought":-1}&limit=${page}&skip=${limit * page}`;
       this.get('order', '', query).then((v:any) => {

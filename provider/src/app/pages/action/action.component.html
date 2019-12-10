@@ -73,7 +73,7 @@
 						<mat-datepicker #picker></mat-datepicker>
 					</mat-form-field>
 					<mat-form-field class="pik">
-						<input matInput [matDatepicker]="picker2" name="date2" [min]="action.dateStart" [(ngModel)]="action.dateEnd" (focus)="picker2.open()" placeholder="Дата окончания акции" (dateChange)="formCheck()">
+						<input matInput [matDatepicker]="picker2" name="date2" [max]="maxDate" [min]="action.dateStart" [(ngModel)]="action.dateEnd" (focus)="picker2.open()" placeholder="Дата окончания акции" (dateChange)="formCheck()">
 						<mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
 						<mat-datepicker #picker2></mat-datepicker>
 					</mat-form-field>
@@ -185,8 +185,8 @@
 			<div class="table-content" *ngIf="actions && actions.length > 0">
 				<div class="content" *ngIf="loading">
 					<table *ngIf="actions && actions.length > 0" class="table">
-						<tr>
-							<td style="min-width: 200px">Назва</td>
+						<tr class="t-title">
+							<td style="min-width: 200px">Название</td>
 							<td style="min-width: 200px"></td>
 							<td style="min-width: 180px">Дата</td>
 							<td style="min-width: 200px"></td>

@@ -13,6 +13,7 @@ module.exports = class Signup {
     }
 
     async init () {
+        console.log(this.result)
         if (!this.result) {
             return this.res.serverError("Result is undefined");
         }

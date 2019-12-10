@@ -35,12 +35,14 @@
 			<div class="table-content" *ngIf="loading" >
 				<div class="content" *ngIf="products && products.length > 0">
 					<table class="table">
-						<tr>
-							<td style="min-width: 300px">Назва</td>
-							<td style="min-width: 400px">Описание</td>
+						<tr class="t-title">
+							<td>Название</td>
+							<td style="min-width: 300px">Описание</td>
+							<td>Категории <br>Подкатегории</td>
+							<td>Бренд</td>
 							<td style="min-width: 100px">Цена</td>
 							<td style="min-width: 180px">Дата</td>
-							<td style="min-width: 200px"></td>
+							<td></td>
 						</tr>
 						<tr *ngFor="let item of products; let i = index">
 							<td>
@@ -56,6 +58,13 @@
 							<td>
 								{{item.des}}
 							</td>
+              <td>
+                <span *ngIf="item.categoryOwner">{{item.categoryOwner.name}}</span> <br>
+                <span class="subcategory">{{item.subCategory}}</span>
+              </td>
+              <td>
+                <span *ngIf="item.brand">{{item.brand.name}}</span>
+              </td>
 							<td>
 								<div class="pr">
 									<div class="old" [class.active]="item.discount">

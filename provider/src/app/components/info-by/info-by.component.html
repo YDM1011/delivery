@@ -23,9 +23,9 @@
     </div>
   </div>
 </div>
-<table *ngIf="loaded; else loader" class="infoBy">
+<table *ngIf="loaded; else loader" class="infoBy table">
   <ng-container *ngIf="dataPayed.length > 0; else empty">
-    <tr>
+    <tr class="t-title">
       <td>Клиент</td>
       <td>Адрес Торговой точки</td>
       <td>Сумма заказа</td>
@@ -129,7 +129,7 @@
           <div class="products">
             <div class="product">
               <h2>Список продуктов заказа</h2>
-              <table>
+              <table class="table">
                 <tr class="t-title">
                   <td>Имя</td>
                   <td>Описание</td>

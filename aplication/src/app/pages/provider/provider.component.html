@@ -97,7 +97,9 @@
           </a>
         </div>
         <div class="category-box">
-              <a [appScrollSmooth]="catalog" class="category-box-item" *ngFor="let category of company.categories" (click)="activeCategory(category._id)">
+              <div [appScrollSmooth]="catalog" class="category-box-item" *ngFor="let category of company.categories"
+                   [class.active]="activeCategoryId === category._id && showCategory"
+                   (click)="activeCategory(category._id)">
                 <ng-container *ngIf="category.mainCategory">
                   <div class="svg">
                     <div class="img">
@@ -108,7 +110,7 @@
                     {{category.name}}
                   </div>
                 </ng-container>
-              </a>
+              </div>
         </div>
       </div>
   </ng-container>
@@ -125,7 +127,9 @@
       <div class="brandy-box">
         <ng-container *ngFor="let brand of company.brands">
             <ng-container *ngIf="brand">
-              <a [appScrollSmooth]="catalog" class="brandy-box-item"  (click)="activeBrands(brand._id)">
+              <div [appScrollSmooth]="catalog" class="brandy-box-item"
+                   [class.active]="activeBrandsId === brand._id && showBrands"
+                   (click)="activeBrands(brand._id)">
                 <div class="svg">
                   <div class="img">
                     <app-img [dir]="'product'" [fs]="brand.img ? brand.img : ''" [anyFs]="'assets/images/brand.svg'"></app-img>
@@ -134,7 +138,7 @@
                 <div class="title">
                   {{brand.name}}
                 </div>
-              </a>
+              </div>
             </ng-container>
         </ng-container>
       </div>

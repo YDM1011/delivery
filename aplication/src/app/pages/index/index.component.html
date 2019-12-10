@@ -132,9 +132,15 @@
   <div class="empty" *ngIf="topProduct && !toggleMain && topProduct.length === 0">
     {{translate.emptyTop[language]}}
   </div>
-  <a routerLink="/{{language}}/product-all" class="index-all" *ngIf="!toggleMain">
-    {{translate.allProducts[language]}}
-  </a>
+  <div class="btn-wrap" *ngIf="!toggleMain">
+    <a routerLink="/{{language}}/product-all/all" class="index-all">
+      {{translate.allProducts[language]}}
+    </a>
+    <a routerLink="/{{language}}/product-all/top" class="index-all">
+      {{translate.allTopProducts[language]}}
+    </a>
+  </div>
+
 </div>
 
 <ng-template #preloadCat>

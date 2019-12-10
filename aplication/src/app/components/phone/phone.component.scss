@@ -30,14 +30,14 @@
     position: relative;
   }
   input{
-    width: 43px;
+    width: 33px;
     font-size: 18px;
     line-height: 22px;
     &:nth-of-type(2){
-      width: 43px;
+      width: 40px;
     }
     &:nth-of-type(3){
-      width: 138px;
+      width: 50px;
     }
   }
 }

@@ -5,18 +5,23 @@
 	<div class="contain__group"  *ngIf="addShow">
 		<div class="contain__group-header">
 			<div class="title">
-				Создать категорию
+				Добавить категорию
 			</div>
 		</div>
 		<form class="add-section" (submit)="create($event)">
 			<ng-container *ngIf="mainCategoryChoose; else emptyGlobal">
-				<mat-form-field class="example-full-width">
-					<input matInput type="text" placeholder="Категория" name="name" [(ngModel)]="category.name" autocomplete="off">
-				</mat-form-field>
+				<div>
+          <ng-container *ngFor="let category of categoryArr">
+            <div class="ships" (click)="remCategory(category)" *ngIf="category">
+              <span>{{category.name}}</span>
+              <span class="chips-close"></span>
+            </div>
+          </ng-container>
+        </div>
 				<mat-form-field>
 					<mat-label>Главная категория</mat-label>
 					<mat-select [(value)]="mainCategoryChoose">
-						<mat-option *ngFor="let item of mainCategory" [value]="item._id">
+						<mat-option *ngFor="let item of mainCategory" [value]="item._id" (click)="addCategory(item)" >
 							{{item.name}}
 						</mat-option>
 					</mat-select>
@@ -33,34 +38,34 @@
 		</form>
 	</div>
 	
-	<div class="contain__group"  *ngIf="editShow">
-		<div class="contain__group-header">
-			<div class="title">
-				Редактировать категорию
-			</div>
-		</div>
-		<form (submit)="confirmEditCategoryCrud($event)" (keyup)="formCheck()" class="edit-section" *ngIf="editShow">
-			<mat-form-field class="example-full-width">
-				<input matInput type="text" placeholder="Категория" name="name" [(ngModel)]="editObj.name" autocomplete="off">
-			</mat-form-field>
-			<mat-form-field>
-				<mat-label>Главная категория</mat-label>
-				<mat-select [(value)]="mainCategoryChoose" (selectionChange)="selectValid()">
-					<mat-option *ngFor="let item of mainCategory" [value]="item._id">
-						{{item.name}}
-					</mat-option>
-				</mat-select>
-			</mat-form-field>
-			<div class="group-buttons">
-				<div class="left">
-				</div>
-				<div class="right">
-					<button class="main-button" type="reset" (click)="cancelEdit()">Отмена</button>
-					<button class="main-button-color" type="submit"  *ngIf="isBlok">Сохранить</button>
-				</div>
-			</div>
-		</form>
-	</div>
+	<!--<div class="contain__group"  *ngIf="editShow">-->
+		<!--<div class="contain__group-header">-->
+			<!--<div class="title">-->
+				<!--Редактировать категорию-->
+			<!--</div>-->
+		<!--</div>-->
+		<!--<form (submit)="confirmEditCategoryCrud($event)" (keyup)="formCheck()" class="edit-section" *ngIf="editShow">-->
+			<!--<mat-form-field class="example-full-width">-->
+				<!--<input matInput type="text" placeholder="Категория" name="name" [(ngModel)]="editObj.name" autocomplete="off">-->
+			<!--</mat-form-field>-->
+			<!--<mat-form-field>-->
+				<!--<mat-label>Главная категория</mat-label>-->
+				<!--<mat-select [(value)]="mainCategoryChoose" (selectionChange)="selectValid()">-->
+					<!--<mat-option *ngFor="let item of mainCategory" [value]="item._id">-->
+						<!--{{item.name}}-->
+					<!--</mat-option>-->
+				<!--</mat-select>-->
+			<!--</mat-form-field>-->
+			<!--<div class="group-buttons">-->
+				<!--<div class="left">-->
+				<!--</div>-->
+				<!--<div class="right">-->
+					<!--<button class="main-button" type="reset" (click)="cancelEdit()">Отмена</button>-->
+					<!--<button class="main-button-color" type="submit"  *ngIf="isBlok">Сохранить</button>-->
+				<!--</div>-->
+			<!--</div>-->
+		<!--</form>-->
+	<!--</div>-->
 	
 	<div class="contain__group">
 		<div class="contain__group-header">
@@ -68,7 +73,7 @@
 				Все категории
 			</div>
 			<button class="button-add" (click)="openAdd()">
-				<span class="content">Создать категорию</span>
+				<span class="content">Добавить категорию</span>
 			</button>
 		</div>
 		<ng-container *ngIf="loading">
@@ -77,18 +82,31 @@
 				<div class="table-content" *ngIf="categorys && categorys.length > 0">
 					<div class="content" *ngIf="loading">
 						<table *ngIf="categorys && categorys.length > 0" class="table">
-							<tr>
-								<td style="min-width: 200px">Назва</td>
-								<td style="min-width: 200px"></td>
+							<tr class="t-title">
+								<td style="min-width: 200px">Название</td>
+								<td>Подкатегории</td>
+								<td>Бренды</td>
 								<td style="min-width: 180px">Дата</td>
-								<td style="min-width: 200px"></td>
+								<td ></td>
 							</tr>
 							<tr *ngFor="let item of categorys; let i = index">
 								<td>
 									{{item.name}}
 								</td>
-								<td>
-								</td>
+                <td>
+                  <ng-container *ngIf="item.mainCategory.subCategory && item.mainCategory.subCategory.length>0">
+                  <span *ngFor="let sub of item.mainCategory.subCategory">
+                    {{sub}}
+                  </span>
+                  </ng-container>
+                </td>
+                <td>
+                  <ng-container *ngIf="item.mainCategory.brands && item.mainCategory.brands.length>0">
+                  <span *ngFor="let brand of item.mainCategory.brands">
+                    {{brand.name}}
+                  </span>
+                  </ng-container>
+                </td>
 								<td>
 									<div class="date">
 										<div class="top-table-date">
@@ -101,7 +119,6 @@
 								</td>
 								<td>
 									<div class="buttons-edit">
-										<span class="edit-btn" (click)="edit(i)" appScrollTop></span>
 										<span class="trash-btn" (click)="delete(i)"></span>
 									</div>
 								</td>

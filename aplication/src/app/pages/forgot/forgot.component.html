@@ -4,6 +4,7 @@
 			<h3>
 				{{translate.title[language]}}
 			</h3>
+      <p>Введите номер телефона для получения смс</p>
 			<form (submit)="phone($event)" class="form">
 				<app-phone (phone)="objLogin['login'] = $event"></app-phone>
 				<button type="submit" class="main-button-bold">
@@ -20,7 +21,7 @@
 			<h3>
 				{{translate.title[language]}}
 			</h3>
-			<form (submit)="confirm($event)">
+			<form (submit)="confirm($event)" class="form-forgot">
 				<input type="text" [placeholder]="translate.input[language]" name="confirm" [(ngModel)]="objConfirm.smsCode">
 				<input type="password" [placeholder]="translate.pass[language]" name="confirm" [(ngModel)]="objConfirm.pass">
 				<button type="submit" class="main-button-bold">

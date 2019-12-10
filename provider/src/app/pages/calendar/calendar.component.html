@@ -2,10 +2,10 @@
 <mat-form-field class="example-full-width">
   <input type="text" placeholder="Для поиска клиента введите имя или телефон" aria-label="Number" name="inputSearch" matInput [(ngModel)]="inputChange" (keyup)="change()">
 </mat-form-field>
-<table *ngIf="loaded; else loader" class="infoBy">
+<table *ngIf="loaded; else loader" class="infoBy table">
 
   <ng-container *ngIf="dataPayed.length > 0; else empty">
-    <tr>
+    <tr class="t-title">
       <td>Клиент</td>
       <td>Заказов</td>
       <td>Последняя покупка</td>

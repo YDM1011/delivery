@@ -93,7 +93,7 @@
 							<div class="content" *ngIf="loading">
 								<ng-container>
 									<table class="table">
-										<tr>
+										<tr class="t-title">
 											<td style="min-width: 200px">Название точки</td>
 											<td style="min-width: 200px">Адресс</td>
 											<td style="min-width: 200px">Долг и номер заказа</td>
@@ -206,7 +206,7 @@
 			<div class="table-content" *ngIf="searchArr.length===0">
 				<div class="content" *ngIf="loading">
 					<table *ngIf="debtors && debtors.length > 0" class="table">
-						<tr>
+						<tr class="t-title">
 							<td style="min-width: 200px">Адрес</td>
 							<td style="min-width: 200px">Долг и номер заказа</td>
 							<td style="min-width: 180px">Дата</td>

@@ -12,3 +12,18 @@ table{
 .example-full-width{
   width:  100%;
 }
+.status.error{
+  position: absolute;
+  top: 38px;
+  z-index: 222;
+  font-size: 11px;
+  color: #f33;
+}
+.form-pass .main-button-color{
+  margin-left: auto;
+}
+.form-pass{
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}

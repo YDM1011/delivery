@@ -7,14 +7,15 @@
 
 <div class="other-pages">
   <div class="city-box">
-    <div class="city-item" *ngFor="let item of city; let index = index;" (click)="changeCity(index)">
-      <ng-container *ngIf="item.img; else cityIcon">
-        <img src="{{item.img}}" alt="{{item.name}}">
-      </ng-container>
-      <div class="title">
+    <div class="city-item category-item" *ngFor="let item of city; let index = index;" (click)="changeCity(index)">
+      <div class="img category-img" *ngIf="item.img; else cityIcon">
+        <app-img  [fs]="item.img"></app-img>
+      </div>
+      <div class="name">
         {{item.name | trans:language}}
       </div>
     </div>
+
 <!--    <a routerLink="/{{language}}/other-city" class="city-item">-->
 <!--      <ng-container *ngTemplateOutlet="cityIcon"></ng-container>-->
 <!--      {{translate.other[language]}}-->

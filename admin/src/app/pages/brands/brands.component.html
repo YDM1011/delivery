@@ -73,28 +73,27 @@
 			<div class="main-section">
 				<div class="table" *ngIf="brands && brands.length > 0">
 					<app-search-filter [inputApi]="'brand'" [inputQuery]="'name'" (output)="outputSearch($event)"></app-search-filter>
-					<div class="table-content">
-						<div class="row-h">
-							<div class="col">
-								Назва
-							</div>
-							<div class="col">
-							</div>
-							<div class="col">
+					<table class="table">
+						<tr class="t-title">
+							<td>
+                Название
+							</td>
+							<td>
 								Дата
-							</div>
-							<div class="col">
-							</div>
-						</div>
-						<div class="row-r" *ngFor="let item of brands; let index = index">
-							<div class="col">
+							</td>
+							<td>
+							</td>
+						</tr>
+						<tr class="row-r" *ngFor="let item of brands; let index = index">
+							<td>
+                <div class="col">
 								<div class="img">
 									<app-img [fs]="item.img" [dir]="'product'"></app-img>
 								</div>
 								{{item.name}}
-							</div>
-							<div class="col"></div>
-							<div class="col">
+                </div>
+							</td>
+							<td>
 								<div class="date">
 									<div class="top-table-date">
 										{{item.date | date: 'dd MMMM, yyyy'  : null : defLang}}
@@ -103,13 +102,15 @@
 										{{item.date | date: 'HH:mm'  : null : defLang}}
 									</div>
 								</div>
-							</div>
-							<div class="col">
+							</td>
+							<td>
+                <div class="col jcc">
 								<span class="edit-btn" (click)="edit(index)" appScrollTop></span>
 								<span class="trash-btn" (click)="delete(index)"></span>
-							</div>
-						</div>
-					</div>
+                </div>
+							</td>
+						</tr>
+					</table>
 					<mat-paginator [length]="lengthPagination"
 					               [pageSize]="pageSizePagination"
 					               [pageSizeOptions]="pageSizeOptionsPagination"

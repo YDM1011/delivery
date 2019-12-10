@@ -60,38 +60,42 @@
 			<div class="main-section">
 				<div class="table">
 					<app-search-filter [inputApi]="'company'" [inputQuery]="'name'" (output)="outputSearch($event)"></app-search-filter>
-					<div class="table-content">
-						<div class="row-h">
-							<div class="col">
-								Назва
-							</div>
-							<div class="col">
+					<table class="table">
+						<tr class="row-h t-title">
+							<td>
+                Название
+							</td>
+							<td>
 								Статус
-							</div>
-							<div class="col">
+							</td>
+							<td>
 								Подписка
-							</div>
-							<div class="col">
-							</div>
-						</div>
+							</td>
+							<td>
+							</td>
+						</tr>
             <ng-container  *ngFor="let item of list; let index = index" >
-						<div class="row-r"  *ngIf="item">
-							<div class="col" [routerLink]="'/provider-detail/'+item._id">
+						<tr class="row-r"  *ngIf="item">
+							<td [routerLink]="'/provider-detail/'+item._id">
+                <div class="col">
 								<div class="img">
 									<img src="./assets/images/user.svg" alt="" *ngIf="item.img == ''">
 									<app-img [fs]="item.img" *ngIf="item.img && item.img !== ''"></app-img>
 								</div>
-								{{item.name}}
-							</div>
-							<div class="col">
+                  <div>
+                    {{item.name}}
+                  </div>
+                </div>
+							</td>
+							<td>
 								<ng-container *ngIf="item && item.verify">
 									Активен
 								</ng-container>
 								<ng-container *ngIf="item && !item.verify">
 									Не активен
 								</ng-container>
-							</div>
-							<div class="col">
+							</td>
+							<td>
 								<div class="date">
                   <ng-container *ngIf="item.payedAt; else noPay">
                     <div class="top-table-date">
@@ -105,14 +109,16 @@
                     <span class="status error">Неоплачено</span>
                   </ng-template>
 								</div>
-							</div>
-							<div class="col">
+							</td>
+							<td>
+                <div class="col jcc">
 								<button class="main-button-color red" (click)="verifyCompany($event, false, item._id, index)" *ngIf="item && item.verify">Выключить</button>
 								<button class="main-button-color" (click)="verifyCompany($event, true, item._id, index)" *ngIf="item && !item.verify">Включить</button>
-							</div>
-						</div>
+                </div>
+              </td>
+						</tr>
             </ng-container>
-					</div>
+					</table>
 					<mat-paginator [length]="lengthPagination"
 					               [pageSize]="pageSizePagination"
 					               [pageSizeOptions]="pageSizeOptionsPagination"

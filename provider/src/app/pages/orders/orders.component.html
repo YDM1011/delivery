@@ -44,7 +44,8 @@
 			<div class="table-container">
 				<div class="content" *ngIf="loading">
 					<table *ngIf="orders && orders.length > 0" class="table">
-						<tr>
+						<tr class="t-title">
+							<td>№</td>
 							<td style="min-width: 200px">Имя</td>
 							<td style="min-width: 200px">Адрес доставки</td>
 							<td style="min-width: 70px" *ngIf="activePage === 2">Отзыв</td>
@@ -53,6 +54,7 @@
 							<td style="min-width: 200px"></td>
 						</tr>
 						<tr [routerLink]="'/orders-detail/' + item._id" *ngFor="let item of orders; let i = index">
+              <td>{{item.basketNumber}}</td>
 							<td [matTooltip]="item.deliveryAddress ? item.deliveryAddress.name : 'Название не извесно'">
 								<div class="name">
 									<div class="img">

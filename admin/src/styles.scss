@@ -1,6 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
 @import "assets/style";
+@import "./assets/css/popup";
 @font-face {
   font-family: 'Montserrat-Bold';
   src: url('./assets/fonts/Montserrat-Bold.ttf') format('ttf'),
@@ -32,4 +33,59 @@
   src: local('Montserrat-Regular');
   font-weight: normal;
   font-style: normal;
+}
+.table {
+  width: 100%;
+  border-radius: 5px;
+  overflow: hidden;
+}
+.table td+td{
+  border-left: 1px solid #DADADA;
+}
+.table .t-title {
+  border-radius: 5px 5px 0 0;
+}
+.table .t-title td{
+  color: #fff;
+  background: #009688;
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+.table tr+tr{
+  //border-bottom: 2px solid #ececec;
+  border-top: 1px solid #DADADA;
+}
+.table tr td {
+  text-align: center;
+  padding: 15px 15px;
+}
+.table {
+  width: 100%;
+  margin-top: 20px;
+  border-collapse: collapse;
+}
+.table tr {
+  border-bottom: 1px solid #DFE0EB;
+  width: 100%;
+}
+
+.col{
+  display: flex;
+  align-items: center;
+}
+.jcc > * {
+  margin-right: 8px;
+}
+.jcc {
+  justify-content: center;
+}
+.table .img {
+  width: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-right: 10px;
 }

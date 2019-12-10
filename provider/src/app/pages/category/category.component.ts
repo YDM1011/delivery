@@ -14,6 +14,7 @@ export class CategoryComponent implements OnInit {
   public pageSizeOptionsPagination: number[] = [5, 10, 15];
   public mainCategoryChoose = null;
   public mainCategory;
+  public categoryArr = [];
   public user;
   public defLang = 'ru-UA';
   public isBlok = false;
@@ -27,12 +28,12 @@ export class CategoryComponent implements OnInit {
     name: '',
     mainCategory: '',
   };
-  public category = {
-    name: '',
-    companyOwner: '',
-    orders: [],
-    mainCategory: '',
-  };
+  // public category = {
+  //   name: '',
+  //   companyOwner: '',
+  //   orders: [],
+  //   mainCategory: '',
+  // };
 
   constructor(
       private crud: CrudService,
@@ -54,7 +55,9 @@ export class CategoryComponent implements OnInit {
         this.crud.get(`category/count?query={"companyOwner": "${this.user.companyOwner._id}"}`).then((count: any) => {
           if (count) {
             this.lengthPagination = count.count;
-            this.crud.get(`category?query={"companyOwner": "${this.user.companyOwner._id}"}&sort={"date":-1}&skip=0&limit=${this.pageSizePagination}`).then((c: any) => {
+            this.crud.get(`category?query={"companyOwner": "${this.user.companyOwner._id}"}
+            &populate={"path":"mainCategory", "populate":{"path":"brands", "select":"name"}}
+            &sort={"date":-1}&skip=0&limit=${this.pageSizePagination}`).then((c: any) => {
               if (c) {
                 this.categorys = c;
                 this.loading = true;
@@ -68,40 +71,24 @@ export class CategoryComponent implements OnInit {
 
   create(e) {
     e.preventDefault();
-    if (this.category.name === '') {
-      Swal.fire('Error', 'Название категории не может быть пустым', 'error');
-      return;
-    }
-    if (!this.mainCategoryChoose) {
-      Swal.fire('Error', 'Выберете к какой категории относится ваша категория', 'error');
-      return;
-    }
-    this.category.name.trim();
-    this.category.name = this.category.name.trim();
-    this.category.mainCategory = this.mainCategoryChoose;
-    this.category.companyOwner = this.user.companyOwner._id;
-    this.crud.post('category', this.category).then((v: any) => {
-      if (v) {
-        this.categorys.unshift(v);
-        this.category = {
-          name: '',
-          companyOwner: '',
-          orders: [],
-          mainCategory: '',
-        };
-        this.mainCategoryChoose = null;
-        this.addShow = false;
-        this.crud.get(`category/count?query={"companyOwner": "${this.user.companyOwner._id}"}`).then((count: any) => {
-          if (count) {
-            this.lengthPagination = count.count;
-          }
-        });
-      }
-    }).catch((error) => {
-      if (error.error.code === 11000) {
-        Swal.fire('Error', 'Категория с таким названием уже создана!', 'error');
-      }
-    });
+    this.categoryArr.forEach(it=>{
+      this.crud.post('category', {
+        name: it.name.trim(),
+        mainCategory: it._id,
+        companyOwner: this.user.companyOwner._id
+      }).then((v: any) => {
+        if (v) {
+          this.categorys.unshift(v);
+          this.addShow = false;
+        }
+      }).catch((error) => {
+        if (error.error.code === 11000) {
+          Swal.fire('Error', 'Категория с таким названием уже создана!', 'error');
+        }
+      });
+    })
+    this.categoryArr = []
+
   }
 
   delete(i) {
@@ -116,13 +103,7 @@ export class CategoryComponent implements OnInit {
       }
     });
   }
-  edit(i) {
-    this.editObj = Object.assign({}, this.categorys[i]);
-    this.editObjCopy = Object.assign({}, this.categorys[i]);
-    this.mainCategoryChoose = this.editObj.mainCategory;
-    this.addShow = false;
-    this.editShow = true;
-  }
+
   confirmEditCategoryCrud(e) {
     e.preventDefault();
     if (this.editObj.name === '') {
@@ -179,21 +160,9 @@ export class CategoryComponent implements OnInit {
   cancelAdd() {
     this.addShow = false;
     this.mainCategoryChoose = this.mainCategory[0]._id;
-    this.category = {
-      name: '',
-      companyOwner: '',
-      orders: [],
-      mainCategory: '',
-    };
+    this.categoryArr = []
   }
-  cancelEdit() {
-    this.editShow = false;
-    this.isBlok = false;
-    this.editObj = {
-      name: '',
-      mainCategory: '',
-    };
-  }
+
   outputSearch(e) {
     if (!e) {
       this.crud.get(`category?query={"companyOwner": "${this.user.companyOwner._id}"}&skip=0&limit=${this.pageSizePagination}`).then((c: any) => {
@@ -213,5 +182,18 @@ export class CategoryComponent implements OnInit {
       this.categorys = c;
       this.loading = true;
     });
+  }
+  addCategory(e){
+    console.log(this.crud.find('_id', e._id, this.categoryArr ), e);
+    let i = this.crud.find('_id', e._id, this.categoryArr )
+    if (i>-1){
+      this.categoryArr.splice(i, 1);
+    } else {
+      this.categoryArr.push(e);
+    }
+  }
+  remCategory(e){
+    let i = this.crud.find('_id', e._id, this.categoryArr )
+    this.categoryArr.splice(i, 1);
   }
 }

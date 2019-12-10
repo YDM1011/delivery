@@ -44,29 +44,32 @@
 			<div class="main-section">
 				<div class="table">
 					<app-search-filter [inputApi]="'client'" [inputQuery]="'login'" [role]="'admin'" (output)="outputSearch($event)"></app-search-filter>
-					<div class="table-content">
-						<div class="row-h">
-							<div class="col">
-								Назва
-							</div>
-							<div class="col">
-							</div>
-							<div class="col">
+					<table class="table" *ngIf="list && list.length>0">
+						<tr class="row-h t-title">
+							<td>
+                Название
+							</td>
+							<td>
 								Дате
-							</div>
-							<div class="col">
-							</div>
-						</div>
-						<div class="row-r" *ngFor="let item of list; let index = index">
-							<div class="col">
+							</td>
+							<td>
+							</td>
+						</tr>
+						<tr class="row-r" *ngFor="let item of list; let index = index">
+							<td>
+                <div class="col">
 								<div class="img">
 									<img src="./assets/images/user.svg" alt="" *ngIf="!item.img || item.img == ''">
 									<app-img [fs]="item.img" *ngIf="item.img && item.img !== ''"></app-img>
 								</div>
-								{{item.login}}
-							</div>
-							<div class="col"></div>
-							<div class="col">
+                <div>
+                  {{item.name}} <br>
+                  {{item.login}}
+                </div>
+
+                </div>
+							</td>
+							<td>
 								<div class="date">
 									<div class="top-table-date">
 										{{item.date | date: 'dd MMMM, yyyy'  : null : defLang}}
@@ -75,12 +78,14 @@
 										{{item.date | date: 'HH:mm'  : null : defLang}}
 									</div>
 								</div>
-							</div>
-							<div class="col">
+							</td>
+							<td>
+                <div class="col jcc">
 								<span class="trash-btn" (click)="delete(index)"></span>
-							</div>
-						</div>
-					</div>
+                </div>
+							</td>
+						</tr>
+					</table>
 					
 					<mat-paginator [length]="lengthPagination"
 					               [pageSize]="pageSizePagination"

@@ -117,21 +117,21 @@ schem.post('save', (doc, next)=>{
             next()
         })
 });
-schem.post('save', (doc, next)=>{
-    const key = doc.name;
-    const translator = mongoose.model('Translator');
-    translator.findOne({value: key}).exec((e,r)=>{
-        if (e) return next(e);
-        if (!r) {
-            translator.create({value: key}, (e,r)=>{
-                if (e) return next(e);
-                next()
-            })
-        } else {
-            next()
-        }
-    });
-});
+// schem.post('save', (doc, next)=>{
+//     const key = doc.name;
+//     const translator = mongoose.model('Translator');
+//     translator.findOne({value: key}).exec((e,r)=>{
+//         if (e) return next(e);
+//         if (!r) {
+//             translator.create({value: key}, (e,r)=>{
+//                 if (e) return next(e);
+//                 next()
+//             })
+//         } else {
+//             next()
+//         }
+//     });
+// });
 
 schem.post('findOneAndRemove', (doc,next) => {
     mongoose.model('Company')

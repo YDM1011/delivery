@@ -45,29 +45,43 @@
 			<div class="main-section">
 				<div class="table">
 					<app-search-filter [inputApi]="'client'" [inputQuery]="'login'" [role]="'client'" (output)="outputSearch($event)"></app-search-filter>
-					<div class="table-content">
-						<div class="row-h">
-							<div class="col">
-								Назва
-							</div>
-							<div class="col">
-							</div>
-							<div class="col">
+					<table class="table-content table">
+						<tr class="row-h t-title">
+							<td>
+                Название
+              </td>
+							<td>
+                Блокирован
+							</td>
+							<td>
+                Номер подтвержден
+							</td>
+							<td>
 								Дата
-							</div>
-							<div class="col">
-							</div>
-						</div>
-						<div class="row-r" *ngFor="let item of list; let index = index">
-							<div class="col">
-								<div class="img">
-									<img src="./assets/images/user.svg" alt="" *ngIf="!item.img || item.img == ''">
-									<app-img [fs]="item.img" *ngIf="item.img && item.img !== ''"></app-img>
-								</div>
-								{{item.login}}
-							</div>
-							<div class="col"></div>
-							<div class="col">
+							</td>
+							<td>
+							</td>
+						</tr>
+						<tr class="row-r" *ngFor="let item of list; let index = index">
+							<td>
+                <div class="col">
+                  <div class="img">
+                    <img src="./assets/images/user.svg" alt="" *ngIf="!item.img || item.img == ''">
+                    <app-img [fs]="item.img" [dir]="'avatar'" *ngIf="item.img && item.img !== ''"></app-img>
+                  </div>
+                  <div>
+                    {{item.name}} <br>
+                    {{item.mobile ? item.mobile : item.login}}
+                  </div>
+                </div>
+							</td>
+              <td>
+                <mat-slide-toggle [checked]="item.banned" (toggleChange)="banned(item)"></mat-slide-toggle>
+              </td>
+              <td>
+                <mat-slide-toggle [checked]="item.verify" (toggleChange)="verify(item)"></mat-slide-toggle>
+              </td>
+							<td>
 								<div class="date">
 									<div class="top-table-date">
 										{{item.date | date: 'dd MMMM, yyyy'  : null : defLang}}
@@ -76,11 +90,14 @@
 										{{item.date | date: 'HH:mm'  : null : defLang}}
 									</div>
 								</div>
-							</div>
-							<div class="col">
-							</div>
-						</div>
-					</div>
+							</td>
+							<td>
+                <div class="col jcc">
+                <span class="edit-btn" (click)="edit(item)" appScrollTop></span>
+                </div>
+							</td>
+						</tr>
+					</table>
 					
 					<mat-paginator [length]="lengthPagination"
 					               [pageSize]="pageSizePagination"
@@ -96,3 +113,30 @@
 		</ng-container>
 	</div>
 </div>
+
+<ng-container *ngIf="clientEdit">
+<div class="popup"  appPopup (onClose)="close()">
+  <div class="content">
+    <br><br><br>
+    <div class="cancel cansel-popup-btn">
+      <svg fill="none" height="15" viewBox="0 0 15 15" width="15" xmlns="http://www.w3.org/2000/svg"><path _ngcontent-ltd-c12="" d="M14.8221 13.9619L8.36014 7.49995L14.822 1.03809C15.0595 0.800639 15.0595 0.41559 14.822 0.17811C14.5845 -0.0593701 14.1995 -0.0593701 13.962 0.17811L7.50016 6.63997L1.03825 0.17811C0.800798 -0.0593701 0.41575 -0.0593701 0.17827 0.17811C-0.0592098 0.415561 -0.0592098 0.80061 0.17827 1.03809L6.64015 7.49995L0.17827 13.9619C-0.0592098 14.1993 -0.0592098 14.5844 0.17827 14.8218C0.415721 15.0593 0.800769 15.0593 1.03825 14.8218L7.50016 8.35993L13.9621 14.8218C14.1995 15.0593 14.5846 15.0593 14.8221 14.8218C15.0595 14.5844 15.0595 14.1993 14.8221 13.9619Z" fill="black"></path></svg>
+    </div>
+    <form class="form form-pass" (submit)="saveClient()">
+      <mat-form-field class="example-full-width">
+        <input matInput placeholder="ФИО" name="name" [(ngModel)]="clientEdit.name" autocomplete="off">
+      </mat-form-field>
+      <mat-form-field class="example-full-width">
+        <input matInput placeholder="Тел." name="mobile" [(ngModel)]="clientEdit.mobile" autocomplete="off">
+      </mat-form-field>
+      <button type="submit" class="main-button-color">Сохранить</button>
+    </form>
+    <div class="form-pass">
+      <mat-form-field class="example-full-width">
+        <input matInput placeholder="Пароль" name="password" (keyup)="passErr = ''" [(ngModel)]="newPass" autocomplete="off">
+      </mat-form-field>
+      <p class="status error" *ngIf="passErr">{{passErr}}</p>
+      <button type="button" class="main-button-color" (click)="savePass()">Сохранить</button>
+    </div>
+  </div>
+</div>
+</ng-container>

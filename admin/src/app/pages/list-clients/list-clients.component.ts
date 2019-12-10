@@ -16,7 +16,10 @@ export class ListClientsComponent implements OnInit {
   public defLang = 'ru-UA';
   public addShow = false;
 
+  public clientEdit;
   public list = [];
+  public newPass;
+  public passErr;
   public client = {
     name: '',
     login: '',
@@ -88,5 +91,42 @@ export class ListClientsComponent implements OnInit {
       }
       this.list = l;
     });
+  }
+  saveClient(){
+    console.log(this.clientEdit);
+    this.crud.post('client',
+      {name: this.clientEdit.name, mobile: this.clientEdit.mobile},
+      this.clientEdit._id).then(v=>{
+      this.clientEdit = ''
+    })
+  }
+  savePass(){
+    if (this.newPass.length < 6) {
+      this.passErr = "Пароль менее 6 символов!";
+      return
+    }
+    this.crud.post('changePass', {pass:this.newPass,_id:this.clientEdit._id}).then(v=>{
+      if (v) {
+        this.newPass = '';
+      }
+    }).catch(e=>{console.log(e)})
+  }
+  edit(data){
+    this.clientEdit = data
+  }
+  close(){
+    this.clientEdit = '';
+  }
+  banned(data){
+    data.banned = !data.banned;
+    this.crud.post('client', {banned:data.banned}, data._id, false).then(v=>{
+
+    }).catch(e=>{console.log(e)})
+  }
+  verify(data){
+    data.verify = !data.verify;
+    this.crud.post('client', {verify:data.verify}, data._id, false).then(v=>{
+
+    }).catch(e=>{console.log(e)})
   }
 }

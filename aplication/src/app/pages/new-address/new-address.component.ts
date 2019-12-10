@@ -41,7 +41,7 @@ export class NewAddressComponent implements OnInit {
     },
     input: {
       ru: 'Название торговой точки',
-      ua: 'Назва торгової точки'
+      ua: 'Название торгової точки'
     },
     city: {
       ru: 'Город',

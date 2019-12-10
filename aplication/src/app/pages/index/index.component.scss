@@ -131,3 +131,11 @@ width: 100%;
   font-size: 14px;
   margin-top: 15px;
 }
+.btn-wrap > *{
+  margin: 5px;
+}
+.btn-wrap {
+  display: flex;
+  margin-top: 30px;
+  justify-content: center;
+}

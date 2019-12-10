@@ -32,6 +32,8 @@ export class ActionComponent implements OnInit {
   public editObjCopy;
   public inputChange;
   public uploadObj;
+  public maxDate;
+  public initPic2;
   public indexTab:number;
   public editObj = {
     name: '',
@@ -90,6 +92,15 @@ export class ActionComponent implements OnInit {
         });
       }
     });
+    this.initPic()
+    console.log(this.action.dateStart)
+  }
+  initPic(){
+    // console.log("REINIT")
+    // this.initPic2 = false;
+    this.maxDate = new Date(new Date(this.action.dateStart).getTime() + 1000*60*60*24*7);
+    // this.initPic2 = true
+
   }
   checkAccess(){
     const date = new Date();
@@ -251,6 +262,7 @@ export class ActionComponent implements OnInit {
     if (this.editObj.client.length !== this.editObjCopy.client.length) {
       this.btnBlok(true);
     }
+    this.initPic()
   }
   openAdd() {
     this.addShow = !this.addShow;

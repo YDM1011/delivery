@@ -22,17 +22,17 @@ export class PhoneComponent implements OnInit {
   ngOnInit() {
     if (this.number) {
       this.mainPhone = this.number;
-      this.firstModel = this.number.slice(0, 3);
-      this.secondModel = this.number.slice(3, 6);
-      this.thirdModel = this.number.slice(6, 10);
-      this.phoneNumber = '+38' + this.firstModel + this.secondModel  + this.thirdModel;
+      this.firstModel = this.number.slice(0, 2);
+      this.secondModel = this.number.slice(2, 5);
+      this.thirdModel = this.number.slice(5, 9);
+      this.phoneNumber = '+380' + this.firstModel + this.secondModel  + this.thirdModel;
     }
   }
   splitPhone() {
-    this.firstModel = this.mainPhone.slice(0, 3);
-    this.secondModel = this.mainPhone.slice(3, 6);
-    this.thirdModel = this.mainPhone.slice(6, 10);
-    this.phoneNumber = '+38' + this.firstModel + this.secondModel  + this.thirdModel;
+    this.firstModel = this.mainPhone.slice(0, 2);
+    this.secondModel = this.mainPhone.slice(2, 5);
+    this.thirdModel = this.mainPhone.slice(5, 9);
+    this.phoneNumber = '+380' + this.firstModel + this.secondModel  + this.thirdModel;
     this.phone.emit(this.phoneNumber);
   }
   // keyPressFirst() {

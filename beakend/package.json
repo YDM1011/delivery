@@ -53,6 +53,7 @@
     "sharp": "^0.23.1",
     "speakeasy": "^2.0.0",
     "swig": "^1.4.2",
+    "tunnel-ssh": "^4.1.4",
     "underscore": "^1.9.1",
     "util": "^0.11.1",
     "web-push": "^3.3.5",

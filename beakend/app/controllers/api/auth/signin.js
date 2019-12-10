@@ -20,16 +20,16 @@ module.exports = (backendApp, router) => {
                 $or:[
                     {login: req.body.login.toLowerCase()}
                 ]
-            }, {verify:true}],
+            }, {verify:true}, {banned: false}],
         }).exec(function (err, user) {
             if (err) return res.serverError(err);
             if (!user) return res.notFound("Password or login invalid!");
             if ((user.role == 'Client' && req.body.role === 'client') || !user.role){
-                if (user.pass != md5(req.body.pass)) return res.notFound("Password or login invalid!");
+                if (user.pass != md5(req.body.pass)) return res.notFound("Password or login invalid! 1");
             }
             if (user.role != 'Client' && user.role){
-                if (user.pass != md5(req.body.pass) && req.body.role === 'client') return res.notFound("Password or login invalid!");
-                if (user.pass != md5(req.body.pass)) return res.notFound("Password or login invalid!");
+                if (user.pass != md5(req.body.pass) && req.body.role === 'client') return res.notFound("Password or login invalid! 2");
+                if (user.pass != md5(req.body.pass)) return res.notFound("Password or login invalid! 3");
             }
             user.signin(req,res,backendApp)
         });

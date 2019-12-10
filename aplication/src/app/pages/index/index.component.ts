@@ -71,6 +71,10 @@ export class IndexComponent implements OnInit, OnDestroy {
       ru: 'Все товары города',
       ua: 'Всі товари міста'
     },
+    allTopProducts: {
+      ru: 'Все Топ товары города',
+      ua: 'Всі Топ товари міста'
+    },
     allProdviders: {
       ru: 'Все поставщики города',
       ua: 'Всі постачальники міста'
@@ -146,7 +150,7 @@ export class IndexComponent implements OnInit, OnDestroy {
       this.topCompany = v;
       this.loaded.topCompany = true;
     }).catch((e) => { this.loaded.topCompany = true; });
-    await this.crud.getTopProduct(0, 5).then((v: any) => {
+    await this.crud.getTopProduct(0, 5, true).then((v: any) => {
       if (!v) {return; }
       this.topProduct = v;
       this.loaded.topProduct = true;
