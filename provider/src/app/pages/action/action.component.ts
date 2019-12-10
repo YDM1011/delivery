@@ -75,9 +75,7 @@ export class ActionComponent implements OnInit {
             this.productChoose = this.products[0]._id;
           }
         });
-        // const date = new Date(new Date().getTime() - new Date().getHours()*60*60*1000 - new Date().getMinutes()*60*1000  - new Date().getSeconds()*1000).getTime();
         const date = new Date(new Date(new Date().getMonth()+1+'.'+(new Date().getDate()) +'.'+new Date().getFullYear()).getTime());
-
         this.crud.get(`action/count?query={"companyOwner":"${this.company}","dateEnd":{"$gte":"${date}"}}`).then((c: any) => {
           if (c) {
             this.lengthPagination = c.count;
@@ -92,15 +90,23 @@ export class ActionComponent implements OnInit {
         });
       }
     });
-    this.initPic()
-    console.log(this.action.dateStart)
+    this.initPic();
   }
   initPic(){
-    // console.log("REINIT")
-    // this.initPic2 = false;
+    this.action.dateEnd = this.action.dateStart;
     this.maxDate = new Date(new Date(this.action.dateStart).getTime() + 1000*60*60*24*7);
-    // this.initPic2 = true
+  }
 
+  initPicEdit(){
+    this.maxDate = new Date(new Date(this.editObj.dateStart).getTime() + 1000*60*60*24*7);
+  }
+
+  dateChange(){
+    this.initPic()
+  }
+  editDateChange(){
+    this.btnBlok(true);
+    this.initPicEdit()
   }
   checkAccess(){
     const date = new Date();
@@ -154,7 +160,6 @@ export class ActionComponent implements OnInit {
     this.crud.post('action', this.action).then((v: any) => {
       if (v) {
         this.actions.unshift(v);
-        this.user.companies[0].categories = this.actions;
         this.crud.get(`action/count?query={"companyOwner":"${this.company}"}`).then((c: any) => {
           if (c.count > 0) {
             this.lengthPagination = c.count;
@@ -182,7 +187,7 @@ export class ActionComponent implements OnInit {
       if (v) {
         this.actions.splice(i, 1);
         this.crud.get(`action/count?query={"companyOwner":"${this.company}"}`).then((c: any) => {
-          if (c.count > 0) {
+          if (c && c.count > 0) {
             this.lengthPagination = c.count;
           }
         });
@@ -196,6 +201,7 @@ export class ActionComponent implements OnInit {
     this.userChoose = this.editObj.client;
     this.addShow = false;
     this.editShow = true;
+    this.initPicEdit()
   }
   confirmEditCategoryCrud(e) {
     e.preventDefault();
@@ -213,8 +219,6 @@ export class ActionComponent implements OnInit {
       if (v) {
         this.editShow = false;
         this.actions[this.crud.find('_id', this.editObj['_id'], this.actions)] = v;
-        this.user.companies[0].action = this.actions;
-        this.auth.setMe(this.user);
         this.isBlok = false;
         this.editShow = false;
         this.editObj = {
@@ -249,12 +253,10 @@ export class ActionComponent implements OnInit {
     this.isBlok = is;
   }
   onFsEdit(e) {
-    // this.uploadObj = e;
     this.editObj.img = e.file;
     this.formCheck();
   }
   onFs(e) {
-    // this.uploadObj = e;
     this.action.img = e.file;
   }
   formCheck() {
@@ -262,7 +264,6 @@ export class ActionComponent implements OnInit {
     if (this.editObj.client.length !== this.editObjCopy.client.length) {
       this.btnBlok(true);
     }
-    this.initPic()
   }
   openAdd() {
     this.addShow = !this.addShow;

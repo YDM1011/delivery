@@ -111,6 +111,8 @@ THE SOFTWARE.
 
 @angular/material/select
 
+@angular/material/slide-toggle
+
 @angular/material/snack-bar
 
 @angular/material/tooltip

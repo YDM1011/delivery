@@ -68,12 +68,12 @@
 				</mat-form-field>
 				<div class="datepikers">
 					<mat-form-field class="pik">
-						<input matInput [matDatepicker]="picker" name="date1" [min]="date" [(ngModel)]="action.dateStart" (focus)="picker.open()" placeholder="Дата начала акции" (dateChange)="formCheck()">
+						<input matInput [matDatepicker]="picker" name="date1" [min]="date" [(ngModel)]="action.dateStart" (focus)="picker.open()" placeholder="Дата начала акции" (dateChange)="dateChange()">
 						<mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
 						<mat-datepicker #picker></mat-datepicker>
 					</mat-form-field>
 					<mat-form-field class="pik">
-						<input matInput [matDatepicker]="picker2" name="date2" [max]="maxDate" [min]="action.dateStart" [(ngModel)]="action.dateEnd" (focus)="picker2.open()" placeholder="Дата окончания акции" (dateChange)="formCheck()">
+						<input matInput [matDatepicker]="picker2" name="date2" [max]="maxDate" [min]="action.dateStart" [(ngModel)]="action.dateEnd" (focus)="picker2.open()" placeholder="Дата окончания акции">
 						<mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
 						<mat-datepicker #picker2></mat-datepicker>
 					</mat-form-field>
@@ -133,12 +133,12 @@
 			</div>
 			<div class="datepikers">
 				<mat-form-field class="pik">
-					<input matInput [matDatepicker]="picker" name="date1" [min]="date" [(ngModel)]="editObj.dateStart" (focus)="picker.open()" placeholder="Дата начала акции" (dateChange)="formCheck()">
+					<input matInput [matDatepicker]="picker" name="date1" [min]="editObj.dateStart" [(ngModel)]="editObj.dateStart" (focus)="picker.open()" placeholder="Дата начала акции" (dateChange)="editDateChange()">
 					<mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
 					<mat-datepicker #picker></mat-datepicker>
 				</mat-form-field>
 				<mat-form-field class="pik">
-					<input matInput [matDatepicker]="picker2" name="date2" [min]="editObj.dateStart" [(ngModel)]="editObj.dateEnd" (focus)="picker2.open()" placeholder="Дата окончания акции" (dateChange)="formCheck()">
+					<input matInput [matDatepicker]="picker2" name="date2" [max]="editObj.dateEnd" [min]="editObj.dateStart" [(ngModel)]="editObj.dateEnd" (focus)="picker2.open()" placeholder="Дата окончания акции" (dateChange)="editDateChange()">
 					<mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
 					<mat-datepicker #picker2></mat-datepicker>
 				</mat-form-field>

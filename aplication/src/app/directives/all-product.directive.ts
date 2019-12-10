@@ -35,7 +35,7 @@ export class AllProductDirective  implements AfterViewInit {
   }
   upload() {
     if (this.count <= this.skip * 5) {return; }
-    this.crud.getTopProduct(this.skip, 5).then((v: any) => {
+    this.crud.getTopProduct(this.skip, 5, false).then((v: any) => {
       if (v) {
         this.skip++;
         this.trigger = true;
