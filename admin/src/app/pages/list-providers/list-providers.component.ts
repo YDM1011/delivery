@@ -66,15 +66,7 @@ export class ListProvidersComponent implements OnInit {
     }
     this.crud.post('signup', {client: {name: this.client.name, login:'0'+this.client.login, pass: this.client.pass, role: this.client.role}, company: this.company}).then((v: any) => {
       if (v) {
-        this.crud.get('company/count').then((count: any) => {
-          if (count) {
-            this.lengthPagination = count.count;
-            this.crud.get(`company?query={}&skip=0&limit=${this.lengthPagination}&sort={"date":-1}`).then((v: any) => {
-              if (!v) {return; }
-              this.list = v;
-            });
-          }
-        });
+        this.init();
         this.addShow = false;
         this.clearObj();
       }
@@ -116,7 +108,6 @@ export class ListProvidersComponent implements OnInit {
   }
   verifyCompany($event, e, id, index) {
     $event.preventDefault();
-    console.log($event)
     this.crud.post(`company`, {verify: e, img: this.list[index].img}, id).then((v: any) => {
       if (v) {
         this.list[index].verify = v.verify;
@@ -125,7 +116,7 @@ export class ListProvidersComponent implements OnInit {
     return false
   }
   pageEvent(e) {
-    this.crud.get(`company?query={}&skip=${e.pageIndex  * e.pageSize}&limit=${e.pageSize}&sort={"date":-1}`).then((l: any) => {
+    this.crud.get(`company?query=${JSON.stringify(this.cityQuery)}&skip=${e.pageIndex  * e.pageSize}&limit=${e.pageSize}&sort={"date":-1}`).then((l: any) => {
       if (!l) {
         return;
       }
