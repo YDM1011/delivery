@@ -12,10 +12,11 @@ export class ListAdminsComponent implements OnInit {
   public pageSizePagination = 10;
   public pageSizeOptionsPagination: number[] = [5, 10, 15];
   public loading = false;
+  public filterShow = true;
   public search;
   public defLang = 'ru-UA';
   public addShow = false;
-
+  public queryFilter = '"role":"admin"';
   public list = [];
   public client = {
     name: '',
@@ -94,9 +95,11 @@ export class ListAdminsComponent implements OnInit {
       this.crud.get(`client?query={"role": "admin"}&skip=0&limit=${this.lengthPagination}`).then((v: any) => {
         if (!v) {return; }
         this.list = v;
+        this.filterShow = true;
       });
     } else {
       this.list = e;
+      this.filterShow = false;
     }
   }
 

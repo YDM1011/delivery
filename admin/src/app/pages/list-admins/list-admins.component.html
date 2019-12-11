@@ -43,8 +43,8 @@
 		<ng-container *ngIf="loading">
 			<div class="main-section">
 				<div class="table">
-					<app-search-filter [inputApi]="'client'" [inputQuery]="'login'" [role]="'admin'" (output)="outputSearch($event)"></app-search-filter>
-					<table class="table" *ngIf="list && list.length>0">
+					<app-filter [apiName]="'client'" [inputQuery]="'login'" [query]="queryFilter" [populate]="''" (output)="outputSearch($event)"></app-filter>
+					<table class="table">
 						<tr class="row-h t-title">
 							<td>
                 Название
@@ -91,10 +91,10 @@
 					               [pageSize]="pageSizePagination"
 					               [pageSizeOptions]="pageSizeOptionsPagination"
 					               (page)="pageEvent($event)"
-					               *ngIf="list && list.length > 0">
+					               *ngIf="filterShow && list && list.length > 0">
 					</mat-paginator>
 				</div>
-				<div class="no-content" *ngIf="list && list.length === 0">
+				<div class="no-content" *ngIf="filterShow && list && list.length === 0">
 					У вас нет администраторов
 				</div>
 			</div>

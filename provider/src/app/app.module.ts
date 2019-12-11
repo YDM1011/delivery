@@ -123,7 +123,7 @@ import { CalendarComponent } from './pages/calendar/calendar.component';
     Ng5SliderModule,
     LottieAnimationViewModule.forRoot()
   ],
-  exports: [MaterialModule],
+	exports: [MaterialModule, SearchFilterComponent],
   providers: [CookieService, {provide: HTTP_INTERCEPTORS, useClass: ApiInterceptor, multi: true},
     {provide: LOCALE_ID, useValue: 'ru-UA'}, {provide: LOCALE_ID, useValue: 'uk'},
     { provide: MatPaginatorIntl, useValue: getDutchPaginatorIntl()}],

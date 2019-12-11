@@ -16,6 +16,7 @@ export class CategoryComponent implements OnInit {
   public addShow = false;
   public editShow = false;
   public isBlok = false;
+  public filterShow = true;
   public categorys = [];
   public brands = [];
   public mainChooseBrand = null;
@@ -210,9 +211,11 @@ export class CategoryComponent implements OnInit {
       this.crud.get(`mainCategory?skip=0&limit=${this.pageSizePagination}`).then((v: any) => {
         if (!v) {return; }
         this.categorys = v;
+        this.filterShow = true;
       });
     } else {
       this.categorys = e;
+      this.filterShow = false;
     }
   }
   pageEvent(e) {

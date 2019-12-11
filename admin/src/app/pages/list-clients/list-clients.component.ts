@@ -15,11 +15,12 @@ export class ListClientsComponent implements OnInit {
   public search;
   public defLang = 'ru-UA';
   public addShow = false;
-
+  public queryFilter = '"role":"client"';
   public clientEdit;
   public list = [];
   public newPass;
   public passErr;
+  public filterShow = true;
   public client = {
     name: '',
     login: '',
@@ -79,9 +80,11 @@ export class ListClientsComponent implements OnInit {
       this.crud.get(`client?query={"role": "client"}&skip=0&limit=${this.lengthPagination}`).then((v: any) => {
         if (!v) {return; }
         this.list = v;
+        this.filterShow = true;
       });
     } else {
       this.list = e;
+      this.filterShow = false;
     }
   }
   pageEvent(e) {

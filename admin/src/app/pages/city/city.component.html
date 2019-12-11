@@ -60,34 +60,28 @@
 				<span class="content">Создать город</span>
 			</button>
 		</div>
-		
 		<ng-container class="loading" *ngIf="!loading">
 			Загрузка...
 		</ng-container>
 		<ng-container *ngIf="loading">
 			<div class="main-section">
 				<div class="table">
-					<app-search-filter [inputApi]="'city'" [inputQuery]="'name'" (output)="outputSearch($event)"></app-search-filter>
+					<app-filter [query]="''" [populate]="''" [apiName]="'city'" [inputQuery]="'name'" (output)="outputSearch($event)"></app-filter>
 					<table class="table">
 						<tr class="row-h t-title">
-							<td>
-								Название
-							</td>
-							<td>
-								Дата
-							</td>
-							<td>
-							</td>
+							<td>Название</td>
+							<td>Дата</td>
+							<td></td>
 						</tr>
 						<tr class="row-r" *ngFor="let item of citys; let index = index">
 							<td>
-                <div class="col">
-								<div class="img">
-									<img src="./assets/images/user.svg" alt="" *ngIf="!item.img || item.img == ''">
-									<app-img [fs]="item.img" *ngIf="item.img && item.img !== ''"></app-img>
-								</div>
-								{{item.name}}
-                </div>
+                                <div class="col">
+									<div class="img">
+										<img src="./assets/images/user.svg" alt="" *ngIf="!item.img || item.img == ''">
+										<app-img [fs]="item.img" *ngIf="item.img && item.img !== ''"></app-img>
+									</div>
+									{{item.name}}
+                                </div>
 							</td>
 							<td>
 								<div class="date">
@@ -100,10 +94,10 @@
 								</div>
 							</td>
 							<td>
-                <div class="col jcc">
-								<span class="edit-btn" (click)="edit(index)" appScrollTop></span>
-								<span class="trash-btn" (click)="delete(index)"></span>
-                </div>
+								<div class="col jcc">
+									<span class="edit-btn" (click)="edit(index)" appScrollTop></span>
+									<span class="trash-btn" (click)="delete(index)"></span>
+                                 </div>
 							</td>
 						</tr>
 					</table>
@@ -112,10 +106,10 @@
 					               [pageSize]="pageSizePagination"
 					               [pageSizeOptions]="pageSizeOptionsPagination"
 					               (page)="pageEvent($event)"
-					               *ngIf="citys && citys.length > 0">
+					               *ngIf="filterShow && citys && citys.length > 0">
 					</mat-paginator>
 				</div>
-				<div class="no-content" *ngIf="citys && citys.length === 0">
+				<div class="no-content" *ngIf="filterShow && citys && citys.length === 0">
 					У вас нет городов
 				</div>
 			</div>

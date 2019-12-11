@@ -97,8 +97,8 @@
 			</ng-container>
 			<ng-container *ngIf="loading">
 				<div class="main-section">
-					<div class="table" *ngIf="categorys && categorys.length > 0">
-						<app-search-filter [inputApi]="'mainCategory'" [inputQuery]="'name'" (output)="outputSearch($event)"></app-search-filter>
+					<div class="table">
+						<app-filter [query]="''" [populate]="''" [inputQuery]="'name'" [apiName]="'mainCategory'" (output)="outputSearch($event)"></app-filter>
 						<table class="table">
 							<tr class="t-title">
 								<td>
@@ -141,10 +141,10 @@
 						               [pageSize]="pageSizePagination"
 						               [pageSizeOptions]="pageSizeOptionsPagination"
 						               (page)="pageEvent($event)"
-						               *ngIf="categorys && categorys.length > 0">
+						               *ngIf="filterShow && categorys && categorys.length > 0">
 						</mat-paginator>
 					</div>
-					<div class="empty-section" *ngIf="!categorys || categorys.length === 0">
+					<div class="empty-section" *ngIf="filterShow && !categorys && categorys.length === 0">
 						<p>
 							У вас нет созданых категорий
 						</p>

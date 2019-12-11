@@ -18,6 +18,7 @@ export class BrandsComponent implements OnInit {
   public uploadObj = {};
   public brands = [];
   public loading = false;
+  public filterShow = true;
   public editObjCopy;
   public editObj = {
     img: '',
@@ -155,13 +156,16 @@ export class BrandsComponent implements OnInit {
     this.btnBlok(this.validate());
   }
   outputSearch(e) {
+    console.log(e)
     if (!e) {
       this.crud.get(`brand?skip=0&limit=${this.pageSizePagination}`).then((v: any) => {
         if (!v) {return; }
         this.brands = v;
+        this.filterShow = true;
       });
     } else {
       this.brands = e;
+      this.filterShow = false;
     }
   }
   pageEvent(e) {

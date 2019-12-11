@@ -21,6 +21,9 @@ export class CityComponent implements OnInit {
   public defLang = 'ru-UA';
   public editObjCopy;
   public editPhoto = false;
+  public filterShow = true;
+  public queryFilter = {};
+  public populateFilter = {};
   public editObj = {
     img: '',
     name: '',
@@ -167,9 +170,11 @@ export class CityComponent implements OnInit {
       this.crud.get(`city?skip=0&limit=${this.pageSizePagination}`).then((v: any) => {
         if (!v) {return; }
         this.citys = v;
+        this.filterShow = true;
       });
     } else {
       this.citys = e;
+      this.filterShow = false;
     }
   }
   pageEvent(e) {

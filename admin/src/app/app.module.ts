@@ -35,7 +35,6 @@ import { ListAdminsComponent } from './pages/list-admins/list-admins.component';
 import {LottieAnimationViewModule} from 'ng-lottie';
 import {CreditCardDirectivesModule} from "angular-cc-library";
 import {NumbersOnlyDirective} from "./directives/numbers-only.directive";
-import { SearchFilterComponent } from './components/search-filter/search-filter.component';
 import { ProviderDetailsComponent } from './pages/provider-details/provider-details.component';
 import { StatusDetailProviderPipe } from './pipe/status-detail-provider.pipe';
 import { SaveHtmlPipe } from './pipe/save-html.pipe';
@@ -47,6 +46,8 @@ import {Ng5SliderModule} from "ng5-slider";
 import { ScrollTopDirective } from './directives/scroll-top.directive';
 import { NotificationComponent } from './pages/notification/notification.component';
 import { PopupDirective } from './directives/popup.directive';
+import { FilterComponent } from './components/filter/filter.component';
+import {SearchFilterComponent} from "./components/search-filter/search-filter.component";
 @NgModule({
   declarations: [
     AppComponent,
@@ -80,6 +81,7 @@ import { PopupDirective } from './directives/popup.directive';
     ScrollTopDirective,
     NotificationComponent,
     PopupDirective,
+    FilterComponent,
   ],
   imports: [
     LottieAnimationViewModule.forRoot(),
