@@ -47,6 +47,7 @@ export class NotificationComponent implements OnInit {
     this.crud.post('customPush', this.notification).then((v: any) => {
       if (v) {
         Swal.fire('Success', 'Ваше уведомление отправленно', 'success');
+        this.userChoose = [];
         this.notification = {
           title: '',
           description: '',
@@ -58,8 +59,11 @@ export class NotificationComponent implements OnInit {
   }
 
   change() {
-    const query = JSON.stringify({login: {$regex: this.inputChange, $options: 'gi'}});
-    this.crud.get(`client?query=${query}&select=["login", "img"]&limit=10`).then((v: any) => {
+    const query = JSON.stringify({$or:[
+        {login: {$regex: this.inputChange, $options: 'gi'}},
+        {name: {$regex: this.inputChange, $options: 'gi'}}
+      ], role: 'client'});
+    this.crud.get(`client?query=${query}&select=["login", "name", "img"]&limit=10`).then((v: any) => {
       this.searchUser = v;
     });
   }

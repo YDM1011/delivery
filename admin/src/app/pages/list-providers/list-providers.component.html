@@ -59,7 +59,17 @@
 		<ng-container *ngIf="loading">
 			<div class="main-section">
 				<div class="table">
-					<app-search-filter [inputApi]="'company'" [inputQuery]="'name'" (output)="outputSearch($event)"></app-search-filter>
+          <div class="col">
+            <app-search-filter [inputApi]="'company'" [inputQuery]="'name'" (output)="outputSearch($event)"></app-search-filter>
+            <mat-form-field *ngIf="city && city.length>0">
+              <mat-label>Город</mat-label>
+              <mat-select (valueChange)="setCityFiltr($event)">
+                <mat-option *ngFor="let item of city" [value]="item._id">
+                  {{item.name}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
 					<table class="table">
 						<tr class="row-h t-title">
 							<td>

@@ -46,6 +46,12 @@ const schem = new Schema({
         create: [{private:true}],
         delete: [{private:true}],
     },
+    admin: {
+        read: [{private:true}],
+        update: [{private:true}],
+        create: [{private:true}],
+        delete: [{private:true}],
+    },
     client: {
         read: [{private:true}],
         update: [{private:true}],

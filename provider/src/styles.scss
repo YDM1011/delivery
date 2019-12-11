@@ -56,3 +56,26 @@
   //border-bottom: 2px solid #ececec;
   border-top: 1px solid #DADADA;
 }
+.col{
+  display: flex;
+  align-items: center;
+}
+.jcc > * {
+  margin-right: 8px;
+}
+.jcc {
+  justify-content: center;
+}
+.table .img app-img{
+  display: flex;
+}
+.table .img {
+  width: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-right: 10px;
+}

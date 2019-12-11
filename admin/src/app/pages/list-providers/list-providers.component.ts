@@ -17,6 +17,8 @@ export class ListProvidersComponent implements OnInit {
   public addShow = false;
   public list = [];
   public city = [];
+  public cityQuery = {};
+  public cityTriger = {};
   public client = {
     name: '',
     login: '',
@@ -33,20 +35,24 @@ export class ListProvidersComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.crud.get('company/count').then((count: any) => {
-      if (count) {
-        this.lengthPagination = count.count;
-        this.crud.get(`company?query={}&skip=0&limit=${this.lengthPagination}&sort={"payedAt":-1}`).then((v: any) => {
-          if (!v) {return; }
-          this.list = v;
-          this.loading = true;
-        });
-      }
-    });
+
     this.crud.get('city').then((c: any) => {
       if (c && c.length > 0) {
         this.city = c;
         this.company.city = this.city[0]._id;
+      }
+    });
+    this.init()
+  }
+  init(){
+    this.crud.get('company/count').then((count: any) => {
+      if (count) {
+        this.lengthPagination = count.count;
+        this.crud.get(`company?query=${JSON.stringify(this.cityQuery)}&skip=0&limit=${this.lengthPagination}&sort={"payedAt":-1}`).then((v: any) => {
+          if (!v) {return; }
+          this.list = v;
+          this.loading = true;
+        });
       }
     });
   }
@@ -125,5 +131,28 @@ export class ListProvidersComponent implements OnInit {
       }
       this.list = l;
     });
+  }
+  setCityFiltr(id){
+    if (this.cityTriger && this.cityTriger['city']){
+      this.queryMod('', 'city', this.cityTriger['city'])
+    }
+    this.cityTriger['city'] = id;
+    this.queryMod({city:id})
+
+  }
+  queryMod(obj = null,property = null,value=null){
+    if (!property && !value && !obj) return;
+    if (!property && !value) {
+      if (this.cityQuery['$or']){
+        this.cityQuery['$or'].push(obj)
+      } else {
+        this.cityQuery['$or'] =[];
+        this.cityQuery['$or'].push(obj)
+      }
+    } else if (property && value) {
+      const i = this.crud.find(property, value, this.cityQuery['$or'] );
+      this.cityQuery['$or'].splice(i, 1);
+    }
+    this.init()
   }
 }

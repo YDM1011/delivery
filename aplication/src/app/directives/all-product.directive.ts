@@ -5,6 +5,7 @@ import {CrudService} from "../crud.service";
   selector: '[appAllProduct]'
 })
 export class AllProductDirective  implements AfterViewInit {
+  @Input('appAllProduct') appAllProduct;
   @Output() output = new EventEmitter();
   public skip = 1;
   public elem: ElementRef;
@@ -35,12 +36,23 @@ export class AllProductDirective  implements AfterViewInit {
   }
   upload() {
     if (this.count <= this.skip * 5) {return; }
-    this.crud.getTopProduct(this.skip, 5, false).then((v: any) => {
-      if (v) {
-        this.skip++;
-        this.trigger = true;
-        this.output.emit(v);
-      }
-    });
+    if (this.appAllProduct === 'top') {
+      this.crud.getTopProduct(this.skip, 5, true).then((v: any) => {
+        if (v) {
+          this.skip++;
+          this.trigger = true;
+          this.output.emit(v);
+        }
+      });
+    } else {
+      this.crud.getTopProduct(this.skip, 5, false).then((v: any) => {
+        if (v) {
+          this.skip++;
+          this.trigger = true;
+          this.output.emit(v);
+        }
+      });
+    }
+
   }
 }

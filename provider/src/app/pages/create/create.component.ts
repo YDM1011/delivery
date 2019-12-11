@@ -44,10 +44,10 @@ export class CreateComponent implements OnInit {
       if (!v) {return; }
       this.user = v;
       if (this.user && this.user.companyOwner) {
-        this.crud.get(`client/count?query={"companyOwner":"${this.user.companyOwner._id}"}`).then((count: any) => {
+        this.crud.get(`client/count?query={"companyOwner":"${this.user.companyOwner._id}","role":"collaborator"}`).then((count: any) => {
           if (count) {
             this.lengthPagination = count.count;
-            this.crud.get(`client?query={"companyOwner": "${this.user.companyOwner._id}"}&skip=0&limit=${this.pageSizePagination}&sort={"date":-1}`).then((c: any) => {
+            this.crud.get(`client?query={"companyOwner": "${this.user.companyOwner._id}","role":"collaborator"}&skip=0&limit=${this.pageSizePagination}&sort={"date":-1}`).then((c: any) => {
               if (c) {
                 this.clients = c;
                 this.loading = true;
@@ -113,7 +113,7 @@ export class CreateComponent implements OnInit {
     this.crud.delete('client', this.clients[i]._id).then((v: any) => {
       if (v) {
         this.clients.splice(i, 1);
-        this.crud.get(`client/count?query={"companyOwner":"${this.user.companyOwner._id}"}`).then((c: any) => {
+        this.crud.get(`client/count?query={"companyOwner":"${this.user.companyOwner._id}","role":"collaborator"}`).then((c: any) => {
           if (!c) {return; }
           this.clients = c;
         });
@@ -158,7 +158,7 @@ export class CreateComponent implements OnInit {
   }
   outputSearch(e) {
     if (!e) {
-      this.crud.get(`client?query={"companyOwner": "${this.user.companyOwner._id}"}&skip=0&limit=${this.pageSizePagination}`).then((c: any) => {
+      this.crud.get(`client?query={"companyOwner": "${this.user.companyOwner._id}","role":"collaborator"}&skip=0&limit=${this.pageSizePagination}`).then((c: any) => {
         if (c) {
           this.clients = c;
         }
@@ -168,7 +168,7 @@ export class CreateComponent implements OnInit {
     }
   }
   pageEvent(e) {
-    this.crud.get(`client?query={"companyOwner":"${this.user.companyOwner._id}"}&skip=${e.pageIndex  * e.pageSize}&limit=${e.pageSize}&sort={"date":-1}`).then((c: any) => {
+    this.crud.get(`client?query={"companyOwner":"${this.user.companyOwner._id}","role":"collaborator"}&skip=${e.pageIndex  * e.pageSize}&limit=${e.pageSize}&sort={"date":-1}`).then((c: any) => {
       if (!c) {return; }
       this.clients = c;
     });

@@ -29,7 +29,7 @@
 				</mat-chip-list>
 			</div>
 			<mat-form-field class="example-full-width" *ngIf="userAction">
-				<input type="text" placeholder="Телефон" aria-label="Number" name="inputSearch" matInput [(ngModel)]="inputChange" [matAutocomplete]="auto" (keyup)="change()">
+				<input type="text" placeholder="Телефон или имя" aria-label="Number" name="inputSearch" matInput [(ngModel)]="inputChange" [matAutocomplete]="auto" (keyup)="change()">
 				<mat-autocomplete #auto="matAutocomplete">
 					<mat-option *ngFor="let item of searchUser" [value]="item.login" (click)="pushUser(item)">
 						<div class="option">
@@ -39,7 +39,10 @@
 									<img src="./assets/images/user.svg" alt="user-svg">
 								</ng-template>
 							</div>
-							{{item.login}}
+              <div>
+                {{item.name}}
+                {{item.login}}
+              </div>
 						</div>
 					</mat-option>
 				</mat-autocomplete>

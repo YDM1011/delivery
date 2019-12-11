@@ -186,25 +186,63 @@
 				<div class="content" *ngIf="loading">
 					<table *ngIf="actions && actions.length > 0" class="table">
 						<tr class="t-title">
-							<td style="min-width: 200px">Название</td>
-							<td style="min-width: 200px"></td>
-							<td style="min-width: 180px">Дата</td>
-							<td style="min-width: 200px"></td>
+							<td>Название</td>
+							<td>Описание</td>
+							<td>Товар</td>
+							<td>Клиенты</td>
+							<td>Период</td>
+							<td></td>
 						</tr>
 						<tr *ngFor="let item of actions; let i = index">
 							<td>
-								{{item.name}}
+								<!--{{item.name}}-->
+                <div class="col jcc" >
+                  <div class="img" style="border-radius: 0;">
+                    <app-img [fs]="item.img" [dir]="'product'"></app-img>
+                  </div>
+                  <div class="name">{{item.name}}</div>
+                </div>
+							</td>
+              <td>
+                {{item.description}}
+              </td>
+							<td>
+                <div class="col jcc" *ngIf="item.orderOwner">
+                  <div class="img">
+                    <app-img [fs]="item.orderOwner.img" [dir]="'product'"></app-img>
+                  </div>
+                  <div class="name">{{item.orderOwner.name}}</div>
+                </div>
 							</td>
 							<td>
+                <ng-container *ngIf="item.client && item.client.length>0; else clnt">
+                  <div *ngFor="let client of item.client" class="client-cart">
+                    <div class="col jcc" >
+                      <div class="img">
+                        <app-img [fs]="client.img" [dir]="'avatar'"></app-img>
+                      </div>
+                      <div class="name">
+                        <span>{{client.name}}</span>
+                        <span>
+                          {{client.login}}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </ng-container>
+                <ng-template #clnt>-</ng-template>
 							</td>
 							<td>
 								<div class="date">
+                  <div class="top-table-date">
+                    {{item.dateStart | date: 'dd MMMM, yyyy' : null : defLang}}
+                  </div>
 									<div class="top-table-date">
-										{{item.date | date: 'dd MMMM, yyyy' : null : defLang}}
+										{{item.dateEnd | date: 'dd MMMM, yyyy' : null : defLang}}
 									</div>
-									<div class="bottom-table-date">
-										{{item.date | date: 'HH:mm' : null : defLang}}
-									</div>
+									<!--<div class="bottom-table-date">-->
+										<!--{{item.date | date: 'HH:mm' : null : defLang}}-->
+									<!--</div>-->
 								</div>
 							</td>
 							<td>
