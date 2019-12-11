@@ -33,6 +33,8 @@ export class CreateComponent implements OnInit {
     pass: '',
     companyOwner: ''
   };
+  public newPass;
+  public passErr;
 
   constructor(
       private crud: CrudService,
@@ -57,6 +59,17 @@ export class CreateComponent implements OnInit {
         });
       }
     });
+  }
+  savePass(){
+    if (this.newPass.length < 6) {
+      this.passErr = "Пароль менее 6 символов!";
+      return
+    }
+    this.crud.post('changePass', {pass:this.newPass,_id:this.editObj._id}).then(v=>{
+      if (v) {
+        this.newPass = '';
+      }
+    }).catch(e=>{console.log(e)})
   }
   create(e) {
     e.preventDefault();

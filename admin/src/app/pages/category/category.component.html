@@ -105,6 +105,12 @@
                   Название
 								</td>
 								<td>
+                  Подкатегории
+                </td>
+								<td>
+                  Бренды
+                </td>
+								<td>
 									Дата
 								</td>
 								<td>
@@ -118,6 +124,16 @@
 									</div>
 									{{item.name}}
                   </div>
+								</td>
+								<td>
+                  <span *ngFor="let sub of item.subCategory">
+                    {{sub}}
+                  </span>
+								</td>
+								<td>
+                  <span *ngFor="let brand of item.brands">
+                    {{brand.name}}
+                  </span>
 								</td>
 								<td>
 									<div class="date">

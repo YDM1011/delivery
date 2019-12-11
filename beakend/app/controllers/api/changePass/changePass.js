@@ -15,7 +15,7 @@ module.exports = function (backendApp, router) {
         const Client = backendApp.mongoose.model('Client');
 
 
-        if ( req.user.role == 'sa' || req.user.role == 'admin') {
+        if ( req.user.role == 'sa' || req.user.role == 'admin' || req.user.role == 'provider') {
             Client.findOne({_id: req.body._id})
                 .exec((e,r)=>{
                     if (e) return res.serverError(e);
@@ -34,7 +34,7 @@ module.exports = function (backendApp, router) {
                     }
                 })
         } else
-        if ( req.user.role == 'provider' || req.user.role == 'client') {
+        if (req.user.role == 'client') {
             let obj = {
                 token: getToken(req.user.login),
                 pass: md5(req.body.pass)

@@ -44,7 +44,7 @@ export class CategoryComponent implements OnInit {
     this.crud.get('mainCategory/count').then((count: any) => {
       if (!count) {return; }
       this.lengthPagination = count.count;
-      this.crud.get(`mainCategory?skip=0&limit=${this.pageSizePagination}`).then((v: any) => {
+      this.crud.get(`mainCategory?populate={"path":"brands"}&skip=0&limit=${this.pageSizePagination}`).then((v: any) => {
         if (!v) {return; }
         this.categorys = v;
         this.loading = true;
@@ -208,7 +208,7 @@ export class CategoryComponent implements OnInit {
   }
   outputSearch(e) {
     if (!e) {
-      this.crud.get(`mainCategory?skip=0&limit=${this.pageSizePagination}`).then((v: any) => {
+      this.crud.get(`mainCategory?populate={"path":"brands"}&skip=0&limit=${this.pageSizePagination}`).then((v: any) => {
         if (!v) {return; }
         this.categorys = v;
         this.filterShow = true;
@@ -219,7 +219,7 @@ export class CategoryComponent implements OnInit {
     }
   }
   pageEvent(e) {
-    this.crud.get(`mainCategory&skip=${e.pageIndex  * e.pageSize}&limit=${e.pageSize}`).then((c: any) => {
+    this.crud.get(`mainCategory?populate={"path":"brands"}&&skip=${e.pageIndex  * e.pageSize}&limit=${e.pageSize}`).then((c: any) => {
       if (!c) {
         return;
       }
