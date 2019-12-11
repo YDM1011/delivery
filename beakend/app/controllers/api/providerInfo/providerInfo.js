@@ -76,7 +76,7 @@ module.exports = (backendApp, router) => {
         }
 
     });
-};
+
 
 const getCompanyByClient = (Client, id) => {
     return new Promise((rs,rj)=>{
@@ -98,9 +98,7 @@ const getCompanyByCity = (Company, id) => {
 };
 
 const callDB = (Model, and, res) => {
-    console.log(and)
-    console.log(and.$and[0].lastUpdate)
-    console.log(and.$and[1].lastUpdate)
+    const Debtor = backendApp.mongoose.model("Debtor");
     Model.aggregate([{ $match:  and },
         { $group: {
                 _id : null,
@@ -114,6 +112,28 @@ const callDB = (Model, and, res) => {
                 sum: 0,
                 count: 0
             });
-        res.ok(r)
+            if (!and.$and[0].lastUpdate || !and.$and[1].lastUpdate) return res.ok(r);
+            let companyOwner = and.$and[3].companyOwner;
+            // and.$and.map(it=>{
+            //     if (it['companyOwner']) companyOwner = String(it.companyOwner)
+            // });
+            Debtor.aggregate([{ $match: {$and:[
+                        {companyOwner:companyOwner},
+                        and.$and[0],
+                        and.$and[1]
+                    ]} },
+                { $group: {
+                        _id : null,
+                        value : { $sum: "$value" },
+                    }
+                }]).then(r1 => {
+                    let obj = {
+                        sum: r[0].sum,
+                        count: r[0].count,
+                        debtor: r1[0].value,
+                    };
+                    res.ok(obj)
+                });
     }).catch(e => res.serverError(e))
+};
 };
