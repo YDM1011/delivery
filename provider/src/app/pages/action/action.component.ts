@@ -100,6 +100,7 @@ export class ActionComponent implements OnInit {
   }
 
   initPicEdit(){
+    this.editObj.dateEnd = this.editObj.dateStart;
     this.maxDate = new Date(new Date(this.editObj.dateStart).getTime() + 1000*60*60*24*7);
   }
 
