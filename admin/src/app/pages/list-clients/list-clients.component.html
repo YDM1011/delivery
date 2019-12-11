@@ -44,43 +44,34 @@
 		<ng-container *ngIf="loading">
 			<div class="main-section">
 				<div class="table">
-					<app-search-filter [inputApi]="'client'" [inputQuery]="'login'" [role]="'client'" (output)="outputSearch($event)"></app-search-filter>
+					<app-filter [apiName]="'client'" [inputQuery]="'login'" [query]="queryFilter" [populate]="''" (output)="outputSearch($event)"></app-filter>
 					<table class="table-content table">
 						<tr class="row-h t-title">
-							<td>
-                Название
-              </td>
-							<td>
-                Блокирован
-							</td>
-							<td>
-                Номер подтвержден
-							</td>
-							<td>
-								Дата
-							</td>
-							<td>
-							</td>
+							<td>Название</td>
+							<td>Блокирован</td>
+							<td>Номер подтвержден</td>
+							<td>Дата</td>
+							<td></td>
 						</tr>
 						<tr class="row-r" *ngFor="let item of list; let index = index">
 							<td>
-                <div class="col">
-                  <div class="img">
-                    <img src="./assets/images/user.svg" alt="" *ngIf="!item.img || item.img == ''">
-                    <app-img [fs]="item.img" [dir]="'avatar'" *ngIf="item.img && item.img !== ''"></app-img>
-                  </div>
-                  <div>
-                    {{item.name}} <br>
-                    {{item.mobile ? item.mobile : item.login}}
-                  </div>
-                </div>
+				                <div class="col">
+				                  <div class="img">
+				                    <img src="./assets/images/user.svg" alt="" *ngIf="!item.img || item.img == ''">
+				                    <app-img [fs]="item.img" [dir]="'avatar'" *ngIf="item.img && item.img !== ''"></app-img>
+				                  </div>
+				                  <div>
+				                    {{item.name}} <br>
+				                    {{item.mobile ? item.mobile : item.login}}
+				                  </div>
+				                </div>
 							</td>
-              <td>
-                <mat-slide-toggle [checked]="item.banned" (toggleChange)="banned(item)"></mat-slide-toggle>
-              </td>
-              <td>
-                <mat-slide-toggle [checked]="item.verify" (toggleChange)="verify(item)"></mat-slide-toggle>
-              </td>
+				              <td>
+				                <mat-slide-toggle [checked]="item.banned" (toggleChange)="banned(item)"></mat-slide-toggle>
+				              </td>
+				              <td>
+				                <mat-slide-toggle [checked]="item.verify" (toggleChange)="verify(item)"></mat-slide-toggle>
+				              </td>
 							<td>
 								<div class="date">
 									<div class="top-table-date">
@@ -103,10 +94,10 @@
 					               [pageSize]="pageSizePagination"
 					               [pageSizeOptions]="pageSizeOptionsPagination"
 					               (page)="pageEvent($event)"
-					               *ngIf="list && list.length > 0">
+					               *ngIf="filterShow && list && list.length > 0">
 					</mat-paginator>
 				</div>
-				<div class="no-content" *ngIf="list && list.length === 0">
+				<div class="no-content" *ngIf="filterShow && list && list.length === 0">
 					У вас нет клиентов
 				</div>
 			</div>

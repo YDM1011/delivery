@@ -71,27 +71,22 @@
 		</ng-container>
 		<ng-container *ngIf="loading">
 			<div class="main-section">
-				<div class="table" *ngIf="brands && brands.length > 0">
-					<app-search-filter [inputApi]="'brand'" [inputQuery]="'name'" (output)="outputSearch($event)"></app-search-filter>
+				<div class="table">
+					<app-filter [apiName]="'brand'" [inputQuery]="'name'" [populate]="''" [query]="''" (output)="outputSearch($event)"></app-filter>
 					<table class="table">
 						<tr class="t-title">
-							<td>
-                Название
-							</td>
-							<td>
-								Дата
-							</td>
-							<td>
-							</td>
+							<td>Название</td>
+							<td>Дата</td>
+							<td></td>
 						</tr>
 						<tr class="row-r" *ngFor="let item of brands; let index = index">
 							<td>
-                <div class="col">
-								<div class="img">
-									<app-img [fs]="item.img" [dir]="'product'"></app-img>
-								</div>
-								{{item.name}}
-                </div>
+                                <div class="col">
+									<div class="img">
+										<app-img [fs]="item.img" [dir]="'product'"></app-img>
+									</div>
+									{{item.name}}
+                                </div>
 							</td>
 							<td>
 								<div class="date">
@@ -115,10 +110,10 @@
 					               [pageSize]="pageSizePagination"
 					               [pageSizeOptions]="pageSizeOptionsPagination"
 					               (page)="pageEvent($event)"
-					               *ngIf="brands && brands.length > 0">
+					               *ngIf="filterShow && brands && brands.length > 0">
 					</mat-paginator>
 				</div>
-				<div class="empty-section" *ngIf="!brands || brands.length === 0">
+				<div class="empty-section" *ngIf="filterShow && brands && brands.length === 0">
 					<p>
 						У вас нет созданых брендов
 					</p>

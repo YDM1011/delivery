@@ -26,23 +26,24 @@ export class SearchFilterComponent implements OnInit {
     if (this.filterInput.length > 0) {
       if (this.queryValue) {
         const query = JSON.stringify({$regex: this.filterInput, $options: 'gi'});
-        this.crud.get(`${this.inputApi}?query={"${this.inputQuery}":${query}, "${this.queryValue}":"${this.querySearch}"}&populate={"path":"${this.populate}"}&skip=0&limit=10`).then((v: any) => {
-          if (v && v.length > 0) {
+        this.crud.get(`${this.inputApi}?query={"${this.inputQuery}":${query}, "${this.queryValue}":"${this.querySearch}"}&populate={"path":"${this.populate}"}&skip=0&limit=5`).then((v: any) => {
+          if (v) {
             this.search = v;
             this.output.emit(this.search);
           }
         });
       } else {
         const query2 = JSON.stringify({$regex: this.filterInput, $options: 'gi'});
-        this.crud.get(`${this.inputApi}?query={"${this.inputQuery}":${query2}}&populate={"path":${this.populate}&skip=0&limit=10`).then((v: any) => {
-          if (v && v.length > 0) {
+        this.crud.get(`${this.inputApi}?query={"${this.inputQuery}":${query2}}&populate={"path":${this.populate}&skip=0&limit=5`).then((v: any) => {
+          if (v) {
             this.search = v;
             this.output.emit(this.search);
           }
         });
       }
-    } else {
-      this.output.emit(null);
+    }
+    else {
+      this.output.emit([]);
     }
   }
 }

@@ -17,6 +17,9 @@ export class ListProvidersComponent implements OnInit {
   public addShow = false;
   public list = [];
   public city = [];
+  public filterShow = true;
+  public queryFilter = '';
+  public sortFilter = '"payedAt":-1';
   public cityQuery = {};
   public cityTriger = {};
   public client = {
@@ -98,12 +101,11 @@ export class ListProvidersComponent implements OnInit {
   }
   outputSearch(e) {
     if (!e) {
-      this.crud.get(`company?query={}&skip=0&limit=${this.lengthPagination}&sort={"date":-1}`).then((v: any) => {
-        if (!v) {return; }
-        this.list = v;
-      });
+      this.init();
+      this.filterShow = true;
     } else {
       this.list = e;
+      this.filterShow = false;
     }
   }
   verifyCompany($event, e, id, index) {
@@ -132,6 +134,8 @@ export class ListProvidersComponent implements OnInit {
 
   }
   queryMod(obj = null,property = null,value=null){
+    this.queryFilter = `"city":"${obj.city}"`;
+    console.log(this.queryFilter);
     if (!property && !value && !obj) return;
     if (!property && !value) {
       if (this.cityQuery['$or']){

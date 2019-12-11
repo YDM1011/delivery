@@ -60,7 +60,7 @@
 			<div class="main-section">
 				<div class="table">
           <div class="col">
-            <app-search-filter [inputApi]="'company'" [inputQuery]="'name'" (output)="outputSearch($event)"></app-search-filter>
+	          <app-filter [apiName]="'company'" [inputQuery]="'name'" [query]="queryFilter" [populate]="''" [sort]="sortFilter" (output)="outputSearch($event)"></app-filter>
             <mat-form-field *ngIf="city && city.length>0">
               <mat-label>Город</mat-label>
               <mat-select (valueChange)="setCityFiltr($event)">
@@ -133,10 +133,10 @@
 					               [pageSize]="pageSizePagination"
 					               [pageSizeOptions]="pageSizeOptionsPagination"
 					               (page)="pageEvent($event)"
-					               *ngIf="list && list.length > 0">
+					               *ngIf="filterShow && list && list.length > 0">
 					</mat-paginator>
 				</div>
-				<div class="no-content" *ngIf="list && list.length === 0">
+				<div class="no-content" *ngIf="filterShow && list && list.length === 0">
 					У вас нет поставщиков
 				</div>
 			</div>
