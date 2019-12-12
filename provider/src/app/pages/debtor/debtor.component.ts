@@ -325,10 +325,12 @@ export class DebtorComponent implements OnInit {
       this.crud.get(`debtor?query={"companyOwner": "${this.user.companyOwner._id}"}${this.populate}&skip=0&limit=${this.pageSizePagination}`).then((d: any) => {
         if (d) {
           this.debtors = d;
+          this.lengthPagination = this.debtors.length;
         }
       });
     } else {
       this.debtors = e;
+      this.lengthPagination = this.debtors.length;
     }
   }
   pageEvent(e) {

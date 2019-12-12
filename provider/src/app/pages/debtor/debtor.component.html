@@ -288,7 +288,7 @@
 					</table>
 				</div>
 			</div>
-			<div class="empty-section" *ngIf="!searchFilter && debtors || debtors.length === 0 && searchArr.length === 0">
+			<div class="empty-section" *ngIf="debtors && debtors.length === 0 && searchArr.length === 0">
 				<p>
 					Нет должников от {{dateStart | date:'dd.MM.yyyy'}} до {{dateEnd | date:'dd.MM.yyyy'}}
 				</p>
@@ -297,7 +297,7 @@
 			               [pageSize]="pageSizePagination"
 			               [pageSizeOptions]="pageSizeOptionsPagination"
 			               (page)="pageEvent($event)"
-			               *ngIf="debtors && debtors.length > 0">
+			               *ngIf="debtors && debtors.length > 0 && !searchFilter">
 			</mat-paginator>
 		</div>
 	</div>
