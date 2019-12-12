@@ -16,7 +16,7 @@
       padding: 10px 0;
       color: #748AA1;
       min-width: 50%;
-      max-width: 500px;
+      max-width: 450px;
       .row{
         display: flex;
         align-items: center;
@@ -48,7 +48,7 @@
   }
 }
 
-@media (max-width: 954px) {
+@media (max-width: 1105px) {
   .work-time{
     &-header{
     }

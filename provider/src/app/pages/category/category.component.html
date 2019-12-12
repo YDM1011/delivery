@@ -11,13 +11,13 @@
 		<form class="add-section" (submit)="create($event)">
 			<ng-container *ngIf="mainCategoryChoose; else emptyGlobal">
 				<div>
-          <ng-container *ngFor="let category of categoryArr">
-            <div class="ships" (click)="remCategory(category)" *ngIf="category">
-              <span>{{category.name}}</span>
-              <span class="chips-close"></span>
-            </div>
-          </ng-container>
-        </div>
+			      <ng-container *ngFor="let category of categoryArr">
+			        <div class="ships" (click)="remCategory(category)" *ngIf="category">
+			          <span>{{category.name}}</span>
+			          <span class="chips-close"></span>
+			        </div>
+			      </ng-container>
+			    </div>
 				<mat-form-field>
 					<mat-label>Главная категория</mat-label>
 					<mat-select [(value)]="mainCategoryChoose">
