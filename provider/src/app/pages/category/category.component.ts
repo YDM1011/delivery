@@ -168,10 +168,12 @@ export class CategoryComponent implements OnInit {
       this.crud.get(`category?query={"companyOwner": "${this.user.companyOwner._id}"}&skip=0&limit=${this.pageSizePagination}`).then((c: any) => {
         if (c) {
           this.categorys = c;
+          this.lengthPagination = this.categorys.length;
         }
       });
     } else {
       this.categorys = e;
+      this.lengthPagination = this.categorys.length;
     }
   }
   pageEvent(e) {

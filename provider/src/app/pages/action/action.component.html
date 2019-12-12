@@ -182,7 +182,7 @@
 				<mat-tab label="История акций">
 				</mat-tab>
 			</mat-tab-group>
-			<div class="table-content" *ngIf="actions && actions.length > 0">
+			<div class="table-content">
 				<div class="content" *ngIf="loading">
 					<table *ngIf="actions && actions.length > 0" class="table">
 						<tr class="t-title">
@@ -234,9 +234,9 @@
 							</td>
 							<td>
 								<div class="date">
-                  <div class="top-table-date">
-                    {{item.dateStart | date: 'dd MMMM, yyyy' : null : defLang}}
-                  </div>
+				                  <div class="top-table-date">
+				                    {{item.dateStart | date: 'dd MMMM, yyyy' : null : defLang}}
+				                  </div>
 									<div class="top-table-date">
 										{{item.dateEnd | date: 'dd MMMM, yyyy' : null : defLang}}
 									</div>
@@ -259,9 +259,9 @@
 			               [pageSize]="pageSizePagination"
 			               [pageSizeOptions]="pageSizeOptionsPagination"
 			               (page)="pageEvent($event)"
-			               *ngIf="actions && actions.length > 0">
+			               *ngIf="!showFilter && actions && actions.length > 0">
 			</mat-paginator>
-			<div class="empty-section" *ngIf="!actions || actions.length === 0">
+			<div class="empty-section" *ngIf="!showFilter && actions && actions.length === 0">
 				<p>
 					Акции отсутствуют
 				</p>

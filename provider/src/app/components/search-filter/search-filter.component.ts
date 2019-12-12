@@ -43,7 +43,7 @@ export class SearchFilterComponent implements OnInit {
       }
     }
     else {
-      this.output.emit([]);
+      this.output.emit(false);
     }
   }
 }
