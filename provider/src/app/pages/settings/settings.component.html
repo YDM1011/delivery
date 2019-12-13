@@ -2,63 +2,74 @@
 	<app-loading></app-loading>
 </ng-container>
 <div class="contain">
-	<div class="contain__group">
-		<div class="contain__group-header">
-			<div class="title">
-				Информация поставщика
-			</div>
-			<div class="info-active" *ngIf="user && user.companyOwner">
+	
+	<mat-tab-group animationDuration="0ms" (selectedIndexChange)="changeTab($event)">
+		<mat-tab label="Компания"></mat-tab>
+		<mat-tab label="Время работы"></mat-tab>
+	</mat-tab-group>
+	<ng-container *ngIf="tabIndex === 0">
+		<div class="contain__group">
+			<div class="contain__group-header">
+				<div class="title">
+					Информация поставщика
+				</div>
+				<div class="info-active" *ngIf="user && user.companyOwner">
 		<span>
 			{{user.companyOwner.payInfo ? "Оплачено до" + user.companyOwner.payInfo : "Не оплачено"}}
 		</span>
-				<button class="active-button" [routerLink]="'/pay-info'">{{user.companyOwner.payInfo ? 'Продлить' : 'Оплатить'}}</button>
+					<button class="active-button" [routerLink]="'/pay-info'">{{user.companyOwner.payInfo ? 'Продлить' : 'Оплатить'}}</button>
+				</div>
 			</div>
-		</div>
-		
-		<div class="add-section" *ngIf="loading && company">
-			<form (keyup)="formCheck()">
-				<mat-form-field class="example-full-width">
-					<input type="text" placeholder="Название комнании" aria-label="Text" name="name" matInput [(ngModel)]="companyCopy.name">
-				</mat-form-field>
-				<mat-form-field class="example-full-width">
-					<input type="tel" placeholder="Номер телефона компании" aria-label="Text" name="phone" matInput [(ngModel)]="companyCopy.companyMobile">
-				</mat-form-field>
-				<mat-form-field class="example-full-width">
-					<input type="text" placeholder="Адресс компании" aria-label="Text" name="address" matInput [(ngModel)]="companyCopy.address">
-				</mat-form-field>
-				<mat-form-field class="example-half" *ngIf="city && city.length > 0">
-					<mat-label>Город</mat-label>
-					<mat-select #o [(value)]="cityChoose" (selectionChange)="changeCity(o.value)">
-						<mat-option *ngFor="let item of city" [value]="item._id">
-							{{item.name}}
-						</mat-option>
-					</mat-select>
-				</mat-form-field>
-				
-				<div class="pass" *ngIf="user.role === 'provider'">
+			
+			<div class="add-section" *ngIf="loading && company">
+				<form (keyup)="formCheck()">
 					<mat-form-field class="example-full-width">
-						<input type="text" placeholder="Новый пароль" name="password" (keyup)="passErr = ''" matInput [(ngModel)]="newPass">
+						<input type="text" placeholder="Название комнании" aria-label="Text" name="name" matInput [(ngModel)]="companyCopy.name">
 					</mat-form-field>
-					<p class="status error" *ngIf="passErr">{{passErr}}</p>
-					<button *ngIf="newPass.length>0" class="main-button-color" (click)="setNewPass()">Изменить</button>
-				</div>
-			</form>
-			<a [routerLink]="'/work-time'" class="link">Время работы</a>
-			<div class="group-buttons">
-				<div class="left">
-					<ng-container *ngIf="companyCopy && companyCopy.img; else upload">
-						<div class="mat-chip-file">
-							<div class="content">{{companyCopy.img.split('--')[1]}}</div>
-							<div class="remove-mat-chip" (click)="companyCopy.img = ''; formCheck()"></div>
-						</div>
-					</ng-container>
-				</div>
-				<div class="right" *ngIf="isBlok">
-					<button class="main-button-color" (click)="create()">Сохранить</button>
+					<mat-form-field class="example-full-width">
+						<span matPrefix>+380 &nbsp;</span>
+						<input type="tel" placeholder="Номер телефона компании" aria-label="Text" name="phone" matInput [(ngModel)]="companyCopy.companyMobile">
+					</mat-form-field>
+					<mat-form-field class="example-full-width">
+						<input type="text" placeholder="Адресс компании" aria-label="Text" name="address" matInput [(ngModel)]="companyCopy.address">
+					</mat-form-field>
+					<mat-form-field class="example-half" *ngIf="city && city.length > 0">
+						<mat-label>Город</mat-label>
+						<mat-select #o [(value)]="cityChoose" (selectionChange)="changeCity(o.value)">
+							<mat-option *ngFor="let item of city" [value]="item._id">
+								{{item.name}}
+							</mat-option>
+						</mat-select>
+					</mat-form-field>
+					
+					<div class="pass" *ngIf="user.role === 'provider'">
+						<mat-form-field class="example-full-width">
+							<input type="text" placeholder="Новый пароль" name="password" (keyup)="passErr = ''" matInput [(ngModel)]="newPass">
+						</mat-form-field>
+						<p class="status error" *ngIf="passErr">{{passErr}}</p>
+						<button *ngIf="newPass.length>0" class="main-button-color" (click)="setNewPass()">Изменить</button>
+					</div>
+				</form>
+<!--				<a [routerLink]="'/work-time'" class="link">Время работы</a>-->
+				<div class="group-buttons">
+					<div class="left">
+						<ng-container *ngIf="companyCopy && companyCopy.img; else upload">
+							<div class="mat-chip-file">
+								<div class="content">{{companyCopy.img.split('--')[1]}}</div>
+								<div class="remove-mat-chip" (click)="companyCopy.img = ''; formCheck()"></div>
+							</div>
+						</ng-container>
+					</div>
+					<div class="right" *ngIf="isBlok">
+						<button class="main-button-color" (click)="create()">Сохранить</button>
+					</div>
 				</div>
 			</div>
 		</div>
-	</div>
+	</ng-container>
+	<ng-container *ngIf="tabIndex === 1">
+		<app-work-time></app-work-time>
+	</ng-container>
 </div>
 
 <ng-template #upload>

@@ -41,6 +41,10 @@ export class ProviderItemComponent implements OnInit, OnDestroy {
     t3: {
       ru: 'акция',
       ua: 'акція'
+    },
+    work: {
+      ru: 'График работы',
+      ua: 'Графік роботи'
     }
   };
   constructor(

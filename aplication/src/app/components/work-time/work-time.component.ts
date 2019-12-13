@@ -10,6 +10,10 @@ export class WorkTimeComponent implements OnInit {
   @Input() data;
   public detail = false;
   public language;
+  public translate = {
+    ru: 'График работы',
+    ua: 'Графік роботи'
+  };
   constructor(
     private auth: AuthService
   ) { }
