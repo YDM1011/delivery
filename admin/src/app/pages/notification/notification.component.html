@@ -14,6 +14,7 @@
 			</mat-form-field>
 			<div class="block-check">
 				<mat-checkbox class="check-item" [(ngModel)]="globalAction" name="global" (change)="changeTypeActionGlobal()">Глобальное уведомление</mat-checkbox>
+				<mat-checkbox class="check-item" [(ngModel)]="cityAction" name="city" (change)="changeTypeActionCity()">Для города</mat-checkbox>
 				<mat-checkbox class="check-item" [(ngModel)]="userAction" name="user" (change)="changeTypeActionUser()">Для клиента</mat-checkbox>
 			</div>
 			<div class="chips-box" *ngIf="userChoose && userChoose.length > 0">
@@ -46,6 +47,14 @@
 						</div>
 					</mat-option>
 				</mat-autocomplete>
+			</mat-form-field>
+			<mat-form-field class="example-full-width" *ngIf="cityAction && city && city.length>0">
+          <mat-label>Город</mat-label>
+          <mat-select (valueChange)="setCityFiltr($event)">
+            <mat-option *ngFor="let item of city" [value]="item._id">
+              {{item.name}}
+            </mat-option>
+          </mat-select>
 			</mat-form-field>
 			<div class="group-buttons">
 				<div class="left">

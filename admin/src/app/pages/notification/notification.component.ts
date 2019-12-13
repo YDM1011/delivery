@@ -9,21 +9,29 @@ import Swal from "sweetalert2";
 })
 export class NotificationComponent implements OnInit {
   public userAction = false;
+  public cityAction = false;
   public globalAction = true;
   public userChoose = [];
   public inputChange;
+  public city=[];
   public searchUser = [];
   public notification = {
     title: '',
     description: '',
     notificationGlobal: true,
-    client: []
+    client: [],
+    city: ''
   };
   constructor(
       private crud: CrudService
   ) { }
 
   ngOnInit() {
+    this.crud.get('city').then((c: any) => {
+      if (c && c.length > 0) {
+        this.city = c;
+      }
+    });
   }
   create(e) {
     e.preventDefault();
@@ -32,7 +40,7 @@ export class NotificationComponent implements OnInit {
       return;
     }
     if (!this.globalAction) {
-      if(this.userChoose.length === 0) {
+      if(this.userChoose.length === 0 && !this.notification.city) {
         Swal.fire('Error', 'Выберите клиентов для уведомления', 'error');
         return;
       }
@@ -52,8 +60,12 @@ export class NotificationComponent implements OnInit {
           title: '',
           description: '',
           notificationGlobal: true,
-          client: []
-        }
+          client: [],
+          city:''
+        };
+        this.globalAction = true;
+        this.userAction = false;
+        this.cityAction = false;
       }
     })
   }
@@ -72,7 +84,9 @@ export class NotificationComponent implements OnInit {
     this.userChoose.splice(i, 1);
     this.notification.client.splice(i, 1);
   }
-
+  setCityFiltr(id){
+    this.notification.city = id
+  }
   pushUser(i) {
     const index = this.crud.find('_id', i._id, this.userChoose);
     if (index === undefined) {
@@ -85,18 +99,33 @@ export class NotificationComponent implements OnInit {
   changeTypeActionGlobal() {
     if (this.globalAction) {
       this.userAction = false;
+      this.cityAction = false;
+      this.notification.client = [];
+      this.notification.city = '';
+      this.userChoose = [];
+    } else if (!this.cityAction) {
+      this.cityAction = true;
+    }
+  }
+  changeTypeActionCity() {
+    if (this.cityAction) {
+      this.userAction = false;
+      this.globalAction = false;
       this.notification.client = [];
       this.userChoose = [];
     } else if (!this.userAction) {
       this.userAction = true;
+      this.notification.city = '';
     }
   }
   changeTypeActionUser() {
     if (this.userAction) {
       this.globalAction = false;
-    } else if (!this.userAction) {
+      this.cityAction = false;
+    } else if (!this.globalAction) {
       this.globalAction = true;
       this.notification.client = [];
+      this.notification.city = '';
       this.userChoose = [];
     }
   }

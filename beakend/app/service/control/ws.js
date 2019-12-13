@@ -140,11 +140,23 @@ const messageSend = (event, WSDB) => {
         //         data: res.data
         //     }));
         // });
+        if (typeof to === 'object' && to.length > 0){
+            to.forEach(it=>{
+                if (WSDB[it]){
+                    WSDB[it].send(JSON.stringify({
+                        event: event,
+                        data: res.data
+                    }));
+                }
+            })
 
-        WSDB[to].send(JSON.stringify({
-            event: event,
-            data: res.data
-        }));
+        } else {
+            WSDB[to].send(JSON.stringify({
+                event: event,
+                data: res.data
+            }));
+        }
+
 
         // wss.clients.forEach(client=>{
         //     let triger;
@@ -161,12 +173,12 @@ const messageSend = (event, WSDB) => {
         // });
     };
     const sendAll = (event) => {
-            wss.clients.forEach(client=>{
-                client.send(JSON.stringify({
-                    event: event,
-                    data: res.data
-                }));
-            });
+        wss.clients.forEach(client=>{
+            client.send(JSON.stringify({
+                event: event,
+                data: res.data
+            }));
+        });
     };
     const send = (event, data) => {
         if (res.to === 'admin'){
