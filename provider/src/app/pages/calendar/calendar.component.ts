@@ -17,6 +17,7 @@ export class CalendarComponent implements OnInit {
   public dataSet;
   public triger = true;
   public inputChange;
+  public showFilterPag = true;
   public query=JSON.stringify({});
   public populate='populate='+ JSON.stringify({
     path:'clientOwner',
@@ -27,11 +28,16 @@ export class CalendarComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.crud.get(`companyClient?query=${this.query}&${this.populate}&skip=0&limit=${this.pageSizePagination}`).then((v:any)=>{
-      if (v && v[0] && v[0]._id) {
-        this.dataPayed = v;
+    this.crud.get(`companyClient/count?query=${this.query}&${this.populate}&skip=0&limit=${this.pageSizePagination}`).then((count:any)=>{
+      if (count) {
+        this.lengthPagination = count.count;
+        this.crud.get(`companyClient?query=${this.query}&${this.populate}&skip=0&limit=${this.pageSizePagination}`).then((v:any)=>{
+          if (v && v[0] && v[0]._id) {
+            this.dataPayed = v;
+          }
+          this.loaded = true
+        })
       }
-      this.loaded = true
     })
   }
 
@@ -40,7 +46,6 @@ export class CalendarComponent implements OnInit {
       data['addresses'] = [];
       data.addresses = address;
       this.data = data;
-      console.log(data)
     })
   }
   close(){
@@ -67,11 +72,11 @@ export class CalendarComponent implements OnInit {
           {mobile: {$regex: this.inputChange, $options: 'gi'}},
           {name: {$regex: this.inputChange, $options: 'gi'}}
         ]});
+
       this.crud.get(`companyClient?query=${this.query}&${this.populate}&skip=0&limit=${this.pageSizePagination}`).then((c: any) => {
-        if (!c) {
-          return;
-        }
+        if (!c) {return; }
         this.dataPayed = c;
+        this.lengthPagination = this.dataPayed.length;
         this.loaded = true;
       });
     }

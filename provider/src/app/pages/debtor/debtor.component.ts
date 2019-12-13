@@ -21,6 +21,7 @@ export class DebtorComponent implements OnInit {
   public addShow = false;
   public editShow = false;
   public isBlok = false;
+  public searchFilter = false;
   public searchDebtors = [];
   public debtors = [];
   public minDate = new Date();
@@ -160,15 +161,18 @@ export class DebtorComponent implements OnInit {
     }
   }
   searchDeb () {
+    this.searchArr = [];
     if (this.searchDebtor) {
       this.crud.get(`debtorSearch/${this.searchDebtor}`).then((v: any) => {
-        if (v) {
+        if (v && v.debtor) {
           this.searchArr.push(v);
+          this.searchFilter = true;
           this.loading = true;
         }
       })
     } else {
       this.searchArr = [];
+      this.searchFilter = false;
       this.getDebtors();
     }
   }
@@ -321,10 +325,12 @@ export class DebtorComponent implements OnInit {
       this.crud.get(`debtor?query={"companyOwner": "${this.user.companyOwner._id}"}${this.populate}&skip=0&limit=${this.pageSizePagination}`).then((d: any) => {
         if (d) {
           this.debtors = d;
+          this.lengthPagination = this.debtors.length;
         }
       });
     } else {
       this.debtors = e;
+      this.lengthPagination = this.debtors.length;
     }
   }
   pageEvent(e) {

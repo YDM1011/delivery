@@ -34,16 +34,15 @@
       <td>
         <div class="date">
           <div class="top-table-date">
-            {{data.lastUpdate | date: 'dd MMMM, yyyy' : null : defLang}}
+            {{data.lastUpdate | date: 'dd MMMM, yyyy'}}
           </div>
           <div class="bottom-table-date">
-            {{data.lastUpdate | date: 'HH:mm' : null : defLang}}
+            {{data.lastUpdate | date: 'HH:mm'}}
           </div>
         </div>
       </td>
       <td>
         <ng-container *ngIf="data.pushDay && data.pushDay.length > 0">
-
           в
           <ng-container *ngFor="let day of data.pushDay">
             {{days[day]}}
@@ -62,7 +61,9 @@
 <mat-paginator [length]="lengthPagination"
                [pageSize]="pageSizePagination"
                [pageSizeOptions]="pageSizeOptionsPagination"
-               (page)="pageEvent($event)">
+               (page)="pageEvent($event)"
+                *ngIf="dataPayed && dataPayed.length>0"
+>
 </mat-paginator>
 
 <div class="detail-data" *ngIf="data">

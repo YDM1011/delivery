@@ -139,9 +139,12 @@ export class ProductComponent implements OnInit {
       this.crud.get(`order?query={"companyOwner":"${this.companyId}"}&populate={"path":"categoryOwner","populate":"mainCategory","select":"mainCategory subCategory"}&skip=0&limit=${this.pageSizePagination}`).then((p: any) => {
         if (!p) {return; }
         this.products = p;
+        this.lengthPagination = this.products.length;
       });
     } else {
       this.products = e;
+      this.lengthPagination = this.products.length;
+
     }
   }
   pageEvent(e) {
