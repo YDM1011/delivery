@@ -131,7 +131,7 @@ const callDB = (Model, and, res) => {
                         sum: r[0].sum,
                         count: r[0].count
                     };
-                    if (r1) {
+                    if (r1 && r1[0]) {
                         obj['debtor'] = r1[0].value;
                     }
 
