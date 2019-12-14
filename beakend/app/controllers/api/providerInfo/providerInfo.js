@@ -129,9 +129,12 @@ const callDB = (Model, and, res) => {
                 }]).then(r1 => {
                     let obj = {
                         sum: r[0].sum,
-                        count: r[0].count,
-                        debtor: r1[0].value,
+                        count: r[0].count
                     };
+                    if (r1) {
+                        obj['debtor'] = r1[0].value;
+                    }
+
                     res.ok(obj)
                 });
     }).catch(e => res.serverError(e))
