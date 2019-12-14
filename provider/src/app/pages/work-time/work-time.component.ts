@@ -51,10 +51,14 @@ export class WorkTimeComponent implements OnInit {
   }
   setTimeStart(range, v) {
     this.time[range].timeStart = v;
+    this.time[range].isTimeRange = false;
+    this.time[range].isWeekend = false;
     this.isBlok = true;
   }
   setTimeEnd(range, v) {
     this.time[range].timeEnd = v;
+    this.time[range].isTimeRange = false;
+    this.time[range].isWeekend = false;
     this.isBlok = true;
   }
   saveTime(isAllert = true) {
