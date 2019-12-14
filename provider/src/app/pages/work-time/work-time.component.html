@@ -1,10 +1,10 @@
 <div class="contain">
 	<div class="contain__group">
-		<div class="contain__group-header">
-			<div class="title">
-				Настройка времени роботы
-			</div>
-		</div>
+<!--		<div class="contain__group-header">-->
+<!--			<div class="title">-->
+<!--				Настройка времени роботы-->
+<!--			</div>-->
+<!--		</div>-->
 		
 		<div class="add-section" *ngIf="time">
 			<mat-form-field class="example-full-width">
@@ -214,7 +214,7 @@
 				</div>
 				<div class="right" *ngIf="isBlok">
 <!--					<button class="main-button" (click)="cancelAdd()">Отмена</button>-->
-					<button class="main-button-color" (click)="saveTime()">Сохранить</button>
+					<button class="main-button-color" (click)="saveTime(); isBlok = false">Сохранить</button>
 				</div>
 			</div>
 		</div>

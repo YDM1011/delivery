@@ -20,6 +20,7 @@ export class SettingsComponent implements OnInit {
   public body = {};
   public newPass = '';
   public passErr = '';
+  public tabIndex = 0;
   constructor(
       private crud: CrudService,
       private auth: AuthService
@@ -63,7 +64,7 @@ export class SettingsComponent implements OnInit {
   create() {
     this.body['img'] = this.companyCopy.img;
     this.crud.post('company', this.body, this.company._id).then((v: any) => {
-      this.user.companies[0] = v;
+      this.user.companyOwner = v;
       this.company = Object.assign({}, v);
       this.companyCopy = Object.assign({}, v);
       this.auth.setMe(this.user);
@@ -98,5 +99,9 @@ export class SettingsComponent implements OnInit {
 
   formCheck() {
     this.btnBlok(this.validate());
+  }
+
+  changeTab(e){
+    this.tabIndex = e;
   }
 }
