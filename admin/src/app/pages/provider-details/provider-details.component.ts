@@ -38,17 +38,18 @@ export class ProviderDetailsComponent implements OnInit {
     this.dateStart.setDate(this.dateStart.getDate() -7);
     this.route.params.subscribe(() => {
       this.id = this.route.snapshot.paramMap.get('id');
-      this.getBaskets(this.id);
-      this.getProvider(this.id);
-      this.getCounts(this.id);
-      this.getfortime(this.id);
+      if (this.id) {
+        this.getfortime(this.id);
+        this.getBaskets(this.id);
+        this.getProvider(this.id);
+        this.getCounts(this.id);
+      }
     });
   }
   getfortime(id){
     const dateStart = new Date(this.dateStart.getMonth()+1+'.'+(this.dateStart.getDate()) +'.'+new Date().getFullYear()).getTime();
     const dateEnd = new Date(this.dateEnd.getMonth()+1+'.'+(this.dateEnd.getDate()+1) +'.'+new Date().getFullYear()).getTime()-1;
     const query = JSON.stringify({from: dateStart, to:dateEnd});
-
     this.crud.get(`providerInfo/${id}/4?query=${query}`).then((v: any)=>{
       if (v && v.length>0) {
         this.countForTime =v[0];

@@ -170,10 +170,10 @@
 					{{countForTime ? countForTime.count : 0}} заказов
 				</td>
 				<td class="all-col">
-					{{countForTime ? countForTime.debtor : 0}} грн.
+					{{countForTime && countForTime.debtor  ? countForTime.debtor : 0}} грн.
 				</td>
 				<td class="all-col">
-					{{countForTime ? countForTime.sum : 0}} грн.
+					{{countForTime ? countForTime.sum + 'грн.' : '-'}}
 				</td>
 			</tr>
 		</table>

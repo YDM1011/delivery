@@ -48,6 +48,7 @@ import { NotificationComponent } from './pages/notification/notification.compone
 import { PopupDirective } from './directives/popup.directive';
 import { FilterComponent } from './components/filter/filter.component';
 import {SearchFilterComponent} from "./components/search-filter/search-filter.component";
+import { DashItemComponent } from './components/dash-item/dash-item.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -82,6 +83,7 @@ import {SearchFilterComponent} from "./components/search-filter/search-filter.co
     NotificationComponent,
     PopupDirective,
     FilterComponent,
+    DashItemComponent,
   ],
   imports: [
     LottieAnimationViewModule.forRoot(),
