@@ -73,7 +73,7 @@ button {
 button svg{
   display: block;
   width: 25px;
-  box-shadow: 0px 2px 15px 1px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 2px 15px 1px rgba(0, 0, 0, 0.4);
   transition: 0.5s;
   cursor: pointer;
   border-radius: 50%;
@@ -93,7 +93,8 @@ button svg{
 .w-day{
   display: flex;
   margin: 0;
-  padding: 0;
+  padding: 0 0 20px;
+  overflow-x: auto;
 }
 .day{
   list-style: none;
@@ -103,6 +104,11 @@ button svg{
   padding: 5px 15px;
   border-radius: 5px;
   transition: .3s;
+  &.active{
+    background: #009688;
+    border: 1px solid #009688;
+    color: #fff;
+  }
 }
 .day:hover{
   background: #009688;
@@ -122,9 +128,10 @@ button svg{
   padding: 5px 10px;
   transition: .5s;
   cursor: pointer;
+  margin-top: 25px;
 }
 .btn button:hover{
-  box-shadow: 0 0px 15px rgba(0,0,0,.1);
+  box-shadow: 0 0 15px rgba(0,0,0,.1);
 }
 table {
   border-collapse: collapse;

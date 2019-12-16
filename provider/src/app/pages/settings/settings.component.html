@@ -28,7 +28,7 @@
 					</mat-form-field>
 					<mat-form-field class="example-full-width">
 						<span matPrefix>+380 &nbsp;</span>
-						<input type="tel" placeholder="Номер телефона компании" aria-label="Text" name="phone" matInput [(ngModel)]="companyCopy.companyMobile">
+						<input type="tel" placeholder="Номер телефона компании" aria-label="Text" [maxLength]="9" name="phone" matInput [(ngModel)]="companyCopy.companyMobile">
 					</mat-form-field>
 					<mat-form-field class="example-full-width">
 						<input type="text" placeholder="Адресс компании" aria-label="Text" name="address" matInput [(ngModel)]="companyCopy.address">

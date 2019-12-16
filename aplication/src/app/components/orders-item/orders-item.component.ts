@@ -12,6 +12,7 @@ export class OrdersItemComponent implements OnInit {
   public removeOrders = true;
   public debtor = null;
   public debtorShow = false;
+  public loadDeb = false;
   public language;
   @Output() removeOrder = new EventEmitter();
   @Output() confirmOrder = new EventEmitter();
@@ -53,6 +54,18 @@ export class OrdersItemComponent implements OnInit {
     t9: {
       ru: 'Ваш долг по заказу',
       ua: 'Ваш борг по замовленню'
+    },
+    status1: {
+      ru: 'Ваш заказ принят. К оплате ',
+      ua: 'Ваше замовлення прийняте. До оплати '
+    },
+    status4Done: {
+      ru: 'Ваш заказ выполнен. Оплачено ',
+      ua: 'Ваше замовлення виконане. Оплачено  '
+    },
+    status4Debtor: {
+      ru: 'Ваш заказ выполнен. К оплате ',
+      ua: 'Ваше замовлення виконане. До оплати  '
     }
   };
   constructor(
@@ -74,6 +87,7 @@ export class OrdersItemComponent implements OnInit {
         this.debtor = 0;
         this.debtorShow = false;
       }
+      this.loadDeb = true;
     });
   }
   getProduct() {

@@ -11,7 +11,8 @@
 				</mat-hint>
 			</mat-form-field>
 			<mat-form-field class="example-full-width">
-				<input type="text" placeholder="Телефон (*без коду країни)" aria-label="Text" name="login" matInput [(ngModel)]="client.login" autocomplete="off">
+				<span matPrefix>+380 &nbsp;</span>
+				<input type="text" placeholder="Телефон" [maxLength]="9" aria-label="Text" name="login" matInput [(ngModel)]="client.login" autocomplete="off">
 				<mat-hint>
 					<span class="error" *ngIf="dataError.login && !client['login']">{{errors[dataError.login][language]}}</span>
 					<span class="error" *ngIf="dataError.loginError">{{errors[dataError.loginError][language]}}</span>
@@ -24,7 +25,7 @@
 				</mat-hint>
 			</mat-form-field>
 			<mat-form-field class="example-full-width">
-				<input type="text" placeholder="Название компанії" aria-label="Text" name="name company" matInput [(ngModel)]="company.name" autocomplete="off">
+				<input type="text" placeholder="Название компании" aria-label="Text" name="name company" matInput [(ngModel)]="company.name" autocomplete="off">
 				<mat-hint>
 					<span class="error" *ngIf="dataError.nameCompany && !company['name']">{{errors[dataError.nameCompany][language]}}</span>
 				</mat-hint>

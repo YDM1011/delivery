@@ -306,7 +306,6 @@ export class CrudService {
         links.push({cityLink: it});
       });
       if (this.CompanyArr && this.CompanyArr.length>0) {
-          console.log(this.CompanyArr)
           const query = `?query={"$or":${JSON.stringify(links)},"$or":${JSON.stringify(this.CompanyArr)}${top ? ','+'"isTop"'+':true' : ''}}
       &populate={"path":"companyOwner"}
       &sort={"countBought":-1}&limit=${page}&skip=${limit * page}`;

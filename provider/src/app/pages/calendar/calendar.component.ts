@@ -11,6 +11,7 @@ export class CalendarComponent implements OnInit {
   public pageSizePagination = 10;
   public pageSizeOptionsPagination: number[] = [5, 10, 15];
   public dataPayed = [];
+  public activeDays = [false,false,false,false,false,false,false];
   public loaded = false;
   public data;
   public days = ['Воскресенье','Понедельник','Вторник','Среду','Четверг','Пятницу','Субботу'];
@@ -82,16 +83,26 @@ export class CalendarComponent implements OnInit {
     }
   }
   openSet(d){
-    this.dataSet = d
+    this.dataSet = d;
+    if(this.dataSet.pushDay.length>0){
+      this.dataSet.pushDay.forEach((item) => {
+        this.activeDays[item] = true;
+      })
+    } else{
+      this.activeDays = [false,false,false,false,false,false,false];
+    }
   }
   pushSave(n) {
     if (!this.dataSet['pushDay'] || (this.dataSet['pushDay'].length == 0) || (typeof this.dataSet['pushDay'] != 'object')){
       this.dataSet['pushDay'] = [];
+      this.activeDays = [false,false,false,false,false,false,false];
     }
     if (this.dataSet['pushDay'].indexOf(n) > -1) {
       this.dataSet['pushDay'].splice(this.dataSet['pushDay'].indexOf(n), 1);
+      this.activeDays[n] = false;
     } else {
-      this.dataSet['pushDay'].push(n)
+      this.dataSet['pushDay'].push(n);
+      this.activeDays[n] = true;
     }
   }
   pushSaveSend(d){

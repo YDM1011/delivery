@@ -5,18 +5,18 @@
 	<div class="contain__group open-close-container" [@openClose]="addShow ? true : false" *ngIf="addShow">
 		<div class="contain__group-header">
 			<div class="title">
-				Создать Продукт
+				Создать товар
 			</div>
 		</div>
 		<app-add-product *ngIf="categorys.length > 0" (outputNew)="newProduct($event)" [brands]="brands" [categorys]="categorys" (cancelAdd)="cancelAdd($event)"></app-add-product>
 		<div *ngIf="categorys && categorys.length === 0" class="nocategory">
-			У вас нет категорий, создайте категорию тогда вы сможете создать продукт
+			У вас нет категорий, создайте категорию тогда вы сможете создать товар
 		</div>
 	</div>
 	<div class="contain__group open-close-container" [@openClose]="editShow ? true : false" *ngIf="editShow">
 		<div class="contain__group-header">
 			<div class="title">
-				Редактировать продукт
+				Редактировать товар
 			</div>
 		</div>
 		<app-edit-product (cancelEdit)="cancelEdit($event)" [brands]="brands" (outputChanges)="outputEdit($event)" [categorys]="categorys"  [obj]="editObj"></app-edit-product>
@@ -24,10 +24,10 @@
 	<div class="contain__group">
 		<div class="contain__group-header">
 			<div class="title">
-				Все продукты
+				Все товари
 			</div>
 			<button class="button-add" (click)="openAdd()">
-				<span class="content">Создать продукт</span>
+				<span class="content">Создать товар</span>
 			</button>
 		</div>
 		<div class="main-section">
@@ -106,86 +106,9 @@
 			
 			<div class="empty-section" *ngIf="loading && !products || products.length === 0">
 				<p>
-					У вас нет созданых продуктов
+					У вас нет созданых товаров
 				</p>
 			</div>
-<!--			<ng-container *ngIf="loading">-->
-<!--				<div class="table-p" *ngIf="products && products.length > 0">-->
-<!--					<app-search-filter [inputApi]="'order'" [inputQuery]="'name'" [queryValue]="'companyOwner'" [querySearch]="user.companyOwner" (output)="outputSearch($event)"></app-search-filter>-->
-<!--					<div class="table-content">-->
-<!--						<div class="row-h">-->
-<!--							<div class="col name-c">-->
-<!--								<div class="name-t">-->
-<!--									Назва-->
-<!--								</div>-->
-<!--							</div>-->
-<!--							<div class="col descr">-->
-<!--								<div class="desc-t">-->
-<!--									Описание-->
-<!--								</div>-->
-<!--							</div>-->
-<!--							<div class="col">-->
-<!--								Цена-->
-<!--							</div>-->
-<!--							<div class="col">-->
-<!--								Дата-->
-<!--							</div>-->
-<!--						</div>-->
-<!--						<div class="row-r"  *ngFor="let item of products; let index = index">-->
-<!--							<div class="col name-c">-->
-<!--								<div class="img">-->
-<!--									<app-img [dir]="'product'" [fs]="item.img"></app-img>-->
-<!--								</div>-->
-<!--								<div class="name">-->
-<!--									{{item.name}}-->
-<!--								</div>-->
-<!--							</div>-->
-<!--							<div class="col descr">-->
-<!--								<div class="des">-->
-<!--									{{item.des}}-->
-<!--								</div>-->
-<!--							</div>-->
-<!--							<div class="col">-->
-<!--								<div class="pr">-->
-<!--									<div class="old" [class.active]="item.discount">-->
-<!--										{{item.price}} Грн-->
-<!--									</div>-->
-<!--									<div class="new" *ngIf="item.discount">-->
-<!--										{{item.discount ? item.discount : ''}} Грн-->
-<!--									</div>-->
-<!--								</div>-->
-<!--							</div>-->
-<!--							<div class="col">-->
-<!--								<div class="date">-->
-<!--									<div class="top-table-date">-->
-<!--										{{item.date | date: 'dd MMMM, yyyy'  : null : defLang}}-->
-<!--									</div>-->
-<!--									<div class="bottom-table-date">-->
-<!--										{{item.date | date: 'h:mm a'  : null : defLang}}-->
-<!--									</div>-->
-<!--								</div>-->
-<!--								<div class="buttons">-->
-<!--									<span class="top-btn" (click)="isTop(item)" [class.done]="item.isTop">top</span>-->
-<!--									<span class="edit-btn" (click)="edit(index)" appScrollTop></span>-->
-<!--									<span class="trash-btn" (click)="delete(index)"></span>-->
-<!--								</div>-->
-<!--								-->
-<!--							</div>-->
-<!--						</div>-->
-<!--					</div>-->
-<!--					<mat-paginator [length]="lengthPagination"-->
-<!--					               [pageSize]="pageSizePagination"-->
-<!--					               [pageSizeOptions]="pageSizeOptionsPagination"-->
-<!--					               (page)="pageEvent($event)"-->
-<!--					               *ngIf="products && products.length > 0">-->
-<!--					</mat-paginator>-->
-<!--				</div>-->
-<!--				<div class="empty-section" *ngIf="!products || products.length === 0">-->
-<!--					<p>-->
-<!--						У вас нет созданых продуктов-->
-<!--					</p>-->
-<!--				</div>-->
-<!--			</ng-container>-->
 		</div>
 	</div>
 </div>

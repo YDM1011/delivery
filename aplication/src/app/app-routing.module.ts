@@ -30,6 +30,10 @@ import {EditAddressComponent} from "./pages/edit-address/edit-address.component"
 import {NotificationIdComponent} from "./components/notification-id/notification-id.component";
 import {ForgotComponent} from "./pages/forgot/forgot.component";
 import {ProductAllComponent} from "./pages/product-all/product-all.component";
+import {CategoryProviderComponent} from "./pages/category-provider/category-provider.component";
+import {CategoryProviderItemsComponent} from "./pages/category-provider-items/category-provider-items.component";
+import {ProviderBrandsComponent} from "./pages/provider-brands/provider-brands.component";
+import {ProviderBrandsItemsComponent} from "./pages/provider-brands-items/provider-brands-items.component";
 
 const routes: Routes = [
   {path: ':lang', component: InitLayoutComponent, children: [
@@ -59,6 +63,10 @@ const routes: Routes = [
       {path: 'new-address', component: NewAddressComponent},
       {path: 'action/:id', component: ActionDetailComponent},
       {path: 'notification/:id', component: NotificationIdComponent},
+      {path: 'categoryProvider/:id', component: CategoryProviderComponent},
+      {path: 'brandsProvider/:id', component: ProviderBrandsComponent},
+      {path: 'productCategoryProvider/:id/:company', component: CategoryProviderItemsComponent},
+      {path: 'productBrandsProvider/:id/:company', component: ProviderBrandsItemsComponent},
       {path: 'orders', component: OrdersComponent, canActivate: [IsLoginGuard]},
     ]},
   {path: '', redirectTo: 'ru', pathMatch: 'full'},

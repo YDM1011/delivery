@@ -99,6 +99,12 @@ import { ProductAllComponent } from './pages/product-all/product-all.component';
 import { AllProvidersDirective } from './directives/all-providers.directive';
 import { AllProductDirective } from './directives/all-product.directive';
 import { CancelOrderComponent } from './components/cancel-order/cancel-order.component';
+import { CategoryProviderComponent } from './pages/category-provider/category-provider.component';
+import { CategoryProviderItemsComponent } from './pages/category-provider-items/category-provider-items.component';
+import { ProviderProductsUploadDirective } from './directives/provider-products-upload.directive';
+import { ProvideBrandProductUploadDirective } from './directives/provide-brand-product-upload.directive';
+import { ProviderBrandsComponent } from './pages/provider-brands/provider-brands.component';
+import { ProviderBrandsItemsComponent } from './pages/provider-brands-items/provider-brands-items.component';
 
 @NgModule({
 	declarations: [
@@ -182,6 +188,12 @@ import { CancelOrderComponent } from './components/cancel-order/cancel-order.com
 		AllProvidersDirective,
 		AllProductDirective,
 		CancelOrderComponent,
+		CategoryProviderComponent,
+		CategoryProviderItemsComponent,
+		ProviderProductsUploadDirective,
+		ProvideBrandProductUploadDirective,
+		ProviderBrandsComponent,
+		ProviderBrandsItemsComponent,
 	],
 	imports: [
 		MatCarouselModule,

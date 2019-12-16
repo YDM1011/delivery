@@ -6,8 +6,8 @@
 				Введите номер телефона
 			</p>
 			<label for="login" class="login-label">
-				<span class="absolute">+38</span>
-				<input type="tel" [maxLength]="10" placeholder="0хх ххх хх хх" name="login" id="login" [(ngModel)]="obj.login" autocomplete="off">
+				<span class="absolute">+380</span>
+				<input type="tel" [maxLength]="10" placeholder="" name="login" id="login" [(ngModel)]="obj.login" autocomplete="off">
 			</label>
 			<div class="error" *ngIf="error && error.text !== ''">
 				{{error.text}}

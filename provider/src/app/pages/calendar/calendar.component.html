@@ -148,7 +148,6 @@
         <p>Сообщение будет отправлено в 9:30</p>
         <p>
           <ng-container *ngIf="dataSet.pushDay && dataSet.pushDay.length > 0">
-
             в
             <ng-container *ngFor="let day of dataSet.pushDay">
               {{days[day]}}
@@ -156,13 +155,13 @@
           </ng-container>
         </p>
         <ul class="w-day">
-          <li class="day" (click)="pushSave(1)">Понедельник</li>
-          <li class="day" (click)="pushSave(2)">Вторник</li>
-          <li class="day" (click)="pushSave(3)">Среда</li>
-          <li class="day" (click)="pushSave(4)">Четверг</li>
-          <li class="day" (click)="pushSave(5)">Пятница</li>
-          <li class="day" (click)="pushSave(6)">Суббота</li>
-          <li class="day" (click)="pushSave(0)">Воскресенье</li>
+          <li class="day" [class.active]="activeDays[1]" (click)="pushSave(1)">Понедельник</li>
+          <li class="day" [class.active]="activeDays[2]" (click)="pushSave(2)">Вторник</li>
+          <li class="day" [class.active]="activeDays[3]" (click)="pushSave(3)">Среда</li>
+          <li class="day" [class.active]="activeDays[4]" (click)="pushSave(4)">Четверг</li>
+          <li class="day" [class.active]="activeDays[5]" (click)="pushSave(5)">Пятница</li>
+          <li class="day" [class.active]="activeDays[6]" (click)="pushSave(6)">Суббота</li>
+          <li class="day" [class.active]="activeDays[0]" (click)="pushSave(0)">Воскресенье</li>
         </ul>
         <div class="btn">
           <button class="ibox-tools" (click)="pushSaveSend(dataSet)">Сохранить</button>

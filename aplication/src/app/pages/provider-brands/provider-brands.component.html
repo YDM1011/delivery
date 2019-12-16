@@ -1,0 +1,11 @@
+<div class="other-header">
+	<app-back-btn></app-back-btn>
+	<h2>
+		{{translate.title[language]}}
+	</h2>
+	<app-basket-item></app-basket-item>
+</div>
+
+<div class="other-pages" *ngIf="brands.length > 0">
+	<app-brand-item *ngFor="let item of brands" [obj]="item" [provider]="id"></app-brand-item>
+</div>

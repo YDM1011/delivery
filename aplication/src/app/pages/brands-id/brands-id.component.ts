@@ -55,7 +55,7 @@ export class BrandsIDComponent implements OnInit, OnDestroy {
     this.sort = JSON.stringify({date: -1});
     this._subscription.push(this.route.params.subscribe((params: any) => {
       this.id = this.route.snapshot.paramMap.get('id');
-      if (!this.id) return
+      if (!this.id) return;
       this.init()
     }));
     this._subscription.push(this.auth.onLanguage.subscribe((v: string) => {

@@ -66,6 +66,5 @@ export class CategoryProductUploadDirective implements AfterViewInit, OnChanges{
           this.output.emit(v);
         }
     });
-
   }
 }

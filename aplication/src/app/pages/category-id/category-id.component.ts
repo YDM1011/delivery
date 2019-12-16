@@ -1,17 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {AuthService} from '../../auth.service';
 import {ActivatedRoute} from '@angular/router';
 import {CrudService} from '../../crud.service';
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-category-id',
   templateUrl: './category-id.component.html',
   styleUrls: ['./category-id.component.scss']
 })
-export class CategoryIDComponent implements OnInit {
+export class CategoryIDComponent implements OnInit, OnDestroy {
   public id: string;
   public language;
-  public orders;
+  public orders = [];
   public city;
   public sort;
   public filter;
@@ -21,6 +22,7 @@ export class CategoryIDComponent implements OnInit {
   public CityLinksArr = [];
   public companyIdArr = [];
   public copyfilterObj;
+  private _subscription: Subscription[] = [];
 
   public translate ={
     sort1: {
@@ -52,14 +54,14 @@ export class CategoryIDComponent implements OnInit {
 
   ngOnInit() {
     this.sort = JSON.stringify({date: -1});
-    this.route.params.subscribe(() => {
+    this._subscription.push(this.route.params.subscribe(() => {
       this.id = this.route.snapshot.paramMap.get('id');
+      if (!this.id) return;
       this.init();
-    });
+    }));
     this.auth.onLanguage.subscribe((v: string) => {
       this.language = v;
     });
-
   }
   init() {
     this.auth.onCity.subscribe((city: any) => {
@@ -83,7 +85,7 @@ export class CategoryIDComponent implements OnInit {
               });
             }
             const query = `?query={"$and":[${arr.length > 0 ? JSON.stringify( {$or: arr} ) : {} },{"mainCategory":"${this.mainCategory._id}"}],"companyOwner":${JSON.stringify( {$in:this.companyIdArr})}}&populate={"path":"companyOwner"}&skip=0&limit=5&sort=${this.sort}`;
-            this.crud.get('order', '',  query).then((orders) => {
+            this.crud.get('order', '',  query).then((orders: any) => {
               this.orders = orders;
             });
           });
@@ -104,7 +106,7 @@ export class CategoryIDComponent implements OnInit {
     }
 
     const query = `?query={"$and":[${arr.length > 0 ? JSON.stringify( {$or: arr} ) : {} },{"mainCategory":"${this.mainCategory._id}"}${this.filter ? this.filter : ''}],"companyOwner":${JSON.stringify( {$in:this.companyIdArr})}}&populate={"path":"companyOwner"}&skip=0&limit=5&sort=${this.sort}`;
-    this.crud.get('order', '',  query).then((orders) => {
+    this.crud.get('order', '',  query).then((orders: any) => {
       this.orders = orders;
     });
   }
@@ -131,5 +133,11 @@ export class CategoryIDComponent implements OnInit {
   }
   getOutput(e) {
     this.orders = this.orders.concat(e);
+  }
+  ngOnDestroy() {
+    this._subscription.forEach((item) => {
+      item.unsubscribe();
+    });
+    this.id = ''
   }
 }
