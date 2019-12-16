@@ -7,5 +7,7 @@
 </div>
 
 <div class="other-pages">
-	<app-category-item *ngFor="let item of category" [obj]="item" [provider]="true"></app-category-item>
+	<ng-container *ngFor="let item of category">
+		<app-category-item *ngIf="item.mainCategory" [obj]="item" [provider]="true"></app-category-item>
+	</ng-container>
 </div>
