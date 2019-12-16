@@ -35,11 +35,10 @@ export class ProviderBrandsComponent implements OnInit {
   }
 
   init(id){
-    this.crud.get(`company?query={"_id":"${id}"}&select="brands"&populate={"path":"brands"}`).then((v: any) => {
+    this.crud.get(`company?query={"_id":"${id}"}&select="brands"&populate={"path":"brands","populate":"mainCategory"}`).then((v: any) => {
       if (v && v.length>0){
         this.brands = v[0].brands;
       }
     })
   }
-
 }

@@ -36,9 +36,9 @@ export class CategoryProviderComponent implements OnInit {
   }
 
   init(id){
-    this.crud.get(`category?query{"companyOwner":"${id}"}&select=name,mainCategory,companyOwner&populate={"path":"mainCategory"}`).then((v: any) => {
+    this.crud.get(`company?query={"_id":"${id}"}&select="categories"&populate={"path":"categories","populate":"mainCategory"}`).then((v: any) => {
       if (v) {
-        this.category = v;
+        this.category = v[0].categories;
       }
     })
   }
