@@ -23,7 +23,8 @@ export class WorkTimeComponent implements OnInit {
       this.language = v;
     })
   }
-  show(){
+  show(e){
+    e.stopPropagation();
     this.detail = !this.detail
   }
   close() {
