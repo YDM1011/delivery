@@ -33,7 +33,7 @@ module.exports = {
     },
     send: (mes, topic = 'all', token = null) => {
         return new Promise((rs,rj)=> {
-            mes.push({icon: "fcm_push_icon"});
+            // mes.push({icon: "fcm_push_icon"});
             let message = {
                 notification: mes,
                 android: {
