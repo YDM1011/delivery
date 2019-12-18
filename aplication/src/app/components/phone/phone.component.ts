@@ -21,6 +21,9 @@ export class PhoneComponent implements OnInit {
 
   ngOnInit() {
     if (this.number) {
+      if (this.other){
+        this.number = this.number.slice(1,10);
+      }
       this.mainPhone = this.number;
       this.firstModel = this.number.slice(0, 2);
       this.secondModel = this.number.slice(2, 5);
@@ -35,30 +38,4 @@ export class PhoneComponent implements OnInit {
     this.phoneNumber = '+380' + this.firstModel + this.secondModel  + this.thirdModel;
     this.phone.emit(this.phoneNumber);
   }
-  // keyPressFirst() {
-  //   this.phoneNumber = '+38' + this.firstModel + this.secondModel  + this.thirdModel;
-  //   if (this.firstModel.length > 2 ) {
-  //     this.secondInput.nativeElement.focus();
-  //     this.secondModel = '';
-  //   }
-  // }
-  // keyPressSecond(e) {
-  //   this.phoneNumber = '+38' + this.firstModel + this.secondModel  + this.thirdModel;
-  //   if (e.keyCode === 8 && this.secondModel.length === 0) {
-  //     this.firstInput.nativeElement.focus();
-  //   }
-  //   if (this.secondModel.length > 2) {
-  //     this.thirdInput.nativeElement.focus();
-  //     this.thirdModel = '';
-  //   }
-  //   console.log(this.phoneNumber);
-  // }
-  // keyPressThird(e) {
-  //   this.phoneNumber = '+38' + this.firstModel + this.secondModel + this.thirdModel;
-  //   this.phone.emit(this.phoneNumber);
-  //   if (e.keyCode === 8 && this.thirdModel.length === 0) {
-  //     this.secondInput.nativeElement.focus();
-  //   }
-  //   console.log(this.phoneNumber);
-  // }
 }

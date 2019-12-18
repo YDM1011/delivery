@@ -88,8 +88,6 @@ export class OrdersItemComponent implements OnInit {
         this.debtorShow = false;
       }
       this.loadDeb = true;
-      console.log(this.debtor);
-      console.log(this.debtorShow);
     });
   }
   getProduct() {

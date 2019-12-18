@@ -1,12 +1,24 @@
-<div class="phone" [class.phone-other]="other">
-  <div class="block">
-    <input type="text" class="mainPhone" [(ngModel)]="mainPhone" (keyup)="splitPhone()" [maxLength]="9" pattern="[0-9]{9}" autocomplete="off" numbersOnly numericType="number" >
+<ng-container *ngIf="!other">
+  <div class="phone">
+    <div class="block">
+      <input type="text" class="mainPhone" [(ngModel)]="mainPhone" (keyup)="splitPhone()" [maxLength]="9" pattern="[0-9]{9}" autocomplete="off" numbersOnly numericType="number" >
+    </div>
+    <div class="text">
+      +380
+    </div> <input type="text" disabled [(ngModel)]="firstModel" autocomplete="off" numbersOnly numericType="number" />
+    - <input type="text" disabled [(ngModel)]="secondModel" autocomplete="off" numbersOnly numericType="number">
+    - <input type="text" disabled [(ngModel)]="thirdModel" autocomplete="off" numbersOnly numericType="number">
   </div>
-  <div class="text">
-    +380
-  </div> <input type="text" disabled [(ngModel)]="firstModel" autocomplete="off" numbersOnly numericType="number" />
-   - <input type="text" disabled [(ngModel)]="secondModel" autocomplete="off" numbersOnly numericType="number">
-  - <input type="text" disabled [(ngModel)]="thirdModel" autocomplete="off" numbersOnly numericType="number">
-</div>
-
-
+</ng-container>
+<ng-container *ngIf="other">
+  <div class="phone" [class.phone-other]="other">
+    <div class="block">
+      <input type="text" class="mainPhone" disabled="true" [(ngModel)]="mainPhone" (keyup)="splitPhone()" [maxLength]="9" pattern="[0-9]{9}" autocomplete="off" numbersOnly numericType="number" >
+    </div>
+    <div class="text">
+      +380
+    </div> <input type="text" disabled [(ngModel)]="firstModel" autocomplete="off" numbersOnly numericType="number" />
+    - <input type="text" disabled [(ngModel)]="secondModel" autocomplete="off" numbersOnly numericType="number">
+    - <input type="text" disabled [(ngModel)]="thirdModel" autocomplete="off" numbersOnly numericType="number">
+  </div>
+</ng-container>
