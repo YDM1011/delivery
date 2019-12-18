@@ -64,6 +64,11 @@ export class AppComponent {
           });
         }
       }
+    }).catch((error)=> {
+      if(error && error.error === 'Token error'){
+        this.clearLocal();
+        location.reload();
+      }
     });
     this.auth.onMe.subscribe((me: any) => {
       if (me) {
@@ -83,5 +88,10 @@ export class AppComponent {
         }
       }
     });
+  }
+
+  clearLocal(){
+    this.localStorage.removeItem('userId');
+    this.localStorage.removeItem('token');
   }
 }
