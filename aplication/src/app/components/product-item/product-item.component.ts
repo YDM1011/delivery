@@ -17,8 +17,8 @@ export class ProductItemComponent implements OnInit, OnDestroy {
   @Input() company;
   private _subscription: Subscription[] = [];
   public snackMessage = {
-    ru: 'Товар додан в корзину',
-    ua: 'Товар доданий у кошик'
+    ru: 'Товар в корзине',
+    ua: 'Товар у кошику'
   };
   public snackMessageLogin = {
     ru: 'Войдите или зарегестрируйтесь',
