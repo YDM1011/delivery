@@ -75,6 +75,9 @@ export class SigninComponent implements OnInit {
       if (error.error === "Password or login invalid! 2") {
         this.dataError.invalid = "invalid_e";
       }
+      if (error.error === "Password or login invalid!") {
+        this.dataError.invalid = "invalid_e";
+      }
     });
   }
 

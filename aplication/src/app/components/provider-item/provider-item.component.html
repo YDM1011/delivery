@@ -2,7 +2,6 @@
   <a routerLink="/{{language}}/provider/{{data._id}}" class="popular-item">
     <div class="sale">
       <div class="top" *ngIf="isTop"></div>
-      <!--    <div class="sale"></div>-->
     </div>
     <div class="img">
       <app-img [dir]="'avatar'" [fs]="data.img" [anyFs]="'assets/images/provider.svg'"></app-img>
@@ -12,10 +11,10 @@
         {{data.name}}
       </div>
       <div class="block-second">
-        <ng-container *ngIf="data.action">
+        <ng-container>
             <div class="action">
-              {{data.actionCount}}
-              <span *ngIf="data.actionCount === 1">
+              {{data && data.actionCount ? data.actionCount : 0}}
+              <span *ngIf="data && data.actionCount === 1">
                 {{translate.t3[language]}}
               </span>
               <span *ngIf="data.actionCount >1 && data.actionCount<=4 || data.actionCount === 0">
@@ -24,7 +23,6 @@
               <span *ngIf="data.actionCount>4">
                 {{translate.t2[language]}}
               </span>
-<!--              {{data.actionCount < 4 ?  translate.t1[language] : translate.t2[language]}}-->
             </div>
         </ng-container>
       </div>

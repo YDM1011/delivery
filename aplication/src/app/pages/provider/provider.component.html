@@ -61,7 +61,9 @@
         <path d="M14.9826 6.61682C14.7008 4.96424 13.922 3.46046 12.7253 2.26377C11.5286 1.06708 10.0249 0.288277 8.37228 0.00651579C8.14117 -0.0346403 7.92273 0.123652 7.88157 0.35476C7.84358 0.589033 7.99871 0.807477 8.23298 0.848633C9.70827 1.09873 11.0538 1.79839 12.1238 2.86528C13.1939 3.93534 13.8904 5.28083 14.1405 6.75611C14.1753 6.96506 14.3557 7.11069 14.5615 7.11069C14.5868 7.11069 14.609 7.10752 14.6343 7.10436C14.8654 7.06953 15.0237 6.84792 14.9826 6.61682Z" fill="#09C2C2"/>
       </svg>
       <div class="text">
-        {{company.companyMobile ? company.companyMobile : company.createdBy.mobile}}
+        <a href="tel:+380{{company.companyMobile ? company.companyMobile : company.createdBy.mobile}}">
+          {{company.companyMobile ? "+380" + company.companyMobile : "+380" + company.createdBy.mobile}}
+        </a>
       </div>
     </div>
     <div class="location">

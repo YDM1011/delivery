@@ -80,8 +80,8 @@ export class IndexComponent implements OnInit, OnDestroy {
       ua: 'Всі постачальники міста'
     },
     emptyTop: {
-      ru: 'Нет популярных продуктов',
-      ua: 'Немає популярних продуктів'
+      ru: 'Нет популярных товаров',
+      ua: 'Немає популярних товарів'
     },
     emptyCountry: {
       ru: 'В выбранном городе нет поставщиков!',
