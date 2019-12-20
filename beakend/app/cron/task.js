@@ -5,30 +5,24 @@ cron.schedule("0 30 9 * * *", ()=>{
 
     console.log("Work!!!", new Date());
     // try {
-        console.log({pushDay: new Date().getDay()})
-    const companyClient = mongoose.model("Client");
+    const companyClient = mongoose.model("companyClient");
     companyClient
-        .find({pushDay: {$in: new Date().getDay()} })
+        .find({pushDay:new Date().getDay()})
         .populate({path: 'clientOwner', select:'fcmToken'})
         .populate({path: 'companyOwner', select:'name'})
         .exec((e,r)=>{
+
             if (!e) {
                 if (r && r.length > 0) {
-                    let fcmTokens = [];
                     r.forEach(it=>{
-                        if (it.clientOwner.fcmToken) {
-                            fcmTokens.push(it.clientOwner.fcmToken)
+                        if (it.clientOwner.fcmToken && it.companyOwner) {
+                            global.backendApp.service.fcm.send({
+                                title : 'Сегодня день заявки у "'+it.companyOwner.name+'"',
+                                body : ''
+                            }, '', it.clientOwner.fcmToken);
                         }
                     });
-                    global.backendApp.service.fcm.send({
-                        title : 'Сегодня день заявки у "'+r.name+'"',
-                        body : ''
-                    }, '', fcmTokens);
-                } else {
-                    global.backendApp.service.fcm.send({
-                        title : new Date(),
-                        body : ''
-                    });
+
                 }
             }
         })
