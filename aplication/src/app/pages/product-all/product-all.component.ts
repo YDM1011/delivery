@@ -16,8 +16,8 @@ export class ProductAllComponent implements OnInit, OnDestroy {
   public orders = [];
   public translate ={
     title: {
-      ru: 'Продукты',
-      ua: 'Продукти'
+      ru: 'Товары',
+      ua: 'Товари'
     }
   };
   private _subscription: Subscription[] = [];
