@@ -2,62 +2,64 @@
 <mat-form-field class="example-full-width">
   <input type="text" placeholder="Для поиска клиента введите имя или телефон" aria-label="Number" name="inputSearch" matInput [(ngModel)]="inputChange" (keyup)="change()">
 </mat-form-field>
-<table *ngIf="loaded; else loader" class="infoBy table">
-
-  <ng-container *ngIf="dataPayed.length > 0; else empty">
-    <tr class="t-title">
-      <td>Клиент</td>
-      <td>Заказов</td>
-      <td>Последняя покупка</td>
-      <td>Напоминание</td>
-      <td></td>
-    </tr>
-
-    <tr *ngFor="let data of dataPayed">
-      <td>
-        <ng-container *ngIf="data.clientOwner">
-          <div class="client-cart">
-            <app-img [fs]="data.clientOwner.img" [dir]="'avatar'"></app-img>
-            <span>
+<div class="table-container">
+  <table *ngIf="loaded; else loader" class="infoBy table">
+    
+    <ng-container *ngIf="dataPayed.length > 0; else empty">
+      <tr class="t-title">
+        <td>Клиент</td>
+        <td>Заказов</td>
+        <td>Последняя покупка</td>
+        <td>Напоминание</td>
+        <td></td>
+      </tr>
+      
+      <tr *ngFor="let data of dataPayed">
+        <td>
+          <ng-container *ngIf="data.clientOwner">
+            <div class="client-cart">
+              <app-img [fs]="data.clientOwner.img" [dir]="'avatar'"></app-img>
+              <span>
               {{data.name}}
-              <ng-container *ngIf="data.mobile">
+                <ng-container *ngIf="data.mobile">
                 <br> {{data.mobile}}
               </ng-container>
               <ng-container *ngIf="!data.mobile">
                 <br> {{data.login}}
               </ng-container>
             </span>
+            </div>
+          </ng-container>
+        </td>
+        <td>{{data.basketCount}}</td>
+        <td>
+          <div class="date">
+            <div class="top-table-date">
+              {{data.lastUpdate | date: 'dd MMMM, yyyy'}}
+            </div>
+            <div class="bottom-table-date">
+              {{data.lastUpdate | date: 'HH:mm'}}
+            </div>
           </div>
-        </ng-container>
-      </td>
-      <td>{{data.basketCount}}</td>
-      <td>
-        <div class="date">
-          <div class="top-table-date">
-            {{data.lastUpdate | date: 'dd MMMM, yyyy'}}
-          </div>
-          <div class="bottom-table-date">
-            {{data.lastUpdate | date: 'HH:mm'}}
-          </div>
-        </div>
-      </td>
-      <td>
-        <ng-container *ngIf="data.pushDay && data.pushDay.length > 0">
-          в
-          <ng-container *ngFor="let day of data.pushDay">
-            {{days[day]}}
-          </ng-container> <br>
-        </ng-container>
-        <span class="link" (click)="openSet(data)">настроить</span>
-      </td>
-      <td>
-        <button (click)="details(data.clientOwner)">
-          <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="info-circle" class="svg-inline--fa fa-info-circle fa-w-16" role="img" viewBox="0 0 512 512"><path fill="#009688" d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"/></svg>
-        </button>
-      </td>
-    </tr>
-  </ng-container>
-</table>
+        </td>
+        <td>
+          <ng-container *ngIf="data.pushDay && data.pushDay.length > 0">
+            в
+            <ng-container *ngFor="let day of data.pushDay">
+              {{days[day]}}
+            </ng-container> <br>
+          </ng-container>
+          <span class="link" (click)="openSet(data)">настроить</span>
+        </td>
+        <td>
+          <button (click)="details(data.clientOwner)">
+            <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="info-circle" class="svg-inline--fa fa-info-circle fa-w-16" role="img" viewBox="0 0 512 512"><path fill="#009688" d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"/></svg>
+          </button>
+        </td>
+      </tr>
+    </ng-container>
+  </table>
+</div>
 <mat-paginator [length]="lengthPagination"
                [pageSize]="pageSizePagination"
                [pageSizeOptions]="pageSizeOptionsPagination"
