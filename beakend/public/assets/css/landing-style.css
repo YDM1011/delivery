@@ -522,8 +522,7 @@ a {
     width: 140px;
     bottom: 0;
     right: 0;
-    z-index: 3;
-}
+    z-index: 3; }
 
 .first .slider .slider-btn button.owl-prev {
     z-index: 4;
@@ -1159,9 +1158,7 @@ a {
         align-items: center;
         width: 140px;
         bottom: 0;
-        right: 0;
-        z-index: 3;
-    }
+        right: 0; }
     .first .slider .slider-btn .left, .first .slider .slider-btn .right {
         display: -webkit-box;
         display: -ms-flexbox;
@@ -1511,3 +1508,37 @@ a {
 
 .owl-carousel .owl-dots .owl-dot.active span {
     background: #09C2C2; }
+
+.privacy {
+    padding: 10px 0 40px; }
+
+.privacy-box h1 {
+    text-align: center;
+    font-size: 32px;
+    margin: 40px auto 40px; }
+
+.privacy-box p {
+    margin-bottom: 15px;
+    line-height: 21px;
+    font-size: 16px; }
+
+.privacy-box p a {
+    font-style: italic;
+    text-decoration: underline; }
+
+.privacy-box ul {
+    margin: 0;
+    padding: 10px 0; }
+
+.privacy-box ul li {
+    font-weight: bold;
+    list-style: none;
+    margin-bottom: 15px; }
+
+.privacy-box ul li p {
+    padding: 5px 15px;
+    margin: 0;
+    font-weight: normal; }
+
+.privacy-box ul li .inside {
+    margin-left: 15px; }
