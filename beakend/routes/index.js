@@ -22,4 +22,9 @@ router.get('/signin', function(req, res, next) {
   res.render('signin', { title: 'Express' });
 });
 
+/* GET home page. */
+router.get('/privacy', function(req, res, next) {
+  res.render('privacy', { title: 'Express' });
+});
+
 module.exports = router;
