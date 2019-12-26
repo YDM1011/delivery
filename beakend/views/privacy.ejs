@@ -1,550 +1,97 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Devon - Home Page 03</title>
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="assets/css/bootstrap-grid.css">
-    <link rel="stylesheet" href="assets/css/bootstrap-reboot.min.css">
-    <link rel="stylesheet" href="assets/css/bootstrap-dropdown.min.css" />
-    <link rel="stylesheet" href="assets/css/bootstrap-select.min.css" />
-    <!-- Font Awesome Icons -->
-    <link rel="stylesheet" href="assets/css/font-awesome.css">
-    <!-- Ionicons Icons -->
-    <link rel="stylesheet" href="assets/css/ionicons.min.css">
-    <!-- Google Fonts -->
-    <link href="assets/fonts/main-fonts.css" rel="stylesheet">
-    <!-- Slick Slider CSS -->
-    <link rel="stylesheet" href="assets/slick/slick.css">
-    <link rel="stylesheet" href="assets/slick/slick-theme.css">
-    <!-- Custom styles for this template -->
-    <link rel="stylesheet" href="assets/css/style.css">
+    <title>Site</title>
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <link rel="stylesheet" href="css/owl.carousel.min.css">
+    <link rel="stylesheet" href="css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-<!-- Navbar -->
-<header class="header transparent">
+<header class="header">
     <div class="container">
-        <div class="header-inner">
-            <a href="/home" class="site-logo">
-                <h1 class="site-logo-title">Devon</h1>
-                <h1 class="site-logo-text">model agency</h1>
+        <div class="header-top">
+            <a href="#" class="logo">
             </a>
-            <div class="navigation-wr">
-                <nav class="navigation">
-                    <ul>
-                        <li class="menu-item-has-children current-menu-parent">
-                            <a href="#">Home</a>
-                            <!--<span class="sub-menu-toggle"></span>-->
-                            <!--<ul class="sub-menu">-->
-                                <!--<li><a href="01_Home.html">Dark with carousel</a></li>-->
-                                <!--<li class="current-menu-item"><a href="03_Home.html">Dark with find model</a></li>-->
-                                <!--<li><a href="04_Home.html">White version</a></li>-->
-                                <!--<li><a href="25_Search_By_Geo_Map.html">Geo maps regions</a></li>-->
-                            <!--</ul>-->
-                        </li>
-                        <li class="menu-item-has-children">
-                            <a href="#">Categories</a>
-                            <!--<span class="sub-menu-toggle"></span>-->
-                            <!--<ul class="sub-menu">-->
-                                <!--<li><a href="06_Models_Load_More.html">Side version (load more)</a></li>-->
-                                <!--<li><a href="07_Models_Load_More_Alternative.html">Side version (load more) Alt</a></li>-->
-                                <!--<li><a href="09_Models_Map_View.html">Side version (pagination)</a></li>-->
-                                <!--<li><a href="10_Models_Map_Big.html">Side version (pagination) Alt</a></li>-->
-                                <!--<li><a href="08_Models_List.html">List version</a></li>-->
-                                <!--<li><a href="23_Full_Screen_Map_Search.html">Map search</a></li>-->
-                                <!--<li><a href="24_Alternative_Search_View.html">Map search Alt</a></li>-->
-                            <!--</ul>-->
-                        </li>
-                        <li class="menu-item-has-children">
-                            <a href="#">Place Ad</a>
-                            <!--<span class="sub-menu-toggle"></span>-->
-                            <!--<ul class="sub-menu">-->
-                                <!--<li><a href="19_About_Us.html">About us</a></li>-->
-                                <!--<li><a href="15_Contact.html">Contact us</a></li>-->
-                                <!--<li><a href="16_Contact.html">Contact us Alt</a></li>-->
-                                <!--<li><a href="18_Pricing.html">Pricing</a></li>-->
-                            <!--</ul>-->
-                        </li>
-                        <li class="menu-item-has-children">
-                            <a href="#">Sponsored Ads</a>
-                            <!--<span class="sub-menu-toggle"></span>-->
-                            <!--<ul class="sub-menu">-->
-                                <!--<li><a href="05_Model_Profile.html">Model Profiles</a></li>-->
-                                <!--<li><a href="12_Blog_Grid.html">Blog Grid</a></li>-->
-                                <!--<li><a href="13_Blog_Grid_Alternative.html">Blog Grid Alternative</a></li>-->
-                                <!--<li><a href="12_Blog_Grid_Standart.html">Blog Grid Standart</a></li>-->
-                                <!--<li><a href="12_Blog_Standart.html">Blog Standart</a></li>-->
-                                <!--<li><a href="14_Blog_Open.html">Blog open</a></li>-->
-                                <!--<li><a href="17_FAQ.html">FAQ</a></li>-->
-                                <!--<li><a href="/login">Sign In</a></li>-->
-                                <!--<li><a href="/signin">Register</a></li>-->
-                                <!--<li><a href="26_Search_By_Geo_Map_Full_Screen.html">Geo map</a></li>-->
-                            <!--</ul>-->
-                        </li>
-                        <li class="menu-item-has-children">
-                            <a href="#">Recent Ads</a>
-                        </li>
-                    </ul>
-                </nav>
-                <div class="right-sec-nav d-flex align-items-center">
-                    <!--<form class="search-wr">-->
-                        <!--<input type="text" id="search" name="search">-->
-                        <!--<i class="icon ion-ios-search"></i>-->
-                        <!--<input type="submit" class="submit" value="">-->
-                    <!--</form>-->
-                    <a href="/login" class="login d-flex align-items-center">
-                        <i class="icon ion-ios-person-outline"></i>
-                    </a>
-                    <!--<div class="lang-menu-wr">-->
-                        <!--<button class="btn lang-toggle">-->
-                            <!--<span>EN</span>-->
-                            <!--<i class="icon ion-ios-arrow-down"></i>-->
-                        <!--</button>-->
-                        <!--<ul class="lang-menu">-->
-                            <!--<li><a href="#">EN</a></li>-->
-                            <!--<li><a href="#">HR</a></li>-->
-                            <!--<li><a href="03_Home_rtl.html">AR</a></li>-->
-                        <!--</ul>-->
-                    <!--</div>-->
-                </div>
-                <i class="fa fa-times" aria-hidden="true"></i>
-            </div>
-            <i class="fa fa-bars" aria-hidden="true"></i>
+            <nav>
+                <a href="#thirth" class="link">Переваги</a>
+                <a href="#second" class="link">Можливості</a>
+                <a href="#fifth" class="link">Вартість</a>
+                <a href="#contact" class="link">Контакти</a>
+                <a href="https://provider.piligrim-test.pp.ua/login" class="btn">Авторизация</a>
+            </nav>
         </div>
     </div>
 </header>
-<!-- End Navbar -->
-<main>
-    <!-- Hero -->
-    <section class="hero over-header" style="background-image: url('assets/img/placeholder/placeholder_1920x1200.jpg')">
-        <div class="container">
-            <div class="over-header-inner">
-                <h1 class="title">Find Perfect Model</h1>
-                <form class="searh-model">
-						<span class="select-item">
-							<select name="height" id="height" class="selectpicker">
-								<option value="0">Categories</option>
-								<option value="150">Escorts</option>
-								<option value="155">Body Rubs</option>
-								<option value="160">Strippers & Strip Clubs</option>
-								<option value="160">Fetish & Dom</option>
-								<option value="160">TS</option>
-								<option value="160">Male Escorts</option>
-								<option value="160">Phone & Websites</option>
-								<option value="160">Adult Jobs</option>
-							</select>
-						</span>
-                    <span class="select-item">
-							<select name="waist" id="waist" class="selectpicker">
-								<option value="0">Locations</option>
-								<option value="50">All</option>
-								<option value="55">Barrie</option>
-								<option value="60">Belleville</option>
-								<option value="60">Brampton</option>
-							</select>
-						</span>
-                    <span class="select-item">
-							<select name="bust" id="bust" class="selectpicker">
-								<option value="0">Background</option>
-								<option value="45">Asian</option>
-								<option value="50">Black/African Descent</option>
-								<option value="55">Latin/Hispanic</option>
-								<option value="55">East Indian</option>
-								<option value="55">Middle Eastern</option>
-								<option value="55">Mixed</option>
-								<option value="55">Native American</option>
-								<option value="55">Pacific Islander</option>
-								<option value="55">White/Caucasian</option>
-							</select>
-						</span>
-                    <span class="select-item">
-							<select name="age" id="age" class="selectpicker">
-								<option value="0">Age</option>
-								<option value="18">18</option>
-								<option value="19">19</option>
-								<option value="20">20</option>
-							</select>
-						</span>
-                    <span class="select-item">
-							<select name="hair" id="hair" class="selectpicker">
-								<option value="hair">Body</option>
-								<option value="blonde">Slim</option>
-								<option value="black">Athletic</option>
-								<option value="brown">Average</option>
-								<option value="brown">Curvy</option>
-								<option value="brown">A Few Extra Pounds</option>
-								<option value="brown">Full/Owerweight</option>
-								<option value="brown">Other</option>
-							</select>
-						</span>
-                    <span class="select-item">
-							<select name="age" id="eyes" class="selectpicker">
-								<option value="0">Donation</option>
-								<option value="blue">$80</option>
-								<option value="green">$100</option>
-								<option value="brown">$120</option>
-								<option value="brown">$140</option>
-								<option value="brown">$160</option>
-								<option value="brown">$180</option>
-								<option value="brown">$200</option>
-								<option value="brown">$220</option>
-								<option value="brown">$240</option>
-								<option value="brown">$260</option>
-							</select>
-						</span>
-                    <input type="submit" value="Search" class="submit">
-                </form>
+<div class="privacy">
+    <div class="container">
+        <div class="privacy-box">
+            <div class="h1">
+                Политика Конфиденциальности
             </div>
+            <p>
+                Политика в отношении обработки персональных данных
+            </p>
+            <p>
+                Команда SMART беспокоится об обеспечении безопасности данных своих клиентов. Именно поэтому мы составили настоящую Политику конфиденциальности, чтобы вы не беспокоились о том, что происходит с вашими персональными данными, которые вы предоставили нам для регистрации.
+            </p>
+            <p>
+                Регистрируясь на веб-сайте, вы предоставляете SMART согласие на обработку всех введенных для регистрации данных с целью использования в некоммерческих целях. Надлежащее предоставление услуг SMART предусматривает передачу вашей информации подрядчикам SMART, административным лицам и органам, осуществляющим техническую организацию, администрирование и поддержку адресного пространства сети Интернет и сохранения информации на серверах, подключенных к сети Интернет.
+            </p>
+            <p>
+                Регистрируясь на веб-сайте, вы также подтверждаете, что ознакомились с перечнем своих прав как субъекта данных согласно статье 8 Закона Украины «О защите персональных данных». Этот перечень доступен по ссылке:
+                <a href="http://zakon2.rada.gov.ua/laws/show/2297-17">http://zakon2.rada.gov.ua/laws/show/2297-17</a>
+            </p>
         </div>
-    </section>
-    <!-- End Hero -->
-    <!-- Categories List -->
-    <section class="container categories bigger">
-        <h2 class="section-title lines">Sponsored Ads</h2>
-        <div class="row categories-wr">
-            <div class="col-sm-6 col-lg-4 categories-item-wr">
-                <a href="07_Models_Load_More_Alternative.html" class="category-models-item" style="background-image: url('assets/img/1.jpg')">
-                    <footer class="categories-item-footer">
-                        <p class="category">Woman</p>
-                        <p class="models-count">5 models</p>
-                    </footer>
-                </a>
+    </div>
+</div>
+<footer class="footer">
+    <div class="container">
+        <div class="footer-box">
+            <div class="logo">
+                2019 EATENCE
             </div>
-            <div class="col-sm-6 col-lg-4 categories-item-wr">
-                <a href="07_Models_Load_More_Alternative.html" class="category-models-item" style="background-image: url('assets/img/2.jpg')">
-                    <footer class="categories-item-footer">
-                        <p class="category">Trending</p>
-                        <p class="models-count">11 models</p>
-                    </footer>
+            <nav>
+                <a href="">Privacy</a>
+                <a href="">Accessibility</a>
+                <a href="">Terms</a>
+            </nav>
+            <div class="buttons-links">
+                <a href="">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M2.56707 0H17.4329C18.8447 0 19.9998 1.04523 19.9998 2.56687V17.4331C19.9998 18.9548 18.8447 20 17.4329 20H2.56707C1.15488 20 0 18.9548 0 17.4331V2.56687C0 1.04523 1.15488 0 2.56707 0ZM14.5691 2.22209C14.0738 2.22209 13.6691 2.62703 13.6691 3.12254V5.27768C13.6691 5.77299 14.0738 6.17814 14.5691 6.17814H16.8296C17.3249 6.17814 17.7301 5.77299 17.7301 5.27768V3.12254C17.7301 2.62703 17.3249 2.22209 16.8296 2.22209H14.5691ZM17.7395 8.45793H15.9793C16.1458 9.00169 16.2359 9.5777 16.2359 10.1736C16.2359 13.5003 13.4522 16.1969 10.019 16.1969C6.58597 16.1969 3.80266 13.5003 3.80266 10.1736C3.80266 9.57729 3.8926 9.00149 4.05935 8.45793H2.2225V16.9062C2.2225 17.3434 2.58021 17.7013 3.01761 17.7013H16.9448C17.3822 17.7013 17.7399 17.3436 17.7399 16.9062V8.45793H17.7395ZM10.0188 6.06458C7.80061 6.06458 6.00216 7.80697 6.00216 9.95657C6.00216 12.1062 7.80061 13.8486 10.0188 13.8486C12.2372 13.8486 14.0358 12.1062 14.0358 9.95657C14.0358 7.80697 12.2374 6.06458 10.0188 6.06458Z" fill="white"/>
+                    </svg>
                 </a>
-            </div>
-            <div class="col-sm-6 col-lg-4 categories-item-wr">
-                <a href="07_Models_Load_More_Alternative.html" class="category-models-item" style="background-image: url('assets/img/3.jpg')">
-                    <footer class="categories-item-footer">
-                        <p class="category">With Video</p>
-                        <p class="models-count">4 models</p>
-                    </footer>
+                <a href="">
+                    <svg width="25" height="20" viewBox="0 0 25 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M24.6154 2.36769C23.7 2.76923 22.7246 3.03538 21.7077 3.16462C22.7538 2.54 23.5523 1.55846 23.9277 0.375385C22.9523 0.956923 21.8754 1.36769 20.7277 1.59692C19.8015 0.610769 18.4815 0 17.0415 0C14.2477 0 11.9985 2.26769 11.9985 5.04769C11.9985 5.44769 12.0323 5.83231 12.1154 6.19846C7.92 5.99385 4.20769 3.98308 1.71385 0.92C1.27846 1.67538 1.02308 2.54 1.02308 3.47077C1.02308 5.21846 1.92308 6.76769 3.26462 7.66462C2.45385 7.64923 1.65846 7.41385 0.984615 7.04308C0.984615 7.05846 0.984615 7.07846 0.984615 7.09846C0.984615 9.55077 2.73385 11.5877 5.02769 12.0569C4.61692 12.1692 4.16923 12.2231 3.70462 12.2231C3.38154 12.2231 3.05538 12.2046 2.74923 12.1369C3.40308 14.1354 5.25846 15.6046 7.46462 15.6523C5.74769 16.9954 3.56769 17.8046 1.20769 17.8046C0.793846 17.8046 0.396923 17.7862 0 17.7354C2.23538 19.1769 4.88462 20 7.74154 20C17.0277 20 22.1046 12.3077 22.1046 5.64C22.1046 5.41692 22.0969 5.20154 22.0862 4.98769C23.0877 4.27692 23.9292 3.38923 24.6154 2.36769Z" fill="white"/>
+                    </svg>
                 </a>
-            </div>
-            <div class="col-sm-6 col-lg-4 categories-item-wr">
-                <a href="07_Models_Load_More_Alternative.html" class="category-models-item" style="background-image: url('assets/img/4.jpg')">
-                    <footer class="categories-item-footer">
-                        <p class="category">Blue Eyes</p>
-                        <p class="models-count">7 models</p>
-                    </footer>
+                <a href="">
+                    <svg width="29" height="20" viewBox="0 0 29 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M28.1982 3.21724C27.8469 1.69123 26.5988 0.565388 25.0962 0.397445C21.538 0.000244624 17.9365 -0.00182865 14.3516 0.000244731C10.7662 -0.00182865 7.16411 0.000244624 3.6059 0.397445C2.10418 0.565388 0.856898 1.69123 0.505608 3.21724C0.00562776 5.39044 0 7.76268 0 10.0001C0 12.2376 0 14.6096 0.49998 16.7825C0.850677 18.3082 2.09826 19.434 3.60087 19.6023C7.15878 19.9998 10.7605 20.0018 14.346 19.9998C17.9321 20.0018 21.5329 19.9998 25.0905 19.6023C26.5923 19.4343 27.8407 18.3085 28.192 16.7825C28.6923 14.6093 28.6941 12.2373 28.6941 10.0001C28.6941 7.76268 28.6982 5.39044 28.1982 3.21724ZM10.6441 14.4538C10.6441 11.2797 10.6441 8.13885 10.6441 4.9645C13.6852 6.55123 16.7061 8.1273 19.7664 9.7238C16.7156 11.3061 13.6932 12.8727 10.6441 14.4538Z" fill="white"/>
+                    </svg>
                 </a>
-            </div>
-            <div class="col-sm-6 col-lg-4 categories-item-wr">
-                <a href="07_Models_Load_More_Alternative.html" class="category-models-item" style="background-image: url('assets/img/5.jpg')">
-                    <footer class="categories-item-footer">
-                        <p class="category">Blonde</p>
-                        <p class="models-count">9 models</p>
-                    </footer>
+                <a href="">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M17.5 0H2.5C1.12125 0 0 1.12125 0 2.5V17.5C0 18.8787 1.12125 20 2.5 20H10V13.125H7.5V10H10V7.5C10 5.42875 11.6788 3.75 13.75 3.75H16.25V6.875H15C14.31 6.875 13.75 6.81 13.75 7.5V10H16.875L15.625 13.125H13.75V20H17.5C18.8787 20 20 18.8787 20 17.5V2.5C20 1.12125 18.8787 0 17.5 0Z" fill="white"/>
+                    </svg>
                 </a>
-            </div>
-            <div class="col-sm-6 col-lg-4 categories-item-wr">
-                <a href="07_Models_Load_More_Alternative.html" class="category-models-item" style="background-image: url('assets/img/6.jpg')">
-                    <footer class="categories-item-footer">
-                        <p class="category">European</p>
-                        <p class="models-count">14 models</p>
-                    </footer>
+                <a href="">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M4.4725 6.25H0V20H4.4725V6.25Z" fill="white"/>
+                        <path d="M16.655 6.41125C16.6075 6.39625 16.5625 6.38 16.5125 6.36625C16.4525 6.3525 16.3925 6.34125 16.3312 6.33125C16.0937 6.28375 15.8338 6.25 15.5288 6.25C12.9213 6.25 11.2675 8.14625 10.7225 8.87875V6.25H6.25V20H10.7225V12.5C10.7225 12.5 14.1025 7.7925 15.5288 11.25C15.5288 14.3363 15.5288 20 15.5288 20H20V10.7212C20 8.64375 18.5763 6.9125 16.655 6.41125Z" fill="white"/>
+                        <path d="M2.1875 4.375C3.39562 4.375 4.375 3.39562 4.375 2.1875C4.375 0.979377 3.39562 0 2.1875 0C0.979377 0 0 0.979377 0 2.1875C0 3.39562 0.979377 4.375 2.1875 4.375Z" fill="white"/>
+                    </svg>
                 </a>
             </div>
         </div>
-    </section>
-    <!-- End Categories List -->
-    <!-- Review -->
-    <!--<div class="container-fluid full-screen-quote">-->
-        <!--<div class="row">-->
-            <!--<div class="col-md-6">-->
-                <!--<div class="full-screen-quote-text">-->
-                    <!--<p class="quotes">“</p>-->
-                    <!--<p class="description">Proin gravida nibh vel velit auctor aliquet. Aenean-->
-                        <!--sollicitudin, lorem quis bibendum auctor, nisi elit conse quat ipsum, nec sagittis sem nibh id elit duis sed.-->
-                    <!--</p>-->
-                    <!--<address class="author">Jena Stain</address>-->
-                <!--</div>-->
-            <!--</div>-->
-            <!--<div class="col-md-6 author-img-wr">-->
-                <!--<img src="assets/img/placeholder/placeholder_900x500.jpg" alt="" class="author-img">-->
-            <!--</div>-->
-        <!--</div>-->
-    <!--</div>-->
-    <!-- End Review -->
-    <!-- Popular Models List -->
-    <!--<section class="container popular-models model-row-wrap">-->
-        <!--<h2 class="section-title lines">Popular Models</h2>-->
-        <!--<article class="model-row">-->
-            <!--<div class="row">-->
-                <!--<div class="col-sm-8 offset-sm-2 col-md-6 offset-md-3 col-lg-4 offset-lg-4 col-xl-2 offset-xl-0">-->
-                    <!--<a href="05_Model_Profile.html" class="img-wr">-->
-                        <!--<img src="assets/img/placeholder/placeholder_400x350.jpg" alt="">-->
-                    <!--</a>-->
-                <!--</div>-->
-                <!--<div class="col-xl-6">-->
-                    <!--<div class="row-model-info">-->
-                        <!--<h3 class="title">-->
-                            <!--<a href="05_Model_Profile.html">Alexis Rane</a>-->
-                        <!--</h3>-->
-                        <!--<div class="model-attr">-->
-                            <!--<p class="attr-item">-->
-                                <!--<span class="attr-name">Height:</span>-->
-                                <!--<span class="attr-value">185</span>-->
-                            <!--</p>-->
-                            <!--<p class="attr-item">-->
-                                <!--<span class="attr-name">Bust:</span>-->
-                                <!--<span class="attr-value">85</span>-->
-                            <!--</p>-->
-                            <!--<p class="attr-item">-->
-                                <!--<span class="attr-name">Waist:</span>-->
-                                <!--<span class="attr-value">60</span>-->
-                            <!--</p>-->
-                            <!--<p class="attr-item">-->
-                                <!--<span class="attr-name">Age:</span>-->
-                                <!--<span class="attr-value">17</span>-->
-                            <!--</p>-->
-                            <!--<p class="attr-item">-->
-                                <!--<span class="attr-name">Heir:</span>-->
-                                <!--<span class="attr-value">Red</span>-->
-                            <!--</p>-->
-                            <!--<p class="attr-item">-->
-                                <!--<span class="attr-name">Eyes:</span>-->
-                                <!--<span class="attr-value">Blue</span>-->
-                            <!--</p>-->
-                        <!--</div>-->
-                        <!--<p class="rating">-->
-                            <!--<i class="fa fa-star active" aria-hidden="true"></i>-->
-                            <!--<i class="fa fa-star active" aria-hidden="true"></i>-->
-                            <!--<i class="fa fa-star active" aria-hidden="true"></i>-->
-                            <!--<i class="fa fa-star active" aria-hidden="true"></i>-->
-                            <!--<i class="fa fa-star active" aria-hidden="true"></i>-->
-                        <!--</p>-->
-                    <!--</div>-->
-                <!--</div>-->
-                <!--<div class="col-xl-2">-->
-                    <!--<p class="soc-icons-wr">-->
-                        <!--<a href="#" class="soc-icon"><i class="fa fa-instagram" aria-hidden="true"></i></a>-->
-                        <!--<a href="#" class="soc-icon"><i class="fa fa-twitter" aria-hidden="true"></i></a>-->
-                    <!--</p>-->
-                <!--</div>-->
-                <!--<div class="col-xl-2">-->
-                    <!--<p class="soc-icons-wr big">-->
-                        <!--<a href="#" class="soc-icon"><i class="icon ion-android-favorite"></i></a>-->
-                        <!--<a href="#" class="soc-icon"><i class="icon ion-ios-email-outline"></i></a>-->
-                    <!--</p>-->
-                <!--</div>-->
-            <!--</div>-->
-        <!--</article>-->
-        <!--<article class="model-row">-->
-            <!--<div class="row">-->
-                <!--<div class="col-sm-8 offset-sm-2 col-md-6 offset-md-3 col-lg-4 offset-lg-4 col-xl-2 offset-xl-0">-->
-                    <!--<a href="05_Model_Profile.html" class="img-wr">-->
-                        <!--<img src="assets/img/placeholder/placeholder_400x350.jpg" alt="">-->
-                    <!--</a>-->
-                <!--</div>-->
-                <!--<div class="col-xl-6">-->
-                    <!--<div class="row-model-info">-->
-                        <!--<h3 class="title">-->
-                            <!--<a href="05_Model_Profile.html">Alexis Rane</a>-->
-                        <!--</h3>-->
-                        <!--<div class="model-attr">-->
-                            <!--<p class="attr-item">-->
-                                <!--<span class="attr-name">Height:</span>-->
-                                <!--<span class="attr-value">185</span>-->
-                            <!--</p>-->
-                            <!--<p class="attr-item">-->
-                                <!--<span class="attr-name">Bust:</span>-->
-                                <!--<span class="attr-value">85</span>-->
-                            <!--</p>-->
-                            <!--<p class="attr-item">-->
-                                <!--<span class="attr-name">Waist:</span>-->
-                                <!--<span class="attr-value">60</span>-->
-                            <!--</p>-->
-                            <!--<p class="attr-item">-->
-                                <!--<span class="attr-name">Age:</span>-->
-                                <!--<span class="attr-value">17</span>-->
-                            <!--</p>-->
-                            <!--<p class="attr-item">-->
-                                <!--<span class="attr-name">Heir:</span>-->
-                                <!--<span class="attr-value">Red</span>-->
-                            <!--</p>-->
-                            <!--<p class="attr-item">-->
-                                <!--<span class="attr-name">Eyes:</span>-->
-                                <!--<span class="attr-value">Blue</span>-->
-                            <!--</p>-->
-                        <!--</div>-->
-                        <!--<p class="rating">-->
-                            <!--<i class="fa fa-star active" aria-hidden="true"></i>-->
-                            <!--<i class="fa fa-star active" aria-hidden="true"></i>-->
-                            <!--<i class="fa fa-star active" aria-hidden="true"></i>-->
-                            <!--<i class="fa fa-star active" aria-hidden="true"></i>-->
-                            <!--<i class="fa fa-star active" aria-hidden="true"></i>-->
-                        <!--</p>-->
-                    <!--</div>-->
-                <!--</div>-->
-                <!--<div class="col-xl-2">-->
-                    <!--<p class="soc-icons-wr">-->
-                        <!--<a href="#" class="soc-icon"><i class="fa fa-instagram" aria-hidden="true"></i></a>-->
-                        <!--<a href="#" class="soc-icon"><i class="fa fa-twitter" aria-hidden="true"></i></a>-->
-                        <!--<a href="#" class="soc-icon"><i class="fa fa-facebook" aria-hidden="true"></i></a>-->
-                    <!--</p>-->
-                <!--</div>-->
-                <!--<div class="col-xl-2">-->
-                    <!--<p class="soc-icons-wr big">-->
-                        <!--<a href="#" class="soc-icon"><i class="icon ion-android-favorite"></i></a>-->
-                        <!--<a href="#" class="soc-icon"><i class="icon ion-ios-email-outline"></i></a>-->
-                    <!--</p>-->
-                <!--</div>-->
-            <!--</div>-->
-        <!--</article>-->
-        <!--<article class="model-row">-->
-            <!--<div class="row">-->
-                <!--<div class="col-sm-8 offset-sm-2 col-md-6 offset-md-3 col-lg-4 offset-lg-4 col-xl-2 offset-xl-0">-->
-                    <!--<a href="05_Model_Profile.html" class="img-wr">-->
-                        <!--<img src="assets/img/placeholder/placeholder_400x350.jpg" alt="">-->
-                    <!--</a>-->
-                <!--</div>-->
-                <!--<div class="col-xl-6">-->
-                    <!--<div class="row-model-info">-->
-                        <!--<h3 class="title">-->
-                            <!--<a href="05_Model_Profile.html">Alexis Rane</a>-->
-                        <!--</h3>-->
-                        <!--<div class="model-attr">-->
-                            <!--<p class="attr-item">-->
-                                <!--<span class="attr-name">Height:</span>-->
-                                <!--<span class="attr-value">185</span>-->
-                            <!--</p>-->
-                            <!--<p class="attr-item">-->
-                                <!--<span class="attr-name">Bust:</span>-->
-                                <!--<span class="attr-value">85</span>-->
-                            <!--</p>-->
-                            <!--<p class="attr-item">-->
-                                <!--<span class="attr-name">Waist:</span>-->
-                                <!--<span class="attr-value">60</span>-->
-                            <!--</p>-->
-                            <!--<p class="attr-item">-->
-                                <!--<span class="attr-name">Age:</span>-->
-                                <!--<span class="attr-value">17</span>-->
-                            <!--</p>-->
-                            <!--<p class="attr-item">-->
-                                <!--<span class="attr-name">Heir:</span>-->
-                                <!--<span class="attr-value">Red</span>-->
-                            <!--</p>-->
-                            <!--<p class="attr-item">-->
-                                <!--<span class="attr-name">Eyes:</span>-->
-                                <!--<span class="attr-value">Blue</span>-->
-                            <!--</p>-->
-                        <!--</div>-->
-                        <!--<p class="rating">-->
-                            <!--<i class="fa fa-star active" aria-hidden="true"></i>-->
-                            <!--<i class="fa fa-star active" aria-hidden="true"></i>-->
-                            <!--<i class="fa fa-star active" aria-hidden="true"></i>-->
-                            <!--<i class="fa fa-star active" aria-hidden="true"></i>-->
-                            <!--<i class="fa fa-star active" aria-hidden="true"></i>-->
-                        <!--</p>-->
-                    <!--</div>-->
-                <!--</div>-->
-                <!--<div class="col-xl-2">-->
-                    <!--<p class="soc-icons-wr">-->
-                        <!--<a href="#" class="soc-icon"><i class="fa fa-instagram" aria-hidden="true"></i></a>-->
-                    <!--</p>-->
-                <!--</div>-->
-                <!--<div class="col-xl-2">-->
-                    <!--<p class="soc-icons-wr big">-->
-                        <!--<a href="#" class="soc-icon"><i class="icon ion-android-favorite"></i></a>-->
-                        <!--<a href="#" class="soc-icon"><i class="icon ion-ios-email-outline"></i></a>-->
-                    <!--</p>-->
-                <!--</div>-->
-            <!--</div>-->
-        <!--</article>-->
-    <!--</section>-->
-    <!-- End Popular Models List -->
-    <!-- Last Post List -->
-    <!--<section class="container last-posts small">-->
-        <!--<h2 class="section-title lines">Journal</h2>-->
-        <!--<div class="row justify-content-center">-->
-            <!--<article class="col-md-6 col-lg-4 last-post-wr">-->
-                <!--<a href="13_Blog_Open_Widget.html" class="post-item no-decoration">-->
-                    <!--<figure class="post-image" style="background-image: url('assets/img/placeholder/placeholder_700x600.jpg')">-->
-                        <!--<div class="info">-->
-                            <!--<p class="post-btn">View post</p>-->
-                            <!--<p class="post-publish">-->
-                                <!--<span class="publish-date">Dec 25, 2017</span>-->
-                                <!--<span class="separator">·</span>-->
-                                <!--<span class="publish-time">1 Minute</span>-->
-                            <!--</p>-->
-                        <!--</div>-->
-                    <!--</figure>-->
-                    <!--<footer class="post-footer">-->
-                        <!--<p class="post-category">Agency</p>-->
-                        <!--<h3 class="post-title">Perfect Fashion Show</h3>-->
-                    <!--</footer>-->
-                <!--</a>-->
-            <!--</article>-->
-            <!--<article class="col-md-6 col-lg-4 last-post-wr">-->
-                <!--<a href="13_Blog_Open_Widget.html" class="post-item no-decoration">-->
-                    <!--<figure class="post-image" style="background-image: url('assets/img/placeholder/placeholder_700x600.jpg')">-->
-                        <!--<div class="info">-->
-                            <!--<p class="post-btn">View post</p>-->
-                            <!--<p class="post-publish">-->
-                                <!--<span class="publish-date">Dec 25, 2017</span>-->
-                                <!--<span class="separator">·</span>-->
-                                <!--<span class="publish-time">1 Minute</span>-->
-                            <!--</p>-->
-                        <!--</div>-->
-                    <!--</figure>-->
-                    <!--<footer class="post-footer">-->
-                        <!--<p class="post-category">Ashion</p>-->
-                        <!--<h3 class="post-title">Changing Style WIth Makeup</h3>-->
-                    <!--</footer>-->
-                <!--</a>-->
-            <!--</article>-->
-            <!--<article class="col-md-6 col-lg-4 last-post-wr">-->
-                <!--<a href="13_Blog_Open_Widget.html" class="post-item no-decoration">-->
-                    <!--<figure class="post-image" style="background-image: url('assets/img/placeholder/placeholder_700x600.jpg')">-->
-                        <!--<div class="info">-->
-                            <!--<p class="post-btn">View post</p>-->
-                            <!--<p class="post-publish">-->
-                                <!--<span class="publish-date">Dec 25, 2017</span>-->
-                                <!--<span class="separator">·</span>-->
-                                <!--<span class="publish-time">1 Minute</span>-->
-                            <!--</p>-->
-                        <!--</div>-->
-                    <!--</figure>-->
-                    <!--<footer class="post-footer">-->
-                        <!--<p class="post-category">Agency</p>-->
-                        <!--<h3 class="post-title">Perfect Fashion Show</h3>-->
-                    <!--</footer>-->
-                <!--</a>-->
-            <!--</article>-->
-        <!--</div>-->
-    <!--</section>-->
-    <!-- End Last Post List -->
-</main>
-<!-- Footer -->
-<footer class="site-footer">
-    <!--<div class="container">-->
-        <!--<div class="soc-icons-wrap">-->
-            <!--<a href="#" class="soc-icon"><i class="fa fa-facebook" aria-hidden="true"></i></a>-->
-            <!--<a href="#" class="soc-icon"><i class="fa fa-instagram" aria-hidden="true"></i></a>-->
-            <!--<a href="#" class="soc-icon"><i class="fa fa-twitter" aria-hidden="true"></i></a>-->
-            <!--<a href="#" class="soc-icon"><i class="fa fa-pinterest" aria-hidden="true"></i></a>-->
-
-        <!--</div>-->
-        <!--<p class="copyright">&#169; 2018 Devon</p>-->
-    <!--</div>-->
+    </div>
 </footer>
-<!-- End Footer -->
-<!-- Jquery core -->
-<script src="assets/js/jquery-3.3.1.min.js"></script>
-<script src="assets/js/bootstrap-dropdown.min.js"></script>
-<script src="assets/js/bootstrap-select.min.js"></script>
-<!-- Slick Slider Core -->
-<script src="assets/slick/slick.js"></script>
-<!-- All Sliders Initialization -->
-<script src='assets/js/slider.js'></script>
-<!-- Custom -->
-<script src='assets/js/common.js'></script>
+<div class="copyright">
+    <a href="https://piligrim.pro">Piligrim 2019</a>
+</div>
 </body>
 </html>
