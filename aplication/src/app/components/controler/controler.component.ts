@@ -8,11 +8,13 @@ import {AuthService} from "../../auth.service";
 })
 export class ControlerComponent implements OnInit {
   public language;
+
   constructor(
-      private auth: AuthService
-  ) { }
+      private auth: AuthService,
+  ) {}
 
   ngOnInit() {
+
     this.auth.onLanguage.subscribe((v: string) => {
       this.language = v;
     })
