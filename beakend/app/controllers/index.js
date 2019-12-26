@@ -17,8 +17,10 @@ module.exports = function (backendApp) {
   backendApp.app.use('/api', cors(corsOptions));
 
   const apiRouter = backendApp.express.Router();
+  const Router = require("../../routes");
 
   backendApp.app.use('/api', apiRouter);
+  backendApp.app.use('/', Router);
 
   apiControllers.forEach((controller) => {
     require(controller)(backendApp, apiRouter);
