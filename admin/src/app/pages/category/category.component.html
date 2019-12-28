@@ -38,7 +38,7 @@
 			<div  *ngIf="brands && brands.length > 0">
 				<div class="box-subcategory">
 					<div class="mat-chip-file" *ngFor="let item of editArrayBrands; let i = index">
-						<div class="content">{{item.name}}</div>
+						<div class="content" *ngIf="item">{{item.name}}</div>
 						<div class="remove-mat-chip" (click)="removeBrands(i); formCheck()"></div>
 					</div>
 				</div>

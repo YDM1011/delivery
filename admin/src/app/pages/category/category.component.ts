@@ -135,7 +135,10 @@ export class CategoryComponent implements OnInit {
   }
   showBrandsName () {
     this.editArrayBrands = this.editObjCopy.brands.map((item, index) => {
-      return this.brands[this.crud.find('_id', item, this.brands)];
+      let id;
+      if (typeof item === 'string') id = item;
+      if (item && typeof item._id === 'string') id = item._id;
+      return this.brands[this.crud.find('_id', id, this.brands)];
     });
   }
   confirmEdit() {
@@ -219,7 +222,7 @@ export class CategoryComponent implements OnInit {
     }
   }
   pageEvent(e) {
-    this.crud.get(`mainCategory?populate={"path":"brands"}&&skip=${e.pageIndex  * e.pageSize}&limit=${e.pageSize}`).then((c: any) => {
+    this.crud.get(`mainCategory?populate={"path":"brands"}&skip=${e.pageIndex  * e.pageSize}&limit=${e.pageSize}`).then((c: any) => {
       if (!c) {
         return;
       }
