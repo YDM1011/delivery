@@ -18,7 +18,7 @@
     "cors": "^2.8.4",
     "debug": "~2.6.9",
     "ejs": "~2.5.7",
-    "express": "~4.15.5",
+    "express": "~4.17.3",
     "express-restify-mongoose": "^5.0.0",
     "express-subdomain": "^1.0.5",
     "fcm-notification": "^2.0.0",
